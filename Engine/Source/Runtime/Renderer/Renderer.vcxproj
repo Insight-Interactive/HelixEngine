@@ -1,0 +1,1072 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditor Win64|x64">
+      <Configuration>DebugEditor Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor Win64|Win32">
+      <Configuration>DebugEditor Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor Win32|x64">
+      <Configuration>DebugEditor Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor Win32|Win32">
+      <Configuration>DebugEditor Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor XboxOne|x64">
+      <Configuration>DebugEditor XboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor XboxOne|Win32">
+      <Configuration>DebugEditor XboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor XboxOneX|x64">
+      <Configuration>DebugEditor XboxOneX</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor XboxOneX|Win32">
+      <Configuration>DebugEditor XboxOneX</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor PlayStation5|x64">
+      <Configuration>DebugEditor PlayStation5</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditor PlayStation5|Win32">
+      <Configuration>DebugEditor PlayStation5</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development Win64|x64">
+      <Configuration>Development Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development Win64|Win32">
+      <Configuration>Development Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development Win32|x64">
+      <Configuration>Development Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development Win32|Win32">
+      <Configuration>Development Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development XboxOne|x64">
+      <Configuration>Development XboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development XboxOne|Win32">
+      <Configuration>Development XboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development XboxOneX|x64">
+      <Configuration>Development XboxOneX</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development XboxOneX|Win32">
+      <Configuration>Development XboxOneX</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development PlayStation5|x64">
+      <Configuration>Development PlayStation5</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development PlayStation5|Win32">
+      <Configuration>Development PlayStation5</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame Win64|x64">
+      <Configuration>DebugGame Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame Win64|Win32">
+      <Configuration>DebugGame Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame Win32|x64">
+      <Configuration>DebugGame Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame Win32|Win32">
+      <Configuration>DebugGame Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame XboxOne|x64">
+      <Configuration>DebugGame XboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame XboxOne|Win32">
+      <Configuration>DebugGame XboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame XboxOneX|x64">
+      <Configuration>DebugGame XboxOneX</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame XboxOneX|Win32">
+      <Configuration>DebugGame XboxOneX</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame PlayStation5|x64">
+      <Configuration>DebugGame PlayStation5</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugGame PlayStation5|Win32">
+      <Configuration>DebugGame PlayStation5</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame Win64|x64">
+      <Configuration>ShippingGame Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame Win64|Win32">
+      <Configuration>ShippingGame Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame Win32|x64">
+      <Configuration>ShippingGame Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame Win32|Win32">
+      <Configuration>ShippingGame Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame XboxOne|x64">
+      <Configuration>ShippingGame XboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame XboxOne|Win32">
+      <Configuration>ShippingGame XboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame XboxOneX|x64">
+      <Configuration>ShippingGame XboxOneX</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame XboxOneX|Win32">
+      <Configuration>ShippingGame XboxOneX</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame PlayStation5|x64">
+      <Configuration>ShippingGame PlayStation5</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ShippingGame PlayStation5|Win32">
+      <Configuration>ShippingGame PlayStation5</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Renderer</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win64\Win64\DebugEditor\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win32\Win32\DebugEditor\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-XboxOne\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-XboxOne\XboxOne\DebugEditor\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-XboxOneX\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-XboxOneX\XboxOneX\DebugEditor\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
+    <OutDir>..\..\..\..\Build-clang\DebugEditor-PlayStation5\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugEditor-PlayStation5\PlayStation5\DebugEditor\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win64\Win64\Development\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win32\Win32\Development\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-XboxOne\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-XboxOne\XboxOne\Development\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-XboxOneX\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-XboxOneX\XboxOneX\Development\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
+    <OutDir>..\..\..\..\Build-clang\Development-PlayStation5\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\Development-PlayStation5\PlayStation5\Development\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win64\Win64\DebugGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win32\Win32\DebugGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-XboxOne\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-XboxOne\XboxOne\DebugGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-XboxOneX\XboxOneX\DebugGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
+    <OutDir>..\..\..\..\Build-clang\DebugGame-PlayStation5\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugGame-PlayStation5\PlayStation5\DebugGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win64\Win64\ShippingGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win32\Win32\ShippingGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-XboxOne\XboxOne\ShippingGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-XboxOneX\XboxOneX\ShippingGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
+    <OutDir>..\..\..\..\Build-clang\ShippingGame-PlayStation5\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\ShippingGame-PlayStation5\PlayStation5\ShippingGame\Renderer\</IntDir>
+    <TargetName>Helix-Renderer</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-XboxOne &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugEditor-XboxOneX &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-XboxOne &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\Development-XboxOneX &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOne &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Private\D3DCommon\D3DCommon.h" />
+    <ClInclude Include="Private\Direct3D12\BackendCoreD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\ColorBufferD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\CommandAllocatorPoolD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\CommandContextD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\CommandManagerD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\ConstantBufferManagerD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\DepthBufferD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\DescriptorAllocatorD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\DescriptorHeapD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\DeviceD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\GeometryBufferManagerD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\GpuResourceD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\IndexBufferD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\LinearAllocator.h" />
+    <ClInclude Include="Private\Direct3D12\PipelineStateD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\PixelBufferD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\RootSignatureD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\SwapchainD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\TextureD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\TextureManagerD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\Utility\DDSTextureLoader.h" />
+    <ClInclude Include="Private\Direct3D12\Utility\dds.h" />
+    <ClInclude Include="Private\Direct3D12\VertexBufferD3D12.h" />
+    <ClInclude Include="Private\Direct3D12\d3dx12.h" />
+    <ClInclude Include="Private\PCH\RendererPCH.h" />
+    <ClInclude Include="Public\APIBridge\CommonFunctions.h" />
+    <ClInclude Include="Public\APIBridge\EnumTranslations.h" />
+    <ClInclude Include="Public\Color.h" />
+    <ClInclude Include="Public\CommonEnums.h" />
+    <ClInclude Include="Public\CommonStructHelpers.h" />
+    <ClInclude Include="Public\CommonStructs.h" />
+    <ClInclude Include="Public\HTexture2D.h" />
+    <ClInclude Include="Public\HTexture3D.h" />
+    <ClInclude Include="Public\IColorBuffer.h" />
+    <ClInclude Include="Public\ICommandContext.h" />
+    <ClInclude Include="Public\ICommandManager.h" />
+    <ClInclude Include="Public\IConstantBufferManager.h" />
+    <ClInclude Include="Public\IDepthBuffer.h" />
+    <ClInclude Include="Public\IDescriptorHeap.h" />
+    <ClInclude Include="Public\IDevice.h" />
+    <ClInclude Include="Public\IGeometryBufferManager.h" />
+    <ClInclude Include="Public\IGpuResource.h" />
+    <ClInclude Include="Public\IIndexBuffer.h" />
+    <ClInclude Include="Public\IPipelineState.h" />
+    <ClInclude Include="Public\IPixelBuffer.h" />
+    <ClInclude Include="Public\IRootSignature.h" />
+    <ClInclude Include="Public\ISwapChain.h" />
+    <ClInclude Include="Public\ITexture.h" />
+    <ClInclude Include="Public\ITextureManager.h" />
+    <ClInclude Include="Public\IVertexBuffer.h" />
+    <ClInclude Include="Public\ModelManager.h" />
+    <ClInclude Include="Public\RenderContext.h" />
+    <ClInclude Include="Public\RenderContextFactory.h" />
+    <ClInclude Include="Public\RenderContextFactoryD3D12.h" />
+    <ClInclude Include="Public\RendererCore.h" />
+    <ClInclude Include="Public\RendererFwd.h" />
+    <ClInclude Include="Public\RendererInitializer.h" />
+    <ClInclude Include="Public\StaticMeshGeometry.h" />
+    <ClInclude Include="Public\VertexLayouts.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\APIBridge\CommonFunctions.cpp" />
+    <ClCompile Include="Private\APIBridge\EnumTranslations.cpp" />
+    <ClCompile Include="Private\Direct3D12\BackendCoreD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\ColorBufferD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\CommandAllocatorPoolD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\CommandContextD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\CommandManagerD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\ConstantBufferManagerD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\DepthBufferD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\DescriptorAllocatorD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\DescriptorHeapD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\DeviceD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\GeometryBufferManagerD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\GpuResourceD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\IndexBufferD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\LinearAllocator.cpp" />
+    <ClCompile Include="Private\Direct3D12\PipelineStateD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\PixelBufferD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\RenderContextFactoryD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\RootSignatureD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\SwapChainD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\TextureD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\TextureManagerD3D12.cpp" />
+    <ClCompile Include="Private\Direct3D12\Utility\DDSTextureLoader.cpp" />
+    <ClCompile Include="Private\Direct3D12\VertexBufferD3D12.cpp" />
+    <ClCompile Include="Private\ICommandContext.cpp" />
+    <ClCompile Include="Private\IConstantBufferManager.cpp" />
+    <ClCompile Include="Private\IGeometryBufferManager.cpp" />
+    <ClCompile Include="Private\IRootSignature.cpp" />
+    <ClCompile Include="Private\ISwapchain.cpp" />
+    <ClCompile Include="Private\ITextureManager.cpp" />
+    <ClCompile Include="Private\ModelManager.cpp" />
+    <ClCompile Include="Private\PCH\RendererPCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Private\RenderContext.cpp" />
+    <ClCompile Include="Private\RendererCore.cpp" />
+    <ClCompile Include="Private\RendererDetail.cpp" />
+    <ClCompile Include="Private\RendererInitializer.cpp" />
+    <ClCompile Include="Private\StaticMeshGeometry.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Renderer.module.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

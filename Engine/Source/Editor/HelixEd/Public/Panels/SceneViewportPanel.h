@@ -1,0 +1,24 @@
+#pragma once
+
+#include "Panels/Panel.h"
+
+#include "IDescriptorHeap.h"
+
+
+class SceneViewportPanel : public Panel
+{
+public:
+	SceneViewportPanel();
+	virtual ~SceneViewportPanel();
+
+	virtual void Initialize() override;
+	virtual void UnInitialize() override;
+
+	virtual void Tick( float DeltaTime ) override;
+	virtual void Render( ICommandContext& CmdCtx ) override;
+
+private:
+	DescriptorHandle m_DescriptorHandle;
+	uint32 m_HandleSize = 0;
+
+};

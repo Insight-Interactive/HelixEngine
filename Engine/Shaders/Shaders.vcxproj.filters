@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Sky">
+      <UniqueIdentifier>{26D41F53-9289-9848-1B7E-921F87328F4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Utility">
+      <UniqueIdentifier>{43DDA777-AF68-153C-B879-98302484713C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Core">
+      <UniqueIdentifier>{5C97AA31-C84C-2327-5141-1DFEBDF5192B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\DeferredShading">
+      <UniqueIdentifier>{32B6DFAE-1EB0-0801-071D-9F11F3B56E6D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Private\Sky\SkyboxPass.ps.hlsl">
+      <Filter>Private\Sky</Filter>
+    </FxCompile>
+    <FxCompile Include="Private\Sky\SkyboxPass.vs.hlsl">
+      <Filter>Private\Sky</Filter>
+    </FxCompile>
+    <FxCompile Include="Private\Utility\AppSlash.ps.hlsl">
+      <Filter>Private\Utility</Filter>
+    </FxCompile>
+    <FxCompile Include="Private\Utility\ScreenAlignedQuad.vs.hlsl">
+      <Filter>Private\Utility</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.ps.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.vs.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\GenericLightPass.ps.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\GenericLightPass.vs.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Public\Core\Core.hlsli">
+      <Filter>Public\Core</Filter>
+    </None>
+    <None Include="Public\Core\LightsFwd.hlsli">
+      <Filter>Public\Core</Filter>
+    </None>
+    <None Include="Public\DeferredShading\DeferredShadingCommon.hlsli">
+      <Filter>Public\DeferredShading</Filter>
+    </None>
+    <None Include="Shaders.module.lua" />
+  </ItemGroup>
+</Project>

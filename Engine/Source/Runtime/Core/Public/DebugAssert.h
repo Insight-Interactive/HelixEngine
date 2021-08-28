@@ -1,0 +1,19 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
+#pragma once
+
+#if HE_ENABLE_ASSERTS
+#	if _MSC_VER
+#		define HE_DEBUG_BREAK __debugbreak()
+#	else
+#		define HE_DEBUG_BREAK _CrtDbgbreak()
+#	endif
+#else
+#	define HE_DEBUG_BREAK
+#endif
+
+#if HE_ENABLE_ASSERTS
+#	define HE_ASSERT(Expr) if( (Expr) != true) { HE_DEBUG_BREAK; }
+#else
+#	define HE_ASSERT(Expr)
+#endif
+

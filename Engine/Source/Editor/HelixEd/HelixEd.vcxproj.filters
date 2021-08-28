@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Direct3D12">
+      <UniqueIdentifier>{44A0E302-3084-A458-99E4-9EAB85E78EDA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\PCH">
+      <UniqueIdentifier>{0AC21F53-7677-9848-FF6B-921F6B208F4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Private\Direct3D12\HelixEdImGuiImplD3D12.h">
+      <Filter>Private\Direct3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="Private\PCH\HelixEdPCH.h">
+      <Filter>Private\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\HEditorEngine.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Panels\SceneViewportPanel.h" />
+    <ClInclude Include="Public\Panels\Panel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp">
+      <Filter>Private\Direct3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\HEditorEngine.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
+      <Filter>Private\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Panels\SceneViewportPanel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HelixEd.module.lua" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Actor">
+      <UniqueIdentifier>{08531B99-7413-97CF-3D4E-E04CA9CDDBAB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Actor\Components">
+      <UniqueIdentifier>{1D43499E-0968-981E-32B3-7DAE1E37973C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\App">
+      <UniqueIdentifier>{30881F53-9C3D-9848-2532-921F91E68E4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Engine">
+      <UniqueIdentifier>{85299AC6-71F7-8DCC-5A8B-FEF246F86931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\GameFramework">
+      <UniqueIdentifier>{373E6A8D-A3AA-2588-6C9E-BDE5D8C947F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Input">
+      <UniqueIdentifier>{FF0EB299-6BCF-2DD0-340A-774DA08972AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Jobs">
+      <UniqueIdentifier>{FD7715B7-E9DA-A45B-9260-DD117EA270DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Launch">
+      <UniqueIdentifier>{8AC80AD6-7696-FEDB-5F2A-6F024B97DA40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\PCH">
+      <UniqueIdentifier>{0AC21F53-7677-9848-FF6B-921F6B208F4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\StandaloneRenderer">
+      <UniqueIdentifier>{2F102C01-1B20-D8D1-84D9-3CF07008C76A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\StandaloneRenderer\Technique">
+      <UniqueIdentifier>{8418A49B-70FF-6593-1950-CCB00516DFF9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Windows">
+      <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Windows\Desktop">
+      <UniqueIdentifier>{034EB910-6F85-01A8-788F-65CBE44528A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Windows\Universal">
+      <UniqueIdentifier>{6286AD45-CE48-E1CF-17F9-6F5C83FAB9AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Windows\Universal\Resource">
+      <UniqueIdentifier>{B9B6548F-A5F2-57F9-0E05-70F0FA5F0014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\World">
+      <UniqueIdentifier>{B7F9AF9A-23BA-2BD1-ECF4-744E587470AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Actor">
+      <UniqueIdentifier>{8CC7D266-782A-620B-21B0-9AC10DF22D8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Actor\Components">
+      <UniqueIdentifier>{215D6C8F-8D94-B426-969E-184A0255DB1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\App">
+      <UniqueIdentifier>{B40BA89C-A0C3-E9E9-09CB-C245F5A184DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Engine">
+      <UniqueIdentifier>{892E404B-F5EE-BB81-BE29-05FF2AA9005E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Engine\Event">
+      <UniqueIdentifier>{9AB2DA56-0614-B864-8F81-FE16FBE1EE23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\GameFramework">
+      <UniqueIdentifier>{BBF67F95-A785-095F-50A4-1D5A3C121A05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Input">
+      <UniqueIdentifier>{83836967-6FE6-F80B-186C-31C204AEC48E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Jobs">
+      <UniqueIdentifier>{016CAE31-6D21-2727-F615-21FE62CA1D2B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\StandaloneRenderer">
+      <UniqueIdentifier>{33BB7DC7-9F7D-B151-E82D-40DE542F8A2F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\StandaloneRenderer\Technique">
+      <UniqueIdentifier>{8858BA3D-F411-25E8-7D71-3FC2E929DB57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\World">
+      <UniqueIdentifier>{3B6E6768-27D1-F60C-D056-2FC3BC98C28F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Private\PCH\EnginePCH.h">
+      <Filter>Private\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\AActor.h">
+      <Filter>Public\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\APawn.h">
+      <Filter>Public\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\APlayerCharacter.h">
+      <Filter>Public\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\Components\HActorComponent.h">
+      <Filter>Public\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\Components\HCameraComponent.h">
+      <Filter>Public\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\Components\HControllerComponent.h">
+      <Filter>Public\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Actor\Components\HStaticMeshComponent.h">
+      <Filter>Public\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\App\FApp.h">
+      <Filter>Public\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\EngineDefines.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\EngineMacros.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Event\EngineEvent.h">
+      <Filter>Public\Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Event\Event.h">
+      <Filter>Public\Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Event\EventEmitter.h">
+      <Filter>Public\Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\HEngine.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\HelixEngine.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\SplashScreen.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\ViewportContext.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Window.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\GameInstance.h">
+      <Filter>Public\GameFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\GamepadEvents.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\InputDispatcher.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\InputEnums.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\KeyEvent.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\MouseEvent.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\RawInput.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Jobs\ThreadPool.h">
+      <Filter>Public\Jobs</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\Common.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\ConstantBufferStructures.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\FRenderPass.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\GeometryGenerator.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\LightManager.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\Material.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\MaterialManager.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\ShaderRegisters.h">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\Technique\DeferredShadingTech.h">
+      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\Technique\PostProcessUber.h">
+      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StandaloneRenderer\Technique\SkyPass.h">
+      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\World\CameraManager.h">
+      <Filter>Public\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\World\HLevel.h">
+      <Filter>Public\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\World\HWorld.h">
+      <Filter>Public\World</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\Actor\AActor.cpp">
+      <Filter>Private\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\APawn.cpp">
+      <Filter>Private\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\APlayerCharacter.cpp">
+      <Filter>Private\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\Components\HActorComponent.cpp">
+      <Filter>Private\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\Components\HCameraComponent.cpp">
+      <Filter>Private\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\Components\HControllerComponent.cpp">
+      <Filter>Private\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Actor\Components\HStaticMeshComponent.cpp">
+      <Filter>Private\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\App\FApp.cpp">
+      <Filter>Private\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\EngineEvent.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\Events.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\HEngine.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\HelixEngine.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\SplashScreen.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\ViewportContext.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\GameInstance.cpp">
+      <Filter>Private\GameFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\InputDispatcher.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\KeyEvent.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\MouseEvent.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\RawInput.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Jobs\ThreadPool.cpp">
+      <Filter>Private\Jobs</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Launch\Launch.cpp">
+      <Filter>Private\Launch</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\PCH\EnginePCH.cpp">
+      <Filter>Private\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\Common.cpp">
+      <Filter>Private\StandaloneRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\LightManager.cpp">
+      <Filter>Private\StandaloneRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\MaterialManager.cpp">
+      <Filter>Private\StandaloneRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\Technique\DeferredShadingTech.cpp">
+      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\Technique\PostProcessUber.cpp">
+      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StandaloneRenderer\Technique\SkyPass.cpp">
+      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Windows\Desktop\WindowWinDesktop.cpp">
+      <Filter>Private\Windows\Desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Windows\Universal\WindowUniversal.cpp">
+      <Filter>Private\Windows\Universal</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\World\CameraManager.cpp">
+      <Filter>Private\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\World\HLevel.cpp">
+      <Filter>Private\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\World\HWorld.cpp">
+      <Filter>Private\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Public\StandaloneRenderer\GeometryGenerator.cpp">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Public\StandaloneRenderer\Material.cpp">
+      <Filter>Public\StandaloneRenderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine.module.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Private\Windows\Universal\Resource\Package.appxmanifest">
+      <Filter>Private\Windows\Universal\Resource</Filter>
+    </AppxManifest>
+  </ItemGroup>
+</Project>
