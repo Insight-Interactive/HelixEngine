@@ -428,6 +428,20 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		pWindow->EmitEvent( e );
 		return 0;
 	}
+	case WM_MOUSEWHEEL:
+	{
+		float YOffset = GET_WHEEL_DELTA_WPARAM( wParam ) / 120.0f;
+		MouseWheelScrolledEvent e( 0.f, YOffset );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
+	case WM_MOUSEHWHEEL:
+	{
+		float XOffset = GET_WHEEL_DELTA_WPARAM( wParam ) / 120.0f;
+		MouseWheelScrolledEvent e( XOffset, 0.f );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
 	// ------------------------
 	// Key Messages
 	// ------------------------

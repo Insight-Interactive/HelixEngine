@@ -60,11 +60,11 @@ private:
 };
 
 
-class MouseScrolledEvent : public Event, public InputEvent
+class MouseWheelScrolledEvent : public Event, public InputEvent
 {
 public:
-	MouseScrolledEvent( float xOffset, float yOffset, DigitalInput KeyMapCode, EInputEvent EventType )
-		: InputEvent( KeyMapCode, EventType )
+	MouseWheelScrolledEvent( float xOffset, float yOffset )
+		: InputEvent( AnalogMouseScroll, IE_Moved )
 		, m_XOffset( xOffset )
 		, m_YOffset( yOffset ) 
 	{

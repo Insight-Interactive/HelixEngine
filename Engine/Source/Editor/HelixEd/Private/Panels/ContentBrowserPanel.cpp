@@ -60,10 +60,11 @@ void ContentBrowserPanel::TraverseFolder( const TChar* Folder )
 	{
 		do
 		{
-			if (!TCharStrCmp( Folder, TEXT( "." ) ) || !TCharStrCmp( Folder, TEXT( ".." ) ))
-				continue;
-
 			String FileName = StringHelper::UTF16ToUTF8( File.cFileName );
+			if(FileName == "." || FileName == ".." )
+				continue;
+			//if (!TCharStrCmp( Folder, TEXT( "." ) ) || !TCharStrCmp( Folder, TEXT( ".." ) ))
+
 			if (File.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
 				const ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;

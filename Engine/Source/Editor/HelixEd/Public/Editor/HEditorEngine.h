@@ -14,10 +14,19 @@ class KeyReleasedEvent;
 class MousePositionMovedEvent;
 class MouseButtonPressedEvent;
 class MouseButtonReleasedEvent;
+class MouseWheelScrolledEvent;
 class WindowResizeEvent;
 class WindowLostFocusEvent;
 class WindowFocusEvent;
 class WindowFileDropEvent;
+
+struct EditorPreferences
+{
+	bool EnableDarkMode;
+	float VerticalScrollSpeedMultiplier;
+	float HorizontalScrollSpeedMultiplier;
+};
+
 
 class HEditorEngine : public HEngine
 {
@@ -43,6 +52,7 @@ protected:
 	bool OnMousePositionMoved( MousePositionMovedEvent& e );
 	bool OnMouseButtonPressed( MouseButtonPressedEvent& e );
 	bool OnMouseButtonReleased( MouseButtonReleasedEvent& e );
+	bool OnMouseWheelScrolled( MouseWheelScrolledEvent& e );
 	bool OnWindowResized( WindowResizeEvent& e );
 	bool OnWindowFocus( WindowFocusEvent& e );
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
@@ -57,6 +67,7 @@ protected:
 	int32 TranslateMouseButton( DigitalInput MouseKeycode );
 
 protected:
+	EditorPreferences m_UserPreferences;
 	std::vector<Panel*> m_EditorPanels;
 
 	MenuBarPanel m_MenuBar;

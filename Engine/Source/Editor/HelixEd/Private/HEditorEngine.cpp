@@ -59,7 +59,12 @@ void HEditorEngine::Startup()
 	IO.ConfigDockingAlwaysTabBar = true;
 	IO.Fonts->AddFontFromFileTTF( "../../Engine/Content/Fonts/Cousine-Regular.ttf", 15.0f );
 
-	EnableDarkMode( true );
+	// TODO: Get this from a editor preferences ini
+	m_UserPreferences.EnableDarkMode = true;
+	m_UserPreferences.VerticalScrollSpeedMultiplier = 0.1f;
+	m_UserPreferences.HorizontalScrollSpeedMultiplier = 0.1f;
+
+	EnableDarkMode( m_UserPreferences.EnableDarkMode );
 
 	ImGuiStyle& Style = ImGui::GetStyle();
 	Style.WindowRounding = 0.0f;
@@ -253,6 +258,7 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<MousePositionMovedEvent>( this, &HEditorEngine::OnMousePositionMoved );
 	Dispatcher.Dispatch<MouseButtonPressedEvent>( this, &HEditorEngine::OnMouseButtonPressed );
 	Dispatcher.Dispatch<MouseButtonReleasedEvent>( this, &HEditorEngine::OnMouseButtonReleased );
+	Dispatcher.Dispatch<MouseWheelScrolledEvent>( this, &HEditorEngine::OnMouseWheelScrolled );
 
 	// Window
 	Dispatcher.Dispatch<WindowResizeEvent>( this, &HEditorEngine::OnWindowResized );
@@ -298,6 +304,19 @@ bool HEditorEngine::OnMouseButtonReleased( MouseButtonReleasedEvent& e )
 {
 	ImGuiIO& io = ImGui::GetIO();
 	io.MouseDown[TranslateMouseButton( e.GetKeyCode() )] = false;
+
+	return false;
+}
+
+bool HEditorEngine::OnMouseWheelScrolled( MouseWheelScrolledEvent& e )
+{
+	ImGuiIO& io = ImGui::GetIO();
+	float XOffset = e.GetXOffset() * m_UserPreferences.VerticalScrollSpeedMultiplier;
+	float YOffset = e.GetYOffset() * m_UserPreferences.HorizontalScrollSpeedMultiplier;
+	if(XOffset > 0.f)
+		io.MouseWheelH = XOffset;
+	else	
+		io.MouseWheel = YOffset;
 
 	return false;
 }
