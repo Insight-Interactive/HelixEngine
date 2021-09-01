@@ -9,7 +9,7 @@
 class RENDER_API ManagedTextureD3D12 : public IManagedTexture, public TextureD3D12
 {
 public:
-	ManagedTextureD3D12(const std::string& FileName)
+	ManagedTextureD3D12(const String& FileName)
 		: IManagedTexture(FileName)
 	{
 	}
@@ -33,16 +33,16 @@ public:
 		UnInitialize();
 	}
 
-	virtual TextureRef LoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB) override;
+	virtual TextureRef LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) override;
 
 	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 
 private:
-	virtual IManagedTexture* FindOrLoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB) override;
-	virtual void DestroyTexture(const std::string& Key) override;
+	virtual IManagedTexture* FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) override;
+	virtual void DestroyTexture(const String& Key) override;
 
 private:
-	std::map<std::string, std::unique_ptr<ManagedTextureD3D12>> m_TextureCache;
+	std::map<String, std::unique_ptr<ManagedTextureD3D12>> m_TextureCache;
 	TextureD3D12 m_DefaultTextures[DT_NumDefaultTextures];
 };

@@ -41,9 +41,10 @@ project ("Renderer")
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 
+		heGetEngineRuntimeModulePublicDir ( "Engine" ),
+
 		-- Third Party 
 		heGetThirdPartyModule( "WinPixEventRuntime" ) .. "Include/",
-		heGetThirdPartyModule( "OpenFBX" ) .. "src/",
 	}
 
 	links
@@ -72,10 +73,10 @@ project ("Renderer")
 			"R_DEBUG=1",
 		}
 	
-	filter { "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
+	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
 		postbuildcommands
 		{
-			"%{dllCopyCommands.PIXWinDesktopx64}"
+			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua
 		}
 
 

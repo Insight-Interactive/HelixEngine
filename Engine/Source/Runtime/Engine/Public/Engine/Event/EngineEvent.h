@@ -62,3 +62,25 @@ public:
 	EVENT_CLASS_TYPE( ET_WindowLostFocus )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
+
+
+class WindowFileDropEvent : public Event
+{
+public:
+	WindowFileDropEvent( const WChar* FilePath )
+		: m_FilePath( FilePath )
+	{
+	}
+	virtual ~WindowFileDropEvent()
+	{
+	}
+
+	const WString& GetFileName() const { return m_FilePath; }
+	
+
+	EVENT_CLASS_TYPE( ET_WindowFileDrop )
+		EVENT_CLASS_CATEGORY( EC_Window )
+
+protected:
+	WString m_FilePath;
+};

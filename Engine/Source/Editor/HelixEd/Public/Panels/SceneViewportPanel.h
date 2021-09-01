@@ -19,6 +19,6 @@ public:
 
 private:
 	DescriptorHandle m_DescriptorHandle;
-	uint32 m_HandleSize = 0;
+	uint32 m_HandleSize;
 
 };

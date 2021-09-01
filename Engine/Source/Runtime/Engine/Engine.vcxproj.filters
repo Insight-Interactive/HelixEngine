@@ -4,20 +4,23 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\Actor">
-      <UniqueIdentifier>{08531B99-7413-97CF-3D4E-E04CA9CDDBAB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Private\Actor\Components">
-      <UniqueIdentifier>{1D43499E-0968-981E-32B3-7DAE1E37973C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Private\App">
       <UniqueIdentifier>{30881F53-9C3D-9848-2532-921F91E68E4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\AssetRegistry">
+      <UniqueIdentifier>{A8CCCACE-1439-86C9-DD2C-1E274958A831}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Engine">
       <UniqueIdentifier>{85299AC6-71F7-8DCC-5A8B-FEF246F86931}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\GameFramework">
       <UniqueIdentifier>{373E6A8D-A3AA-2588-6C9E-BDE5D8C947F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\GameFramework\Actor">
+      <UniqueIdentifier>{7FBFD60B-EBCC-04F2-74B3-00DDE0BFD0A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\GameFramework\Actor\Components">
+      <UniqueIdentifier>{3497A972-20E9-8062-0908-BE72F5F8994B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Input">
       <UniqueIdentifier>{FF0EB299-6BCF-2DD0-340A-774DA08972AC}</UniqueIdentifier>
@@ -31,11 +34,11 @@
     <Filter Include="Private\PCH">
       <UniqueIdentifier>{0AC21F53-7677-9848-FF6B-921F6B208F4C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\StandaloneRenderer">
-      <UniqueIdentifier>{2F102C01-1B20-D8D1-84D9-3CF07008C76A}</UniqueIdentifier>
+    <Filter Include="Private\Renderer">
+      <UniqueIdentifier>{A6424B30-923B-6A82-BB6D-4F07A7C5498E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\StandaloneRenderer\Technique">
-      <UniqueIdentifier>{8418A49B-70FF-6593-1950-CCB00516DFF9}</UniqueIdentifier>
+    <Filter Include="Private\Renderer\Technique">
+      <UniqueIdentifier>{BB0B0297-A71B-AE67-10D5-1286FC039D00}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
@@ -55,14 +58,11 @@
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\Actor">
-      <UniqueIdentifier>{8CC7D266-782A-620B-21B0-9AC10DF22D8E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public\Actor\Components">
-      <UniqueIdentifier>{215D6C8F-8D94-B426-969E-184A0255DB1F}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Public\App">
       <UniqueIdentifier>{B40BA89C-A0C3-E9E9-09CB-C245F5A184DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\AssetRegistry">
+      <UniqueIdentifier>{2C85E0D6-1814-6AA0-C132-7E9BADA07A46}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Engine">
       <UniqueIdentifier>{892E404B-F5EE-BB81-BE29-05FF2AA9005E}</UniqueIdentifier>
@@ -73,17 +73,23 @@
     <Filter Include="Public\GameFramework">
       <UniqueIdentifier>{BBF67F95-A785-095F-50A4-1D5A3C121A05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\GameFramework\Actor">
+      <UniqueIdentifier>{03CB5D9C-EFDA-096D-5894-6E8B44C3F805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\GameFramework\Actor\Components">
+      <UniqueIdentifier>{38E84FF3-A4AC-4EE3-6D12-7FADD995EA18}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public\Input">
       <UniqueIdentifier>{83836967-6FE6-F80B-186C-31C204AEC48E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Jobs">
       <UniqueIdentifier>{016CAE31-6D21-2727-F615-21FE62CA1D2B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\StandaloneRenderer">
-      <UniqueIdentifier>{33BB7DC7-9F7D-B151-E82D-40DE542F8A2F}</UniqueIdentifier>
+    <Filter Include="Public\Renderer">
+      <UniqueIdentifier>{AA988676-1624-F43A-1F35-772F8B3F503B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\StandaloneRenderer\Technique">
-      <UniqueIdentifier>{8858BA3D-F411-25E8-7D71-3FC2E929DB57}</UniqueIdentifier>
+    <Filter Include="Public\Renderer\Technique">
+      <UniqueIdentifier>{BFB6535D-2B79-87E7-7429-1674E02A60C5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\World">
       <UniqueIdentifier>{3B6E6768-27D1-F60C-D056-2FC3BC98C28F}</UniqueIdentifier>
@@ -93,29 +99,20 @@
     <ClInclude Include="Private\PCH\EnginePCH.h">
       <Filter>Private\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Actor\AActor.h">
-      <Filter>Public\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\APawn.h">
-      <Filter>Public\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\APlayerCharacter.h">
-      <Filter>Public\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\Components\HActorComponent.h">
-      <Filter>Public\Actor\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\Components\HCameraComponent.h">
-      <Filter>Public\Actor\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\Components\HControllerComponent.h">
-      <Filter>Public\Actor\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Actor\Components\HStaticMeshComponent.h">
-      <Filter>Public\Actor\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Public\App\FApp.h">
       <Filter>Public\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\AssetDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\HAsset.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\HMeshAsset.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\MeshDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\EngineDefines.h">
       <Filter>Public\Engine</Filter>
@@ -147,6 +144,30 @@
     <ClInclude Include="Public\Engine\Window.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\AActor.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\APawn.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\APlayerCharacter.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HActorComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HCameraComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HControllerComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HSceneComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HStaticMeshComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\GameInstance.h">
       <Filter>Public\GameFramework</Filter>
     </ClInclude>
@@ -171,38 +192,38 @@
     <ClInclude Include="Public\Jobs\ThreadPool.h">
       <Filter>Public\Jobs</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\Common.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\Common.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\ConstantBufferStructures.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\ConstantBufferStructures.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\FRenderPass.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\FRenderPass.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\GeometryGenerator.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\GeometryGenerator.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\LightManager.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\LightManager.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\Material.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\Material.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\MaterialManager.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\MaterialManager.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\ShaderRegisters.h">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClInclude Include="Public\Renderer\ShaderRegisters.h">
+      <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\Technique\DeferredShadingTech.h">
-      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    <ClInclude Include="Public\Renderer\Technique\DeferredShadingTech.h">
+      <Filter>Public\Renderer\Technique</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\Technique\PostProcessUber.h">
-      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    <ClInclude Include="Public\Renderer\Technique\PostProcessUber.h">
+      <Filter>Public\Renderer\Technique</Filter>
     </ClInclude>
-    <ClInclude Include="Public\StandaloneRenderer\Technique\SkyPass.h">
-      <Filter>Public\StandaloneRenderer\Technique</Filter>
+    <ClInclude Include="Public\Renderer\Technique\SkyPass.h">
+      <Filter>Public\Renderer\Technique</Filter>
     </ClInclude>
     <ClInclude Include="Public\World\CameraManager.h">
       <Filter>Public\World</Filter>
@@ -215,29 +236,17 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\Actor\AActor.cpp">
-      <Filter>Private\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\APawn.cpp">
-      <Filter>Private\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\APlayerCharacter.cpp">
-      <Filter>Private\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\Components\HActorComponent.cpp">
-      <Filter>Private\Actor\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\Components\HCameraComponent.cpp">
-      <Filter>Private\Actor\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\Components\HControllerComponent.cpp">
-      <Filter>Private\Actor\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Actor\Components\HStaticMeshComponent.cpp">
-      <Filter>Private\Actor\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Private\App\FApp.cpp">
       <Filter>Private\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\HMeshAsset.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\EngineEvent.cpp">
       <Filter>Private\Engine</Filter>
@@ -256,6 +265,30 @@
     </ClCompile>
     <ClCompile Include="Private\Engine\ViewportContext.cpp">
       <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\AActor.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\APawn.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\APlayerCharacter.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HActorComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HCameraComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HControllerComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HSceneComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HStaticMeshComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\GameInstance.cpp">
       <Filter>Private\GameFramework</Filter>
@@ -281,23 +314,23 @@
     <ClCompile Include="Private\PCH\EnginePCH.cpp">
       <Filter>Private\PCH</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\Common.cpp">
-      <Filter>Private\StandaloneRenderer</Filter>
+    <ClCompile Include="Private\Renderer\Common.cpp">
+      <Filter>Private\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\LightManager.cpp">
-      <Filter>Private\StandaloneRenderer</Filter>
+    <ClCompile Include="Private\Renderer\LightManager.cpp">
+      <Filter>Private\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\MaterialManager.cpp">
-      <Filter>Private\StandaloneRenderer</Filter>
+    <ClCompile Include="Private\Renderer\MaterialManager.cpp">
+      <Filter>Private\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\Technique\DeferredShadingTech.cpp">
-      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp">
+      <Filter>Private\Renderer\Technique</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\Technique\PostProcessUber.cpp">
-      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp">
+      <Filter>Private\Renderer\Technique</Filter>
     </ClCompile>
-    <ClCompile Include="Private\StandaloneRenderer\Technique\SkyPass.cpp">
-      <Filter>Private\StandaloneRenderer\Technique</Filter>
+    <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp">
+      <Filter>Private\Renderer\Technique</Filter>
     </ClCompile>
     <ClCompile Include="Private\Windows\Desktop\WindowWinDesktop.cpp">
       <Filter>Private\Windows\Desktop</Filter>
@@ -314,11 +347,11 @@
     <ClCompile Include="Private\World\HWorld.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
-    <ClCompile Include="Public\StandaloneRenderer\GeometryGenerator.cpp">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
+      <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Public\StandaloneRenderer\Material.cpp">
-      <Filter>Public\StandaloneRenderer</Filter>
+    <ClCompile Include="Public\Renderer\Material.cpp">
+      <Filter>Public\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

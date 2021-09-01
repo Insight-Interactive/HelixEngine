@@ -19,6 +19,9 @@ public:
 
 	void EndFrame();
 
+	ViewPort& GetViewport();
+	Rect& GetScissorRect();
+
 protected:
 	ViewPort m_ViewPort;
 	Rect m_ScissorRect;
@@ -46,4 +49,14 @@ protected:
 inline void SplashScreen::EndFrame()
 {
 	PresentOneFrame();
+}
+
+inline ViewPort& SplashScreen::GetViewport()
+{
+	return m_ViewPort;
+}
+
+inline Rect& SplashScreen::GetScissorRect()
+{
+	return m_ScissorRect;
 }

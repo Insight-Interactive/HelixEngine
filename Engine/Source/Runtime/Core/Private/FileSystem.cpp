@@ -8,8 +8,8 @@
 {
 	// Set the working directory of the application no matter what environment we are running in.
 	TChar Path[HE_MAX_PATH];
-	System::GetWorkingDirectory(HE_MAX_PATH, Path);
-	System::SetWorkingDirectory(Path);
+	System::GetWorkingDirectory( HE_MAX_PATH, Path );
+	System::SetWorkingDirectory( Path );
 	
 	return true;
 }

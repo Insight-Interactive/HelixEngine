@@ -35,6 +35,7 @@ public:
 		uint32 Height;
 		bool bHasTitleBar;
 		bool bShowImmediate;
+		bool bAllowDropFiles;
 		Window* pParent;
 
 		Description()
@@ -73,6 +74,8 @@ public:
 	void SetWindowMode( EWindowMode NewMode );
 	void SetParent( Window* pParent );
 	bool SetTitle( const TChar* NewTitle );
+	bool DoesAllowFileDrops();
+	void AllowFileDrops( bool bAllow );
 	uint32 GetWidth() const;
 	uint32 GetHeight() const;
 	FVector2 GetDimensions() const;
@@ -111,6 +114,11 @@ protected:
 //
 // Inline function implementations
 //
+
+inline bool Window::DoesAllowFileDrops()
+{
+	return m_Desc.bAllowDropFiles;
+}
 
 inline uint32 Window::GetWidth() const
 {

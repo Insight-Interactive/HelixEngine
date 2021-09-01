@@ -108,6 +108,11 @@ bool Window::SetTitle(const TChar* NewTitle)
 
 }
 
+void Window::AllowFileDrops( bool bAllow )
+{
+	m_Desc.bAllowDropFiles = bAllow;
+}
+
 IColorBuffer* Window::GetRenderSurface()
 {
 	return m_pSwapChain->GetColorBufferForCurrentFrame();

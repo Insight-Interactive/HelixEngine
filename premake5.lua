@@ -19,19 +19,17 @@ workspace ("HelixEngine")
 
 	configurations
 	{
-		-- Debug symbols for engine activated. Optimal configuration for
+		-- Debug symbols for all engine modules activated. Optimal configuration for
 		-- adding and testing new engine features.
 		"DebugEditor",
 
-		-- Debug symbols for engine activated and able to open
-		-- projects and edit worlds.
+		-- Debug symbols for engine and game activated.
 		"Development",
 		
-		-- Optimized engine code with debug symbols for game code.
-		-- Builds a standalone exe that can be luanched, and the game played.
+		-- Optimized engine code with debug symbols for game code only.
 		"DebugGame",
 
-		-- All engine and game code optomizations applied.
+		-- All engine and game code optimizations applied.
 		-- Builds a standalone exe that is shipped to the client.
 		"ShippingGame",
 	}

@@ -17,7 +17,6 @@ struct DataBlob
 public:
 	DataBlob()
 	{
-		m_ByteArray = std::make_shared<TDynamicArray<uint8>>();
 	}
 	~DataBlob() = default;
 
@@ -27,17 +26,17 @@ public:
 	}
 	inline void Invalidate()
 	{
-		m_ByteArray.reset();
+		m_ByteArray.Reset();
 		m_ByteArray = NULL;
 		m_DataSize = kInvalidDataSize;
 	}
 	inline TDynamicArray<uint8>* operator->()
 	{
-		return m_ByteArray.get();
+		return m_ByteArray.Get();
 	}
 	inline uint8* GetBufferPointer()
 	{
-		return m_ByteArray.get()->Data();
+		return m_ByteArray.Get()->Data();
 	}
 	inline size_t GetDataSize() const
 	{

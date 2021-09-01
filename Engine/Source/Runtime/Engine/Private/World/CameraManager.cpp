@@ -3,7 +3,7 @@
 #include "World/CameraManager.h"
 
 #include "Engine/ViewportContext.h"
-#include "Actor/Components/HCameraComponent.h"
+#include "GameFramework/Actor/Components/HCameraComponent.h"
 
 
 CameraManager::CameraManager( HWorld* pWorld )
@@ -28,10 +28,6 @@ void CameraManager::Tick( float DeltaTime )
 void CameraManager::CacheCamera( HCameraComponent* pCamera )
 {
 	HE_ASSERT( pCamera != NULL ); // Trying to cache a null camera.
-
-	FVector2 WindowDims = m_pWorld->GetOwningViewport()->GetWindow().GetDimensions();
-	pCamera->SetProjectionValues( pCamera->GetFieldOfView(), WindowDims.x, WindowDims.y, pCamera->GetNearZ(), pCamera->GetFarZ() );
-
 	m_Cameras.push_back( pCamera );
 }
 

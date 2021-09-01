@@ -6,7 +6,7 @@
 #include "CoreFwd.h"
 
 /*
-	Valid log categories for HE_LOG
+	Valid log categories for Logging instance.
 */
 enum class ELogSeverity
 {
@@ -78,7 +78,7 @@ const TChar* Logger::GetLoggerName()
 }
 
 #if HE_ENABLE_LOGS
-#	define CreateLogger(Logger, Name) (Logger).Initialize( TEXT(Name) )
+#	define CreateLogger(LoggerInstance, Name) ( LoggerInstance ).Initialize( TEXT(Name) )
 #else
-#	define CreateLogger(Logger, Name)
+#	define CreateLogger(LoggerInstance, Name)
 #endif

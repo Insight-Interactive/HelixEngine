@@ -96,7 +96,7 @@ void Window::Create( const Window::Description& Desc )
 	HWND hParent = m_Desc.pParent ? (HWND)m_Desc.pParent->GetNativeWindow() : NULL;
 
 	m_hWindowHandle = ::CreateWindowEx(
-		NULL,					// Window Styles
+		NULL,					// Window ExStyles
 		m_WindowClassName,		// Window Class
 		m_Desc.Title,			// Window Title
 		m_WindowStyle,			// Window Style
@@ -114,11 +114,12 @@ void Window::Create( const Window::Description& Desc )
 
 	if (m_Desc.bHasTitleBar)
 		SetTitle( m_Desc.Title );
-	//else
-	//	SetWindowLong(m_hWindowHandle, GWL_STYLE, 0);
 
 	if (Desc.bShowImmediate)
 		Show();
+
+	if (m_Desc.bAllowDropFiles)
+		DragAcceptFiles( m_hWindowHandle, TRUE );
 
 	CreateSwapChain();
 
@@ -217,6 +218,12 @@ bool Window::SetTitle( const TChar* NewTitle )
 	}
 
 	return ::SetWindowText( m_hWindowHandle, NewTitle );
+}
+
+void Window::AllowFileDrops( bool bAllow )
+{
+	m_Desc.bAllowDropFiles = bAllow;
+	DragAcceptFiles( m_hWindowHandle, (BOOL)bAllow );
 }
 
 IColorBuffer* Window::GetRenderSurface()
@@ -329,6 +336,19 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 	// ------------------------
 	// Window Events
 	// ------------------------
+#if HE_WITH_EDITOR
+	case WM_DROPFILES:
+	{
+		UINT iFile = 0;
+		WCHAR lpszFile[MAX_PATH];
+		UINT cch = MAX_PATH;
+		UINT ret = DragQueryFile( (HDROP)wParam, iFile, lpszFile, cch );
+		
+		WindowFileDropEvent e( lpszFile );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
+#endif // HE_WITH_EDITOR
 	case WM_EXITSIZEMOVE:
 	{
 		// Get the new window dimensions.

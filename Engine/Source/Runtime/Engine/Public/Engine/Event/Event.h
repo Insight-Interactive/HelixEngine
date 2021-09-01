@@ -11,7 +11,7 @@ enum class EEventType
 {
 	ET_None = 0,
 	// Window
-	ET_WindowClose, ET_WindowResize, ET_WindowFocus, ET_WindowLostFocus, ET_ToggleWindowFullScreen, 
+	ET_WindowClose, ET_WindowResize, ET_WindowFocus, ET_WindowLostFocus, ET_ToggleWindowFullScreen, ET_WindowFileDrop,
 	// Application
 	ET_AppBeginPlay, ET_AppEndPlay, ET_AppTick, ET_AppRender, ET_AppSuspending, ET_AppResuming,
 	// Input

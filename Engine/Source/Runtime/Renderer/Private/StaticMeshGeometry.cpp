@@ -8,7 +8,7 @@
 #include "IVertexBuffer.h"
 
 
-void StaticMeshGeometry::Create(void* pVertexData, uint32 VertexDataSize, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices)
+void StaticMeshGeometry::Create(void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices)
 {
 	// Create the vertex buffer
 	m_DrawArgs.NumVerts = NumVerticies;
@@ -16,7 +16,7 @@ void StaticMeshGeometry::Create(void* pVertexData, uint32 VertexDataSize, uint32
 	// Init Vertex buffer.
 	HE_ASSERT(m_DrawArgs.VertexBufferHandle != HE_INVALID_VERTEX_BUFFER_HANDLE); // Vertex buffer was not registered properly with geometry buffer manager.
 	IVertexBuffer& Buffer = GGeometryManager->GetVertexBufferByUID(m_DrawArgs.VertexBufferHandle);
-	Buffer.Create(TEXT("Vertex Buffer"), VertexDataSize, VertexSize, pVertexData);
+	Buffer.Create(TEXT("Vertex Buffer"), NumVerticies * VertexSize, VertexSize, pVertexData);
 
 	// Create the index buffer
 	m_DrawArgs.NumIndices = NumIndices;

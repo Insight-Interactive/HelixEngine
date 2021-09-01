@@ -17,6 +17,7 @@
 
 #if defined HE_WINDOWS
 #	include <Windows.h>
+#	include <shellapi.h>
 #	include <strsafe.h>
 #	include <d3d12.h>
 

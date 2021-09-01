@@ -14,13 +14,14 @@
 #include "Engine/Event/EngineEvent.h"
 
 #include "ITextureManager.h"
-#include "StandaloneRenderer/Technique/DeferredShadingTech.h"
+#include "Renderer/Technique/DeferredShadingTech.h"
 #include "System.h"
 #include "StringHelper.h"
 #include "Jobs/ThreadPool.h"
 
 
-HEditorEngine::HEditorEngine()
+HEditorEngine::HEditorEngine( CommandLine& CmdLine )
+	: HEngine( CmdLine )
 {
 }
 
@@ -28,9 +29,23 @@ HEditorEngine::~HEditorEngine()
 {
 }
 
+void HEditorEngine::PreStartup()
+{
+	HEngine::PreStartup();
+
+	// Initialize the console window.
+	ConsoleWindowDesc WindowDesc;
+	WindowDesc.CanClose = false;
+	WindowDesc.BufferDims = FVector2( 700, 320 );
+	WindowDesc.WindowDims = FVector2( 170, 42 );
+	WindowDesc.DefaultForegroundColor = CC_White;
+	m_ConsoleWindow.Create( WindowDesc );
+}
+
 void HEditorEngine::Startup()
 {
 	HEngine::Startup();
+
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -55,8 +70,7 @@ void HEditorEngine::Startup()
 	HE_ASSERT( ImGuiImplWin32Succeeded );
 	SetupImGuiRenderBackend();
 
-	m_SceneViewport.Initialize();
-	m_EditorPanels.push_back( &m_SceneViewport );
+	SetupEditorPanels();
 }
 
 void HEditorEngine::SetupImGuiRenderBackend()
@@ -77,12 +91,12 @@ void HEditorEngine::SetupImGuiRenderBackend()
 		HE_ASSERT( ImGuiD3D12Succeeded );
 		break;
 	}
-	default: 
+	default:
 		HE_ASSERT( false );
 	}
 }
 
-void StandaloneGameLaunch(void*)
+void StandaloneGameLaunch( void* )
 {
 	TChar Path[HE_MAX_PATH];
 	System::GetWorkingDirectory( sizeof( Path ), Path );
@@ -101,32 +115,10 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	ImGui::NewFrame();
 	ImGui::DockSpaceOverViewport( 0, ImGuiDockNodeFlags_PassthruCentralNode );
 
+	// Update the client world and viewport.
 	GetClientViewport().Update( DeltaTime );
 	GetClientViewport().Render();
 
-	static bool ShowDemoWindow = true;
-	ImGui::ShowDemoWindow( &ShowDemoWindow );
-
-
-	if (ImGui::BeginMainMenuBar())
-	{
-		if (ImGui::BeginMenu( "File" ))
-		{
-			//ShowExampleMenuFile();
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu( "Edit" ))
-		{
-			if (ImGui::MenuItem( "Undo", "CTRL+Z" )) {}
-			if (ImGui::MenuItem( "Redo", "CTRL+Y", false, false )) {}  // Disabled item
-			ImGui::Separator();
-			if (ImGui::MenuItem( "Cut", "CTRL+X" )) {}
-			if (ImGui::MenuItem( "Copy", "CTRL+C" )) {}
-			if (ImGui::MenuItem( "Paste", "CTRL+V" )) {}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMainMenuBar();
-	}
 
 	ImGui::Begin( "Hello From HelixEd!" );
 	{
@@ -151,57 +143,13 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	}
 	ImGui::End();
 
+
 	ICommandContext& Context = ICommandContext::Begin( TEXT( "Setup Editor Display" ) );
 	{
-		for(size_t i = 0; i < m_EditorPanels.size(); ++i)
+		for (size_t i = 0; i < m_EditorPanels.size(); ++i)
 			m_EditorPanels[i]->Render( Context );
 	}
 	Context.End();
-
-	//ImGui::Begin( "Scene Viewport" );
-	//{
-
-	//	//if (ImGui::IsWindowFocused())
-	//	{
-	//		//GetMainClientViewPort().GetInputDispatcher()->GetInputSureyor().AcquireMouse();
-	//		ICommandContext& UIContext = ICommandContext::Begin( TEXT( "Setup Editor Display" ) );
-	//		{
-	//			UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
-	//			ColorBufferD3D12* Buffer = GetClientViewport().GetPreDisplayBuffer()->As<ColorBufferD3D12*>();
-
-	//			ID3D12Device* pDevice = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
-	//			static bool Created = false;
-	//			uint32 HandleSize = 0;
-	//			if (!Created)
-	//			{
-	//				Created = true;
-	//				m_DescriptorHandle = GTextureHeap->Alloc( 1 );
-	//				HandleSize = pDevice->GetDescriptorHandleIncrementSize( D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
-	//			}
-
-	//			uint32_t DestCount = 1;
-	//			uint32_t SourceCounts[] = { 1 };
-
-	//			D3D12_CPU_DESCRIPTOR_HANDLE SourceTextures[] =
-	//			{
-	//				Buffer->GetSRVHandle(),
-	//			};
-
-	//			DescriptorHandle dest = m_DescriptorHandle + 1 * HandleSize;
-
-	//			D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ dest.GetCpuPtr() };
-	//			pDevice->CopyDescriptors( 1, &CpuHandle, &DestCount, DestCount, SourceTextures, SourceCounts, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
-
-	//			ImGui::Image( (ImTextureID)dest.GetGpuPtr(), ImGui::GetWindowSize() );
-	//		}
-	//		UIContext.End();
-	//	}
-	//	/*else
-	//	{
-	//		GetMainClientViewPort().GetInputDispatcher()->GetInputSureyor().UnacquireMouse();
-	//	}*/
-	//}
-	//ImGui::End();
 
 	ImGui::Render();
 
@@ -211,8 +159,9 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	ICommandContext& UIContext = ICommandContext::Begin( TEXT( "Draw Editor" ) );
 	{
 		// TODO: Doesnt't work for some reason. Only works in ViewportContext.cpp
-		//IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainSurface );
-		//UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
+		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainSurface );
+		UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
+		UIContext.ClearColorBuffer( *pSwapChainSurface, GetClientViewport().GetClientRect() );
 
 		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
 		const IColorBuffer* pRTs[] = {
@@ -273,6 +222,20 @@ void HEditorEngine::EnableDarkMode( bool Enabled )
 	}
 }
 
+void HEditorEngine::SetupEditorPanels()
+{
+	m_EditorPanels.push_back( &m_SceneViewport );
+	m_EditorPanels.push_back( &m_MenuBar );
+	m_EditorPanels.push_back( &m_ContentBrowserPanel );
+
+	for (size_t i = 0; i < m_EditorPanels.size(); ++i)
+	{
+		m_EditorPanels[i]->Initialize();
+	}
+
+	m_MenuBar.AddMenuItem( "File", "Exit", this, &HEditorEngine::OnExitMenuItem );
+}
+
 //
 // Event Processing
 //
@@ -296,6 +259,7 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<WindowFocusEvent>( this, &HEditorEngine::OnWindowFocus );
 	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &HEditorEngine::OnWindowLostFocus );
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEditorEngine::OnClientWindowClosed );
+	Dispatcher.Dispatch<WindowFileDropEvent>( this, &HEditorEngine::OnClientWindowDropFile );
 }
 
 bool HEditorEngine::OnKeyPressed( KeyPressedEvent& e )
@@ -372,3 +336,13 @@ bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 	return false;
 }
 
+bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
+{
+	m_AssetImporter.Import( StringHelper::UTF16ToUTF8( e.GetFileName() ).c_str() );
+	return true;
+}
+
+void HEditorEngine::OnExitMenuItem()
+{
+	RequestShutdown();
+}

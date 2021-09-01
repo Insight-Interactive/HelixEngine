@@ -31,7 +31,7 @@ public:
 	inline uint32 GetNumIndices() const;
 	inline uint64 GetUID() const;
 
-	void Create(void* pVertexData, uint32 VertexDataSize, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices);
+	void Create(void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices);
 
 private:
 	inline void Initialize();

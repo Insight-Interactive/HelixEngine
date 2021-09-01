@@ -8,6 +8,8 @@
 
 
 SceneViewportPanel::SceneViewportPanel()
+	: m_DescriptorHandle()
+	, m_HandleSize(0)
 {
 }
 

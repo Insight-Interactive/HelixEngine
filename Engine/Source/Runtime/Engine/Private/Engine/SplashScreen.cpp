@@ -11,8 +11,8 @@
 #include "ICommandManager.h"
 #include "ICommandContext.h"
 #include "CommonStructHelpers.h"
-#include "StandaloneRenderer/Common.h"
-#include "StandaloneRenderer/GeometryGenerator.h"
+#include "Renderer/Common.h"
+#include "Renderer/GeometryGenerator.h"
 
 #include "FileSystem.h"
 #include "DataTypeWrappers.h"
@@ -73,8 +73,8 @@ SplashScreen::~SplashScreen()
 	// Flush the Gpu before destroying resources.
 	GCommandManager->IdleGPU();
 
-	delete m_pRootSig;
-	delete m_pPipeline;
+	HE_SAFE_DELETE_PTR( m_pRootSig );
+	HE_SAFE_DELETE_PTR( m_pPipeline );
 }
 
 void SplashScreen::Render( ICommandContext& CmdContext )
@@ -84,11 +84,11 @@ void SplashScreen::Render( ICommandContext& CmdContext )
 
 	CmdContext.TransitionResource( BackBufferResource, RS_RenderTarget );
 
-	CmdContext.ClearColorBuffer( *pCurrentBackBuffer, m_ScissorRect );
-	CmdContext.RSSetViewPorts( 1, &m_ViewPort );
+	CmdContext.ClearColorBuffer( *pCurrentBackBuffer, GetScissorRect() );
+	CmdContext.RSSetViewPorts( 1, &GetViewport() );
 
-	CmdContext.RSSetViewPorts( 1, &m_ViewPort );
-	CmdContext.RSSetScissorRects( 1, &m_ScissorRect );
+	CmdContext.RSSetViewPorts( 1, &GetViewport() );
+	CmdContext.RSSetScissorRects( 1, &GetScissorRect() );
 
 	const IColorBuffer* RTs[] = {
 		pCurrentBackBuffer
@@ -99,7 +99,7 @@ void SplashScreen::Render( ICommandContext& CmdContext )
 
 	CmdContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
 	CmdContext.SetTexture( kSplashTextureRootIndex, m_SplashTexture );
-
+	
 	CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
 	CmdContext.BindVertexBuffer( 0, m_ScreenQuadRef->GetVertexBuffer() );
 	CmdContext.BindIndexBuffer( m_ScreenQuadRef->GetIndexBuffer() );

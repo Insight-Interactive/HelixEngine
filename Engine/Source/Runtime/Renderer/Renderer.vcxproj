@@ -480,7 +480,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -502,7 +502,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -524,7 +524,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -546,7 +546,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -568,7 +568,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -587,7 +587,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -609,7 +609,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -631,7 +631,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -653,7 +653,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -675,7 +675,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -694,7 +694,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -711,9 +711,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win64 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
     <ClCompile>
@@ -721,7 +718,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -738,9 +735,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-Win32 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
     <ClCompile>
@@ -748,7 +742,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -765,9 +759,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOne &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
     <ClCompile>
@@ -775,7 +766,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -792,9 +783,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
     <ClCompile>
@@ -802,7 +790,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -826,7 +814,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -843,9 +831,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win64 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <ClCompile>
@@ -853,7 +838,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -870,9 +855,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-Win32 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
     <ClCompile>
@@ -880,7 +862,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -897,9 +879,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
     <ClCompile>
@@ -907,7 +886,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -924,9 +903,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
     <ClCompile>
@@ -934,7 +910,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

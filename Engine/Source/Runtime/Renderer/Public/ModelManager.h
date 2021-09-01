@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "RendererFwd.h"
@@ -66,10 +67,6 @@ private:
 	ManagedStaticMeshGeometry* m_Ref;
 };
 
-namespace ofbx
-{
-	struct Mesh;
-}
 
 class RENDER_API StaticGeometryManager
 {
@@ -77,22 +74,37 @@ public:
 	StaticGeometryManager() = default;
 	~StaticGeometryManager() = default;
 
-	void LoadFBXFromFile(const char* FilePath);
+	StaticMeshGeometryRef LoadHAssetMeshFromFile(const char* FilePath);
 	void DestroyMesh(const String& Key);
 	bool MeshExists(const String& Name);
 	void FlushCache();
 
-	StaticMeshGeometryRef GetStaticMeshByName(const std::string& Name)
-	{
-		return m_ModelCache.at(Name).get();
-	}
+	StaticMeshGeometryRef GetStaticMeshByName( const String& Name );
 
-	StaticMeshGeometryRef RegisterGeometry(const std::string& Name, void* Verticies, uint32 VertexDataSizeInBytes, uint32 NumVerticies, uint32 VertexSize, void* Indices, uint32 IndexDataSizeInBytes, uint32 NumIndices);
+	StaticMeshGeometryRef RegisterGeometry(const std::string& Name, void* Verticies, uint32 NumVerticies, uint32 VertexSizeInBytes, void* Indices, uint32 IndexDataSizeInBytes, uint32 NumIndices);
 
-protected:
-	void ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<struct Vertex3D>& OutVerticies, std::vector<uint32>& OutIndices);
 
 private:
 	std::map< String, std::unique_ptr<ManagedStaticMeshGeometry> > m_ModelCache;
 	CriticalSection m_MapMutex;
 };
+
+
+//
+// Inline function implementations
+//
+
+inline StaticMeshGeometryRef StaticGeometryManager::GetStaticMeshByName( const String& Name )
+{
+	auto Iter = m_ModelCache.find( Name );
+	if (Iter != m_ModelCache.end())
+	{
+		return m_ModelCache.at( Name ).get();
+	}
+	else
+	{
+		HE_ASSERT( false );
+	}
+
+	return null;
+}

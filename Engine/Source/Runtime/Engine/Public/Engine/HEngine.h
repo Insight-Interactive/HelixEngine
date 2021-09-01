@@ -6,15 +6,17 @@
 #include "RenderContext.h"
 #include "RendererInitializer.h"
 #include "Engine/ViewportContext.h"
+#include "AssetRegistry/AssetDatabase.h"
 
 
 class WindowClosedEvent;
+class CommandLine;
 
 class HEngine
 {
 	HE_DECL_NON_COPYABLE( HEngine );
 public:
-	HEngine();
+	HEngine(CommandLine& CmdLine);
 	virtual ~HEngine();
 
 	void EngineMain();
@@ -36,8 +38,11 @@ public:
 	*/
 	float GetDeltaTime() const;
 
+	bool GetIsEditorPresent();
+
 
 protected:
+	virtual void PreStartup();
 	virtual void Startup();
 	virtual void PostStartup();
 
@@ -58,10 +63,12 @@ protected:
 
 private:
 	bool				m_IsInitialized;
+	bool				m_IsEditorPresent;
 	ViewportContext		m_MainViewPort;
 	RendererInitializer	m_RenderContextInitializer;
 	RenderContext		m_RenderContext;
 	FApp				m_Application;
+	AssetDatabase		m_AssetDatabase;
 
 private:
 
@@ -121,6 +128,11 @@ inline ViewportContext& HEngine::GetClientViewport()
 inline float HEngine::GetDeltaTime() const
 {
 	return m_FrameTimeManager.GetFrameTime();
+}
+
+inline bool HEngine::GetIsEditorPresent()
+{
+	return m_IsEditorPresent;
 }
 
 // Frametime manager

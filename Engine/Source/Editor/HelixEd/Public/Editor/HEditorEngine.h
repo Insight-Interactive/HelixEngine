@@ -2,7 +2,11 @@
 
 #include "Engine/HEngine.h"
 
+#include "Panels/MenuBarPanel.h"
 #include "Panels/SceneViewportPanel.h"
+#include "Panels/ContentBrowserPanel.h"
+#include "Tools/AssetImporter.h"
+#include "Debug/ConsoleWindow.h"
 
 
 class KeyPressedEvent;
@@ -13,14 +17,16 @@ class MouseButtonReleasedEvent;
 class WindowResizeEvent;
 class WindowLostFocusEvent;
 class WindowFocusEvent;
+class WindowFileDropEvent;
 
 class HEditorEngine : public HEngine
 {
 	HE_DECL_NON_COPYABLE( HEditorEngine );
 public:
-	HEditorEngine();
+	HEditorEngine( CommandLine& CmdLine );
 	virtual ~HEditorEngine();
 
+	virtual void PreStartup() override;
 	virtual void Startup() override;
 	virtual void Shutdown() override;
 
@@ -41,13 +47,23 @@ protected:
 	bool OnWindowFocus( WindowFocusEvent& e );
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 	bool OnClientWindowClosed( WindowClosedEvent& e );
+	bool OnClientWindowDropFile( WindowFileDropEvent& e );
 
+	void OnExitMenuItem( );
+	
 protected:
 	void SetupImGuiRenderBackend();
+	void SetupEditorPanels();
 	int32 TranslateMouseButton( DigitalInput MouseKeycode );
 
 protected:
 	std::vector<Panel*> m_EditorPanels;
 
+	MenuBarPanel m_MenuBar;
+	ContentBrowserPanel m_ContentBrowserPanel;
 	SceneViewportPanel m_SceneViewport;
+
+	AssetImporter m_AssetImporter;
+	ConsoleWindow m_ConsoleWindow;
+
 };

@@ -2,6 +2,7 @@
 
 #include "Logger.h"
 
+
 Logger::Logger()
 	: m_UseConsole(true)
 {
@@ -59,11 +60,11 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		PrintBuffer(TraceBuffer, TEXT("[%s][Critical] - "), GetLoggerName());
 		break;
 	default:
-		//PrintBuffer(TraceBuffer, TEXT("Invalid log severity given to logger. Choose one option from ELogSeverity enum."));
+		PrintBuffer(TraceBuffer, TEXT("Invalid log severity given to logger. Choose one option from ELogSeverity enum."));
 		break;
 	}
 
-	// Ensure the buffers are null terminated to avoid MSVC-C6054.
+	// Ensure the buffers are null terminated.
 	TraceBuffer[kMaxLogLength - 1] = '\0';
 	OutputBuffer[kMaxLogLength - 1] = '\0';
 
@@ -75,8 +76,11 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 	}
 	// Print message
 #if _MSC_VER
-	OutputDebugString(TraceBuffer);
-	OutputDebugString(OutputBuffer);
-	OutputDebugString(TEXT("\n"));
+	if (IsDebuggerPresent())
+	{
+		OutputDebugString(TraceBuffer);
+		OutputDebugString(OutputBuffer);
+		OutputDebugString(TEXT("\n"));
+	}
 #endif
 }

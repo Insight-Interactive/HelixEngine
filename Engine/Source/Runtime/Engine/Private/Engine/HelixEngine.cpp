@@ -9,7 +9,6 @@
 #endif // HE_WITH_EDITOR
 
 
-
 void GuardedMain(WChar* CmdLine)
 {
 	CommandLine Args;
@@ -18,12 +17,12 @@ void GuardedMain(WChar* CmdLine)
 #if HE_WITH_EDITOR
 	if (Args[L"-launchcfg"] == L"LaunchEditor")
 	{
-		GEngine = new HEditorEngine();
+		GEngine = new HEditorEngine( Args );
 	}
 	else if (Args[L"-launchcfg"] == L"LaunchGame")
 #endif // HE_WITH_EDITOR
 	{
-		GEngine = new HEngine();
+		GEngine = new HEngine( Args );
 	}
 
 	GEngine->EngineMain();

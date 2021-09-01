@@ -5,6 +5,9 @@
 
 # Helix
 [Bb]uild-*
+*.sln
+*.vcxproj
+*.vcxproj.filters
 
 # User-specific files
 *.rsuser

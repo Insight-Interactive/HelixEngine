@@ -29,9 +29,9 @@ project ("Engine")
 		"Private/GameFramework/**.h",
 		"Private/GameFramework/**.cpp",
 		"Private/GameFramework/**.inl",
-		"Private/StandaloneRenderer/**.h",
-		"Private/StandaloneRenderer/**.cpp",
-		"Private/StandaloneRenderer/**.inl",
+		"Private/Renderer/**.h",
+		"Private/Renderer/**.cpp",
+		"Private/Renderer/**.inl",
 		"Private/Input/**.h",
 		"Private/Input/**.cpp",
 		"Private/Input/**.inl",
@@ -53,12 +53,14 @@ project ("Engine")
 		"Private/World/**.h",
 		"Private/World/**.cpp",
 		"Private/World/**.inl",
+		"Private/AssetRegistry/**.h",
+		"Private/AssetRegistry/**.cpp",
+		"Private/AssetRegistry/**.inl",
 		"Private/PCH/**.h",
 		"Private/PCH/**.cpp",
 		"Private/PCH/**.inl",
 	}
 
-		
 	includedirs
 	{
 		"Public/",
@@ -68,6 +70,9 @@ project ("Engine")
 		heGetModulePublicDir( "Renderer" ),
 
 		heGetEditorModulePublicDir ( "HelixEd" ),
+
+		-- Third Party
+		heGetThirdPartyModule( "rapidxml-1.13" ) .. "Include/",
 	}
 
 	links   
@@ -91,6 +96,13 @@ project ("Engine")
 	flags
 	{
 		"MultiProcessorCompile",
+	}
+
+	postbuildcommands
+	{
+		"%{postBuildCommands.gameConfigCopy}",
+		"%{postBuildCommands.clearModuleLibs}",
+		"%{postBuildCommands.clearModuleLibLinkExtras}",
 	}
 
 	dofile ("Helix/CommonEngineMacros.lua")
@@ -123,10 +135,25 @@ project ("Engine")
 		}
 
 	filter ("configurations:DebugEditor or Development")
+		debugargs
+		{
+			"-launchcfg LaunchEditor",
+		}
 		postbuildcommands
 		{
-			-- Create a virtual copy of the assets folder
+			-- Create a virtual copy of the assets folder.
 			"%{postBuildCommands.debugContentDir}",
+		}
+
+	filter ("configurations:DebugGame or ShippingGame")
+		debugargs
+		{
+			"-launchcfg LaunchGame",
+		}
+		postbuildcommands
+		{
+			-- Create a copy of the assets folder.
+			"%{postBuildCommands.releaseContentDir}",
 		}
 
 	filter ("configurations:DebugEditor or Development", "platforms:Win64 or Win32 or XboxOne or XboxOneX")
@@ -138,12 +165,6 @@ project ("Engine")
 		libdirs
 		{
 			"%{libraryDirectories.PIXx64}"
-		}
-
-	 filter ("configurations:DebugEditor or Development")
-		debugargs
-		{
-			"-launchcfg LaunchEditor",
 		}
 
 

@@ -27,8 +27,9 @@ static void SplashMain(void* pUserData);
 // Engine
 //
 
-HEngine::HEngine()
+HEngine::HEngine( CommandLine& CmdLine )
 	: m_IsInitialized(false)
+	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
 {
 }
 
@@ -44,9 +45,15 @@ void HEngine::EngineMain()
 		HE_LOG(Warning, TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!"));
 		HE_DEBUG_BREAK;
 	}
+	GEngine->PreStartup();
 	GEngine->Startup();
 	GEngine->Update();
 	GEngine->Shutdown();
+}
+
+void HEngine::PreStartup()
+{
+	
 }
 
 void HEngine::Startup()
@@ -85,15 +92,20 @@ void HEngine::Startup()
 	ClientDesc.Width = 1600;
 	ClientDesc.Height = 900;
 	ClientDesc.Title = m_Application.GetName();
+#if HE_WITH_EDITOR
+	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
+#endif //HE_WITH_EDITOR
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
+	AssetDatabase::GetInstance()->Initialize("TODO");
+
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 	// Create the splash screen to serve as a loading indicator.
-	String SplashDir = "../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
-	SplashScreen AppSplash( SplashDir );
+	String SplashTextureDir = "../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
+	SplashScreen AppSplash( SplashTextureDir );
 	GThreadPool->Kick(SplashMain, &AppSplash);
-	//std::this_thread::sleep_for(std::chrono::seconds(8)); // Uncomment to delay app and debug splash screen.
+	//std::this_thread::sleep_for(std::chrono::seconds(4)); // Uncomment to delay app and debug the splash screen.
 
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
@@ -128,6 +140,8 @@ void HEngine::Shutdown()
 
 	m_Application.Shutdown();
 	GetClientViewport().Uninitialize();
+
+	AssetDatabase::GetInstance()->UnInitialize();
 
 	HE_LOG(Log, TEXT("Engine shutdown complete."));
 

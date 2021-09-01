@@ -38,19 +38,19 @@ void TextureManagerD3D12::UnInitialize()
     m_TextureCache.clear();
 }
 
-TextureRef TextureManagerD3D12::LoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB)
+TextureRef TextureManagerD3D12::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
     return FindOrLoadTexture(FileName, Fallback, forceSRGB);
 }
 
-IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB)
+IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
     ManagedTextureD3D12* pTexture = NULL;
 
     {
         m_Mutex.Enter();
 
-        std::string key = FileName;
+        String key = FileName;
         if (forceSRGB)
             key += "_sRGB";
 
@@ -82,7 +82,7 @@ IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const std::string& FileN
     return pTexture;
 }
 
-void TextureManagerD3D12::DestroyTexture(const std::string& Key)
+void TextureManagerD3D12::DestroyTexture(const String& Key)
 {
     m_Mutex.Enter();
 

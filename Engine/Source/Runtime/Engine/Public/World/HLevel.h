@@ -18,18 +18,18 @@ public:
 	void Flush();
 
 	template <typename ActorType, typename ... InitArgs>
-	inline ActorType* CreateActor(InitArgs ... args);
+	ActorType* CreateActor(InitArgs ... args);
 
 
 protected:
-	inline void GuardedAddActor(AActor* pActor);
+	void GuardedAddActor(AActor* pActor);
 
 	void BeginPlay();
 	void Tick(float DeltaTime);
 	void Render(ICommandContext& CmdContext);
 	
 protected:
-	TDynamicArray<AActor*> m_Actors;
+	std::vector<AActor*> m_Actors;
 	CriticalSection m_ActorListGuard;
 	HWorld* m_pOwner;
 };
@@ -53,9 +53,6 @@ inline ActorType* HLevel::CreateActor(InitArgs ... args)
 
 inline void HLevel::GuardedAddActor(AActor* pActor)
 {
-	m_ActorListGuard.Enter();
-	{
-		m_Actors.PushBack(pActor);
-	}
-	m_ActorListGuard.Exit();
+	ScopedCriticalSection Guard( m_ActorListGuard );
+	m_Actors.push_back(pActor);
 }

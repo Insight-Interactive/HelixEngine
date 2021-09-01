@@ -480,7 +480,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -499,7 +499,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -518,7 +518,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -537,7 +537,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -556,7 +556,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -575,7 +575,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -594,7 +594,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -613,7 +613,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -632,7 +632,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -651,7 +651,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -670,7 +670,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HELIXED_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -694,7 +694,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HELIXED_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -718,7 +718,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -742,7 +742,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -766,7 +766,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -790,7 +790,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;HELIXED_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -814,7 +814,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;HELIXED_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -838,7 +838,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -862,7 +862,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -886,7 +886,7 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -907,17 +907,25 @@
   <ItemGroup>
     <ClInclude Include="Private\Direct3D12\HelixEdImGuiImplD3D12.h" />
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
+    <ClInclude Include="Public\Debug\ConsoleWindow.h" />
     <ClInclude Include="Public\Editor\HEditorEngine.h" />
+    <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
+    <ClInclude Include="Public\Panels\MenuBarPanel.h" />
     <ClInclude Include="Public\Panels\Panel.h" />
     <ClInclude Include="Public\Panels\SceneViewportPanel.h" />
+    <ClInclude Include="Public\Tools\AssetImporter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Private\Debug\ConsoleWindow.cpp" />
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp" />
     <ClCompile Include="Private\HEditorEngine.cpp" />
-    <ClCompile Include="Private\Panels\SceneViewportPanel.cpp" />
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Private\Panels\ContentBrowserPanel.cpp" />
+    <ClCompile Include="Private\Panels\MenuBarPanel.cpp" />
+    <ClCompile Include="Private\Panels\SceneViewportPanel.cpp" />
+    <ClCompile Include="Private\Tools\AssetImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

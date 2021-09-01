@@ -7,17 +7,17 @@
 #include "IGpuResource.h"
 #include "ICommandContext.h"
 #include "IConstantBufferManager.h"
-#include "StandaloneRenderer/ShaderRegisters.h"
-#include "StandaloneRenderer/GeometryGenerator.h"
-#include "StandaloneRenderer/ConstantBufferStructures.h"
-#include "StandaloneRenderer/MaterialManager.h"
-#include "Actor/Components/HCameraComponent.h"
-#include "StandaloneRenderer/Common.h"
-#include "StandaloneRenderer/LightManager.h"
+#include "Renderer/Common.h"
+#include "Renderer/LightManager.h"
+#include "Renderer/MaterialManager.h"
+#include "Renderer/ShaderRegisters.h"
+#include "Renderer/GeometryGenerator.h"
+#include "Renderer/ConstantBufferStructures.h"
+#include "GameFramework/Actor/Components/HCameraComponent.h"
 
-#include "StandaloneRenderer/Technique/SkyPass.h"
-#include "StandaloneRenderer/Technique/DeferredShadingTech.h"
-#include "StandaloneRenderer/Technique/PostProcessUber.h"
+#include "Renderer/Technique/SkyPass.h"
+#include "Renderer/Technique/DeferredShadingTech.h"
+#include "Renderer/Technique/PostProcessUber.h"
 
 
 #include "IDevice.h"
@@ -68,7 +68,6 @@ void ViewportContext::Initialize( const Window::Description& WindowDesc )
 
 void ViewportContext::Uninitialize()
 {
-
 	for (size_t i = 0; i < m_pSceneConstantBuffers.size(); ++i)
 	{
 		GConstantBufferManager->DestroyConstantBuffer( m_pSceneConstantBuffers[i]->GetUID() );
@@ -98,11 +97,18 @@ void ViewportContext::Render()
 
 	ICommandContext& CmdContext = ICommandContext::Begin( TEXT( "Scene Pass" ) );
 	{
-		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainBackBuffer );
-		CmdContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
-		CmdContext.ClearColorBuffer( *pSwapChainBackBuffer, GetClientRect() );
+		if (GEngine->GetIsEditorPresent())
+		{
+			RenderWorld( CmdContext, *m_pSceneRenderTarget );
+		}
+		else
+		{
+			IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainBackBuffer );
+			CmdContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
+			CmdContext.ClearColorBuffer( *pSwapChainBackBuffer, GetClientRect() );
 
-		RenderWorld( CmdContext, *m_pSceneRenderTarget );
+			RenderWorld( CmdContext, *pSwapChainBackBuffer );
+		}
 	}
 	CmdContext.End();
 }

@@ -76,40 +76,6 @@
 #define HE_ReAlloc(HeapPtr, Size)		realloc(HeapPtr, Size)
 
 
-//-----------------------------------
-//		System Text Manipulation
-//-----------------------------------
-//
-#if _UNICODE
-	typedef wchar_t TChar;
-	// A client facing UTF-16 string.
-	typedef std::wstring HName;
-
-#	define Printf(Fmt, ...)									::wprintf( Fmt, __VA_ARGS__)
-#	define PrintBuffer(Buffer, Fmt, ...)					::swprintf_s( Buffer, Fmt, __VA_ARGS__)
-#	define VSPrintBuffer(Buffer, BufferSize, Fmt, ArgList)	::_vsnwprintf_s( Buffer, BufferSize, Fmt, ArgList)
-#	define TCharStrCpy( Destination, Source )				HE_PRAGMA_DISABLE( 4996, ::wcscpy( Destination, Source ) );
-#	define TCharStrlen( Str )								::wcslen( Str )
-#	define HE_FILE											LONG_STR( __FILE__ )
-#	define HE_FUNCTION										LONG_STR( __FUNCTION__ )
-#else
-	typedef char TChar;
-	// A client facing UTF-8 string.
-	typedef std::string HName;
-
-#	define Printf(Fmt, ...)									::printf( Fmt, __VA_ARGS__ )
-#	define PrintBuffer(Buffer, Fmt, ...)					::sprintf_s( Buffer, Fmt, __VA_ARGS__ )
-#	define VSPrintBuffer(Buffer, BufferSize, Fmt, ArgList)	::vsnprintf_s( Buffer, BufferSize, Fmt, ArgList )
-#	define TCharStringCopy( Destination, Source )			::strcpy( Destination, Source )
-#	define TCharStrLen( Str )								::strlen( Str )
-#	define FILE												__FILE__
-#	define FUNCTION											__FUNCTION__
-#endif // _UNICODE
-typedef wchar_t WChar;
-typedef char	Char;
-typedef std::wstring WString;
-typedef std::string String;
-
 
 //-----------------------------------
 //		Container Debug Levels
@@ -134,29 +100,14 @@ typedef std::string String;
 //-----------------------------------
 //
 /*
-	8-bit unsigned integer.
-*/
-typedef unsigned char uint8;
-
-/*
-	16-bit unsigned integer.
-*/
-typedef unsigned short uint16;
-
-/*
-	32-bit unsigned integer.
-*/
-typedef unsigned long uint32;
-
-/*
-	64-bit unsigned integer.
-*/
-typedef unsigned long long uint64;
-
-/*
 	8-bit signed integer.
 */
 typedef signed char int8;
+
+/*
+	8-bit unsigned integer.
+*/
+typedef unsigned char uint8;
 
 /*
 	16-bit signed integer.
@@ -164,14 +115,103 @@ typedef signed char int8;
 typedef short int16;
 
 /*
+	16-bit unsigned integer.
+*/
+typedef unsigned short uint16;
+
+/*
 	32-bit signed integer.
 */
 typedef long int32;
 
 /*
+	32-bit unsigned integer.
+*/
+typedef unsigned long uint32;
+
+/*
 	64-bit signed integer.
 */
 typedef long long int64;
+
+/*
+	64-bit unsigned integer.
+*/
+typedef unsigned long long uint64;
+
+
+
+//-----------------------------------
+//		Strings and Characters
+//-----------------------------------
+//
+/*
+	A UTF - 16 character.
+*/ 
+typedef wchar_t WChar;
+
+/*
+	A UTF - 8 character.
+*/
+typedef char	Char;
+
+/*
+	String using UTF-16 encoding.
+*/
+typedef std::wstring WString;
+
+/*
+	String using UTF-8 encoding.
+*/
+typedef std::string String;
+
+
+//-----------------------------------
+//		System Text Manipulation
+//-----------------------------------
+//
+// TChar is a string of test that could be ascii or unicode depending on 
+// if unicode is supported in the build configuration.
+//
+#if _UNICODE
+typedef WChar TChar;
+// A client facing UTF-16 string.
+typedef WString HName;
+
+#	define Printf(Fmt, ...)									::wprintf( Fmt, __VA_ARGS__)
+#	define PrintBuffer(Buffer, Fmt, ...)					::swprintf_s( Buffer, Fmt, __VA_ARGS__)
+#	define VSPrintBuffer(Buffer, BufferSize, Fmt, ArgList)	::_vsnwprintf_s( Buffer, BufferSize, Fmt, ArgList)
+#	define TCharStrCpy( Destination, Source )				HE_PRAGMA_DISABLE( 4996, ::wcscpy( Destination, Source ) );
+#	define TCharStrlen( Str )								::wcslen( Str )
+#	define TCharStrCat( Destination, Source )				::lstrcatW( Destination, Source )
+#	define TCharStrCmp( Str1, Str2 )						::wcscmp( Str1, Str2 )
+#	define CharToTChar( Str )								StringHelper::UTF8ToUTF16( Str ).c_str()
+#	define WCharToTChar( Str )								Str
+#	define HE_FILE											LONG_STR( __FILE__ )
+#	define HE_FUNCTION										LONG_STR( __FUNCTION__ )
+#	define HE_TIME											LONG_STR( __TIME__ )
+#	define HE_DATA											LONG_STR( __DATE__ )
+
+#else
+typedef Char TChar;
+// A client facing UTF-8 string.
+typedef String HName;
+
+#	define Printf(Fmt, ...)									::printf( Fmt, __VA_ARGS__ )
+#	define PrintBuffer(Buffer, Fmt, ...)					::sprintf_s( Buffer, Fmt, __VA_ARGS__ )
+#	define VSPrintBuffer(Buffer, BufferSize, Fmt, ArgList)	::vsnprintf_s( Buffer, BufferSize, Fmt, ArgList )
+#	define TCharStringCopy( Destination, Source )			::strcpy( Destination, Source )
+#	define TCharStrLen( Str )								::strlen( Str )
+#	define TCharStrCat( Destination, Source )				::strcat( Destination, Source )
+#	define TCharStrCmp( Str1, Str2 )						::strcmp( Str1, Str2 )
+#	define CharToTChar( Str )								StringHelper::UTF16ToUTF8( Str ).c_str()
+#	define FILE												( __FILE__ )
+#	define FUNCTION											( __FUNCTION__ )
+#	define HE_TIME											( __TIME__ )
+#	define HE_DATA											( __DATE__ )
+
+#endif // _UNICODE
+
 
 
 
