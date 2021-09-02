@@ -269,11 +269,12 @@ void Window::OnWindowModeChanged()
 		DevMode.dmSize = sizeof( DEVMODE );
 		EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
 
-		RECT FullscreenWindowRect = {
+		RECT FullscreenWindowRect = 
+		{
 			DevMode.dmPosition.x,
 			DevMode.dmPosition.y,
-			DevMode.dmPosition.x + SCast<LONG>( DevMode.dmPelsWidth ),
-			DevMode.dmPosition.y + SCast<LONG>( DevMode.dmPelsHeight )
+			DevMode.dmPosition.x + (LONG) DevMode.dmPelsWidth,
+			DevMode.dmPosition.y + (LONG) DevMode.dmPelsHeight 
 		};
 
 		SetWindowPos(
@@ -287,7 +288,18 @@ void Window::OnWindowModeChanged()
 
 		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
 
-		m_pSwapChain->ToggleFullScreen( !m_pSwapChain->GetIsFullScreenEnabled() );
+		GetSwapChain()->ToggleFullScreen( !m_pSwapChain->GetIsFullScreenEnabled() );
+		
+		// Get the new window dimensions.
+		uint32 NewWidth( FullscreenWindowRect.right - FullscreenWindowRect.left );
+		uint32 NewHeight( FullscreenWindowRect.bottom - FullscreenWindowRect.top );
+
+		// Resize the window's swapchain.
+		GetSwapChain()->Resize( NewWidth, NewHeight );
+
+		// Emit the resize event.
+		WindowResizeEvent e( NewWidth, NewHeight );
+		EmitEvent( e );
 	}
 	break;
 	case EWindowMode::WM_Windowed:

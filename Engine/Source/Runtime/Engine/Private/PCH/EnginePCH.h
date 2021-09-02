@@ -11,6 +11,8 @@
 #include <sstream>
 #include <functional>
 #include <xmmintrin.h>
+#include <iostream>
+#include <fstream>
 
 #include "Engine/EngineMacros.h"
 #include "Engine/EngineDefines.h"

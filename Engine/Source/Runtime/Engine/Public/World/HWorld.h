@@ -6,6 +6,7 @@
 
 class HLevel;
 class HCameraComponent;
+class APlayerCharacter;
 class ICommandContext;
 class ViewportContext;
 
@@ -29,8 +30,14 @@ public:
 	void SetCurrentSceneRenderCamera(HCameraComponent* pCamera);
 	void SetViewport( ViewportContext* pViewport );
 
+	HLevel* GetCurrentLevel();
+	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
+	APlayerCharacter* GetPlayerCharacter( uint32 Index );
+
 protected:
-	TDynamicArray<HLevel> m_Levels;
+	std::vector<HLevel*> m_Levels;
+	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
+
 	HCameraComponent* m_RenderingCamera;
 	ViewportContext* m_pViewport;
 
@@ -65,4 +72,20 @@ inline ViewportContext* HWorld::GetOwningViewport()
 inline void HWorld::SetViewport( ViewportContext* pViewport )
 {
 	m_pViewport = pViewport;
+}
+
+inline HLevel* HWorld::GetCurrentLevel()
+{
+	return m_Levels[0];
+}
+
+inline void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
+{
+	m_PlayerCharacterRefs.push_back( pCharacter );
+}
+
+inline APlayerCharacter* HWorld::GetPlayerCharacter( uint32 Index )
+{
+	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
+	return m_PlayerCharacterRefs[Index];
 }

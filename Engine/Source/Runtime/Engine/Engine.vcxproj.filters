@@ -234,6 +234,7 @@
     <ClInclude Include="Public\World\HWorld.h">
       <Filter>Public\World</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HPointLightComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\FApp.cpp">
@@ -353,6 +354,7 @@
     <ClCompile Include="Public\Renderer\Material.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HPointLightComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

@@ -518,7 +518,7 @@
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
@@ -545,7 +545,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
@@ -572,7 +572,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
@@ -599,7 +599,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
@@ -626,7 +626,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
@@ -653,7 +653,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
@@ -680,7 +680,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
@@ -707,7 +707,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
@@ -734,7 +734,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
@@ -761,7 +761,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Content</Command>
+IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
@@ -795,7 +795,7 @@ IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content $(SolutionDir)Con
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
@@ -829,7 +829,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
@@ -863,7 +863,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
@@ -897,7 +897,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
@@ -931,7 +931,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -965,7 +965,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
@@ -999,7 +999,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
@@ -1033,7 +1033,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
@@ -1067,7 +1067,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
@@ -1101,7 +1101,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
 DEL "$(TargetDir)/*.lib"
 DEL "$(TargetDir)/*.exp"
-IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul)</Command>
+IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -1127,6 +1127,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
     <ClInclude Include="Public\GameFramework\Actor\Components\HActorComponent.h" />
     <ClInclude Include="Public\GameFramework\Actor\Components\HCameraComponent.h" />
     <ClInclude Include="Public\GameFramework\Actor\Components\HControllerComponent.h" />
+    <ClInclude Include="Public\GameFramework\Actor\Components\HPointLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Actor\Components\HSceneComponent.h" />
     <ClInclude Include="Public\GameFramework\Actor\Components\HStaticMeshComponent.h" />
     <ClInclude Include="Public\GameFramework\GameInstance.h" />
@@ -1169,6 +1170,7 @@ IF EXIST $(SolutionDir)Content\ (xcopy /Q /E /Y /I $(SolutionDir)Content ..\..\.
     <ClCompile Include="Private\GameFramework\Actor\Components\HActorComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\Components\HCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\Components\HControllerComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Actor\Components\HPointLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\Components\HSceneComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\Components\HStaticMeshComponent.cpp" />
     <ClCompile Include="Private\GameFramework\GameInstance.cpp" />

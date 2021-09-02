@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string>
 #include <map>
+#include <iostream>
+#include <sstream>
 
 #if HE_WINDOWS
 #	include <Windows.h>

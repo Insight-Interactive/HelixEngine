@@ -9,13 +9,9 @@ class APlayerCharacter : public APawn
 {
 	using Super = APawn;
 public:
-	HE_GENERATED_BODY( APlayerCharacter )
-		
+	HE_GENERATED_BODY( APlayerCharacter );
 
-	virtual void BeginPlay() override
-	{
-		Super::BeginPlay();
-	}
+	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaMs) override;
 
@@ -23,7 +19,6 @@ public:
 
 	inline HCameraComponent* GetCameraComponent();
 
-protected:
 	void LookUp(float Value);
 	void LookRight(float Value);
 	void TogglePitchYawRotation();

@@ -32,6 +32,7 @@ public:
 	*/
 	HCameraComponent* GetRenderingCamera();
 
+	virtual void ReloadPipeline() = 0;
 
 protected:
 	void SetRenderingCamera( HCameraComponent* pCamera );

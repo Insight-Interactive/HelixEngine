@@ -3,7 +3,9 @@
 #include "Engine/HEngine.h"
 
 #include "Panels/MenuBarPanel.h"
+#include "Panels/ToolbarPanel.h"
 #include "Panels/SceneViewportPanel.h"
+#include "Panels/ConsoleOutputPanel.h"
 #include "Panels/ContentBrowserPanel.h"
 #include "Tools/AssetImporter.h"
 #include "Debug/ConsoleWindow.h"
@@ -59,8 +61,9 @@ protected:
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 	bool OnClientWindowDropFile( WindowFileDropEvent& e );
 
-	void OnExitMenuItem( );
-	
+	void OnExitMenuItem();
+	void OnReloadPipelineShaders();
+
 protected:
 	void SetupImGuiRenderBackend();
 	void SetupEditorPanels();
@@ -71,7 +74,9 @@ protected:
 	std::vector<Panel*> m_EditorPanels;
 
 	MenuBarPanel m_MenuBar;
+	ToolbarPanel m_ToolbarPanel;
 	ContentBrowserPanel m_ContentBrowserPanel;
+	ConsoleOutputPanel m_ConsoleOutputPanel;
 	SceneViewportPanel m_SceneViewport;
 
 	AssetImporter m_AssetImporter;

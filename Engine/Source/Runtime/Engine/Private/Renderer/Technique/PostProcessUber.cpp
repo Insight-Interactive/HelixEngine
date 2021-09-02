@@ -35,3 +35,8 @@ void PostProcesssUber::UnBind( ICommandContext& GfxContext )
 {
 
 }
+
+void PostProcesssUber::ReloadPipeline()
+{
+
+}

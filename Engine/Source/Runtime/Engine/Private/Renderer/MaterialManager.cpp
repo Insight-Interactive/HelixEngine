@@ -75,14 +75,14 @@ HMaterial* MaterialRef::operator->()
 // Material Manager Implementation
 //
 
-void MaterialManager::LoadMaterialFromFile(const String& Path)
+MaterialRef MaterialManager::LoadMaterialFromFile(const String& Path)
 {
 	ManagedMaterial* pMat = NULL;
 
+	String Name = StringHelper::GetFilenameFromDirectoryNoExtension( Path );
 	{
 		m_MapMutex.Enter();
 
-		String Name = StringHelper::GetFilenameFromDirectoryNoExtension(Path);
 		uint64 HashName = std::hash<String>{}(Name);
 
 		auto Iter = m_MaterialCache.find(Name);
@@ -90,24 +90,24 @@ void MaterialManager::LoadMaterialFromFile(const String& Path)
 		{
 			pMat = Iter->second.get();
 			pMat->WaitForLoad();
-			return;
 		}
 		else
 		{
 			pMat = new ManagedMaterial(Name);
 			// TODO load from file here.
 			m_MaterialCache[Name].reset(pMat);
-		}
 
-		//DataBlob Data = FileSystem::ReadRawData(Path.c_str());
-		//pMat->CreateFromMemory(Data);
-		pMat->Initialize();
-		pMat->SetDebugName(Name);
-		pMat->SetUID(HashName);
-		pMat->SetLoadCompleted(true);
+			//DataBlob Data = FileSystem::ReadRawData(Path.c_str());
+			//pMat->CreateFromMemory(Data);
+			pMat->Initialize();
+			pMat->SetDebugName(Name);
+			pMat->SetUID(HashName);
+			pMat->SetLoadCompleted(true);
+		}
 
 		m_MapMutex.Exit();
 	}
+	return GetMaterialByName( Name );
 }
 
 void MaterialManager::DestroyMaterial(const String& Key)

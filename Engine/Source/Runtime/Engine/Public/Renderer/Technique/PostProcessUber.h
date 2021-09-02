@@ -19,6 +19,8 @@ public:
 	virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) override;
 	virtual void UnBind( ICommandContext& GfxContext ) override;
 
+	virtual void ReloadPipeline() override;
+
 protected:
 
 	// Pipeline

@@ -75,7 +75,7 @@ public:
 	MaterialManager() = default;
 	~MaterialManager() = default;
 
-	void LoadMaterialFromFile(const String& Path);
+	MaterialRef LoadMaterialFromFile(const String& Path);
 
 	void DestroyMaterial(const String& Key);
 

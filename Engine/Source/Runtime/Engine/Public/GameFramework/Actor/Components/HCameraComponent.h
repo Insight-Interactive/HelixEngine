@@ -37,12 +37,6 @@ struct ProjectionProperties
 class HCameraComponent : public HActorComponent
 {
 	friend class CameraManager;
-protected:
-
-	Transform m_Transform;
-	ProjectionProperties m_ViewProps;
-	float m_FieldOfView;
-
 public:
 	HCameraComponent( const HName& Name );
 	virtual ~HCameraComponent();
@@ -69,7 +63,12 @@ protected:
 	virtual void Render( ICommandContext& GfxContext ) override;
 
 private:
-	void UpdateViewMat();
+	void BuildViewMatrix();
+
+protected:
+	Transform m_Transform;
+	ProjectionProperties m_ViewProps;
+	float m_FieldOfView;
 
 };
 
@@ -123,7 +122,7 @@ inline void HCameraComponent::SetFieldOfView( float Value )
 	m_FieldOfView = Value;
 }
 
-inline void HCameraComponent::UpdateViewMat()
+inline void HCameraComponent::BuildViewMatrix()
 {
 	m_ViewProps.ViewMat = XMMatrixLookAtLH(
 		m_Transform.GetAbsoluteWorldPosition()

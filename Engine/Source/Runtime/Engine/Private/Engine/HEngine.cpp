@@ -28,8 +28,9 @@ static void SplashMain(void* pUserData);
 //
 
 HEngine::HEngine( CommandLine& CmdLine )
-	: m_IsInitialized(false)
+	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
+	, m_IsPlayingInEditor( false )
 {
 }
 
@@ -47,8 +48,13 @@ void HEngine::EngineMain()
 	}
 	GEngine->PreStartup();
 	GEngine->Startup();
+	GEngine->PostStartup();
+
 	GEngine->Update();
+	
+	GEngine->PreShutdown();
 	GEngine->Shutdown();
+	GEngine->PostShutdown();
 }
 
 void HEngine::PreStartup()
@@ -89,8 +95,8 @@ void HEngine::Startup()
 	Window::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar = true;
 	ClientDesc.bShowImmediate = false;
-	ClientDesc.Width = 1600;
-	ClientDesc.Height = 900;
+	ClientDesc.Width = 1920;
+	ClientDesc.Height = 1080;
 	ClientDesc.Title = m_Application.GetName();
 #if HE_WITH_EDITOR
 	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
@@ -102,16 +108,12 @@ void HEngine::Startup()
 
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 	// Create the splash screen to serve as a loading indicator.
-	String SplashTextureDir = "../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
-	SplashScreen AppSplash( SplashTextureDir );
-	GThreadPool->Kick(SplashMain, &AppSplash);
+	GThreadPool->Kick(SplashMain, NULL);
 	//std::this_thread::sleep_for(std::chrono::seconds(4)); // Uncomment to delay app and debug the splash screen.
 
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
 	HE_LOG(Log, TEXT("Engine startup complete."));
-
-	PostStartup();
 }
 
 void HEngine::PostStartup()
@@ -134,8 +136,6 @@ void HEngine::PreShutdown()
 
 void HEngine::Shutdown()
 {
-	PreShutdown();
-
 	HE_LOG(Log, TEXT("Shutting down engine."));
 
 	m_Application.Shutdown();
@@ -144,8 +144,6 @@ void HEngine::Shutdown()
 	AssetDatabase::GetInstance()->UnInitialize();
 
 	HE_LOG(Log, TEXT("Engine shutdown complete."));
-
-	PostShutdown();
 }
 
 void HEngine::PostShutdown()
@@ -260,18 +258,20 @@ void HEngine::FrameTimeManager::Update( bool VSyncEnabled, bool LimitTo30Hz )
 // Static function implementations
 //
 
-/* static */ void SplashMain(void* pUserData)
+/* static */ void SplashMain( void* pUserData )
 {
-	SplashScreen* pAppSplash = (SplashScreen*)pUserData;
+	(void)pUserData;
+	String SplashTextureDir = "../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
+	SplashScreen AppSplash( SplashTextureDir );
 
 	while ( !GEngine->IsInitialized() )
 	{
 		ICommandContext& Context = ICommandContext::Begin(TEXT("Scene Pass"));
 		{
-			pAppSplash->Render( Context );
+			AppSplash.Render( Context );
 		}
 		Context.End();
-		pAppSplash->EndFrame();
+		AppSplash.EndFrame();
 	}
 
 }

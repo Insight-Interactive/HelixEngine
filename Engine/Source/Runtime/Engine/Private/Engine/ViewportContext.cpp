@@ -229,18 +229,27 @@ void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
 	//pData->WorldTime = (float)m_GFXTimer.Seconds();
 	CmdContext.SetGraphicsConstantBuffer( kSceneConstants, GetSceneConstBufferForCurrentFrame() );
 
-	// Set the lights
+	// Upload the lights
 	SceneLightsCBData* pLights = GetLightConstBufferForCurrentFrame()->GetBufferPointer<SceneLightsCBData>();
-	uint64 PointLightBufferSize = sizeof( PointLightCBData ) * GLightManager.GetScenePointLightCount();
-	uint64 DirectionalLightBufferSize = sizeof( DirectionalLightCBData ) * GLightManager.GetSceneDirectionalLightCount();
-	CopyMemory( GLightManager.GetPointLighBufferPointer(), pLights->PointLights, PointLightBufferSize );
-	CopyMemory( GLightManager.GetDirectionalLightBufferPointer(), pLights->DirectionalLights, DirectionalLightBufferSize );
+	{
+		uint64 PointLightBufferSize			= sizeof( PointLightCBData ) * GLightManager.GetScenePointLightCount();
+		uint64 DirectionalLightBufferSize	= sizeof( DirectionalLightCBData ) * GLightManager.GetSceneDirectionalLightCount();
+	
+		CopyMemory( pLights->PointLights, GLightManager.GetPointLighBufferPointer(), PointLightBufferSize );
+		CopyMemory( pLights->DirectionalLights, GLightManager.GetDirectionalLightBufferPointer(), DirectionalLightBufferSize );
 
-	// TODO: pLights->NumSpotLights = GLightManager.GetSceneSpotLightCount();
-	pLights->NumPointLights = GLightManager.GetScenePointLightCount();
-	pLights->NumDirectionalLights = GLightManager.GetSceneDirectionalLightCount();
-
+		// TODO: pLights->NumSpotLights = GLightManager.GetSceneSpotLightCount();
+		pLights->NumPointLights = GLightManager.GetScenePointLightCount();
+		pLights->NumDirectionalLights = GLightManager.GetSceneDirectionalLightCount();
+	}
 	CmdContext.SetGraphicsConstantBuffer( kLights, GetLightConstBufferForCurrentFrame() );
+}
+
+void ViewportContext::ReloadRenderPipelines()
+{
+	//m_PostProcessPass->ReloadPipeline();
+	m_DeferredShader->ReloadPipeline();
+	//m_SkyPass->ReloadPipeline();
 }
 
 //

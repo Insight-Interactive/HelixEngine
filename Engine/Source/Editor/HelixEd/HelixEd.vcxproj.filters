@@ -63,6 +63,9 @@
     <ClInclude Include="Public\Tools\AssetImporter.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
+    <ClInclude Include="Public\Debug\ADebugCharacter.h" />
+    <ClInclude Include="Public\Panels\ToolbarPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Debug\ConsoleWindow.cpp">
@@ -89,6 +92,9 @@
     <ClCompile Include="Private\Tools\AssetImporter.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp" />
+    <ClCompile Include="Private\Debug\ADebugCharacter.cpp" />
+    <ClCompile Include="Private\Panels\ToolbarPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

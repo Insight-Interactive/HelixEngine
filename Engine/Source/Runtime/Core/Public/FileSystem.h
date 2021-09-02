@@ -80,7 +80,6 @@ private:
 	EFileUsageMode m_UsageMode;
 	EContentMode m_ContentUsageMode;
 };
-
 using FileRef = Ref<File>;
 
 

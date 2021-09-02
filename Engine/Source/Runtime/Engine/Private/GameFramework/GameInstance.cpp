@@ -1,5 +1,6 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
+
 #include "GameFramework/GameInstance.h"
 
 
@@ -11,7 +12,12 @@
 //{
 //}
 //
-//const TChar* HGameInstance::GetGameName()
+//void HGameInstance::OnSetFocus()
 //{
-//	return TEXT("Unnamed Game");
+//
+//}
+//
+//void HGameInstance::OnLostFocus()
+//{
+//
 //}

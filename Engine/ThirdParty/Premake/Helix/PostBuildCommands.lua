@@ -1,7 +1,7 @@
 postBuildCommands = {}
 
-postBuildCommands["debugContentDir"]			= "IF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content %{wks.location}Content"
-postBuildCommands["releaseContentDir"]			= "{COPY} %{wks.location}Content %{cfg.targetdir}/Content"
+postBuildCommands["debugContentDir"]			= "IF NOT EXIST \"$(TargetDir)Content\" mklink /D \"$(TargetDir)Content\" \"%{wks.location}Game/Content\""
+postBuildCommands["releaseContentDir"]			= "{COPY} %{wks.location}Game/Content %{cfg.targetdir}/Content"
 postBuildCommands["gameConfigCopy"]				= "{COPY} %{wks.location}Game/Config/* $(TargetDir)"
 postBuildCommands["clearModuleLibs"]			= "DEL \"$(TargetDir)/*.lib\""
 postBuildCommands["clearModuleLibLinkExtras"]	= "DEL \"$(TargetDir)/*.exp\""

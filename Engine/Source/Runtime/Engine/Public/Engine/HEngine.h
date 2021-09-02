@@ -38,7 +38,17 @@ public:
 	*/
 	float GetDeltaTime() const;
 
+	/*
+		Returns true if the editor is present, false if not.
+	*/
 	bool GetIsEditorPresent();
+
+	/*
+		True if the the engine is running a simulation in the editor, false if not.
+	*/
+	//bool IsPlayingInEditor();
+
+	//void SetIsPlayingInEditor( bool IsPlaying );
 
 
 protected:
@@ -64,6 +74,7 @@ protected:
 private:
 	bool				m_IsInitialized;
 	bool				m_IsEditorPresent;
+	bool				m_IsPlayingInEditor;
 	ViewportContext		m_MainViewPort;
 	RendererInitializer	m_RenderContextInitializer;
 	RenderContext		m_RenderContext;
@@ -134,6 +145,25 @@ inline bool HEngine::GetIsEditorPresent()
 {
 	return m_IsEditorPresent;
 }
+
+//inline bool HEngine::IsPlayingInEditor()
+//{
+//	return m_IsPlayingInEditor;
+//}
+//
+//inline void HEngine::SetIsPlayingInEditor( bool IsPlaying )
+//{
+//	m_IsPlayingInEditor = IsPlaying;
+//
+//	if (m_IsPlayingInEditor)
+//	{
+//		HE_LOG( Log, TEXT( "Starting Play In Editor session." ) );
+//	}
+//	else
+//	{
+//		HE_LOG( Log, TEXT( "Ending Play In Editor session." ) );
+//	}
+//}
 
 // Frametime manager
 //

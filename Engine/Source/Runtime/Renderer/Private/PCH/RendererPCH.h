@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <sstream>
 #include <intrin0.h>
+#include <iostream>
 
 #include "RendererFwd.h"
 

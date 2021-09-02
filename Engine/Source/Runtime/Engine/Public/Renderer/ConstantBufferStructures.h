@@ -17,7 +17,7 @@ typedef Handle DirectionalLightDataHandle;
 #define IE_INVALID_POINT_LIGHT_HANDLE		( PointLightDataHandle		(-1) )
 #define IE_INVALID_DIRECTIONAL_LIGHT_HANDLE	( DirectionalLightDataHandle(-1) )
 
-const float kDefaultBrightness = 2000.f;
+const float kDefaultBrightness = 20.f;
 
 HE_ALIGN( 16 ) struct SceneConstantsCBData
 {

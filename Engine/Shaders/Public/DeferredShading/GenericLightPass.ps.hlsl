@@ -8,9 +8,9 @@ SamplerState g_LinearWrapSampler : register(s0);
 
 // GBuffer Inputs
 //
-Texture2D g_SceneDepth : register(t0);
-Texture2D g_AlbedoGBuffer : register(t1);
-Texture2D g_NormalGBuffer : register(t2);
+Texture2D g_SceneDepth      : register(t0);
+Texture2D g_AlbedoGBuffer   : register(t1);
+Texture2D g_NormalGBuffer   : register(t2);
 Texture2D g_PositionGBuffer : register(t3);
 
 // Forward Function Declarations
@@ -52,13 +52,13 @@ LP_PSOutput main(LP_PSInput Input)
         DirectionalLightLuminance += (DirectionalLights[d].Color.rgb * DirectionalLights[d].Brightness) * Angle;
     }
         
-    float3 LightLuminance = /*PointLightLuminance + */DirectionalLightLuminance;
+    float3 LightLuminance = PointLightLuminance /*+ DirectionalLightLuminance*/;
     
-    Output.Result = float4(AlbedoSample/* * LightLuminance*/, 1);
+    Output.Result = float4(AlbedoSample * LightLuminance, 1.f);
     
 	// DEBUG
 	//
-    //Output.Result = float4(Radiance, 1);
+    //Output.Result = float4(LightLuminance, 1);
     
     return Output;
 }
@@ -66,9 +66,9 @@ LP_PSOutput main(LP_PSInput Input)
 
 float3 WorldPosFromDepth(float _Depth, float2 _TexCoords)
 {
-    float Z = _Depth * 2.0 - 1.0; // back to NDC 
+    float Z = _Depth * 2.f - 1.f; // back to NDC 
 
-    float4 ClipSpacePos = float4(_TexCoords * 2.0f - 1.0f, Z, 1.0f);
+    float4 ClipSpacePos = float4(_TexCoords * 2.f - 1.f, Z, 1.f);
     float4 ViewSpacePos = mul(InverseProjMat, ClipSpacePos);
 
     ViewSpacePos /= ViewSpacePos.w;
@@ -80,6 +80,6 @@ float3 WorldPosFromDepth(float _Depth, float2 _TexCoords)
 
 float LinearizeDepth(float depth)
 {
-    float z = depth * 2.0 - 1.0; // back to NDC 
-    return (2.0 * CameraNearZ * CameraFarZ) / (CameraFarZ + CameraNearZ - z * (CameraFarZ - CameraNearZ)) / CameraFarZ;
+    float z = depth * 2.f - 1.f; // back to NDC 
+    return (2.f * CameraNearZ * CameraFarZ) / (CameraFarZ + CameraNearZ - z * (CameraFarZ - CameraNearZ)) / CameraFarZ;
 }

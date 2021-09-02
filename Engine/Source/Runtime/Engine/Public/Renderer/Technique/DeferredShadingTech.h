@@ -23,6 +23,7 @@ public:
 	void Initialize(FVector2 RenderResolution, EFormat SwapchainFormat);
 	void UnInitialize();
 
+	void ReloadPipeline();
 
 	enum EGBuffers
 	{
@@ -44,6 +45,8 @@ public:
 
 		virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) override;
 		virtual void UnBind( ICommandContext& GfxContext ) override;
+
+		virtual void ReloadPipeline() override;
 
 		inline IColorBuffer& operator[]( size_t Index );
 		inline IColorBuffer& GetGBufferColorBuffer( EGBuffers GBuffer ) const;
@@ -73,6 +76,8 @@ public:
 		virtual void Bind(ICommandContext& GfxContext, const Rect& Viewrect) override;
 		virtual void UnBind(ICommandContext& GfxContext) override;
 
+		virtual void ReloadPipeline() override;
+
 	protected:
 		DeferredShadingTech::GeometryPass& m_GeometryPass;
 
@@ -80,6 +85,7 @@ public:
 		IRootSignature* m_pRS;
 		IPipelineState* m_pPSO;
 
+		EFormat m_RenderTargetFormat;
 	};
 
 	GeometryPass& GetGeometryPass();
@@ -99,6 +105,12 @@ private:
 
 // Deferred Shading Tech
 //
+
+inline void DeferredShadingTech::ReloadPipeline()
+{
+	m_GeometryPass.ReloadPipeline();
+	m_LightPass.ReloadPipeline();
+}
 
 inline DeferredShadingTech::GeometryPass& DeferredShadingTech::GetGeometryPass()
 {

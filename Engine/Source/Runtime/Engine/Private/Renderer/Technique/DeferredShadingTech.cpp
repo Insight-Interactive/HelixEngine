@@ -190,6 +190,38 @@ void DeferredShadingTech::GeometryPass::UnBind(ICommandContext& GfxContext)
 	GfxContext.EndDebugMarker();
 }
 
+void DeferredShadingTech::GeometryPass::ReloadPipeline()
+{
+	HE_SAFE_DELETE_PTR( m_pPSO );
+
+	// Create the pipeline state.
+	//
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/GenericGeometryPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/GenericGeometryPass.ps.cso" );
+
+
+	PipelineStateDesc PSODesc = {};
+	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
+	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
+	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
+	PSODesc.pRootSignature = m_pRS;
+	PSODesc.DepthStencilState = CDepthStencilStateDesc();
+	//PSODesc.DepthStencilState.DepthFunc = CF_GreaterEqual;
+	PSODesc.BlendState = CBlendDesc();
+	PSODesc.RasterizerDesc = CRasterizerDesc();
+	PSODesc.SampleMask = UINT_MAX;
+	PSODesc.PrimitiveTopologyType = PTT_Triangle;
+	PSODesc.NumRenderTargets = GB_NumBuffers;
+	for (uint32 i = 0; i < GB_NumBuffers; ++i)
+	{
+		PSODesc.RTVFormats[i] = DCast<IPixelBuffer*>( m_RenderTargets[i] )->GetFormat();
+	}
+	PSODesc.DSVFormat = DCast<IPixelBuffer*>( m_pDepthBuffer )->GetFormat();
+	PSODesc.SampleDesc = { 1, 0 };
+	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
+}
+
 EFormat DeferredShadingTech::GeometryPass::GetDepthFormat() const
 {
 	return DCast<IPixelBuffer*>(m_pDepthBuffer)->GetFormat();
@@ -214,6 +246,8 @@ DeferredShadingTech::LightPass::~LightPass()
 
 void DeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolution, EFormat SwapchainFormatTEMP)
 {
+	m_RenderTargetFormat = SwapchainFormatTEMP;
+
 	GDevice->CreateRootSignature(&m_pRS);
 	m_pRS->Reset(8, 1);
 	(*m_pRS).InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
@@ -255,7 +289,7 @@ void DeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolution
 	PSODesc.SampleMask = UINT_MAX;
 	PSODesc.PrimitiveTopologyType = PTT_Triangle;
 	PSODesc.NumRenderTargets = 1;
-	PSODesc.RTVFormats[0] = SwapchainFormatTEMP;// GetPassResultFormat();
+	PSODesc.RTVFormats[0] = m_RenderTargetFormat;// GetPassResultFormat();
 	PSODesc.SampleDesc = { 1, 0 };
 	GDevice->CreatePipelineState(PSODesc, &m_pPSO);
 }
@@ -282,4 +316,30 @@ void DeferredShadingTech::LightPass::Bind(ICommandContext& GfxContext, const Rec
 void DeferredShadingTech::LightPass::UnBind(ICommandContext& GfxContext)
 {
 	GfxContext.EndDebugMarker();
+}
+
+void DeferredShadingTech::LightPass::ReloadPipeline()
+{
+	HE_SAFE_DELETE_PTR( m_pPSO );
+
+	// Create the pipeline state.
+	//
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/GenericLightPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/GenericLightPass.ps.cso" );
+
+	PipelineStateDesc PSODesc = {};
+	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
+	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.InputLayout.NumElements = kNumScreenSpaceInputElements;
+	PSODesc.InputLayout.pInputElementDescs = GScreenSpaceInputElements;
+	PSODesc.pRootSignature = m_pRS;
+	PSODesc.DepthStencilState.DepthEnable = false;
+	PSODesc.BlendState = CBlendDesc();
+	PSODesc.RasterizerDesc = CRasterizerDesc();
+	PSODesc.SampleMask = UINT_MAX;
+	PSODesc.PrimitiveTopologyType = PTT_Triangle;
+	PSODesc.NumRenderTargets = 1;
+	PSODesc.RTVFormats[0] = m_RenderTargetFormat;// GetPassResultFormat();
+	PSODesc.SampleDesc = { 1, 0 };
+	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
 }

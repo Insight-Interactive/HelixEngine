@@ -55,7 +55,7 @@ void ContentBrowserPanel::TraverseFolder( const TChar* Folder )
 
 	WIN32_FIND_DATA File;
 	HANDLE hSearch = FindFirstFile( Folder, &File );
-
+	
 	if (hSearch != INVALID_HANDLE_VALUE)
 	{
 		do
@@ -63,8 +63,7 @@ void ContentBrowserPanel::TraverseFolder( const TChar* Folder )
 			String FileName = StringHelper::UTF16ToUTF8( File.cFileName );
 			if(FileName == "." || FileName == ".." )
 				continue;
-			//if (!TCharStrCmp( Folder, TEXT( "." ) ) || !TCharStrCmp( Folder, TEXT( ".." ) ))
-
+			
 			if (File.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
 				const ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;

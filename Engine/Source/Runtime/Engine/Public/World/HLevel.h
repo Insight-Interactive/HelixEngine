@@ -20,6 +20,7 @@ public:
 	template <typename ActorType, typename ... InitArgs>
 	ActorType* CreateActor(InitArgs ... args);
 
+	HWorld* GetWorld();
 
 protected:
 	void GuardedAddActor(AActor* pActor);
@@ -55,4 +56,9 @@ inline void HLevel::GuardedAddActor(AActor* pActor)
 {
 	ScopedCriticalSection Guard( m_ActorListGuard );
 	m_Actors.push_back(pActor);
+}
+
+inline HWorld* HLevel::GetWorld()
+{
+	return m_pOwner;
 }

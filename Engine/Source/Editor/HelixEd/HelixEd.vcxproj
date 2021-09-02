@@ -907,18 +907,24 @@
   <ItemGroup>
     <ClInclude Include="Private\Direct3D12\HelixEdImGuiImplD3D12.h" />
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
+    <ClInclude Include="Public\Debug\ADebugCharacter.h" />
     <ClInclude Include="Public\Debug\ConsoleWindow.h" />
     <ClInclude Include="Public\Editor\HEditorEngine.h" />
+    <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="Public\Panels\MenuBarPanel.h" />
     <ClInclude Include="Public\Panels\Panel.h" />
     <ClInclude Include="Public\Panels\SceneViewportPanel.h" />
+    <ClInclude Include="Public\Panels\ToolbarPanel.h" />
     <ClInclude Include="Public\Tools\AssetImporter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Private\Debug\ADebugCharacter.cpp" />
     <ClCompile Include="Private\Debug\ConsoleWindow.cpp" />
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp" />
     <ClCompile Include="Private\HEditorEngine.cpp" />
+    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp" />
+    <ClCompile Include="Private\Panels\ToolbarPanel.cpp" />
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

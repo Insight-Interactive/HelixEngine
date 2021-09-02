@@ -2,6 +2,28 @@
 
 #include "Logger.h"
 
+#include "CriticalSection.h"
+
+
+// Output Buffer
+//
+
+void OutputBuffer::FlushBuffer()
+{
+	m_Stream.str( TEXT( "" ) );
+}
+
+HName OutputBuffer::GetStringBuffer()
+{
+	return m_Stream.str();
+}
+
+
+// Logger
+//
+
+OutputBuffer Logger::SOutputBuffer;
+CriticalSection GStreamGuard;
 
 Logger::Logger()
 	: m_UseConsole(true)
@@ -15,7 +37,7 @@ Logger::~Logger()
 void Logger::Initialize(TChar* Name)
 {
 	SetLoggerName(Name);
-	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: {%s}"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
+	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: %s"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
 }
 
 void Logger::SetLoggerName(TChar* Name)
@@ -68,15 +90,15 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 	TraceBuffer[kMaxLogLength - 1] = '\0';
 	OutputBuffer[kMaxLogLength - 1] = '\0';
 
-	if (GetShouldUseConsole())
-	{
-		Printf(TraceBuffer);
-		Printf(OutputBuffer);
-		Printf(TEXT("\n"));
-	}
 	// Print message
+	{
+		ScopedCriticalSection StreamGuard( GStreamGuard );
+		SOutputBuffer << TraceBuffer;
+		SOutputBuffer << OutputBuffer;
+		SOutputBuffer << TEXT( "\n" );
+	}
 #if _MSC_VER
-	if (IsDebuggerPresent())
+	if ( IsDebuggerPresent() )
 	{
 		OutputDebugString(TraceBuffer);
 		OutputDebugString(OutputBuffer);

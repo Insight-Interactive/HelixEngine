@@ -41,11 +41,13 @@ public:
 
 	ViewPort& GetClientViewport();
 	Rect& GetClientRect();
+	HWorld& GetWorld();
 
 protected:
 	void PresentOneFrame();
 	void InitializeRenderingResources();
 	void SetCommonRenderState( ICommandContext& CmdContext );
+	void ReloadRenderPipelines();
 
 	void RenderWorld( ICommandContext& CmdContext, IColorBuffer& RenderTarget );
 
@@ -83,6 +85,11 @@ protected:
 //
 // Inline function implementation
 //
+
+inline HWorld& ViewportContext::GetWorld()
+{
+	return m_GameWorld;
+}
 
 inline InputDispatcher* ViewportContext::GetInputDispatcher()
 {

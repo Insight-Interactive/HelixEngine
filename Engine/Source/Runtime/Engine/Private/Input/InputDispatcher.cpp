@@ -6,20 +6,11 @@
 #include "Input/KeyEvent.h"
 #include "Input/GamepadEvents.h"
 #include "Input/InputEnums.h"
+#include "FileSystem.h"
 
 
 InputDispatcher::InputDispatcher()
 {
-	AddAxisMapping( "MoveForward", Key_W, 1.0f );
-	AddAxisMapping( "MoveForward", Key_S, -1.0f );
-	AddAxisMapping( "MoveRight", Key_D, 1.0f );
-	AddAxisMapping( "MoveRight", Key_A, -1.0f );
-	AddAxisMapping( "MoveUp", Key_E, 1.0f );
-	AddAxisMapping( "MoveUp", Key_Q, -1.0f );
-	AddAxisMapping( "LookUp", AnalogMouseY, 1.0f );
-	AddAxisMapping( "LookUp", AnalogMouseY, -1.0f );
-	AddAxisMapping( "LookRight", AnalogMouseX, 1.0f );
-	AddAxisMapping( "LookRight", AnalogMouseX, -1.0f );
 }
 
 InputDispatcher::~InputDispatcher()
@@ -30,6 +21,24 @@ InputDispatcher::~InputDispatcher()
 void InputDispatcher::Initialize( void* pNativeWindow )
 {
 	m_InputSurveyer.Initialize( pNativeWindow );
+
+	AddAxisMapping( "MoveForward", Key_W, 1.0f );
+	AddAxisMapping( "MoveForward", Key_S, -1.0f );
+	AddAxisMapping( "MoveForward", AnalogLeftStickY, 1.0f );
+	AddAxisMapping( "MoveRight", Key_D, 1.0f );
+	AddAxisMapping( "MoveRight", Key_A, -1.0f );
+	AddAxisMapping( "MoveRight", AnalogLeftStickX, 1.0f );
+	AddAxisMapping( "MoveUp", Key_E, 1.0f );
+	AddAxisMapping( "MoveUp", Key_Q, -1.0f );
+	AddAxisMapping( "MoveUp", AnalogRightTrigger, -1.0f );
+	AddAxisMapping( "MoveUp", AnalogLeftTrigger, 1.0f );
+	AddAxisMapping( "LookUp", AnalogMouseY, 1.0f );
+	AddAxisMapping( "LookUp", AnalogRightStickY, 1.0f );
+	AddAxisMapping( "LookRight", AnalogMouseX, 1.0f );
+	AddAxisMapping( "LookRight", AnalogMouseX, -1.0f );
+	AddAxisMapping( "LookRight", AnalogRightStickX, 1.0f );
+
+	AddActionMapping( "Sprint", Key_LShift );
 }
 
 void InputDispatcher::UnInitialize()
@@ -39,8 +48,6 @@ void InputDispatcher::UnInitialize()
 
 void InputDispatcher::UpdateInputs( float DeltaTime )
 {
-	//m_InputSurveyer.AcquireMouse();
-
 	// Update the input devices.
 	//
 	m_InputSurveyer.Update( DeltaTime );

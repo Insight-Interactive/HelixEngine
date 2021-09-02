@@ -5,7 +5,6 @@
 
 MyGameInstance::MyGameInstance()
 {
-	m_SomeVariable = 250;
 	CreateLogger(GGameLogger, "Game");
 }
 

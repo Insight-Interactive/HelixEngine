@@ -26,6 +26,8 @@ SkyboxPass::~SkyboxPass()
 
 void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferFormat)
 {
+	m_DepthTargetFormat = DepthBufferFormat;
+	m_RenderTargetFormat = RenderTargetFormat;
 
 	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20);
 	m_SkyDiffuse = GTextureManager->LoadTexture("Content/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds", DT_Magenta2D, false);
@@ -138,4 +140,48 @@ void SkyboxPass::UnBind(ICommandContext& GfxContext, IDepthBuffer& DepthBuffer)
 	GfxContext.TransitionResource(DepthBufferResource, RS_DepthRead);
 
 	GfxContext.EndDebugMarker();
+}
+
+void SkyboxPass::ReloadPipeline()
+{
+	HE_SAFE_DELETE_PTR( m_pPSO );
+
+	// Create the pipeline state.
+	//
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/SkyboxPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/SkyboxPass.ps.cso" );
+
+	InputElementDesc InputElements[1] =
+	{
+		{ "POSITION",	0, F_R32G32B32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	};
+	const uint32 kNumInputElements = HE_ARRAYSIZE( InputElements );
+
+	DepthStencilStateDesc DepthStateDesc = {};
+	DepthStateDesc.DepthEnable = true;
+	DepthStateDesc.DepthWriteMask = DWM_All;
+	DepthStateDesc.DepthFunc = CF_LessEqual;
+
+	RasterizerDesc RasterStateDesc = {};
+	RasterStateDesc.DepthClipEnabled = true;
+	RasterStateDesc.CullMode = CM_Front;
+	RasterStateDesc.FillMode = FM_Solid;
+
+	PipelineStateDesc PSODesc = {};
+	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
+	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.InputLayout.pInputElementDescs = InputElements;
+	PSODesc.InputLayout.NumElements = kNumInputElements;
+	PSODesc.pRootSignature = m_pRS;
+	PSODesc.DepthStencilState = DepthStateDesc;
+	PSODesc.BlendState = CBlendDesc();
+	PSODesc.RasterizerDesc = RasterStateDesc;
+	PSODesc.SampleMask = UINT_MAX;
+	PSODesc.PrimitiveTopologyType = PTT_Triangle;
+	PSODesc.NumRenderTargets = 1;
+	PSODesc.RTVFormats[0] = m_RenderTargetFormat;
+	PSODesc.SampleDesc = { 1, 0 };
+	PSODesc.DSVFormat = m_DepthTargetFormat;
+
+	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
 }

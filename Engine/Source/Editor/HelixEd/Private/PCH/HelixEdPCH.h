@@ -44,5 +44,6 @@
 
 #endif // HE_WINDOWS
 
+#include "CoreFwd.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"

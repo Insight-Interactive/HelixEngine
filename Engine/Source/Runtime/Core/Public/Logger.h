@@ -5,6 +5,32 @@
 #include "Cast.h"
 #include "CoreFwd.h"
 
+
+class OutputBuffer final
+{
+public:
+	OutputBuffer()
+	{
+	}
+	~OutputBuffer()
+	{
+	}
+
+	inline void operator << ( const HName& Str )
+	{
+		m_Stream << Str.c_str();
+	}
+
+	void FlushBuffer();
+	HName GetStringBuffer();
+
+
+private:
+	TStringStream m_Stream;
+
+};
+
+
 /*
 	Valid log categories for Logging instance.
 */
@@ -29,6 +55,16 @@ public:
 		Initialize the logger.
 	*/
 	void Initialize(TChar* Name);
+
+	/*
+		Returns a reference to the global log buffer where log messages are stored.
+	*/
+	static OutputBuffer& GetOutputGlobalBuffer();
+
+	/*
+		Flush the log buffer and erase all log messages.
+	*/
+	static void FlushGlobalLogBuffer();
 
 	/*
 		Set the name of the logger.
@@ -60,6 +96,8 @@ public:
 private:
 	TChar m_LoggerName[kMakLoggerNameLength];
 	bool m_UseConsole;
+
+	static OutputBuffer SOutputBuffer;
 };
 
 bool Logger::GetShouldUseConsole()
@@ -82,3 +120,17 @@ const TChar* Logger::GetLoggerName()
 #else
 #	define CreateLogger(LoggerInstance, Name)
 #endif
+
+//
+// Inline function implementations
+//
+
+/*static*/ inline OutputBuffer& Logger::GetOutputGlobalBuffer()
+{
+	return SOutputBuffer;
+}
+
+/*static*/ inline void Logger::FlushGlobalLogBuffer()
+{
+	SOutputBuffer.FlushBuffer();
+}

@@ -4,6 +4,7 @@
 
 #include "IDescriptorHeap.h"
 
+class ADebugCharacter;
 
 class SceneViewportPanel : public Panel
 {
@@ -20,5 +21,7 @@ public:
 private:
 	DescriptorHandle m_DescriptorHandle;
 	uint32 m_HandleSize;
+
+	ADebugCharacter* m_pDebugPawn;
 
 };

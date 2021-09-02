@@ -170,13 +170,14 @@ typedef std::string String;
 //		System Text Manipulation
 //-----------------------------------
 //
-// TChar is a string of test that could be ascii or unicode depending on 
-// if unicode is supported in the build configuration.
 //
 #if _UNICODE
+// A character that could be ascii or unicode depending on
+// if unicode is supported in the build configuration.
 typedef WChar TChar;
 // A client facing UTF-16 string.
 typedef WString HName;
+typedef std::wstringstream TStringStream;
 
 #	define Printf(Fmt, ...)									::wprintf( Fmt, __VA_ARGS__)
 #	define PrintBuffer(Buffer, Fmt, ...)					::swprintf_s( Buffer, Fmt, __VA_ARGS__)
@@ -186,6 +187,7 @@ typedef WString HName;
 #	define TCharStrCat( Destination, Source )				::lstrcatW( Destination, Source )
 #	define TCharStrCmp( Str1, Str2 )						::wcscmp( Str1, Str2 )
 #	define CharToTChar( Str )								StringHelper::UTF8ToUTF16( Str ).c_str()
+#	define TCharToChar( Str )								StringHelper::UTF16ToUTF8( Str ).c_str()
 #	define WCharToTChar( Str )								Str
 #	define HE_FILE											LONG_STR( __FILE__ )
 #	define HE_FUNCTION										LONG_STR( __FUNCTION__ )
@@ -196,6 +198,7 @@ typedef WString HName;
 typedef Char TChar;
 // A client facing UTF-8 string.
 typedef String HName;
+typedef std::stringstream TStringStream;
 
 #	define Printf(Fmt, ...)									::printf( Fmt, __VA_ARGS__ )
 #	define PrintBuffer(Buffer, Fmt, ...)					::sprintf_s( Buffer, Fmt, __VA_ARGS__ )
@@ -205,6 +208,8 @@ typedef String HName;
 #	define TCharStrCat( Destination, Source )				::strcat( Destination, Source )
 #	define TCharStrCmp( Str1, Str2 )						::strcmp( Str1, Str2 )
 #	define CharToTChar( Str )								StringHelper::UTF16ToUTF8( Str ).c_str()
+#	define TCharToChar( Str )								( Str )
+#	define WCharToTChar( Str )								StringHelper::UTF16ToUTF8( Str ).c_str()
 #	define FILE												( __FILE__ )
 #	define FUNCTION											( __FUNCTION__ )
 #	define HE_TIME											( __TIME__ )
