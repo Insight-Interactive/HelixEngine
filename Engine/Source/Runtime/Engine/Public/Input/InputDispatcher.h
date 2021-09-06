@@ -20,7 +20,6 @@ class AxisEvent;
 class ActionEvent;
 class KeyPressedEvent;
 class MouseScrolledEvent;
-class MouseMovedEvent;
 class InputEvent;
 
 

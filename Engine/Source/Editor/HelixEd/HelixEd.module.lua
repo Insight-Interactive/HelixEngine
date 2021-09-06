@@ -12,7 +12,6 @@ project ("HelixEd")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en-US")
-	defaultlanguage ("en-us")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
@@ -54,7 +53,7 @@ project ("HelixEd")
 
 	links
 	{
-		"Core",
+--		"Core",
 	}
 
 	defines

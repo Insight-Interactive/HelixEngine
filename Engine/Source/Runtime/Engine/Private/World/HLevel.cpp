@@ -16,7 +16,7 @@
 
 
 HLevel::HLevel(HWorld* pOwner)
-	: m_pOwner(pOwner)
+	: m_pWorld(pOwner)
 {
 }
 
@@ -42,9 +42,10 @@ void HLevel::LoadFromFile(const Char* FileName)
 	SMSubeActorCube->SetMaterial(RustedMetalMaterial);
 	SMSubeActorCube->SetMesh(CubeMesh);
 	HPointLightComponent* pPointLight = CubeActor->AddComponent<HPointLightComponent>( TEXT( "Point Light" ) );
+	pPointLight->SetPosition( FVector3(0.f, 5.f, 0.f) );
 
 	APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>();
-	m_pOwner->SetCurrentSceneRenderCamera(pPlayer->GetCameraComponent());
+	GetWorld()->SetCurrentSceneRenderCamera(pPlayer->GetCameraComponent());
 	GetWorld()->AddPlayerCharacterRef( pPlayer );
 
 	return;

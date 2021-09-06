@@ -32,7 +32,7 @@ protected:
 protected:
 	std::vector<AActor*> m_Actors;
 	CriticalSection m_ActorListGuard;
-	HWorld* m_pOwner;
+	HWorld* m_pWorld;
 };
 
 
@@ -43,10 +43,11 @@ protected:
 template <typename ActorType, typename ... InitArgs>
 inline ActorType* HLevel::CreateActor(InitArgs ... args)
 {
-	AActor* pNewActor = new ActorType( m_pOwner, args...);
+	HE_ASSERT( m_pWorld != NULL ); // Cannot add an actor to a level with a null world.
+
+	AActor* pNewActor = new ActorType( m_pWorld, args...);
 	HE_ASSERT(pNewActor != NULL);
 
-	HE_ASSERT(m_pOwner != NULL); // Cannot add an actor to a level with a null world.
 	GuardedAddActor(pNewActor);
 
 	return SCast<ActorType*>(pNewActor);
@@ -60,5 +61,5 @@ inline void HLevel::GuardedAddActor(AActor* pActor)
 
 inline HWorld* HLevel::GetWorld()
 {
-	return m_pOwner;
+	return m_pWorld;
 }

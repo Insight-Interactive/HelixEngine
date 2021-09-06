@@ -923,23 +923,19 @@
     <ClCompile Include="Private\Debug\ConsoleWindow.cpp" />
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp" />
     <ClCompile Include="Private\HEditorEngine.cpp" />
-    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp" />
-    <ClCompile Include="Private\Panels\ToolbarPanel.cpp" />
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp" />
     <ClCompile Include="Private\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="Private\Panels\MenuBarPanel.cpp" />
     <ClCompile Include="Private\Panels\SceneViewportPanel.cpp" />
+    <ClCompile Include="Private\Panels\ToolbarPanel.cpp" />
     <ClCompile Include="Private\Tools\AssetImporter.cpp" />
+    <ClCompile Include="Private\Tools\ImGuiBuild.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Runtime\Core\Core.vcxproj">
-      <Project>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,8 +7,7 @@
 
 
 RawInputSurveyer::RawInputSurveyer()
-	: m_MouseAcquired( false )
-	, m_UseKeyBoardMouse( true )
+	: m_UseKeyBoardMouse( true )
 	, m_pSurveyingWindow( NULL )
 {
 	ZeroMemory( m_Buttons, sizeof( m_Buttons ) );
@@ -43,9 +42,12 @@ void RawInputSurveyer::UnInitialize()
 
 void RawInputSurveyer::Update( float DeltaTime )
 {
-	memcpy( m_Buttons[1], m_Buttons[0], sizeof( m_Buttons[0] ) );
-	memset( m_Buttons[0], 0, sizeof( m_Buttons[0] ) );
-	memset( m_Analogs, 0, sizeof( m_Analogs ) );
+	CopyMemory( m_Buttons[1], m_Buttons[0], sizeof( m_Buttons[0] ) );
+	ZeroMemory( m_Buttons[0], sizeof( m_Buttons[0] ) );
+	ZeroMemory( m_Analogs, sizeof( m_Analogs ) );
+
+	m_Mouse.UpdateBuffers();
+
 
 #ifdef HE_INPUT_USE_XINPUT
 	XINPUT_STATE newInputState;
@@ -74,7 +76,6 @@ void RawInputSurveyer::Update( float DeltaTime )
 		m_Analogs[AnalogRightStickY] = FilterAnalogInput( newInputState.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE );
 	}
 #else
-
 	IVectorView<Gamepad^>^ gamepads = Gamepad::Gamepads;
 	if (gamepads->Size != 0)
 	{
@@ -113,20 +114,25 @@ void RawInputSurveyer::Update( float DeltaTime )
 
 	for (uint32_t i = 0; i < NumKeys; ++i)
 	{
-		m_Buttons[0][i] = (m_Keybuffer[m_DXKeyMapping[i]] & 0x80) != 0;
+		m_Buttons[0][i] = m_Keyboard.GetState( i ) != 0;
 	}
 
+#if HE_WINDOWS
 	for (uint32_t i = 0; i < 8; ++i)
 	{
-		if (m_MouseState.rgbButtons[i] > 0) m_Buttons[0][Mouse0 + i] = true;
+		if (m_Mouse.GetButtonStateByIndex( i ) > 0) 
+			m_Buttons[0][Mouse0 + i] = true;
 	}
+#endif
 
-	m_Analogs[AnalogMouseX] = (float)m_MouseState.lX * .0018f;
-	m_Analogs[AnalogMouseY] = (float)m_MouseState.lY * -.0018f;
+	FVector2 MouseMoveDelta = m_Mouse.GetMoveDelta();
+	m_Analogs[AnalogMouseX] = MouseMoveDelta.x * .0018f;
+	m_Analogs[AnalogMouseY] = MouseMoveDelta.y * -.0018f;
 
-	if (m_MouseState.lZ > 0)
+	float MouseVerticalScrollDelta = m_Mouse.GetVerticalScrollDelta();
+	if (MouseVerticalScrollDelta > 0)
 		m_Analogs[AnalogMouseScroll] = 1.0f;
-	else if (m_MouseState.lZ < 0)
+	else if (MouseVerticalScrollDelta < 0)
 		m_Analogs[AnalogMouseScroll] = -1.0f;
 
 #endif // HE_INPUT_USE_KEYBOARD_MOUSE
@@ -175,7 +181,7 @@ bool RawInputSurveyer::IsMouseButtonPressed( DigitalInput di )
 #endif // HE_WINDOWS
 }
 
-bool RawInputSurveyer::IsAnyPressed( void )
+bool RawInputSurveyer::IsAnyPressed()
 {
 	return m_Buttons[0] != 0;
 }
@@ -208,236 +214,52 @@ float RawInputSurveyer::GetDurationPressed( DigitalInput di )
 float RawInputSurveyer::GetAnalogInput( DigitalInput ai )
 {
 	HE_ASSERT( IsValidAnalogInput( ai ) );
-	return m_Analogs[ai];
+	// m_Analogs only stores values from AnalogLeftTrigger to AnalogMouseScroll 
+	// (0 - 8) so put it back in that range.
+	return m_Analogs[ai - AnalogLeftTrigger];
 }
 
 float RawInputSurveyer::GetTimeCorrectedAnalogInput( DigitalInput ai )
 {
 	HE_ASSERT( IsValidAnalogInput( ai ) );
-	return m_AnalogsTC[ai];
-}
-
-void RawInputSurveyer::AcquireDevices()
-{
-	m_pMouse->Acquire();
-	m_pKeyboard->Acquire();
-}
-
-void RawInputSurveyer::UnacquireDevices()
-{
-	m_pMouse->Unacquire();
-	m_pKeyboard->Unacquire();
-}
-
-void RawInputSurveyer::AcquireMouse()
-{
-	m_MouseAcquired = true;
-	m_pMouse->Acquire();
-}
-
-void RawInputSurveyer::UnacquireMouse()
-{
-	m_MouseAcquired = false;
-	m_pMouse->Unacquire();
-}
-
-void RawInputSurveyer::AcquireKeyboard()
-{
-	m_pKeyboard->Acquire();
-}
-
-void RawInputSurveyer::UnacquireKeyboard()
-{
-	m_pKeyboard->Unacquire();
+	// m_Analogs only stores values from AnalogLeftTrigger to AnalogMouseScroll 
+	// (0 - 8) so put it back in that range.
+	return m_AnalogsTC[ai - AnalogLeftTrigger];
 }
 
 #if HE_INPUT_USE_KEYBOARD_MOUSE
-
 void RawInputSurveyer::KbmInitialize()
 {
-#if HE_WIN64 || HE_WIN32
+	// Acquire the hardware input interface.
+	m_RIDInterface.Setup();
 
-	HWND NativeWindow = RCast<HWND>( m_pSurveyingWindow );
+	// Setup the keyboard.
+	m_Keyboard.SetupPlatformRIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow );
 
-	KbmBuildKeyMapping();
-
-	HRESULT hr = DirectInput8Create( GetModuleHandle( nullptr ), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_pDirectInput, nullptr );
-	HE_ASSERT( SUCCEEDED( hr ) ); // DirectInput8 initialization failed.
-
-	hr = m_pDirectInput->CreateDevice( GUID_SysKeyboard, &m_pKeyboard, nullptr );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Keyboard CreateDevice failed.
-
-	hr = m_pKeyboard->SetDataFormat( &c_dfDIKeyboard );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Keyboard SetDataFormat failed.
+	// Setup the mouse.
+	m_Mouse.SetupPlatformRIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow );
 	
-	hr = m_pKeyboard->SetCooperativeLevel( NativeWindow, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Keyboard SetCooperativeLevel failed.
+	HE_ASSERT( m_Mouse.IsValid() && m_Keyboard.IsValid() );
 
-	DIPROPDWORD dipdw = {};
-	dipdw.diph.dwSize = sizeof( DIPROPDWORD );
-	dipdw.diph.dwHeaderSize = sizeof( DIPROPHEADER );
-	dipdw.diph.dwObj = 0;
-	dipdw.diph.dwHow = DIPH_DEVICE;
-	dipdw.dwData = 10;
-	hr = m_pKeyboard->SetProperty( DIPROP_BUFFERSIZE, &dipdw.diph );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Keyboard set buffer size failed.
-
-	hr = m_pDirectInput->CreateDevice( GUID_SysMouse, &m_pMouse, nullptr );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Mouse CreateDevice failed.
-
-	hr = m_pMouse->SetDataFormat( &c_dfDIMouse2 );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Mouse SetDataFormat failed.
-
-	hr = m_pMouse->SetCooperativeLevel( NativeWindow, DISCL_FOREGROUND | DISCL_EXCLUSIVE );
-	HE_ASSERT( SUCCEEDED( hr ) ); // Mouse SetCooperativeLevel failed.
-
-	AcquireDevices();
+	AcquireKeyboard();
 	KbmZeroInputs();
-
-#endif // HE_WIN64 || HE_WIN32
-}
-
-void RawInputSurveyer::KbmBuildKeyMapping()
-{
-	m_DXKeyMapping[Key_Escape] = 1;
-	m_DXKeyMapping[Key_1] = 2;
-	m_DXKeyMapping[Key_2] = 3;
-	m_DXKeyMapping[Key_3] = 4;
-	m_DXKeyMapping[Key_4] = 5;
-	m_DXKeyMapping[Key_5] = 6;
-	m_DXKeyMapping[Key_6] = 7;
-	m_DXKeyMapping[Key_7] = 8;
-	m_DXKeyMapping[Key_8] = 9;
-	m_DXKeyMapping[Key_9] = 10;
-	m_DXKeyMapping[Key_0] = 11;
-	m_DXKeyMapping[Key_Minus] = 12;
-	m_DXKeyMapping[Key_Equals] = 13;
-	m_DXKeyMapping[Key_Back] = 14;
-	m_DXKeyMapping[Key_Tab] = 15;
-	m_DXKeyMapping[Key_Q] = 16;
-	m_DXKeyMapping[Key_W] = 17;
-	m_DXKeyMapping[Key_E] = 18;
-	m_DXKeyMapping[Key_R] = 19;
-	m_DXKeyMapping[Key_T] = 20;
-	m_DXKeyMapping[Key_Y] = 21;
-	m_DXKeyMapping[Key_U] = 22;
-	m_DXKeyMapping[Key_I] = 23;
-	m_DXKeyMapping[Key_O] = 24;
-	m_DXKeyMapping[Key_P] = 25;
-	m_DXKeyMapping[Key_LBracket] = 26;
-	m_DXKeyMapping[Key_RBracket] = 27;
-	m_DXKeyMapping[Key_Return] = 28;
-	m_DXKeyMapping[Key_LControl] = 29;
-	m_DXKeyMapping[Key_A] = 30;
-	m_DXKeyMapping[Key_S] = 31;
-	m_DXKeyMapping[Key_D] = 32;
-	m_DXKeyMapping[Key_F] = 33;
-	m_DXKeyMapping[Key_G] = 34;
-	m_DXKeyMapping[Key_H] = 35;
-	m_DXKeyMapping[Key_J] = 36;
-	m_DXKeyMapping[Key_K] = 37;
-	m_DXKeyMapping[Key_L] = 38;
-	m_DXKeyMapping[Key_Semicolon] = 39;
-	m_DXKeyMapping[Key_Apostrophe] = 40;
-	m_DXKeyMapping[Key_Grave] = 41;
-	m_DXKeyMapping[Key_LShift] = 42;
-	m_DXKeyMapping[Key_Backslash] = 43;
-	m_DXKeyMapping[Key_Z] = 44;
-	m_DXKeyMapping[Key_X] = 45;
-	m_DXKeyMapping[Key_C] = 46;
-	m_DXKeyMapping[Key_V] = 47;
-	m_DXKeyMapping[Key_B] = 48;
-	m_DXKeyMapping[Key_N] = 49;
-	m_DXKeyMapping[Key_M] = 50;
-	m_DXKeyMapping[Key_Comma] = 51;
-	m_DXKeyMapping[Key_Period] = 52;
-	m_DXKeyMapping[Key_Slash] = 53;
-	m_DXKeyMapping[Key_RShift] = 54;
-	m_DXKeyMapping[Key_Multiply] = 55;
-	m_DXKeyMapping[Key_LAlt] = 56;
-	m_DXKeyMapping[Key_Space] = 57;
-	m_DXKeyMapping[Key_Capital] = 58;
-	m_DXKeyMapping[Key_F1] = 59;
-	m_DXKeyMapping[Key_F2] = 60;
-	m_DXKeyMapping[Key_F3] = 61;
-	m_DXKeyMapping[Key_F4] = 62;
-	m_DXKeyMapping[Key_F5] = 63;
-	m_DXKeyMapping[Key_F6] = 64;
-	m_DXKeyMapping[Key_F7] = 65;
-	m_DXKeyMapping[Key_F8] = 66;
-	m_DXKeyMapping[Key_F9] = 67;
-	m_DXKeyMapping[Key_F10] = 68;
-	m_DXKeyMapping[Key_Numlock] = 69;
-	m_DXKeyMapping[Key_Scroll] = 70;
-	m_DXKeyMapping[Key_Numpad7] = 71;
-	m_DXKeyMapping[Key_Numpad8] = 72;
-	m_DXKeyMapping[Key_Numpad9] = 73;
-	m_DXKeyMapping[Key_Subtract] = 74;
-	m_DXKeyMapping[Key_Numpad4] = 75;
-	m_DXKeyMapping[Key_Numpad5] = 76;
-	m_DXKeyMapping[Key_Numpad6] = 77;
-	m_DXKeyMapping[Key_Add] = 78;
-	m_DXKeyMapping[Key_Numpad1] = 79;
-	m_DXKeyMapping[Key_Numpad2] = 80;
-	m_DXKeyMapping[Key_Numpad3] = 81;
-	m_DXKeyMapping[Key_Numpad0] = 82;
-	m_DXKeyMapping[Key_Decimal] = 83;
-	m_DXKeyMapping[Key_F11] = 87;
-	m_DXKeyMapping[Key_F12] = 88;
-	m_DXKeyMapping[Key_NumpAdenter] = 156;
-	m_DXKeyMapping[Key_RControl] = 157;
-	m_DXKeyMapping[Key_Divide] = 181;
-	m_DXKeyMapping[Key_Sysrq] = 183;
-	m_DXKeyMapping[Key_RAlt] = 184;
-	m_DXKeyMapping[Key_Pause] = 197;
-	m_DXKeyMapping[Key_Home] = 199;
-	m_DXKeyMapping[Key_Up] = 200;
-	m_DXKeyMapping[Key_PageUp] = 201;
-	m_DXKeyMapping[Key_Left] = 203;
-	m_DXKeyMapping[Key_Right] = 205;
-	m_DXKeyMapping[Key_End] = 207;
-	m_DXKeyMapping[Key_Down] = 208;
-	m_DXKeyMapping[Key_PageDown] = 209;
-	m_DXKeyMapping[Key_Insert] = 210;
-	m_DXKeyMapping[Key_Delete] = 211;
-	m_DXKeyMapping[Key_LeftWindows] = 219;
-	m_DXKeyMapping[Key_RightWindows] = 220;
-	m_DXKeyMapping[Key_Apps] = 221;
 }
 
 void RawInputSurveyer::KbmZeroInputs()
 {
-	memset( &m_MouseState, 0, sizeof( DIMOUSESTATE2 ) );
-	memset( m_Keybuffer, 0, sizeof( m_Keybuffer ) );
+	m_Mouse.ZeroInput();
+	m_Keyboard.ZeroInput();
 }
 
 void RawInputSurveyer::KbmShutdown()
 {
-#if HE_INPUT_USE_XINPUT
-	if (m_pKeyboard)
-	{
-		m_pKeyboard->Unacquire();
-		m_pKeyboard->Release();
-		m_pKeyboard = nullptr;
-	}
-	if (m_pMouse)
-	{
-		m_pMouse->Unacquire();
-		m_pMouse->Release();
-		m_pMouse = nullptr;
-	}
-	if (m_pDirectInput)
-	{
-		m_pDirectInput->Release();
-		m_pDirectInput = nullptr;
-	}
-#endif // HE_INPUT_USE_XINPUT
+	m_Keyboard.Destroy();
+	m_Mouse.Destroy();
+	m_RIDInterface.Destroy();
 }
 
 void RawInputSurveyer::KbmUpdate()
 {
-#if HE_WIN64 || HE_WIN32
-
 	// Zero out the inputs if the application is out of focus.
 	//
 	HWND NativeWindow = RCast<HWND>( m_pSurveyingWindow );
@@ -448,23 +270,19 @@ void RawInputSurveyer::KbmUpdate()
 	}
 	else
 	{
-		if (m_MouseAcquired)
+		if ( m_Mouse.GetIsAcquired() )
 		{
 			AcquireMouse();
-			m_pMouse->GetDeviceState( sizeof( DIMOUSESTATE2 ), &m_MouseState );
+			m_Mouse.QueryState();
 		}
 
 		AcquireKeyboard();
-		m_pKeyboard->GetDeviceState( sizeof( m_Keybuffer ), m_Keybuffer );
+		m_Keyboard.QueryState();
 	}
-
-#endif // HE_WIN64 || HE_WIN32
 }
-
 #endif //HE_INPUT_USE_KEYBOARD_MOUSE
 
 #if HE_INPUT_USE_GAMEPAD
-
 float RawInputSurveyer::FilterAnalogInput( int Val, int DeadZone )
 {
 #if HE_INPUT_USE_XINPUT
@@ -494,5 +312,4 @@ float RawInputSurveyer::FilterAnalogInput( int Val, int DeadZone )
 		return 0.0f;
 #endif // HE_INPUT_USE_XINPUT
 }
-
 #endif // HE_INPUT_USE_GAMEPAD

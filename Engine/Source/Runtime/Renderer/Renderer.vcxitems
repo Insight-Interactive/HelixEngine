@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\D3DCommon\D3DCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\BackendCoreD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\ColorBufferD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandAllocatorPoolD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandContextD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandManagerD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\ConstantBufferManagerD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DepthBufferD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DescriptorAllocatorD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DescriptorHeapD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DeviceD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DynamicDescriptorHeapD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\GeometryBufferManagerD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\GpuResourceD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\IndexBufferD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\LinearAllocator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\PipelineStateD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\PixelBufferD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\RootSignatureD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\SwapchainD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\TextureD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\TextureManagerD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\Utility\DDSTextureLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\Utility\dds.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\VertexBufferD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\Direct3D12\d3dx12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Private\PCH\RendererPCH.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\APIBridge\CommonFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\APIBridge\EnumTranslations.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\Color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\CommonEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\CommonStructHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\CommonStructs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\HTexture2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\HTexture3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IColorBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ICommandContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ICommandManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IConstantBufferManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IDepthBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IDescriptorHeap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IDevice.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IGeometryBufferManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IGpuResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IIndexBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IPipelineState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IPixelBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IRootSignature.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ISwapChain.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ITexture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\IVertexBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\ModelManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RenderContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RenderContextFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RenderContextFactoryD3D12.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RendererCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RendererFwd.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\RendererInitializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\StaticMeshGeometry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Public\VertexLayouts.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\APIBridge\CommonFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\APIBridge\EnumTranslations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\BackendCoreD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\ColorBufferD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandAllocatorPoolD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandContextD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\CommandManagerD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\ConstantBufferManagerD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DepthBufferD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DescriptorAllocatorD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DescriptorHeapD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DeviceD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\DynamicDescriptorHeapD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\GeometryBufferManagerD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\GpuResourceD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\IndexBufferD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\LinearAllocator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\PipelineStateD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\PixelBufferD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\RenderContextFactoryD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\RootSignatureD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\SwapChainD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\TextureD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\TextureManagerD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\Utility\DDSTextureLoader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\Direct3D12\VertexBufferD3D12.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\ICommandContext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\IConstantBufferManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\IGeometryBufferManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\IRootSignature.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\ISwapchain.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\ITextureManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\ModelManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\PCH\RendererPCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\RenderContext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\RendererCore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\RendererDetail.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\RendererInitializer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Private\StaticMeshGeometry.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Renderer.module.lua" />
+  </ItemGroup>
+</Project>

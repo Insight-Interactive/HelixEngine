@@ -13,6 +13,7 @@ void GuardedMain(WChar* CmdLine)
 {
 	CommandLine Args;
 	Args.Process( CmdLine );
+	//Args.Process( L"-launchcfg LaunchGame");
 
 #if HE_WITH_EDITOR
 	if (Args[L"-launchcfg"] == L"LaunchEditor")
@@ -25,6 +26,7 @@ void GuardedMain(WChar* CmdLine)
 		GEngine = new HEngine( Args );
 	}
 
+	HE_ASSERT( GEngine != NULL );
 	GEngine->EngineMain();
 
 	HE_SAFE_DELETE_PTR( GEngine );

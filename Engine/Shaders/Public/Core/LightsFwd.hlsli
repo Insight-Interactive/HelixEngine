@@ -5,7 +5,8 @@
 
 struct PointLight
 {
-    float4 Position;
+    float3 Position;
+    float Radius;
     float4 Color;
     float Brightness;
     uint Id;

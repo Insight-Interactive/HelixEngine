@@ -16,7 +16,7 @@
 #endif
 
 
-#if defined HE_WINDOWS						
+#ifdef HE_WINDOWS						
 #	define HE_ENTRY_POINT int APIENTRY wWinMain(					\
 							_In_		HINSTANCE hInstance,		\
 							_In_opt_	HINSTANCE hPrevInstance,	\
@@ -69,5 +69,5 @@
 #elif HE_XBOX_ONE_X
 #	define HE_PLATFORM_STRING "Xbox One X (Scorpio)"
 #elif HE_PS5
-#	define HE_PLATFORM_STRING "PlayStation 5"
+#	define HE_PLATFORM_STRING "PlayStation 5 (Prospero)"
 #endif

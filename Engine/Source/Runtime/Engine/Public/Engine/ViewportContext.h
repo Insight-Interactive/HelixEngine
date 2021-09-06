@@ -13,6 +13,7 @@
 class DeferredShadingTech;;
 class PostProcesssUber;
 class SkyboxPass;
+class MouseRawPointerMovedEvent;
 
 class ViewportContext
 {
@@ -57,6 +58,7 @@ protected:
 	// Event Processing
 	//
 	void OnEvent( Event& e );
+	bool OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e );
 
 protected:
 	Window m_Window;

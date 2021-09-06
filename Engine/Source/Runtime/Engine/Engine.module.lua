@@ -101,8 +101,8 @@ project ("Engine")
 	postbuildcommands
 	{
 		"%{postBuildCommands.gameConfigCopy}",
-		"%{postBuildCommands.clearModuleLibs}",
-		"%{postBuildCommands.clearModuleLibLinkExtras}",
+--		"%{postBuildCommands.clearModuleLibs}",
+--		"%{postBuildCommands.clearModuleLibLinkExtras}",
 	}
 
 	dofile ("Helix/CommonEngineMacros.lua")

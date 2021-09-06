@@ -9,11 +9,10 @@ public:
 	static FORCEINLINE ClassType* GetInstance();
 	static FORCEINLINE bool IsValid();
 
-
 private:
 	static void InValidate();
 
-	static ClassType* s_Instance;
+	static ClassType* SInstance;
 
 protected:
 	FORCEINLINE TSingleton();
@@ -25,14 +24,14 @@ protected:
 //
 
 template <typename ClassType>
-ClassType* TSingleton<ClassType>::s_Instance = NULL;
+ClassType* TSingleton<ClassType>::SInstance = NULL;
 
 template <typename ClassType>
 FORCEINLINE TSingleton<ClassType>::TSingleton()
 {
-	if (s_Instance == NULL)
+	if (SInstance == NULL)
 	{
-		s_Instance = (ClassType*)this;
+		SInstance = (ClassType*)this;
 	}
 }
 
@@ -45,18 +44,18 @@ FORCEINLINE TSingleton<ClassType>::~TSingleton()
 template <typename ClassType>
 /*static*/ FORCEINLINE ClassType* TSingleton<ClassType>::GetInstance()
 {
-	HE_ASSERT(s_Instance != NULL); // Trying to get an instance of a class that has not been initialized.
-	return s_Instance;
+	HE_ASSERT(SInstance != NULL); // Trying to get an instance of a class that has not been initialized.
+	return SInstance;
 }
 
 template <typename ClassType>
 /*static*/ FORCEINLINE bool TSingleton<ClassType>::IsValid()
 {
-	return s_Instance != NULL;
+	return SInstance != NULL;
 }
 
 template <typename ClassType>
 /*static*/ FORCEINLINE void TSingleton<ClassType>::InValidate()
 {
-	s_Instance = NULL;
+	SInstance = NULL;
 }

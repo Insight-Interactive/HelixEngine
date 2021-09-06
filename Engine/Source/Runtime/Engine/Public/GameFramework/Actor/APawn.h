@@ -29,8 +29,9 @@ public:
 	void MoveUp(float Value);
 	void Sprint();
 
-	inline void SetMovementSpeed(float Value);
-	inline float GetMovementSpeed() const;
+	void SetMovementSpeed(float Value);
+	float GetMovementSpeed() const;
+	Transform& GetTransform();
 
 protected:
 	virtual void SetupController(HControllerComponent& Controller)
@@ -61,7 +62,7 @@ private:
 
 
 //
-// Inline function impleentation
+// Inline function implementations
 //
 
 inline void APawn::SetMovementSpeed(float Value)
@@ -72,4 +73,9 @@ inline void APawn::SetMovementSpeed(float Value)
 inline float APawn::GetMovementSpeed() const
 {
 	return m_MovementSpeed;
+}
+
+inline Transform& APawn::GetTransform()
+{
+	return m_Transform;
 }

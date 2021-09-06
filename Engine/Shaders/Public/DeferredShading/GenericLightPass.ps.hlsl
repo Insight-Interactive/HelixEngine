@@ -23,63 +23,63 @@ float LinearizeDepth(float depth);
 //
 LP_PSOutput main(LP_PSInput Input)
 {
-    LP_PSOutput Output;
+	LP_PSOutput Output;
 
-    // Sample G-Buffer.
-    float3 AlbedoSample = g_AlbedoGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
-    float3 NormalSample = g_NormalGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
-    float3 WorldPos     = g_PositionGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+	// Sample G-Buffer.
+	float3 AlbedoSample = g_AlbedoGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+	float3 NormalSample = g_NormalGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+	float3 WorldPos     = g_PositionGBuffer.Sample(g_LinearWrapSampler, Input.UVs).rgb;
 	
-    // Acummulate point light luminance.
-    float3 PointLightLuminance = float3(0.f, 0.f, 0.f);
-    for (uint i = 0; i < NumPointLights; i++)
-    {
-        float3 LightDir = -normalize(PointLights[i].Position.xyz - WorldPos);
-        float Angle = max(dot(NormalSample, LightDir), 0);
+	// Acummulate point light luminance.
+	float3 PointLightLuminance = float3(0.f, 0.f, 0.f);
+	for (uint i = 0; i < NumPointLights; i++)
+	{
+		float3 LightDir = -normalize(PointLights[i].Position.xyz - WorldPos);
+		float Angle = max(dot(NormalSample, LightDir), 0);
 
-        float Distance = length(PointLights[i].Position.xyz - WorldPos);
-        float Attenuation = 1.0f / (Distance * Distance);
-        PointLightLuminance += ((PointLights[i].Color.rgb * PointLights[i].Brightness) * Attenuation) * Angle;
-    }
-    
-    // Accumulate directional light luminance.
-    float3 DirectionalLightLuminance = float3(0.f, 0.f, 0.f);
-    for (uint d = 0; d < NumDirectionalLights; d++)
-    {
-        float3 LightDir = normalize(DirectionalLights[d].Direction.xyz);
-        float Angle     = max(dot(NormalSample, LightDir), 0);
-        
-        DirectionalLightLuminance += (DirectionalLights[d].Color.rgb * DirectionalLights[d].Brightness) * Angle;
-    }
-        
-    float3 LightLuminance = PointLightLuminance /*+ DirectionalLightLuminance*/;
-    
-    Output.Result = float4(AlbedoSample * LightLuminance, 1.f);
-    
+		float Distance = length(PointLights[i].Position.xyz - WorldPos);
+		float Attenuation = 1.0f / (Distance * Distance);
+		PointLightLuminance += ((PointLights[i].Color.rgb * PointLights[i].Brightness) * Attenuation) * Angle;
+	}
+	
+	// Accumulate directional light luminance.
+	float3 DirectionalLightLuminance = float3(0.f, 0.f, 0.f);
+	for (uint d = 0; d < NumDirectionalLights; d++)
+	{
+		float3 LightDir = normalize(DirectionalLights[d].Direction.xyz);
+		float Angle     = max(dot(NormalSample, LightDir), 0);
+		
+		DirectionalLightLuminance += (DirectionalLights[d].Color.rgb * DirectionalLights[d].Brightness) * Angle;
+	}
+		
+	float3 LightLuminance = PointLightLuminance /*+ DirectionalLightLuminance*/;
+	
+	Output.Result = float4(AlbedoSample * LightLuminance, 1.f);
+	
 	// DEBUG
 	//
-    //Output.Result = float4(LightLuminance, 1);
-    
-    return Output;
+	//Output.Result = float4(LightLuminance, 1);
+	
+	return Output;
 }
 
 
 float3 WorldPosFromDepth(float _Depth, float2 _TexCoords)
 {
-    float Z = _Depth * 2.f - 1.f; // back to NDC 
+	float Z = _Depth * 2.f - 1.f; // back to NDC 
 
-    float4 ClipSpacePos = float4(_TexCoords * 2.f - 1.f, Z, 1.f);
-    float4 ViewSpacePos = mul(InverseProjMat, ClipSpacePos);
+	float4 ClipSpacePos = float4(_TexCoords * 2.f - 1.f, Z, 1.f);
+	float4 ViewSpacePos = mul(InverseProjMat, ClipSpacePos);
 
-    ViewSpacePos /= ViewSpacePos.w;
+	ViewSpacePos /= ViewSpacePos.w;
 
-    float4 WorldSpacePos = mul(InverseViewMat, ViewSpacePos);
+	float4 WorldSpacePos = mul(InverseViewMat, ViewSpacePos);
 
-    return WorldSpacePos.xyz;
+	return WorldSpacePos.xyz;
 }
 
 float LinearizeDepth(float depth)
 {
-    float z = depth * 2.f - 1.f; // back to NDC 
-    return (2.f * CameraNearZ * CameraFarZ) / (CameraFarZ + CameraNearZ - z * (CameraFarZ - CameraNearZ)) / CameraFarZ;
+	float z = depth * 2.f - 1.f; // back to NDC 
+	return (2.f * CameraNearZ * CameraFarZ) / (CameraFarZ + CameraNearZ - z * (CameraFarZ - CameraNearZ)) / CameraFarZ;
 }

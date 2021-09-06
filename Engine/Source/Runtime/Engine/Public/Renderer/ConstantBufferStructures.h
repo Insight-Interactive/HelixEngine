@@ -41,10 +41,16 @@ HE_ALIGN( 16 ) struct MaterialConstantsCBData
 	FVector4 Color;
 };
 
+// Light Structures
+// Keep these in sync with "Shaders/Public/Core/LightsFwd.hlsli"
+//
 HE_ALIGN( 16 ) struct PointLightCBData
 {
 	// The position of the light in world space.
-	FVector4				Position;
+	FVector3				Position;
+
+	// The radial influence of the light.
+	float Radius;
 
 	// The color of the light. Fourth component is unused.
 	FVector4				Color;

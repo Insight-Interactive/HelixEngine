@@ -16,23 +16,23 @@ Texture2D g_Normal : register(t1);
 //
 GP_PSOutput main(GP_PSInput Input)
 {
-    GP_PSOutput Output;
+	GP_PSOutput Output;
 
-    float3 AlbedoSample = g_Albedo.Sample(g_LinearWrapSampler, Input.UVs).rgb;
-    float3 NormalSample = g_Normal.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+	float3 AlbedoSample = g_Albedo.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+	float3 NormalSample = g_Normal.Sample(g_LinearWrapSampler, Input.UVs).rgb;
 
-    const float3x3 TangentToView = float3x3(normalize(Input.Tangent),
+	const float3x3 TangentToView = float3x3(normalize(Input.Tangent),
 											normalize(Input.BiTangent),
 													  Input.Normal);
-    float3 NormalTangentSpace;
-    NormalTangentSpace.x =  NormalSample.x * 2.0f - 1.0f;
-    NormalTangentSpace.y = -NormalSample.y * 2.0f + 1.0f;
-    NormalTangentSpace.z =  NormalSample.z;
-    NormalTangentSpace = normalize(mul(NormalTangentSpace, TangentToView));
+	float3 NormalTangentSpace;
+	NormalTangentSpace.x =  NormalSample.x * 2.0f - 1.0f;
+	NormalTangentSpace.y = -NormalSample.y * 2.0f + 1.0f;
+	NormalTangentSpace.z =  NormalSample.z;
+	NormalTangentSpace = normalize(mul(NormalTangentSpace, TangentToView));
 
-    Output.Normal = float4(NormalTangentSpace, 1);
-    Output.Albedo = float4(AlbedoSample, 1) + MatColor;
-    Output.Position = float4(Input.WorldPos, 1);
+	Output.Normal = float4(NormalTangentSpace, 1);
+	Output.Albedo = float4(AlbedoSample, 1) + MatColor;
+	Output.Position = float4(Input.WorldPos, 1);
 	
-    return Output;
+	return Output;
 }

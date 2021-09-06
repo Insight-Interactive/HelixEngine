@@ -129,6 +129,9 @@
     <ClInclude Include="Public\Engine\Event\EventEmitter.h">
       <Filter>Public\Engine\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\FrameTimeManager.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Engine\HEngine.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -162,6 +165,9 @@
     <ClInclude Include="Public\GameFramework\Actor\Components\HControllerComponent.h">
       <Filter>Public\GameFramework\Actor\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\Components\HPointLightComponent.h">
+      <Filter>Public\GameFramework\Actor\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Actor\Components\HSceneComponent.h">
       <Filter>Public\GameFramework\Actor\Components</Filter>
     </ClInclude>
@@ -170,6 +176,12 @@
     </ClInclude>
     <ClInclude Include="Public\GameFramework\GameInstance.h">
       <Filter>Public\GameFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\FKeyboard.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\FMouse.h">
+      <Filter>Public\Input</Filter>
     </ClInclude>
     <ClInclude Include="Public\Input\GamepadEvents.h">
       <Filter>Public\Input</Filter>
@@ -234,7 +246,6 @@
     <ClInclude Include="Public\World\HWorld.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HPointLightComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\FApp.cpp">
@@ -253,6 +264,9 @@
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\Events.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\FrameTimeManager.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\HEngine.cpp">
@@ -285,6 +299,9 @@
     <ClCompile Include="Private\GameFramework\Actor\Components\HControllerComponent.cpp">
       <Filter>Private\GameFramework\Actor\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\Components\HPointLightComponent.cpp">
+      <Filter>Private\GameFramework\Actor\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Actor\Components\HSceneComponent.cpp">
       <Filter>Private\GameFramework\Actor\Components</Filter>
     </ClCompile>
@@ -293,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="Private\GameFramework\GameInstance.cpp">
       <Filter>Private\GameFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\FKeyboard.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\FMouse.cpp">
+      <Filter>Private\Input</Filter>
     </ClCompile>
     <ClCompile Include="Private\Input\InputDispatcher.cpp">
       <Filter>Private\Input</Filter>
@@ -354,7 +377,6 @@
     <ClCompile Include="Public\Renderer\Material.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HPointLightComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

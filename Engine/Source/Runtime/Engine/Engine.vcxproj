@@ -516,8 +516,6 @@
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -543,8 +541,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -570,8 +566,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -597,8 +591,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -624,8 +616,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -651,8 +641,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -678,8 +666,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -705,8 +691,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -732,8 +716,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -759,8 +741,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -793,8 +773,6 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -827,8 +805,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -861,8 +837,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -895,8 +869,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -929,8 +901,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -963,8 +933,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -997,8 +965,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -1031,8 +997,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -1065,8 +1029,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -1099,8 +1061,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     </ProjectReference>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-DEL "$(TargetDir)/*.lib"
-DEL "$(TargetDir)/*.exp"
 IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -1116,6 +1076,7 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClInclude Include="Public\Engine\Event\EngineEvent.h" />
     <ClInclude Include="Public\Engine\Event\Event.h" />
     <ClInclude Include="Public\Engine\Event\EventEmitter.h" />
+    <ClInclude Include="Public\Engine\FrameTimeManager.h" />
     <ClInclude Include="Public\Engine\HEngine.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\SplashScreen.h" />
@@ -1131,6 +1092,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClInclude Include="Public\GameFramework\Actor\Components\HSceneComponent.h" />
     <ClInclude Include="Public\GameFramework\Actor\Components\HStaticMeshComponent.h" />
     <ClInclude Include="Public\GameFramework\GameInstance.h" />
+    <ClInclude Include="Public\Input\FKeyboard.h" />
+    <ClInclude Include="Public\Input\FMouse.h" />
     <ClInclude Include="Public\Input\GamepadEvents.h" />
     <ClInclude Include="Public\Input\InputDispatcher.h" />
     <ClInclude Include="Public\Input\InputEnums.h" />
@@ -1160,6 +1123,7 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp" />
     <ClCompile Include="Private\Engine\EngineEvent.cpp" />
     <ClCompile Include="Private\Engine\Events.cpp" />
+    <ClCompile Include="Private\Engine\FrameTimeManager.cpp" />
     <ClCompile Include="Private\Engine\HEngine.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\SplashScreen.cpp" />
@@ -1174,6 +1138,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClCompile Include="Private\GameFramework\Actor\Components\HSceneComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\Components\HStaticMeshComponent.cpp" />
     <ClCompile Include="Private\GameFramework\GameInstance.cpp" />
+    <ClCompile Include="Private\Input\FKeyboard.cpp" />
+    <ClCompile Include="Private\Input\FMouse.cpp" />
     <ClCompile Include="Private\Input\InputDispatcher.cpp" />
     <ClCompile Include="Private\Input\KeyEvent.cpp" />
     <ClCompile Include="Private\Input\MouseEvent.cpp" />

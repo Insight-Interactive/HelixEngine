@@ -123,6 +123,22 @@ void Window::Create( const Window::Description& Desc )
 
 	CreateSwapChain();
 
+	// Setup the raw input devices. Only needs to be done once.
+	static bool RIDInitialized = false;
+	if (!RIDInitialized)
+	{
+		RAWINPUTDEVICE RID = {};
+		RID.usUsagePage = HID_USAGE_PAGE_GENERIC;
+		RID.usUsage		= HID_USAGE_GENERIC_MOUSE;
+		RID.dwFlags		= 0;
+		RID.hwndTarget	= NULL;
+		if ( !RegisterRawInputDevices( &RID, 1, sizeof( RAWINPUTDEVICE ) ) )
+		{
+			HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
+		}
+		RIDInitialized = true;
+	}
+
 	WindowInstanceCount++;
 }
 
@@ -393,6 +409,33 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 	case WM_CLOSE:
 	{
 		pWindow->Close();
+		return 0;
+	}
+	// ------------------------
+	// Mouse Messages
+	// ------------------------
+	case WM_INPUT:
+	{
+		UINT DataSize = 0;
+		GetRawInputData( (HRAWINPUT)lParam, RID_INPUT, NULL, &DataSize, sizeof( RAWINPUTHEADER ) );
+		
+		if (DataSize > 0)
+		{
+			void* RawData = HE_StackAlloc( DataSize );
+			if (GetRawInputData( (HRAWINPUT)lParam, RID_INPUT, RawData, &DataSize, sizeof( RAWINPUTHEADER ) ) == DataSize)
+			{
+				RAWINPUT* pInputData = RCast<RAWINPUT*>( RawData );
+				if (pInputData->header.dwType == RIM_TYPEMOUSE)
+				{
+					MouseRawPointerMovedEvent e( (float)pInputData->data.mouse.lLastX, (float)pInputData->data.mouse.lLastY );
+					pWindow->EmitEvent( e );
+				}
+			}
+
+		}
+		// Cleanup the rids.
+		return DefWindowProc( hWnd, uMsg, wParam, lParam );
+
 		return 0;
 	}
 	// ------------------------

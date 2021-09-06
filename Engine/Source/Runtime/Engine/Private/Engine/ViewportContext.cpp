@@ -4,6 +4,8 @@
 #include "Engine/ViewportContext.h"
 
 #include "Engine/HEngine.h"
+#include "Input/MouseEvent.h"
+#include "IDevice.h"
 #include "IGpuResource.h"
 #include "ICommandContext.h"
 #include "IConstantBufferManager.h"
@@ -13,14 +15,10 @@
 #include "Renderer/ShaderRegisters.h"
 #include "Renderer/GeometryGenerator.h"
 #include "Renderer/ConstantBufferStructures.h"
-#include "GameFramework/Actor/Components/HCameraComponent.h"
-
 #include "Renderer/Technique/SkyPass.h"
 #include "Renderer/Technique/DeferredShadingTech.h"
 #include "Renderer/Technique/PostProcessUber.h"
-
-
-#include "IDevice.h"
+#include "GameFramework/Actor/Components/HCameraComponent.h"
 
 
 ViewportContext::ViewportContext()
@@ -259,5 +257,14 @@ void ViewportContext::ReloadRenderPipelines()
 
 void ViewportContext::OnEvent( Event& e )
 {
+	EventDispatcher Dispatcher(e);
 
+	// Mouse
+	Dispatcher.Dispatch<MouseRawPointerMovedEvent>( this, &ViewportContext::OnMouseRawPointerMoved );
+}
+
+bool ViewportContext::OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseMoveDelta( e.GetX(), e.GetY() );
+	return false;
 }

@@ -31,5 +31,12 @@ public:
 	{
 	}
 
+	FORCEINLINE FVector4 ToVector4() const
+	{
+		return FVector4( R, G, B, A );
+	}
+
+
 	float R, G, B, A;
 };
+

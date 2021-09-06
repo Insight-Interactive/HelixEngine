@@ -22,7 +22,7 @@
 // The literal value of a piece of text.
 #define HE_STRINGIFY( Value )			#Value
 // Force the compiler to inline a piece of code.
-#if HE_PS5
+#if __clang__
 #	define FORCEINLINE					inline
 #else
 #	define FORCEINLINE					__forceinline
@@ -48,20 +48,23 @@
 #define HE_ALIGN( InBytes )				__declspec( align(InBytes) )
 #define DLL_EXPORT						__declspec( dllexport )
 #define DLL_IMPORT						__declspec( dllimport )
-// Returns the size of a array.
+// Returns the size of an array.
 #define HE_ARRAYSIZE(Arr)				( sizeof(Arr) / sizeof(Arr[0]) )
 // The max path for a string of characters (analogous to microsoft's MAX_PATH).
 #define HE_MAX_PATH						260
+// Returns the required memory size in bytes for a given kilobyte value.
+#define HE_KILOBYTES(Value)				( Value * 1024 )
 // Returns the required memory size in bytes for a given megabyte value.
-#define HE_MEGABYTES(Value)				( Value * 1024 )
+#define HE_MEGABYTES(Value)				( Value * HE_KILOBYTES(1024) )
 // Returns the required memory size in bytes for a given gigabyte value.
-#define HE_GIGABYTES(Value)				( Value * IE_MEGABYTES(1024) )
-#define HE_PI							3.14159265359
-#define HE_2PI							(2.0 * HE_PI)
+#define HE_GIGABYTES(Value)				( Value * HE_MEGABYTES(1024) )
+#define HE_PI							( 3.14159265359 )
+#define HE_2PI							( 2.0 * HE_PI )
 // Declare a class to be non-copyable.
-#define HE_DECL_NON_COPYABLE( Class )	\
-		Class(const Class&) = delete;	\
-		Class(Class&&)		= delete;
+#define HE_DECL_NON_COPYABLE( Class )					\
+		Class(const Class&)					= delete;	\
+		Class(Class&&)						= delete;	\
+		Class& operator = (const Class&)	= delete;	
 // The max path for a string of characters (analogous to microsoft's MAX_PATH).
 #define HE_MAX_PATH						260
 #define HE_MAX(a, b)					( ((a) > (b)) ? (a) : (b) )
@@ -70,10 +73,10 @@
 		HE_PRAGMA (warning (disable : PragmaCode))	\
 		__VA_ARGS__									\
 		HE_PRAGMA (warning (pop))						
-#define HE_StackAlloc(Size)				alloca(Size)
-#define HE_HeapAlloc(Size)				malloc(Size)
-#define HE_HeapFree(HeapPtr)			free(HeapPtr)
-#define HE_ReAlloc(HeapPtr, Size)		realloc(HeapPtr, Size)
+#define HE_StackAlloc(Size)				_malloca(Size)
+#define HE_HeapAlloc(Size)				::malloc(Size)
+#define HE_HeapFree(HeapPtr)			::free(HeapPtr)
+#define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)
 
 
 

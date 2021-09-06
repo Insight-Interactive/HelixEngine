@@ -19,6 +19,7 @@
 HEngine* GEngine = NULL;
 Logger GEngineLogger;
 
+
 // Static function declarations
 //
 static void SplashMain(void* pUserData);
@@ -46,20 +47,25 @@ void HEngine::EngineMain()
 		HE_LOG(Warning, TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!"));
 		HE_DEBUG_BREAK;
 	}
-	GEngine->PreStartup();
-	GEngine->Startup();
-	GEngine->PostStartup();
+	// Startup
+	PreStartup();
+	Startup();
+	PostStartup();
 
-	GEngine->Update();
+	// Update
+	Update();
 	
-	GEngine->PreShutdown();
-	GEngine->Shutdown();
-	GEngine->PostShutdown();
+	// Shutdown
+	PreShutdown();
+	Shutdown();
+	PostShutdown();
 }
 
 void HEngine::PreStartup()
 {
-	
+	HE_LOG( Log, TEXT( "Beginning engine pre-startup." ) );
+
+	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
 }
 
 void HEngine::Startup()
@@ -163,7 +169,7 @@ void HEngine::Update()
 		// Check one more time before proceeding with the loop.
 		if ( !FApp::GetInstance()->IsRunning() ) break;
 
-		float DeltaTime = m_FrameTimeManager.GetFrameTime();
+		float DeltaTime = (float)m_FrameTimeManager.GetFrameTime();
 
 		// Check if the main viewport has focus. There will only be one window 
 		// in shipping builds.
@@ -174,7 +180,6 @@ void HEngine::Update()
 			continue;
 		}
 #endif
-		IColorBuffer* pBuff = GetClientViewport().GetPreDisplayBuffer();
 		RenderClientViewport( DeltaTime );
 
 		m_FrameTimeManager.Update( GetClientViewport().GetWindow().IsVSyncEnabled(), false );
@@ -211,7 +216,6 @@ void HEngine::OnEvent( Event& e )
 
 	// Window
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEngine::OnClientWindowClosed );
-	//Dispatcher.Dispatch<KeyPressedEvent>(this, Engine::OnKeyPressed);
 }
 
 bool HEngine::OnClientWindowClosed( WindowClosedEvent& e )
@@ -224,33 +228,6 @@ void HEngine::RequestShutdown()
 {
 	HE_LOG(Log, TEXT("Engine shutdown requested."));
 	m_Application.RequestShutdown();
-}
-
-
-//
-// Frametime manager implementation
-//
-
-void HEngine::FrameTimeManager::Initialize()
-{
-	m_CpuTickDelta = 1.0 / (double)System::QueryPerformanceFrequency();
-}
-
-double HEngine::FrameTimeManager::GetCurrentTick()
-{
-	return (double)System::QueryPerformanceCounter();
-}
-
-void HEngine::FrameTimeManager::Update( bool VSyncEnabled, bool LimitTo30Hz )
-{
-	int64 CurrentTick = System::QueryPerformanceCounter();
-
-	if (VSyncEnabled)
-		m_FrameTime = ( LimitTo30Hz ? 2.f : 1.f ) / 60.f;
-	else
-		m_FrameTime = (float)TimeBetweenTicks( m_FrameStartTick, CurrentTick );
-
-	m_FrameStartTick = CurrentTick;
 }
 
 

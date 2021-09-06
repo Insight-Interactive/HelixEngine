@@ -5,6 +5,7 @@ include ("Helix/DllCopy.lua")
 
 project ("Renderer")
 	location ("./")
+--	kind ("SharedItems")
 	kind ("StaticLib")
 	language ("C++")
 	cppdialect ("C++17")
@@ -12,7 +13,6 @@ project ("Renderer")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en-US")
-	defaultlanguage ("en-us")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
@@ -49,7 +49,7 @@ project ("Renderer")
 
 	links
 	{
-		"Core",
+--		"Core",
 	}
 
 	defines

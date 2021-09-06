@@ -3,7 +3,7 @@ include ("Helix/HelixModule.lua")
 
 project ("Game")
     location ("./")
-    kind ("SharedLIb")
+    kind ("SharedLib")
     language ("C++")
     cppdialect ("C++17")
     staticruntime ("Off")

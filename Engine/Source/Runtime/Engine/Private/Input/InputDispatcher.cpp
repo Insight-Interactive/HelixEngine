@@ -22,23 +22,23 @@ void InputDispatcher::Initialize( void* pNativeWindow )
 {
 	m_InputSurveyer.Initialize( pNativeWindow );
 
-	AddAxisMapping( "MoveForward", Key_W, 1.0f );
-	AddAxisMapping( "MoveForward", Key_S, -1.0f );
-	AddAxisMapping( "MoveForward", AnalogLeftStickY, 1.0f );
-	AddAxisMapping( "MoveRight", Key_D, 1.0f );
-	AddAxisMapping( "MoveRight", Key_A, -1.0f );
-	AddAxisMapping( "MoveRight", AnalogLeftStickX, 1.0f );
-	AddAxisMapping( "MoveUp", Key_E, 1.0f );
-	AddAxisMapping( "MoveUp", Key_Q, -1.0f );
-	AddAxisMapping( "MoveUp", AnalogRightTrigger, -1.0f );
-	AddAxisMapping( "MoveUp", AnalogLeftTrigger, 1.0f );
-	AddAxisMapping( "LookUp", AnalogMouseY, 1.0f );
-	AddAxisMapping( "LookUp", AnalogRightStickY, 1.0f );
-	AddAxisMapping( "LookRight", AnalogMouseX, 1.0f );
-	AddAxisMapping( "LookRight", AnalogMouseX, -1.0f );
-	AddAxisMapping( "LookRight", AnalogRightStickX, 1.0f );
+	AddAxisMapping( "MoveForward",	Key_W, 1.f );
+	AddAxisMapping( "MoveForward",	Key_S, -1.f );
+	AddAxisMapping( "MoveForward",	AnalogLeftStickY, 1.f );
+	AddAxisMapping( "MoveRight",	Key_D, 1.f );
+	AddAxisMapping( "MoveRight",	Key_A, -1.f );
+	AddAxisMapping( "MoveRight",	AnalogLeftStickX, 1.f );
+	AddAxisMapping( "MoveUp",		Key_E, 1.f );
+	AddAxisMapping( "MoveUp",		Key_Q, -1.f );
+	AddAxisMapping( "MoveUp",		AnalogRightTrigger, -1.f );
+	AddAxisMapping( "MoveUp",		AnalogLeftTrigger, 1.f );
+	AddAxisMapping( "LookUp",		AnalogMouseY, 1.f );
+	AddAxisMapping( "LookUp",		AnalogRightStickY, 1.f );
+	AddAxisMapping( "LookRight",	AnalogMouseX, 1.f );
+	AddAxisMapping( "LookRight",	AnalogMouseX, -1.f );
+	AddAxisMapping( "LookRight",	AnalogRightStickX, 1.f );
 
-	AddActionMapping( "Sprint", Key_LShift );
+	AddActionMapping( "Sprint",		Key_LShift );
 }
 
 void InputDispatcher::UnInitialize()
@@ -109,7 +109,6 @@ void InputDispatcher::UpdateInputs( float DeltaTime )
 				ProcessInputEventEx<AxisEvent>( AxisKey, 0.f );
 			}
 		}
-
 	}
 }
 

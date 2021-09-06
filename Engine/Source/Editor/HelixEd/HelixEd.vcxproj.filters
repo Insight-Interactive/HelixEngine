@@ -42,11 +42,17 @@
     <ClInclude Include="Private\PCH\HelixEdPCH.h">
       <Filter>Private\PCH</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Debug\ADebugCharacter.h">
+      <Filter>Public\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Debug\ConsoleWindow.h">
       <Filter>Public\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Public\Editor\HEditorEngine.h">
       <Filter>Public\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Panels\ConsoleOutputPanel.h">
+      <Filter>Public\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h">
       <Filter>Public\Panels</Filter>
@@ -60,14 +66,17 @@
     <ClInclude Include="Public\Panels\SceneViewportPanel.h">
       <Filter>Public\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Panels\ToolbarPanel.h">
+      <Filter>Public\Panels</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Tools\AssetImporter.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
-    <ClInclude Include="Public\Debug\ADebugCharacter.h" />
-    <ClInclude Include="Public\Panels\ToolbarPanel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Private\Debug\ADebugCharacter.cpp">
+      <Filter>Private\Debug</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Debug\ConsoleWindow.cpp">
       <Filter>Private\Debug</Filter>
     </ClCompile>
@@ -80,6 +89,9 @@
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <Filter>Private\PCH</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp">
+      <Filter>Private\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Panels\ContentBrowserPanel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
@@ -89,12 +101,15 @@
     <ClCompile Include="Private\Panels\SceneViewportPanel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\ToolbarPanel.cpp">
+      <Filter>Private\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Tools\AssetImporter.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp" />
-    <ClCompile Include="Private\Debug\ADebugCharacter.cpp" />
-    <ClCompile Include="Private\Panels\ToolbarPanel.cpp" />
+    <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
+      <Filter>Private\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

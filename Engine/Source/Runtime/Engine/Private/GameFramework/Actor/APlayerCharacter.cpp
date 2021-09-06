@@ -14,7 +14,6 @@ APlayerCharacter::APlayerCharacter( HWorld* pWorld )
 {
 	m_pCameraComponent = AddComponent<HCameraComponent>(TEXT("Player camera"));
 
-	//GetWorld()->SetSceneRenderCamera(m_pCamera);
 	m_pCameraComponent->GetTransform().SetParent(&m_Transform);
 	m_Transform.SetPosition( 0.f, 0.f, -28.f );
 	
@@ -39,6 +38,7 @@ void APlayerCharacter::LookUp(float Value)
 {
 	if (m_CanRotateCamera)
 	{
+		float DT = GetWorld()->GetDeltaTime();
 		m_pCameraComponent->GetTransform().Rotate(-Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f);
 		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
 	}
@@ -48,6 +48,7 @@ void APlayerCharacter::LookRight(float Value)
 {
 	if (m_CanRotateCamera)
 	{
+		float DT = GetWorld()->GetDeltaTime();
 		m_pCameraComponent->GetTransform().Rotate(0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f);
 		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
 	}

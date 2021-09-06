@@ -13,7 +13,6 @@
 #include "Direct3D12/TextureD3D12.h"
 #include "Direct3D12/ColorBufferD3D12.h"
 #include "Direct3D12/CommandContextD3D12.h"
-#include "Renderer/Technique/DeferredShadingTech.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Engine/Event/EngineEvent.h"

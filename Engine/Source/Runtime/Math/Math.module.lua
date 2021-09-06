@@ -40,7 +40,7 @@ project ("Math")
 
     links
     {
-        "Core",
+--        "Core",
     }
 
     defines

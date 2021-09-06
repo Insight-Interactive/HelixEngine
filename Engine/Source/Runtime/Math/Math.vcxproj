@@ -921,11 +921,6 @@
   <ItemGroup>
     <None Include="Math.module.lua" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.vcxproj">
-      <Project>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -28,7 +28,7 @@ protected:
 inline void MeshDatabase::RegisterMesh( const char* MeshName, const char* Filepath )
 {
 	HE_LOG( Log, TEXT( "Registering mesh \"%s\" into database." ), CharToTChar( MeshName ) );
-	m_ProjectMeshes.try_emplace( MeshName, Filepath );
+	m_ProjectMeshes.try_emplace( String(MeshName), String(Filepath) );
 }
 
 inline void MeshDatabase::UnRegisterMesh( const char* MeshName )

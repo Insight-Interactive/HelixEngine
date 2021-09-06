@@ -168,9 +168,11 @@ enum DigitalInput
 	AnalogMouseY,
 	AnalogMouseScroll,
 
-	// Misc
+	// Misc - Internal
 	PlatformDefined,
 	MouseAnyMoved,
+	MousePositionMoved,
+	MouseRawInput
 };
 
 static const uint32 kNumAnalogInputs	= AnalogMouseScroll - AnalogLeftTrigger;
