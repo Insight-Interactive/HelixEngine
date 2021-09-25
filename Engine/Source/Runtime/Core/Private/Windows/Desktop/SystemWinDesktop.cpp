@@ -86,8 +86,7 @@ namespace System
 	}
 	void ProcessMessages()
 	{
-		MSG Message;
-		ZeroMemory( &Message, sizeof( MSG ) );
+		MSG Message = {};
 		while (::PeekMessage( &Message, NULL, 0, 0, PM_REMOVE ))
 		{
 			::TranslateMessage( &Message );
@@ -107,9 +106,9 @@ namespace System
 		return (int32)::FreeLibrary( (HMODULE)Handle );
 	}
 
-	void CreateMessageBox( const wchar_t* Message, const wchar_t* Title, void* pParentWindow/* = NULL*/ )
+	MessageDialogResult CreateMessageBox( const WChar* Message, const WChar* Title, MessageDialogInput Type, void* pParentWindow/* = NULL*/ )
 	{
-		::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, MB_OK );
+		return (MessageDialogResult)::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, (UINT)Type );
 	}
 
 	TChar* GetLastSystemError()
@@ -192,7 +191,7 @@ namespace System
 	uint32 GetProcessorCount()
 	{
 		SYSTEM_INFO SystemInfo = {};
-		GetSystemInfo( &SystemInfo );
+		::GetSystemInfo( &SystemInfo );
 
 		return SystemInfo.dwNumberOfProcessors;
 	}
@@ -204,20 +203,20 @@ namespace System
 
 	Char* GetProcessCommandLine()
 	{
-		return GetCommandLineA();
+		return ::GetCommandLineA();
 	}
 
 	int64 QueryPerformanceCounter()
 	{
 		LARGE_INTEGER Tick = { 0 };
-		HE_ASSERT( QueryPerformanceCounter( &Tick ) == TRUE );
+		HE_ASSERT( ::QueryPerformanceCounter( &Tick ) == TRUE );
 		return (int64)Tick.QuadPart;
 	}
 
 	int64 QueryPerformanceFrequency()
 	{
 		LARGE_INTEGER Frequency = { 0 };
-		HE_ASSERT( QueryPerformanceFrequency( &Frequency ) == TRUE );
+		HE_ASSERT( ::QueryPerformanceFrequency( &Frequency ) == TRUE );
 
 		return (int64)Frequency.QuadPart;
 	}

@@ -10,6 +10,8 @@
 
 /* static */ void RendererInitializer::InitializeContext( ERenderBackend API, RenderContext& Context )
 {
+	CreateLogger( GRendererLogger, "Renderer" );
+
 	// Initialize the render context.
 	switch (API)
 	{

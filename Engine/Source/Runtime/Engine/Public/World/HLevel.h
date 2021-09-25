@@ -10,6 +10,7 @@ class ICommandContext;
 class HLevel
 {
 	friend class HWorld;
+	friend class WorldOutlinePanel;
 public:
 	HLevel(HWorld* pOwner);
 	~HLevel();
@@ -18,7 +19,7 @@ public:
 	void Flush();
 
 	template <typename ActorType, typename ... InitArgs>
-	ActorType* CreateActor(InitArgs ... args);
+	ActorType* CreateActor(const HName& Name = TEXT(""), InitArgs ... args);
 
 	HWorld* GetWorld();
 
@@ -32,7 +33,8 @@ protected:
 protected:
 	std::vector<AActor*> m_Actors;
 	CriticalSection m_ActorListGuard;
-	HWorld* m_pWorld;
+	HWorld* m_pOwningWorld;
+
 };
 
 
@@ -41,11 +43,11 @@ protected:
 //
 
 template <typename ActorType, typename ... InitArgs>
-inline ActorType* HLevel::CreateActor(InitArgs ... args)
+inline ActorType* HLevel::CreateActor(const HName& Name, InitArgs ... args)
 {
-	HE_ASSERT( m_pWorld != NULL ); // Cannot add an actor to a level with a null world.
+	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world.
 
-	AActor* pNewActor = new ActorType( m_pWorld, args...);
+	AActor* pNewActor = new ActorType( m_pOwningWorld, Name, args...);
 	HE_ASSERT(pNewActor != NULL);
 
 	GuardedAddActor(pNewActor);
@@ -61,5 +63,5 @@ inline void HLevel::GuardedAddActor(AActor* pActor)
 
 inline HWorld* HLevel::GetWorld()
 {
-	return m_pWorld;
+	return m_pOwningWorld;
 }

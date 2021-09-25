@@ -8,6 +8,9 @@
 #include "RenderContextFactoryD3D12.h"
 
 
+uint32 Window::SWindowInstanceCount = 0;
+CriticalSection Window::SWindowInstanceCounterGuard;
+
 
 Window::Window()
 	: m_WindowMode(WM_Windowed)
@@ -104,7 +107,16 @@ void Window::PresentOneFrame()
 bool Window::SetTitle(const TChar* NewTitle)
 {
 	if (!m_Desc.bHasTitleBar)
+	{
 		HE_LOG(Warning, TEXT("Trying to set a title for a window that has no title. Attempting to override..."));
+		return false;
+	}
+	TCharStrCpy( m_WindowTitle, NewTitle );
+
+}
+
+void Window::GetTitle( TChar* OutTitleBuffer, uint32 BufferLength ) const
+{
 
 }
 

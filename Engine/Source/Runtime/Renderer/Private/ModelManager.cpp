@@ -43,16 +43,16 @@ void StaticGeometryManager::FlushCache()
 	m_ModelCache.clear();
 }
 
-StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const char* FilePath )
+StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
 {
-	String MeshName = StringHelper::GetFilenameFromDirectory( FilePath );
+	String MeshName = StringHelper::GetFilenameFromDirectoryNoExtension( FilePath );
 	if (MeshExists( MeshName ))
 		return GetStaticMeshByName( MeshName );
 
 
 	// Read the data file from disk.
 	//
-	DataBlob Memory = FileSystem::ReadRawData( FilePath );
+	DataBlob Memory = FileSystem::ReadRawData( FilePath.c_str() );
 	HE_ASSERT( Memory.IsValid() ); // Failed to load model.
 
 	uint8* DataHead = Memory.GetBufferPointer();

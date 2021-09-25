@@ -29,7 +29,7 @@ protected:
 	}
 
 protected:
-	bool IsValid(void) const { return m_IsValid; }
+	bool IsValid(void) const { return GetAlbedoTexture().IsValid() && GetNormalTexture().IsValid(); }
 	void Unload();
 
 	String m_MapKey; // For deleting from the map later.

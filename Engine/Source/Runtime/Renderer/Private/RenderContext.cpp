@@ -27,7 +27,7 @@ void RenderContext::Initialize()
 void RenderContext::UnInitialize()
 {
 	// Wait for all work on the GPU to finish.
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 	GStaticGeometryManager.FlushCache();
 
 	HE_SAFE_DELETE_PTR(GDevice);

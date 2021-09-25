@@ -6,6 +6,8 @@
 #include "ISwapChain.h"
 #include "Engine/Event/Event.h"
 #include "Engine/Event/EventEmitter.h"
+#include "CriticalSection.h"
+
 
 class ISwapChain;
 class IColorBuffer;
@@ -19,6 +21,7 @@ enum EWindowMode
 
 const uint8 kMaxDebugNameLength = 64;
 const uint8 kMaxClassNameSize = 16;
+const uint8 kMaxWindowTitleLength = 64;
 
 class Window : public EventEmitter<void, Event&>
 {
@@ -47,7 +50,7 @@ public:
 
 	Window();
 	Window( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, Window* pParent );
-	~Window();
+	virtual ~Window();
 
 	/*
 		Create the window and register it with the OS.
@@ -80,6 +83,7 @@ public:
 	uint32 GetHeight() const;
 	FVector2 GetDimensions() const;
 	bool HasTitleBar() const;
+	void GetTitle(TChar* OutTitleBuffer, uint32 BufferLength) const;
 	Window* GetParent();
 	void AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback );
 	EWindowMode GetWindowMode() const;
@@ -96,10 +100,14 @@ protected:
 	Description m_Desc;
 	EWindowMode m_WindowMode;
 	TChar m_WindowClassName[kMaxClassNameSize];
+	TChar m_WindowTitle[kMaxWindowTitleLength];
 	TDynamicArray<OutVoidInEWindowModeFn*> m_OnWindowModeChangedCallbacks;
 	ISwapChain* m_pSwapChain;
 
 	TChar m_DebugName[kMaxDebugNameLength];
+
+	static uint32 SWindowInstanceCount;
+	static CriticalSection SWindowInstanceCounterGuard;
 
 #ifdef HE_WINDOWS_DESKTOP
 	HWND	m_hWindowHandle;

@@ -30,7 +30,7 @@ IndexBufferUID GeometryBufferManagerD3D12::AllocateIndexBuffer()
 void GeometryBufferManagerD3D12::DeAllocateVertexBuffer(VertexBufferUID& UID)
 {
 	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 
 	HE_ASSERT(UID != HE_INVALID_VERTEX_BUFFER_HANDLE);
 	m_VertexBufferLUT.erase(UID);
@@ -39,7 +39,7 @@ void GeometryBufferManagerD3D12::DeAllocateVertexBuffer(VertexBufferUID& UID)
 void GeometryBufferManagerD3D12::DeAllocateIndexBuffer(IndexBufferUID& UID)
 {
 	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 
 	HE_ASSERT(UID != HE_INVALID_INDEX_BUFFER_HANDLE);
 	m_IndexBufferLUT.erase(UID);

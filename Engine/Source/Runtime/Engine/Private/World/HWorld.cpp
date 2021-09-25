@@ -14,13 +14,13 @@ HWorld::HWorld()
 
 HWorld::~HWorld()
 {
-
+	Flush();
 }
 
 void HWorld::Initialize()
 {
-	HLevel* Level = m_Levels.emplace_back( new HLevel(this) );
-	Level->LoadFromFile("TODO: Content/Levels/Test.hlevel");
+	m_pLevel = new HLevel( this );
+	m_pLevel->LoadFromFile("Content/Levels/TestLevel.hlevel");
 }
 
 float HWorld::GetDeltaTime() const
@@ -30,34 +30,26 @@ float HWorld::GetDeltaTime() const
 
 void HWorld::BeginPlay()
 {
-	for (uint64 i = 0; i < m_Levels.size(); ++i)
-	{
-		m_Levels[i]->BeginPlay();
-	}
+	m_pLevel->BeginPlay();
 }
 
 void HWorld::Tick(float DeltaTime)
 {
 	m_CameraManager.Tick( DeltaTime );
 
-	for (uint64 i = 0; i < m_Levels.size(); ++i)
-	{
-		m_Levels[i]->Tick(DeltaTime);
-	}
+	m_pLevel->Tick(DeltaTime);
 }
 
 void HWorld::Flush()
 {
-	for (uint64 i = 0; i < m_Levels.size(); ++i)
+	if (m_pLevel != NULL)
 	{
-		m_Levels[i]->Flush();
+		m_pLevel->Flush();
+		HE_SAFE_DELETE_PTR( m_pLevel );
 	}
 }
 
 void HWorld::Render(ICommandContext& CmdContext)
 {
-	for (uint64 i = 0; i < m_Levels.size(); ++i)
-	{
-		m_Levels[i]->Render(CmdContext);
-	}
+	m_pLevel->Render(CmdContext);
 }

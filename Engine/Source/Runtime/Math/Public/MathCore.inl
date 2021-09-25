@@ -487,7 +487,7 @@ inline FVector2 FVector2::Refract(const FVector2& ivec, const FVector2& nvec, fl
     return result;
 }
 
-inline void FVector2::Transform(const FVector2& v, const FQuat& quat, FVector2& result) noexcept
+inline void FVector2::FTransform(const FVector2& v, const FQuat& quat, FVector2& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -496,7 +496,7 @@ inline void FVector2::Transform(const FVector2& v, const FQuat& quat, FVector2& 
     XMStoreFloat2(&result, X);
 }
 
-inline FVector2 FVector2::Transform(const FVector2& v, const FQuat& quat) noexcept
+inline FVector2 FVector2::FTransform(const FVector2& v, const FQuat& quat) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -508,7 +508,7 @@ inline FVector2 FVector2::Transform(const FVector2& v, const FQuat& quat) noexce
     return result;
 }
 
-inline void FVector2::Transform(const FVector2& v, const FMatrix& m, FVector2& result) noexcept
+inline void FVector2::FTransform(const FVector2& v, const FMatrix& m, FVector2& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -517,7 +517,7 @@ inline void FVector2::Transform(const FVector2& v, const FMatrix& m, FVector2& r
     XMStoreFloat2(&result, X);
 }
 
-inline FVector2 FVector2::Transform(const FVector2& v, const FMatrix& m) noexcept
+inline FVector2 FVector2::FTransform(const FVector2& v, const FMatrix& m) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -530,14 +530,14 @@ inline FVector2 FVector2::Transform(const FVector2& v, const FMatrix& m) noexcep
 }
 
 _Use_decl_annotations_
-inline void FVector2::Transform(const FVector2* varray, size_t count, const FMatrix& m, FVector2* resultArray) noexcept
+inline void FVector2::FTransform(const FVector2* varray, size_t count, const FMatrix& m, FVector2* resultArray) noexcept
 {
     using namespace DirectX;
     XMMATRIX M = XMLoadFloat4x4(&m);
     XMVector2TransformCoordStream(resultArray, sizeof(XMFLOAT2), varray, sizeof(XMFLOAT2), count, M);
 }
 
-inline void FVector2::Transform(const FVector2& v, const FMatrix& m, FVector4& result) noexcept
+inline void FVector2::FTransform(const FVector2& v, const FMatrix& m, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -547,7 +547,7 @@ inline void FVector2::Transform(const FVector2& v, const FMatrix& m, FVector4& r
 }
 
 _Use_decl_annotations_
-inline void FVector2::Transform(const FVector2* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
+inline void FVector2::FTransform(const FVector2* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
 {
     using namespace DirectX;
     XMMATRIX M = XMLoadFloat4x4(&m);
@@ -1088,7 +1088,7 @@ inline FVector3 FVector3::Refract(const FVector3& ivec, const FVector3& nvec, fl
     return result;
 }
 
-inline void FVector3::Transform(const FVector3& v, const FQuat& quat, FVector3& result) noexcept
+inline void FVector3::FTransform(const FVector3& v, const FQuat& quat, FVector3& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1097,7 +1097,7 @@ inline void FVector3::Transform(const FVector3& v, const FQuat& quat, FVector3& 
     XMStoreFloat3(&result, X);
 }
 
-inline FVector3 FVector3::Transform(const FVector3& v, const FQuat& quat) noexcept
+inline FVector3 FVector3::FTransform(const FVector3& v, const FQuat& quat) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1109,7 +1109,7 @@ inline FVector3 FVector3::Transform(const FVector3& v, const FQuat& quat) noexce
     return result;
 }
 
-inline void FVector3::Transform(const FVector3& v, const FMatrix& m, FVector3& result) noexcept
+inline void FVector3::FTransform(const FVector3& v, const FMatrix& m, FVector3& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1118,7 +1118,7 @@ inline void FVector3::Transform(const FVector3& v, const FMatrix& m, FVector3& r
     XMStoreFloat3(&result, X);
 }
 
-inline FVector3 FVector3::Transform(const FVector3& v, const FMatrix& m) noexcept
+inline FVector3 FVector3::FTransform(const FVector3& v, const FMatrix& m) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1131,14 +1131,14 @@ inline FVector3 FVector3::Transform(const FVector3& v, const FMatrix& m) noexcep
 }
 
 _Use_decl_annotations_
-inline void FVector3::Transform(const FVector3* varray, size_t count, const FMatrix& m, FVector3* resultArray) noexcept
+inline void FVector3::FTransform(const FVector3* varray, size_t count, const FMatrix& m, FVector3* resultArray) noexcept
 {
     using namespace DirectX;
     XMMATRIX M = XMLoadFloat4x4(&m);
     XMVector3TransformCoordStream(resultArray, sizeof(XMFLOAT3), varray, sizeof(XMFLOAT3), count, M);
 }
 
-inline void FVector3::Transform(const FVector3& v, const FMatrix& m, FVector4& result) noexcept
+inline void FVector3::FTransform(const FVector3& v, const FMatrix& m, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1148,7 +1148,7 @@ inline void FVector3::Transform(const FVector3& v, const FMatrix& m, FVector4& r
 }
 
 _Use_decl_annotations_
-inline void FVector3::Transform(const FVector3* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
+inline void FVector3::FTransform(const FVector3* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
 {
     using namespace DirectX;
     XMMATRIX M = XMLoadFloat4x4(&m);
@@ -1690,7 +1690,7 @@ inline FVector4 FVector4::Refract(const FVector4& ivec, const FVector4& nvec, fl
     return result;
 }
 
-inline void FVector4::Transform(const FVector2& v, const FQuat& quat, FVector4& result) noexcept
+inline void FVector4::FTransform(const FVector2& v, const FQuat& quat, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -1700,7 +1700,7 @@ inline void FVector4::Transform(const FVector2& v, const FQuat& quat, FVector4& 
     XMStoreFloat4(&result, X);
 }
 
-inline FVector4 FVector4::Transform(const FVector2& v, const FQuat& quat) noexcept
+inline FVector4 FVector4::FTransform(const FVector2& v, const FQuat& quat) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat2(&v);
@@ -1713,7 +1713,7 @@ inline FVector4 FVector4::Transform(const FVector2& v, const FQuat& quat) noexce
     return result;
 }
 
-inline void FVector4::Transform(const FVector3& v, const FQuat& quat, FVector4& result) noexcept
+inline void FVector4::FTransform(const FVector3& v, const FQuat& quat, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1723,7 +1723,7 @@ inline void FVector4::Transform(const FVector3& v, const FQuat& quat, FVector4& 
     XMStoreFloat4(&result, X);
 }
 
-inline FVector4 FVector4::Transform(const FVector3& v, const FQuat& quat) noexcept
+inline FVector4 FVector4::FTransform(const FVector3& v, const FQuat& quat) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat3(&v);
@@ -1736,7 +1736,7 @@ inline FVector4 FVector4::Transform(const FVector3& v, const FQuat& quat) noexce
     return result;
 }
 
-inline void FVector4::Transform(const FVector4& v, const FQuat& quat, FVector4& result) noexcept
+inline void FVector4::FTransform(const FVector4& v, const FQuat& quat, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1746,7 +1746,7 @@ inline void FVector4::Transform(const FVector4& v, const FQuat& quat, FVector4& 
     XMStoreFloat4(&result, X);
 }
 
-inline FVector4 FVector4::Transform(const FVector4& v, const FQuat& quat) noexcept
+inline FVector4 FVector4::FTransform(const FVector4& v, const FQuat& quat) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1759,7 +1759,7 @@ inline FVector4 FVector4::Transform(const FVector4& v, const FQuat& quat) noexce
     return result;
 }
 
-inline void FVector4::Transform(const FVector4& v, const FMatrix& m, FVector4& result) noexcept
+inline void FVector4::FTransform(const FVector4& v, const FMatrix& m, FVector4& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1768,7 +1768,7 @@ inline void FVector4::Transform(const FVector4& v, const FMatrix& m, FVector4& r
     XMStoreFloat4(&result, X);
 }
 
-inline FVector4 FVector4::Transform(const FVector4& v, const FMatrix& m) noexcept
+inline FVector4 FVector4::FTransform(const FVector4& v, const FMatrix& m) noexcept
 {
     using namespace DirectX;
     XMVECTOR v1 = XMLoadFloat4(&v);
@@ -1781,7 +1781,7 @@ inline FVector4 FVector4::Transform(const FVector4& v, const FMatrix& m) noexcep
 }
 
 _Use_decl_annotations_
-inline void FVector4::Transform(const FVector4* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
+inline void FVector4::FTransform(const FVector4* varray, size_t count, const FMatrix& m, FVector4* resultArray) noexcept
 {
     using namespace DirectX;
     XMMATRIX M = XMLoadFloat4x4(&m);
@@ -2608,7 +2608,7 @@ inline FMatrix FMatrix::Lerp(const FMatrix& M1, const FMatrix& M2, float t) noex
     return result;
 }
 
-inline void FMatrix::Transform(const FMatrix& M, const FQuat& rotation, FMatrix& result) noexcept
+inline void FMatrix::FTransform(const FMatrix& M, const FQuat& rotation, FMatrix& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR quatv = XMLoadFloat4(&rotation);
@@ -2619,7 +2619,7 @@ inline void FMatrix::Transform(const FMatrix& M, const FQuat& rotation, FMatrix&
     XMStoreFloat4x4(&result, XMMatrixMultiply(M0, M1));
 }
 
-inline FMatrix FMatrix::Transform(const FMatrix& M, const FQuat& rotation) noexcept
+inline FMatrix FMatrix::FTransform(const FMatrix& M, const FQuat& rotation) noexcept
 {
     using namespace DirectX;
     XMVECTOR quatv = XMLoadFloat4(&rotation);
@@ -3075,7 +3075,7 @@ inline float Plane::DotNormal(const FVector3& normal) const noexcept
 // Static functions
 //------------------------------------------------------------------------------
 
-inline void Plane::Transform(const Plane& plane, const FMatrix& M, Plane& result) noexcept
+inline void Plane::FTransform(const Plane& plane, const FMatrix& M, Plane& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR p = XMLoadFloat4(&plane);
@@ -3083,7 +3083,7 @@ inline void Plane::Transform(const Plane& plane, const FMatrix& M, Plane& result
     XMStoreFloat4(&result, XMPlaneTransform(p, m0));
 }
 
-inline Plane Plane::Transform(const Plane& plane, const FMatrix& M) noexcept
+inline Plane Plane::FTransform(const Plane& plane, const FMatrix& M) noexcept
 {
     using namespace DirectX;
     XMVECTOR p = XMLoadFloat4(&plane);
@@ -3094,7 +3094,7 @@ inline Plane Plane::Transform(const Plane& plane, const FMatrix& M) noexcept
     return result;
 }
 
-inline void Plane::Transform(const Plane& plane, const FQuat& rotation, Plane& result) noexcept
+inline void Plane::FTransform(const Plane& plane, const FQuat& rotation, Plane& result) noexcept
 {
     using namespace DirectX;
     XMVECTOR p = XMLoadFloat4(&plane);
@@ -3104,7 +3104,7 @@ inline void Plane::Transform(const Plane& plane, const FQuat& rotation, Plane& r
     XMStoreFloat4(&result, X);
 }
 
-inline Plane Plane::Transform(const Plane& plane, const FQuat& rotation) noexcept
+inline Plane Plane::FTransform(const Plane& plane, const FQuat& rotation) noexcept
 {
     using namespace DirectX;
     XMVECTOR p = XMLoadFloat4(&plane);

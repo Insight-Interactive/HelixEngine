@@ -45,7 +45,7 @@ void HEngine::EngineMain()
 	if ( IsInitialized() )
 	{
 		HE_LOG(Warning, TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!"));
-		HE_DEBUG_BREAK;
+		HE_DEBUG_BREAK();
 	}
 	// Startup
 	PreStartup();
@@ -63,6 +63,7 @@ void HEngine::EngineMain()
 
 void HEngine::PreStartup()
 {
+	CreateLogger( GEngineLogger, "Helix Engine" );
 	HE_LOG( Log, TEXT( "Beginning engine pre-startup." ) );
 
 	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
@@ -70,7 +71,6 @@ void HEngine::PreStartup()
 
 void HEngine::Startup()
 {
-	CreateLogger(GEngineLogger, "Helix Engine");
 	HE_LOG(Log, TEXT("Starting up engine."));
 
 	// Initialize the thread pool.
@@ -88,7 +88,7 @@ void HEngine::Startup()
 	// Initialize the renderer.
 	ERenderBackend API = RB_Direct3D12; // TODO: Get from ini file
 	RendererInitializer::InitializeContext( API, m_RenderContext );
-
+	
 	m_FrameTimeManager.Initialize();
 
 	// Initialize the application context.
@@ -96,6 +96,8 @@ void HEngine::Startup()
 
 	// Initialize the game.
 	GGameInstance = MakeGameInstance();
+
+	AssetDatabase::GetInstance()->Initialize( "Content/DataCache/AssetDatabase.json" );
 
 	// Create and initialize the main client window.
 	Window::Description ClientDesc = {};
@@ -110,13 +112,11 @@ void HEngine::Startup()
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
-	AssetDatabase::GetInstance()->Initialize("TODO");
 
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 	// Create the splash screen to serve as a loading indicator.
 	GThreadPool->Kick(SplashMain, NULL);
-	//std::this_thread::sleep_for(std::chrono::seconds(4)); // Uncomment to delay app and debug the splash screen.
-
+	//std::this_thread::sleep_for(std::chrono::seconds(2)); // Uncomment to delay app and debug the splash screen.
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
 	HE_LOG(Log, TEXT("Engine startup complete."));
@@ -144,7 +144,7 @@ void HEngine::Shutdown()
 {
 	HE_LOG(Log, TEXT("Shutting down engine."));
 
-	m_Application.Shutdown();
+	FApp::GetInstance()->Shutdown();
 	GetClientViewport().Uninitialize();
 
 	AssetDatabase::GetInstance()->UnInitialize();
@@ -188,8 +188,9 @@ void HEngine::Update()
 
 void HEngine::RenderClientViewport(float DeltaTime)
 {
-	GetClientViewport().Update( DeltaTime );
-	GetClientViewport().Render();
+	ViewportContext& ClientViewport = GetClientViewport();
+	ClientViewport.Update( DeltaTime );
+	ClientViewport.Render();
 
 	ICommandContext& CmdContext = ICommandContext::Begin( TEXT( "Present" ) );
 	{
@@ -199,7 +200,8 @@ void HEngine::RenderClientViewport(float DeltaTime)
 		CmdContext.TransitionResource( *SwapChainGpuResource, RS_Present );
 	}
 	CmdContext.End();
-	GetClientViewport().PresentOneFrame();
+
+	ClientViewport.PresentOneFrame();
 }
 
 void HEngine::BackgroundUpdate()
@@ -238,7 +240,12 @@ void HEngine::RequestShutdown()
 /* static */ void SplashMain( void* pUserData )
 {
 	(void)pUserData;
-	String SplashTextureDir = "../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
+	String SplashTextureDir =
+#if HE_WITH_EDITOR
+		"../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
+#else
+		"";
+#endif
 	SplashScreen AppSplash( SplashTextureDir );
 
 	while ( !GEngine->IsInitialized() )
@@ -250,5 +257,4 @@ void HEngine::RequestShutdown()
 		Context.End();
 		AppSplash.EndFrame();
 	}
-
 }

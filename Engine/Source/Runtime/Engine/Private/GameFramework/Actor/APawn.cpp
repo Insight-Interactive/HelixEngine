@@ -3,12 +3,12 @@
 
 #include "GameFramework/Actor/APawn.h"
 #include "World/HWorld.h"
-#include "GameFramework/Actor/Components/HControllerComponent.h"
+#include "GameFramework/Components/HControllerComponent.h"
 #include "Engine/HEngine.h"
 
 
-APawn::APawn( HWorld* pWorld )
-	: AActor( pWorld )
+APawn::APawn( HWorld* pWorld, const HName& Name )
+	: AActor( pWorld, Name )
 	, m_CameraPitchSpeedMultiplier(kDefaultCameraPitchSpeedMultiplier)
 	, m_CameraYawSpeedMultiplier(kDefaultCameraYawSpeedMultiplier)
 	, m_MovementSpeed(kDefaultMovementSpeed)

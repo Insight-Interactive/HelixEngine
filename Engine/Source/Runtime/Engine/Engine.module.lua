@@ -73,6 +73,7 @@ project ("Engine")
 
 		-- Third Party
 		heGetThirdPartyModule( "rapidxml-1.13" ) .. "Include/",
+		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
 	}
 
 	links   

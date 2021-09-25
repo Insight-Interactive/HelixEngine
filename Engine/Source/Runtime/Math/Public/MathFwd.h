@@ -1,7 +1,7 @@
 #pragma once
 
 #if MATH_MODULE
-#	define MATH_API //__declspec(dllexport)
+#	define MATH_API 
 #else
-#	define MATH_API //__declspec(dllimport)
+#	define MATH_API 
 #endif

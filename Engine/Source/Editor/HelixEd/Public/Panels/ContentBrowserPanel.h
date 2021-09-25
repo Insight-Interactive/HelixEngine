@@ -18,6 +18,5 @@ public:
 
 protected:
 	void TraverseFolder( const TChar* Folder );
-	void RenderFile( const char* FileName );
 
 };

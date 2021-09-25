@@ -16,7 +16,7 @@
 //
 // Safely checks a pointer and deletes it if it is non-null.
 #define HE_SAFE_DELETE_PTR( Ptr )			if( (Ptr) != NULL ) { delete	(Ptr); (Ptr) = NULL; }
-#define HE_SAFE_DELETE_PTR_ARRAY( Ptr )	if( (Ptr) != NULL ) { delete[]	(Ptr); }
+#define HE_SAFE_DELETE_PTR_ARRAY( Ptr )		if( (Ptr) != NULL ) { delete[]	(Ptr); }
 // Safely checks a COM pointer and deletes it if it is non-null.
 #define HE_COM_SAFE_RELEASE( ComObject )	if( (ComObject) ) { (ComObject)->Release(); (ComObject) = nullptr; }
 // The literal value of a piece of text.
@@ -178,7 +178,7 @@ typedef std::string String;
 // A character that could be ascii or unicode depending on
 // if unicode is supported in the build configuration.
 typedef WChar TChar;
-// A client facing UTF-16 string.
+// A client facing string composed of TChar.
 typedef WString HName;
 typedef std::wstringstream TStringStream;
 

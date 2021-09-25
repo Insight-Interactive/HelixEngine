@@ -6,6 +6,7 @@
 #include "BackendCoreD3D12.h"
 #include "FileSystem.h"
 #include "IDevice.h"
+#include "StringHelper.h"
 
 #include "Utility/DDSTextureLoader.h"
 
@@ -48,9 +49,9 @@ IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, 
     ManagedTextureD3D12* pTexture = NULL;
 
     {
-        m_Mutex.Enter();
+        ScopedCriticalSection Guard( m_Mutex );
 
-        String key = FileName;
+        String key = StringHelper::GetFilenameFromDirectoryNoExtension(FileName);
         if (forceSRGB)
             key += "_sRGB";
 
@@ -70,8 +71,6 @@ IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, 
             pTexture = new ManagedTextureD3D12(key);
             m_TextureCache[key].reset(pTexture);
         }
-
-        m_Mutex.Exit();
     }
 
     // TODO Filesystem readfilesync

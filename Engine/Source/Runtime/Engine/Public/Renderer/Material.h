@@ -33,9 +33,9 @@ public:
 	}
 
 	void Bind(ICommandContext& GfxContext);
-	void CreateFromMemory(DataBlob Memory);
-	void WriteToFile();
-
+	
+	void LoadFromFile( const String& Filepath );
+	
 
 	FVector4 GetColor() const
 	{
@@ -107,6 +107,11 @@ protected:
 		m_DebugName = Name;
 #endif
 	}
+
+	// WIP
+	void CreateFromMemory( DataBlob Memory );
+	// WIP
+	void WriteToFile();
 
 private:
 	IConstantBuffer* m_pConstantsCB;

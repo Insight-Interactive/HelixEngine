@@ -2,7 +2,10 @@
 
 #include "CoreFwd.h"
 
-template <typename ClassType>
+/*
+	Sets a single instance of a class to be the only instance available for its type.
+*/
+template <typename ClassType, bool bShouldHeapAllocate = false>
 class TSingleton
 {
 public:
@@ -23,39 +26,47 @@ protected:
 // TSingleton implementation
 //
 
-template <typename ClassType>
-ClassType* TSingleton<ClassType>::SInstance = NULL;
+template <typename ClassType, bool bShouldHeapAllocate>
+ClassType* TSingleton<ClassType, bShouldHeapAllocate>::SInstance = NULL;
 
-template <typename ClassType>
-FORCEINLINE TSingleton<ClassType>::TSingleton()
+template <typename ClassType, bool bShouldHeapAllocate>
+FORCEINLINE TSingleton<ClassType, bShouldHeapAllocate>::TSingleton()
 {
-	if (SInstance == NULL)
+	if constexpr (bShouldHeapAllocate)
 	{
-		SInstance = (ClassType*)this;
+		SInstance = new ClassType();
 	}
+	else
+	{
+		if (SInstance == NULL)
+		{
+			SInstance = (ClassType*)this;
+		}
+	}
+	HE_ASSERT( SInstance != NULL );
 }
 
-template <typename ClassType>
-FORCEINLINE TSingleton<ClassType>::~TSingleton()
+template <typename ClassType, bool bShouldHeapAllocate>
+FORCEINLINE TSingleton<ClassType, bShouldHeapAllocate>::~TSingleton()
 {
 	InValidate();
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE ClassType* TSingleton<ClassType>::GetInstance()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE ClassType* TSingleton<ClassType, bShouldHeapAllocate>::GetInstance()
 {
 	HE_ASSERT(SInstance != NULL); // Trying to get an instance of a class that has not been initialized.
 	return SInstance;
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE bool TSingleton<ClassType>::IsValid()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE bool TSingleton<ClassType, bShouldHeapAllocate>::IsValid()
 {
 	return SInstance != NULL;
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE void TSingleton<ClassType>::InValidate()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE void TSingleton<ClassType, bShouldHeapAllocate>::InValidate()
 {
 	SInstance = NULL;
 }

@@ -61,13 +61,38 @@ public:
 	File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
 	~File();
 
+	/*
+		Returns the file size in bytes.
+	*/
 	uint64 GetSizeInBytes();
 
-	void  WriteData( void* pData, uint64 ElementSize, uint64 ElementCount );
+	/*
+		Writes data to the file. Returns true if all data was successfuly written to the file, false if not.
+		@param pData - Pointer to the array of elements to write to the file.
+		@param ElementSize - The size in bytes of each element in the array.
+		@param ElementCount - The number of elements to write.
+	*/
+	bool WriteData( void* pData, uint64 ElementSize, uint64 ElementCount );
+
+	/*
+		Reads data from the file and returns a pointer to the start of it.
+	*/
 	void* ReadData();
 
+	/*
+		Returns a pointer to the data in the file.
+	*/
 	void* Data();
+
+	/*
+		Returns true if the file is open, false if not.
+	*/
 	bool IsOpen();
+
+	/*
+		Returns the path of the file.
+	*/
+	const Char* GetFilepath() const;
 
 protected:
 	FILE* GetCFile();
@@ -79,6 +104,7 @@ private:
 	void* m_pContents;
 	EFileUsageMode m_UsageMode;
 	EContentMode m_ContentUsageMode;
+	Char m_Filepath[MAX_PATH];
 };
 using FileRef = Ref<File>;
 
@@ -90,12 +116,14 @@ using FileRef = Ref<File>;
 // File
 //
 
-inline File::File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
+FORCEINLINE File::File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode = CM_Text )
 	: m_pFile( null )
 	, m_pContents( null )
 	, m_UsageMode( UsageMode )
 	, m_ContentUsageMode( ContentUsageMode )
 {
+	strcpy_s( m_Filepath, pFilePath );
+
 	Char FileOpMode[4] = {};
 	const Char* CUsageMode = GetCFileUsageMode( UsageMode );
 	const Char* CContentUsageMode = GetCFileContentUsageMode( ContentUsageMode );
@@ -116,18 +144,18 @@ inline File::File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode
 
 }
 
-inline File::~File()
+FORCEINLINE File::~File()
 {
 	HE_ASSERT( m_pFile != null );
 	fclose( m_pFile );
 	if (m_pContents != NULL)
 	{
-		free( m_pContents );
+		HE_HeapFree( m_pContents );
 		m_pContents = NULL;
 	}
 }
 
-inline const Char* File::GetCFileUsageMode( const EFileUsageMode& Mode )
+FORCEINLINE const Char* File::GetCFileUsageMode( const EFileUsageMode& Mode )
 {
 	switch (Mode)
 	{
@@ -141,11 +169,10 @@ inline const Char* File::GetCFileUsageMode( const EFileUsageMode& Mode )
 		HE_ASSERT( false );
 		break;
 	}
-
 	return "a";
 }
 
-inline const Char* File::GetCFileContentUsageMode( const EContentMode& ContentUsageMode )
+FORCEINLINE const Char* File::GetCFileContentUsageMode( const EContentMode& ContentUsageMode )
 {
 	switch (ContentUsageMode)
 	{
@@ -161,22 +188,22 @@ inline const Char* File::GetCFileContentUsageMode( const EContentMode& ContentUs
 	return "";
 }
 
-inline FILE* File::GetCFile()
+FORCEINLINE FILE* File::GetCFile()
 {
 	return m_pFile;
 }
 
-inline void* File::Data()
+FORCEINLINE void* File::Data()
 {
 	return m_pContents;
 }
 
-inline bool File::IsOpen()
+FORCEINLINE bool File::IsOpen()
 {
 	return m_pFile != NULL;
 }
 
-inline uint64 File::GetSizeInBytes()
+FORCEINLINE uint64 File::GetSizeInBytes()
 {
 	uint64 FileSize = 0;
 	HE_ASSERT( m_pFile != null );
@@ -188,23 +215,29 @@ inline uint64 File::GetSizeInBytes()
 	return FileSize;
 }
 
-inline void File::WriteData(void* pData, uint64 ElementSize, uint64 ElementCount)
+FORCEINLINE bool File::WriteData(void* pData, uint64 ElementSize, uint64 ElementCount)
 {
 	HE_ASSERT( m_UsageMode == FUM_Write || m_UsageMode == FUM_Append );
 	
-	fwrite( pData, ElementSize, ElementCount, GetCFile() );
+	return fwrite( pData, ElementSize, ElementCount, GetCFile() ) == ElementCount;
 }
 
-inline void* File::ReadData()
+FORCEINLINE void* File::ReadData()
 {
-	HE_ASSERT( m_UsageMode == FUM_Read );
+	HE_ASSERT( m_UsageMode == FUM_Read ); // Trying to read contents of a file with no read privlages.
 	
 	uint64 FileSizeInBytes = GetSizeInBytes();
-	m_pContents = malloc( FileSizeInBytes );
-	HE_ASSERT( m_pContents != null );
+	m_pContents = HE_HeapAlloc( FileSizeInBytes );
+	HE_ASSERT( m_pContents != null ); // Failed to allocate memory.
+	ZeroMemory( m_pContents, FileSizeInBytes );
 
 	fread( m_pContents, 1, FileSizeInBytes, m_pFile );
-	HE_ASSERT( m_pContents != null );
+	HE_ASSERT( m_pContents != null ); // Failed to read the file contents into the buffer.
 
 	return m_pContents;
+}
+
+FORCEINLINE const Char* File::GetFilepath() const
+{
+	return m_Filepath;
 }

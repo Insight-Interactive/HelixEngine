@@ -71,7 +71,7 @@ SplashScreen::SplashScreen( const String& SplashTexturePath/* = "" */)
 SplashScreen::~SplashScreen()
 {
 	// Flush the Gpu before destroying resources.
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 
 	HE_SAFE_DELETE_PTR( m_pRootSig );
 	HE_SAFE_DELETE_PTR( m_pPipeline );

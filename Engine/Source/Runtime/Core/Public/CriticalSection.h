@@ -20,7 +20,7 @@ private:
 
 
 /*
-	Enters and exits a critical section based on a scoped lifetime.
+	Enters and exits a critical section based on a scoped lifetime (RAII)
 */
 struct ScopedCriticalSection
 {

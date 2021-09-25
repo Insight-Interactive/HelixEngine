@@ -1,0 +1,48 @@
+#include "HelixEdPCH.h"
+
+#include "Panels/WorldOutlinePanel.h"
+#include "Engine/HEngine.h"
+#include "World/HLevel.h"
+#include "GameFramework/Actor/AActor.h"
+
+WorldOutlinePanel::WorldOutlinePanel()
+{
+}
+
+WorldOutlinePanel::~WorldOutlinePanel()
+{
+}
+
+void WorldOutlinePanel::Initialize()
+{
+}
+
+void WorldOutlinePanel::UnInitialize()
+{
+}
+
+void WorldOutlinePanel::Tick( float DeltaTime )
+{
+}
+
+void WorldOutlinePanel::Render( ICommandContext& CmdCtx )
+{
+	ImGui::Begin( "World Outliner" );
+	{
+		HLevel* pLevel = GEngine->GetClientViewport().GetWorld().GetCurrentLevel();
+		for (uint32 j = 0; j < pLevel->m_Actors.size(); j++)
+		{
+			AActor* pCurrentActor = pLevel->m_Actors[j];
+			const HName& ActorName = pCurrentActor->GetObjectName();
+			if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))
+			{
+				if (ImGui::IsItemClicked())
+				{
+					pCurrentActor->OnEditorSelected();
+				}
+				ImGui::TreePop();
+			}
+		}
+	}
+	ImGui::End();
+}

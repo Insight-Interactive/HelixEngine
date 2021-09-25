@@ -7,6 +7,11 @@
 #include "ICommandContext.h"
 #include "IConstantBufferManager.h"
 #include "Renderer/ConstantBufferStructures.h"
+#include "AssetRegistry/AssetDatabase.h"
+
+#include "FileSystem.h"
+#include "JsonUtility.h"
+
 
 void HMaterial::Initialize()
 {
@@ -32,6 +37,30 @@ void HMaterial::Bind(ICommandContext& GfxContext)
 	default:
 		HE_ASSERT(false); // Invalid material type provided when binding for draw.
 		break;
+	}
+}
+
+void HMaterial::LoadFromFile( const String& Filepath )
+{
+	rapidjson::Document JsonDoc;
+	FileRef JsonSource( Filepath.c_str(), FUM_Read, CM_Text );
+	JsonUtility::LoadDocument( JsonSource, JsonDoc );
+	if (JsonDoc.IsObject())
+	{
+		const rapidjson::Value& MatRoot = JsonDoc["Material"];
+		// Loop over the actor's properties.
+		for (uint32 i = 0; i < MatRoot.Size(); ++i)
+		{
+			const rapidjson::Value& MaterialParam = MatRoot[i];
+			
+			Char TextureNameBuffer[32];
+			
+			JsonUtility::GetString( MaterialParam, "AlbedoTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
+			SetAlbedoTexture( AssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
+
+			JsonUtility::GetString( MaterialParam, "NormalTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
+			SetNormalTexture( AssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
+		}
 	}
 }
 

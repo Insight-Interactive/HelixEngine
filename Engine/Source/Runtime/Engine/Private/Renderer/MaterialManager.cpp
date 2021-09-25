@@ -99,6 +99,7 @@ MaterialRef MaterialManager::LoadMaterialFromFile(const String& Path)
 
 			//DataBlob Data = FileSystem::ReadRawData(Path.c_str());
 			//pMat->CreateFromMemory(Data);
+			pMat->LoadFromFile( Path );
 			pMat->Initialize();
 			pMat->SetDebugName(Name);
 			pMat->SetUID(HashName);

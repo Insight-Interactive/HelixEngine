@@ -72,6 +72,8 @@
     <ClInclude Include="Public\Tools\AssetImporter.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Panels\WorldOutlinePanel.h" />
+    <ClInclude Include="Public\Panels\DetailsPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Debug\ADebugCharacter.cpp">
@@ -110,6 +112,8 @@
     <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\WorldOutlinePanel.cpp" />
+    <ClCompile Include="Private\Panels\DetailsPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

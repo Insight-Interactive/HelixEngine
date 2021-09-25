@@ -49,6 +49,9 @@ public:
 	*/
 	//bool IsPlayingInEditor();
 
+	/*
+		Set if the engine is currently simulating the game in editor.
+	*/
 	//void SetIsPlayingInEditor( bool IsPlaying );
 
 

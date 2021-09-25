@@ -11,7 +11,7 @@
 #include "Debug/ADebugCharacter.h"
 #include "GameFramework/GameInstance.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
-#include "GameFramework/Actor/Components/HCameraComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 
 SceneViewportPanel::SceneViewportPanel()

@@ -49,6 +49,7 @@ project ("HelixEd")
 		-- Third Party 
 		heGetThirdPartyModule( "ImGui" ),
 		heGetThirdPartyModule( "OpenFBX" ) .. "src/",
+		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
 	}
 
 	links

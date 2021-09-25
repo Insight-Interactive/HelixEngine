@@ -18,7 +18,7 @@
 #include "Renderer/Technique/SkyPass.h"
 #include "Renderer/Technique/DeferredShadingTech.h"
 #include "Renderer/Technique/PostProcessUber.h"
-#include "GameFramework/Actor/Components/HCameraComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 
 ViewportContext::ViewportContext()

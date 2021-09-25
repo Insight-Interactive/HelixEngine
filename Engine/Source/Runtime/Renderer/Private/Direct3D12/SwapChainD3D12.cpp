@@ -95,7 +95,7 @@ void SwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
 {
 	// Flush the GPU and wait for all frames to finish rendering 
 	// before destroying the swapchain buffers.
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 
 	m_Desc.Width = Width;
 	m_Desc.Height = Height;
@@ -107,7 +107,7 @@ void SwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
 	BindSwapChainBackBuffers();
 	SetCurrentFrameIndex( m_pDXGISwapChain->GetCurrentBackBufferIndex() );
 
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 }
 
 void SwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)

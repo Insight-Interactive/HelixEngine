@@ -14,6 +14,9 @@
 #include "Engine/Event/EngineEvent.h"
 
 
+uint32 Window::SWindowInstanceCount = 0;
+CriticalSection Window::SWindowInstanceCounterGuard;
+
 LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 
@@ -61,9 +64,9 @@ void Window::Create( const Window::Description& Desc )
 	m_Desc = Desc;
 
 	HINSTANCE WindowsAppInstance = GetModuleHandle( NULL );
-	static uint32 WindowInstanceCount = 0;
 
-	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), WindowInstanceCount );
+
+	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), SWindowInstanceCount );
 
 	CopyMemory( m_DebugName, Desc.Title, lstrlen( Desc.Title ) * sizeof( TChar ) );
 	HE_LOG( Log, TEXT( "Registering Windows Desktop window with title:  %s  (Class: %s)" ), Desc.Title ? Desc.Title : TEXT( "Unnamed window" ), m_WindowClassName );
@@ -78,7 +81,13 @@ void Window::Create( const Window::Description& Desc )
 	wc.lpszClassName	= m_WindowClassName;
 	wc.hCursor			= LoadCursor( NULL, Cursor );
 	::RegisterClassEx( &wc );
-	HE_ASSERT( GetLastError() == 0 );
+	DWORD Err = GetLastError();
+	if (Err == 0)
+	{
+		ScopedCriticalSection Guard( SWindowInstanceCounterGuard );
+		SWindowInstanceCount++;
+	}
+	HE_ASSERT( Err == 0 );
 
 
 	// Assemble a rect to align the window with the center to the screen.
@@ -138,8 +147,6 @@ void Window::Create( const Window::Description& Desc )
 		}
 		RIDInitialized = true;
 	}
-
-	WindowInstanceCount++;
 }
 
 void Window::Destroy()
@@ -231,9 +238,24 @@ bool Window::SetTitle( const TChar* NewTitle )
 	if (!m_Desc.bHasTitleBar)
 	{
 		HE_LOG( Warning, TEXT( "Trying to set a title for a window that has no title bar. Attempting to override..." ) );
+		return false;
 	}
 
-	return ::SetWindowText( m_hWindowHandle, NewTitle );
+	TCharStrCpy( m_WindowTitle, NewTitle );
+	return ::SetWindowText( m_hWindowHandle, m_WindowTitle );
+}
+
+void Window::GetTitle( TChar* OutTitleBuffer, uint32 BufferLength ) const
+{
+	if (HasTitleBar())
+	{
+		GetWindowText( m_hWindowHandle, OutTitleBuffer, BufferLength );
+	}
+	else
+	{
+		OutTitleBuffer = NULL;
+		BufferLength = -1;
+	}
 }
 
 void Window::AllowFileDrops( bool bAllow )

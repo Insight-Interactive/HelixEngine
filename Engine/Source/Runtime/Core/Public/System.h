@@ -19,23 +19,56 @@ namespace System
 	};
 
 	struct ThreadId
-#if defined HE_WINDOWS
 	{
+#ifdef HE_WINDOWS
 		DWORD Id;
 		HANDLE Handle;
 
 		bool operator == (const ThreadId& rhs) { return rhs.Id == this->Id; }
 		bool operator != (const ThreadId& rhs) { return rhs.Id != this->Id; }
-	};
-#else
-	{
-	};
 #endif
+	};
 
+	enum MessageDialogResult
+	{
+		MDR_Ok =
+#if HE_WINDOWS_DESKTOP
+		IDOK,
+#endif
+		MDR_No =
+#if HE_WINDOWS_DESKTOP
+		IDNO,
+#endif
+		MDR_Cancel = 
+#if HE_WINDOWS_DESKTOP
+		IDCANCEL,
+#endif
+	};
+	enum MessageDialogInput
+	{
+		MDI_Ok = 
+#if HE_WINDOWS_DESKTOP
+		MB_OK,
+#endif
+		MDI_OkCancel = 
+#if HE_WINDOWS_DESKTOP
+		MB_OKCANCEL,
+#endif
+	};
+
+	/*
+		Create and run a new thread.
+	*/
 	ThreadId CreateAndRunThread(const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData = NULL, const uint64 StackSize = kDefaultStackSize, const int32 Flags = kJoinable);
 
+	/*
+		Join an existing thread to this thread.
+	*/
 	void JoinThread(ThreadId Thread);
 
+	/*
+		Set the debug name for an existing thread.
+	*/
 	void SetThreadName(ThreadId Thread, const char* NewName);
 
 	/*
@@ -45,12 +78,13 @@ namespace System
 	void ProcessMessages();
 
 	/*
-		Create a message box to be immediatly displayed to th user.
+		Create a message box to be immediatly displayed to the user. Creating a message box is a blocking call.
 		@param Message - The message to display inside the message box.
 		@param Title - The message to be displayer in the titlebar of the message box window.
+		@param Type - The type of message box to be displayed.
 		@param pParentWindow - A pointer to the native window's handle.
 	*/
-	void CreateMessageBox(const wchar_t* Message, const wchar_t* Title, void* pParentWindow = NULL);
+	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, void* pParentWindow = NULL);
 
 	/*
 		Loads a DLL into the curent application's address space.
@@ -114,9 +148,18 @@ namespace System
 	*/
 	void Sleep(uint32 Miliseconds);
 
+	/*
+		Returns a pointer to this thread's command line.
+	*/
 	Char* GetProcessCommandLine();
 
+	/*
+		Quiries the systems high performance system timer and returns the result.
+	*/
 	int64 QueryPerformanceCounter();
 
+	/*
+		Quiries the systems CPU tick frequency and returns the result.
+	*/
 	int64 QueryPerformanceFrequency();
 }

@@ -1,0 +1,10 @@
+{
+  "AssetDatabase": [
+    {
+      "MeshDatabase": "Content/DataCache/MeshCache.json",
+      "TextureDatabase": "Content/DataCache/TextureCache.json",
+      "MaterialDatabase": "Content/DataCache/MaterialCache.json",
+      "ActorDatabase": "Content/DataCache/ActorCache.json"
+    }
+  ]
+}

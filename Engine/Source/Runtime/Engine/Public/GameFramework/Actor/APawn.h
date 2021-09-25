@@ -12,6 +12,7 @@ static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 2.f;
 static const float kDefaultCameraPitchSpeedMultiplier = 80.f;
 static const float kDefaultCameraYawSpeedMultiplier = 80.f;
 
+HCLASS()
 class APawn : public AActor
 {
 	using Super = AActor;
@@ -31,7 +32,7 @@ public:
 
 	void SetMovementSpeed(float Value);
 	float GetMovementSpeed() const;
-	Transform& GetTransform();
+	FTransform& GetTransform();
 
 protected:
 	virtual void SetupController(HControllerComponent& Controller)
@@ -52,7 +53,7 @@ protected:
 	float m_Velocity;
 	bool m_bIsSprinting;
 	HControllerComponent* m_pController;
-	Transform m_Transform;
+	FTransform m_Transform;
 
 
 private:
@@ -75,7 +76,7 @@ inline float APawn::GetMovementSpeed() const
 	return m_MovementSpeed;
 }
 
-inline Transform& APawn::GetTransform()
+inline FTransform& APawn::GetTransform()
 {
 	return m_Transform;
 }

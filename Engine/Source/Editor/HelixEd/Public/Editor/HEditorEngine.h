@@ -7,6 +7,8 @@
 #include "Panels/SceneViewportPanel.h"
 #include "Panels/ConsoleOutputPanel.h"
 #include "Panels/ContentBrowserPanel.h"
+#include "Panels/WorldOutlinePanel.h"
+#include "Panels/DetailsPanel.h"
 #include "Tools/AssetImporter.h"
 #include "Debug/ConsoleWindow.h"
 
@@ -33,6 +35,7 @@ struct EditorPreferences
 class HEditorEngine : public HEngine
 {
 	HE_DECL_NON_COPYABLE( HEditorEngine );
+	using Super = HEngine;
 public:
 	HEditorEngine( CommandLine& CmdLine );
 	virtual ~HEditorEngine();
@@ -62,6 +65,7 @@ protected:
 	bool OnClientWindowDropFile( WindowFileDropEvent& e );
 
 	void OnExitMenuItem();
+	void OnSaveMenuItem();
 	void OnReloadPipelineShaders();
 
 protected:
@@ -78,6 +82,8 @@ protected:
 	ContentBrowserPanel m_ContentBrowserPanel;
 	ConsoleOutputPanel m_ConsoleOutputPanel;
 	SceneViewportPanel m_SceneViewport;
+	WorldOutlinePanel m_WorldOutline;
+	DetailsPanel m_DetailsPanel;
 
 	AssetImporter m_AssetImporter;
 	ConsoleWindow m_ConsoleWindow;

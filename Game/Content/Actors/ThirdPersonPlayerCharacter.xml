@@ -1,6 +1,0 @@
-<Asset Type="0" Category="1">
-  <DisplayName>MyThirdPersonActor</DisplayName>
-  <Components>
-    <StaticMeshComponent File="SomeFile.fbx" />
-  </Components>
-</Asset>

@@ -32,7 +32,6 @@ protected:
 protected:
 	IRenderContextFactory()
 	{
-		CreateLogger(GRendererLogger, "Renderer");
 	}
 
 };

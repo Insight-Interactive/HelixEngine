@@ -74,7 +74,7 @@ public:
 	StaticGeometryManager() = default;
 	~StaticGeometryManager() = default;
 
-	StaticMeshGeometryRef LoadHAssetMeshFromFile(const char* FilePath);
+	StaticMeshGeometryRef LoadHAssetMeshFromFile(const String& FilePath);
 	void DestroyMesh(const String& Key);
 	bool MeshExists(const String& Name);
 	void FlushCache();

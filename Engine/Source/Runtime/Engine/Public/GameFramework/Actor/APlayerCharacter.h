@@ -5,6 +5,7 @@
 
 class HCameraComponent;
 
+HCLASS()
 class APlayerCharacter : public APawn
 {
 	using Super = APawn;

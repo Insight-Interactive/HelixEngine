@@ -3,20 +3,19 @@
 
 #include "World/HLevel.h"
 
-#include "GameFramework/Actor/AActor.h"
-#include "GameFramework/Actor/APlayerCharacter.h"
 #include "RendererCore.h"
-#include "ModelManager.h"
 #include "World/HWorld.h"
 #include "FileSystem.h"
-#include "GameFramework/Actor/Components/HStaticMeshComponent.h"
-#include "GameFramework/Actor/Components/HPointLightComponent.h"
+#include "StringHelper.h"
+#include "GameFramework/Actor/AActor.h"
+#include "GameFramework/Actor/APlayerCharacter.h"
+#include "AssetRegistry/AssetDatabase.h"
 
-#include "RapidXML/rapidxml.hpp"
+#include "JsonUtility.h"
 
 
-HLevel::HLevel(HWorld* pOwner)
-	: m_pWorld(pOwner)
+HLevel::HLevel( HWorld* pOwner )
+	: m_pOwningWorld( pOwner )
 {
 }
 
@@ -24,75 +23,61 @@ HLevel::~HLevel()
 {
 }
 
-void HLevel::LoadFromFile(const Char* FileName)
+void HLevel::LoadFromFile( const Char* FileName )
 {
-	// Load Resources
-	//
-	StaticMeshGeometryRef CubeMesh = GStaticGeometryManager.LoadHAssetMeshFromFile("Content/Models/SM_Cube.hasset");
-	MaterialRef RustedMetalMaterial = GMaterialManager.LoadMaterialFromFile("M_RustedMetal.hmat");
-	TextureRef AlbedoTexture = GTextureManager->LoadTexture("Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false);
-	TextureRef NormalTexture = GTextureManager->LoadTexture("Content/Textures/RustedIron/RustedIron_Normal.dds", DT_Magenta2D, false);
-	
-	RustedMetalMaterial->SetAlbedoTexture(AlbedoTexture);
-	RustedMetalMaterial->SetNormalTexture(NormalTexture);
-
-	AActor* CubeActor = CreateActor<AActor>();
-	HStaticMeshComponent* SMSubeActorCube = CubeActor->AddComponent<HStaticMeshComponent>(TEXT("Cube Mesh"));
-	SMSubeActorCube->GetTransform().SetScale( 10.f, 10.f, 10.f );
-	SMSubeActorCube->SetMaterial(RustedMetalMaterial);
-	SMSubeActorCube->SetMesh(CubeMesh);
-	HPointLightComponent* pPointLight = CubeActor->AddComponent<HPointLightComponent>( TEXT( "Point Light" ) );
-	pPointLight->SetPosition( FVector3(0.f, 5.f, 0.f) );
-
-	APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>();
-	GetWorld()->SetCurrentSceneRenderCamera(pPlayer->GetCameraComponent());
+	APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>( TEXT( "Player Character" ) );
+	GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
 	GetWorld()->AddPlayerCharacterRef( pPlayer );
 
-	return;
-	FileRef File( "Content/Actors/ThirdPersonPlayerCharacter.xml", FUM_Read, CM_Text );
-
-	rapidxml::xml_document<char> doc;
-	doc.parse<0>( (char*)File->Data() );
-
-	enum AssetType
+	rapidjson::Document LevelJsonDoc;
+	FileRef LevelJsonSource( FileName, FUM_Read, CM_Text );
+	JsonUtility::LoadDocument( LevelJsonSource, LevelJsonDoc );
+	if (LevelJsonDoc.IsObject())
 	{
-		Actor,
-		Material,
-	};
+		for (rapidjson::Value::ConstMemberIterator itr = LevelJsonDoc.MemberBegin();
+			itr != LevelJsonDoc.MemberEnd(); ++itr)
+		{
+			String ActorName = itr->name.GetString();
+			const rapidjson::Value& ActorWorldProps = itr->value;
+			
+			
+			const String& ActorFilePath = AssetDatabase::GetInstance()->LookupActor( ActorName );
+			HE_ASSERT( !ActorFilePath.empty() );
 
-	enum ActorCategory
-	{
-		UserDefined,
-		Base,
-		PlayerCharacter,
-		PlayerController,
-		Pawn,
-	};
+			// Load the actor
+			//
+			rapidjson::Document JsonDoc;
+			FileRef JsonSource( ActorFilePath.c_str(), FUM_Read );
+			JsonUtility::LoadDocument( JsonSource, JsonDoc );
+			if (JsonDoc.IsObject())
+			{
+				const Char* kBaseActorType = "BaseActor";
+				const Char* kPlayerCharacterType = "PlayerCharacter";
+				for (rapidjson::Value::ConstMemberIterator Itr = JsonDoc.MemberBegin();
+					Itr != JsonDoc.MemberEnd(); ++Itr)
+				{
+					String ObjectType = Itr->name.GetString();
+					if (ObjectType == kBaseActorType)
+					{
+						const rapidjson::Value& ActorObject = JsonDoc[kBaseActorType];
 
-	rapidxml::xml_node<>* pAssetNode = doc.first_node( "Asset" );
-	char* val = pAssetNode->value();
-	// Type
-	rapidxml::xml_attribute<char>* pType = pAssetNode->first_attribute();
-	char* TypeName = pType->name();
-	char* TypeValue = pType->value();
-	AssetType AssetCategory = (AssetType)(TypeValue[0] - 48);
-	// Category
-	rapidxml::xml_attribute<char>* pCategory = pType->next_attribute();
-	char* pCategoryName = pCategory->name();
-	char* pCategoryValue = pCategory->value();
-	ActorCategory ActorCat = (ActorCategory)(pCategoryValue[0] - 48);
+						// Create the actor and deserialize its components.
+						AActor* pNewActor = CreateActor<AActor>( TEXT( "<Unnamed Actor>" ) );
+						pNewActor->Deserialize( ActorObject );
+						JsonUtility::GetTransform( ActorWorldProps[0], "WorldTransform", pNewActor->GetTransform() );
+					}
+					else if (ObjectType == kPlayerCharacterType)
+					{
+						APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>( TEXT( "<Unnamed Player Character>" ) );
+						GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
+						GetWorld()->AddPlayerCharacterRef( pPlayer );
+					}
+				}
+			}
+		}
+	}
 
-	rapidxml::xml_node<>* pDisplayNameNode = pAssetNode->first_node( "DisplayName" );
-	char* DisplayName = pDisplayNameNode->value();
-
-	rapidxml::xml_node<>* pComponentsNode = pDisplayNameNode->next_sibling();
-	rapidxml::xml_node<>* pSMNode = pComponentsNode->first_node( "StaticMeshComponent" );
-	rapidxml::xml_attribute<char>* pSMFileInfo = pSMNode->first_attribute();
-	char* SMFileName = pSMFileInfo->name();
-	char* SMFilepath = pSMFileInfo->value();
-
-	AActor* pNewActor = CreateActor<AActor>();
-	
+	HE_LOG( Log, TEXT( "Level loaded with name: " ), StringHelper::GetFilenameFromDirectoryNoExtension( FileName ) );
 }
 
 void HLevel::BeginPlay()
@@ -103,11 +88,11 @@ void HLevel::BeginPlay()
 	}
 }
 
-void HLevel::Tick(float DeltaTime)
+void HLevel::Tick( float DeltaTime )
 {
 	for (size_t i = 0; i < m_Actors.size(); ++i)
 	{
-		m_Actors[i]->Tick(DeltaTime);
+		m_Actors[i]->Tick( DeltaTime );
 	}
 }
 
@@ -120,10 +105,10 @@ void HLevel::Flush()
 	}
 }
 
-void HLevel::Render(ICommandContext& CmdContext)
+void HLevel::Render( ICommandContext& CmdContext )
 {
 	for (size_t i = 0; i < m_Actors.size(); ++i)
 	{
-		m_Actors[i]->Render(CmdContext);
+		m_Actors[i]->Render( CmdContext );
 	}
 }

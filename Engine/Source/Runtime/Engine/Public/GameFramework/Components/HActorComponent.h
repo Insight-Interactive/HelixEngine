@@ -1,0 +1,71 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
+#pragma once
+
+#include "GameFramework/HObject.h"
+#include "AssetRegistry/SerializeableInterface.h"
+
+
+#define HCOMPONENT()
+
+class AActor;
+class HWorld;
+class ICommandContext;
+
+HCOMPONENT()
+class HActorComponent : public HObject, public SerializeableInterface
+{
+	friend class AActor;
+public:
+	inline AActor* GetOwner() const;
+
+protected:
+	HActorComponent( const HName& Name )
+		: HObject( Name )
+		, m_pOwner( NULL )
+
+	{
+	}
+	virtual ~HActorComponent()
+	{
+	}
+
+	void SetOwner( AActor* pNewOwner );
+	AActor* GetOwner();
+	HWorld* GetWorld();
+
+	virtual void BeginPlay() {}
+	virtual void Tick( float DeltaTime ) {}
+
+	virtual void OnCreate() {}
+	virtual void OnAttach() {}
+	virtual void OnDetach() {}
+	virtual void OnDestroy() {}
+	virtual void Render( ICommandContext& GfxContext ) = 0;
+
+	virtual void Serialize( rapidjson::Value& Value ) override;
+	virtual void Deserialize( const rapidjson::Value& Value ) override;
+
+protected:
+	AActor* m_pOwner;
+
+};
+
+
+//
+// Inline function implmentations
+//
+
+inline AActor* HActorComponent::GetOwner() const
+{
+	return m_pOwner;
+}
+
+inline void HActorComponent::SetOwner( AActor* pNewOwner )
+{
+	m_pOwner = pNewOwner;
+}
+
+inline AActor* HActorComponent::GetOwner()
+{
+	return m_pOwner;
+}

@@ -4,24 +4,24 @@
 #include "CoreFwd.h"
 
 #include "MathCore.h"
-#include "Containers/TDynamicArray.h"
 
-class MATH_API Transform
+
+class MATH_API FTransform
 {
 public:
-	Transform::Transform()
+	FTransform::FTransform()
 		: m_pParent(NULL)
 		, m_Position(FVector3::Zero)
 		, m_Rotation(FVector3::Zero)
 		, m_Scale(FVector3::One)
 	{
 	}
-	Transform::~Transform()
+	FTransform::~FTransform()
 	{
 		ReAssignChildrenToParent();
 		UnsetParent();
 	}
-	Transform(Transform&& Other) noexcept
+	FTransform(FTransform&& Other) noexcept
 	{
 		m_Scale = Other.m_Scale;
 		m_Position = Other.m_Position;
@@ -33,11 +33,11 @@ public:
 
 		Other.m_pParent = NULL;
 	}
-	Transform(const Transform& Transform)
+	FTransform(const FTransform& FTransform)
 	{
-		*this = Transform;
+		*this = FTransform;
 	}
-	Transform& operator = (const Transform& Other)
+	FTransform& operator = (const FTransform& Other)
 	{
 		m_Position = Other.m_Position;
 		m_Scale = Other.m_Scale;
@@ -51,8 +51,8 @@ public:
 	/*
 		Returns the parent of this transform. Null if no parent.
 	*/
-	inline Transform* GetParent() const { return m_pParent; }
-	inline void SetParent(Transform* NewParent)
+	FTransform* GetParent() const { return m_pParent; }
+	void SetParent(FTransform* NewParent)
 	{
 		m_pParent = NewParent;
 		if (m_pParent != NULL)
@@ -61,7 +61,7 @@ public:
 		}
 		ComputeWorldMatrix();
 	}
-	inline void UnsetParent()
+	void UnsetParent()
 	{
 		if (m_pParent != NULL)
 		{
@@ -73,15 +73,15 @@ public:
 	/*
 		Returns the objects position relative to it's parent.
 	*/
-	inline FVector3 GetPosition()	const { return m_Position; }
-	inline FVector3 GetRotation()	const { return m_Rotation; }
-	inline FVector3 GetScale()		const { return m_Scale; }
+	FVector3 GetPosition()	const { return m_Position; }
+	FVector3 GetRotation()	const { return m_Rotation; }
+	FVector3 GetScale()		const { return m_Scale; }
 
 	/*
 		Returns the absolute world position of this actor. As in,
 		it's position in world space not relative to it's parent (if it has one).
 	*/
-	inline FVector3 GetAbsoluteWorldPosition()
+	FVector3 GetAbsoluteWorldPosition()
 	{
 		if (m_pParent != NULL)
 		{
@@ -93,63 +93,63 @@ public:
 	/*
 		Set the position of the object relative to its parent.
 	*/
-	inline void SetPosition(float X, float Y, float Z);
+	void SetPosition(float X, float Y, float Z);
 
 	/*
 		Set the rotation of the transform using Pitch, Yaw, Roll in degrees relative to its parent.
 	*/
-	inline void SetRotation(float Pitch, float Yaw, float Roll);
+	void SetRotation(float Pitch, float Yaw, float Roll);
 
 	/*
 		Set the scale of the object relative to its parent.
 	*/
-	inline void SetScale(float X, float Y, float Z);
+	void SetScale(float X, float Y, float Z);
 
-	inline void SetPosition(const FVector3& Position);
-	inline void SetRotation(const FVector3& Rotation);
-	inline void SetScale(const FVector3& Scale);
+	void SetPosition(const FVector3& Position);
+	void SetRotation(const FVector3& Rotation);
+	void SetScale(const FVector3& Scale);
 
 	/*
 		Returns the transform local UP vector.
 	*/
-	inline FVector3 GetLocalUp();
+	FVector3 GetLocalUp();
 
 	/*
 		Returns the transform local DOWN vector.
 	*/
-	inline FVector3 GetLocalDown();
+	FVector3 GetLocalDown();
 
 	/*
 		Returns the transform local LEFT vector.
 	*/
-	inline FVector3 GetLocalLeft();
+	FVector3 GetLocalLeft();
 
 	/*
 		Returns the transform local RIGHT vector.
 	*/
-	inline FVector3 GetLocalRight();
+	FVector3 GetLocalRight();
 
 	/*
 		Returns the transform local FORWARD vector.
 	*/
-	inline FVector3 GetLocalForward();
+	FVector3 GetLocalForward();
 
 	/*
 		Returns the transform local BACKWARD vector.
 	*/
-	inline FVector3 GetLocalBackward();
+	FVector3 GetLocalBackward();
 
 
-	inline void Translate(const FVector3& Translation);
-	inline void Rotate(const FVector3& Rotation);
-	inline void Scale(const FVector3& NewScale);
+	void Translate(const FVector3& Translation);
+	void Rotate(const FVector3& Rotation);
+	void Scale(const FVector3& NewScale);
 
-	inline void Translate(float X, float Y, float Z);
-	inline void Rotate(float Pitch, float Yaw, float Roll);
-	inline void Scale(float X, float Y, float Z);
+	void Translate(float X, float Y, float Z);
+	void Rotate(float Pitch, float Yaw, float Roll);
+	void Scale(float X, float Y, float Z);
 
 	/*
-		Transform the point to look at a point in space.
+		FTransform the point to look at a point in space.
 	*/
 	void LookAt(const FVector3& LookAtPos);
 
@@ -196,28 +196,28 @@ public:
 
 protected:
 
-	inline void RotateVector(FVector3& outResult, const FVector3& Direction, const FMatrix& Matrix);
+	void RotateVector(FVector3& outResult, const FVector3& Direction, const FMatrix& Matrix);
 
 	/*
 		Add a child that will be updated relative to this transform.
 	*/
-	inline void AddChild(Transform& Child);
+	void AddChild(FTransform& Child);
 	/*
 		Remove a child from being updated form this transform.
 	*/
-	inline bool RemoveChild(Transform* Child);
+	bool RemoveChild(FTransform* Child);
 	/*
 		Repoint the children attached to this tansform to this parent's parent.
 	*/
-	inline void ReAssignChildrenToParent();
+	void ReAssignChildrenToParent();
 	/*
 		Compute the world space matrix of this transform.
 	*/
-	inline void ComputeWorldMatrix();
+	void ComputeWorldMatrix();
 	/*
 		Update the children relative to this transform.
 	*/
-	inline void UpdateChildren();
+	void UpdateChildren();
 
 
 	// Matrix Operations
@@ -226,11 +226,11 @@ protected:
 	void TranslateLocalMatrix();
 	void ScaleLocalMatrix();
 	void RotateLocalMatrix();
-	inline void ComputeAllMatriciesAndUpdateChildren();
-	inline void UpdateLocalVectors();
+	void ComputeAllMatriciesAndUpdateChildren();
+	void UpdateLocalVectors();
 
-	Transform* m_pParent;
-	TDynamicArray<Transform*> m_Children;
+	FTransform* m_pParent;
+	std::vector<FTransform*> m_Children;
 
 	FMatrix m_LocalMatrix = DirectX::XMMatrixIdentity();
 	FMatrix m_WorldMatrix = DirectX::XMMatrixIdentity();

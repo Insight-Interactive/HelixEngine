@@ -3,7 +3,7 @@
 #include "World/CameraManager.h"
 
 #include "Engine/ViewportContext.h"
-#include "GameFramework/Actor/Components/HCameraComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 
 CameraManager::CameraManager( HWorld* pWorld )
@@ -21,7 +21,7 @@ void CameraManager::Tick( float DeltaTime )
 {
 	for (size_t i = 0; i < m_Cameras.size(); ++i)
 	{
-		m_Cameras[i]->BuildViewMatrix();
+		m_Cameras[i]->BuildViewMatrix();																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 	}
 }
 

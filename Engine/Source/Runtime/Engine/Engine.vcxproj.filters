@@ -19,8 +19,8 @@
     <Filter Include="Private\GameFramework\Actor">
       <UniqueIdentifier>{7FBFD60B-EBCC-04F2-74B3-00DDE0BFD0A8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\GameFramework\Actor\Components">
-      <UniqueIdentifier>{3497A972-20E9-8062-0908-BE72F5F8994B}</UniqueIdentifier>
+    <Filter Include="Private\GameFramework\Components">
+      <UniqueIdentifier>{EC723DE9-D8C3-282B-0128-17EDEDD7BB94}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Input">
       <UniqueIdentifier>{FF0EB299-6BCF-2DD0-340A-774DA08972AC}</UniqueIdentifier>
@@ -76,8 +76,8 @@
     <Filter Include="Public\GameFramework\Actor">
       <UniqueIdentifier>{03CB5D9C-EFDA-096D-5894-6E8B44C3F805}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\GameFramework\Actor\Components">
-      <UniqueIdentifier>{38E84FF3-A4AC-4EE3-6D12-7FADD995EA18}</UniqueIdentifier>
+    <Filter Include="Public\GameFramework\Components">
+      <UniqueIdentifier>{F050CCC2-5C34-DB02-6537-093FD199A153}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Input">
       <UniqueIdentifier>{83836967-6FE6-F80B-186C-31C204AEC48E}</UniqueIdentifier>
@@ -102,7 +102,13 @@
     <ClInclude Include="Public\App\FApp.h">
       <Filter>Public\App</Filter>
     </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\ActorDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\HAsset.h">
@@ -111,7 +117,16 @@
     <ClInclude Include="Public\AssetRegistry\HMeshAsset.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\TextureDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\EngineDefines.h">
@@ -156,25 +171,28 @@
     <ClInclude Include="Public\GameFramework\Actor\APlayerCharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HActorComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HActorComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HCameraComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HControllerComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HPointLightComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HSceneComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\Components\HStaticMeshComponent.h">
-      <Filter>Public\GameFramework\Actor\Components</Filter>
+    <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\GameInstance.h">
+      <Filter>Public\GameFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\HObject.h">
       <Filter>Public\GameFramework</Filter>
     </ClInclude>
     <ClInclude Include="Public\Input\FKeyboard.h">
@@ -254,10 +272,19 @@
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
     <ClCompile Include="Private\AssetRegistry\HMeshAsset.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\EngineEvent.cpp">
@@ -290,25 +317,28 @@
     <ClCompile Include="Private\GameFramework\Actor\APlayerCharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HActorComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HCameraComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HControllerComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HPointLightComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HSceneComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\Components\HStaticMeshComponent.cpp">
-      <Filter>Private\GameFramework\Actor\Components</Filter>
+    <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\GameInstance.cpp">
+      <Filter>Private\GameFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\HObject.cpp">
       <Filter>Private\GameFramework</Filter>
     </ClCompile>
     <ClCompile Include="Private\Input\FKeyboard.cpp">
@@ -370,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="Private\World\HWorld.cpp">
       <Filter>Private\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Public\AssetRegistry\ActorDatabase.cpp">
+      <Filter>Public\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>

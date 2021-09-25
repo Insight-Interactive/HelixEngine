@@ -19,7 +19,7 @@
 
 
 HEditorEngine::HEditorEngine( CommandLine& CmdLine )
-	: HEngine( CmdLine )
+	: Super( CmdLine )
 {
 }
 
@@ -29,12 +29,12 @@ HEditorEngine::~HEditorEngine()
 
 void HEditorEngine::PreStartup()
 {
-	HEngine::PreStartup();
+	Super::PreStartup();
 }
 
 void HEditorEngine::Startup()
 {
-	HEngine::Startup();
+	Super::Startup();
 
 
 	IMGUI_CHECKVERSION();
@@ -114,48 +114,49 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	GetClientViewport().Render();
 
 
-	ImGui::Begin( "Hello From HelixEd!" );
-	{
-		static TextureRef pTexture;
-		static bool Loaded = false;
-		if (!Loaded)
-		{
-			Loaded = true;
-			pTexture = GTextureManager->LoadTexture( "Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false );
-		}
-		const TextureD3D12* pD3D12Tex = DCast<const TextureD3D12*>( pTexture.Get() );
-		D3D12_GPU_DESCRIPTOR_HANDLE TextureHandle{ pD3D12Tex->GetShaderVisibleDescriptorHandle().GetGpuPtr() };
-		ImGui::Text( "Texture: %s", pTexture.GetCacheKey().c_str() );
-		ImGui::Image( (ImTextureID)TextureHandle.ptr, ImVec2( 200, 200 ) );
+	// ----------------------
+	// For later reference
+	// ----------------------
+	// 
+	//ImGui::Begin( "Hello From HelixEd!" );
+	//{
+	//	static TextureRef pTexture;
+	//	static bool Loaded = false;
+	//	if (!Loaded)
+	//	{
+	//		Loaded = true;
+	//		pTexture = GTextureManager->LoadTexture( "Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false );
+	//	}
+	//	const TextureD3D12* pD3D12Tex = DCast<const TextureD3D12*>( pTexture.Get() );
+	//	D3D12_GPU_DESCRIPTOR_HANDLE TextureHandle{ pD3D12Tex->GetShaderVisibleDescriptorHandle().GetGpuPtr() };
+	//	ImGui::Text( "Texture: %s", pTexture.GetCacheKey().c_str() );
+	//	ImGui::Image( (ImTextureID)TextureHandle.ptr, ImVec2( 200, 200 ) );
 
-		/*static bool Pressed = false;
-		if (ImGui::Button( "Start New Instance" ) && !Pressed)
-		{
-			Pressed = true;
-			GThreadPool->Kick( StandaloneGameLaunch, NULL );
-		}*/
-	}
-	ImGui::End();
-
-
-	ICommandContext& Context = ICommandContext::Begin( TEXT( "Setup Editor Display" ) );
-	{
-		for (size_t i = 0; i < m_EditorPanels.size(); ++i)
-		{
-			m_EditorPanels[i]->Tick( DeltaTime );
-			m_EditorPanels[i]->Render( Context );
-		}
-	}
-	Context.End();
-
-	ImGui::Render();
+	//	/*static bool Pressed = false;
+	//	if (ImGui::Button( "Start New Instance" ) && !Pressed)
+	//	{
+	//		Pressed = true;
+	//		GThreadPool->Kick( StandaloneGameLaunch, NULL );
+	//	}*/
+	//}
+	//ImGui::End();
 
 
 	IColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
-
 	ICommandContext& UIContext = ICommandContext::Begin( TEXT( "Draw Editor" ) );
 	{
-		// TODO: Doesnt't work for some reason. Only works in ViewportContext.cpp
+		UIContext.BeginDebugMarker( TEXT( "Draw Panels" ) );
+		{
+			for (size_t i = 0; i < m_EditorPanels.size(); ++i)
+			{
+				m_EditorPanels[i]->Tick( DeltaTime );
+				m_EditorPanels[i]->Render( UIContext );
+			}
+		}
+		UIContext.EndDebugMarker();
+		
+		ImGui::Render();
+
 		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainSurface );
 		UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
 		UIContext.ClearColorBuffer( *pSwapChainSurface, GetClientViewport().GetClientRect() );
@@ -176,23 +177,16 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault( NULL, (void*)pCommandList );
 		}
-	}
-	UIContext.End();
-
-
-	ICommandContext& PresentContext = ICommandContext::Begin( TEXT( "Present" ) );
-	{
-		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainSurface );
 		UIContext.TransitionResource( SwapChainGpuResource, RS_Present );
 	}
-	PresentContext.End();
+	UIContext.End();
 
 	GetClientViewport().PresentOneFrame();
 }
 
 void HEditorEngine::Shutdown()
 {
-	HEngine::Shutdown();
+	Super::Shutdown();
 
 	ImGui::DestroyContext();
 }
@@ -226,6 +220,8 @@ void HEditorEngine::SetupEditorPanels()
 	m_EditorPanels.push_back( &m_SceneViewport );
 	m_EditorPanels.push_back( &m_ConsoleOutputPanel );
 	m_EditorPanels.push_back( &m_ContentBrowserPanel );
+	m_EditorPanels.push_back( &m_WorldOutline );
+	m_EditorPanels.push_back( &m_DetailsPanel );
 
 	for (size_t i = 0; i < m_EditorPanels.size(); ++i)
 	{
@@ -233,6 +229,7 @@ void HEditorEngine::SetupEditorPanels()
 	}
 
 	m_MenuBar.AddMenuItem( "File", "Exit", this, &HEditorEngine::OnExitMenuItem );
+	m_MenuBar.AddMenuItem( "File", "Save", this, &HEditorEngine::OnSaveMenuItem );
 	m_MenuBar.AddMenuItem( "Developer", "Reload Pipeline Shaders", this, &HEditorEngine::OnReloadPipelineShaders );
 }
 
@@ -347,6 +344,10 @@ bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
+	if (AssetDatabase::GetInstance()->IsAnyDatabaseDirty())
+	{
+		OnSaveMenuItem();
+	}
 	return false;
 }
 
@@ -361,10 +362,20 @@ void HEditorEngine::OnExitMenuItem()
 	RequestShutdown();
 }
 
+void HEditorEngine::OnSaveMenuItem()
+{
+	using namespace System;
+	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel );
+	if (Result == MDR_Ok)
+	{
+		AssetDatabase::GetInstance()->SaveAssetDatabases();
+	}
+}
+
 void HEditorEngine::OnReloadPipelineShaders()
 {
 	HE_LOG( Log, TEXT( "Starting shader pipeline reload." ) );
-	GCommandManager->IdleGPU();
+	GCommandManager->IdleGpu();
 	GetClientViewport().ReloadRenderPipelines();
 	HE_LOG( Log, TEXT( "Shader pipeline reload completed." ) );
 }

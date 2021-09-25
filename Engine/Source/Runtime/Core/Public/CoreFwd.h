@@ -17,9 +17,9 @@
 #include "DataTypes.h"
 
 #if CORE_MODULE
-#	define CORE_API //__declspec(dllexport)
+#	define CORE_API 
 #else
-#	define CORE_API //__declspec(dllimport)
+#	define CORE_API 
 #endif
 
 #include "DebugAssert.h"

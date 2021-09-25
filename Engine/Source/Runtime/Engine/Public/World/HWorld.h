@@ -12,6 +12,7 @@ class ViewportContext;
 
 class HWorld
 {
+	friend class WorldOutlinePanel;
 public:
 	HWorld();
 	~HWorld();
@@ -35,7 +36,7 @@ public:
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
 
 protected:
-	std::vector<HLevel*> m_Levels;
+	HLevel* m_pLevel;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
 
 	HCameraComponent* m_RenderingCamera;
@@ -76,7 +77,7 @@ inline void HWorld::SetViewport( ViewportContext* pViewport )
 
 inline HLevel* HWorld::GetCurrentLevel()
 {
-	return m_Levels[0];
+	return m_pLevel;
 }
 
 inline void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )

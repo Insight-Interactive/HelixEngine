@@ -44,3 +44,14 @@
 
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
+
+// Third Party
+//
+// Rapid Json
+#include <rapidjson/writer.h>
+#include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/filewritestream.h>

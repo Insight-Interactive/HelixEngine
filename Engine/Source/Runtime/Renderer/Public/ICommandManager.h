@@ -42,7 +42,7 @@ public:
 	virtual void CreateNewCommandContext(const ECommandListType& Type, ICommandContext** pContext, void** pData) = 0;
 
 	virtual void WaitForFence(uint64 Value) = 0;
-	inline virtual void IdleGPU()
+	inline virtual void IdleGpu()
 	{
 		m_pGraphicsQueue->WaitForIdle();
 		//m_pComputeQueue->WaitForIdle(); // TODO: Add Compute functionality

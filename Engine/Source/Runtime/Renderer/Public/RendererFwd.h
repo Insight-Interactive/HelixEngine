@@ -2,9 +2,9 @@
 
 
 #if RENDERER_MODULE
-#	define RENDER_API //__declspec(dllexport)
+#	define RENDER_API
 #else
-#	define RENDER_API //__declspec(dllimport)
+#	define RENDER_API
 #endif
 
 #if R_WITH_D3D12 || R_WITH_D3D11

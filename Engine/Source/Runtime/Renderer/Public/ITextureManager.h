@@ -42,11 +42,11 @@ class RENDER_API ITextureManager
 	friend class RenderContext;
 public:
 
-	virtual TextureRef LoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
-	virtual void DestroyTexture(const std::string& Key) = 0;
+	virtual TextureRef LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
+	virtual void DestroyTexture(const String& Key) = 0;
 
 private:
-	virtual IManagedTexture* FindOrLoadTexture(const std::string& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
+	virtual IManagedTexture* FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
 
 	void DestroyDefaultTextures();
 

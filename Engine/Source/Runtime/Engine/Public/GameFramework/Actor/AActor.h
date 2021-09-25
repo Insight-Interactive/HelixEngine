@@ -1,22 +1,30 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
+#include "GameFramework/HObject.h"
+#include "AssetRegistry/SerializeableInterface.h"
+#include "Transform.h"
 
-#define HE_GENERATED_BODY( Class )		\
-			Class( HWorld* pWorld );	\
-			virtual ~Class();
+
+#define HE_GENERATED_BODY( Class )						\
+			Class( HWorld* pWorld, const HName& Name );	\
+			virtual ~Class();							
+
+#define HCLASS()
+
 
 class HWorld;
 class HActorComponent;
 class ICommandContext;
 
-class AActor
+HCLASS()
+class AActor : public HObject, public SerializeableInterface
 {
 	friend class HLevel;
 	friend class HActorComponent;
+	friend class WorldOutlinePanel;
 public:
 	HE_GENERATED_BODY( AActor )
-
 
 	virtual void BeginPlay();
 	virtual void Tick( float DeltaTime );
@@ -26,18 +34,26 @@ public:
 
 	void RemoveAllComponents();
 
-	void SetDisplayName( const HName& Name );
-	const HName& GetDisplayName() const;
+	FTransform& GetTransform();
 
 protected:
 	void Render( ICommandContext& GfxContext );
 	inline HWorld* GetWorld();
 	inline void SetOwningWorld( HWorld* pWorld );
 
+	virtual void Serialize( rapidjson::Value& Value ) override;
+	virtual void Deserialize( const rapidjson::Value& Value ) override;
+
+#if HE_WITH_EDITOR
+	virtual void OnEditorSelected();
+#endif
+
 protected:
 	std::vector<HActorComponent*> m_Components;
 	HWorld* m_pOwningWorld;
 	HName m_DisplayName;
+	FTransform m_Transform;
+
 };
 
 
@@ -68,12 +84,7 @@ inline void AActor::SetOwningWorld( HWorld* pWorld )
 	m_pOwningWorld = pWorld;
 }
 
-inline void AActor::SetDisplayName( const HName& Name )
+inline FTransform& AActor::GetTransform()
 {
-	m_DisplayName = Name;
-}
-
-inline const HName& AActor::GetDisplayName() const
-{
-	return m_DisplayName;
+	return m_Transform;
 }

@@ -4,12 +4,12 @@
 #include "GameFramework/Actor/APlayerCharacter.h"
 
 #include "World/HWorld.h"
-#include "GameFramework/Actor/Components/HCameraComponent.h"
-#include "GameFramework/Actor/Components/HControllerComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
+#include "GameFramework/Components/HControllerComponent.h"
 
 
-APlayerCharacter::APlayerCharacter( HWorld* pWorld )
-	: APawn(pWorld)
+APlayerCharacter::APlayerCharacter( HWorld* pWorld, const HName& Name )
+	: APawn(pWorld, Name)
 	, m_CanRotateCamera(true)
 {
 	m_pCameraComponent = AddComponent<HCameraComponent>(TEXT("Player camera"));
