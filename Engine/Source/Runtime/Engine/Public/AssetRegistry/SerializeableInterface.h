@@ -2,12 +2,14 @@
 
 #include "JsonUtility.h"
 
+typedef rapidjson::PrettyWriter<rapidjson::StringBuffer> WriteContext;
+typedef rapidjson::Value ReadContext;
 
 class SerializeableInterface
 {
-public:
+protected:
 	virtual void Serialize( const Char* Filepath ) {}
-	virtual void Serialize( rapidjson::Value& Value ) = 0;
-	virtual void Deserialize( const rapidjson::Value& Value ) = 0;
+	virtual void Serialize( WriteContext& Value ) = 0;
+	virtual void Deserialize( const ReadContext& Value ) = 0;
 	
 };

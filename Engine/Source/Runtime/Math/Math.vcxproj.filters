@@ -24,10 +24,10 @@
     <ClInclude Include="Public\MathFwd.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\FTransform.h">
+    <ClInclude Include="Public\Transform.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\FTransform.inl">
+    <ClInclude Include="Public\Transform.inl">
       <Filter>Public</Filter>
     </ClInclude>
   </ItemGroup>

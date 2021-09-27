@@ -18,20 +18,21 @@ project ("HelixEd")
 	pchheader("HelixEdPCH.h")
 	pchsource("Private/PCH/HelixEdPCH.cpp")
 
-	files
-	{
-		"HelixEd.module.lua",
+	filter "configurations:DebugEditor or Development"
+		files
+		{
+			"HelixEd.module.lua",
 
-		"Public/**.h",
-		"Public/**.cpp",
-		"Public/**.inl",
-		"Private/**.h",
-		"Private/**.cpp",
-		"Private/**.inl",
+			"Public/**.h",
+			"Public/**.cpp",
+			"Public/**.inl",
+			"Private/**.h",
+			"Private/**.cpp",
+			"Private/**.inl",
 
-		-- Third Party 
+			-- Third Party 
 
-	}
+		}
 
 	includedirs
 	{
@@ -44,17 +45,12 @@ project ("HelixEd")
 		-- Generaly grabbing the engine runtime should never be done.
 		-- However, the editor needs it.
 		heGetEngineRuntimeModulePublicDir ( "Engine" ),
-		heGetEngineRuntimeModulePrivatecDir ( "Renderer" ),
+		heGetEngineRuntimeModulePrivateDir ( "Renderer" ),
 
 		-- Third Party 
 		heGetThirdPartyModule( "ImGui" ),
 		heGetThirdPartyModule( "OpenFBX" ) .. "src/",
 		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
-	}
-
-	links
-	{
---		"Core",
 	}
 
 	defines

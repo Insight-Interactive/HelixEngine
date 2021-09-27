@@ -10,7 +10,7 @@ public:
 	const HName& GetObjectName() const;
 
 protected:
-	HObject( const HName& Name );
+	HObject( const HName& Name = TEXT("Unamed HObject") );
 	virtual ~HObject();
 
 private:

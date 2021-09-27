@@ -24,12 +24,12 @@ AActor::~AActor()
 
 }
 
-void AActor::Serialize( rapidjson::Value& Value )
+void AActor::Serialize( WriteContext& Output )
 {
 
 }
 
-void AActor::Deserialize( const rapidjson::Value& Value ) 
+void AActor::Deserialize( const ReadContext& Value ) 
 {
 	const rapidjson::Value& HObjectProps = Value[0];
 	const rapidjson::Value& ActorProps = Value[1];

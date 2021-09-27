@@ -18,7 +18,10 @@ public:
 		, m_pWritePointer(NULL)
 	{
 	}
-	~ConstantBufferD3D12() = default;
+	~ConstantBufferD3D12()
+	{
+		m_pWritePointer = NULL;
+	}
 
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE CBV() const;
 	FORCEINLINE void* GetGPUWritePointer() const;

@@ -33,7 +33,7 @@ void HStaticMeshComponent::Render(ICommandContext& GfxContext)
 		m_MaterialRef->Bind(GfxContext);
 	}
 
-	if (m_GeometryRef.IsValid())
+	if (m_GeometryRef->IsValid())
 	{
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_pMeshWorldCB->GetBufferPointer<MeshWorldCBData>();
@@ -56,13 +56,13 @@ void HStaticMeshComponent::OnAttach()
 	GetTransform().SetParent( &GetOwner()->GetTransform() );
 }
 
-void HStaticMeshComponent::Serialize( rapidjson::Value& Value )
+void HStaticMeshComponent::Serialize( WriteContext& Output )
 {
-	Super::Serialize( Value );
+	Super::Serialize( Output );
 
 }
 
-void HStaticMeshComponent::Deserialize( const rapidjson::Value& Value ) 
+void HStaticMeshComponent::Deserialize( const ReadContext& Value ) 
 {
 	Super::Deserialize( Value[0] );
 

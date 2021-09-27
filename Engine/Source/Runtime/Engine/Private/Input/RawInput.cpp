@@ -68,12 +68,12 @@ void RawInputSurveyer::Update( float DeltaTime )
 		if (newInputState.Gamepad.wButtons & (1 << 14)) m_Buttons[0][XButton] = true;
 		if (newInputState.Gamepad.wButtons & (1 << 15)) m_Buttons[0][YButton] = true;
 
-		m_Analogs[AnalogLeftTrigger] = newInputState.Gamepad.bLeftTrigger / 255.0f;
-		m_Analogs[AnalogRightTrigger] = newInputState.Gamepad.bRightTrigger / 255.0f;
-		m_Analogs[AnalogLeftStickX] = FilterAnalogInput( newInputState.Gamepad.sThumbLX, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE );
-		m_Analogs[AnalogLeftStickY] = FilterAnalogInput( newInputState.Gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE );
-		m_Analogs[AnalogRightStickX] = FilterAnalogInput( newInputState.Gamepad.sThumbRX, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE );
-		m_Analogs[AnalogRightStickY] = FilterAnalogInput( newInputState.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE );
+		SetAnalogValue( AnalogLeftTrigger, newInputState.Gamepad.bLeftTrigger / 255.0f );
+		SetAnalogValue( AnalogRightTrigger, newInputState.Gamepad.bRightTrigger / 255.0f );
+		SetAnalogValue( AnalogLeftStickX, FilterAnalogInput( newInputState.Gamepad.sThumbLX, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) );
+		SetAnalogValue( AnalogLeftStickY, FilterAnalogInput( newInputState.Gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) );
+		SetAnalogValue( AnalogRightStickX, FilterAnalogInput( newInputState.Gamepad.sThumbRX, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ) );
+		SetAnalogValue( AnalogRightStickY, FilterAnalogInput( newInputState.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ) );
 	}
 #else
 	IVectorView<Gamepad^>^ gamepads = Gamepad::Gamepads;
@@ -99,12 +99,12 @@ void RawInputSurveyer::Update( float DeltaTime )
 
 		static const float kAnalogStickDeadZone = 0.18f;
 
-		m_Analogs[kAnalogLeftTrigger] = (float)reading.LeftTrigger;
-		m_Analogs[kAnalogRightTrigger] = (float)reading.RightTrigger;
-		m_Analogs[kAnalogLeftStickX] = FilterAnalogInput( (float)reading.LeftThumbstickX, kAnalogStickDeadZone );
-		m_Analogs[kAnalogLeftStickY] = FilterAnalogInput( (float)reading.LeftThumbstickY, kAnalogStickDeadZone );
-		m_Analogs[kAnalogRightStickX] = FilterAnalogInput( (float)reading.RightThumbstickX, kAnalogStickDeadZone );
-		m_Analogs[kAnalogRightStickY] = FilterAnalogInput( (float)reading.RightThumbstickY, kAnalogStickDeadZone );
+		m_Analogs[kAnalogLeftTrigger - AnalogLeftTrigger] = (float)reading.LeftTrigger;
+		m_Analogs[kAnalogRightTrigger - AnalogLeftTrigger] = (float)reading.RightTrigger;
+		m_Analogs[kAnalogLeftStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickX, kAnalogStickDeadZone );
+		m_Analogs[kAnalogLeftStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickY, kAnalogStickDeadZone );
+		m_Analogs[kAnalogRightStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickX, kAnalogStickDeadZone );
+		m_Analogs[kAnalogRightStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickY, kAnalogStickDeadZone );
 	}
 
 #endif // HE_INPUT_USE_XINPUT
@@ -126,14 +126,14 @@ void RawInputSurveyer::Update( float DeltaTime )
 #endif
 
 	FVector2 MouseMoveDelta = m_Mouse.GetMoveDelta();
-	m_Analogs[AnalogMouseX] = MouseMoveDelta.x * .0018f;
-	m_Analogs[AnalogMouseY] = MouseMoveDelta.y * -.0018f;
+	SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * .0018f );
+	SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * -.0018f );
 
 	float MouseVerticalScrollDelta = m_Mouse.GetVerticalScrollDelta();
 	if (MouseVerticalScrollDelta > 0)
-		m_Analogs[AnalogMouseScroll] = 1.0f;
+		SetAnalogValue( AnalogMouseScroll, 1.f );
 	else if (MouseVerticalScrollDelta < 0)
-		m_Analogs[AnalogMouseScroll] = -1.0f;
+		SetAnalogValue( AnalogMouseScroll, -1.f );
 
 #endif // HE_INPUT_USE_KEYBOARD_MOUSE
 

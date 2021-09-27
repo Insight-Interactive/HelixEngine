@@ -57,6 +57,9 @@
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h">
       <Filter>Public\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Panels\DetailsPanel.h">
+      <Filter>Public\Panels</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Panels\MenuBarPanel.h">
       <Filter>Public\Panels</Filter>
     </ClInclude>
@@ -69,11 +72,12 @@
     <ClInclude Include="Public\Panels\ToolbarPanel.h">
       <Filter>Public\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Panels\WorldOutlinePanel.h">
+      <Filter>Public\Panels</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Tools\AssetImporter.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Panels\WorldOutlinePanel.h" />
-    <ClInclude Include="Public\Panels\DetailsPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Debug\ADebugCharacter.cpp">
@@ -97,6 +101,9 @@
     <ClCompile Include="Private\Panels\ContentBrowserPanel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\DetailsPanel.cpp">
+      <Filter>Private\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Panels\MenuBarPanel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
@@ -106,14 +113,15 @@
     <ClCompile Include="Private\Panels\ToolbarPanel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Panels\WorldOutlinePanel.cpp">
+      <Filter>Private\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Tools\AssetImporter.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Panels\WorldOutlinePanel.cpp" />
-    <ClCompile Include="Private\Panels\DetailsPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

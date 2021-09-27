@@ -9,6 +9,20 @@
 
 struct DrawArgs
 {
+	DrawArgs()
+		: NumVerts( 0 )
+		, NumIndices( 0 )
+		, VertexBufferHandle( HE_INVALID_VERTEX_BUFFER_HANDLE )
+		, IndexBufferHandle( HE_INVALID_INDEX_BUFFER_HANDLE )
+	{
+	}
+	~DrawArgs()
+	{
+		NumVerts = -1;
+		NumIndices = -1;
+		VertexBufferHandle = HE_INVALID_VERTEX_BUFFER_HANDLE;
+		IndexBufferHandle = HE_INVALID_INDEX_BUFFER_HANDLE;
+	}
 	uint32 NumVerts;
 	uint32 NumIndices;
 	VertexBufferUID VertexBufferHandle;
@@ -19,8 +33,14 @@ class RENDER_API StaticMeshGeometry
 {
 	friend class StaticGeometryManager;
 public:
-	inline StaticMeshGeometry();
-	inline virtual ~StaticMeshGeometry();
+	StaticMeshGeometry()
+	{
+		Initialize();
+	}
+	virtual ~StaticMeshGeometry()
+	{
+		UnInitialize();
+	}
 
 	//
 	// Getters and Setters
@@ -31,13 +51,13 @@ public:
 	inline uint32 GetNumIndices() const;
 	inline uint64 GetUID() const;
 
-	void Create(void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices);
+	void Create( void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices );
 
 private:
 	inline void Initialize();
 	inline void UnInitialize();
 
-	inline void SetHashName(uint64 NewUID);
+	inline void SetHashName( uint64 NewUID );
 
 
 protected:
@@ -52,24 +72,15 @@ protected:
 // Inline function definitions
 //
 
-inline StaticMeshGeometry::StaticMeshGeometry()
-{
-	Initialize();
-}
-
-inline StaticMeshGeometry::~StaticMeshGeometry()
-{
-	UnInitialize();
-}
 
 inline IVertexBuffer& StaticMeshGeometry::GetVertexBuffer()
 {
-	return GGeometryManager->GetVertexBufferByUID(m_DrawArgs.VertexBufferHandle);
+	return GGeometryManager->GetVertexBufferByUID( m_DrawArgs.VertexBufferHandle );
 }
 
 inline IIndexBuffer& StaticMeshGeometry::GetIndexBuffer()
 {
-	return GGeometryManager->GetIndexBufferByUID(m_DrawArgs.IndexBufferHandle);
+	return GGeometryManager->GetIndexBufferByUID( m_DrawArgs.IndexBufferHandle );
 }
 
 inline uint32 StaticMeshGeometry::GetNumVerticies() const
@@ -95,11 +106,14 @@ inline void StaticMeshGeometry::Initialize()
 
 inline void StaticMeshGeometry::UnInitialize()
 {
-	GGeometryManager->DeAllocateVertexBuffer(m_DrawArgs.VertexBufferHandle);
-	GGeometryManager->DeAllocateIndexBuffer(m_DrawArgs.IndexBufferHandle);
+	if (GGeometryManager)
+	{
+		GGeometryManager->DeAllocateVertexBuffer( m_DrawArgs.VertexBufferHandle );
+		GGeometryManager->DeAllocateIndexBuffer( m_DrawArgs.IndexBufferHandle );
+	}
 }
 
-inline void StaticMeshGeometry::SetHashName(uint64 NewGUID)
+inline void StaticMeshGeometry::SetHashName( uint64 NewGUID )
 {
 	m_Uid = NewGUID;
 }

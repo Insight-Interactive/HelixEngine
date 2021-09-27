@@ -58,6 +58,6 @@ function heGetEngineRuntimeModulePublicDir( ModuleName )
 end
 
 -- Returns the private directory of a specified engine module.
-function heGetEngineRuntimeModulePrivatecDir( ModuleName )
+function heGetEngineRuntimeModulePrivateDir( ModuleName )
     return heGetRuntimeModuleRootDir() .. ModuleName .. "/Private/"
 end

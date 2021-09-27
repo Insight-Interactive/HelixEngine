@@ -1,3 +1,4 @@
 {
-  "MyCoolActor": "Content/Actors/MyCoolActor.hactor"
+  "MyCoolActor": "Content/Actors/MyCoolActor.hactor",
+  "SphereActor": "Content/Actors/SphereActor.hactor"
 }

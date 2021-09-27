@@ -36,6 +36,10 @@ void TextureManagerD3D12::Initialize()
 
 void TextureManagerD3D12::UnInitialize()
 {
+    for (auto Iter = m_TextureCache.begin(); Iter != m_TextureCache.end(); ++Iter)
+    {
+        Iter->second.reset();
+    }
     m_TextureCache.clear();
 }
 

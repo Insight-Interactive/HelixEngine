@@ -11,11 +11,11 @@
 #define HE_DEFAULT_DEPTH_BIAS					( 0 )
 #define HE_DEFAULT_DEPTH_BIAS_CLAMP				( 0.f )
 #define HE_DEFAULT_SLOPE_SCALED_DEPTH_BIAS		( 0.f )
-#define HE_INVALID_VERTEX_BUFFER_HANDLE			( VertexBufferUID )(-1)
-#define HE_INVALID_INDEX_BUFFER_HANDLE			( IndexBufferUID )(-1)
+#define HE_INVALID_VERTEX_BUFFER_HANDLE			( VertexBufferUID )( -1 )
+#define HE_INVALID_INDEX_BUFFER_HANDLE			( IndexBufferUID )( -1 )
 #define	HE_APPEND_ALIGNED_ELEMENT				( 0xFFFFFFFF )
 #define HE_MAX_CONSTANT_BUFFER_SIZE				( 256 )
-#define HE_INVALID_CONSTANT_BUFFER_HANDLE		( ConstantBufferUID )(-1)
+#define HE_INVALID_CONSTANT_BUFFER_HANDLE		( ConstantBufferUID )( -1 )
 #define HE_INVALID_GPU_ADDRESS					( -1 )
 #define HE_INVALID_MATERIAL_ID					( -1 )
 #define HE_DESCRIPTOR_RANGE_OFFSET_APPEND		( 0xFFFFFFFF )
@@ -89,9 +89,10 @@ extern StaticGeometryManager GStaticGeometryManager;
 // ----------
 //	Typedefs
 // ----------
-//
+
 // UIDs
 //
+
 // Handle to vertex buffer instance in the IGeometryBufferManager.
 typedef uint32 VertexBufferUID;
 // Handle to index buffer instance in the IGeometryBufferManager.

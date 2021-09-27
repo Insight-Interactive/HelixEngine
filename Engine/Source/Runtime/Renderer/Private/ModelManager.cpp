@@ -24,31 +24,13 @@ void ManagedStaticMeshGeometry::Unload()
 	GStaticGeometryManager.DestroyMesh( m_MapKey );
 }
 
-void StaticGeometryManager::DestroyMesh( const String& Key )
-{
-	auto Iter = m_ModelCache.find( Key );
-	if (Iter != m_ModelCache.end())
-		m_ModelCache.erase( Iter );
-
-}
-
-bool StaticGeometryManager::MeshExists( const String& Name )
-{
-	auto Iter = m_ModelCache.find( Name );
-	return Iter != m_ModelCache.end();
-}
-
-void StaticGeometryManager::FlushCache()
-{
-	m_ModelCache.clear();
-}
-
 StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
 {
+	HE_ASSERT( StringHelper::GetFileExtension( FilePath ) == "hasset" ); // Trying to load a file that is not an hasset.
+
 	String MeshName = StringHelper::GetFilenameFromDirectoryNoExtension( FilePath );
 	if (MeshExists( MeshName ))
 		return GetStaticMeshByName( MeshName );
-
 
 	// Read the data file from disk.
 	//
@@ -83,10 +65,10 @@ StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const Strin
 	pMesh->SetLoadCompleted( true );
 	m_ModelCache[MeshName].reset( pMesh );
 
-	return m_ModelCache[MeshName].get();
+	return m_ModelCache[MeshName]/*.get()*/;
 }
 
-StaticMeshGeometryRef StaticGeometryManager::RegisterGeometry( const std::string& Name, void* Verticies, uint32 NumVerticies, uint32 VertexSizeInBytes, void* Indices, uint32 IndexDataSizeInBytes, uint32 NumIndices )
+StaticMeshGeometryRef StaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
 {
 #if HE_WITH_EDITOR
 	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
@@ -95,66 +77,10 @@ StaticMeshGeometryRef StaticGeometryManager::RegisterGeometry( const std::string
 	uint64 HashName = StringHash( Name.c_str(), Name.size() );
 	ManagedStaticMeshGeometry* pMesh = new ManagedStaticMeshGeometry( Name );
 	pMesh->SetHashName( HashName );
-	pMesh->Create( Verticies, NumVerticies, VertexSizeInBytes, Indices, IndexDataSizeInBytes, NumIndices );
+	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );
 
 	m_ModelCache[Name].reset( pMesh );
 
-	return pMesh;
+	return m_ModelCache[Name];
 }
-
-StaticMeshGeometryRef::StaticMeshGeometryRef( const StaticMeshGeometryRef& ref )
-	: m_Ref( ref.m_Ref )
-{
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
-}
-
-StaticMeshGeometryRef::StaticMeshGeometryRef( ManagedStaticMeshGeometry* tex )
-	: m_Ref( tex )
-{
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
-}
-
-StaticMeshGeometryRef::~StaticMeshGeometryRef()
-{
-	if (m_Ref != nullptr && --m_Ref->m_ReferenceCount == 0)
-		m_Ref->Unload();
-}
-
-void StaticMeshGeometryRef::operator= ( std::nullptr_t )
-{
-	if (m_Ref != nullptr)
-		--m_Ref->m_ReferenceCount;
-
-	m_Ref = nullptr;
-}
-
-void StaticMeshGeometryRef::operator= ( StaticMeshGeometryRef& rhs )
-{
-	if (m_Ref != nullptr)
-		--m_Ref->m_ReferenceCount;
-
-	m_Ref = rhs.m_Ref;
-
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
-}
-
-bool StaticMeshGeometryRef::IsValid() const
-{
-	return m_Ref && m_Ref->IsValid();
-}
-
-StaticMeshGeometry* StaticMeshGeometryRef::Get()
-{
-	return (StaticMeshGeometry*)m_Ref;
-}
-
-StaticMeshGeometry* StaticMeshGeometryRef::operator->()
-{
-	HE_ASSERT( m_Ref != nullptr );
-	return (StaticMeshGeometry*)m_Ref;
-}
-

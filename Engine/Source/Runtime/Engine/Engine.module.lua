@@ -69,8 +69,6 @@ project ("Engine")
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
 
-		heGetEditorModulePublicDir ( "HelixEd" ),
-
 		-- Third Party
 		heGetThirdPartyModule( "rapidxml-1.13" ) .. "Include/",
 		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
@@ -166,6 +164,11 @@ project ("Engine")
 		libdirs
 		{
 			"%{libraryDirectories.PIXx64}"
+		}
+		includedirs
+		{	
+			-- Only include the editor for the ability to launch the editor library in editor builds.
+			heGetEditorModulePublicDir ( "HelixEd" ),
 		}
 
 

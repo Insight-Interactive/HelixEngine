@@ -5,6 +5,9 @@
 
 #include "RendererCore.h"
 
+#include "CriticalSection.h"
+
+
 class RENDER_API IConstantBuffer
 {
 	friend class IConstantBufferManager;
@@ -50,12 +53,20 @@ protected:
 	{
 	}
 
-	static ConstantBufferUID s_NextAvailableBufferID;
+	ConstantBufferUID AllocBufferHandle();
+
+private:
+	static CriticalSection SBufferIdGuard;
+	static ConstantBufferUID SNextAvailableBufferID;
+
 };
 
 
 //
 // Inline function implementations
+//
+
+// IConstantBuffer
 //
 
 FORCEINLINE ConstantBufferUID IConstantBuffer::GetUID() const
@@ -82,4 +93,14 @@ FORCEINLINE void IConstantBuffer::SetBufferSize(uint32 BufferSize)
 FORCEINLINE void IConstantBuffer::SetUID(const ConstantBufferUID& UID)
 {
 	m_UID = UID;
+}
+
+// IConstantBufferManager
+//
+
+FORCEINLINE ConstantBufferUID IConstantBufferManager::AllocBufferHandle()
+{
+	ScopedCriticalSection Guard( SBufferIdGuard );
+	SNextAvailableBufferID++;
+	return SNextAvailableBufferID;
 }

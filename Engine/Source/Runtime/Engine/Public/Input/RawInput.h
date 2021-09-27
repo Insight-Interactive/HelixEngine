@@ -133,7 +133,8 @@ private:
 	void KbmShutdown();
 	void KbmUpdate();
 	void SetMouseMoveDelta( float XValue, float YValue );
-	
+	void SetAnalogValue( DigitalInput Input, float Value );
+
 	FMouse m_Mouse;
 	FKeyboard m_Keyboard;
 	PlatformRIDInterface m_RIDInterface;
@@ -224,6 +225,12 @@ inline float RawInputSurveyer::GetMouseMoveDeltaY()
 inline void RawInputSurveyer::SetMouseMoveDelta( float XValue, float YValue )
 {
 	m_Mouse.SetMouseMoveDelta( XValue, YValue );
+}
+
+inline void RawInputSurveyer::SetAnalogValue( DigitalInput Input, float Value )
+{
+	HE_ASSERT( IsValidAnalogInput( Input ) );
+	m_Analogs[Input - AnalogLeftTrigger] = Value;
 }
 
 inline void RawInputSurveyer::AcquireDevices()

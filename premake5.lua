@@ -98,7 +98,7 @@ workspace ("HelixEngine")
 		
 	filter "configurations:Development"
 		defines { "%{macros.dev}=1", "%{macros.debug}=1", "%{macros.withEd}=1"}
-		runtime ("Release")
+		runtime ("Debug")
 		symbols ("On")
 		optimize ("Off")
 		

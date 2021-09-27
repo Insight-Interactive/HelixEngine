@@ -84,3 +84,77 @@ public:
 protected:
 	WString m_FilePath;
 };
+
+
+// -----------------
+//	Engine Events
+// -----------------
+
+class HObject;
+class ObjectSelectedEvent : public Event
+{
+public:
+	ObjectSelectedEvent()
+	{
+	}
+	virtual ~ObjectSelectedEvent()
+	{
+	}
+
+	inline HObject* GetSelectedObject() { return m_pSelectedActor; }
+	inline void SetSelectedObject( HObject* pActor ) { m_pSelectedActor = pActor; }
+
+	EVENT_CLASS_TYPE( ET_ObjectSelected )
+		EVENT_CLASS_CATEGORY( EC_Engine )
+
+protected:
+	HObject* m_pSelectedActor;
+
+};
+
+
+// -----------------
+//	Application Events
+// -----------------
+
+class AppBeginPlayEvent : public Event
+{
+public:
+	AppBeginPlayEvent()
+	{
+	}
+	virtual ~AppBeginPlayEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_AppBeginPlay )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
+class AppTickEvent : public Event
+{
+public:
+	AppTickEvent()
+	{
+	}
+	virtual ~AppTickEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_AppTick )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
+class AppRenderEvent : public Event
+{
+public:
+	AppRenderEvent()
+	{
+	}
+	virtual ~AppRenderEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_AppRender )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};

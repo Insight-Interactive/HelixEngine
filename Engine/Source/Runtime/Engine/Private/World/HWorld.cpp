@@ -5,6 +5,7 @@
 
 #include "World/HLevel.h"
 #include "Engine/HEngine.h"
+#include "GameFramework/Actor/APlayerCharacter.h"
 
 
 HWorld::HWorld()
@@ -17,10 +18,36 @@ HWorld::~HWorld()
 	Flush();
 }
 
-void HWorld::Initialize()
+void HWorld::Initialize(const Char* LevelURL )
 {
-	m_pLevel = new HLevel( this );
-	m_pLevel->LoadFromFile("Content/Levels/TestLevel.hlevel");
+	m_Filepath = LevelURL;
+
+	m_pPlayerCharacter = new APlayerCharacter( this, TEXT( "Player Character" ) );
+	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
+	AddPlayerCharacterRef( m_pPlayerCharacter );
+
+	rapidjson::Document WorldJsonDoc;
+	FileRef WorldJsonSource( LevelURL, FUM_Read );
+	HE_ASSERT( WorldJsonSource->IsOpen() );
+	JsonUtility::LoadDocument( WorldJsonSource, WorldJsonDoc );
+	if (WorldJsonDoc.IsObject())
+	{
+		const rapidjson::Value& World = WorldJsonDoc["World"];
+		enum
+		{
+			kSettings = 0,
+			kActors = 1,
+		};
+		// Load the world's settings
+		const rapidjson::Value& WorldSettings = World[kSettings];
+		Deserialize( WorldSettings );
+
+		// Load the worlds actors.
+		const rapidjson::Value& WorldActors = World[kActors];
+		m_pLevel = new HLevel( this );
+		m_pLevel->Deserialize( WorldActors );
+	}
+	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
 
 float HWorld::GetDeltaTime() const
@@ -31,13 +58,15 @@ float HWorld::GetDeltaTime() const
 void HWorld::BeginPlay()
 {
 	m_pLevel->BeginPlay();
+	m_pPlayerCharacter->BeginPlay();
 }
 
 void HWorld::Tick(float DeltaTime)
 {
 	m_CameraManager.Tick( DeltaTime );
 
-	m_pLevel->Tick(DeltaTime);
+	m_pPlayerCharacter->Tick( DeltaTime );
+	m_pLevel->Tick( DeltaTime );
 }
 
 void HWorld::Flush()
@@ -47,9 +76,70 @@ void HWorld::Flush()
 		m_pLevel->Flush();
 		HE_SAFE_DELETE_PTR( m_pLevel );
 	}
+	HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 }
 
 void HWorld::Render(ICommandContext& CmdContext)
 {
+	m_pPlayerCharacter->Render( CmdContext );
 	m_pLevel->Render(CmdContext);
+}
+
+void HWorld::Serialize( const Char* Filename )
+{
+	rapidjson::StringBuffer StrBuffer;
+	WriteContext Writer( StrBuffer );
+
+	Writer.StartObject();
+	{
+		Writer.Key( "World" );
+		Writer.StartArray();
+		{
+			// Serialize the world settings.
+			Writer.StartObject();
+			{
+				Serialize( Writer );
+			}
+			Writer.EndObject();
+
+			// Serialize the level.
+			Writer.StartObject();
+			{
+				m_pLevel->Serialize( Writer );
+			}
+			Writer.EndObject();
+
+		}
+		Writer.EndArray();
+	}
+	Writer.EndObject();
+
+	FileRef OutFile( Filename, FUM_Write, CM_Text );
+	HE_ASSERT( OutFile->IsOpen() );
+	if (OutFile->IsOpen())
+	{
+		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
+		{
+			HE_LOG( Error, TEXT( "Failed to serialize database %s" ), TCharToChar( GetObjectName() ) );
+			HE_ASSERT( false );
+		}
+	}
+}
+
+void HWorld::Serialize( WriteContext& Output )
+{
+	Output.Key( "Name" );
+	Output.String( TCharToChar( GetObjectName() ) );
+
+	Output.Key( "TickInterval" );
+	Output.Double( 1.0 );
+}
+
+void HWorld::Deserialize( const ReadContext& Value ) 
+{
+	float TickInterval = 0.f;
+	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );
+	Char WorldName[64];
+	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
+	Super::SetObjectName( CharToTChar( WorldName ) );
 }

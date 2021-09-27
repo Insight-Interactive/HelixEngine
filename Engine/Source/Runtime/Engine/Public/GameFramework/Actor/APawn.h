@@ -22,6 +22,8 @@ public:
 
 	virtual void BeginPlay() override
 	{
+		Super::BeginPlay();
+
 		SetupController(*m_pController);
 	}
 

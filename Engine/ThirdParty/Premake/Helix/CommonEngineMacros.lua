@@ -67,3 +67,9 @@ filter ("configurations:DebugEditor")
 		"HE_DEBUG_THREADS",
 		"HE_DEBUG_FILESYSTEM",
 	}
+
+filter ("configurations:DebugGame or ShippingGame")
+	defines
+	{
+		"HE_STANDALONE",
+	}

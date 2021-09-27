@@ -19,30 +19,30 @@
 #include "Renderer/Technique/DeferredShadingTech.h"
 #include "Renderer/Technique/PostProcessUber.h"
 #include "GameFramework/Components/HCameraComponent.h"
+#include "World/HWorld.h"
 
 
 ViewportContext::ViewportContext()
 {
-	m_DeferredShader = new DeferredShadingTech();
-	m_SkyPass = new SkyboxPass();
-	m_PostProcessPass = new PostProcesssUber();
+	m_DeferredShader	= new DeferredShadingTech();
+	m_SkyPass			= new SkyboxPass();
+	m_PostProcessPass	= new PostProcesssUber();
 }
 
 ViewportContext::~ViewportContext()
 {
-	HE_SAFE_DELETE_PTR( m_DeferredShader );
-	HE_SAFE_DELETE_PTR( m_SkyPass );
 	HE_SAFE_DELETE_PTR( m_PostProcessPass );
+	HE_SAFE_DELETE_PTR( m_SkyPass );
+	HE_SAFE_DELETE_PTR( m_DeferredShader );
 }
 
 void ViewportContext::Initialize( const Window::Description& WindowDesc )
 {
 	m_Window.Create( WindowDesc );
-	m_InputDispatcher.Initialize( m_Window.GetNativeWindow() );
+	m_Window.GetSwapChain()->SetClearColor( Color( .25f, 0.f, 1.f ) );
+	m_Window.AddListener( this, &ViewportContext::OnEvent );
 
-	m_GameWorld.SetViewport( this );
-	m_GameWorld.Initialize();
-	m_GameWorld.BeginPlay();
+	m_InputDispatcher.Initialize( m_Window.GetNativeWindow() );
 
 	m_ViewPort.TopLeftX = 0.f;
 	m_ViewPort.TopLeftY = 0.f;
@@ -55,11 +55,6 @@ void ViewportContext::Initialize( const Window::Description& WindowDesc )
 	m_ScissorRect.Top = 0;
 	m_ScissorRect.Right = m_Window.GetWidth();
 	m_ScissorRect.Bottom = m_Window.GetHeight();
-
-	m_Window.GetSwapChain()->SetClearColor( Color( .25f, 0.f, 1.f ) );
-
-	m_Window.AddListener( this, &ViewportContext::OnEvent );
-	m_PostProcessPass = new PostProcesssUber();
 
 	InitializeRenderingResources();
 }
@@ -77,7 +72,6 @@ void ViewportContext::Uninitialize()
 
 	m_InputDispatcher.UnInitialize();
 	m_Window.Destroy();
-	m_GameWorld.Flush();
 
 	HE_SAFE_DELETE_PTR( m_pSceneRenderTarget );
 }
@@ -85,8 +79,6 @@ void ViewportContext::Uninitialize()
 void ViewportContext::Update( float DeltaTime )
 {
 	m_InputDispatcher.UpdateInputs( DeltaTime );
-
-	m_GameWorld.Tick( DeltaTime );
 }
 
 void ViewportContext::Render()
@@ -132,7 +124,7 @@ void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& Re
 
 		// Draw world
 		//
-		m_GameWorld.Render( CmdContext );
+		m_WorldInView->Render( CmdContext );
 
 		m_DeferredShader->GetGeometryPass().UnBind( CmdContext );
 	}
@@ -213,7 +205,7 @@ void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
 	// Set Constant Buffers
 	//
 	SceneConstantsCBData* pCBData = GetSceneConstBufferForCurrentFrame()->GetBufferPointer<SceneConstantsCBData>();
-	HCameraComponent* pCurrentCamera = m_GameWorld.GetCurrentSceneRenderCamera();
+	HCameraComponent* pCurrentCamera = m_WorldInView->GetCurrentSceneRenderCamera();
 	if (pCurrentCamera)
 	{
 		pCBData->ViewMat = pCurrentCamera->GetViewMatrix().Transpose();

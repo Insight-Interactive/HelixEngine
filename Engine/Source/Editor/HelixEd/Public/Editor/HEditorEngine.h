@@ -23,6 +23,9 @@ class WindowResizeEvent;
 class WindowLostFocusEvent;
 class WindowFocusEvent;
 class WindowFileDropEvent;
+class AppBeginPlayEvent;
+class ObjectSelectedEvent;
+
 
 struct EditorPreferences
 {
@@ -63,6 +66,8 @@ protected:
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 	bool OnClientWindowDropFile( WindowFileDropEvent& e );
+	bool OnAppBeginPlay( AppBeginPlayEvent& e );
+	bool OnObjectSelected( ObjectSelectedEvent& e );
 
 	void OnExitMenuItem();
 	void OnSaveMenuItem();

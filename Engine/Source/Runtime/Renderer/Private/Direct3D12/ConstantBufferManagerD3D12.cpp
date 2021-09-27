@@ -6,6 +6,8 @@
 
 #include "RendererCore.h"
 #include "IDevice.h"
+#include "ICommandManager.h"
+
 
 // -------------------
 // ConstantBufferD3D12
@@ -60,7 +62,7 @@ void ConstantBufferManagerD3D12::Initialize()
 
 void ConstantBufferManagerD3D12::CreateConstantBuffer(const WChar* Name, IConstantBuffer** OutBuffer, uint32 BufferSizeInBytes)
 {
-	ConstantBufferUID NewID = s_NextAvailableBufferID++;
+	ConstantBufferUID NewID = AllocBufferHandle();
 
 	auto InsertResult = m_ConstantBufferLUT.try_emplace(NewID, ConstantBufferD3D12{});
 	HE_ASSERT(InsertResult.second == true);
@@ -76,7 +78,7 @@ void ConstantBufferManagerD3D12::CreateConstantBuffer(const WChar* Name, IConsta
 void ConstantBufferManagerD3D12::DestroyConstantBuffer(ConstantBufferUID BufferHandle)
 {
 	HE_ASSERT(BufferHandle != HE_INVALID_CONSTANT_BUFFER_HANDLE); // Trying to destroy a constant buffer with an invalid handle.
-
+	GCommandManager->IdleGpu();
 	auto Iter = m_ConstantBufferLUT.find(BufferHandle);
 	if (Iter != m_ConstantBufferLUT.end())
 	{

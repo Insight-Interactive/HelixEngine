@@ -75,6 +75,9 @@
     <ClInclude Include="Public\MathCommon.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Path.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Ref.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -99,7 +102,6 @@
     <ClInclude Include="Public\TSingleton.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Path.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp">

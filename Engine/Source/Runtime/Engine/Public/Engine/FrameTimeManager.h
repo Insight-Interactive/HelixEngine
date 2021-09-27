@@ -16,7 +16,7 @@ public:
 	}
 
 	void Initialize();
-	void Update( bool VSyncEnabled, bool LimitTo30Hz );
+	void Tick( bool VSyncEnabled, bool LimitTo30Hz );
 
 	double GetFrameTime() const;
 	double GetFrameRate() const;

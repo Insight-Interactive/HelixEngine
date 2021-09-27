@@ -231,6 +231,9 @@ void HEditorEngine::SetupEditorPanels()
 	m_MenuBar.AddMenuItem( "File", "Exit", this, &HEditorEngine::OnExitMenuItem );
 	m_MenuBar.AddMenuItem( "File", "Save", this, &HEditorEngine::OnSaveMenuItem );
 	m_MenuBar.AddMenuItem( "Developer", "Reload Pipeline Shaders", this, &HEditorEngine::OnReloadPipelineShaders );
+
+	m_ToolbarPanel.AddListener( this, &HEditorEngine::OnEvent );
+	m_WorldOutline.AddListener( this, &HEditorEngine::OnEvent );
 }
 
 //
@@ -258,6 +261,10 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &HEditorEngine::OnWindowLostFocus );
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEditorEngine::OnClientWindowClosed );
 	Dispatcher.Dispatch<WindowFileDropEvent>( this, &HEditorEngine::OnClientWindowDropFile );
+
+	// Application/Engine
+	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
+	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HEditorEngine::OnObjectSelected );
 }
 
 bool HEditorEngine::OnKeyPressed( KeyPressedEvent& e )
@@ -357,6 +364,24 @@ bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
 	return true;
 }
 
+bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
+{
+	SetIsPlayingInEditor( true );
+	// TODO Check if the world is dirty, ask to save if it first before playing.
+	m_GameWorld.Flush();
+	m_GameWorld.Initialize( "Content/Levels/TestLevel.hlevel" );
+	m_GameWorld.BeginPlay();
+
+	return false;
+}
+
+bool HEditorEngine::OnObjectSelected( ObjectSelectedEvent& e )
+{
+	m_DetailsPanel.SetSelectedObject( e.GetSelectedObject() );
+	//e.GetSelectedActor();
+	return false;
+}
+
 void HEditorEngine::OnExitMenuItem()
 {
 	RequestShutdown();
@@ -369,6 +394,7 @@ void HEditorEngine::OnSaveMenuItem()
 	if (Result == MDR_Ok)
 	{
 		AssetDatabase::GetInstance()->SaveAssetDatabases();
+		m_GameWorld.Serialize( "Content/Levels/TestLevel.hlevel" );
 	}
 }
 

@@ -15,13 +15,13 @@ void HSceneComponent::Render( ICommandContext& GfxContext )
 {
 }
 
-void HSceneComponent::Serialize( rapidjson::Value& Value )
+void HSceneComponent::Serialize( WriteContext& Output )
 {
-	Super::Serialize( Value );
+	Super::Serialize( Output );
 
 }
 
-void HSceneComponent::Deserialize( const rapidjson::Value& Value ) 
+void HSceneComponent::Deserialize( const ReadContext& Value ) 
 {
 	Super::Deserialize( Value[0] );
 

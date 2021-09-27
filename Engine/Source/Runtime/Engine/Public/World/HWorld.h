@@ -1,7 +1,10 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
+#include "GameFramework/HObject.h"
+
 #include "World/CameraManager.h"
+#include "AssetRegistry/SerializeableInterface.h"
 
 
 class HLevel;
@@ -10,14 +13,21 @@ class APlayerCharacter;
 class ICommandContext;
 class ViewportContext;
 
-class HWorld
+/*
+	The "World" is a high-level construct that contains all entities in the playable space.
+	The world contains a level which contains all actors. The name level is used interchangably 
+	for ease of use to the user.
+*/
+class HWorld : public HObject, public SerializeableInterface
 {
 	friend class WorldOutlinePanel;
+	friend class HEditorEngine;
+	using Super = HObject;
 public:
 	HWorld();
 	~HWorld();
 
-	void Initialize();
+	void Initialize( const Char* LevelURL );
 	void Flush();
 	float GetDeltaTime() const;
 
@@ -36,8 +46,15 @@ public:
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
 
 protected:
+	virtual void Serialize( const Char* Filename ) override;
+	virtual void Serialize( WriteContext& Value ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
+
+protected:
 	HLevel* m_pLevel;
+	APlayerCharacter* m_pPlayerCharacter;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
+	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
 	ViewportContext* m_pViewport;

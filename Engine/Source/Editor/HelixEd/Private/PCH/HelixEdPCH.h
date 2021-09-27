@@ -16,7 +16,6 @@
 #include "../Direct3D12/HelixEdImGuiImplD3D12.h"
 #include "backends/imgui_impl_win32.h"
 
-
 #include "MathCore.h"
 #include "Engine/EngineMacros.h"
 #include "Engine/EngineDefines.h"
@@ -47,6 +46,7 @@
 #include "CoreFwd.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
+#include "MathCore.h"
 
 // Third Party
 //

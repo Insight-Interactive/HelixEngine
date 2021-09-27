@@ -37,7 +37,6 @@ HEngine::HEngine( CommandLine& CmdLine )
 
 HEngine::~HEngine()
 {
-	RendererInitializer::UnInitializeContext( m_RenderContext );
 }
 
 void HEngine::EngineMain()
@@ -108,7 +107,7 @@ void HEngine::Startup()
 	ClientDesc.Title = m_Application.GetName();
 #if HE_WITH_EDITOR
 	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
-#endif //HE_WITH_EDITOR
+#endif
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
@@ -119,6 +118,10 @@ void HEngine::Startup()
 	//std::this_thread::sleep_for(std::chrono::seconds(2)); // Uncomment to delay app and debug the splash screen.
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
+	m_GameWorld.SetViewport( &GetClientViewport() );
+	m_GameWorld.Initialize( "Content/Levels/TestLevel.hlevel" );
+	GetClientViewport().SetWorld( &m_GameWorld );
+
 	HE_LOG(Log, TEXT("Engine startup complete."));
 }
 
@@ -128,6 +131,10 @@ void HEngine::PostStartup()
 
 	GetClientViewport().Show();
 	GetClientViewport().BringToFocus();
+//#if HE_STANDALONE
+	m_GameWorld.BeginPlay();
+//#endif
+
 	//EWindowMode ClientWindowMode = WM_FullScreen;
 	//m_MainViewPort.GetWindow().SetWindowMode(ClientWindowMode);
 
@@ -146,6 +153,7 @@ void HEngine::Shutdown()
 
 	FApp::GetInstance()->Shutdown();
 	GetClientViewport().Uninitialize();
+	m_GameWorld.Flush();
 
 	AssetDatabase::GetInstance()->UnInitialize();
 
@@ -154,6 +162,7 @@ void HEngine::Shutdown()
 
 void HEngine::PostShutdown()
 {
+	RendererInitializer::UnInitializeContext( m_RenderContext );
 	HE_SAFE_DELETE_PTR(GThreadPool);
 }
 
@@ -169,20 +178,23 @@ void HEngine::Update()
 		// Check one more time before proceeding with the loop.
 		if ( !FApp::GetInstance()->IsRunning() ) break;
 
-		float DeltaTime = (float)m_FrameTimeManager.GetFrameTime();
-
+		float DeltaTime = GetDeltaTime();
+		
 		// Check if the main viewport has focus. There will only be one window 
 		// in shipping builds.
-#if HE_SHIPPING
+#if HE_STANDALONE
 		if ( !GetClientViewport().HasFocus() )
 		{
-			BackgroundUpdate();
+			BackgroundUpdate( DeltaTime );
 			continue;
 		}
 #endif
+
+		m_GameWorld.Tick( DeltaTime );
+		
 		RenderClientViewport( DeltaTime );
 
-		m_FrameTimeManager.Update( GetClientViewport().GetWindow().IsVSyncEnabled(), false );
+		m_FrameTimeManager.Tick( GetClientViewport().GetWindow().IsVSyncEnabled(), false );
 	}
 }
 
@@ -204,7 +216,7 @@ void HEngine::RenderClientViewport(float DeltaTime)
 	ClientViewport.PresentOneFrame();
 }
 
-void HEngine::BackgroundUpdate()
+void HEngine::BackgroundUpdate(float DeltaTime)
 {
 	
 }

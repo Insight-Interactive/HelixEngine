@@ -1,21 +1,24 @@
 #pragma once
 
 #include "CriticalSection.h"
+#include "GameFramework/HObject.h"
+#include "AssetRegistry/SerializeableInterface.h"
+
 
 class AActor;
 class HWorld;
 class ICommandContext;
 
 
-class HLevel
+class HLevel : public HObject, public SerializeableInterface
 {
 	friend class HWorld;
 	friend class WorldOutlinePanel;
+	using Super = HObject;
 public:
 	HLevel(HWorld* pOwner);
 	~HLevel();
 
-	void LoadFromFile(const Char* FileName);
 	void Flush();
 
 	template <typename ActorType, typename ... InitArgs>
@@ -29,12 +32,15 @@ protected:
 	void BeginPlay();
 	void Tick(float DeltaTime);
 	void Render(ICommandContext& CmdContext);
-	
+
+	virtual void Serialize( WriteContext& Value ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
+
 protected:
 	std::vector<AActor*> m_Actors;
 	CriticalSection m_ActorListGuard;
 	HWorld* m_pOwningWorld;
-
+	
 };
 
 

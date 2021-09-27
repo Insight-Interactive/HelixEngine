@@ -8,7 +8,7 @@
 #		define HE_DEBUG_BREAK() _CrtDbgbreak()
 #	endif
 #else
-#	define HE_DEBUG_BREAK
+#	define HE_DEBUG_BREAK()
 #endif
 
 #if HE_ENABLE_ASSERTS

@@ -2,4 +2,6 @@
 
 #include "IConstantBufferManager.h"
 
-ConstantBufferUID IConstantBufferManager::s_NextAvailableBufferID = 0;
+
+CriticalSection IConstantBufferManager::SBufferIdGuard;
+ConstantBufferUID IConstantBufferManager::SNextAvailableBufferID = 0;

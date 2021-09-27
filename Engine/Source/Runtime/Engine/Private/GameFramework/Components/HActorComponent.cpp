@@ -13,12 +13,12 @@ HWorld* HActorComponent::GetWorld()
 	return m_pOwner->GetWorld();
 }
 
-void HActorComponent::Serialize( rapidjson::Value& Value )
+void HActorComponent::Serialize( WriteContext& Output )
 {
 
 }
 
-void HActorComponent::Deserialize( const rapidjson::Value& Value )
+void HActorComponent::Deserialize( const ReadContext& Value )
 {
 	// Object Name
 	char ObjectNameBuffer[32];

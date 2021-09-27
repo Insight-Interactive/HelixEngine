@@ -4,16 +4,17 @@
 #include "CommonStructs.h"
 
 #include "ModelManager.h"
-#include "World/HWorld.h"
 #include "Engine/Window.h"
 
 #include "Input/InputDispatcher.h"
 
 
+class HWorld;
 class DeferredShadingTech;;
 class PostProcesssUber;
 class SkyboxPass;
 class MouseRawPointerMovedEvent;
+
 
 class ViewportContext
 {
@@ -43,6 +44,10 @@ public:
 	ViewPort& GetClientViewport();
 	Rect& GetClientRect();
 	HWorld& GetWorld();
+	/*
+		Set the world this viewport can render.
+	*/
+	void SetWorld( HWorld* pWorldToView );
 
 protected:
 	void PresentOneFrame();
@@ -62,7 +67,7 @@ protected:
 
 protected:
 	Window m_Window;
-	HWorld m_GameWorld;
+	HWorld* m_WorldInView;
 
 	InputDispatcher m_InputDispatcher;
 
@@ -90,7 +95,12 @@ protected:
 
 inline HWorld& ViewportContext::GetWorld()
 {
-	return m_GameWorld;
+	return *m_WorldInView;
+}
+
+inline void ViewportContext::SetWorld( HWorld* pWorldToView )
+{
+	m_WorldInView = pWorldToView;
 }
 
 inline InputDispatcher* ViewportContext::GetInputDispatcher()

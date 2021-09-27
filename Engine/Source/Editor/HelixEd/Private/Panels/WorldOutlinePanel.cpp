@@ -4,6 +4,8 @@
 #include "Engine/HEngine.h"
 #include "World/HLevel.h"
 #include "GameFramework/Actor/AActor.h"
+#include "Engine/Event/EngineEvent.h"
+
 
 WorldOutlinePanel::WorldOutlinePanel()
 {
@@ -38,7 +40,9 @@ void WorldOutlinePanel::Render( ICommandContext& CmdCtx )
 			{
 				if (ImGui::IsItemClicked())
 				{
-					pCurrentActor->OnEditorSelected();
+					ObjectSelectedEvent e;
+					e.SetSelectedObject( pCurrentActor );
+					EmitEvent( e );
 				}
 				ImGui::TreePop();
 			}

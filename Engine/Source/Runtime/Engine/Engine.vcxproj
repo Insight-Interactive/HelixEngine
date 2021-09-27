@@ -202,31 +202,31 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
@@ -500,7 +500,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -525,7 +525,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -550,7 +550,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -575,7 +575,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -600,7 +600,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -625,11 +625,11 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -650,11 +650,11 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -675,11 +675,11 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -700,11 +700,11 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -725,11 +725,11 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -749,8 +749,8 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -781,8 +781,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -813,8 +813,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -845,8 +845,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -877,8 +877,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -909,8 +909,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -941,8 +941,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -973,8 +973,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1005,8 +1005,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1037,8 +1037,8 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\Editor\HelixEd\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

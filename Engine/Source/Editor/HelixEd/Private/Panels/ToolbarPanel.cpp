@@ -3,6 +3,7 @@
 #include "Panels/ToolbarPanel.h"
 
 #include "Engine/HEngine.h"
+#include "Engine/Event/EngineEvent.h"
 
 
 ToolbarPanel::ToolbarPanel()
@@ -29,7 +30,7 @@ void ToolbarPanel::Render( ICommandContext& CmdCtx )
 {
 	ImGui::Begin( "Tools" );
 	{
-		/*bool IsPlayingInEditor = GEngine->IsPlayingInEditor();
+		bool IsPlayingInEditor = GEngine->IsPlayingInEditor();
 		const Char* PlayButtonText;
 		if (IsPlayingInEditor)
 		{
@@ -37,13 +38,13 @@ void ToolbarPanel::Render( ICommandContext& CmdCtx )
 		}
 		else
 		{
-			PlayButtonText = "Start";
+			PlayButtonText = "Play";
 		}
 
 		if (ImGui::Button( PlayButtonText ))
 		{
-			GEngine->SetIsPlayingInEditor( !GEngine->IsPlayingInEditor() );
-		}*/
+			EmitEvent( AppBeginPlayEvent() );
+		}
 	}
 	ImGui::End();
 }

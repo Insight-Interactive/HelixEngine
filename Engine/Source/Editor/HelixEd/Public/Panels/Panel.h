@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Engine/Event/Event.h"
+#include "Engine/Event/EventEmitter.h"
 
 class ICommandContext;
 
-class Panel
+class Panel : public EventEmitter<void, Event&>
 {
 public:
 	virtual void Initialize() {}
@@ -19,4 +21,5 @@ protected:
 	virtual ~Panel()
 	{
 	}
+
 };

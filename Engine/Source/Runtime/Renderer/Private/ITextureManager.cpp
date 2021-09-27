@@ -16,7 +16,10 @@ void IManagedTexture::WaitForLoad() const
 
 void IManagedTexture::Unload()
 {
-	GTextureManager->DestroyTexture(m_MapKey);
+	if (GTextureManager)
+	{
+		GTextureManager->DestroyTexture(m_MapKey);
+	}
 }
 
 void ITextureManager::DestroyDefaultTextures()

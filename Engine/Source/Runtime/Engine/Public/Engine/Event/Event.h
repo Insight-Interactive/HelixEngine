@@ -14,6 +14,8 @@ enum class EEventType
 	ET_WindowClose, ET_WindowResize, ET_WindowFocus, ET_WindowLostFocus, ET_ToggleWindowFullScreen, ET_WindowFileDrop,
 	// Application
 	ET_AppBeginPlay, ET_AppEndPlay, ET_AppTick, ET_AppRender, ET_AppSuspending, ET_AppResuming,
+	// Engine
+	ET_ObjectSelected,
 	// Input
 	ET_InputAction, ET_InputAxis,
 	// Key
@@ -41,6 +43,7 @@ enum EEventCategory
 	EC_Network		= 0x0200,
 	EC_Window		= 0x0400,
 	EC_Renderer		= 0x0800,
+	EC_Engine		= 0x1000,
 };
 
 #define EVENT_CLASS_TYPE( Type )	static EEventType GetStaticType()	{ return EEventType::##Type; }				\
@@ -51,7 +54,7 @@ enum EEventCategory
 
 
 /*
-	Describes an event that can be braudcasted by an event dispatcher.
+	Describes an event that can be broadcasted by an event dispatcher.
 */
 class Event
 {

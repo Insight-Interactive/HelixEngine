@@ -42,8 +42,8 @@ protected:
 	virtual void OnDestroy() {}
 	virtual void Render( ICommandContext& GfxContext ) = 0;
 
-	virtual void Serialize( rapidjson::Value& Value ) override;
-	virtual void Deserialize( const rapidjson::Value& Value ) override;
+	virtual void Serialize( WriteContext& Output ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
 
 protected:
 	AActor* m_pOwner;

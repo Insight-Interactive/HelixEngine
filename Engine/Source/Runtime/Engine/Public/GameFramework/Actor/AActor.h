@@ -21,8 +21,8 @@ HCLASS()
 class AActor : public HObject, public SerializeableInterface
 {
 	friend class HLevel;
+	friend class HWorld;
 	friend class HActorComponent;
-	friend class WorldOutlinePanel;
 public:
 	HE_GENERATED_BODY( AActor )
 
@@ -41,8 +41,8 @@ protected:
 	inline HWorld* GetWorld();
 	inline void SetOwningWorld( HWorld* pWorld );
 
-	virtual void Serialize( rapidjson::Value& Value ) override;
-	virtual void Deserialize( const rapidjson::Value& Value ) override;
+	virtual void Serialize( WriteContext& Output ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
 
 #if HE_WITH_EDITOR
 	virtual void OnEditorSelected();

@@ -15,7 +15,7 @@ double FrameTimeManager::GetCurrentTick()
 	return (double)System::QueryPerformanceCounter();
 }
 
-void FrameTimeManager::Update( bool VSyncEnabled, bool LimitTo30Hz )
+void FrameTimeManager::Tick( bool VSyncEnabled, bool LimitTo30Hz )
 {
 	int64 CurrentTick = System::QueryPerformanceCounter();
 

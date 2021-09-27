@@ -42,13 +42,13 @@ void HPointLightComponent::Render( ICommandContext& GfxContext )
 {
 }
 
-void HPointLightComponent::Serialize( rapidjson::Value& Value )
+void HPointLightComponent::Serialize( WriteContext& Output )
 {
-	Super::Serialize( Value );
+	Super::Serialize( Output );
 
 }
 
-void HPointLightComponent::Deserialize( const rapidjson::Value& Value )
+void HPointLightComponent::Deserialize( const ReadContext& Value )
 {
 	Super::Deserialize( Value[0] );
 

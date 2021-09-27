@@ -5,6 +5,7 @@
 
 #include "Engine/ViewportContext.h"
 #include "World/CameraManager.h"
+#include "World/HWorld.h"
 
 
 HCameraComponent::HCameraComponent(const HName& Name)

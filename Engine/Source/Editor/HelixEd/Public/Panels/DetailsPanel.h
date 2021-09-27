@@ -3,6 +3,7 @@
 #include "Panels/Panel.h"
 
 class HObject;
+class AActor;
 
 class DetailsPanel : public Panel
 {
@@ -17,6 +18,9 @@ public:
 	virtual void Render( ICommandContext& CmdCtx ) override;
 
 	void SetSelectedObject( HObject* pSelectedObject );
+
+protected:
+	void PreviewActor( AActor* pActor );
 
 protected:
 	HObject* m_pSelectedObject;
