@@ -120,12 +120,20 @@ inline float HEngine::GetDeltaTime() const
 
 inline bool HEngine::GetIsEditorPresent()
 {
+#if HE_SHIPPING
+	return false;
+#else
 	return m_IsEditorPresent;
+#endif
 }
 
 inline bool HEngine::IsPlayingInEditor()
 {
+#if HE_SHIPPING
+	return true;
+#else
 	return m_IsPlayingInEditor;
+#endif
 }
 
 inline void HEngine::SetIsPlayingInEditor( bool IsPlaying )

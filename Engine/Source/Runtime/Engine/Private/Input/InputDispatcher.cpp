@@ -21,29 +21,128 @@ InputDispatcher::~InputDispatcher()
 void InputDispatcher::Initialize( void* pNativeWindow )
 {
 	m_InputSurveyer.Initialize( pNativeWindow );
-
-	AddAxisMapping( "MoveForward",	Key_W, 1.f );
-	AddAxisMapping( "MoveForward",	Key_S, -1.f );
-	AddAxisMapping( "MoveForward",	AnalogLeftStickY, 1.f );
-	AddAxisMapping( "MoveRight",	Key_D, 1.f );
-	AddAxisMapping( "MoveRight",	Key_A, -1.f );
-	AddAxisMapping( "MoveRight",	AnalogLeftStickX, 1.f );
-	AddAxisMapping( "MoveUp",		Key_E, 1.f );
-	AddAxisMapping( "MoveUp",		Key_Q, -1.f );
-	AddAxisMapping( "MoveUp",		AnalogRightTrigger, -1.f );
-	AddAxisMapping( "MoveUp",		AnalogLeftTrigger, 1.f );
-	AddAxisMapping( "LookUp",		AnalogMouseY, 1.f );
-	AddAxisMapping( "LookUp",		AnalogRightStickY, 1.f );
-	AddAxisMapping( "LookRight",	AnalogMouseX, 1.f );
-	AddAxisMapping( "LookRight",	AnalogMouseX, -1.f );
-	AddAxisMapping( "LookRight",	AnalogRightStickX, 1.f );
-
-	AddActionMapping( "Sprint",		Key_LShift );
 }
 
 void InputDispatcher::UnInitialize()
 {
 	m_InputSurveyer.UnInitialize();
+}
+
+void InputDispatcher::Serialize( const Char* Filepath )
+{
+	rapidjson::StringBuffer StrBuffer;
+	WriteContext Writter( StrBuffer );
+
+	Writter.StartObject();
+	{
+		Serialize( Writter );
+	}
+	Writter.EndObject();
+
+	FileRef OutFile( Filepath, FUM_Write, CM_Text );
+	HE_ASSERT( OutFile->IsOpen() );
+	if (OutFile->IsOpen())
+	{
+		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
+		{
+			HE_LOG( Error, TEXT( "Failed to serialize input dispatcher mappings!" ) );
+			HE_ASSERT( false );
+		}
+	}
+}
+
+void InputDispatcher::Serialize( WriteContext& Output )
+{
+#if HE_WITH_EDITOR // In client shipping builds, the user should never be able to serialize new input mappings.
+	Output.Key( "AxisMappings" );
+	Output.StartArray();
+	{
+		for (size_t i = 0; i < m_AxisMappings.size(); ++i)
+		{
+			Output.StartObject();
+			{
+				auto Mapping = m_AxisMappings[i];
+				Output.Key( "Name" );
+				Output.String( Mapping.HintName );
+
+				Output.Key( "Key" );
+				Output.Int( (int)Mapping.MappedKeycode );
+
+				Output.Key( "Scale" );
+				Output.Double( Mapping.Scale );
+			}
+			Output.EndObject();
+		}
+	}
+	Output.EndArray();
+
+	Output.Key( "ActionMappings" );
+	Output.StartArray();
+	{
+		for (size_t i = 0; i < m_ActionMappings.size(); ++i)
+		{
+			Output.StartObject();
+			{
+				auto Mapping = m_ActionMappings[i];
+				Output.Key( "Name" );
+				Output.String( Mapping.HintName );
+
+				Output.Key( "Key" );
+				Output.Int( (int)Mapping.MappedKeycode );
+			}
+			Output.EndObject();
+		}
+	}
+	Output.EndArray();
+#endif // HE_WITH_EDITOR
+}
+
+void InputDispatcher::Deserialize( const ReadContext& Value )
+{
+	// Add the axis mappings
+	const rapidjson::Value& AxisMappingsArray = Value["AxisMappings"];
+	for (rapidjson::SizeType i = 0; i < AxisMappingsArray.Size(); ++i)
+	{
+		const rapidjson::Value& AxisMapping = AxisMappingsArray[i];
+
+		Char Name[64];
+		JsonUtility::GetString( AxisMapping, "Name", Name, sizeof( Name ) );
+
+		int32 Key = 0;
+		JsonUtility::GetInteger( AxisMapping, "Key", Key );
+
+		float Scale;
+		JsonUtility::GetFloat( AxisMapping, "Scale", Scale );
+
+		AddAxisMapping( Name, (DigitalInput)Key, Scale );
+	}
+
+	// Add the action mappings
+	const rapidjson::Value& ActionMappingsArray = Value["ActionMappings"];
+	for (rapidjson::SizeType i = 0; i < ActionMappingsArray.Size(); ++i)
+	{
+		const rapidjson::Value& ActionMapping = ActionMappingsArray[i];
+
+		Char Name[64];
+		JsonUtility::GetString( ActionMapping, "Name", Name, sizeof( Name ) );
+
+		int32 Key = 0;
+		JsonUtility::GetInteger( ActionMapping, "Key", Key );
+
+		AddActionMapping( Name, (DigitalInput)Key );
+	}
+}
+
+void InputDispatcher::LoadMappingsFromFile( const Char* Filename )
+{
+	rapidjson::Document MappingsJsonDoc;
+	FileRef MappingsSource( Filename, FUM_Read );
+	HE_ASSERT( MappingsSource->IsOpen() );
+	JsonUtility::LoadDocument( MappingsSource, MappingsJsonDoc );
+	if (MappingsJsonDoc.IsObject())
+	{
+		Deserialize( MappingsJsonDoc );
+	}
 }
 
 void InputDispatcher::UpdateInputs( float DeltaTime )

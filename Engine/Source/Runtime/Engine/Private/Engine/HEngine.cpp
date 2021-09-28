@@ -121,6 +121,7 @@ void HEngine::Startup()
 	m_GameWorld.SetViewport( &GetClientViewport() );
 	m_GameWorld.Initialize( "Content/Levels/TestLevel.hlevel" );
 	GetClientViewport().SetWorld( &m_GameWorld );
+	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( "DefaultInput.ini" );
 
 	HE_LOG(Log, TEXT("Engine startup complete."));
 }
@@ -131,9 +132,9 @@ void HEngine::PostStartup()
 
 	GetClientViewport().Show();
 	GetClientViewport().BringToFocus();
-//#if HE_STANDALONE
+#if HE_STANDALONE
 	m_GameWorld.BeginPlay();
-//#endif
+#endif
 
 	//EWindowMode ClientWindowMode = WM_FullScreen;
 	//m_MainViewPort.GetWindow().SetWindowMode(ClientWindowMode);
@@ -189,7 +190,6 @@ void HEngine::Update()
 			continue;
 		}
 #endif
-
 		m_GameWorld.Tick( DeltaTime );
 		
 		RenderClientViewport( DeltaTime );

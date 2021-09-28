@@ -15,6 +15,11 @@ public:
 	~LightManager() = default;
 
 	/*
+		Clear all lights in the cache.
+	*/
+	void FlushLightCache();
+	
+	/*
 		Allocates a spot light and adds it to the scene. Populates a handle to the newly created point light.
 		@param [out] OutHandle - Handle to the newly allocated light.
 		@param [out] ppOutLight - Optional pointer to the light that will be created. Only for use with initialization.
@@ -71,6 +76,12 @@ private:
 // Inline Function Implementations
 //
 
+inline void LightManager::FlushLightCache()
+{
+	m_SceneSpotLightDatas.clear();
+	m_ScenePointLightDatas.clear();
+	m_SceneDirectionalLightDatas.clear();
+}
 
 inline void LightManager::AllocateSpotLightData(SpotLightDataHandle& OutHandle, SpotLightCBData** pOutLight)
 {

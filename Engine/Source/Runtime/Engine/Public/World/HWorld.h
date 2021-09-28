@@ -46,6 +46,17 @@ public:
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
 
 protected:
+	/*
+		Reload the world.
+	*/
+	void Reload();
+
+	/*
+		Reload the world and call begin play on all actors.
+	*/
+	void ReloadAndBeginPlay();
+
+
 	virtual void Serialize( const Char* Filename ) override;
 	virtual void Serialize( WriteContext& Value ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
@@ -57,7 +68,7 @@ protected:
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
-	ViewportContext* m_pViewport;
+	ViewportContext* m_pRenderingViewport;
 
 	CameraManager m_CameraManager;
 };
@@ -84,12 +95,12 @@ inline void HWorld::SetCurrentSceneRenderCamera(HCameraComponent* pCamera)
 
 inline ViewportContext* HWorld::GetOwningViewport()
 {
-	return m_pViewport;
+	return m_pRenderingViewport;
 }
 
 inline void HWorld::SetViewport( ViewportContext* pViewport )
 {
-	m_pViewport = pViewport;
+	m_pRenderingViewport = pViewport;
 }
 
 inline HLevel* HWorld::GetCurrentLevel()

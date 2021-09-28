@@ -4,7 +4,7 @@
 
 #include "IDescriptorHeap.h"
 
-class ADebugCharacter;
+class ADebugPawn;
 
 class SceneViewportPanel : public Panel
 {
@@ -18,11 +18,26 @@ public:
 	virtual void Tick( float DeltaTime ) override;
 	virtual void Render( ICommandContext& CmdCtx ) override;
 
+	/*
+		Set the debug camera as the main rendering camera 
+		and activate its controls
+	*/
+	void ActivateDebugCamera();
+	
+	/*
+		Deactivate the debug camera's controls.
+	*/
+	void DeactivateDebugCamera();
+
+protected:
+	void FreezeDebugCamera();
+	void UnFreezeDebugCamera();
+
 private:
 	DescriptorHandle m_DescriptorHandle;
 	uint32 m_HandleSize;
 
-	ADebugCharacter* m_pDebugPawn;
+	ADebugPawn* m_pDebugPawn;
 
 	float m_DeltaTime;
 	bool m_IsCameraRotating;

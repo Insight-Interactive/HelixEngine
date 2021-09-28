@@ -26,6 +26,7 @@ const uint8 kMaxWindowTitleLength = 64;
 class Window : public EventEmitter<void, Event&>
 {
 	friend class ViewportContext;
+	friend class HEditorEngine;
 public:
 	/*
 		Describes a window that can be shown to the user.
@@ -95,6 +96,11 @@ protected:
 	void OnWindowModeChanged();
 	void CreateSwapChain();
 	void PresentOneFrame();
+	/*
+		Associate the mouse with the window. Some platforms 
+		need this for mouse input messages.
+	*/
+	void MakeMoueWindowAssociation();
 
 protected:
 	Description m_Desc;

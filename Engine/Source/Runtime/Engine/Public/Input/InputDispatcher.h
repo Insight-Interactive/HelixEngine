@@ -14,6 +14,7 @@
 
 #include "Callbacks.h"
 #include "Input/RawInput.h"
+#include "AssetRegistry/SerializeableInterface.h"
 
 
 class AxisEvent;
@@ -53,8 +54,10 @@ using ActionPair		= std::pair<int32, EInputEvent>;
 
 class Event;
 
-class InputDispatcher
+class InputDispatcher : public SerializeableInterface
 {
+	friend class HEngine;
+	friend class HEditorEngine;
 public:
 	InputDispatcher();
 	~InputDispatcher();
@@ -104,9 +107,20 @@ public:
 
 	RawInputSurveyer& GetInputSureyor();
 
+protected:
+	void LoadMappingsFromFile( const Char* Filename );
+	virtual void Serialize( const Char* Filepath ) override;
+	virtual void Serialize( WriteContext& Output ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
+
 private:
-	void AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey );
-	void AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale );
+	/*
+		Unregisters all callbacks registered to this input dispatcher.
+	*/
+	void FlushCallbacks();
+	
+	void AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey, const Char* HintName = NULL );
+	void AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale, const Char* HintName = NULL );
 
 	/*
 		Extension of "ProcessInputEvent" that allows the function call and event declaration to be declared inline.
@@ -125,6 +139,7 @@ private:
 	bool DispatchActionEvent( ActionEvent& e );
 
 private:
+	static const uint32 kMaxHintNameLength = 32;
 	/*
 		Internal non-client facing axis mapping representation.
 	*/
@@ -134,6 +149,9 @@ private:
 			: HintHash( Hash ), MappedKeycode( Key ), Scale( AxisScale )
 		{
 		}
+#if HE_WITH_EDITOR
+		Char HintName[kMaxHintNameLength];
+#endif
 		int32			HintHash;
 		DigitalInput	MappedKeycode;
 		float			Scale;
@@ -148,6 +166,9 @@ private:
 			: HintHash( Hash ), MappedKeycode( Key )
 		{
 		}
+#if HE_WITH_EDITOR
+		Char HintName[kMaxHintNameLength];
+#endif
 		int32			HintHash;
 		DigitalInput	MappedKeycode;
 	};
@@ -175,35 +196,60 @@ private:
 // Inline function implementations
 //
 
+FORCEINLINE void InputDispatcher::FlushCallbacks()
+{
+	m_AxisCallbacks.clear();
+	m_ActionCallbacks.clear();
+}
 
 FORCEINLINE void InputDispatcher::AddActionMapping( ActionMapping& Mapping )
 {
-	AddActionMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeyCode );
+	AddActionMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeyCode
+#if HE_WITH_EDITOR
+		, Mapping.Hint 
+#endif
+	);
 }
 
 FORCEINLINE void InputDispatcher::AddAxisMapping( AxisMapping& Mapping )
 {
-	AddAxisMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeycode, Mapping.Scale );
+	AddAxisMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeycode, Mapping.Scale, Mapping.Hint );
 }
 
 FORCEINLINE void InputDispatcher::AddActionMapping( const char* Hint, DigitalInput MappedKey )
 {
-	AddActionMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey );
+	AddActionMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey
+#if HE_WITH_EDITOR
+		, Hint
+#endif
+	);
 }
 
 FORCEINLINE void InputDispatcher::AddAxisMapping( const char* Hint, DigitalInput MappedKey, float Scale )
 {
-	AddAxisMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey, Scale );
+	AddAxisMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey, Scale
+#if HE_WITH_EDITOR
+		, Hint 
+#endif
+	);
 }
 
-FORCEINLINE void InputDispatcher::AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey )
+FORCEINLINE void InputDispatcher::AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey, const Char* HintName )
 {
-	m_ActionMappings.emplace_back( HintHash, MappedKey );
+	ActionMappingInternal Mapping(HintHash, MappedKey);
+#if HE_WITH_EDITOR
+	strcpy_s( Mapping.HintName, HintName );
+#endif
+	m_ActionMappings.emplace_back( Mapping );
 }
 
-FORCEINLINE void InputDispatcher::AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale )
+FORCEINLINE void InputDispatcher::AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale, const Char* HintName )
 {
-	m_AxisMappings.emplace_back( HintHash, MappedKey, Scale );
+	AxisMappingInternal Mapping( HintHash, MappedKey, Scale );
+#if HE_WITH_EDITOR
+	strcpy_s( Mapping.HintName, HintName );
+#endif
+	m_AxisMappings.emplace_back( Mapping );
 }
 
 FORCEINLINE void InputDispatcher::RegisterAxisCallback( const char* MappedHint, AxisCallback Callback )

@@ -887,8 +887,8 @@
   <ItemGroup>
     <ClInclude Include="Private\Direct3D12\HelixEdImGuiImplD3D12.h" />
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
-    <ClInclude Include="Public\Debug\ADebugCharacter.h" />
-    <ClInclude Include="Public\Debug\ConsoleWindow.h" />
+    <ClInclude Include="Public\Developer\ADebugPawn.h" />
+    <ClInclude Include="Public\Developer\ConsoleWindow.h" />
     <ClInclude Include="Public\Editor\HEditorEngine.h" />
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
@@ -901,7 +901,7 @@
     <ClInclude Include="Public\Tools\AssetImporter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\Debug\ADebugCharacter.cpp">
+    <ClCompile Include="Private\Developer\ADebugPawn.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
@@ -913,7 +913,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Private\Debug\ConsoleWindow.cpp">
+    <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>

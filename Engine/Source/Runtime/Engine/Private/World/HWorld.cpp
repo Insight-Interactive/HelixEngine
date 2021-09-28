@@ -5,11 +5,16 @@
 
 #include "World/HLevel.h"
 #include "Engine/HEngine.h"
+#include "Renderer/LightManager.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 
 
 HWorld::HWorld()
 	: m_CameraManager(this)
+	, m_pLevel(NULL)
+	, m_pPlayerCharacter(NULL)
+	, m_RenderingCamera(NULL)
+	, m_pRenderingViewport(NULL)
 {
 }
 
@@ -22,9 +27,6 @@ void HWorld::Initialize(const Char* LevelURL )
 {
 	m_Filepath = LevelURL;
 
-	m_pPlayerCharacter = new APlayerCharacter( this, TEXT( "Player Character" ) );
-	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
-	AddPlayerCharacterRef( m_pPlayerCharacter );
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
@@ -57,6 +59,10 @@ float HWorld::GetDeltaTime() const
 
 void HWorld::BeginPlay()
 {
+	m_pPlayerCharacter = new APlayerCharacter( this, TEXT( "Player Character" ) );
+	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
+	AddPlayerCharacterRef( m_pPlayerCharacter );
+
 	m_pLevel->BeginPlay();
 	m_pPlayerCharacter->BeginPlay();
 }
@@ -65,24 +71,43 @@ void HWorld::Tick(float DeltaTime)
 {
 	m_CameraManager.Tick( DeltaTime );
 
-	m_pPlayerCharacter->Tick( DeltaTime );
-	m_pLevel->Tick( DeltaTime );
+	if (GEngine->IsPlayingInEditor())
+	{
+		m_pPlayerCharacter->Tick( DeltaTime );
+		m_pLevel->Tick( DeltaTime );
+	}
 }
 
 void HWorld::Flush()
 {
+	HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
 	if (m_pLevel != NULL)
 	{
 		m_pLevel->Flush();
 		HE_SAFE_DELETE_PTR( m_pLevel );
 	}
+	m_PlayerCharacterRefs.clear();
 	HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 }
 
 void HWorld::Render(ICommandContext& CmdContext)
 {
-	m_pPlayerCharacter->Render( CmdContext );
+	if(m_pPlayerCharacter != NULL)
+		m_pPlayerCharacter->Render( CmdContext );
 	m_pLevel->Render(CmdContext);
+}
+
+void HWorld::Reload()
+{
+	Flush();
+	GLightManager.FlushLightCache();
+	Initialize( m_Filepath.c_str() );
+}
+
+void HWorld::ReloadAndBeginPlay()
+{
+	Reload();
+	BeginPlay();
 }
 
 void HWorld::Serialize( const Char* Filename )

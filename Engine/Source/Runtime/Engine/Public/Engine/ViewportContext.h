@@ -41,6 +41,16 @@ public:
 	void Show();
 	void Hide();
 
+	// Input
+	//
+
+	bool IsPressed( DigitalInput Key );
+	bool IsFirstPressed( DigitalInput Key );
+	bool IsReleased( DigitalInput Key );
+
+	float GetMouseMoveDeltaX();
+	float GetMouseMoveDeltaY();
+
 	ViewPort& GetClientViewport();
 	Rect& GetClientRect();
 	HWorld& GetWorld();
@@ -171,4 +181,29 @@ inline ViewPort& ViewportContext::GetClientViewport()
 inline Rect& ViewportContext::GetClientRect()
 {
 	return m_ScissorRect; 
+}
+
+inline bool ViewportContext::IsPressed( DigitalInput Key )
+{
+	return GetInputDispatcher()->GetInputSureyor().IsPressed( Key );
+}
+
+inline bool ViewportContext::IsFirstPressed( DigitalInput Key )
+{
+	return GetInputDispatcher()->GetInputSureyor().IsFirstPressed( Key );
+}
+
+inline bool ViewportContext::IsReleased( DigitalInput Key )
+{
+	return GetInputDispatcher()->GetInputSureyor().IsReleased( Key );
+}
+
+inline float ViewportContext::GetMouseMoveDeltaX()
+{
+	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaX();
+}
+
+inline float ViewportContext::GetMouseMoveDeltaY()
+{
+	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaY();
 }

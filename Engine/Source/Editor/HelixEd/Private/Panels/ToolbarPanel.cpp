@@ -43,7 +43,14 @@ void ToolbarPanel::Render( ICommandContext& CmdCtx )
 
 		if (ImGui::Button( PlayButtonText ))
 		{
-			EmitEvent( AppBeginPlayEvent() );
+			if (GEngine->IsPlayingInEditor())
+			{
+				EmitEvent( AppEndPlayEvent() );
+			}
+			else
+			{
+				EmitEvent( AppBeginPlayEvent() );
+			}
 		}
 	}
 	ImGui::End();

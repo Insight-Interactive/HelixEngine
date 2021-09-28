@@ -17,7 +17,7 @@ inline bool JsonUtility::LoadDocument( const char* Filename, rapidjson::Document
 	return LoadDocument( JsonSource, OutDocument );
 }
 
-inline bool JsonUtility::GetInteger( const rapidjson::Value& Value, const char* PropertyName, int& OutInteger )
+inline bool JsonUtility::GetInteger( const rapidjson::Value& Value, const char* PropertyName, int32& OutInteger )
 {
 	HE_ASSERT( PropertyName != NULL );
 

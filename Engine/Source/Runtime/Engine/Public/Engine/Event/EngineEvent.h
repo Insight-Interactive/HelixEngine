@@ -131,6 +131,20 @@ public:
 		EVENT_CLASS_CATEGORY( EC_Application )
 };
 
+class AppEndPlayEvent : public Event
+{
+public:
+	AppEndPlayEvent()
+	{
+	}
+	virtual ~AppEndPlayEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_AppEndPlay )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
 class AppTickEvent : public Event
 {
 public:

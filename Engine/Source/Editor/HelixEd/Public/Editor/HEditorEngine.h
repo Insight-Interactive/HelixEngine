@@ -10,9 +10,10 @@
 #include "Panels/WorldOutlinePanel.h"
 #include "Panels/DetailsPanel.h"
 #include "Tools/AssetImporter.h"
-#include "Debug/ConsoleWindow.h"
+#include "Developer/ConsoleWindow.h"
 
 
+class ADebugPawn;
 class KeyPressedEvent;
 class KeyReleasedEvent;
 class MousePositionMovedEvent;
@@ -24,6 +25,7 @@ class WindowLostFocusEvent;
 class WindowFocusEvent;
 class WindowFileDropEvent;
 class AppBeginPlayEvent;
+class AppEndPlayEvent;
 class ObjectSelectedEvent;
 
 
@@ -67,6 +69,7 @@ protected:
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 	bool OnClientWindowDropFile( WindowFileDropEvent& e );
 	bool OnAppBeginPlay( AppBeginPlayEvent& e );
+	bool OnAppEndPlay( AppEndPlayEvent& e );
 	bool OnObjectSelected( ObjectSelectedEvent& e );
 
 	void OnExitMenuItem();

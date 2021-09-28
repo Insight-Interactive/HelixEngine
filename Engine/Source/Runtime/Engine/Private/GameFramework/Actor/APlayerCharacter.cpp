@@ -27,6 +27,7 @@ APlayerCharacter::~APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	GetWorld()->GetOwningViewport()->LockMouseToScreenCenter();
 }
 
 void APlayerCharacter::Tick(float DeltaMs)

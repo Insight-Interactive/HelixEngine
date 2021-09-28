@@ -9,7 +9,7 @@ class SerializeableInterface
 {
 protected:
 	virtual void Serialize( const Char* Filepath ) {}
-	virtual void Serialize( WriteContext& Value ) = 0;
+	virtual void Serialize( WriteContext& Output ) = 0;
 	virtual void Deserialize( const ReadContext& Value ) = 0;
 	
 };

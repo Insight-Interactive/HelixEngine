@@ -225,6 +225,7 @@ void HEditorEngine::SetupEditorPanels()
 
 	for (size_t i = 0; i < m_EditorPanels.size(); ++i)
 	{
+		m_EditorPanels[i]->SetOwningViewport( &GetClientViewport() );
 		m_EditorPanels[i]->Initialize();
 	}
 
@@ -264,6 +265,7 @@ void HEditorEngine::OnEvent( Event& e )
 
 	// Application/Engine
 	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
+	Dispatcher.Dispatch<AppEndPlayEvent>( this, &HEditorEngine::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HEditorEngine::OnObjectSelected );
 }
 
@@ -367,10 +369,23 @@ bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
 bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 {
 	SetIsPlayingInEditor( true );
+	m_SceneViewport.DeactivateDebugCamera();
+
 	// TODO Check if the world is dirty, ask to save if it first before playing.
-	m_GameWorld.Flush();
-	m_GameWorld.Initialize( "Content/Levels/TestLevel.hlevel" );
-	m_GameWorld.BeginPlay();
+	m_GameWorld.ReloadAndBeginPlay();
+
+	return false;
+}
+
+bool HEditorEngine::OnAppEndPlay( AppEndPlayEvent& e )
+{
+	SetIsPlayingInEditor( false );
+	m_GameWorld.Reload();
+	m_SceneViewport.ActivateDebugCamera();
+
+	// Reset the input state.
+	GetClientViewport().GetInputDispatcher()->FlushCallbacks();
+	GetClientViewport().GetWindow().MakeMoueWindowAssociation();
 
 	return false;
 }

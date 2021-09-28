@@ -29,7 +29,7 @@ namespace JsonUtility
 	/*
 		Reads and returns a integer property from a json value. Returns true if succeeded false if not.
 	*/
-	bool GetInteger( const rapidjson::Value& Value, const char* PropertyName, int& OutInteger );
+	bool GetInteger( const rapidjson::Value& Value, const char* PropertyName, int32& OutInteger );
 
 	/*
 		Reads and returns a float property from a json value. Returns true if succeeded false if not.

@@ -42,10 +42,10 @@
     <ClInclude Include="Private\PCH\HelixEdPCH.h">
       <Filter>Private\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Debug\ADebugCharacter.h">
+    <ClInclude Include="Public\Developer\ADebugPawn.h">
       <Filter>Public\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Debug\ConsoleWindow.h">
+    <ClInclude Include="Public\Developer\ConsoleWindow.h">
       <Filter>Public\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Public\Editor\HEditorEngine.h">
@@ -80,10 +80,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\Debug\ADebugCharacter.cpp">
+    <ClCompile Include="Private\Developer\ADebugPawn.cpp">
       <Filter>Private\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Debug\ConsoleWindow.cpp">
+    <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
       <Filter>Private\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp">

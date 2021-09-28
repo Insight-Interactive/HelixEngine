@@ -132,21 +132,7 @@ void Window::Create( const Window::Description& Desc )
 
 	CreateSwapChain();
 
-	// Setup the raw input devices. Only needs to be done once.
-	static bool RIDInitialized = false;
-	if (!RIDInitialized)
-	{
-		RAWINPUTDEVICE RID = {};
-		RID.usUsagePage = HID_USAGE_PAGE_GENERIC;
-		RID.usUsage		= HID_USAGE_GENERIC_MOUSE;
-		RID.dwFlags		= 0;
-		RID.hwndTarget	= NULL;
-		if ( !RegisterRawInputDevices( &RID, 1, sizeof( RAWINPUTDEVICE ) ) )
-		{
-			HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
-		}
-		RIDInitialized = true;
-	}
+	MakeMoueWindowAssociation();
 }
 
 void Window::Destroy()
@@ -283,6 +269,19 @@ void Window::SetParent( Window* pParent )
 	}
 
 	::SetParent( m_hWindowHandle, hParent );
+}
+
+void Window::MakeMoueWindowAssociation()
+{
+	RAWINPUTDEVICE RID = {};
+	RID.usUsagePage = HID_USAGE_PAGE_GENERIC;
+	RID.usUsage = HID_USAGE_GENERIC_MOUSE;
+	RID.dwFlags = 0;
+	RID.hwndTarget = NULL;
+	if (!RegisterRawInputDevices( &RID, 1, sizeof( RAWINPUTDEVICE ) ))
+	{
+		HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
+	}
 }
 
 void Window::OnWindowModeChanged()
