@@ -19,18 +19,22 @@ bool ConsoleWindow::Create( const ConsoleWindowDesc& Desc )
 {
 	m_Desc = Desc;
 
-	// Our temp console info struct
-	CONSOLE_SCREEN_BUFFER_INFO ConsoleInfo;
-
 	// Get the console info and set the number of lines
-	AllocConsole();
-	GetConsoleScreenBufferInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &ConsoleInfo );
+	if (!AllocConsole())
+	{
+		HE_LOG( Error, TEXT( "Failed to allocate console window! Console will not be created. Error code: %i" ), ::GetLastError() );
+		return false;
+	}
+
+	// Temp console info struct.
+	CONSOLE_SCREEN_BUFFER_INFO ConsoleInfo;
+	m_OutputHandle = GetStdHandle( STD_OUTPUT_HANDLE );
+	GetConsoleScreenBufferInfo( m_OutputHandle, &ConsoleInfo );
 	ConsoleInfo.dwSize.Y = (SHORT)m_Desc.BufferDims.x;
 	ConsoleInfo.dwSize.X = (SHORT)m_Desc.BufferDims.y;
-	SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), ConsoleInfo.dwSize );
+	SetConsoleScreenBufferSize( m_OutputHandle, ConsoleInfo.dwSize );
 
-	m_OutputHandle = GetStdHandle( STD_OUTPUT_HANDLE );
-
+	
 	SMALL_RECT Rect;
 	Rect.Left = 0;
 	Rect.Top = 0;
@@ -43,29 +47,28 @@ bool ConsoleWindow::Create( const ConsoleWindowDesc& Desc )
 	freopen_s( &stream, "CONOUT$", "w", stdout );
 	freopen_s( &stream, "CONOUT$", "w", stderr );
 
+	m_WindowHandle = GetConsoleWindow();
+	m_WindowHMenu = GetSystemMenu( m_WindowHandle, FALSE );
 	if ( !m_Desc.CanClose )
 	{
-		// Prevent accidental console window close
-		m_WindowHandle = GetConsoleWindow();
-		m_WindowHMenu = GetSystemMenu( m_WindowHandle, FALSE );
+		// Prevent console window from being closed.
 		EnableMenuItem( m_WindowHMenu, SC_CLOSE, MF_GRAYED );
 	}
 
 	// Set the default console color.
 	SetForegroundColor( m_Desc.DefaultForegroundColor );
-
-	bool Valid = IsWindow( m_WindowHandle ) && m_OutputHandle && m_WindowHMenu;
-	return Valid;
+	
+	return IsValid();
 }
 
 void ConsoleWindow::Destroy()
 {
 	if (IsValid())
 	{
+		FreeConsole();
 		CloseWindow( m_WindowHandle );
 		DestroyWindow( m_WindowHandle );
 		m_WindowHandle = NULL;
 		DestroyMenu( m_WindowHMenu );
-		CloseHandle( m_OutputHandle );
 	}
 }

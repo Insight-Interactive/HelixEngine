@@ -9,7 +9,7 @@ public:
 	CommandLine();
 	~CommandLine();
 
-	void Process( WChar* CommandLine );
+	void Process( const WChar* CommandLine );
 
 	WString& operator[]( const WString& Key );
 	bool CommandExists( const WString& Key );

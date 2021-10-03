@@ -112,6 +112,8 @@ void HWorld::ReloadAndBeginPlay()
 
 void HWorld::Serialize( const Char* Filename )
 {
+	HE_ASSERT( Filename == NULL ); // World has a reference to its filepath. No need to pass one in.
+
 	rapidjson::StringBuffer StrBuffer;
 	WriteContext Writer( StrBuffer );
 
@@ -139,7 +141,7 @@ void HWorld::Serialize( const Char* Filename )
 	}
 	Writer.EndObject();
 
-	FileRef OutFile( Filename, FUM_Write, CM_Text );
+	FileRef OutFile( m_Filepath, FUM_Write, CM_Text );
 	HE_ASSERT( OutFile->IsOpen() );
 	if (OutFile->IsOpen())
 	{

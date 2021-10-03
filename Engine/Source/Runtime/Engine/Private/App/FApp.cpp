@@ -2,6 +2,7 @@
 #include "EnginePCH.h"
 
 #include "App/FApp.h"
+#include "Engine/GameProject.h"
 
 
 FApp::FApp()
@@ -17,13 +18,6 @@ FApp::~FApp()
 
 void FApp::Startup()
 {
-	const TChar* TargetName =
-#if HE_WITH_EDITOR
-		TEXT( "Helix Ed" ) " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]";
-#else
-		TEXT( "My Application" );
-#endif
-	TCharStrCpy( m_Name, TargetName );
 }
 
 void FApp::Shutdown()

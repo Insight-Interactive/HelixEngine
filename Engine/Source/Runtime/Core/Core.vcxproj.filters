@@ -102,6 +102,9 @@
     <ClInclude Include="Public\TSingleton.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\ThreadPool.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp">
@@ -117,6 +120,9 @@
       <Filter>Private\PCH</Filter>
     </ClCompile>
     <ClCompile Include="Private\StringHelper.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\ThreadPool.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\Windows\CriticalSectionWinDesktop.cpp">

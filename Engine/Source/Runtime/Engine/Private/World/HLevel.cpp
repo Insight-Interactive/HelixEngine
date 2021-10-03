@@ -124,8 +124,8 @@ void HLevel::Deserialize( const ReadContext& Value )
 		JsonUtility::LoadDocument( JsonSource, JsonDoc );
 		if (JsonDoc.IsObject())
 		{
-			const Char* kBaseActorType = "BaseActor";
-			const Char* kPlayerCharacterType = "PlayerCharacter";
+			const Char* kBaseActorType = HE_STRINGIFY( AActor );
+			const Char* kPlayerCharacterType = HE_STRINGIFY( APlayerCharacter );
 			for (rapidjson::Value::ConstMemberIterator Itr = JsonDoc.MemberBegin();
 				Itr != JsonDoc.MemberEnd(); ++Itr)
 			{

@@ -14,6 +14,7 @@
 #include "IDepthBuffer.h"
 #include "IColorBuffer.h"
 #include "IPipelineState.h"
+#include "Engine/GameProject.h"
 
 
 SkyboxPass::SkyboxPass()
@@ -29,9 +30,15 @@ void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForma
 	m_DepthTargetFormat = DepthBufferFormat;
 	m_RenderTargetFormat = RenderTargetFormat;
 
+	// Resources
+	//
 	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20);
-	m_SkyDiffuse = GTextureManager->LoadTexture("Content/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds", DT_Magenta2D, false);
+	String SkyTexture = FGameProject::GetInstance()->GetContentFolder() + "/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds";
+	m_SkyDiffuse = GTextureManager->LoadTexture(SkyTexture, DT_Magenta2D, false);
 
+
+	// Create the pipeline state.
+	//
 	GDevice->CreateRootSignature(&m_pRS);
 	m_pRS->Reset(5, 1);
 	(*m_pRS).InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
@@ -46,8 +53,6 @@ void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForma
 	(*m_pRS)[SPRP_Diffuse].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
 	m_pRS->Finalize(TEXT("Skybox Pass RootSignature"), RSF_AllowInputAssemblerLayout);
 
-	// Create the pipeline state.
-	//
 	DataBlob VSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.vs.cso");
 	DataBlob PSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.ps.cso");
 

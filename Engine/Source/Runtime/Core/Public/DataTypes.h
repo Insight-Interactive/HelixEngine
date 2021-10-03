@@ -19,7 +19,7 @@
 #define HE_SAFE_DELETE_PTR_ARRAY( Ptr )		if( (Ptr) != NULL ) { delete[]	(Ptr); }
 // Safely checks a COM pointer and deletes it if it is non-null.
 #define HE_COM_SAFE_RELEASE( ComObject )	if( (ComObject) ) { (ComObject)->Release(); (ComObject) = nullptr; }
-// The literal value of a piece of text.
+// Turn characters into a string of text.
 #define HE_STRINGIFY( Value )			#Value
 // Force the compiler to inline a piece of code.
 #if __clang__
@@ -60,7 +60,7 @@
 #define HE_GIGABYTES(Value)				( Value * HE_MEGABYTES(1024) )
 #define HE_PI							( 3.14159265359 )
 #define HE_2PI							( 2.0 * HE_PI )
-// Declare a class to be non-copyable.
+// Declare a class to be non-copyable and non-movable.
 #define HE_DECL_NON_COPYABLE( Class )					\
 		Class(const Class&)					= delete;	\
 		Class(Class&&)						= delete;	\
@@ -168,6 +168,17 @@ typedef std::wstring WString;
 */
 typedef std::string String;
 
+/*
+	View into a UTF-8 string.
+*/
+typedef std::string_view StringView;
+
+/*
+	View into a UTF-16 string.
+*/
+typedef std::wstring_view WStringView;
+
+
 
 //-----------------------------------
 //		System Text Manipulation
@@ -180,6 +191,7 @@ typedef std::string String;
 typedef WChar TChar;
 // A client facing string composed of TChar.
 typedef WString HName;
+typedef WStringView HNameView;
 typedef std::wstringstream TStringStream;
 
 #	define Printf(Fmt, ...)									::wprintf( Fmt, __VA_ARGS__)
@@ -201,6 +213,7 @@ typedef std::wstringstream TStringStream;
 typedef Char TChar;
 // A client facing UTF-8 string.
 typedef String HName;
+typedef StringView HNameView;
 typedef std::stringstream TStringStream;
 
 #	define Printf(Fmt, ...)									::printf( Fmt, __VA_ARGS__ )

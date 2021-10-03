@@ -9,14 +9,14 @@
 
 
 APlayerCharacter::APlayerCharacter( HWorld* pWorld, const HName& Name )
-	: APawn(pWorld, Name)
-	, m_CanRotateCamera(true)
+	: APawn( pWorld, Name )
+	, m_CanRotateCamera( true )
 {
-	m_pCameraComponent = AddComponent<HCameraComponent>(TEXT("Player camera"));
+	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "Player camera" ) );
 
-	m_pCameraComponent->GetTransform().SetParent(&m_Transform);
+	m_pCameraComponent->GetTransform().SetParent( &m_Transform );
 	m_Transform.SetPosition( 0.f, 0.f, -28.f );
-	
+
 }
 
 APlayerCharacter::~APlayerCharacter()
@@ -30,28 +30,30 @@ void APlayerCharacter::BeginPlay()
 	GetWorld()->GetOwningViewport()->LockMouseToScreenCenter();
 }
 
-void APlayerCharacter::Tick(float DeltaMs)
+void APlayerCharacter::Tick( float DeltaMs )
 {
-	Super::Tick(DeltaMs);
+	Super::Tick( DeltaMs );
 }
 
-void APlayerCharacter::LookUp(float Value)
+void APlayerCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
 		float DT = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->GetTransform().Rotate(-Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f);
-		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
+		m_pCameraComponent->GetTransform().Rotate( -Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
+		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
+		//m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
 	}
 }
 
-void APlayerCharacter::LookRight(float Value)
+void APlayerCharacter::LookRight( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		float DT = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->GetTransform().Rotate(0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f);
-		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
+		float DeltaTime = GetWorld()->GetDeltaTime();
+		m_pCameraComponent->GetTransform().Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * DeltaTime, 0.0f );
+		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
+		//m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
 	}
 }
 
@@ -60,9 +62,9 @@ void APlayerCharacter::TogglePitchYawRotation()
 	m_CanRotateCamera = !m_CanRotateCamera;
 }
 
-void APlayerCharacter::SetupController(HControllerComponent& Controller)
+void APlayerCharacter::SetupController( HControllerComponent& Controller )
 {
-	Super::SetupController(Controller);
+	Super::SetupController( Controller );
 
 	// Setup event callbacks for camera movement.
 	//

@@ -26,7 +26,7 @@ OutputBuffer Logger::SOutputBuffer;
 CriticalSection GStreamGuard;
 
 Logger::Logger()
-	: m_UseConsole(true)
+	: m_UseConsole( false )
 {
 }
 
@@ -96,6 +96,12 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		SOutputBuffer << TraceBuffer;
 		SOutputBuffer << OutputBuffer;
 		SOutputBuffer << TEXT( "\n" );
+	}
+	if (m_UseConsole)
+	{
+		Printf( TraceBuffer );
+		Printf( OutputBuffer );
+		Printf( TEXT("\n") );
 	}
 #if _MSC_VER
 	if ( IsDebuggerPresent() )

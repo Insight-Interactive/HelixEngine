@@ -34,6 +34,10 @@ public:
 
 	void SetMovementSpeed(float Value);
 	float GetMovementSpeed() const;
+	float GetVerticalLookSpeed() const;
+	float GetHorizontalLookSpeed() const;
+	void SetVerticalLookSpeed( float Speed );
+	void SetHorizontalLookSpeed( float Speed );
 	FTransform& GetTransform();
 
 protected:
@@ -71,6 +75,26 @@ private:
 inline void APawn::SetMovementSpeed(float Value)
 {
 	m_MovementSpeed = Value;
+}
+
+inline float APawn::GetVerticalLookSpeed() const
+{
+	return m_CameraPitchSpeedMultiplier;
+}
+
+inline float APawn::GetHorizontalLookSpeed() const
+{
+	return m_CameraYawSpeedMultiplier;
+}
+
+inline void APawn::SetVerticalLookSpeed( float Speed )
+{
+	m_CameraPitchSpeedMultiplier = Speed;
+}
+
+inline void APawn::SetHorizontalLookSpeed( float Speed )
+{
+	m_CameraYawSpeedMultiplier = Speed;
 }
 
 inline float APawn::GetMovementSpeed() const

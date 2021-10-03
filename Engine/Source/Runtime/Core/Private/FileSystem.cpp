@@ -39,3 +39,15 @@
 
 	return Data;
 }
+
+/*static*/ bool FileSystem::DoesFileExist( const char* Filepath )
+{
+	FILE* Result = NULL;
+	fopen_s( &Result, Filepath, "r" );
+	if (Result != NULL)
+	{
+		fclose( Result );
+		return true;
+	}
+	return false;
+}

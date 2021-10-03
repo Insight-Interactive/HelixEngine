@@ -10,6 +10,7 @@
 #include "ITextureManager.h"
 #include "ModelManager.h"
 #include "Renderer/MaterialManager.h"
+#include "Engine/GameProject.h"
 
 
 /*
@@ -45,10 +46,10 @@ protected:
 	void RegisterMaterial( const Char* MaterialName, const Char* Filepath );
 	void RegisterActor( const Char* MaterialName, const Char* Filepath );
 
-	const String& LookupMesh( const String& Name ) const;
-	const String& LookupTexture( const String& Name ) const;
-	const String& LookupMaterial( const String& Name ) const;
-	const String& LookupActor( const String& Name ) const;
+	const String LookupMesh( const String& Name ) const;
+	const String LookupTexture( const String& Name ) const;
+	const String LookupMaterial( const String& Name ) const;
+	const String LookupActor( const String& Name ) const;
 
 	MeshDatabase& GetMeshDatabase();
 	TextureDatabase& GetTextureDatabase();
@@ -138,22 +139,22 @@ inline void AssetDatabase::RegisterActor( const Char* ActorName, const Char* Fil
 	m_ActorDatabase.RegisterAsset( ActorName, Filepath );
 }
 
-inline const String& AssetDatabase::LookupMesh( const String& Name ) const
+inline const String AssetDatabase::LookupMesh( const String& Name ) const
 {
-	return m_MeshDatabase.GetValueByKey( Name );
+	return FGameProject::GetInstance()->GetProjectRoot() + m_MeshDatabase.GetValueByKey( Name );
 }
 
-inline const String& AssetDatabase::LookupTexture( const String& Name ) const
+inline const String AssetDatabase::LookupTexture( const String& Name ) const
 {
-	return m_TextureDatabase.GetValueByKey( Name );
+	return FGameProject::GetInstance()->GetProjectRoot() + m_TextureDatabase.GetValueByKey( Name );
 }
 
-inline const String& AssetDatabase::LookupMaterial( const String& Name ) const
+inline const String AssetDatabase::LookupMaterial( const String& Name ) const
 {
-	return m_MaterialDatabase.GetValueByKey( Name );
+	return FGameProject::GetInstance()->GetProjectRoot() + m_MaterialDatabase.GetValueByKey( Name );
 }
 
-inline const String& AssetDatabase::LookupActor( const String& Name ) const
+inline const String AssetDatabase::LookupActor( const String& Name ) const
 {
-	return m_ActorDatabase.GetValueByKey( Name );
+	return FGameProject::GetInstance()->GetProjectRoot() + m_ActorDatabase.GetValueByKey( Name );
 }

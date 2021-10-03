@@ -23,6 +23,7 @@
 
 
 ViewportContext::ViewportContext()
+	: m_WorldInView(NULL)
 {
 	m_DeferredShader	= new DeferredShadingTech();
 	m_SkyPass			= new SkyboxPass();
@@ -105,6 +106,8 @@ void ViewportContext::Render()
 
 void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& RenderTarget  )
 {
+	if (m_WorldInView == NULL) return;
+
 	IGpuResource& RenderTargetResource = *RenderTarget.As<IGpuResource*>();
 	CmdContext.TransitionResource( RenderTargetResource, RS_RenderTarget );
 
@@ -205,6 +208,7 @@ void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
 	// Set Constant Buffers
 	//
 	SceneConstantsCBData* pCBData = GetSceneConstBufferForCurrentFrame()->GetBufferPointer<SceneConstantsCBData>();
+
 	HCameraComponent* pCurrentCamera = m_WorldInView->GetCurrentSceneRenderCamera();
 	if (pCurrentCamera)
 	{

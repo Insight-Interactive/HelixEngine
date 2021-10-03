@@ -23,13 +23,13 @@ enum EConsoleColor
 struct ConsoleWindowDesc
 {
 	// Wether the window is allowed to close.
-	bool CanClose;
+	bool CanClose = true;
 	// Output buffer dimensions.
-	FVector2 BufferDims;
+	FVector2 BufferDims = FVector2(700, 320);
 	// Window dimensions
-	FVector2 WindowDims;
+	FVector2 WindowDims = FVector2(170, 42);
 	// The default text color when adding text to the log.
-	EConsoleColor DefaultForegroundColor;
+	EConsoleColor DefaultForegroundColor = CC_White;
 };
 
 class ConsoleWindow
@@ -103,7 +103,7 @@ protected:
 
 inline bool ConsoleWindow::IsValid() const
 {
-	return m_WindowHandle != NULL;
+	return IsWindow(m_WindowHandle) && m_OutputHandle && m_WindowHMenu;
 }
 
 inline const ConsoleWindowDesc& ConsoleWindow::GetDesc() const 

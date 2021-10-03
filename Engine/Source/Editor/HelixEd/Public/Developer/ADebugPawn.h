@@ -17,6 +17,8 @@ public:
 	HCameraComponent* GetCameraComponent();
 	void SetCanMove( bool CanMove );
 
+	void SetCanRotateCamera( bool CanRotate );
+
 protected:
 	void LookUp( float Value );
 	void LookRight( float Value );
@@ -44,4 +46,9 @@ inline HCameraComponent* ADebugPawn::GetCameraComponent()
 inline void ADebugPawn::SetCanMove( bool CanMove )
 {
 	m_CanMove = CanMove;
+}
+
+inline void ADebugPawn::SetCanRotateCamera( bool CanRotate )
+{
+	m_CanRotateCamera = CanRotate;
 }

@@ -18,9 +18,14 @@ public:
 	void Shutdown();
 	
 	/*
-		Returns the name of the application. Generally the game name.
+		Returns the name of the application that is currently running.
 	*/
 	const TChar* GetName() const;
+
+	/*
+		Set the name of the application.
+	*/
+	void SetName( const TChar* AppName );
 
 	/*
 		Returns true if the application is running, false if not.
@@ -50,6 +55,12 @@ inline const TChar* FApp::GetName() const
 {
 	HE_ASSERT( m_Name != NULL );
 	return m_Name;
+}
+
+inline void FApp::SetName( const TChar* AppName )
+{
+	HE_ASSERT( AppName != NULL );
+	TCharStrCpy( m_Name, AppName );
 }
 
 inline bool FApp::IsRunning() const

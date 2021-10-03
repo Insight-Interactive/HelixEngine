@@ -77,7 +77,7 @@ project ("Engine")
 	links   
 	{
 		"Core",
-		"Game",
+		--"Game",
 		"Math",
 		"Renderer",
 		"Shaders",
@@ -99,9 +99,10 @@ project ("Engine")
 
 	postbuildcommands
 	{
-		"%{postBuildCommands.gameConfigCopy}",
+-- 		"%{postBuildCommands.gameConfigCopy}",
 --		"%{postBuildCommands.clearModuleLibs}",
 --		"%{postBuildCommands.clearModuleLibLinkExtras}",
+		"%{postBuildCommands.clearModuleLibs}",
 	}
 
 	dofile ("Helix/CommonEngineMacros.lua")
@@ -138,21 +139,11 @@ project ("Engine")
 		{
 			"-launchcfg LaunchEditor",
 		}
-		postbuildcommands
-		{
-			-- Create a virtual copy of the assets folder.
-			"%{postBuildCommands.debugContentDir}",
-		}
 
 	filter ("configurations:DebugGame or ShippingGame")
 		debugargs
 		{
 			"-launchcfg LaunchGame",
-		}
-		postbuildcommands
-		{
-			-- Create a copy of the assets folder.
-			"%{postBuildCommands.releaseContentDir}",
 		}
 
 	filter ("configurations:DebugEditor or Development", "platforms:Win64 or Win32 or XboxOne or XboxOneX")

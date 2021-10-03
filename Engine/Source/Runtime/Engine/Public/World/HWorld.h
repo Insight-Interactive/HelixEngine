@@ -56,7 +56,6 @@ protected:
 	*/
 	void ReloadAndBeginPlay();
 
-
 	virtual void Serialize( const Char* Filename ) override;
 	virtual void Serialize( WriteContext& Value ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;

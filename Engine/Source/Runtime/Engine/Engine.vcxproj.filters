@@ -25,9 +25,6 @@
     <Filter Include="Private\Input">
       <UniqueIdentifier>{FF0EB299-6BCF-2DD0-340A-774DA08972AC}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\Jobs">
-      <UniqueIdentifier>{FD7715B7-E9DA-A45B-9260-DD117EA270DE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Private\Launch">
       <UniqueIdentifier>{8AC80AD6-7696-FEDB-5F2A-6F024B97DA40}</UniqueIdentifier>
     </Filter>
@@ -81,9 +78,6 @@
     </Filter>
     <Filter Include="Public\Input">
       <UniqueIdentifier>{83836967-6FE6-F80B-186C-31C204AEC48E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public\Jobs">
-      <UniqueIdentifier>{016CAE31-6D21-2727-F615-21FE62CA1D2B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Renderer">
       <UniqueIdentifier>{AA988676-1624-F43A-1F35-772F8B3F503B}</UniqueIdentifier>
@@ -144,7 +138,13 @@
     <ClInclude Include="Public\Engine\Event\EventEmitter.h">
       <Filter>Public\Engine\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\FileExplorerWindow.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Engine\FrameTimeManager.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\GameProject.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\HEngine.h">
@@ -218,9 +218,6 @@
     </ClInclude>
     <ClInclude Include="Public\Input\RawInput.h">
       <Filter>Public\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Jobs\ThreadPool.h">
-      <Filter>Public\Jobs</Filter>
     </ClInclude>
     <ClInclude Include="Public\Renderer\Common.h">
       <Filter>Public\Renderer</Filter>
@@ -296,6 +293,9 @@
     <ClCompile Include="Private\Engine\FrameTimeManager.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Engine\GameProject.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Engine\HEngine.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
@@ -359,9 +359,6 @@
     <ClCompile Include="Private\Input\RawInput.cpp">
       <Filter>Private\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Jobs\ThreadPool.cpp">
-      <Filter>Private\Jobs</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Launch\Launch.cpp">
       <Filter>Private\Launch</Filter>
     </ClCompile>
@@ -385,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp">
       <Filter>Private\Renderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Windows\Desktop\FileExplorerWinDesktop.cpp">
+      <Filter>Private\Windows\Desktop</Filter>
     </ClCompile>
     <ClCompile Include="Private\Windows\Desktop\WindowWinDesktop.cpp">
       <Filter>Private\Windows\Desktop</Filter>

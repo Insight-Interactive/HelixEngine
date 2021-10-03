@@ -11,6 +11,7 @@
 #include "Panels/DetailsPanel.h"
 #include "Tools/AssetImporter.h"
 #include "Developer/ConsoleWindow.h"
+#include "Editor/PreferencesViewport.h"
 
 
 class ADebugPawn;
@@ -32,8 +33,12 @@ class ObjectSelectedEvent;
 struct EditorPreferences
 {
 	bool EnableDarkMode;
-	float VerticalScrollSpeedMultiplier;
-	float HorizontalScrollSpeedMultiplier;
+	float VerticalScrollSpeed;
+	float HorizontalScrollSpeed;
+	FVector3 DebugCameraPosition;
+	FVector3 DebugCameraRotation;
+	float DebugCameraPitchSpeed;
+	float DebugCameraYawSpeed;
 };
 
 
@@ -74,14 +79,20 @@ protected:
 
 	void OnExitMenuItem();
 	void OnSaveMenuItem();
+	void OnEditorPreferencesMenuItem();
+	void OnEditorPreferencesViewportClosed();
 	void OnReloadPipelineShaders();
 
 protected:
+	void LoadEditorPreferences();
+	void SaveEditorPreferences();
 	void SetupImGuiRenderBackend();
 	void SetupEditorPanels();
 	int32 TranslateMouseButton( DigitalInput MouseKeycode );
+	void PackageGame();
 
 protected:
+	PreferencesViewport m_PreferencesViewport;
 	EditorPreferences m_UserPreferences;
 	std::vector<Panel*> m_EditorPanels;
 

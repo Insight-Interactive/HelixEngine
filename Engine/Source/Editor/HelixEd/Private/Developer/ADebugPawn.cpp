@@ -35,6 +35,20 @@ void ADebugPawn::Tick( float DeltaMs )
 
 void ADebugPawn::UpdateMovement( float DeltaTime )
 {
+	if (m_CanRotateCamera)
+	{
+		float X = GetWorld()->GetOwningViewport()->GetMouseMoveDeltaX() * DeltaTime;
+		float Y = GetWorld()->GetOwningViewport()->GetMouseMoveDeltaY() * DeltaTime;
+		if (Y != 0.f)
+		{
+			LookUp( Y );
+		}
+		if (X != 0.f)
+		{
+			LookRight( X );
+		}
+	}
+
 	if (m_CanMove)
 	{
 		ViewportContext* pViewport = GetWorld()->GetOwningViewport();
@@ -69,8 +83,8 @@ void ADebugPawn::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		m_pCameraComponent->GetTransform().Rotate( -Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
-		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
+		m_pCameraComponent->GetTransform().Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
+		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
 	}
 }
 
@@ -79,7 +93,7 @@ void ADebugPawn::LookRight( float Value )
 	if (m_CanRotateCamera)
 	{
 		m_pCameraComponent->GetTransform().Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f );
-		m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
+		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
 	}
 }
 

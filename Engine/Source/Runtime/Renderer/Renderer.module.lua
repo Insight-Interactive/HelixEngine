@@ -41,7 +41,7 @@ project ("Renderer")
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 
-		heGetEngineRuntimeModulePublicDir ( "Engine" ),
+		heGetEngineRuntimeModulePublicDir ( "Engine" ), -- To get access to *.hasset headers
 
 		-- Third Party 
 		heGetThirdPartyModule( "WinPixEventRuntime" ) .. "Include/",

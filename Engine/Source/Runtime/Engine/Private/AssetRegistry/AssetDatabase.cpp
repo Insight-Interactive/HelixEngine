@@ -31,18 +31,23 @@ void AssetDatabase::Initialize( const Char* DatabaseFile )
 
 			// Database Name
 			Char StringBuff[HE_MAX_PATH];
+			String ProjectRelativePath;
 
 			JsonUtility::GetString( DbParam, "MeshDatabase", StringBuff, sizeof( StringBuff ) );
-			m_MeshDatabase.Initialize( StringBuff );
+			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
+			m_MeshDatabase.Initialize( ProjectRelativePath.c_str() );
 
 			JsonUtility::GetString( DbParam, "TextureDatabase", StringBuff, sizeof( StringBuff ) );
-			m_TextureDatabase.Initialize( StringBuff );
+			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
+			m_TextureDatabase.Initialize( ProjectRelativePath.c_str() );
 
 			JsonUtility::GetString( DbParam, "MaterialDatabase", StringBuff, sizeof( StringBuff ) );
-			m_MaterialDatabase.Initialize( StringBuff );
+			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
+			m_MaterialDatabase.Initialize( ProjectRelativePath.c_str() );
 
 			JsonUtility::GetString( DbParam, "ActorDatabase", StringBuff, sizeof( StringBuff ) );
-			m_ActorDatabase.Initialize( StringBuff );
+			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
+			m_ActorDatabase.Initialize( ProjectRelativePath.c_str() );
 		}
 	}
 }

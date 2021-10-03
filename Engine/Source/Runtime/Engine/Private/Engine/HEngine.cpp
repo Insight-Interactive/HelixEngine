@@ -5,7 +5,7 @@
 
 #include "System.h"
 #include "GameFramework/GameInstance.h"
-#include "Jobs/ThreadPool.h"
+#include "ThreadPool.h"
 #include "FileSystem.h"
 #include "System.h"
 
@@ -18,6 +18,7 @@
 
 HEngine* GEngine = NULL;
 Logger GEngineLogger;
+ThreadPool* GThreadPool = NULL;
 
 
 // Static function declarations
@@ -64,6 +65,8 @@ void HEngine::PreStartup()
 {
 	CreateLogger( GEngineLogger, "Helix Engine" );
 	HE_LOG( Log, TEXT( "Beginning engine pre-startup." ) );
+	
+	System::InitializePlatform();
 
 	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
 }
@@ -90,13 +93,23 @@ void HEngine::Startup()
 	
 	m_FrameTimeManager.Initialize();
 
+	// TODO: Make this dynamic
+	const Char* GameProjectDirectory =
+#if HE_STANDALONE
+		"Data\\Game.hproject";
+#else
+		"C:\\Dev\\InsightInteractive\\HelixProjects\\Game\\Game.hproject";
+#endif
+	FGameProject::GetInstance()->Startup( GameProjectDirectory );
+	
 	// Initialize the application context.
 	FApp::GetInstance()->Startup();
 
 	// Initialize the game.
-	GGameInstance = MakeGameInstance();
+	//GGameInstance = MakeGameInstance();
 
-	AssetDatabase::GetInstance()->Initialize( "Content/DataCache/AssetDatabase.json" );
+	String AssetDatabaseRoot = FGameProject::GetInstance()->GetContentFolder() + "/DataCache/AssetDatabase.json";
+	AssetDatabase::GetInstance()->Initialize( AssetDatabaseRoot.c_str() );
 
 	// Create and initialize the main client window.
 	Window::Description ClientDesc = {};
@@ -104,10 +117,13 @@ void HEngine::Startup()
 	ClientDesc.bShowImmediate = false;
 	ClientDesc.Width = 1920;
 	ClientDesc.Height = 1080;
-	ClientDesc.Title = m_Application.GetName();
+	ClientDesc.Title = 
 #if HE_WITH_EDITOR
-	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
+	TEXT( "Helix Ed" ) " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]";
+#else
+	FApp::GetInstance()->GetName();
 #endif
+	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
@@ -119,9 +135,14 @@ void HEngine::Startup()
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
 	m_GameWorld.SetViewport( &GetClientViewport() );
-	m_GameWorld.Initialize( "Content/Levels/TestLevel.hlevel" );
+
+	// TODO Get this from the DefaultEngine.ini
+	String StartingWorldPath = FGameProject::GetInstance()->GetContentFolder() + "/Levels/TestLevel.hlevel";
+	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 	GetClientViewport().SetWorld( &m_GameWorld );
-	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( "DefaultInput.ini" );
+
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultInput.ini";
+	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
 	HE_LOG(Log, TEXT("Engine startup complete."));
 }
@@ -145,7 +166,9 @@ void HEngine::PostStartup()
 
 void HEngine::PreShutdown()
 {
+	HE_LOG( Log, TEXT( "Beginning engine pre-shutdown." ) );
 
+	HE_LOG( Log, TEXT( "Engine pre-shutdown complete." ) );
 }
 
 void HEngine::Shutdown()
@@ -163,13 +186,16 @@ void HEngine::Shutdown()
 
 void HEngine::PostShutdown()
 {
+	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
 	RendererInitializer::UnInitializeContext( m_RenderContext );
 	HE_SAFE_DELETE_PTR(GThreadPool);
+	System::UninitializePlatform();
+	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
 
 void HEngine::Update()
 {
-	HE_LOG( Log, TEXT( "Starting Engine update loop." ) );
+	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 
 	while ( FApp::GetInstance()->IsRunning() )
 	{
@@ -196,6 +222,7 @@ void HEngine::Update()
 
 		m_FrameTimeManager.Tick( GetClientViewport().GetWindow().IsVSyncEnabled(), false );
 	}
+	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );
 }
 
 void HEngine::RenderClientViewport(float DeltaTime)

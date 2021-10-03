@@ -10,6 +10,7 @@ class ViewportContext;
 class Panel : public EventEmitter<void, Event&>
 {
 	friend class HEditorEngine;
+	friend class TabbedEditorViewport;
 public:
 	virtual void Initialize() {}
 	virtual void UnInitialize() {}
@@ -36,6 +37,7 @@ protected:
 
 //
 // Inline function implementations
+//
 
 inline ViewportContext* Panel::GetOwningViewport()
 {
@@ -44,6 +46,5 @@ inline ViewportContext* Panel::GetOwningViewport()
 
 inline void Panel::SetOwningViewport( ViewportContext* pOwningViewport )
 {
-	HE_ASSERT( pOwningViewport != NULL );
 	m_OwningViewport = pOwningViewport;
 }

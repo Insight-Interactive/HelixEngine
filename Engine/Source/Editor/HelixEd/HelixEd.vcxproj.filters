@@ -4,8 +4,8 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\Debug">
-      <UniqueIdentifier>{76695299-E229-CECF-AB64-174D17E412AC}</UniqueIdentifier>
+    <Filter Include="Private\Developer">
+      <UniqueIdentifier>{F5AB8945-61C2-87DB-AA39-13FD168F5863}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Direct3D12">
       <UniqueIdentifier>{44A0E302-3084-A458-99E4-9EAB85E78EDA}</UniqueIdentifier>
@@ -22,8 +22,8 @@
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\Debug">
-      <UniqueIdentifier>{FADD0967-E640-990B-8FC6-D1C17B08658E}</UniqueIdentifier>
+    <Filter Include="Public\Developer">
+      <UniqueIdentifier>{79C22F53-65BB-4EA5-8EED-332A7A452EB1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Editor">
       <UniqueIdentifier>{3A818C4A-A641-0881-6F7C-51FEDBFB4C5D}</UniqueIdentifier>
@@ -43,10 +43,10 @@
       <Filter>Private\PCH</Filter>
     </ClInclude>
     <ClInclude Include="Public\Developer\ADebugPawn.h">
-      <Filter>Public\Debug</Filter>
+      <Filter>Public\Developer</Filter>
     </ClInclude>
     <ClInclude Include="Public\Developer\ConsoleWindow.h">
-      <Filter>Public\Debug</Filter>
+      <Filter>Public\Developer</Filter>
     </ClInclude>
     <ClInclude Include="Public\Editor\HEditorEngine.h">
       <Filter>Public\Editor</Filter>
@@ -78,18 +78,22 @@
     <ClInclude Include="Public\Tools\AssetImporter.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Tools\PackageMaker.h">
+      <Filter>Public\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\PreferencesViewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
-      <Filter>Private\Debug</Filter>
+      <Filter>Private\Developer</Filter>
     </ClCompile>
     <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
-      <Filter>Private\Debug</Filter>
+      <Filter>Private\Developer</Filter>
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
-    <ClCompile Include="Private\HEditorEngine.cpp">
+    <ClCompile Include="Private\Editor\HEditorEngine.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
@@ -122,6 +126,10 @@
     <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Tools\PackageMaker.cpp">
+      <Filter>Private\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\PreferencesViewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

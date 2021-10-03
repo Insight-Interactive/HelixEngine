@@ -57,6 +57,16 @@ namespace System
 	};
 
 	/*
+		Initialize any platform system dependencies. Return strue if succeeded, false if not.
+	*/
+	bool InitializePlatform();
+
+	/*
+		Uninitialize any platform system dependencies. Return strue if succeeded, false if not.
+	*/
+	bool UninitializePlatform();
+
+	/*
 		Create and run a new thread.
 	*/
 	ThreadId CreateAndRunThread(const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData = NULL, const uint64 StackSize = kDefaultStackSize, const int32 Flags = kJoinable);

@@ -9,24 +9,18 @@
 #include "Engine/FrameTimeManager.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "World/HWorld.h"
+#include "Engine/GameProject.h"
 
 
 class WindowClosedEvent;
 class CommandLine;
 class HWorld;
+class ThreadPool;
 
 class HEngine
 {
+	friend class HEngineLaunchBootstraper;
 public:
-	HEngine(CommandLine& CmdLine);
-	virtual ~HEngine();
-	HE_DECL_NON_COPYABLE( HEngine );
-
-	/*
-		Main entry point for the engine. Should only ever be called once.
-	*/
-	void EngineMain();
-
 	/*
 		Requests a global shutdown from the engine. Cleaning up and shutting down everything.
 	*/
@@ -49,17 +43,27 @@ public:
 	float GetDeltaTime() const;
 
 	/*
-		Returns true if the editor is present, false if not.
+		Returns true if the editor is present, false if not. Editor is present if "-launchcfg LaunchEditor" is 
+		passed in the command line or in standalone game builds.
 	*/
 	bool GetIsEditorPresent();
 
 	/*
-		True if the the engine is running a simulation in the editor, false if not.
+		True if the the engine is running a game simulation in the editor (or at all), false if not.
 	*/
 	bool IsPlayingInEditor();
 
 
 protected:
+	HEngine( CommandLine& CmdLine );
+	virtual ~HEngine();
+	HE_DECL_NON_COPYABLE( HEngine );
+
+	/*
+		Main entry point for the engine. Should only ever be called once.
+	*/
+	void EngineMain();
+
 	virtual void PreStartup();
 	virtual void Startup();
 	virtual void PostStartup();
@@ -74,7 +78,9 @@ protected:
 	virtual void PostShutdown();
 
 	/*
-		Set if the engine is currently simulating the game in editor.
+		Set if the engine is currently simulating the game in editor. Value 
+		is always set to true in standalone game builds regardless of input.
+		@param IsPlaying: Wether or not the game is playing.
 	*/
 	void SetIsPlayingInEditor( bool IsPlaying );
 
@@ -92,12 +98,15 @@ protected:
 	RendererInitializer	m_RenderContextInitializer;
 	RenderContext		m_RenderContext;
 	FApp				m_Application;
+	FGameProject		m_GameProject;
 	AssetDatabase		m_AssetDatabase;
 	HWorld				m_GameWorld;
 
 };
 
 extern HEngine* GEngine;
+extern ThreadPool* GThreadPool;
+
 
 //
 // Inline function implementations
@@ -138,7 +147,11 @@ inline bool HEngine::IsPlayingInEditor()
 
 inline void HEngine::SetIsPlayingInEditor( bool IsPlaying )
 {
+#if HE_SHIPPING
+	m_IsPlayingInEditor = true;
+#else
 	m_IsPlayingInEditor = IsPlaying;
+#endif
 
 	if (m_IsPlayingInEditor)
 	{

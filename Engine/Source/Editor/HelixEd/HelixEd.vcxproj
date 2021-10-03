@@ -890,6 +890,7 @@
     <ClInclude Include="Public\Developer\ADebugPawn.h" />
     <ClInclude Include="Public\Developer\ConsoleWindow.h" />
     <ClInclude Include="Public\Editor\HEditorEngine.h" />
+    <ClInclude Include="Public\Editor\PreferencesViewport.h" />
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="Public\Panels\DetailsPanel.h" />
@@ -899,6 +900,7 @@
     <ClInclude Include="Public\Panels\ToolbarPanel.h" />
     <ClInclude Include="Public\Panels\WorldOutlinePanel.h" />
     <ClInclude Include="Public\Tools\AssetImporter.h" />
+    <ClInclude Include="Public\Tools\PackageMaker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
@@ -937,7 +939,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Private\HEditorEngine.cpp">
+    <ClCompile Include="Private\Editor\HEditorEngine.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
@@ -949,6 +951,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Private\Editor\PreferencesViewport.cpp" />
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">Create</PrecompiledHeader>
@@ -1068,6 +1071,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Private\Tools\PackageMaker.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>

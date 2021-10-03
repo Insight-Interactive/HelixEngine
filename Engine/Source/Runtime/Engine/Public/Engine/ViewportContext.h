@@ -24,10 +24,12 @@ public:
 	ViewportContext();
 	~ViewportContext();
 
-	void Initialize( const Window::Description& WindowDesc );
-	void Uninitialize();
-	void Update( float DeltaTime );
-	void Render();
+	virtual void Initialize( const Window::Description& WindowDesc );
+	virtual void Uninitialize();
+	virtual void Update( float DeltaTime );
+	virtual void Render();
+
+	bool IsValid();
 
 	Window& GetWindow();
 	IColorBuffer* GetPreDisplayBuffer();
@@ -36,6 +38,7 @@ public:
 	void LockMouseToScreenCenter();
 	void UnlockMouseFromScreenCenter();
 
+	FVector2 GetDimensions();
 	void BringToFocus();
 	bool HasFocus();
 	void Show();
@@ -103,6 +106,11 @@ protected:
 // Inline function implementation
 //
 
+inline bool ViewportContext::IsValid()
+{
+	return GetWindow().IsValid();
+}
+
 inline HWorld& ViewportContext::GetWorld()
 {
 	return *m_WorldInView;
@@ -131,6 +139,11 @@ inline void ViewportContext::UnlockMouseFromScreenCenter()
 inline void ViewportContext::PresentOneFrame()
 {
 	m_Window.PresentOneFrame();
+}
+
+inline FVector2 ViewportContext::GetDimensions() 
+{
+	return GetWindow().GetDimensions();
 }
 
 inline void ViewportContext::BringToFocus()

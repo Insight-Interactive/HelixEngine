@@ -26,7 +26,16 @@ AActor::~AActor()
 
 void AActor::Serialize( WriteContext& Output )
 {
+	Output.StartObject();
+	{
+		Output.Key( HE_STRINGIFY( AActor ) );
+		Output.StartArray();
+		{
 
+		}
+		Output.EndArray();
+	}
+	Output.EndObject();
 }
 
 void AActor::Deserialize( const ReadContext& Value ) 

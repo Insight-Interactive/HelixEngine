@@ -21,6 +21,8 @@ public:
 	*/
 	static DataBlob ReadRawData(const char* Path);
 
+	static bool DoesFileExist( const char* Filepath );
+
 };
 
 
@@ -59,6 +61,7 @@ class File
 {
 public:
 	File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
+	File( const String& FilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
 	~File();
 
 	/*
@@ -142,6 +145,11 @@ FORCEINLINE File::File( const Char* pFilePath, EFileUsageMode UsageMode, EConten
 		break;
 	}
 
+}
+
+FORCEINLINE File::File( const String& Filepath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
+	: File(Filepath.c_str(), UsageMode, ContentUsageMode)
+{
 }
 
 FORCEINLINE File::~File()

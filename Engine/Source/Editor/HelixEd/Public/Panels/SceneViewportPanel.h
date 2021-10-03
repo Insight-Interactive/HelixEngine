@@ -4,6 +4,7 @@
 
 #include "IDescriptorHeap.h"
 
+
 class ADebugPawn;
 
 class SceneViewportPanel : public Panel
@@ -29,6 +30,8 @@ public:
 	*/
 	void DeactivateDebugCamera();
 
+	ADebugPawn* GetDebugPawn();
+
 protected:
 	void FreezeDebugCamera();
 	void UnFreezeDebugCamera();
@@ -42,3 +45,12 @@ private:
 	float m_DeltaTime;
 	bool m_IsCameraRotating;
 };
+
+//
+// Inline function implementations
+//
+
+inline ADebugPawn* SceneViewportPanel::GetDebugPawn()
+{
+	return m_pDebugPawn;
+}

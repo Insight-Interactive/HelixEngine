@@ -24,6 +24,21 @@ namespace System
 		return EXIT_SUCCESS;
 	}
 
+	bool InitializePlatform()
+	{
+		// Init the COM library.
+		HRESULT hr = CoInitialize( NULL );
+		return SUCCEEDED( hr );
+	}
+
+	bool UninitializePlatform()
+	{
+		// Uninit the COM library.
+		CoUninitialize();
+		
+		return true;
+	}
+
 	ThreadId CreateAndRunThread( const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData/* = NULL*/, const uint64 StackSize/* = kDefaultStackSize*/, const int32 Flags/* = kJoinable*/ )
 	{
 		Win32ThreadData* ThreadData = new Win32ThreadData();

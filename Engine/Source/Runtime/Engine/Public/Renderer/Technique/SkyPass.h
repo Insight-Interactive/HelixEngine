@@ -4,6 +4,7 @@
 
 #include "ModelManager.h"
 #include "ITextureManager.h"
+#include "HTexture3D.h"
 
 
 class SkyboxPass : public FRenderPass
@@ -20,6 +21,8 @@ public:
 
 	virtual void ReloadPipeline() override;
 
+	//void SetSkyTexture( HTexture3D Texture );
+
 private:
 	// Dont use the FRenderPass interface. This pass is a special case.
 	virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) override {}
@@ -34,4 +37,6 @@ private:
 
 	EFormat m_RenderTargetFormat;
 	EFormat m_DepthTargetFormat;
+
+	//HTexture3D m_SkyTexture;
 };

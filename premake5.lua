@@ -2,9 +2,7 @@
 
 -- The main entry point for the project build system. 
 
--- LUA_PATH = "Engine/ThirdParty/premake/"
-
--- Add the premake module to enable WinRT project building.
+-- Add the premake module to enable C++/WinRT project building.
 require ("vstudio");
 dofile  ("Modules/winrt/_preload.lua");
 require ("Modules/winrt");
@@ -122,7 +120,7 @@ workspace ("HelixEngine")
 include ( "Engine/Source/Runtime/Engine/Engine.module.lua" );
 include ( "Engine/Source/UnitTests/UnitTests.module.lua" );
 include ( "Engine/Shaders/Shaders.module.lua" );
-include ( "Game/Source/Game.module.lua" );
+-- include ( "Game/Source/Game.module.lua" );
 
 group ("Modules")
 	include ( "Engine/Source/Runtime/Core/Core.module.lua" );
@@ -132,4 +130,8 @@ group ("")
 
 group ("Editor")
 	include ( "Engine/Source/Editor/HelixEd/HelixEd.module.lua" );
+group ("")
+
+group ("Programs")
+	include ( "Engine/Source/Editor/PackageCooker/PackageCooker.program.lua" );
 group ("")

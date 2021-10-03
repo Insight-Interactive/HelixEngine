@@ -13,7 +13,7 @@ CommandLine::~CommandLine()
 
 }
 
-void CommandLine::Process( WChar* CommandLine )
+void CommandLine::Process( const WChar* CommandLine )
 {
 	uint64 i = 0;
 	bool FoundKey = false;

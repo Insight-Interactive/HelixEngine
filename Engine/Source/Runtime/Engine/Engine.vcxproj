@@ -515,8 +515,7 @@
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
@@ -540,8 +539,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
@@ -565,8 +563,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
@@ -590,8 +587,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
@@ -615,8 +611,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
@@ -640,8 +635,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
@@ -665,8 +659,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
@@ -690,8 +683,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
@@ -715,8 +707,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
@@ -740,8 +731,7 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDir)Game/Content"</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
@@ -766,14 +756,13 @@ IF NOT EXIST "$(TargetDir)Content" mklink /D "$(TargetDir)Content" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Game.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win64\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
@@ -798,14 +787,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Game.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-Win32\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
@@ -830,14 +818,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Game.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOne\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
@@ -862,14 +849,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Game.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
@@ -894,14 +880,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-PlayStation5\Game.lib;..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-PlayStation5\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\DebugGame-PlayStation5\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -926,14 +911,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Game.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win64\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
@@ -958,14 +942,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Game.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-Win32\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
@@ -990,14 +973,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Game.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
@@ -1022,14 +1004,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Game.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
@@ -1054,14 +1035,13 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-PlayStation5\Game.lib;..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-PlayStation5\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Game\Config\*\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Config\* $(TargetDir) &gt; nul)
-IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Game\Content ..\..\..\..\Build-clang\ShippingGame-PlayStation5\Content &gt; nul)</Command>
+      <Command>DEL "$(TargetDir)/*.lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -1081,7 +1061,9 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClInclude Include="Public\Engine\Event\EngineEvent.h" />
     <ClInclude Include="Public\Engine\Event\Event.h" />
     <ClInclude Include="Public\Engine\Event\EventEmitter.h" />
+    <ClInclude Include="Public\Engine\FileExplorerWindow.h" />
     <ClInclude Include="Public\Engine\FrameTimeManager.h" />
+    <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HEngine.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\SplashScreen.h" />
@@ -1106,7 +1088,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClInclude Include="Public\Input\KeyEvent.h" />
     <ClInclude Include="Public\Input\MouseEvent.h" />
     <ClInclude Include="Public\Input\RawInput.h" />
-    <ClInclude Include="Public\Jobs\ThreadPool.h" />
     <ClInclude Include="Public\Renderer\Common.h" />
     <ClInclude Include="Public\Renderer\ConstantBufferStructures.h" />
     <ClInclude Include="Public\Renderer\FRenderPass.h" />
@@ -1133,6 +1114,7 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClCompile Include="Private\Engine\EngineEvent.cpp" />
     <ClCompile Include="Private\Engine\Events.cpp" />
     <ClCompile Include="Private\Engine\FrameTimeManager.cpp" />
+    <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HEngine.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\SplashScreen.cpp" />
@@ -1154,7 +1136,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClCompile Include="Private\Input\KeyEvent.cpp" />
     <ClCompile Include="Private\Input\MouseEvent.cpp" />
     <ClCompile Include="Private\Input\RawInput.cpp" />
-    <ClCompile Include="Private\Jobs\ThreadPool.cpp" />
     <ClCompile Include="Private\Launch\Launch.cpp" />
     <ClCompile Include="Private\PCH\EnginePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -1165,6 +1146,20 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
     <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp" />
     <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp" />
     <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp" />
+    <ClCompile Include="Private\Windows\Desktop\FileExplorerWinDesktop.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Private\Windows\Desktop\WindowWinDesktop.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">true</ExcludedFromBuild>
@@ -1211,9 +1206,6 @@ IF EXIST $(SolutionDir)Game\Content\ (xcopy /Q /E /Y /I $(SolutionDir)Game\Conte
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Game\Source\Game.vcxproj">
-      <Project>{7FA9857C-6BE0-860D-14CD-6C1000E3020F}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Math\Math.vcxproj">
       <Project>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</Project>

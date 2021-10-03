@@ -8,26 +8,48 @@
 #	include "Engine/HEngine.h"
 #endif // HE_WITH_EDITOR
 
+/*
+	Private class used to boostrap and launch the engine.
+*/
+class HEngineLaunchBootstraper
+{
+public:
+	static void Execute( HEngine** pEngine, WChar* Commandline )
+	{
+		CommandLine Args;
+		Args.Process( Commandline );
+
+#if HE_WITH_EDITOR
+		if (Args[L"-launchcfg"] == L"LaunchEditor")
+		{
+			(*pEngine) = new HEditorEngine( Args );
+		}
+		else if (Args[L"-launchcfg"] == L"LaunchGame")
+#endif // HE_WITH_EDITOR
+		{
+			(*pEngine) = new HEngine( Args );
+		}
+
+		HE_ASSERT( (*pEngine) != NULL );
+		(*pEngine)->EngineMain();
+
+		HE_SAFE_DELETE_PTR( *pEngine );
+	}
+};
 
 void GuardedMain(WChar* CmdLine)
 {
-	CommandLine Args;
-	Args.Process( CmdLine );
-	//Args.Process( L"-launchcfg LaunchGame");
-
-#if HE_WITH_EDITOR
-	if (Args[L"-launchcfg"] == L"LaunchEditor")
+#if HE_USE_EXCEPTIONS
+	__try
+#endif
 	{
-		GEngine = new HEditorEngine( Args );
+		HEngineLaunchBootstraper::Execute( &GEngine, CmdLine );
 	}
-	else if (Args[L"-launchcfg"] == L"LaunchGame")
-#endif // HE_WITH_EDITOR
+#if HE_USE_EXCEPTIONS
+	catch (...)
 	{
-		GEngine = new HEngine( Args );
+
 	}
+#endif
 
-	HE_ASSERT( GEngine != NULL );
-	GEngine->EngineMain();
-
-	HE_SAFE_DELETE_PTR( GEngine );
 }

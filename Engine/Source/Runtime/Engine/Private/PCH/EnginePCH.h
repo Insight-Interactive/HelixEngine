@@ -23,6 +23,8 @@
 #	include <hidusage.h>
 #	include <strsafe.h>
 #	include <d3d12.h>
+#	include <ShlObj.h>		// File dialogs
+#	include <Shlwapi.h>		// IUnknown overrides
 
 //	Input
 // 

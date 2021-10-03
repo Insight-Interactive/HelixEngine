@@ -69,19 +69,10 @@ void SceneViewportPanel::Render( ICommandContext& CmdCtx )
 		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ) || m_IsCameraRotating)
 		{
 			m_IsCameraRotating = true;
-			
-			float X = GetOwningViewport()->GetMouseMoveDeltaX() * m_DeltaTime;
-			float Y = GetOwningViewport()->GetMouseMoveDeltaY() * m_DeltaTime;
-			pCamera->GetTransform().Rotate( 2.f * Y, 2.f * X, 0.f );
-			FVector3 Rot = pCamera->GetTransform().GetRotation();
-			//HE_LOG( Log, TEXT( "Camera rotation: %f, %f, %f" ), Rot.x, Rot.x, Rot.x );
-			/*pCamera->GetTransform().SetRotationMatrix(
-				pCamera->GetTransform().GetRotationMatrix()
-			);*/
-			m_pDebugPawn->GetTransform().SetRotationMatrix( pCamera->GetTransform().GetRotationMatrix() );
 		}
 		// Dont stop rotating until the user lets go of the mouse button.
 		m_IsCameraRotating = ImGui::IsMouseDown( ImGuiMouseButton_Right );
+		m_pDebugPawn->SetCanRotateCamera( m_IsCameraRotating );
 
 
 		// Render the scene to the viewport.
