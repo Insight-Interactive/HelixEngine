@@ -1,6 +1,6 @@
 #include "RendererPCH.h"
 
-#include "DeviceD3D12.h"
+#include "RenderDeviceD3D12.h"
 
 #include "RendererCore.h"
 #include "PipelineStateD3D12.h"
@@ -10,17 +10,17 @@
 #include "DepthBufferD3D12.h"
 #include "TextureD3D12.h"
 
-DeviceD3D12::DeviceD3D12()
+FRenderDeviceD3D12::FRenderDeviceD3D12()
 	: m_pD3DDevice(NULL)
 {
 }
 
-DeviceD3D12::~DeviceD3D12()
+FRenderDeviceD3D12::~FRenderDeviceD3D12()
 {
 	UnInitialize();
 }
 
-void DeviceD3D12::Initialize(const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult, void** ppFactoryContext)
+void FRenderDeviceD3D12::Initialize(const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult, void** ppFactoryContext)
 {
 	IDXGIFactory6** ppDXGIFactory = RCast<IDXGIFactory6**>(ppFactoryContext);
 	HE_ASSERT( ppDXGIFactory != NULL );
@@ -60,36 +60,36 @@ void DeviceD3D12::Initialize(const DeviceInitParams& InitParams, DeviceQueryResu
 	}
 }
 
-void DeviceD3D12::CreatePipelineState(const PipelineStateDesc& PSODesc, IPipelineState** ppOutPSO)
+void FRenderDeviceD3D12::CreatePipelineState(const FPipelineStateDesc& PSODesc, FPipelineState** ppOutPSO)
 {
-	PipelineStateD3D12* pD3D12PSO = CreateRenderComponentObject<PipelineStateD3D12>(ppOutPSO);
+	FPipelineStateD3D12* pD3D12PSO = CreateRenderComponentObject<FPipelineStateD3D12>(ppOutPSO);
 	pD3D12PSO->Initialize(PSODesc);
 }
 
-void DeviceD3D12::CreateRootSignature(IRootSignature** ppOutSignature)
+void FRenderDeviceD3D12::CreateRootSignature(FRootSignature** ppOutSignature)
 {
-	RootSignatureD3D12* pD3D12RS = CreateRenderComponentObject<RootSignatureD3D12>(ppOutSignature);
+	FRootSignatureD3D12* pD3D12RS = CreateRenderComponentObject<FRootSignatureD3D12>(ppOutSignature);
 }
-void DeviceD3D12::CreateDescriptorHeap(const TChar* DebugHeapName, EResourceHeapType&& Type, uint32&& MaxCount, IDescriptorHeap** ppOutHeap)
+void FRenderDeviceD3D12::CreateDescriptorHeap(const TChar* DebugHeapName, EResourceHeapType&& Type, uint32&& MaxCount, FDescriptorHeap** ppOutHeap)
 {
-	(*ppOutHeap) = CreateRenderComponentObject<DescriptorHeapD3D12>(ppOutHeap);
-	DescriptorHeapD3D12* pHeap = DCast<DescriptorHeapD3D12*>(*ppOutHeap);
+	(*ppOutHeap) = CreateRenderComponentObject<FDescriptorHeapD3D12>(ppOutHeap);
+	FDescriptorHeapD3D12* pHeap = DCast<FDescriptorHeapD3D12*>(*ppOutHeap);
 	pHeap->Create(DebugHeapName, Type, MaxCount);
 }
 
-void DeviceD3D12::CreateColorBuffer(const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format, IColorBuffer** ppOutColorBuffer)
+void FRenderDeviceD3D12::CreateColorBuffer(const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format, FColorBuffer** ppOutColorBuffer)
 {
-	(*ppOutColorBuffer) = new ColorBufferD3D12();
+	(*ppOutColorBuffer) = new FColorBufferD3D12();
 	(*ppOutColorBuffer)->Create(this, Name, Width, Height, NumMips, Format);
 }
 
-void DeviceD3D12::CreateDepthBuffer(const TChar* Name, uint32 Width, uint32 Height, EFormat Format, IDepthBuffer** ppOutDepthBuffer)
+void FRenderDeviceD3D12::CreateDepthBuffer(const TChar* Name, uint32 Width, uint32 Height, EFormat Format, FDepthBuffer** ppOutDepthBuffer)
 {
-	(*ppOutDepthBuffer) = new DepthBufferD3D12();
+	(*ppOutDepthBuffer) = new FDepthBufferD3D12();
 	(*ppOutDepthBuffer)->Create(Name, Width, Height, Format);
 }
 
-void DeviceD3D12::CopyDescriptors(uint32 NumDestDescriptorRanges, const CpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const ITexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
+void FRenderDeviceD3D12::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const HTexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
 {
 	constexpr uint32 kMaxHandles = 12;
 	D3D12_CPU_DESCRIPTOR_HANDLE SourceStarts[kMaxHandles];
@@ -99,13 +99,13 @@ void DeviceD3D12::CopyDescriptors(uint32 NumDestDescriptorRanges, const CpuDescr
 	D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ pDestDescriptorRangeStarts->Ptr };
 	for (uint32 i = 0; i < NumSrcDescriptorRanges; i++)
 	{
-		const TextureD3D12* Tex = DCast<const TextureD3D12*>(pSrcDescriptorRangeStarts[i]);
+		const HTextureD3D12* Tex = DCast<const HTextureD3D12*>(pSrcDescriptorRangeStarts[i]);
 		SourceStarts[i] = Tex->GetSRV();
 	}
 	m_pD3DDevice->CopyDescriptors(NumDestDescriptorRanges, &CpuHandle, (const UINT*)pDestDescriptorRangeSizes, NumSrcDescriptorRanges, SourceStarts, (const UINT*)pSrcDescriptorRangeSizes, (D3D12_DESCRIPTOR_HEAP_TYPE)DescriptorHeapsType);
 }
 
-void DeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** ppAdapter, const DeviceInitParamsD3D12& InitParams, DeviceQueryResultD3D12& OutDeviceQueryResult)
+void FRenderDeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** ppAdapter, const DeviceInitParamsD3D12& InitParams, DeviceQueryResultD3D12& OutDeviceQueryResult)
 {
 	Microsoft::WRL::ComPtr<IDXGIAdapter1> pAdapter;
 	*ppAdapter = NULL;
@@ -165,11 +165,12 @@ void DeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** pp
 
 	ZeroMemory(&Desc, sizeof(DXGI_ADAPTER_DESC1));
 	(*ppAdapter)->GetDesc1(&Desc);
-	lstrcpynW(OutDeviceQueryResult.DeviceName, Desc.Description, R_MAX_DEVICE_NAME_LENGTH);
+	
+	::wcscpy_s(OutDeviceQueryResult.DeviceName, Desc.Description);
 	R_LOG(Log, TEXT("\"%s\" selected as D3D 12 graphics hardware."), OutDeviceQueryResult.DeviceName);
 }
 
-void DeviceD3D12::UnInitialize()
+void FRenderDeviceD3D12::UnInitialize()
 {
 	HE_COM_SAFE_RELEASE(m_pD3DDevice);
 }
@@ -180,7 +181,7 @@ void DeviceD3D12::UnInitialize()
 // Utility Functions
 // 
 
-bool DeviceD3D12::CheckSM6Support(ID3D12Device* pDevice)
+bool FRenderDeviceD3D12::CheckSM6Support(ID3D12Device* pDevice)
 {
 	HE_ASSERT(pDevice != NULL); // Cannot check for device feature support with a null device.
 	D3D12_FEATURE_DATA_SHADER_MODEL sm6_0{ D3D_SHADER_MODEL_6_0 };
@@ -189,7 +190,7 @@ bool DeviceD3D12::CheckSM6Support(ID3D12Device* pDevice)
 	return (sm6_0.HighestShaderModel >= D3D_SHADER_MODEL_6_0);
 }
 
-bool DeviceD3D12::CheckDXRSupport(ID3D12Device* pDevice)
+bool FRenderDeviceD3D12::CheckDXRSupport(ID3D12Device* pDevice)
 {
 	HE_ASSERT(pDevice != NULL); // Cannot check for device feature support with a null device.
 	D3D12_FEATURE_DATA_D3D12_OPTIONS5 Options5 = {};

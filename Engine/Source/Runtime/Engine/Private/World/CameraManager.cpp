@@ -6,18 +6,18 @@
 #include "GameFramework/Components/HCameraComponent.h"
 
 
-CameraManager::CameraManager( HWorld* pWorld )
+HCameraManager::HCameraManager( HWorld* pWorld )
 	: m_pWorld( pWorld )
 {
 
 }
 
-CameraManager::~CameraManager()
+HCameraManager::~HCameraManager()
 {
 
 }
 
-void CameraManager::Tick( float DeltaTime )
+void HCameraManager::Tick( float DeltaTime )
 {
 	for (size_t i = 0; i < m_Cameras.size(); ++i)
 	{
@@ -25,13 +25,13 @@ void CameraManager::Tick( float DeltaTime )
 	}
 }
 
-void CameraManager::CacheCamera( HCameraComponent* pCamera )
+void HCameraManager::CacheCamera( HCameraComponent* pCamera )
 {
 	HE_ASSERT( pCamera != NULL ); // Trying to cache a null camera.
 	m_Cameras.push_back( pCamera );
 }
 
-void CameraManager::RemoveCachedCamera( HCameraComponent* pCamera )
+void HCameraManager::RemoveCachedCamera( HCameraComponent* pCamera )
 {
 	for (size_t i = 0; i < m_Cameras.size(); ++i)
 	{

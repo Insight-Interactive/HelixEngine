@@ -6,15 +6,15 @@
 #include "ISwapChain.h"
 
 
-class CommandQueueD3D12;
+class FCommandQueueD3D12;
 
-class RENDER_API SwapChainD3D12 final : public ISwapChain
+class RENDER_API FSwapChainD3D12 final : public FSwapChain
 {
 public:
-	SwapChainD3D12();
-	~SwapChainD3D12();
+	FSwapChainD3D12();
+	~FSwapChainD3D12();
 
-	virtual void Initialize(IDevice* pDevice) override;
+	virtual void Initialize(FRenderDevice* pDevice) override;
 
 	virtual void SwapBuffers() override;
 	virtual void Resize(const uint32& Width, const uint32& Height) override;
@@ -25,7 +25,7 @@ public:
 
 	virtual void ToggleFullScreen(bool IsEnabled) override;
 
-	void Create(const SwapChainDescription& InitParams, IDXGIFactory6** ppDXGIFactory, CommandQueueD3D12* ppCommandQueue, ID3D12Device* pDevice);
+	void Create(const FSwapChainDesc& InitParams, IDXGIFactory6** ppDXGIFactory, FCommandQueueD3D12* ppCommandQueue, ID3D12Device* pDevice);
 
 
 protected:

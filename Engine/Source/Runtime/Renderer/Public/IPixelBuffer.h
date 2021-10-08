@@ -7,14 +7,14 @@
 #include "CommonStructs.h"
 
 
-class IDevice;
+class FRenderDevice;
 
-class RENDER_API IPixelBuffer
+class RENDER_API FPixelBuffer
 {
 public:
-	virtual ResourceDesc DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags) = 0;
-	virtual void AssociateWithResource(IDevice* Device, const WChar* Name, void* Resource, EResourceState CurrentState) = 0;
-	virtual void CreateTextureResource(IDevice* Device, const WChar* Name, const ResourceDesc& ResourceDesc, const ClearValue& ClearValue) = 0;
+	virtual FResourceDesc DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags) = 0;
+	virtual void AssociateWithResource(FRenderDevice* Device, const WChar* Name, void* Resource, EResourceState CurrentState) = 0;
+	virtual void CreateTextureResource(FRenderDevice* Device, const WChar* Name, const FResourceDesc& FResourceDesc, const FClearValue& ClearValue) = 0;
 
 	FORCEINLINE EFormat GetFormat() const { return m_Format; }
 
@@ -36,14 +36,14 @@ public:
 	}
 
 protected:
-	IPixelBuffer()
+	FPixelBuffer()
 		: m_Width(0u)
 		, m_Height(0u)
 		, m_ArraySize(0u)
 	{
 	}
 
-	virtual ~IPixelBuffer()
+	virtual ~FPixelBuffer()
 	{
 	}
 
@@ -57,7 +57,7 @@ protected:
 // Inline function implementations
 //
 
-EFormat IPixelBuffer::GetBaseFormat(EFormat BaseFormat)
+EFormat FPixelBuffer::GetBaseFormat(EFormat BaseFormat)
 {
 	switch (BaseFormat)
 	{
@@ -104,7 +104,7 @@ EFormat IPixelBuffer::GetBaseFormat(EFormat BaseFormat)
 	}
 }
 
-EFormat IPixelBuffer::GetUAVFormat(EFormat BaseFormat)
+EFormat FPixelBuffer::GetUAVFormat(EFormat BaseFormat)
 {
 	switch (BaseFormat)
 	{
@@ -118,7 +118,7 @@ EFormat IPixelBuffer::GetUAVFormat(EFormat BaseFormat)
 	}
 }
 
-EFormat IPixelBuffer::GetDSVFormat(EFormat DefaultFormat)
+EFormat FPixelBuffer::GetDSVFormat(EFormat DefaultFormat)
 {
 	switch (DefaultFormat)
 	{
@@ -153,7 +153,7 @@ EFormat IPixelBuffer::GetDSVFormat(EFormat DefaultFormat)
 	}
 }
 
-EFormat IPixelBuffer::GetStencilFormat(EFormat DefaultFormat)
+EFormat FPixelBuffer::GetStencilFormat(EFormat DefaultFormat)
 {
 	switch (DefaultFormat)
 	{
@@ -176,7 +176,7 @@ EFormat IPixelBuffer::GetStencilFormat(EFormat DefaultFormat)
 	}
 }
 
-EFormat IPixelBuffer::GetDepthFormat(EFormat DefaultFormat)
+EFormat FPixelBuffer::GetDepthFormat(EFormat DefaultFormat)
 {
 	switch (DefaultFormat)
 	{

@@ -3,9 +3,9 @@
 #include "StringHelper.h"
 
 
-class DatabaseInterface
+class FDatabaseInterface
 {
-	friend class AssetDatabase;
+	friend class FAssetDatabase;
 public:
 	virtual void Initialize( const Char* MaterialDatabaseFile ) = 0;
 	virtual void UnInitialize() = 0;
@@ -17,8 +17,8 @@ public:
 	const String& GetName() const;
 
 protected:
-	DatabaseInterface( const String& Name );
-	virtual ~DatabaseInterface();
+	FDatabaseInterface( const String& Name );
+	virtual ~FDatabaseInterface();
 
 	const String& GetInvalidAssetPath() const;
 	void SerializeToFile( const Char* Filepath );
@@ -40,7 +40,7 @@ private:
 	/*
 		Const string to indicate invalid paths.s
 	*/
-	static const String s_InvalidAssetPath;
+	static const String SInvalidAssetPath;
 
 protected:
 	std::unordered_map<String, String> m_Data;
@@ -51,7 +51,7 @@ protected:
 // Inline function implementations
 //
 
-inline void DatabaseInterface::RegisterAsset( const Char* Name, const Char* Filepath )
+inline void FDatabaseInterface::RegisterAsset( const Char* Name, const Char* Filepath )
 {
 	auto InsertResult = m_Data.try_emplace( String( Name ), String( Filepath ) );
 	if (InsertResult.second)
@@ -61,7 +61,7 @@ inline void DatabaseInterface::RegisterAsset( const Char* Name, const Char* File
 	}
 }
 
-inline void DatabaseInterface::UnRegisterAsset( const Char* Name )
+inline void FDatabaseInterface::UnRegisterAsset( const Char* Name )
 {
 	auto Iter = m_Data.find( Name );
 	if (Iter != m_Data.end())
@@ -75,12 +75,12 @@ inline void DatabaseInterface::UnRegisterAsset( const Char* Name )
 	}
 }
 
-inline const String& DatabaseInterface::GetInvalidAssetPath() const
+inline const String& FDatabaseInterface::GetInvalidAssetPath() const
 {
-	return s_InvalidAssetPath;
+	return SInvalidAssetPath;
 }
 
-inline void DatabaseInterface::SerializeToFile( const Char* Filepath )
+inline void FDatabaseInterface::SerializeToFile( const Char* Filepath )
 {
 	if (GetIsDirty())
 	{
@@ -89,7 +89,7 @@ inline void DatabaseInterface::SerializeToFile( const Char* Filepath )
 	}
 }
 
-inline const String& DatabaseInterface::GetValueByKey( const String& Key ) const
+inline const String& FDatabaseInterface::GetValueByKey( const String& Key ) const
 {
 	auto Iter = m_Data.find( Key );
 	if (Iter != m_Data.end())
@@ -103,17 +103,17 @@ inline const String& DatabaseInterface::GetValueByKey( const String& Key ) const
 	}
 }
 
-inline const String& DatabaseInterface::GetName() const
+inline const String& FDatabaseInterface::GetName() const
 {
 	return m_DatabaseName;
 }
 
-inline bool DatabaseInterface::GetIsDirty() const
+inline bool FDatabaseInterface::GetIsDirty() const
 {
 	return m_IsDirty;
 }
 
-inline void DatabaseInterface::SetDirty( bool IsDirty )
+inline void FDatabaseInterface::SetDirty( bool IsDirty )
 {
 	m_IsDirty = IsDirty;
 }

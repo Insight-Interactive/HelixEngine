@@ -35,12 +35,12 @@ bool ConsoleWindow::Create( const ConsoleWindowDesc& Desc )
 	SetConsoleScreenBufferSize( m_OutputHandle, ConsoleInfo.dwSize );
 
 	
-	SMALL_RECT Rect;
-	Rect.Left = 0;
-	Rect.Top = 0;
-	Rect.Right = (SHORT)m_Desc.WindowDims.x;
-	Rect.Bottom = (SHORT)m_Desc.WindowDims.y;
-	SetConsoleWindowInfo( m_OutputHandle, TRUE, &Rect );
+	SMALL_RECT FRect;
+	FRect.Left = 0;
+	FRect.Top = 0;
+	FRect.Right = (SHORT)m_Desc.WindowDims.x;
+	FRect.Bottom = (SHORT)m_Desc.WindowDims.y;
+	SetConsoleWindowInfo( m_OutputHandle, TRUE, &FRect );
 
 	FILE* stream;
 	freopen_s( &stream, "CONIN$", "r", stdin );

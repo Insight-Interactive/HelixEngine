@@ -3,7 +3,7 @@
 #include "CoreFwd.h"
 #include "RendererFwd.h"
 
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "../D3DCommon/D3DCommon.h"
 
 struct DeviceInitParamsD3D12 : public DeviceInitParams
@@ -18,27 +18,27 @@ struct DeviceQueryResultD3D12 : public DeviceQueryResult
 	bool IsDXRSupported;
 };
 
-class RENDER_API DeviceD3D12 : public IDevice
+class RENDER_API FRenderDeviceD3D12 : public FRenderDevice
 {
-	friend class RenderContextFactoryD3D12;
+	friend class FRenderContextFactoryD3D12;
 public:
-	DeviceD3D12();
-	virtual ~DeviceD3D12();
+	FRenderDeviceD3D12();
+	virtual ~FRenderDeviceD3D12();
 
 	virtual void* GetNativeDevice() const override { return RCast<void*>(m_pD3DDevice); }
 
 
-	virtual void CreatePipelineState(const PipelineStateDesc& PSODesc, IPipelineState** ppOutPSO) override;
-	virtual void CreateRootSignature(IRootSignature** ppOutSignature) override;
-	virtual void CreateDescriptorHeap(const TChar* DebugHeapName, EResourceHeapType&& Type, uint32&& MaxCount, IDescriptorHeap** ppOutHeap) override;
-	virtual void CreateColorBuffer(const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format, IColorBuffer** ppOutColorBuffer) override;
-	virtual void CreateDepthBuffer(const TChar* Name, uint32 Width, uint32 Height, EFormat Format, IDepthBuffer** ppOutDepthBuffer) override;
+	virtual void CreatePipelineState(const FPipelineStateDesc& PSODesc, FPipelineState** ppOutPSO) override;
+	virtual void CreateRootSignature(FRootSignature** ppOutSignature) override;
+	virtual void CreateDescriptorHeap(const TChar* DebugHeapName, EResourceHeapType&& Type, uint32&& MaxCount, FDescriptorHeap** ppOutHeap) override;
+	virtual void CreateColorBuffer(const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format, FColorBuffer** ppOutColorBuffer) override;
+	virtual void CreateDepthBuffer(const TChar* Name, uint32 Width, uint32 Height, EFormat Format, FDepthBuffer** ppOutDepthBuffer) override;
 	virtual void CopyDescriptors(
 		uint32 NumDestDescriptorRanges,
-		const CpuDescriptorHandle* pDestDescriptorRangeStarts,
+		const FCpuDescriptorHandle* pDestDescriptorRangeStarts,
 		const uint32* pDestDescriptorRangeSizes,
 		uint32 NumSrcDescriptorRanges,
-		const ITexture** pSrcDescriptorRangeStarts,
+		const HTexture** pSrcDescriptorRangeStarts,
 		const uint32* pSrcDescriptorRangeSizes,
 		EResourceHeapType DescriptorHeapsType
 	) override;

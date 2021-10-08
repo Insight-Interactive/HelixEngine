@@ -3,9 +3,10 @@
 
 #include "Engine/ViewportContext.h"
 
-#include "Engine/HEngine.h"
+#include "Engine/Engine.h"
 #include "Input/MouseEvent.h"
-#include "IDevice.h"
+#include "Input/KeyEvent.h"
+#include "IRenderDevice.h"
 #include "IGpuResource.h"
 #include "ICommandContext.h"
 #include "IConstantBufferManager.h"
@@ -19,31 +20,32 @@
 #include "Renderer/Technique/DeferredShadingTech.h"
 #include "Renderer/Technique/PostProcessUber.h"
 #include "GameFramework/Components/HCameraComponent.h"
-#include "World/HWorld.h"
+#include "World/World.h"
+#include "Engine/Event/EngineEvent.h"
 
 
-ViewportContext::ViewportContext()
-	: m_WorldInView(NULL)
+FViewportContext::FViewportContext()
+	: m_WorldInView( NULL )
 {
-	m_DeferredShader	= new DeferredShadingTech();
-	m_SkyPass			= new SkyboxPass();
-	m_PostProcessPass	= new PostProcesssUber();
+	m_DeferredShader	= new FDeferredShadingTech();
+	m_SkyPass			= new FSkyboxPass();
+	m_PostProcessPass	= new FPostProcessUber();
 }
 
-ViewportContext::~ViewportContext()
+FViewportContext::~FViewportContext()
 {
 	HE_SAFE_DELETE_PTR( m_PostProcessPass );
 	HE_SAFE_DELETE_PTR( m_SkyPass );
 	HE_SAFE_DELETE_PTR( m_DeferredShader );
 }
 
-void ViewportContext::Initialize( const Window::Description& WindowDesc )
+void FViewportContext::Initialize( const FWindow::Description& WindowDesc )
 {
 	m_Window.Create( WindowDesc );
-	m_Window.GetSwapChain()->SetClearColor( Color( .25f, 0.f, 1.f ) );
-	m_Window.AddListener( this, &ViewportContext::OnEvent );
+	m_Window.GetSwapChain()->SetClearColor( FColor( .25f, 0.f, 1.f ) );
+	m_Window.AddListener( this, &FViewportContext::OnEvent );
 
-	m_InputDispatcher.Initialize( m_Window.GetNativeWindow() );
+	m_InputDispatcher.Initialize( &m_Window );
 
 	m_ViewPort.TopLeftX = 0.f;
 	m_ViewPort.TopLeftY = 0.f;
@@ -60,7 +62,7 @@ void ViewportContext::Initialize( const Window::Description& WindowDesc )
 	InitializeRenderingResources();
 }
 
-void ViewportContext::Uninitialize()
+void FViewportContext::Uninitialize()
 {
 	for (size_t i = 0; i < m_pSceneConstantBuffers.size(); ++i)
 	{
@@ -77,16 +79,17 @@ void ViewportContext::Uninitialize()
 	HE_SAFE_DELETE_PTR( m_pSceneRenderTarget );
 }
 
-void ViewportContext::Update( float DeltaTime )
+void FViewportContext::Update( float DeltaTime )
 {
+	// Update the world inputs.
 	m_InputDispatcher.UpdateInputs( DeltaTime );
 }
 
-void ViewportContext::Render()
+void FViewportContext::Render()
 {
-	IColorBuffer* pSwapChainBackBuffer = m_Window.GetRenderSurface();
+	FColorBuffer* pSwapChainBackBuffer = m_Window.GetRenderSurface();
 
-	ICommandContext& CmdContext = ICommandContext::Begin( TEXT( "Scene Pass" ) );
+	FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Scene Pass" ) );
 	{
 		if (GEngine->GetIsEditorPresent())
 		{
@@ -94,7 +97,7 @@ void ViewportContext::Render()
 		}
 		else
 		{
-			IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainBackBuffer );
+			FGpuResource& SwapChainGpuResource = *DCast<FGpuResource*>( pSwapChainBackBuffer );
 			CmdContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
 			CmdContext.ClearColorBuffer( *pSwapChainBackBuffer, GetClientRect() );
 
@@ -104,11 +107,11 @@ void ViewportContext::Render()
 	CmdContext.End();
 }
 
-void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& RenderTarget  )
+void FViewportContext::RenderWorld( FCommandContext& CmdContext, FColorBuffer& RenderTarget  )
 {
 	if (m_WorldInView == NULL) return;
 
-	IGpuResource& RenderTargetResource = *RenderTarget.As<IGpuResource*>();
+	FGpuResource& RenderTargetResource = *RenderTarget.As<FGpuResource*>();
 	CmdContext.TransitionResource( RenderTargetResource, RS_RenderTarget );
 
 	// Deferred Pass
@@ -135,7 +138,7 @@ void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& Re
 	// Prep the render target to be rendered too.
 	//
 	CmdContext.ClearColorBuffer( RenderTarget, GetClientRect() );
-	const IColorBuffer* pRTs[] = {
+	const FColorBuffer* pRTs[] = {
 		&RenderTarget,
 	};
 	CmdContext.OMSetRenderTargets( 1, pRTs, NULL );
@@ -170,7 +173,7 @@ void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& Re
 	}
 }
 
-void ViewportContext::InitializeRenderingResources()
+void FViewportContext::InitializeRenderingResources()
 {
 	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
 	m_DeferredShader->Initialize( RenderResolution, m_Window.GetSwapChain()->GetBackBufferFormat() );
@@ -198,7 +201,7 @@ void ViewportContext::InitializeRenderingResources()
 	}
 }
 
-void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
+void FViewportContext::SetCommonRenderState( FCommandContext& CmdContext )
 {
 	// Set View and Scissor
 	//
@@ -239,7 +242,7 @@ void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
 	CmdContext.SetGraphicsConstantBuffer( kLights, GetLightConstBufferForCurrentFrame() );
 }
 
-void ViewportContext::ReloadRenderPipelines()
+void FViewportContext::ReloadRenderPipelines()
 {
 	//m_PostProcessPass->ReloadPipeline();
 	m_DeferredShader->ReloadPipeline();
@@ -251,16 +254,71 @@ void ViewportContext::ReloadRenderPipelines()
 //
 
 
-void ViewportContext::OnEvent( Event& e )
+void FViewportContext::OnEvent( Event& e )
 {
 	EventDispatcher Dispatcher(e);
 
+	// Window
+	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &FViewportContext::OnWindowLostFocus );
+	Dispatcher.Dispatch<WindowFocusEvent>( this, &FViewportContext::OnWindowFocus );
+
 	// Mouse
-	Dispatcher.Dispatch<MouseRawPointerMovedEvent>( this, &ViewportContext::OnMouseRawPointerMoved );
+	Dispatcher.Dispatch<MouseRawPointerMovedEvent>( this, &FViewportContext::OnMouseRawPointerMoved );
+	Dispatcher.Dispatch<MouseWheelScrolledEvent>( this, &FViewportContext::OnMouseWheelScrolled );
+	Dispatcher.Dispatch<MouseButtonPressedEvent>( this, &FViewportContext::OnMouseButtonPressed );
+	Dispatcher.Dispatch<MouseButtonReleasedEvent>( this, &FViewportContext::OnMouseButtonReleased );
+
+	// Keyboard
+	Dispatcher.Dispatch<KeyPressedEvent>( this, &FViewportContext::OnKeyPressed );
+	Dispatcher.Dispatch<KeyReleasedEvent>( this, &FViewportContext::OnKeyReleased );
+
 }
 
-bool ViewportContext::OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e )
+bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )
+{
+
+	return false;
+}
+
+bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
+{
+
+	return false;
+}
+
+bool FViewportContext::OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e )
 {
 	GetInputDispatcher()->GetInputSureyor().SetMouseMoveDelta( e.GetX(), e.GetY() );
 	return false;
 }
+
+bool FViewportContext::OnMouseWheelScrolled( MouseWheelScrolledEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseScrollDelta( e.GetXOffset(), e.GetYOffset() );
+	return false;
+}
+
+bool FViewportContext::OnMouseButtonPressed( MouseButtonPressedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, true );
+	return false;
+}
+
+bool FViewportContext::OnMouseButtonReleased( MouseButtonReleasedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, false );
+	return false;
+}
+
+bool FViewportContext::OnKeyPressed( KeyPressedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), true );
+	return false;
+}
+
+bool FViewportContext::OnKeyReleased( KeyReleasedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), false );
+	return false;
+}
+

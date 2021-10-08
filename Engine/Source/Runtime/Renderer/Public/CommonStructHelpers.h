@@ -4,7 +4,7 @@
 #include "CommonStructs.h"
 
 
-struct CDepthStencilStateDesc : public DepthStencilStateDesc
+struct CDepthStencilStateDesc : public FDepthStencilStateDesc
 {
 	CDepthStencilStateDesc()
 	{
@@ -14,21 +14,21 @@ struct CDepthStencilStateDesc : public DepthStencilStateDesc
 		StencilEnabled = false;
 		StencilReadMask = HE_DEFAULT_STENCIL_READ_MASK;
 		StencilWriteMask = HE_DEFAULT_STENCIL_WRITE_MASK;
-		const StencilOpDesc DefaultStencilOp =
+		const FStencilOpDesc DefaultStencilOp =
 		{ SO_Keep, SO_Keep, SO_Keep, CF_Always };
 		FrontFace = DefaultStencilOp;
 		BackFace = DefaultStencilOp;
 	}
 };
 
-struct CBlendDesc : public BlendDesc
+struct CBlendDesc : public FBlendDesc
 {
 	CBlendDesc()
 	{
 		AlphaToCoverageEnable = false;
 		IndependentBlendEnable = false;
 
-		RenderTargetBlendDesc DefaultRenderTargetBlendDesc =
+		FRenderTargetBlendDesc DefaultRenderTargetBlendDesc =
 		{
 			false, false,
 			B_One, B_Zero, BO_Add,
@@ -41,7 +41,7 @@ struct CBlendDesc : public BlendDesc
 	}
 };
 
-struct CRasterizerDesc : public RasterizerDesc
+struct CRasterizerDesc : public FRasterizerDesc
 {
 	CRasterizerDesc()
 	{

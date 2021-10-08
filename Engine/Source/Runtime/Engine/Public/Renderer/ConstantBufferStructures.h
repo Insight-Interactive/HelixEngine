@@ -96,11 +96,11 @@ HE_ALIGN( 16 ) struct PostProcessSettings
 };
 
 // Input layouts.
-extern InputElementDesc g_SceneMeshInputElements[];
+extern FInputElementDesc g_SceneMeshInputElements[];
 extern const uint32 kNumSceneMeshCommonInputElements;
 
-extern InputElementDesc g_ScreenSpaceInputElements[];
+extern FInputElementDesc g_ScreenSpaceInputElements[];
 extern const uint32 kNumScreenSpaceInputElements;
 
 // Sampler Descriptions.
-extern SamplerDesc g_LinearWrapSamplerDesc;
+extern FSamplerDesc g_LinearWrapSamplerDesc;

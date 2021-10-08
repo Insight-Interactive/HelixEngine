@@ -6,17 +6,17 @@
 #include "IRootSignature.h"
 
 
-class RENDER_API RootSignatureD3D12 : public IRootSignature
+class RENDER_API FRootSignatureD3D12 : public FRootSignature
 {
 public:
-	RootSignatureD3D12();
-	virtual ~RootSignatureD3D12();
+	FRootSignatureD3D12();
+	virtual ~FRootSignatureD3D12();
 
 	virtual void* GetNativeSignature() override { return RCast<void*>(m_pID3D12RootSignature); }
 
 	virtual void DestroyAll() override;
 
-	virtual void Initialize(const RootSignatureDesc& Desc) override;
+	virtual void Initialize(const FRootSignatureDesc& Desc) override;
 	virtual void Finalize(const WChar* name, ERootSignatureFlags Flags) override;
 
 protected:

@@ -1,11 +1,11 @@
 #include "RendererPCH.h"
 
 #include "ColorBufferD3D12.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "RendererCore.h"
 #include "BackendCoreD3D12.h"
 
-ColorBufferD3D12::ColorBufferD3D12()
+FColorBufferD3D12::FColorBufferD3D12()
 {
     m_RTVHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
     m_SRVHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
@@ -13,11 +13,11 @@ ColorBufferD3D12::ColorBufferD3D12()
         m_UAVHandle[i].ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 }
 
-ColorBufferD3D12::~ColorBufferD3D12()
+FColorBufferD3D12::~FColorBufferD3D12()
 {
 }
 
-void ColorBufferD3D12::CreateFromSwapChain(IDevice* pDevice, const TChar* Name, void* pResource)
+void FColorBufferD3D12::CreateFromSwapChain(FRenderDevice* pDevice, const TChar* Name, void* pResource)
 {
     ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(pDevice->GetNativeDevice());
     AssociateWithResource(pDevice, Name, pResource, RS_Present);
@@ -26,16 +26,15 @@ void ColorBufferD3D12::CreateFromSwapChain(IDevice* pDevice, const TChar* Name, 
     pID3D12Device->CreateRenderTargetView(RCast<ID3D12Resource*>(pResource), NULL, m_RTVHandle);
 }
 
-void ColorBufferD3D12::Create(IDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format)
+void FColorBufferD3D12::Create(FRenderDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format)
 {
     NumMips = (NumMips == 0 ? ComputeNumMips(Width, Height) : NumMips);
     EResourceFlags Flags = CombineResourceFlags();
-    ResourceDesc ResourceDesc = DescribeTex2D(Width, Height, 1, NumMips, Format, Flags);
-
+    FResourceDesc ResourceDesc = DescribeTex2D(Width, Height, 1, NumMips, Format, Flags);
     ResourceDesc.SampleDesc.Count = m_FragmentCount;
     ResourceDesc.SampleDesc.Quality = 0;
 
-    ClearValue ClearValue = {};
+    FClearValue ClearValue = {};
     ClearValue.Format = Format;
     ClearValue.Color[0] = m_ClearColor.R;
     ClearValue.Color[1] = m_ClearColor.G;
@@ -47,12 +46,12 @@ void ColorBufferD3D12::Create(IDevice* pDevice, const TChar* Name, uint32 Width,
     CreateDerivedViews(GDevice, Format, 1, NumMips);
 }
 
-void ColorBufferD3D12::DestroyAPIResource()
+void FColorBufferD3D12::DestroyAPIResource()
 {
     HE_COM_SAFE_RELEASE( m_pID3D12Resource );
 }
 
-void ColorBufferD3D12::CreateDerivedViews(IDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips)
+void FColorBufferD3D12::CreateDerivedViews(FRenderDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips)
 {
     HE_ASSERT(ArraySize == 1 || NumMips == 1); // We don't support auto-mips on texture arrays.
     HE_ASSERT(pDevice != NULL);

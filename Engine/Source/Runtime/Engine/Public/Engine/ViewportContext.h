@@ -10,33 +10,39 @@
 
 
 class HWorld;
-class DeferredShadingTech;;
-class PostProcesssUber;
-class SkyboxPass;
+class FDeferredShadingTech;;
+class FPostProcessUber;
+class FSkyboxPass;
+class WindowFocusEvent;
+class WindowLostFocusEvent;
 class MouseRawPointerMovedEvent;
+class MouseWheelScrolledEvent;
+class MouseButtonPressedEvent;
+class MouseButtonReleasedEvent;
+class KeyPressedEvent;
+class KeyReleasedEvent;
 
 
-class ViewportContext
+class FViewportContext
 {
 	friend class HEngine;
 	friend class HEditorEngine;
+	friend class SceneViewportPanel;
 public:
-	ViewportContext();
-	~ViewportContext();
+	FViewportContext();
+	~FViewportContext();
 
-	virtual void Initialize( const Window::Description& WindowDesc );
+	virtual void Initialize( const FWindow::Description& WindowDesc );
 	virtual void Uninitialize();
 	virtual void Update( float DeltaTime );
 	virtual void Render();
 
 	bool IsValid();
 
-	Window& GetWindow();
-	IColorBuffer* GetPreDisplayBuffer();
-	InputDispatcher* GetInputDispatcher();
-	
-	void LockMouseToScreenCenter();
-	void UnlockMouseFromScreenCenter();
+	FWindow& GetWindow();
+	FColorBuffer* GetPreDisplayBuffer();
+	FInputDispatcher* GetInputDispatcher();
+
 
 	FVector2 GetDimensions();
 	void BringToFocus();
@@ -53,9 +59,17 @@ public:
 
 	float GetMouseMoveDeltaX();
 	float GetMouseMoveDeltaY();
+	// Lock the mouse to the screen center and hide it.
+	void LockMouseToScreenCenter();
+	// Unlock the mouse from the screen center and show it.
+	void UnlockMouseFromScreenCenter();
+	// Show the mouse if it is hidden.
+	void ShowMouse();
+	// Hide the mouse if it is shown.
+	void HideMouse();
 
-	ViewPort& GetClientViewport();
-	Rect& GetClientRect();
+	FViewPort& GetClientViewport();
+	FRect& GetClientRect();
 	HWorld& GetWorld();
 	/*
 		Set the world this viewport can render.
@@ -65,39 +79,46 @@ public:
 protected:
 	void PresentOneFrame();
 	void InitializeRenderingResources();
-	void SetCommonRenderState( ICommandContext& CmdContext );
+	void SetCommonRenderState( FCommandContext& CmdContext );
 	void ReloadRenderPipelines();
 
-	void RenderWorld( ICommandContext& CmdContext, IColorBuffer& RenderTarget );
+	void RenderWorld( FCommandContext& CmdContext, FColorBuffer& RenderTarget );
 
-	IConstantBuffer* GetSceneConstBufferForCurrentFrame();
-	IConstantBuffer* GetLightConstBufferForCurrentFrame();
+	FConstantBuffer* GetSceneConstBufferForCurrentFrame();
+	FConstantBuffer* GetLightConstBufferForCurrentFrame();
 
 	// Event Processing
 	//
 	void OnEvent( Event& e );
+	bool OnWindowLostFocus( WindowLostFocusEvent& e );
+	bool OnWindowFocus( WindowFocusEvent& e );
 	bool OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e );
+	bool OnMouseWheelScrolled( MouseWheelScrolledEvent& e );
+	bool OnMouseButtonPressed( MouseButtonPressedEvent& e );
+	bool OnMouseButtonReleased( MouseButtonReleasedEvent& e );
+	bool OnKeyPressed( KeyPressedEvent& e );
+	bool OnKeyReleased( KeyReleasedEvent& e );
 
 protected:
-	Window m_Window;
+	FWindow m_Window;
 	HWorld* m_WorldInView;
 
-	InputDispatcher m_InputDispatcher;
+	FInputDispatcher m_InputDispatcher;
 
 	// Rendering Resources
 	//
-	DeferredShadingTech* m_DeferredShader;
-	SkyboxPass* m_SkyPass;
-	PostProcesssUber* m_PostProcessPass;
+	FDeferredShadingTech* m_DeferredShader;
+	FSkyboxPass* m_SkyPass;
+	FPostProcessUber* m_PostProcessPass;
 	StaticMeshGeometryRef m_pScreenQuadRef;
 	// Constant buffers
-	std::vector<IConstantBuffer*> m_pSceneConstantBuffers;
-	std::vector<IConstantBuffer*> m_pLightConstantBuffers;
-	// Window
-	ViewPort	m_ViewPort;
-	Rect		m_ScissorRect;
+	std::vector<FConstantBuffer*> m_pSceneConstantBuffers;
+	std::vector<FConstantBuffer*> m_pLightConstantBuffers;
+	// FWindow
+	FViewPort	m_ViewPort;
+	FRect		m_ScissorRect;
 
-	IColorBuffer* m_pSceneRenderTarget;
+	FColorBuffer* m_pSceneRenderTarget;
 
 };
 
@@ -106,117 +127,127 @@ protected:
 // Inline function implementation
 //
 
-inline bool ViewportContext::IsValid()
+inline bool FViewportContext::IsValid()
 {
 	return GetWindow().IsValid();
 }
 
-inline HWorld& ViewportContext::GetWorld()
+inline HWorld& FViewportContext::GetWorld()
 {
 	return *m_WorldInView;
 }
 
-inline void ViewportContext::SetWorld( HWorld* pWorldToView )
+inline void FViewportContext::SetWorld( HWorld* pWorldToView )
 {
 	m_WorldInView = pWorldToView;
 }
 
-inline InputDispatcher* ViewportContext::GetInputDispatcher()
+inline FInputDispatcher* FViewportContext::GetInputDispatcher()
 {
 	return &m_InputDispatcher;
 }
 
-inline void ViewportContext::LockMouseToScreenCenter()
+inline void FViewportContext::ShowMouse()
+{
+	m_InputDispatcher.GetInputSureyor().ShowMouse();
+}
+
+inline void FViewportContext::HideMouse()
+{
+	m_InputDispatcher.GetInputSureyor().HideMouse();
+}
+
+inline void FViewportContext::LockMouseToScreenCenter()
 {
 	m_InputDispatcher.GetInputSureyor().AcquireMouse();
 }
 
-inline void ViewportContext::UnlockMouseFromScreenCenter()
+inline void FViewportContext::UnlockMouseFromScreenCenter()
 {
 	m_InputDispatcher.GetInputSureyor().UnacquireMouse();
 }
 
-inline void ViewportContext::PresentOneFrame()
+inline void FViewportContext::PresentOneFrame()
 {
 	m_Window.PresentOneFrame();
 }
 
-inline FVector2 ViewportContext::GetDimensions() 
+inline FVector2 FViewportContext::GetDimensions()
 {
 	return GetWindow().GetDimensions();
 }
 
-inline void ViewportContext::BringToFocus()
+inline void FViewportContext::BringToFocus()
 {
 	GetWindow().SetFocus();
 }
 
-inline bool ViewportContext::HasFocus()
+inline bool FViewportContext::HasFocus()
 {
 	return m_Window.HasFocus();
 }
 
-inline void ViewportContext::Show()
+inline void FViewportContext::Show()
 {
 	m_Window.Show();
 }
 
-inline void ViewportContext::Hide()
+inline void FViewportContext::Hide()
 {
 	m_Window.Hide();
 }
 
-inline Window& ViewportContext::GetWindow()
+inline FWindow& FViewportContext::GetWindow()
 {
 	return m_Window;
 }
 
-inline IColorBuffer* ViewportContext::GetPreDisplayBuffer()
+inline FColorBuffer* FViewportContext::GetPreDisplayBuffer()
 {
 	return m_pSceneRenderTarget;
 }
 
-inline IConstantBuffer* ViewportContext::GetSceneConstBufferForCurrentFrame()
+inline FConstantBuffer* FViewportContext::GetSceneConstBufferForCurrentFrame()
 {
 	return m_pSceneConstantBuffers[m_Window.GetSwapChain()->GetCurrentFrameIndex()];
 }
 
-inline IConstantBuffer* ViewportContext::GetLightConstBufferForCurrentFrame()
+inline FConstantBuffer* FViewportContext::GetLightConstBufferForCurrentFrame()
 {
 	return m_pLightConstantBuffers[m_Window.GetSwapChain()->GetCurrentFrameIndex()];
 }
 
-inline ViewPort& ViewportContext::GetClientViewport()
-{ 
-	return m_ViewPort; 
-}
-
-inline Rect& ViewportContext::GetClientRect()
+inline FViewPort& FViewportContext::GetClientViewport()
 {
-	return m_ScissorRect; 
+	return m_ViewPort;
 }
 
-inline bool ViewportContext::IsPressed( DigitalInput Key )
+inline FRect& FViewportContext::GetClientRect()
+{
+	return m_ScissorRect;
+}
+
+inline bool FViewportContext::IsPressed( DigitalInput Key )
 {
 	return GetInputDispatcher()->GetInputSureyor().IsPressed( Key );
 }
 
-inline bool ViewportContext::IsFirstPressed( DigitalInput Key )
+inline bool FViewportContext::IsFirstPressed( DigitalInput Key )
 {
 	return GetInputDispatcher()->GetInputSureyor().IsFirstPressed( Key );
 }
 
-inline bool ViewportContext::IsReleased( DigitalInput Key )
+inline bool FViewportContext::IsReleased( DigitalInput Key )
 {
 	return GetInputDispatcher()->GetInputSureyor().IsReleased( Key );
 }
 
-inline float ViewportContext::GetMouseMoveDeltaX()
+inline float FViewportContext::GetMouseMoveDeltaX()
 {
 	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaX();
 }
 
-inline float ViewportContext::GetMouseMoveDeltaY()
+inline float FViewportContext::GetMouseMoveDeltaY()
 {
 	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaY();
 }

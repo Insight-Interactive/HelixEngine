@@ -7,13 +7,11 @@
 #include "../D3DCommon/D3DCommon.h"
 #include "CommandAllocatorPoolD3D12.h"
 
+class FDeviceD3D12;
 
-class D3D12Device;
-class D3D12CommandManager;
-
-class RENDER_API CommandQueueD3D12 final : public ICommandQueue
+class RENDER_API FCommandQueueD3D12 final : public FCommandQueue
 {
-	friend CommandManagerD3D12;
+	friend FCommandManagerD3D12;
 public:
 	inline virtual void* GetNativeQueue() override { return RCast<void*>(m_pID3D12CommandQueue); }
 
@@ -36,8 +34,8 @@ public:
 
 
 private:
-	CommandQueueD3D12(const ECommandListType Type);
-	virtual ~CommandQueueD3D12();
+	FCommandQueueD3D12(const ECommandListType Type);
+	virtual ~FCommandQueueD3D12();
 
 	void Initialize(ID3D12Device* pDevice);
 
@@ -51,7 +49,7 @@ private:
 	ID3D12Device* m_pID3DDeviceRef;
 
 	ID3D12CommandQueue* m_pID3D12CommandQueue;
-	D3D12CommandAllocatorPool	m_D3D12AllocatorPool;
+	FCommandAllocatorPoolD3D12	m_D3D12AllocatorPool;
 
 	// Sync
 	//
@@ -64,24 +62,24 @@ private:
 };
 
 
-class RENDER_API CommandManagerD3D12 final : public ICommandManager
+class RENDER_API FCommandManagerD3D12 final : public FCommandManager
 {
-	friend class IRenderContextFactory;
+	friend class FRenderContextFactory;
 	friend class D3D12RenderContextFactory;
 public:
-	virtual void Initialize(IDevice* pDevice) override;
-	virtual void CreateNewCommandContext(const ECommandListType& Type, ICommandContext** pContext, void** pCommandAllocator) override;
+	virtual void Initialize(FRenderDevice* pDevice) override;
+	virtual void CreateNewCommandContext(const ECommandListType& Type, FCommandContext** pContext, void** pCommandAllocator) override;
 
 	virtual void WaitForFence(uint64 FenceValue) override;
 
-	CommandManagerD3D12()
+	FCommandManagerD3D12()
 		: m_pID3D12DeviceRef(NULL)
 		, m_pD3D12DeviceRef(NULL)
 		, m_D3D12GraphicsQueue(CLT_Direct)
 		, m_D3D12ComputeQueue(CLT_Compute)
 	{
 	}
-	virtual ~CommandManagerD3D12()
+	virtual ~FCommandManagerD3D12()
 	{
 		m_pID3D12DeviceRef = NULL;
 		m_pD3D12DeviceRef = NULL;
@@ -93,10 +91,10 @@ protected:
 
 	// References
 	ID3D12Device* m_pID3D12DeviceRef;
-	D3D12Device* m_pD3D12DeviceRef;
+	FDeviceD3D12* m_pD3D12DeviceRef;
 
 
-	CommandQueueD3D12 m_D3D12GraphicsQueue;
-	CommandQueueD3D12 m_D3D12ComputeQueue;
+	FCommandQueueD3D12 m_D3D12GraphicsQueue;
+	FCommandQueueD3D12 m_D3D12ComputeQueue;
 
 };

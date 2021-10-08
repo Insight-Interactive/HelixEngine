@@ -7,27 +7,27 @@
 #include "CriticalSection.h"
 
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 
 static std::map<size_t, ::Microsoft::WRL::ComPtr<ID3D12RootSignature>> s_RootSignatureHashMap;
 
-RootSignatureD3D12::RootSignatureD3D12()
+FRootSignatureD3D12::FRootSignatureD3D12()
     : m_pID3D12RootSignature(NULL)
 {
 }
 
-RootSignatureD3D12::~RootSignatureD3D12()
+FRootSignatureD3D12::~FRootSignatureD3D12()
 {
     HE_COM_SAFE_RELEASE(m_pID3D12RootSignature);
 }
 
 
-void RootSignatureD3D12::DestroyAll(void)
+void FRootSignatureD3D12::DestroyAll(void)
 {
     s_RootSignatureHashMap.clear();
 }
 
-void RootSignatureD3D12::Initialize(const RootSignatureDesc& Desc)
+void FRootSignatureD3D12::Initialize(const FRootSignatureDesc& Desc)
 {
     ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
 
@@ -45,7 +45,7 @@ void RootSignatureD3D12::Initialize(const RootSignatureDesc& Desc)
     HE_COM_SAFE_RELEASE(pSignature);
 }
 
-void RootSignatureD3D12::Finalize(const WChar* name, ERootSignatureFlags Flags)
+void FRootSignatureD3D12::Finalize(const WChar* name, ERootSignatureFlags Flags)
 {
     if (m_Finalized)
         return;

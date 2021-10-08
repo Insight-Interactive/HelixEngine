@@ -12,7 +12,7 @@ project ("Engine")
 	staticruntime ("Off")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en-US")
+	defaultlanguage ("en")
 	targetdir( heGetBuildFolder() )
 	objdir( heGetBuildIntFolder() )
 	pchheader("EnginePCH.h")
@@ -41,9 +41,6 @@ project ("Engine")
 		"Private/App/**.h",
 		"Private/App/**.cpp",
 		"Private/App/**.inl",
-		"Private/Launch/**.h",
-		"Private/Launch/**.cpp",
-		"Private/Launch/**.inl",
 		"Private/Engine/**.h",
 		"Private/Engine/**.cpp",
 		"Private/Engine/**.inl",
@@ -81,6 +78,7 @@ project ("Engine")
 		"Math",
 		"Renderer",
 		"Shaders",
+		--"PackageMaker",
 		
 		-- Third Party libs
 		"D3D12.lib",
@@ -112,6 +110,8 @@ project ("Engine")
 	filter ("platforms:Win64 or Win32")
 		files
 		{
+			"Private/Launch/LaunchWindowsDesktop.cpp",
+			-- Win Desktop
 			"Private/Windows/Desktop/**.h",
 			"Private/Windows/Desktop/**.cpp",
 			"Private/Windows/Desktop/**.inl",
@@ -121,9 +121,11 @@ project ("Engine")
 			"Private/Windows/*.inl",
 		}
 
-	filter ("platforms:XboxOne or XboxOneX")
+	filter ("platforms:Durango or Scorpio")
 		files
 		{
+			"Private/Launch/LaunchWindowsUniversal.cpp",
+			-- Win Universal
 			"Private/Windows/Universal/**.h",
 			"Private/Windows/Universal/**.cpp",
 			"Private/Windows/Universal/**.inl",
@@ -146,7 +148,7 @@ project ("Engine")
 			"-launchcfg LaunchGame",
 		}
 
-	filter ("configurations:DebugEditor or Development", "platforms:Win64 or Win32 or XboxOne or XboxOneX")
+	filter ("configurations:DebugEditor or Development", "platforms:Win64 or Win32")
 		links
 		{
 			"%{libraries.PIXWinDesktop}",

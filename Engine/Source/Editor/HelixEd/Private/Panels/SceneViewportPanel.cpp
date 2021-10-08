@@ -3,10 +3,10 @@
 #include "Panels/SceneViewportPanel.h"
 
 #include "Direct3D12/ColorBufferD3D12.h"
-#include "IDevice.h"
-#include "Engine/HEngine.h"
+#include "IRenderDevice.h"
+#include "Engine/Engine.h"
 #include "Input/RawInput.h"
-#include "World/HLevel.h"
+#include "World/Level.h"
 #include "Engine/ViewportContext.h"
 #include "Developer/ADebugPawn.h"
 #include "GameFramework/GameInstance.h"
@@ -49,16 +49,18 @@ void SceneViewportPanel::Tick( float DeltaTime )
 
 	if (GetOwningViewport()->IsPressed( Key_LShift ) && GetOwningViewport()->IsFirstPressed( Key_Escape ))
 	{
-		//GGameInstance->OnGameLostFocus();
+		// Notify the game the "window"(the scene viewport) lost focus.
+		GGameInstance->OnGameLostFocus();
 
 		UnFreezeDebugCamera();
 
 		// Unlock the mouse if the game locked it.
 		GetOwningViewport()->UnlockMouseFromScreenCenter();
+		GetOwningViewport()->GetInputDispatcher()->SetCanDispatchListeners( false );
 	}
 }
 
-void SceneViewportPanel::Render( ICommandContext& CmdCtx )
+void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Scene Viewport", NULL, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse );
 	{
@@ -69,15 +71,32 @@ void SceneViewportPanel::Render( ICommandContext& CmdCtx )
 		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ) || m_IsCameraRotating)
 		{
 			m_IsCameraRotating = true;
+
+			HWND Window = (HWND)GetOwningViewport()->GetWindow().GetNativeWindow();
+			RECT rcClip;           // new area for ClipCursor
+			RECT rcOldClip;        // previous area for ClipCursor
+
+			::GetClipCursor( &rcOldClip );
+			
+			::GetWindowRect( Window, &rcClip );
+
+			::ClipCursor( &rcClip );
+
+			::ClipCursor( &rcOldClip );
 		}
-		// Dont stop rotating until the user lets go of the mouse button.
+		// Don't stop rotating until the user lets go of the mouse button.
 		m_IsCameraRotating = ImGui::IsMouseDown( ImGuiMouseButton_Right );
 		m_pDebugPawn->SetCanRotateCamera( m_IsCameraRotating );
 
+		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Left ))
+		{
+			GetOwningViewport()->GetInputDispatcher()->SetCanDispatchListeners( true );
+			GGameInstance->OnGameSetFocus();
+		}
 
 		// Render the scene to the viewport.
 		//
-		ColorBufferD3D12* Buffer = GetOwningViewport()->GetPreDisplayBuffer()->As<ColorBufferD3D12*>();
+		FColorBufferD3D12* Buffer = GetOwningViewport()->GetPreDisplayBuffer()->As<FColorBufferD3D12*>();
 		ID3D12Device* pDevice = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
 		uint32_t DestCount = 1;
 		uint32_t SourceCounts[] = { 1 };
@@ -85,7 +104,7 @@ void SceneViewportPanel::Render( ICommandContext& CmdCtx )
 		{
 			Buffer->GetSRVHandle(),
 		};
-		DescriptorHandle dest = m_DescriptorHandle;// + 1 * m_HandleSize;
+		FDescriptorHandle dest = m_DescriptorHandle;// + 1 * m_HandleSize;
 		D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ dest.GetCpuPtr() };
 		pDevice->CopyDescriptors( 1, &CpuHandle, &DestCount, DestCount, SourceTextures, SourceCounts, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 

@@ -1,8 +1,8 @@
 #include "HelixEdPCH.h"
 
 #include "Panels/WorldOutlinePanel.h"
-#include "Engine/HEngine.h"
-#include "World/HLevel.h"
+#include "Engine/Engine.h"
+#include "World/Level.h"
 #include "GameFramework/Actor/AActor.h"
 #include "Engine/Event/EngineEvent.h"
 
@@ -27,7 +27,7 @@ void WorldOutlinePanel::Tick( float DeltaTime )
 {
 }
 
-void WorldOutlinePanel::Render( ICommandContext& CmdCtx )
+void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "World Outliner" );
 	{

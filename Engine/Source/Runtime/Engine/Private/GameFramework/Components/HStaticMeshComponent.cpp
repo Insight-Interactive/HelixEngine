@@ -23,7 +23,7 @@ HStaticMeshComponent::~HStaticMeshComponent()
 	GConstantBufferManager->DestroyConstantBuffer( m_pMeshWorldCB->GetUID() );
 }
 
-void HStaticMeshComponent::Render(ICommandContext& GfxContext)
+void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 {
 	if (!GetIsDrawEnabled()) return;
 
@@ -70,11 +70,11 @@ void HStaticMeshComponent::Deserialize( const ReadContext& Value )
 
 	Char MeshNameBuffer[32];
 	JsonUtility::GetString( StaticMesh, "MeshAsset", MeshNameBuffer, sizeof( MeshNameBuffer ) );
-	SetMesh( AssetDatabase::GetInstance()->GetStaticMesh( MeshNameBuffer ) );
+	SetMesh( FAssetDatabase::GetInstance()->GetStaticMesh( MeshNameBuffer ) );
 
 	Char MaterialNameBuffer[32];
 	JsonUtility::GetString( StaticMesh, "MaterialAsset", MaterialNameBuffer, sizeof( MaterialNameBuffer ) );
-	SetMaterial( AssetDatabase::GetInstance()->GetMaterial( MaterialNameBuffer ) );
+	SetMaterial( FAssetDatabase::GetInstance()->GetMaterial( MaterialNameBuffer ) );
 
 	bool IsRenderable = false;
 	JsonUtility::GetBoolean( StaticMesh, "IsRenderable", IsRenderable );

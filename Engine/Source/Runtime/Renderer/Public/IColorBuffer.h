@@ -6,20 +6,20 @@
 #include "Color.h"
 
 
-class IDevice;
+class FRenderDevice;
 
-class RENDER_API IColorBuffer
+class RENDER_API FColorBuffer
 {
-	friend class ISwapChain;
+	friend class FSwapChain;
 public:
-	virtual ~IColorBuffer() = default;
+	virtual ~FColorBuffer() = default;
 
-	virtual void CreateFromSwapChain(IDevice* pDevice, const TChar* Name, void* pResource) = 0;
-	virtual void Create(IDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format) = 0;
+	virtual void CreateFromSwapChain(FRenderDevice* pDevice, const TChar* Name, void* pResource) = 0;
+	virtual void Create(FRenderDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format) = 0;
 	virtual void DestroyAPIResource() = 0;
 
-	FORCEINLINE void SetClearColor(Color Color) { m_ClearColor = Color; }
-	FORCEINLINE Color GetClearColor() const { return m_ClearColor; }
+	FORCEINLINE void SetClearColor(FColor Color) { m_ClearColor = Color; }
+	FORCEINLINE FColor GetClearColor() const { return m_ClearColor; }
 
 	template <typename T>
 	inline T As()
@@ -28,7 +28,7 @@ public:
 	}
 
 protected:
-	IColorBuffer()
+	FColorBuffer()
 		: m_ClearColor(0.f, 0.f, 0.f, 1.f)
 		, m_NumMipMaps(0u)
 		, m_FragmentCount(1u)
@@ -36,7 +36,7 @@ protected:
 	{
 	}
 
-	virtual void CreateDerivedViews(IDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips) = 0;
+	virtual void CreateDerivedViews(FRenderDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips) = 0;
 
 	EResourceFlags CombineResourceFlags() const
 	{
@@ -49,7 +49,7 @@ protected:
 	}
 
 protected:
-	Color m_ClearColor;
+	FColor m_ClearColor;
 	uint32 m_NumMipMaps;
 	uint32 m_FragmentCount;
 	uint32 m_SampleCount;

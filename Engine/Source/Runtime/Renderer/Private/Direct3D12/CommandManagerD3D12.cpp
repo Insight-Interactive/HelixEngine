@@ -1,7 +1,7 @@
 #include "RendererPCH.h"
 
 #include "CommandManagerD3D12.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ICommandContext.h"
 #include "RendererCore.h"
 
@@ -10,7 +10,7 @@
 // D3D12 Command Manager
 // ---------------------
 
-void CommandManagerD3D12::Initialize( IDevice* pDevice )
+void FCommandManagerD3D12::Initialize( FRenderDevice* pDevice )
 {
 	m_pDeviceRef = pDevice;
 	HE_ASSERT( m_pDeviceRef != NULL );
@@ -25,13 +25,13 @@ void CommandManagerD3D12::Initialize( IDevice* pDevice )
 	// TODO: Create command queue
 }
 
-void CommandManagerD3D12::UnInitialize()
+void FCommandManagerD3D12::UnInitialize()
 {
 	m_pD3D12DeviceRef = NULL;
 	m_pID3D12DeviceRef = NULL;
 }
 
-void CommandManagerD3D12::CreateNewCommandContext( const ECommandListType& Type, ICommandContext** pContext, void** pCommandAllocator )
+void FCommandManagerD3D12::CreateNewCommandContext( const ECommandListType& Type, FCommandContext** pContext, void** pCommandAllocator )
 {
 	switch (Type)
 	{
@@ -50,9 +50,9 @@ void CommandManagerD3D12::CreateNewCommandContext( const ECommandListType& Type,
 	ThrowIfFailedMsg( hr, TEXT( "Failed to create command list!" ) );
 }
 
-void CommandManagerD3D12::WaitForFence( uint64 FenceValue )
+void FCommandManagerD3D12::WaitForFence( uint64 FenceValue )
 {
-	ICommandQueue* Queue = GCommandManager->GetQueue( (ECommandListType)(FenceValue >> 56) );
+	FCommandQueue* Queue = GCommandManager->GetQueue( (ECommandListType)(FenceValue >> 56) );
 	Queue->WaitForFence( FenceValue );
 }
 
@@ -62,8 +62,8 @@ void CommandManagerD3D12::WaitForFence( uint64 FenceValue )
 //  D3D12 Command Queue
 // -----------------------
 
-CommandQueueD3D12::CommandQueueD3D12( const ECommandListType Type )
-	: ICommandQueue( Type )
+FCommandQueueD3D12::FCommandQueueD3D12( const ECommandListType Type )
+	: FCommandQueue( Type )
 	, m_pID3D12CommandQueue( NULL )
 	, m_pID3DDeviceRef( NULL )
 	, m_D3D12AllocatorPool( (D3D12_COMMAND_LIST_TYPE)Type )
@@ -74,7 +74,7 @@ CommandQueueD3D12::CommandQueueD3D12( const ECommandListType Type )
 {
 }
 
-uint64 CommandQueueD3D12::ExecuteCommandList( ID3D12CommandList* pCommandList )
+uint64 FCommandQueueD3D12::ExecuteCommandList( ID3D12CommandList* pCommandList )
 {
 	m_FenceMutex.Enter();
 
@@ -89,7 +89,7 @@ uint64 CommandQueueD3D12::ExecuteCommandList( ID3D12CommandList* pCommandList )
 	return m_NextFenceValue++;
 }
 
-void CommandQueueD3D12::WaitForFence( uint64 FenceValue )
+void FCommandQueueD3D12::WaitForFence( uint64 FenceValue )
 {
 	if (IsFenceCompleted( FenceValue ))
 		return;
@@ -105,7 +105,7 @@ void CommandQueueD3D12::WaitForFence( uint64 FenceValue )
 	}
 }
 
-uint64 CommandQueueD3D12::IncrementFence()
+uint64 FCommandQueueD3D12::IncrementFence()
 {
 	m_FenceMutex.Enter();
 	m_pID3D12CommandQueue->Signal( m_pFence, m_NextFenceValue );
@@ -113,7 +113,7 @@ uint64 CommandQueueD3D12::IncrementFence()
 	return m_NextFenceValue++;
 }
 
-bool CommandQueueD3D12::IsFenceCompleted( uint64 FenceValue )
+bool FCommandQueueD3D12::IsFenceCompleted( uint64 FenceValue )
 {
 	if (FenceValue > m_LastCompletedFenceValue)
 		m_LastCompletedFenceValue = HE_MAX( m_LastCompletedFenceValue, m_pFence->GetCompletedValue() );
@@ -121,7 +121,7 @@ bool CommandQueueD3D12::IsFenceCompleted( uint64 FenceValue )
 	return FenceValue <= m_LastCompletedFenceValue;
 }
 
-CommandQueueD3D12::~CommandQueueD3D12()
+FCommandQueueD3D12::~FCommandQueueD3D12()
 {
 	CloseHandle( m_FenceEventHandle );
 
@@ -129,7 +129,7 @@ CommandQueueD3D12::~CommandQueueD3D12()
 	HE_COM_SAFE_RELEASE( m_pID3D12CommandQueue );
 }
 
-void CommandQueueD3D12::Initialize( ID3D12Device* pID3D12Device )
+void FCommandQueueD3D12::Initialize( ID3D12Device* pID3D12Device )
 {
 	HE_ASSERT( pID3D12Device != NULL );
 	m_pID3DDeviceRef = pID3D12Device;
@@ -139,7 +139,7 @@ void CommandQueueD3D12::Initialize( ID3D12Device* pID3D12Device )
 	CreateSyncObjects();
 }
 
-void CommandQueueD3D12::CreateD3D12Queue()
+void FCommandQueueD3D12::CreateD3D12Queue()
 {
 	D3D12_COMMAND_QUEUE_DESC Desc;
 	ZeroMemory( &Desc, sizeof( D3D12_COMMAND_QUEUE_DESC ) );
@@ -149,7 +149,7 @@ void CommandQueueD3D12::CreateD3D12Queue()
 	ThrowIfFailedMsg( hr, TEXT( "Failed to create command queue!" ) );
 }
 
-void CommandQueueD3D12::CreateSyncObjects()
+void FCommandQueueD3D12::CreateSyncObjects()
 {
 	HRESULT hr = S_OK;
 

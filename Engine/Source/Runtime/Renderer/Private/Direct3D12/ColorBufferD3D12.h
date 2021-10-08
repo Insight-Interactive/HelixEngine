@@ -7,24 +7,24 @@
 #include "PixelBufferD3D12.h"
 #include "CommonEnums.h"
 
-class IDevice;
+class FRenderDevice;
 
 
-class RENDER_API ColorBufferD3D12 : public IColorBuffer, public PixelBufferD3D12
+class RENDER_API FColorBufferD3D12 : public FColorBuffer, public FPixelBufferD3D12
 {
 public:
-	ColorBufferD3D12();
-	virtual ~ColorBufferD3D12();
+	FColorBufferD3D12();
+	virtual ~FColorBufferD3D12();
 
-	virtual void CreateFromSwapChain(IDevice* pDevice, const TChar* Name, void* pResource) override;
-	virtual void Create(IDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format) override;
+	virtual void CreateFromSwapChain(FRenderDevice* pDevice, const TChar* Name, void* pResource) override;
+	virtual void Create(FRenderDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format) override;
 	virtual void DestroyAPIResource() override;
 
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetSRVHandle() const { return m_SRVHandle; }
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle() const { return m_RTVHandle; }
 
 protected:
-	virtual void CreateDerivedViews(IDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips) override;
+	virtual void CreateDerivedViews(FRenderDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips) override;
 
 protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE m_SRVHandle;

@@ -5,15 +5,15 @@
 #include "BackendCoreD3D12.h"
 
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ICommandManager.h"
 
 
 // -------------------
-// ConstantBufferD3D12
+// FConstantBufferD3D12
 // -------------------
 
-void ConstantBufferD3D12::Create(const WChar* Name, uint32 BufferSize)
+void FConstantBufferD3D12::Create(const WChar* Name, uint32 BufferSize)
 {
 	SetBufferSize(GetAlignedBufferSize(BufferSize));
 
@@ -51,23 +51,23 @@ void ConstantBufferD3D12::Create(const WChar* Name, uint32 BufferSize)
 
 
 // ---------------------------
-// ConstantBufferManagerD3D12
+// FConstantBufferManagerD3D12
 // ---------------------------
 
-void ConstantBufferManagerD3D12::Initialize()
+void FConstantBufferManagerD3D12::Initialize()
 {
 	m_pID3D12DeviceRef = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
 	HE_ASSERT(m_pID3D12DeviceRef != NULL);
 }
 
-void ConstantBufferManagerD3D12::CreateConstantBuffer(const WChar* Name, IConstantBuffer** OutBuffer, uint32 BufferSizeInBytes)
+void FConstantBufferManagerD3D12::CreateConstantBuffer(const WChar* Name, FConstantBuffer** OutBuffer, uint32 BufferSizeInBytes)
 {
 	ConstantBufferUID NewID = AllocBufferHandle();
 
-	auto InsertResult = m_ConstantBufferLUT.try_emplace(NewID, ConstantBufferD3D12{});
+	auto InsertResult = m_ConstantBufferLUT.try_emplace(NewID, FConstantBufferD3D12{});
 	HE_ASSERT(InsertResult.second == true);
 
-	ConstantBufferD3D12& ConstBuffer = m_ConstantBufferLUT.at(NewID);
+	FConstantBufferD3D12& ConstBuffer = m_ConstantBufferLUT.at(NewID);
 	ConstBuffer.SetUID(NewID);
 	ConstBuffer.Create(Name, BufferSizeInBytes);
 
@@ -75,7 +75,7 @@ void ConstantBufferManagerD3D12::CreateConstantBuffer(const WChar* Name, IConsta
 }
 
 
-void ConstantBufferManagerD3D12::DestroyConstantBuffer(ConstantBufferUID BufferHandle)
+void FConstantBufferManagerD3D12::DestroyConstantBuffer(ConstantBufferUID BufferHandle)
 {
 	HE_ASSERT(BufferHandle != HE_INVALID_CONSTANT_BUFFER_HANDLE); // Trying to destroy a constant buffer with an invalid handle.
 	GCommandManager->IdleGpu();

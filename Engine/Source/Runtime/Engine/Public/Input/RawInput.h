@@ -1,17 +1,25 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "Input/FMouse.h"
-#include "Input/FKeyboard.h"
+#include "Input/Mouse.h"
+#include "Input/Keyboard.h"
+#include "Input/Gamepad.h"
 
 
-struct PlatformRIDInterface
+class FWindow;
+
+
+/*
+	Some platforms require a base interface for mouse and keyboard input.
+	FPlatformHIDInterface is a light wrapper around those interfaces if needed.
+*/
+struct FPlatformHIDInterface
 {
 public:
-	PlatformRIDInterface() 
+	FPlatformHIDInterface() 
 	{
 	}
-	~PlatformRIDInterface() 
+	~FPlatformHIDInterface() 
 	{
 	}
 	
@@ -22,27 +30,25 @@ public:
 	void* GetInterface();
 
 private:
-#if HE_INPUT_USE_XINPUT
-	IDirectInput8A* m_pDirectInput = NULL;
-#endif
+
 };
 
 
 /*
 	Captures the raw input from the system and tracks the key states per-frame.
 */
-class RawInputSurveyer
+class FRawInputSurveyer
 {
-	friend class ViewportContext;
+	friend class FViewportContext;
 public:
-	RawInputSurveyer();
-	~RawInputSurveyer();
+	FRawInputSurveyer();
+	~FRawInputSurveyer();
 
 	/*
 		Initialize the input polling system.
 		@param pNativeWindow - The window to poll input from.
 	*/
-	void Initialize( void* pNativeWindow );
+	void Initialize( FWindow* pNativeWindow );
 	/*
 		Shutdown the input polling system and unaquire all devices from the window.
 	*/
@@ -56,66 +62,80 @@ public:
 		Set the window to poll input from.
 		@param pNativeWindow - The native window handle to poll input from.
 	*/
-	void SetWindow( void* pNativeWindow );
+	void SetWindow( FWindow* pNativeWindow );
 
 	/*
 		Returns true if any key is pressed, false if not.
 	*/
 	bool IsAnyPressed();
+
 	/*
 		True if the specified mouse button is pressed, false if not.
 	*/
 	bool IsMouseButtonPressed( DigitalInput di );
+
 	/*
 		True if the specified button is pressed, false if not.
 	*/
 	bool IsPressed( DigitalInput di );
+
 	/*
 		True if the specified button is first pressed, false if not.
 	*/
 	bool IsFirstPressed( DigitalInput di );
+
 	/*
 		True if the specified button is released, false if not.
 	*/
 	bool IsReleased( DigitalInput di );
+
 	/*
 		True if the specified button is first released, false if not.
 	*/
 	bool IsFirstReleased( DigitalInput di );
+
 	/*
 		Returns the time in seconds a key is currently heing held down for.
 	*/
 	float GetDurationPressed( DigitalInput di );
+
 	/*
 		Returns the movement delta for a specified analog input.
 	*/
 	float GetAnalogInput( DigitalInput ai );
+
 	/*
 		Returns the time corrected input for a specified analog input.
 	*/
 	float GetTimeCorrectedAnalogInput( DigitalInput ai );
+
 	/*
 		Aquire all input devices.
 	*/
 	void AcquireDevices();
+
 	/*
 		WARNING: This will unaquire all input methods, leaving no valid input option
 		immediatly proceeding this call. It should usually never be used.
 	*/
 	void UnacquireDevices();
+
 	/*
 		Aquire the mouse. Locking it to the center of the screen and disabling
-		the visual cursor. Call before expecting valid values from RawInputSurveyer::GetAnalogInput.
+		the visual cursor. Call before expecting valid values from FRawInputSurveyer::GetAnalogInput.
 	*/
 	void AcquireMouse();
+
 	/*
 		Unaquire the mouse. Unlocking it from the center of the screen and reqctivating the cursor.
 	*/
 	void UnacquireMouse();
+
 	/*
 		Aquire the keyboard. Allowing for key presses to be polled
 	*/
 	void AcquireKeyboard();
+
 	/*
 		Unaquire the keyboard. Disallowing any key presses to be polled.
 	*/
@@ -125,6 +145,11 @@ public:
 
 	float GetMouseMoveDeltaY();
 
+	bool GetIsMouseAcquired();
+	bool GetIsKeyboardAcquired();
+
+	void ShowMouse();
+	void HideMouse();
 
 private:
 #if HE_INPUT_USE_KEYBOARD_MOUSE
@@ -133,11 +158,14 @@ private:
 	void KbmShutdown();
 	void KbmUpdate();
 	void SetMouseMoveDelta( float XValue, float YValue );
+	void SetMouseScrollDelta( float XScrollDelta, float YScrollDelta );
+	void SetMouseButton( uint8 Button, bool IsPressed );
 	void SetAnalogValue( DigitalInput Input, float Value );
+	void SetKey( uint8 Key, bool IsPressed );
 
 	FMouse m_Mouse;
 	FKeyboard m_Keyboard;
-	PlatformRIDInterface m_RIDInterface;
+	FPlatformHIDInterface m_RIDInterface;
 
 #endif // HE_INPUT_USE_KEYBOARD_MOUSE
 
@@ -149,13 +177,17 @@ private:
 private:
 	bool m_UseKeyBoardMouse;
 
-	bool m_Buttons[2][kNumDigitalInputs];
+	bool m_Buttons[kState_Count][kNumDigitalInputs];
 	float m_HoldDuration[kNumDigitalInputs] = { 0.0f };
 	float m_Analogs[kNumAnalogInputs];
 	float m_AnalogsTC[kNumAnalogInputs];
 
+#if HE_INPUT_USE_GAMEPAD
+	FGamepadQueryBatcher m_GamepadManager;
+	FGamepad* m_pGamepad;
+#endif
 
-	void* m_pSurveyingWindow;
+	FWindow* m_pSurveyingWindow;
 };
 
 
@@ -163,104 +195,125 @@ private:
 // Inline function implementations
 //
 
-// PlatformRIDInterface
+// FPlatformHIDInterface
 //
 
-inline bool PlatformRIDInterface::IsValid() const
+inline bool FPlatformHIDInterface::IsValid() const
 {
-#if HE_INPUT_USE_XINPUT
-	return m_pDirectInput != NULL;
-#else
 	return false;
-#endif
 }
 
-inline void PlatformRIDInterface::Setup()
+inline void FPlatformHIDInterface::Setup()
 {
-#if HE_INPUT_USE_XINPUT
-	HRESULT hr = DirectInput8Create( GetModuleHandle( NULL ), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_pDirectInput, nullptr );
-	HE_ASSERT( SUCCEEDED( hr ) ); // DirectInput8 initialization failed.
-#endif
 }
 
-inline void PlatformRIDInterface::Destroy()
+inline void FPlatformHIDInterface::Destroy()
 {
-#if HE_INPUT_USE_XINPUT
 	if (IsValid())
 	{
-		m_pDirectInput->Release();
-		m_pDirectInput = nullptr;
+
 	}
-#endif
 }
 
-inline void* PlatformRIDInterface::GetInterface()
+inline void* FPlatformHIDInterface::GetInterface()
 {
-#if HE_INPUT_USE_XINPUT
-	return RCast<void*>(m_pDirectInput);
-#else
 	return NULL;
-#endif
 }
 
-// RawInputSurveyer
+// FRawInputSurveyer
 //
 
-inline void RawInputSurveyer::SetWindow( void* pNativeWindow )
+inline void FRawInputSurveyer::SetWindow( FWindow* pNativeWindow )
 {
 	HE_ASSERT( pNativeWindow != NULL ); // Cannot poll input from a null window!
 	m_pSurveyingWindow = pNativeWindow;
 }
 
-inline float RawInputSurveyer::GetMouseMoveDeltaX()
+inline bool FRawInputSurveyer::GetIsMouseAcquired()
+{
+	return m_Mouse.GetIsAcquired();
+}
+
+inline bool FRawInputSurveyer::GetIsKeyboardAcquired()
+{
+	return m_Keyboard.GetIsAcquired();
+}
+
+
+inline float FRawInputSurveyer::GetMouseMoveDeltaX()
 {
 	return m_Mouse.GetMoveDeltaX();
 }
 
-inline float RawInputSurveyer::GetMouseMoveDeltaY()
+inline float FRawInputSurveyer::GetMouseMoveDeltaY()
 {
 	return m_Mouse.GetMoveDeltaY();
 }
 
-inline void RawInputSurveyer::SetMouseMoveDelta( float XValue, float YValue )
+inline void FRawInputSurveyer::SetMouseMoveDelta( float XValue, float YValue )
 {
 	m_Mouse.SetMouseMoveDelta( XValue, YValue );
 }
 
-inline void RawInputSurveyer::SetAnalogValue( DigitalInput Input, float Value )
+inline void FRawInputSurveyer::SetMouseScrollDelta( float XScrollDelta, float YScrollDelta )
+{
+	m_Mouse.SetMouseScrollDelta( XScrollDelta, YScrollDelta );
+}
+
+inline void FRawInputSurveyer::SetMouseButton( uint8 Button, bool IsPressed )
+{
+	m_Mouse.SetMouseButton( Button, IsPressed );
+}
+
+inline void FRawInputSurveyer::SetAnalogValue( DigitalInput Input, float Value )
 {
 	HE_ASSERT( IsValidAnalogInput( Input ) );
 	m_Analogs[Input - AnalogLeftTrigger] = Value;
 }
 
-inline void RawInputSurveyer::AcquireDevices()
+inline void FRawInputSurveyer::SetKey( uint8 Key, bool IsPressed )
+{
+	m_Keyboard.SetKey( Key, IsPressed );
+}
+
+inline void FRawInputSurveyer::AcquireDevices()
 {
 	AcquireMouse();
 	AcquireKeyboard();
 }
 
-inline void RawInputSurveyer::UnacquireDevices()
+inline void FRawInputSurveyer::UnacquireDevices()
 {
 	UnacquireMouse();
 	UnacquireKeyboard();
 }
 
-inline void RawInputSurveyer::AcquireMouse()
+inline void FRawInputSurveyer::AcquireMouse()
 {
 	m_Mouse.Acquire();
 }
 
-inline void RawInputSurveyer::UnacquireMouse()
+inline void FRawInputSurveyer::UnacquireMouse()
 {
 	m_Mouse.Unacquire();
 }
 
-inline void RawInputSurveyer::AcquireKeyboard()
+inline void FRawInputSurveyer::AcquireKeyboard()
 {
 	m_Keyboard.Acquire();
 }
 
-inline void RawInputSurveyer::UnacquireKeyboard()
+inline void FRawInputSurveyer::UnacquireKeyboard()
 {
 	m_Keyboard.Unacquire();
+}
+
+inline void FRawInputSurveyer::ShowMouse()
+{
+	m_Mouse.Show();
+}
+
+inline void FRawInputSurveyer::HideMouse()
+{
+	m_Mouse.Hide();
 }

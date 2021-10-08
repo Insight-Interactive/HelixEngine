@@ -1,32 +1,32 @@
 #pragma once
 
-#include "Renderer/FRenderPass.h"
+#include "Renderer/RenderPass.h"
 
-class IRootSignature;
-class IPipelineState;
-class IConstantBuffer;
+class FRootSignature;
+class FPipelineState;
+class FConstantBuffer;
 enum EFormat;
 
-class PostProcesssUber : public FRenderPass
+class FPostProcessUber : public FRenderPass
 {
 public:
-	PostProcesssUber();
-	virtual ~PostProcesssUber();
+	FPostProcessUber();
+	virtual ~FPostProcessUber();
 	
 	void Initialize( FVector2 RenderResolution );
 	void UnInitialize();
 
-	virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) override;
-	virtual void UnBind( ICommandContext& GfxContext ) override;
+	virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) override;
+	virtual void UnBind( FCommandContext& GfxContext ) override;
 
 	virtual void ReloadPipeline() override;
 
 protected:
 
 	// Pipeline
-	IRootSignature* m_pRS;
-	IPipelineState* m_pPSO;
+	FRootSignature* m_pRS;
+	FPipelineState* m_pPSO;
 
-	IConstantBuffer* m_pPostProcessSettings;
+	FConstantBuffer* m_pPostProcessSettings;
 
 };

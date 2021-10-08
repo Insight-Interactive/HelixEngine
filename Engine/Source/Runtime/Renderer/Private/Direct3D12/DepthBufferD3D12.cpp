@@ -2,24 +2,24 @@
 
 #include "DepthBufferD3D12.h"
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "../Direct3D12/BackendCoreD3D12.h"
 
-void DepthBufferD3D12::Create(const WChar* Name, uint32 Width, uint32 Height, EFormat Format)
+void FDepthBufferD3D12::Create(const WChar* Name, uint32 Width, uint32 Height, EFormat Format)
 {
-    ResourceDesc ResourceDesc = DescribeTex2D(Width, Height, 1, 1, Format, RF_AllowDepthStencil);
+    FResourceDesc ResourceDesc = DescribeTex2D(Width, Height, 1, 1, Format, RF_AllowDepthStencil);
     ResourceDesc.SampleDesc.Count = 1;
 
 
-    ClearValue ClearValue = {};
-    ClearValue.Format = Format;
-    ClearValue.DepthStencil.Depth = m_ClearDepth;
-    ClearValue.DepthStencil.Stencil = m_ClearStencil;
-    CreateTextureResource(GDevice, Name, ResourceDesc, ClearValue);
+    FClearValue ClearVal = {};
+    ClearVal.Format = Format;
+    ClearVal.DepthStencil.Depth = m_ClearDepth;
+    ClearVal.DepthStencil.Stencil = m_ClearStencil;
+    CreateTextureResource(GDevice, Name, ResourceDesc, ClearVal);
     CreateDerivedViews(GDevice, Format);
 }
 
-void DepthBufferD3D12::CreateDerivedViews(IDevice* Device, EFormat Format)
+void FDepthBufferD3D12::CreateDerivedViews(FRenderDevice* Device, EFormat Format)
 {
     ID3D12Device* pID3D12Device = RCast< ID3D12Device*>(Device->GetNativeDevice());
     ID3D12Resource* Resource = m_pID3D12Resource.Get();

@@ -25,14 +25,14 @@ public:
 	virtual void OnDestroy() override;
 
 	FVector3 GetPosition() const;
-	Color GetColor() const;
+	FColor GetColor() const;
 	float GetBrightness() const;
 	void SetPosition( const FVector3& NewPosition );
-	void SetColor( const Color& NewColor );
+	void SetColor( const FColor& NewColor );
 	void SetBrightness( float NewBrightness );
 
 protected:
-	virtual void Render( ICommandContext& GfxContext ) override;
+	virtual void Render( FCommandContext& GfxContext ) override;
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
@@ -52,9 +52,9 @@ inline FVector3 HPointLightComponent::GetPosition() const
 	return m_Transform.GetPosition();
 }
 
-inline Color HPointLightComponent::GetColor() const
+inline FColor HPointLightComponent::GetColor() const
 {
-	Color RetVal( 0.f, 0.f, 0.f, 0.f );
+	FColor RetVal( 0.f, 0.f, 0.f, 0.f );
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != NULL)
 	{
@@ -88,7 +88,7 @@ inline void HPointLightComponent::SetPosition( const FVector3& NewPosition )
 	}
 }
 
-inline void HPointLightComponent::SetColor( const Color& NewColor )
+inline void HPointLightComponent::SetColor( const FColor& NewColor )
 {
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != NULL)

@@ -3,11 +3,11 @@
 #include "AssetRegistry/DatabaseInterface.h"
 
 
-class ActorDatabase : public DatabaseInterface
+class FActorDatabase : public FDatabaseInterface
 {
 public:
-	ActorDatabase();
-	virtual ~ActorDatabase();
+	FActorDatabase();
+	virtual ~FActorDatabase();
 	
 	virtual void Initialize( const Char* TextureDatabaseFile ) override;
 	virtual void UnInitialize() override;

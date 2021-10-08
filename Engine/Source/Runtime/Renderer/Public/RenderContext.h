@@ -7,7 +7,7 @@
 #include "TSingleton.h"
 
 
-class ISwapChain;
+class FSwapChain;
 
 
 enum ERenderBackend
@@ -30,17 +30,17 @@ extern const RenderBackendDescription RenderBackends[];
 /*
 	Responsible for handling rendering related messaged and resource management.
 */
-class RENDER_API RenderContext : public TSingleton<RenderContext>
+class RENDER_API FRenderContext : public TSingleton<FRenderContext>
 {
-	friend class IRenderContextFactory;
-	friend class RenderContextFactoryD3D12;
-	friend class RendererInitializer;
+	friend class FRenderContextFactory;
+	friend class FRenderContextFactoryD3D12;
+	friend class FRendererInitializer;
 public:
-	RenderContext()
+	FRenderContext()
 		: m_BackendType(RB_Invalid)
 	{
 	}
-	virtual ~RenderContext()
+	virtual ~FRenderContext()
 	{
 	}
 
@@ -74,17 +74,17 @@ protected:
 // Inline Function Implementations
 //
 
-FORCEINLINE ERenderBackend RenderContext::GetBackendType() const
+FORCEINLINE ERenderBackend FRenderContext::GetBackendType() const
 {
 	return m_BackendType;
 }
 
-FORCEINLINE void RenderContext::SetBackendType(ERenderBackend Type)
+FORCEINLINE void FRenderContext::SetBackendType(ERenderBackend Type)
 {
 	m_BackendType = Type;
 }
 
-FORCEINLINE bool RenderContext::IsReady() const
+FORCEINLINE bool FRenderContext::IsReady() const
 {
 	return (m_BackendType != RB_Invalid);
 }

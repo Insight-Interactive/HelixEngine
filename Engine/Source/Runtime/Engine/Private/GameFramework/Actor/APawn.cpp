@@ -2,9 +2,9 @@
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/APawn.h"
-#include "World/HWorld.h"
+#include "World/World.h"
 #include "GameFramework/Components/HControllerComponent.h"
-#include "Engine/HEngine.h"
+#include "Engine/Engine.h"
 
 
 APawn::APawn( HWorld* pWorld, const HName& Name )
@@ -28,7 +28,6 @@ APawn::~APawn()
 
 void APawn::Move(const FVector3& Direction, const float Value)
 {
-	float DT = GEngine->GetDeltaTime();
 	m_Velocity = m_MovementSpeed * Value * GetWorld()->GetDeltaTime();
 	FVector3 Pos = m_Transform.GetPosition();
 	Pos += Direction * m_Velocity;

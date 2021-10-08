@@ -7,18 +7,18 @@
 #include "StringHelper.h"
 
 
-ActorDatabase::ActorDatabase()
-	: DatabaseInterface( "Actor Database" )
+FActorDatabase::FActorDatabase()
+	: FDatabaseInterface( "Actor Database" )
 {
 
 }
 
-ActorDatabase::~ActorDatabase()
+FActorDatabase::~FActorDatabase()
 {
 
 }
 
-void ActorDatabase::Initialize( const Char* ActorDatabaseFile )
+void FActorDatabase::Initialize( const Char* ActorDatabaseFile )
 {
 	// Load the texture cache.
 	rapidjson::Document JsonDoc;
@@ -37,13 +37,13 @@ void ActorDatabase::Initialize( const Char* ActorDatabaseFile )
 	}
 }
 
-void ActorDatabase::UnInitialize()
+void FActorDatabase::UnInitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing texture database." ) );
 	m_Data.clear();
 }
 
-void ActorDatabase::SerializeToFile_Implementation( const Char* Filepath )
+void FActorDatabase::SerializeToFile_Implementation( const Char* Filepath )
 {
 	rapidjson::StringBuffer StrBuffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> Writer( StrBuffer );

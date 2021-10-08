@@ -6,31 +6,31 @@
 #include "RenderContext.h"
 #include "RendererCore.h"
 
-class IDevice;
-class ISwapChain;
-class ICommandManager;
-class IContextManager;
-class IGeometryBufferManager;
-class IConstantBufferManager;
-class ITextureManager;
+class FRenderDevice;
+class FSwapChain;
+class FCommandManager;
+class FContextManager;
+class FGeometryBufferManager;
+class FConstantBufferManager;
+class FTextureManager;
 
-class RENDER_API IRenderContextFactory
+class RENDER_API FRenderContextFactory
 {
 protected:
-	virtual void CreateContext(RenderContext& OutContext) = 0;
+	virtual void CreateContext(FRenderContext& OutContext) = 0;
 
 	FORCEINLINE void InitializeMainComponents();
 
-	virtual void CreateDevice(IDevice** OutDevice) = 0;
-	virtual void CreateSwapChain(ISwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, ICommandManager* InCommandManager, IDevice* InDevice) = 0;
-	virtual void CreateCommandManager(ICommandManager** OutCommandManager, IDevice* InDevice) = 0;
-	virtual void CreateContextManager(IContextManager** OutCommandContext) = 0;
-	virtual void CreateGeometryManager(IGeometryBufferManager** OutGeometryManager) = 0;
-	virtual void CreateConstantBufferManager(IConstantBufferManager** OutCBManager) = 0;
-	virtual void CreateTextureManager(ITextureManager** OutTexManager) = 0;
+	virtual void CreateDevice(FRenderDevice** OutDevice) = 0;
+	virtual void CreateSwapChain(FSwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, FCommandManager* InCommandManager, FRenderDevice* InDevice) = 0;
+	virtual void CreateCommandManager(FCommandManager** OutCommandManager, FRenderDevice* InDevice) = 0;
+	virtual void CreateContextManager(FContextManager** OutCommandContext) = 0;
+	virtual void CreateGeometryManager(FGeometryBufferManager** OutGeometryManager) = 0;
+	virtual void CreateConstantBufferManager(FConstantBufferManager** OutCBManager) = 0;
+	virtual void CreateTextureManager(FTextureManager** OutTexManager) = 0;
 
 protected:
-	IRenderContextFactory()
+	FRenderContextFactory()
 	{
 	}
 
@@ -41,7 +41,7 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE void IRenderContextFactory::InitializeMainComponents()
+FORCEINLINE void FRenderContextFactory::InitializeMainComponents()
 {
 	CreateDevice(&GDevice);
 

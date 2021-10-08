@@ -5,7 +5,7 @@
 
 #include "Engine/ViewportContext.h"
 #include "World/CameraManager.h"
-#include "World/HWorld.h"
+#include "World/World.h"
 
 
 HCameraComponent::HCameraComponent(const HName& Name)
@@ -67,7 +67,7 @@ void HCameraComponent::SetProjectionValues(float FOVDegrees, float NearZ, float 
 	}
 }
 
-void HCameraComponent::Render(ICommandContext& GfxContext) 
+void HCameraComponent::Render(FCommandContext& GfxContext) 
 {
 
 }

@@ -8,7 +8,7 @@
 #endif
 
 
-/* static */ void RendererInitializer::InitializeContext( ERenderBackend API, RenderContext& Context )
+/* static */ void FRendererInitializer::InitializeContext( ERenderBackend API, FRenderContext& Context )
 {
 	CreateLogger( GRendererLogger, "Renderer" );
 
@@ -18,7 +18,7 @@
 #if R_WITH_D3D12
 	case RB_Direct3D12:
 	{
-		RenderContextFactoryD3D12 Factory;
+		FRenderContextFactoryD3D12 Factory;
 		Factory.CreateContext( Context );
 		break;
 	}
@@ -33,21 +33,21 @@
 	}
 }
 
-/* static */ void RendererInitializer::UnInitializeContext( RenderContext& Context )
+/* static */ void FRendererInitializer::UnInitializeContext( FRenderContext& Context )
 {
 	Context.UnInitialize();
 }
 
-/* static */ void RendererInitializer::InitializeSwapChain( ISwapChain** pOutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height )
+/* static */ void FRendererInitializer::InitializeSwapChain( FSwapChain** pOutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height )
 {
-	RenderContext* Context = RenderContext::GetInstance();
+	FRenderContext* Context = FRenderContext::GetInstance();
 	switch (Context->GetBackendType())
 	{
 	case RB_Direct3D11: break;
 #if R_WITH_D3D12
 	case RB_Direct3D12:
 		{
-			RenderContextFactoryD3D12 Factory;
+			FRenderContextFactoryD3D12 Factory;
 			Factory.CreateSwapChain( pOutSwapChain, pNativeWindow, Width, Height, GCommandManager, GDevice );
 			break;
 		}

@@ -101,7 +101,7 @@ namespace System
 	}
 	void ProcessMessages()
 	{
-		MSG Message = {};
+		MSG Message = { 0 };
 		while (::PeekMessage( &Message, NULL, 0, 0, PM_REMOVE ))
 		{
 			::TranslateMessage( &Message );
@@ -221,14 +221,14 @@ namespace System
 		return ::GetCommandLineA();
 	}
 
-	int64 QueryPerformanceCounter()
+	int64 QueryPerfCounter()
 	{
 		LARGE_INTEGER Tick = { 0 };
 		HE_ASSERT( ::QueryPerformanceCounter( &Tick ) == TRUE );
 		return (int64)Tick.QuadPart;
 	}
 
-	int64 QueryPerformanceFrequency()
+	int64 QueryPerfFrequency()
 	{
 		LARGE_INTEGER Frequency = { 0 };
 		HE_ASSERT( ::QueryPerformanceFrequency( &Frequency ) == TRUE );

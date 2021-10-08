@@ -4,7 +4,7 @@
 #include "ICommandManager.h"
 
 
-VertexBufferUID GeometryBufferManagerD3D12::AllocateVertexBuffer()
+VertexBufferUID FGeometryBufferManagerD3D12::AllocateVertexBuffer()
 {
 	ScopedCriticalSection Guard( m_VertexBufferGuard );
 
@@ -17,7 +17,7 @@ VertexBufferUID GeometryBufferManagerD3D12::AllocateVertexBuffer()
 	return NewUID;
 }
 
-IndexBufferUID GeometryBufferManagerD3D12::AllocateIndexBuffer()
+IndexBufferUID FGeometryBufferManagerD3D12::AllocateIndexBuffer()
 {
 	ScopedCriticalSection Guard( m_IndexBufferGuard );
 
@@ -29,7 +29,7 @@ IndexBufferUID GeometryBufferManagerD3D12::AllocateIndexBuffer()
 	return NewUID;
 }
 
-void GeometryBufferManagerD3D12::DeAllocateVertexBuffer( VertexBufferUID& UID )
+void FGeometryBufferManagerD3D12::DeAllocateVertexBuffer( VertexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_VERTEX_BUFFER_HANDLE );
 
@@ -40,7 +40,7 @@ void GeometryBufferManagerD3D12::DeAllocateVertexBuffer( VertexBufferUID& UID )
 	UID = HE_INVALID_VERTEX_BUFFER_HANDLE;
 }
 
-void GeometryBufferManagerD3D12::DeAllocateIndexBuffer( IndexBufferUID& UID )
+void FGeometryBufferManagerD3D12::DeAllocateIndexBuffer( IndexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_INDEX_BUFFER_HANDLE );
 	

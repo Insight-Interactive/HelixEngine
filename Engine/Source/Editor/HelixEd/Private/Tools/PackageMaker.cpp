@@ -8,11 +8,11 @@
 
 const Char* kBuildPlatformStrings[BuildPlatform_Count]
 {
-	HE_STRINGIFY( Playstation5 )
+	HE_STRINGIFY( Prospero ),
 	HE_STRINGIFY( Win32 ),
 	HE_STRINGIFY( Win64 ),
-	HE_STRINGIFY( XboxOne ),
-	HE_STRINGIFY( XboxOneX ),
+	HE_STRINGIFY( Durango ),
+	HE_STRINGIFY( Scorpio ),
 };
 
 const Char* kBuildConfigStrings[BuildConfig_Count]

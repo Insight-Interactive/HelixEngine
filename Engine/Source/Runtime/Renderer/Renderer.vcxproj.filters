@@ -57,9 +57,6 @@
     <ClInclude Include="Private\Direct3D12\DescriptorHeapD3D12.h">
       <Filter>Private\Direct3D12</Filter>
     </ClInclude>
-    <ClInclude Include="Private\Direct3D12\DeviceD3D12.h">
-      <Filter>Private\Direct3D12</Filter>
-    </ClInclude>
     <ClInclude Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.h">
       <Filter>Private\Direct3D12</Filter>
     </ClInclude>
@@ -81,10 +78,13 @@
     <ClInclude Include="Private\Direct3D12\PixelBufferD3D12.h">
       <Filter>Private\Direct3D12</Filter>
     </ClInclude>
+    <ClInclude Include="Private\Direct3D12\RenderDeviceD3D12.h">
+      <Filter>Private\Direct3D12</Filter>
+    </ClInclude>
     <ClInclude Include="Private\Direct3D12\RootSignatureD3D12.h">
       <Filter>Private\Direct3D12</Filter>
     </ClInclude>
-    <ClInclude Include="Private\Direct3D12\SwapchainD3D12.h">
+    <ClInclude Include="Private\Direct3D12\SwapChainD3D12.h">
       <Filter>Private\Direct3D12</Filter>
     </ClInclude>
     <ClInclude Include="Private\Direct3D12\TextureD3D12.h">
@@ -126,12 +126,6 @@
     <ClInclude Include="Public\CommonStructs.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\HTexture2D.h">
-      <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\HTexture3D.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="Public\IColorBuffer.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -150,9 +144,6 @@
     <ClInclude Include="Public\IDescriptorHeap.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\IDevice.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="Public\IGeometryBufferManager.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -166,6 +157,9 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\IPixelBuffer.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\IRenderDevice.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\IRootSignature.h">
@@ -207,6 +201,12 @@
     <ClInclude Include="Public\StaticMeshGeometry.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Texture2D.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Texture3D.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\VertexLayouts.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -245,9 +245,6 @@
     <ClCompile Include="Private\Direct3D12\DescriptorHeapD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Direct3D12\DeviceD3D12.cpp">
-      <Filter>Private\Direct3D12</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
@@ -270,6 +267,9 @@
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\RenderContextFactoryD3D12.cpp">
+      <Filter>Private\Direct3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Direct3D12\RenderDeviceD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\RootSignatureD3D12.cpp">

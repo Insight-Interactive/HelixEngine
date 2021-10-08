@@ -2,7 +2,7 @@
 
 #include "Engine/SplashScreen.h"
 
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ISwapChain.h"
 #include "IPixelBuffer.h"
 #include "IGpuResource.h"
@@ -17,8 +17,9 @@
 #include "FileSystem.h"
 #include "DataTypeWrappers.h"
 
-SplashScreen::SplashScreen( const String& SplashTexturePath/* = "" */)
-	: Window( TEXT( "App Splash" ), HE_SPLASH_WIDTH, HE_SPLASH_HEIGHT, false, true, NULL )
+
+FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
+	: FWindow( TEXT( "App Splash" ), HE_SPLASH_WIDTH, HE_SPLASH_HEIGHT, false, true, NULL )
 	, m_pRootSig(NULL)
 	, m_pPipeline(NULL)
 {
@@ -34,7 +35,7 @@ SplashScreen::SplashScreen( const String& SplashTexturePath/* = "" */)
 	m_ScissorRect.Right = GetWidth();
 	m_ScissorRect.Bottom = GetHeight();
 
-	GetSwapChain()->SetClearColor( Color( 0.f, 0.f, 0.f ) );
+	GetSwapChain()->SetClearColor( FColor( 0.f, 0.f, 0.f ) );
 
 	m_SplashTexture = GTextureManager->LoadTexture( SplashTexturePath, DT_Magenta2D, false );
 	m_ScreenQuadRef = GeometryGenerator::GenerateScreenAlignedQuadMesh();
@@ -52,7 +53,7 @@ SplashScreen::SplashScreen( const String& SplashTexturePath/* = "" */)
 	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/ScreenAlignedQuad.vs.cso" );
 	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/AppSlash.ps.cso" );
 
-	PipelineStateDesc PSODesc = {};
+	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = GScreenSpaceInputElements;
@@ -63,12 +64,12 @@ SplashScreen::SplashScreen( const String& SplashTexturePath/* = "" */)
 	PSODesc.SampleMask = UINT_MAX;
 	PSODesc.PrimitiveTopologyType = PTT_Triangle;
 	PSODesc.NumRenderTargets = 1;
-	PSODesc.RTVFormats[0] = DCast<IPixelBuffer*>( GetRenderSurface() )->GetFormat();
+	PSODesc.RTVFormats[0] = DCast<FPixelBuffer*>( GetRenderSurface() )->GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
 	GDevice->CreatePipelineState( PSODesc, &m_pPipeline );
 }
 
-SplashScreen::~SplashScreen()
+FSplashScreen::~FSplashScreen()
 {
 	// Flush the Gpu before destroying resources.
 	GCommandManager->IdleGpu();
@@ -77,10 +78,10 @@ SplashScreen::~SplashScreen()
 	HE_SAFE_DELETE_PTR( m_pPipeline );
 }
 
-void SplashScreen::Render( ICommandContext& CmdContext )
+void FSplashScreen::Render( FCommandContext& CmdContext )
 {
-	IColorBuffer* pCurrentBackBuffer = GetRenderSurface();
-	IGpuResource& BackBufferResource = *pCurrentBackBuffer->As<IGpuResource*>();
+	FColorBuffer* pCurrentBackBuffer = GetRenderSurface();
+	FGpuResource& BackBufferResource = *pCurrentBackBuffer->As<FGpuResource*>();
 
 	CmdContext.TransitionResource( BackBufferResource, RS_RenderTarget );
 
@@ -90,7 +91,7 @@ void SplashScreen::Render( ICommandContext& CmdContext )
 	CmdContext.RSSetViewPorts( 1, &GetViewport() );
 	CmdContext.RSSetScissorRects( 1, &GetScissorRect() );
 
-	const IColorBuffer* RTs[] = {
+	const FColorBuffer* RTs[] = {
 		pCurrentBackBuffer
 	};
 	CmdContext.OMSetRenderTargets( 1, RTs, NULL );

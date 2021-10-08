@@ -1,6 +1,6 @@
 #include "EnginePCH.h"
 
-#include "AssetRegistry/HMeshAsset.h"
+#include "AssetRegistry/MeshAsset.h"
 
 #include "FileSystem.h"
 

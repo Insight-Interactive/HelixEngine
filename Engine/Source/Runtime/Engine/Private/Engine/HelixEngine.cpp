@@ -3,9 +3,9 @@
 #include "Engine/HelixEngine.h"
 
 #if HE_WITH_EDITOR
-#	include "Editor/HEditorEngine.h"
+#	include "Editor/EditorEngine.h"
 #else
-#	include "Engine/HEngine.h"
+#	include "Engine/Engine.h"
 #endif // HE_WITH_EDITOR
 
 /*

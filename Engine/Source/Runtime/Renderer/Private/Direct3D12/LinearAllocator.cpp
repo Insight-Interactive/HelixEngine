@@ -2,22 +2,22 @@
 
 #include "LinearAllocator.h"
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ICommandManager.h"
 #include "MathCommon.h"
 
-LinearAllocatorType LinearAllocatorPageManager::sm_AutoType = LAT_GpuExclusive;
+LinearAllocatorType FLinearAllocatorPageManager::sm_AutoType = LAT_GpuExclusive;
 
-LinearAllocatorPageManager::LinearAllocatorPageManager()
+FLinearAllocatorPageManager::FLinearAllocatorPageManager()
 {
     m_AllocationType = sm_AutoType;
     sm_AutoType = (LinearAllocatorType)(sm_AutoType + 1);
     HE_ASSERT(sm_AutoType <= LAT_NumAllocatorTypes);
 }
 
-LinearAllocatorPageManager LinearAllocator::sm_PageManager[2];
+FLinearAllocatorPageManager FLinearAllocator::sm_PageManager[2];
 
-LinearAllocationPage* LinearAllocatorPageManager::RequestPage()
+FLinearAllocationPage* FLinearAllocatorPageManager::RequestPage()
 {
     m_Mutex.Enter();
 
@@ -27,7 +27,7 @@ LinearAllocationPage* LinearAllocatorPageManager::RequestPage()
         m_RetiredPages.pop();
     }
 
-    LinearAllocationPage* PagePtr = nullptr;
+    FLinearAllocationPage* PagePtr = nullptr;
 
     if (!m_AvailablePages.empty())
     {
@@ -44,7 +44,7 @@ LinearAllocationPage* LinearAllocatorPageManager::RequestPage()
     return PagePtr;
 }
 
-void LinearAllocatorPageManager::DiscardPages(uint64_t FenceValue, const std::vector<LinearAllocationPage*>& UsedPages)
+void FLinearAllocatorPageManager::DiscardPages(uint64_t FenceValue, const std::vector<FLinearAllocationPage*>& UsedPages)
 {
     m_Mutex.Enter();
 
@@ -54,7 +54,7 @@ void LinearAllocatorPageManager::DiscardPages(uint64_t FenceValue, const std::ve
     m_Mutex.Exit();
 }
 
-void LinearAllocatorPageManager::FreeLargePages(uint64_t FenceValue, const std::vector<LinearAllocationPage*>& LargePages)
+void FLinearAllocatorPageManager::FreeLargePages(uint64_t FenceValue, const std::vector<FLinearAllocationPage*>& LargePages)
 {
     m_Mutex.Enter();
 
@@ -73,7 +73,7 @@ void LinearAllocatorPageManager::FreeLargePages(uint64_t FenceValue, const std::
     m_Mutex.Exit();
 }
 
-LinearAllocationPage* LinearAllocatorPageManager::CreateNewPage(size_t PageSize)
+FLinearAllocationPage* FLinearAllocatorPageManager::CreateNewPage(size_t PageSize)
 {
     ID3D12Device* pD3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
 
@@ -116,12 +116,12 @@ LinearAllocationPage* LinearAllocatorPageManager::CreateNewPage(size_t PageSize)
         &ResourceDesc, DefaultUsage, nullptr, IID_PPV_ARGS(&pBuffer));
 
 #if R_DEBUG_GPU_RESOURCES
-    pBuffer->SetName(L"LinearAllocator Page");
+    pBuffer->SetName(L"FLinearAllocator Page");
 #endif
-    return new LinearAllocationPage(pBuffer, (EResourceState)DefaultUsage);
+    return new FLinearAllocationPage(pBuffer, (EResourceState)DefaultUsage);
 }
 
-void LinearAllocator::CleanupUsedPages(uint64_t FenceID)
+void FLinearAllocator::CleanupUsedPages(uint64_t FenceID)
 {
     if (m_CurPage == nullptr)
         return;
@@ -137,9 +137,9 @@ void LinearAllocator::CleanupUsedPages(uint64_t FenceID)
     m_LargePageList.clear();
 }
 
-DynAlloc LinearAllocator::AllocateLargePage(size_t SizeInBytes)
+DynAlloc FLinearAllocator::AllocateLargePage(size_t SizeInBytes)
 {
-    LinearAllocationPage* OneOff = sm_PageManager[m_AllocationType].CreateNewPage(SizeInBytes);
+    FLinearAllocationPage* OneOff = sm_PageManager[m_AllocationType].CreateNewPage(SizeInBytes);
     m_LargePageList.push_back(OneOff);
 
     DynAlloc ret(*OneOff, 0, SizeInBytes);
@@ -149,7 +149,7 @@ DynAlloc LinearAllocator::AllocateLargePage(size_t SizeInBytes)
     return ret;
 }
 
-DynAlloc LinearAllocator::Allocate(size_t SizeInBytes, size_t Alignment)
+DynAlloc FLinearAllocator::Allocate(size_t SizeInBytes, size_t Alignment)
 {
     const size_t AlignmentMask = Alignment - 1;
 

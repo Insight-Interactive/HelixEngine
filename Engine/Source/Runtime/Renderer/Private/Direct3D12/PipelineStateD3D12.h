@@ -6,15 +6,15 @@
 #include "IPipelineState.h"
 
 
-class RENDER_API PipelineStateD3D12 : public IPipelineState
+class RENDER_API FPipelineStateD3D12 : public FPipelineState
 {
 public:
-	PipelineStateD3D12();
-	virtual ~PipelineStateD3D12();
+	FPipelineStateD3D12();
+	virtual ~FPipelineStateD3D12();
 
 	virtual void* GetNativePSO() override { return RCast<void*>(m_pID3D12PipelineState); }
 
-	virtual void Initialize(const PipelineStateDesc& Desc) override;
+	virtual void Initialize(const FPipelineStateDesc& Desc) override;
 
 
 protected:

@@ -26,7 +26,7 @@ void DetailsPanel::Tick( float DeltaTime )
 {
 }
 
-void DetailsPanel::Render( ICommandContext& CmdCtx )
+void DetailsPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Details" );
 	{

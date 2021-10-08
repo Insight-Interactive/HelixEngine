@@ -1,17 +1,17 @@
 #pragma once
 
 
-class FrameTimeManager
+class FFrameTimeManager
 {
 public:
-	FrameTimeManager()
+	FFrameTimeManager()
 		: m_FrameTime( 0.0 )
 		, m_FrameRate( 0.0 )
 		, m_FrameStartTick( 0 )
 		, m_CpuTickDelta( 0.0 )
 	{
 	}
-	~FrameTimeManager()
+	~FFrameTimeManager()
 	{
 	}
 
@@ -39,27 +39,27 @@ private:
 // Inline function implementations
 //
 
-inline double FrameTimeManager::GetFrameTime() const
+inline double FFrameTimeManager::GetFrameTime() const
 {
 	return m_FrameTime;
 }
 
-inline double FrameTimeManager::GetFrameRate() const
+inline double FFrameTimeManager::GetFrameRate() const
 {
 	return (m_FrameTime == 0.f) ? 0.f : 1.f / m_FrameTime;
 }
 
-inline double FrameTimeManager::TicksToSeconds( int64 TickCount )
+inline double FFrameTimeManager::TicksToSeconds( int64 TickCount )
 {
 	return (double)TickCount * m_CpuTickDelta;
 }
 
-inline double FrameTimeManager::TicksToMillisecs( int64 TickCount )
+inline double FFrameTimeManager::TicksToMillisecs( int64 TickCount )
 {
 	return (double)TickCount * m_CpuTickDelta * 1000.0;
 }
 
-inline double FrameTimeManager::TimeBetweenTicks( int64 Tick1, int64 Tick2 )
+inline double FFrameTimeManager::TimeBetweenTicks( int64 Tick1, int64 Tick2 )
 {
 	return TicksToSeconds( Tick2 - Tick1 );
 }

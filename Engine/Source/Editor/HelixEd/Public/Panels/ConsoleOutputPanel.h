@@ -15,7 +15,7 @@ public:
 	virtual void UnInitialize();
 
 	virtual void Tick( float DeltaTime );
-	virtual void Render( ICommandContext& CmdCtx );
+	virtual void Render( FCommandContext& CmdCtx );
 
 protected:
 

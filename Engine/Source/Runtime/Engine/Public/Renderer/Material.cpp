@@ -24,7 +24,7 @@ void HMaterial::UnInitialize()
 	GConstantBufferManager->DestroyConstantBuffer(m_pConstantsCB->GetUID());
 }
 
-void HMaterial::Bind(ICommandContext& GfxContext)
+void HMaterial::Bind(FCommandContext& GfxContext)
 {
 	switch (m_Type)
 	{
@@ -56,10 +56,10 @@ void HMaterial::LoadFromFile( const String& Filepath )
 			Char TextureNameBuffer[32];
 			
 			JsonUtility::GetString( MaterialParam, "AlbedoTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
-			SetAlbedoTexture( AssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
+			SetAlbedoTexture( FAssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
 
 			JsonUtility::GetString( MaterialParam, "NormalTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
-			SetNormalTexture( AssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
+			SetNormalTexture( FAssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
 		}
 	}
 }
@@ -152,7 +152,7 @@ void HMaterial::WriteToFile()
 
 }
 
-void HMaterial::BindOpaque(ICommandContext& GfxContext)
+void HMaterial::BindOpaque(FCommandContext& GfxContext)
 {
 	// Set constants.
 	MaterialConstantsCBData* pMat = m_pConstantsCB->GetBufferPointer<MaterialConstantsCBData>();
@@ -166,7 +166,7 @@ void HMaterial::BindOpaque(ICommandContext& GfxContext)
 	}
 }
 
-void HMaterial::BindTranslucent(ICommandContext& GfxContext)
+void HMaterial::BindTranslucent(FCommandContext& GfxContext)
 {
 	// TODO Forward transparent pass
 }

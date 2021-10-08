@@ -1,10 +1,10 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
-#include "World/HLevel.h"
+#include "World/Level.h"
 
 #include "RendererCore.h"
-#include "World/HWorld.h"
+#include "World/World.h"
 #include "FileSystem.h"
 #include "StringHelper.h"
 #include "GameFramework/Actor/AActor.h"
@@ -48,7 +48,7 @@ void HLevel::Flush()
 	}
 }
 
-void HLevel::Render( ICommandContext& CmdContext )
+void HLevel::Render( FCommandContext& CmdContext )
 {
 	for (size_t i = 0; i < m_Actors.size(); ++i)
 	{
@@ -114,7 +114,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 		String ActorName = itr->name.GetString();
 		const rapidjson::Value& ActorWorldProps = itr->value;
 
-		const String& ActorFilePath = AssetDatabase::GetInstance()->LookupActor( ActorName );
+		const String& ActorFilePath = FAssetDatabase::GetInstance()->LookupActor( ActorName );
 		HE_ASSERT( !ActorFilePath.empty() );
 
 		// Load the actor

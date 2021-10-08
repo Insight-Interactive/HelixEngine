@@ -4,11 +4,11 @@
 class HWorld;
 class HCameraComponent;
 
-class CameraManager
+class HCameraManager
 {
 public:
-	CameraManager(HWorld* pWorld);
-	~CameraManager();
+	HCameraManager(HWorld* pWorld);
+	~HCameraManager();
 
 	void CacheCamera( HCameraComponent* pCamera );
 	void RemoveCachedCamera( HCameraComponent* pCamera );

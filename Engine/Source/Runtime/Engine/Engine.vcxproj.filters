@@ -93,10 +93,13 @@
     <ClInclude Include="Private\PCH\EnginePCH.h">
       <Filter>Private\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Public\App\FApp.h">
+    <ClInclude Include="Public\App\App.h">
       <Filter>Public\App</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\ActorDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\Asset.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h">
@@ -105,13 +108,10 @@
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\HAsset.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\HMeshAsset.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\MeshAsset.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h">
@@ -122,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\TextureDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Engine.h">
+      <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\EngineDefines.h">
       <Filter>Public\Engine</Filter>
@@ -145,9 +148,6 @@
       <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\GameProject.h">
-      <Filter>Public\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Engine\HEngine.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\HelixEngine.h">
@@ -195,10 +195,7 @@
     <ClInclude Include="Public\GameFramework\HObject.h">
       <Filter>Public\GameFramework</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Input\FKeyboard.h">
-      <Filter>Public\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\Input\FMouse.h">
+    <ClInclude Include="Public\Input\Gamepad.h">
       <Filter>Public\Input</Filter>
     </ClInclude>
     <ClInclude Include="Public\Input\GamepadEvents.h">
@@ -213,6 +210,12 @@
     <ClInclude Include="Public\Input\KeyEvent.h">
       <Filter>Public\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Input\Keyboard.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Input\Mouse.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Input\MouseEvent.h">
       <Filter>Public\Input</Filter>
     </ClInclude>
@@ -225,9 +228,6 @@
     <ClInclude Include="Public\Renderer\ConstantBufferStructures.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Renderer\FRenderPass.h">
-      <Filter>Public\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Renderer\GeometryGenerator.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
@@ -238,6 +238,9 @@
       <Filter>Public\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Public\Renderer\MaterialManager.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Renderer\RenderPass.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Public\Renderer\ShaderRegisters.h">
@@ -255,15 +258,15 @@
     <ClInclude Include="Public\World\CameraManager.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\World\HLevel.h">
+    <ClInclude Include="Public\World\Level.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\World\HWorld.h">
+    <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\App\FApp.cpp">
+    <ClCompile Include="Private\App\App.cpp">
       <Filter>Private\App</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp">
@@ -272,10 +275,10 @@
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\HMeshAsset.cpp">
+    <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">
+    <ClCompile Include="Private\AssetRegistry\MeshAsset.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
@@ -283,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\BuildConfigValidation.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\Engine.cpp">
+      <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\EngineEvent.cpp">
       <Filter>Private\Engine</Filter>
@@ -294,9 +303,6 @@
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\GameProject.cpp">
-      <Filter>Private\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Engine\HEngine.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\HelixEngine.cpp">
@@ -341,10 +347,7 @@
     <ClCompile Include="Private\GameFramework\HObject.cpp">
       <Filter>Private\GameFramework</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Input\FKeyboard.cpp">
-      <Filter>Private\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Input\FMouse.cpp">
+    <ClCompile Include="Private\Input\Gamepad.cpp">
       <Filter>Private\Input</Filter>
     </ClCompile>
     <ClCompile Include="Private\Input\InputDispatcher.cpp">
@@ -353,13 +356,22 @@
     <ClCompile Include="Private\Input\KeyEvent.cpp">
       <Filter>Private\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Input\Keyboard.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Input\Mouse.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Input\MouseEvent.cpp">
       <Filter>Private\Input</Filter>
     </ClCompile>
     <ClCompile Include="Private\Input\RawInput.cpp">
       <Filter>Private\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Launch\Launch.cpp">
+    <ClCompile Include="Private\Launch\LaunchWindowsDesktop.cpp">
+      <Filter>Private\Launch</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Launch\LaunchWindowsUniversal.cpp">
       <Filter>Private\Launch</Filter>
     </ClCompile>
     <ClCompile Include="Private\PCH\EnginePCH.cpp">
@@ -395,10 +407,10 @@
     <ClCompile Include="Private\World\CameraManager.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
-    <ClCompile Include="Private\World\HLevel.cpp">
+    <ClCompile Include="Private\World\Level.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
-    <ClCompile Include="Private\World\HWorld.cpp">
+    <ClCompile Include="Private\World\World.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
     <ClCompile Include="Public\AssetRegistry\ActorDatabase.cpp">

@@ -20,24 +20,24 @@
 //  Context Manager
 // ----------------
 
-ContextManagerD3D12::ContextManagerD3D12()
+FContextManagerD3D12::FContextManagerD3D12()
 {
 }
 
-ContextManagerD3D12::~ContextManagerD3D12()
+FContextManagerD3D12::~FContextManagerD3D12()
 {
 }
 
-ICommandContext* ContextManagerD3D12::AllocateContext(ECommandListType Type)
+FCommandContext* FContextManagerD3D12::AllocateContext(ECommandListType Type)
 {
 	m_ContextAllocationMutex.Enter();
 
 	auto& AvailableContexts = m_AvailableContexts[Type];
 
-	ICommandContext* ret = nullptr;
+	FCommandContext* ret = nullptr;
 	if (AvailableContexts.empty())
 	{
-		ret = new CommandContextD3D12(Type);
+		ret = new FCommandContextD3D12(Type);
 		m_ContextPool[Type].emplace_back(ret);
 		ret->Initialize();
 	}
@@ -50,7 +50,7 @@ ICommandContext* ContextManagerD3D12::AllocateContext(ECommandListType Type)
 	HE_ASSERT(ret != nullptr);
 
 
-	CommandContextD3D12* pD3D12Context = DCast<CommandContextD3D12*>(ret);
+	FCommandContextD3D12* pD3D12Context = DCast<FCommandContextD3D12*>(ret);
 	HE_ASSERT(pD3D12Context != NULL);
 
 	HE_ASSERT(pD3D12Context->m_Type == Type);
@@ -59,12 +59,12 @@ ICommandContext* ContextManagerD3D12::AllocateContext(ECommandListType Type)
 	return ret;
 }
 
-void ContextManagerD3D12::FreeContext(ICommandContext* pContext)
+void FContextManagerD3D12::FreeContext(FCommandContext* pContext)
 {
 	HE_ASSERT(pContext != NULL);
 	m_ContextAllocationMutex.Enter();
 
-	CommandContextD3D12* pD3D12Context = DCast<CommandContextD3D12*>(pContext);
+	FCommandContextD3D12* pD3D12Context = DCast<FCommandContextD3D12*>(pContext);
 	HE_ASSERT(pD3D12Context != NULL);
 
 	m_AvailableContexts[pD3D12Context->m_Type].push(pContext);
@@ -72,7 +72,7 @@ void ContextManagerD3D12::FreeContext(ICommandContext* pContext)
 	m_ContextAllocationMutex.Exit();
 }
 
-void ContextManagerD3D12::DestroyAllContexts()
+void FContextManagerD3D12::DestroyAllContexts()
 {
 
 }
@@ -82,8 +82,8 @@ void ContextManagerD3D12::DestroyAllContexts()
 //  Command Context
 // ----------------
 
-CommandContextD3D12::CommandContextD3D12(const ECommandListType& Type)
-	: ICommandContext(Type)
+FCommandContextD3D12::FCommandContextD3D12(const ECommandListType& Type)
+	: FCommandContext(Type)
 	, m_NumBarriersToFlush(0u)
 	, m_pID3D12CommandList(NULL)
 	, m_pID3D12CurrentCmdAllocator(NULL)
@@ -97,12 +97,12 @@ CommandContextD3D12::CommandContextD3D12(const ECommandListType& Type)
 	ZeroMemory(m_CurrentDescriptorHeaps, sizeof(m_CurrentDescriptorHeaps));
 }
 
-CommandContextD3D12::~CommandContextD3D12()
+FCommandContextD3D12::~FCommandContextD3D12()
 {
 	UnInitialize();
 }
 
-void CommandContextD3D12::BindDescriptorHeaps()
+void FCommandContextD3D12::BindDescriptorHeaps()
 {
 	UINT NonNullHeaps = 0;
 	ID3D12DescriptorHeap* HeapsToBind[D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES];
@@ -117,26 +117,26 @@ void CommandContextD3D12::BindDescriptorHeaps()
 		m_pID3D12CommandList->SetDescriptorHeaps(NonNullHeaps, HeapsToBind);
 }
 
-void CommandContextD3D12::Initialize()
+void FCommandContextD3D12::Initialize()
 {
-	ICommandContext* pThisContext = RCast<ICommandContext*>(this);
+	FCommandContext* pThisContext = RCast<FCommandContext*>(this);
 	void** pThisAllocator = RCast<void**>(&m_pID3D12CurrentCmdAllocator);
 
 	GCommandManager->CreateNewCommandContext(m_Type, &pThisContext, pThisAllocator);
 }
 
-void CommandContextD3D12::UnInitialize()
+void FCommandContextD3D12::UnInitialize()
 {
 	HE_COM_SAFE_RELEASE(m_pID3D12CommandList);
 }
 
-void CommandContextD3D12::Reset()
+void FCommandContextD3D12::Reset()
 {
 	// We only call Reset() on previously freed contexts.  The command list persists, but we must
 	// request a new allocator.
 	HE_ASSERT(m_pID3D12CommandList != nullptr && m_pID3D12CurrentCmdAllocator == nullptr);
 
-	m_pID3D12CurrentCmdAllocator = RCast<CommandQueueD3D12*>(GCommandManager->GetQueue(m_Type))->RequestAllocator();
+	m_pID3D12CurrentCmdAllocator = RCast<FCommandQueueD3D12*>(GCommandManager->GetQueue(m_Type))->RequestAllocator();
 	m_pID3D12CommandList->Reset(m_pID3D12CurrentCmdAllocator, NULL);
 
 	// TODO Reset root signature
@@ -144,31 +144,31 @@ void CommandContextD3D12::Reset()
 
 }
 
-void CommandContextD3D12::BeginDebugMarker(const TChar* Message)
+void FCommandContextD3D12::BeginDebugMarker(const TChar* Message)
 {
 #if R_TRACK_RENDER_EVENTS
 	PIXBeginEvent(m_pID3D12CommandList, 0, Message);
 #endif
 }
 
-void CommandContextD3D12::EndDebugMarker()
+void FCommandContextD3D12::EndDebugMarker()
 {
 #if R_TRACK_RENDER_EVENTS
 	PIXEndEvent(m_pID3D12CommandList);
 #endif
 }
 
-void CommandContextD3D12::ClearState(IPipelineState* pNewPipelineState)
+void FCommandContextD3D12::ClearState(FPipelineState* pNewPipelineState)
 {
 	ID3D12PipelineState* pD3D12PipeState = NULL;
 	if (pNewPipelineState != NULL)
 	{
-		pD3D12PipeState = RCast<ID3D12PipelineState*>(DCast<PipelineStateD3D12*>(pNewPipelineState)->GetNativePSO());
+		pD3D12PipeState = RCast<ID3D12PipelineState*>(DCast<FPipelineStateD3D12*>(pNewPipelineState)->GetNativePSO());
 	}
 	m_pID3D12CommandList->ClearState(pD3D12PipeState);
 }
 
-void CommandContextD3D12::OMSetRenderTargets(uint32 NumRTVs, const IColorBuffer* Targets[], IDepthBuffer* pDepthBuffer)
+void FCommandContextD3D12::OMSetRenderTargets(uint32 NumRTVs, const FColorBuffer* Targets[], FDepthBuffer* pDepthBuffer)
 {
 	constexpr uint32 cx_MaxRTVBinds = 12;
 	D3D12_CPU_DESCRIPTOR_HANDLE RTVHandles[cx_MaxRTVBinds];
@@ -176,7 +176,7 @@ void CommandContextD3D12::OMSetRenderTargets(uint32 NumRTVs, const IColorBuffer*
 
 	for (uint32 i = 0; i < NumRTVs; ++i)
 	{
-		const ColorBufferD3D12* pBuffer = DCast<const ColorBufferD3D12*>(Targets[i]);
+		const FColorBufferD3D12* pBuffer = DCast<const FColorBufferD3D12*>(Targets[i]);
 		HE_ASSERT(pBuffer != NULL);
 
 		RTVHandles[i] = pBuffer->GetRTVHandle();
@@ -185,7 +185,7 @@ void CommandContextD3D12::OMSetRenderTargets(uint32 NumRTVs, const IColorBuffer*
 	if (pDepthBuffer != NULL)
 	{
 		D3D12_CPU_DESCRIPTOR_HANDLE DSVHandle;
-		DepthBufferD3D12* pD3D12DepthBuffer = DCast<DepthBufferD3D12*>(pDepthBuffer);
+		FDepthBufferD3D12* pD3D12DepthBuffer = DCast<FDepthBufferD3D12*>(pDepthBuffer);
 		DSVHandle = pD3D12DepthBuffer->GetDSV();
 		m_pID3D12CommandList->OMSetRenderTargets(NumRTVs, RTVHandles, false, &DSVHandle);
 	}
@@ -195,50 +195,50 @@ void CommandContextD3D12::OMSetRenderTargets(uint32 NumRTVs, const IColorBuffer*
 	}
 }
 
-void CommandContextD3D12::ClearDepth(IDepthBuffer& DepthBuffer)
+void FCommandContextD3D12::ClearDepth(FDepthBuffer& DepthBuffer)
 {
-	DepthBufferD3D12* pD3D12DepthBuffer = DCast<DepthBufferD3D12*>(&DepthBuffer);
+	FDepthBufferD3D12* pD3D12DepthBuffer = DCast<FDepthBufferD3D12*>(&DepthBuffer);
 	D3D12_CPU_DESCRIPTOR_HANDLE  DSVHandle = pD3D12DepthBuffer->GetDSV();
 
 	m_pID3D12CommandList->ClearDepthStencilView(DSVHandle, D3D12_CLEAR_FLAG_DEPTH, DepthBuffer.GetClearDepth(), DepthBuffer.GetClearStencil(), 0, NULL);
 }
 
-void CommandContextD3D12::RSSetViewPorts(uint32 NumViewPorts, const ViewPort* ViewPorts)
+void FCommandContextD3D12::RSSetViewPorts(uint32 NumViewPorts, const FViewPort* ViewPorts)
 {
 	m_pID3D12CommandList->RSSetViewports(NumViewPorts, RCast<const D3D12_VIEWPORT*>(ViewPorts));
 }
 
-void CommandContextD3D12::RSSetScissorRects(uint32 NumScissorRects, const Rect* ScissorRects)
+void FCommandContextD3D12::RSSetScissorRects(uint32 NumScissorRects, const FRect* ScissorRects)
 {
 	m_pID3D12CommandList->RSSetScissorRects(NumScissorRects, RCast<const RECT*>(ScissorRects));
 }
 
-void CommandContextD3D12::SetPrimitiveTopologyType(EPrimitiveTopology TopologyType)
+void FCommandContextD3D12::SetPrimitiveTopologyType(EPrimitiveTopology TopologyType)
 {
 	m_pID3D12CommandList->IASetPrimitiveTopology((D3D12_PRIMITIVE_TOPOLOGY)TopologyType);
 }
 
-void CommandContextD3D12::ClearColorBuffer(IColorBuffer& Buffer, const Rect& Rect)
+void FCommandContextD3D12::ClearColorBuffer(FColorBuffer& Buffer, const FRect& FRect)
 {
 	FlushResourceBarriers();
-	ColorBufferD3D12* pD3D12ColorBuffer = DCast<ColorBufferD3D12*>(&Buffer);
+	FColorBufferD3D12* pD3D12ColorBuffer = DCast<FColorBufferD3D12*>(&Buffer);
 	HE_ASSERT(pD3D12ColorBuffer != NULL);
 
-	Color ClearColor = pD3D12ColorBuffer->GetClearColor();
-	m_pID3D12CommandList->ClearRenderTargetView(pD3D12ColorBuffer->GetRTVHandle(), &ClearColor.R, 1, RCast<const D3D12_RECT*>(&Rect));
+	FColor ClearColor = pD3D12ColorBuffer->GetClearColor();
+	m_pID3D12CommandList->ClearRenderTargetView(pD3D12ColorBuffer->GetRTVHandle(), &ClearColor.R, 1, RCast<const D3D12_RECT*>(&FRect));
 }
 
-void CommandContextD3D12::CreateTexture2D()
+void FCommandContextD3D12::CreateTexture2D()
 {
 }
 
-void CommandContextD3D12::CreateBuffer()
+void FCommandContextD3D12::CreateBuffer()
 {
 }
 
-void CommandContextD3D12::SetDescriptorHeap(EResourceHeapType Type, IDescriptorHeap* HeapPtr)
+void FCommandContextD3D12::SetDescriptorHeap(EResourceHeapType Type, FDescriptorHeap* HeapPtr)
 {
-	DynamicDescriptorHeapD3D12* pID3D12Heap = RCast<DynamicDescriptorHeapD3D12*>(HeapPtr);
+	FDynamicDescriptorHeapD3D12* pID3D12Heap = RCast<FDynamicDescriptorHeapD3D12*>(HeapPtr);
 	HE_ASSERT(pID3D12Heap != NULL);
 
 	if (m_CurrentDescriptorHeaps[Type] != pID3D12Heap->GetNativeHeap())
@@ -248,15 +248,15 @@ void CommandContextD3D12::SetDescriptorHeap(EResourceHeapType Type, IDescriptorH
 	}
 }
 
-DynAlloc CommandContextD3D12::ReserveUploadMemory(uint64 SizeInBytes)
+DynAlloc FCommandContextD3D12::ReserveUploadMemory(uint64 SizeInBytes)
 {
 	return m_CpuLinearAllocator.Allocate(SizeInBytes);
 }
 
-void CommandContextD3D12::UpdateSubresources(IGpuResource& Destination, IGpuResource& Intermediate, uint32 IntermediateOffset, uint32 FirstSubresource, uint32 NumSubresources, SubResourceData& SubresourceData)
+void FCommandContextD3D12::UpdateSubresources(FGpuResource& Destination, FGpuResource& Intermediate, uint32 IntermediateOffset, uint32 FirstSubresource, uint32 NumSubresources, FSubResourceData& SubresourceData)
 {
-	GpuResourceD3D12* pD3D12DestGpuResource = DCast<GpuResourceD3D12*>(&Destination);
-	GpuResourceD3D12* pD3D12IntGpuResource = DCast<GpuResourceD3D12*>(&Intermediate);
+	FGpuResourceD3D12* pD3D12DestGpuResource = DCast<FGpuResourceD3D12*>(&Destination);
+	FGpuResourceD3D12* pD3D12IntGpuResource = DCast<FGpuResourceD3D12*>(&Intermediate);
 
 	ID3D12Resource* pID3D12Destination = pD3D12DestGpuResource->GetResource();
 	ID3D12Resource* pID3D12Intermediate = pD3D12IntGpuResource->GetResource();
@@ -268,59 +268,59 @@ void CommandContextD3D12::UpdateSubresources(IGpuResource& Destination, IGpuReso
 	::UpdateSubresources(m_pID3D12CommandList, pID3D12Destination, pID3D12Intermediate, IntermediateOffset, FirstSubresource, NumSubresources, &SRData);
 }
 
-void CommandContextD3D12::SetDepthBufferAsTexture(uint32 RootParameterIndex, const IDepthBuffer* pDepthBuffer)
+void FCommandContextD3D12::SetDepthBufferAsTexture(uint32 RootParameterIndex, const FDepthBuffer* pDepthBuffer)
 {
-	const DepthBufferD3D12* pD3D12DepthBuffer = DCast<const DepthBufferD3D12*>(pDepthBuffer);
+	const FDepthBufferD3D12* pD3D12DepthBuffer = DCast<const FDepthBufferD3D12*>(pDepthBuffer);
 	m_DynamicViewDescriptorHeap.SetGraphicsDescriptorHandles(RootParameterIndex, 0, 1, &pD3D12DepthBuffer->GetDepthSRV());
 }
 
-void CommandContextD3D12::SetColorBuffersAsTextures(uint32 RootParameterIndex, uint32 Offset, uint32 Count, const IColorBuffer* Buffers[])
+void FCommandContextD3D12::SetColorBuffersAsTextures(uint32 RootParameterIndex, uint32 Offset, uint32 Count, const FColorBuffer* Buffers[])
 {
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> Handles;
 	for (uint32 i = 0; i < Count; ++i)
 	{
-		const ColorBufferD3D12* pD3D12ColorBuffer = DCast<const ColorBufferD3D12*>(Buffers[i]);
+		const FColorBufferD3D12* pD3D12ColorBuffer = DCast<const FColorBufferD3D12*>(Buffers[i]);
 		HE_ASSERT(pD3D12ColorBuffer != NULL);
 		Handles.push_back(pD3D12ColorBuffer->GetSRVHandle());
 	}
 	m_DynamicViewDescriptorHeap.SetGraphicsDescriptorHandles(RootParameterIndex, Offset, Count, Handles.data());
 }
 
-void CommandContextD3D12::SetColorBufferAsTexture(uint32 RootParameterIndex, uint32 Offset, IColorBuffer* Buffer)
+void FCommandContextD3D12::SetColorBufferAsTexture(uint32 RootParameterIndex, uint32 Offset, FColorBuffer* Buffer)
 {
-	const IColorBuffer* Buffers[] = { Buffer };
+	const FColorBuffer* Buffers[] = { Buffer };
 	SetColorBuffersAsTextures(RootParameterIndex, Offset, 1, Buffers);
 }
 
-void CommandContextD3D12::BindVertexBuffer(uint32 Slot, IVertexBuffer& VertexBuffer)
+void FCommandContextD3D12::BindVertexBuffer(uint32 Slot, FVertexBuffer& VertexBuffer)
 {
 	D3D12_VERTEX_BUFFER_VIEW* pView = RCast<D3D12_VERTEX_BUFFER_VIEW*>(VertexBuffer.GetNativeBufferView());
 	m_pID3D12CommandList->IASetVertexBuffers(Slot, 1, pView);
 }
 
-void CommandContextD3D12::BindIndexBuffer(IIndexBuffer& IndexBuffer)
+void FCommandContextD3D12::BindIndexBuffer(FIndexBuffer& IndexBuffer)
 {
 	D3D12_INDEX_BUFFER_VIEW* pView = RCast<D3D12_INDEX_BUFFER_VIEW*>(IndexBuffer.GetNativeBufferView());
 	m_pID3D12CommandList->IASetIndexBuffer(pView);
 }
 
-void CommandContextD3D12::SetGraphicsConstantBuffer(uint32 RootParameterIndex, IConstantBuffer* pConstantBuffer)
+void FCommandContextD3D12::SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBuffer* pConstantBuffer)
 {
-	ConstantBufferD3D12& D3D12Cb = *DCast<ConstantBufferD3D12*>(pConstantBuffer);
+	FConstantBufferD3D12& D3D12Cb = *DCast<FConstantBufferD3D12*>(pConstantBuffer);
 	D3D12Cb.UploadBuffer();
 	D3D12_GPU_VIRTUAL_ADDRESS Address = D3D12Cb.GetGPUVirtualAddress();
 	m_pID3D12CommandList->SetGraphicsRootConstantBufferView(RootParameterIndex, Address);
 }
 
-void CommandContextD3D12::SetTexture(uint32 RootParameterIndex, TextureRef& pTexture)
+void FCommandContextD3D12::SetTexture(uint32 RootParameterIndex, HTextureRef& pTexture)
 {
-	const TextureD3D12* pD3D12Tex = DCast<const TextureD3D12*>(pTexture.Get());
+	const HTextureD3D12* pD3D12Tex = DCast<const HTextureD3D12*>(pTexture.Get());
 	D3D12_GPU_DESCRIPTOR_HANDLE GpuHandle;
 
 	if (pD3D12Tex == NULL || !pTexture.IsValid())
 	{
 		// If the texture is invalid or incomplete: bind a default texture instead.
-		GpuHandle.ptr = DCast<TextureD3D12*>(GDefaultTextures[DT_BlackOpaque2D])->GetShaderVisibleDescriptorHandle().GetGpuPtr();
+		GpuHandle.ptr = DCast<HTextureD3D12*>(GDefaultTextures[DT_BlackOpaque2D])->GetShaderVisibleDescriptorHandle().GetGpuPtr();
 	}
 	else
 	{
@@ -330,7 +330,7 @@ void CommandContextD3D12::SetTexture(uint32 RootParameterIndex, TextureRef& pTex
 	m_pID3D12CommandList->SetGraphicsRootDescriptorTable(RootParameterIndex, GpuHandle);
 }
 
-void CommandContextD3D12::SetPipelineState(IPipelineState& Pipeline)
+void FCommandContextD3D12::SetPipelineState(FPipelineState& Pipeline)
 {
 	ID3D12PipelineState* pD3D12Pipeline = RCast<ID3D12PipelineState*>(Pipeline.GetNativePSO());
 	HE_ASSERT(pD3D12Pipeline != NULL);
@@ -338,7 +338,7 @@ void CommandContextD3D12::SetPipelineState(IPipelineState& Pipeline)
 	m_pID3D12CommandList->SetPipelineState(pD3D12Pipeline);
 }
 
-void CommandContextD3D12::SetGraphicsRootSignature(IRootSignature& Signature)
+void FCommandContextD3D12::SetGraphicsRootSignature(FRootSignature& Signature)
 {
 	ID3D12RootSignature* pD3D12Signature = RCast<ID3D12RootSignature*>(Signature.GetNativeSignature());
 	HE_ASSERT(pD3D12Signature != NULL);
@@ -349,17 +349,17 @@ void CommandContextD3D12::SetGraphicsRootSignature(IRootSignature& Signature)
 	m_DynamicSamplerDescriptorHeap.ParseGraphicsRootSignature(Signature);
 }
 
-void CommandContextD3D12::Draw(uint32 VertexCount, uint32 VertexStartOffset)
+void FCommandContextD3D12::Draw(uint32 VertexCount, uint32 VertexStartOffset)
 {
 	DrawInstanced(VertexCount, 1, VertexStartOffset, 0);
 }
 
-void CommandContextD3D12::DrawIndexed(uint32 IndexCount, uint32 StartIndexLocation, int32 BaseVertexLocation)
+void FCommandContextD3D12::DrawIndexed(uint32 IndexCount, uint32 StartIndexLocation, int32 BaseVertexLocation)
 {
 	DrawIndexedInstanced(IndexCount, 1, StartIndexLocation, BaseVertexLocation, 0);
 }
 
-void CommandContextD3D12::DrawInstanced(uint32 VertexCountPerInstance, uint32 InstanceCount, uint32 StartVertexLocation, uint32 StartInstanceLocation)
+void FCommandContextD3D12::DrawInstanced(uint32 VertexCountPerInstance, uint32 InstanceCount, uint32 StartVertexLocation, uint32 StartInstanceLocation)
 {
 	FlushResourceBarriers();
 	m_DynamicViewDescriptorHeap.CommitGraphicsRootDescriptorTables(m_pID3D12CommandList);
@@ -367,7 +367,7 @@ void CommandContextD3D12::DrawInstanced(uint32 VertexCountPerInstance, uint32 In
 	m_pID3D12CommandList->DrawInstanced(VertexCountPerInstance, InstanceCount, StartVertexLocation, StartInstanceLocation);
 }
 
-void CommandContextD3D12::DrawIndexedInstanced(uint32 IndexCountPerInstance, uint32 InstanceCount, UINT StartIndexLocation, uint32 BaseVertexLocation, uint32 StartInstanceLocation)
+void FCommandContextD3D12::DrawIndexedInstanced(uint32 IndexCountPerInstance, uint32 InstanceCount, UINT StartIndexLocation, uint32 BaseVertexLocation, uint32 StartInstanceLocation)
 {
 	FlushResourceBarriers();
 	m_DynamicViewDescriptorHeap.CommitGraphicsRootDescriptorTables(m_pID3D12CommandList);
@@ -375,7 +375,7 @@ void CommandContextD3D12::DrawIndexedInstanced(uint32 IndexCountPerInstance, uin
 	m_pID3D12CommandList->DrawIndexedInstanced(IndexCountPerInstance, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation);
 }
 
-void CommandContextD3D12::TransitionResource(IGpuResource& Resource, EResourceState NewState, bool FlushImmediate/* = false*/)
+void FCommandContextD3D12::TransitionResource(FGpuResource& Resource, EResourceState NewState, bool FlushImmediate/* = false*/)
 {
 	EResourceState OldState = Resource.GetUsageState();
 
@@ -386,7 +386,7 @@ void CommandContextD3D12::TransitionResource(IGpuResource& Resource, EResourceSt
 
 
 		BarrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-		BarrierDesc.Transition.pResource = DCast<GpuResourceD3D12*>(&Resource)->GetResource();
+		BarrierDesc.Transition.pResource = DCast<FGpuResourceD3D12*>(&Resource)->GetResource();
 		BarrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 		BarrierDesc.Transition.StateBefore = (D3D12_RESOURCE_STATES)OldState;
 		BarrierDesc.Transition.StateAfter = (D3D12_RESOURCE_STATES)NewState;
@@ -410,13 +410,13 @@ void CommandContextD3D12::TransitionResource(IGpuResource& Resource, EResourceSt
 }
 
 
-uint64 CommandContextD3D12::Flush(bool WaitForCompletion/* = false*/)
+uint64 FCommandContextD3D12::Flush(bool WaitForCompletion/* = false*/)
 {
 	FlushResourceBarriers();
 
 	HE_ASSERT(m_pID3D12CurrentCmdAllocator != NULL);
 
-	CommandQueueD3D12* pQueue = DCast<CommandQueueD3D12*>(GCommandManager->GetGraphicsQueue());
+	FCommandQueueD3D12* pQueue = DCast<FCommandQueueD3D12*>(GCommandManager->GetGraphicsQueue());
 	uint64 FenceValue = pQueue->ExecuteCommandList(m_pID3D12CommandList);
 
 	if (WaitForCompletion)
@@ -432,12 +432,12 @@ uint64 CommandContextD3D12::Flush(bool WaitForCompletion/* = false*/)
 
 }
 
-uint64 CommandContextD3D12::End(bool WaitForCompletion/* = false*/)
+uint64 FCommandContextD3D12::End(bool WaitForCompletion/* = false*/)
 {
 	FlushResourceBarriers();
 	EndDebugMarker();
 
-	CommandQueueD3D12* pQueue = DCast<CommandQueueD3D12*>(GCommandManager->GetQueue(m_Type));
+	FCommandQueueD3D12* pQueue = DCast<FCommandQueueD3D12*>(GCommandManager->GetQueue(m_Type));
 
 	uint64 FenceValue = pQueue->ExecuteCommandList(m_pID3D12CommandList);
 	pQueue->DiscardAllocator(FenceValue, m_pID3D12CurrentCmdAllocator);
@@ -456,7 +456,7 @@ uint64 CommandContextD3D12::End(bool WaitForCompletion/* = false*/)
 	return 0;
 }
 
-void CommandContextD3D12::FlushResourceBarriers()
+void FCommandContextD3D12::FlushResourceBarriers()
 {
 	if (m_NumBarriersToFlush > 0)
 	{

@@ -2,5 +2,5 @@
 
 #include "IGeometryBufferManager.h"
 
-VertexBufferUID IGeometryBufferManager::SNextVertexBufferID = 0;
-IndexBufferUID IGeometryBufferManager::SNextIndexBufferID = 0;
+VertexBufferUID FGeometryBufferManager::SNextVertexBufferID = 0;
+IndexBufferUID FGeometryBufferManager::SNextIndexBufferID = 0;

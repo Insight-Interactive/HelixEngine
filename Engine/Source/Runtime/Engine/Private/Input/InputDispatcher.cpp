@@ -7,28 +7,30 @@
 #include "Input/GamepadEvents.h"
 #include "Input/InputEnums.h"
 #include "FileSystem.h"
+#include "Engine/Engine.h"
 
 
-InputDispatcher::InputDispatcher()
+FInputDispatcher::FInputDispatcher()
 {
 }
 
-InputDispatcher::~InputDispatcher()
+FInputDispatcher::~FInputDispatcher()
 {
 	UnInitialize();
 }
 
-void InputDispatcher::Initialize( void* pNativeWindow )
+void FInputDispatcher::Initialize( FWindow* pNativeWindow )
 {
+	m_CanDispatchListeners = !GEngine->GetIsEditorPresent();
 	m_InputSurveyer.Initialize( pNativeWindow );
 }
 
-void InputDispatcher::UnInitialize()
+void FInputDispatcher::UnInitialize()
 {
 	m_InputSurveyer.UnInitialize();
 }
 
-void InputDispatcher::Serialize( const Char* Filepath )
+void FInputDispatcher::Serialize( const Char* Filepath )
 {
 	rapidjson::StringBuffer StrBuffer;
 	WriteContext Writter( StrBuffer );
@@ -51,7 +53,7 @@ void InputDispatcher::Serialize( const Char* Filepath )
 	}
 }
 
-void InputDispatcher::Serialize( WriteContext& Output )
+void FInputDispatcher::Serialize( WriteContext& Output )
 {
 #if HE_WITH_EDITOR // In client shipping builds, the user should never be able to serialize new input mappings.
 	Output.Key( "AxisMappings" );
@@ -97,7 +99,7 @@ void InputDispatcher::Serialize( WriteContext& Output )
 #endif // HE_WITH_EDITOR
 }
 
-void InputDispatcher::Deserialize( const ReadContext& Value )
+void FInputDispatcher::Deserialize( const ReadContext& Value )
 {
 	// Add the axis mappings
 	const rapidjson::Value& AxisMappingsArray = Value["AxisMappings"];
@@ -133,7 +135,7 @@ void InputDispatcher::Deserialize( const ReadContext& Value )
 	}
 }
 
-void InputDispatcher::LoadMappingsFromFile( const Char* Filename )
+void FInputDispatcher::LoadMappingsFromFile( const Char* Filename )
 {
 	rapidjson::Document MappingsJsonDoc;
 	FileRef MappingsSource( Filename, FUM_Read );
@@ -145,81 +147,84 @@ void InputDispatcher::LoadMappingsFromFile( const Char* Filename )
 	}
 }
 
-void InputDispatcher::UpdateInputs( float DeltaTime )
+void FInputDispatcher::UpdateInputs( float DeltaTime )
 {
 	// Update the input devices.
 	//
 	m_InputSurveyer.Update( DeltaTime );
 
-	// Iterate over all the action mappings and determine if any events need to be dispatched.
-	//
-	for (size_t i = 0; i < m_ActionMappings.size(); i++)
+	if (GetCanDispatchListeners())
 	{
-		DigitalInput ActionKey = m_ActionMappings[i].MappedKeycode;
-
-		if (m_InputSurveyer.IsFirstPressed( ActionKey ))
+		// Iterate over all the action mappings and determine if any events need to be dispatched.
+		//
+		for (size_t i = 0; i < m_ActionMappings.size(); i++)
 		{
-			ProcessInputEventEx<ActionEvent>( ActionKey, IE_Pressed );
-		}
-		if (m_InputSurveyer.IsPressed( ActionKey ))
-		{
-			ProcessInputEventEx<ActionEvent>( ActionKey, IE_Held );
-		}
-		if (m_InputSurveyer.IsFirstReleased( ActionKey ))
-		{
-			ProcessInputEventEx<ActionEvent>( ActionKey, IE_Released );
-		}
-	}
+			DigitalInput ActionKey = m_ActionMappings[i].MappedKeycode;
 
-	// Iterate over all the axis mappings and determine if any events need to be dispatched.
-	//
-	for (size_t i = 0; i < m_AxisMappings.size(); i++)
-	{
-		DigitalInput AxisKey = m_AxisMappings[i].MappedKeycode;
-
-		if (IsValidAnalogInput( AxisKey ))
-		{
-			float MoveValue = m_InputSurveyer.GetAnalogInput( AxisKey );
-
-			if (IsAnalogInputMoved( MoveValue ))
+			if (m_InputSurveyer.IsFirstPressed( ActionKey ))
 			{
-				if (IsMouseMoveAnalog( AxisKey ))
-				{
-					ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
-				}
-				else if (IsValidGamepadThumbStickAnalog( AxisKey ))
-				{
-					ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
-				}
-				else if (IsValidGamepadTriggerAnalog( AxisKey ))
-				{
-					ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
-				}
+				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Pressed );
+			}
+			if (m_InputSurveyer.IsPressed( ActionKey ))
+			{
+				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Held );
+			}
+			if (m_InputSurveyer.IsFirstReleased( ActionKey ))
+			{
+				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Released );
 			}
 		}
-		else
+
+		// Iterate over all the axis mappings and determine if any events need to be dispatched.
+		//
+		for (size_t i = 0; i < m_AxisMappings.size(); i++)
 		{
-			if (m_InputSurveyer.IsPressed( AxisKey ))
+			DigitalInput AxisKey = m_AxisMappings[i].MappedKeycode;
+
+			if (IsValidAnalogInput( AxisKey ))
 			{
-				ProcessInputEventEx<AxisEvent>( AxisKey, 1.f );
+				float MoveValue = m_InputSurveyer.GetAnalogInput( AxisKey );
+
+				if (IsAnalogInputMoved( MoveValue ))
+				{
+					if (IsMouseMoveAnalog( AxisKey ))
+					{
+						ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
+					}
+					else if (IsValidGamepadThumbStickAnalog( AxisKey ))
+					{
+						ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
+					}
+					else if (IsValidGamepadTriggerAnalog( AxisKey ))
+					{
+						ProcessInputEventEx<AxisEvent>( AxisKey, MoveValue );
+					}
+				}
 			}
-			else if (m_InputSurveyer.IsFirstReleased( AxisKey ))
+			else
 			{
-				ProcessInputEventEx<AxisEvent>( AxisKey, 0.f );
+				if (m_InputSurveyer.IsPressed( AxisKey ))
+				{
+					ProcessInputEventEx<AxisEvent>( AxisKey, 1.f );
+				}
+				else if (m_InputSurveyer.IsFirstReleased( AxisKey ))
+				{
+					ProcessInputEventEx<AxisEvent>( AxisKey, 0.f );
+				}
 			}
 		}
 	}
 }
 
-void InputDispatcher::ProcessInputEvent( Event& e )
+void FInputDispatcher::ProcessInputEvent( Event& e )
 {
 	EventDispatcher Dispatcher( e );
 
-	Dispatcher.Dispatch<ActionEvent>( this, &InputDispatcher::DispatchActionEvent );
-	Dispatcher.Dispatch<AxisEvent>( this, &InputDispatcher::DispatchAxisEvent );
+	Dispatcher.Dispatch<ActionEvent>( this, &FInputDispatcher::DispatchActionEvent );
+	Dispatcher.Dispatch<AxisEvent>( this, &FInputDispatcher::DispatchAxisEvent );
 }
 
-bool InputDispatcher::DispatchAxisEvent( AxisEvent& e )
+bool FInputDispatcher::DispatchAxisEvent( AxisEvent& e )
 {
 	for (AxisMappingInternal& Axis : m_AxisMappings)
 	{
@@ -241,7 +246,7 @@ bool InputDispatcher::DispatchAxisEvent( AxisEvent& e )
 	return false;
 }
 
-bool InputDispatcher::DispatchActionEvent( ActionEvent& e )
+bool FInputDispatcher::DispatchActionEvent( ActionEvent& e )
 {
 	for (ActionMappingInternal& Action : m_ActionMappings)
 	{

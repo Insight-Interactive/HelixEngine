@@ -38,7 +38,7 @@ void HPointLightComponent::OnDestroy()
 {
 }
 
-void HPointLightComponent::Render( ICommandContext& GfxContext )
+void HPointLightComponent::Render( FCommandContext& GfxContext )
 {
 }
 
@@ -72,7 +72,7 @@ void HPointLightComponent::Deserialize( const ReadContext& Value )
 
 	// Color
 	const rapidjson::Value& Color = LightComponent["Color"][0];
-	::Color LightColor;
+	FColor LightColor;
 	JsonUtility::GetFloat( Color, "R", LightColor.R );
 	JsonUtility::GetFloat( Color, "G", LightColor.G );
 	JsonUtility::GetFloat( Color, "B", LightColor.B );

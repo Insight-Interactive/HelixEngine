@@ -22,7 +22,7 @@ namespace GeometryGenerator
 		const uint32 NumIndices = HE_ARRAYSIZE(Indices);
 		const uint32 IndexBufferSize = NumIndices * sizeof(uint32);
 
-		Vertex2D Verts[] =
+		FVertex2D Verts[] =
 		{
 			{ { -1.0f, 1.0f }, { 0.0f, 0.0f } }, // Top Left
 			{ {  1.0f, 1.0f }, { 1.0f, 0.0f } }, // Top Right
@@ -30,11 +30,11 @@ namespace GeometryGenerator
 			{ {  1.0f,-1.0f }, { 1.0f, 1.0f } }, // Bottom Right
 		};
 		const uint32 NumVerts = HE_ARRAYSIZE(Verts);
-		const uint32 VertexBufferSize = NumVerts * sizeof(Vertex2D);
+		const uint32 VertexBufferSize = NumVerts * sizeof(FVertex2D);
 
 		return GStaticGeometryManager.RegisterGeometry(
 			QuadGeometryName,
-			Verts, NumVerts, sizeof(Vertex2D),
+			Verts, NumVerts, sizeof(FVertex2D),
 			Indices, IndexBufferSize, NumIndices
 		);
 	}
@@ -51,7 +51,7 @@ namespace GeometryGenerator
 		}
 
 
-		std::vector< SimpleVertex3D > Verts;
+		std::vector< FSimpleVertex3D > Verts;
 		Verts.resize((Segments + 1) * Slices + 2);
 
 		const float _pi = DirectX::XM_PI;
@@ -119,7 +119,7 @@ namespace GeometryGenerator
 
 		return GStaticGeometryManager.RegisterGeometry(
 			GeometryName,
-			Verts.data(), TriCount, sizeof(SimpleVertex3D),
+			Verts.data(), TriCount, sizeof(FSimpleVertex3D),
 			Triangles.data(), IndicesCount * sizeof(int), IndicesCount
 		);
 	}

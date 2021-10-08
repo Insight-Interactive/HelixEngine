@@ -4,7 +4,7 @@
 	Author: Garrett Courtney
 
 	Description:
-	Client facing reference counted 3D texture.
+	Client facing reference counted 2D texture.
 
 */
 #pragma once
@@ -12,19 +12,18 @@
 #include "ITextureManager.h"
 #include "ITexture.h"
 
-class HTexture3D : public TextureRef
+class HTexture2D : public HTextureRef
 {
 public:
-	HTexture3D()
+	HTexture2D()
 	{
 	}
-	virtual ~HTexture3D()
+	virtual ~HTexture2D()
 	{
 	}
 
 	uint32 GetWidth() const;
 	uint32 GetHeight() const;
-	uint32 GetDepth() const;
 
 };
 
@@ -32,17 +31,12 @@ public:
 // Inline function implementations
 //
 
-FORCEINLINE uint32 HTexture3D::GetWidth() const
+FORCEINLINE uint32 HTexture2D::GetWidth() const
 {
 	return Get()->GetWidth();
 }
 
-FORCEINLINE uint32 HTexture3D::GetHeight() const
+FORCEINLINE uint32 HTexture2D::GetHeight() const
 {
 	return Get()->GetHeight();
-}
-
-FORCEINLINE uint32 HTexture3D::GetDepth() const
-{
-	return Get()->GetDepth();
 }

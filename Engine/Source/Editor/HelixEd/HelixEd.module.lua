@@ -69,7 +69,7 @@ project ("HelixEd")
 		{
 		}
 	
-	filter { "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
+	filter { "platforms:Win64 or Win32 or Durango or Scorpio" }
 		postbuildcommands
 		{
 		}

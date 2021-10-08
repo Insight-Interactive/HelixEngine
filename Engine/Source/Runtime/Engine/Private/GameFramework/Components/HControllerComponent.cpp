@@ -4,10 +4,10 @@
 
 void HControllerComponent::AddGamepadVibration(uint32 PlayerIndex, EGampadRumbleMotor Motor, float Amount)
 {
-	//InputDispatcher::Get().AddGamepadVibration(PlayerIndex, Motor, Amount);
+	//FInputDispatcher::Get().AddGamepadVibration(PlayerIndex, Motor, Amount);
 }
 
-void HControllerComponent::Render(ICommandContext& GfxContext)
+void HControllerComponent::Render(FCommandContext& GfxContext)
 {
 
 }

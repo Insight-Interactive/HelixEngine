@@ -1,18 +1,15 @@
 #include "HelixEdPCH.h"
 
-#include "Editor/HEditorEngine.h"
+#include "Editor/EditorEngine.h"
 
 #include "System.h"
 #include "StringHelper.h"
 #include "ThreadPool.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "IGpuResource.h"
 #include "ITextureManager.h"
 #include "ICommandContext.h"
 #include "ICommandManager.h"
-#include "Direct3D12/TextureD3D12.h"
-#include "Direct3D12/ColorBufferD3D12.h"
-#include "Direct3D12/CommandContextD3D12.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Engine/Event/EngineEvent.h"
@@ -20,6 +17,11 @@
 #include "GameFramework/Components/HCameraComponent.h"
 #include "Tools/PackageMaker.h"
 #include "Engine/FileExplorerWindow.h"
+#include "GameFramework/GameInstance.h"
+
+#include "Direct3D12/TextureD3D12.h"
+#include "Direct3D12/ColorBufferD3D12.h"
+#include "Direct3D12/CommandContextD3D12.h"
 
 
 HEditorEngine::HEditorEngine( CommandLine& CmdLine )
@@ -49,7 +51,7 @@ void HEditorEngine::Startup()
 	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 	//IO.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;		// Enable Gamepad Controls
 	IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;			// Enable Window Independence
+	IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;			// Enable FWindow Independence
 	IO.ConfigWindowsMoveFromTitleBarOnly = true;
 	IO.ConfigDockingAlwaysTabBar = true;
 	IO.Fonts->AddFontFromFileTTF( "../../Engine/Content/Fonts/Cousine-Regular.ttf", 15.0f );
@@ -201,11 +203,11 @@ void HEditorEngine::SaveEditorPreferences()
 
 void HEditorEngine::SetupImGuiRenderBackend()
 {
-	ISwapChain* pClientSwapChain = GetClientViewport().GetWindow().GetSwapChain();
+	FSwapChain* pClientSwapChain = GetClientViewport().GetWindow().GetSwapChain();
 	DXGI_FORMAT SwapChainFmt = (DXGI_FORMAT)pClientSwapChain->GetBackBufferFormat();
 	int NumBackBuffers = pClientSwapChain->GetNumBackBuffers();
 
-	switch (RenderContext::GetInstance()->GetBackendType())
+	switch (FRenderContext::GetInstance()->GetBackendType())
 	{
 	case RB_Direct3D11:
 		HE_ASSERT( false );
@@ -256,14 +258,14 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	// 
 	//ImGui::Begin( "Hello From HelixEd!" );
 	//{
-	//	static TextureRef pTexture;
+	//	static HTextureRef pTexture;
 	//	static bool Loaded = false;
 	//	if (!Loaded)
 	//	{
 	//		Loaded = true;
 	//		pTexture = GTextureManager->LoadTexture( "Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false );
 	//	}
-	//	const TextureD3D12* pD3D12Tex = DCast<const TextureD3D12*>( pTexture.Get() );
+	//	const HTextureD3D12* pD3D12Tex = DCast<const HTextureD3D12*>( pTexture.Get() );
 	//	D3D12_GPU_DESCRIPTOR_HANDLE TextureHandle{ pD3D12Tex->GetShaderVisibleDescriptorHandle().GetGpuPtr() };
 	//	ImGui::Text( "Texture: %s", pTexture.GetCacheKey().c_str() );
 	//	ImGui::Image( (ImTextureID)TextureHandle.ptr, ImVec2( 200, 200 ) );
@@ -277,8 +279,8 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	//ImGui::End();
 
 
-	IColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
-	ICommandContext& UIContext = ICommandContext::Begin( TEXT( "Draw Editor" ) );
+	FColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
+	FCommandContext& UIContext = FCommandContext::Begin( TEXT( "Draw Editor" ) );
 	{
 		UIContext.BeginDebugMarker( TEXT( "Draw Panels" ) );
 		{
@@ -292,12 +294,12 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 
 		ImGui::Render();
 
-		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainSurface );
+		FGpuResource& SwapChainGpuResource = *DCast<FGpuResource*>( pSwapChainSurface );
 		UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
 		UIContext.ClearColorBuffer( *pSwapChainSurface, GetClientViewport().GetClientRect() );
 
 		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
-		const IColorBuffer* pRTs[] = {
+		const FColorBuffer* pRTs[] = {
 			pSwapChainSurface
 		};
 		UIContext.OMSetRenderTargets( 1, pRTs, NULL );
@@ -400,7 +402,7 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<MouseButtonReleasedEvent>( this, &HEditorEngine::OnMouseButtonReleased );
 	Dispatcher.Dispatch<MouseWheelScrolledEvent>( this, &HEditorEngine::OnMouseWheelScrolled );
 
-	// Window
+	// FWindow
 	Dispatcher.Dispatch<WindowResizeEvent>( this, &HEditorEngine::OnWindowResized );
 	Dispatcher.Dispatch<WindowFocusEvent>( this, &HEditorEngine::OnWindowFocus );
 	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &HEditorEngine::OnWindowLostFocus );
@@ -519,7 +521,7 @@ bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
-	if (AssetDatabase::GetInstance()->IsAnyDatabaseDirty())
+	if (FAssetDatabase::GetInstance()->IsAnyDatabaseDirty())
 	{
 		OnSaveMenuItem();
 	}
@@ -537,6 +539,9 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 	SetIsPlayingInEditor( true );
 	m_SceneViewport.DeactivateDebugCamera();
 
+	GetClientViewport().GetInputDispatcher()->SetCanDispatchListeners( true );
+	GGameInstance->OnGameSetFocus();
+
 	// TODO Check if the world is dirty, ask to save if it first before playing.
 	m_GameWorld.ReloadAndBeginPlay();
 
@@ -550,6 +555,7 @@ bool HEditorEngine::OnAppEndPlay( AppEndPlayEvent& e )
 	m_SceneViewport.ActivateDebugCamera();
 
 	// Reset the input state.
+	GetClientViewport().GetInputDispatcher()->SetCanDispatchListeners( false );
 	GetClientViewport().GetInputDispatcher()->FlushCallbacks();
 	GetClientViewport().GetWindow().MakeMoueWindowAssociation();
 
@@ -574,7 +580,7 @@ void HEditorEngine::OnSaveMenuItem()
 	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel );
 	if (Result == MDR_Ok)
 	{
-		AssetDatabase::GetInstance()->SaveAssetDatabases();
+		FAssetDatabase::GetInstance()->SaveAssetDatabases();
 		// World saves a reference to its own filepath, use null to satisfy the argument.
 		m_GameWorld.Serialize( NULL );
 	}
@@ -589,7 +595,7 @@ void HEditorEngine::OnEditorPreferencesMenuItem()
 		return;
 	}
 
-	Window::Description Desc = { };
+	FWindow::Description Desc = { };
 	Desc.bHasTitleBar = true;
 	Desc.bShowImmediate = true;
 	Desc.Width = 1920;

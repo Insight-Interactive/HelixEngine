@@ -3,6 +3,8 @@
 
 #include "TSingleton.h"
 
+#include "Engine/Engine.h"
+
 #if GAME_MODULE
 #	define GAME_API __declspec( dllexport )
 #else
@@ -11,21 +13,25 @@
 
 class APlayerCharacter;
 
-class GAME_API HGameInstance : public TSingleton<HGameInstance>
+class /*GAME_API*/ HGameInstance : public TSingleton<HGameInstance>
 {
 public:
 	HGameInstance() {}
 	virtual ~HGameInstance() {}
 
-	virtual void OnGameSetFocus() {}
-	virtual void OnGameLostFocus() {}
-
+	virtual void OnGameSetFocus() 
+	{
+		GEngine->GetClientViewport().LockMouseToScreenCenter();
+	}
+	virtual void OnGameLostFocus() 
+	{
+		GEngine->GetClientViewport().UnlockMouseFromScreenCenter();
+	}
 
 protected:
 
 };
 
-static HGameInstance* GGameInstance = NULL;
+/*static*/ extern HGameInstance* GGameInstance;
 
 GAME_API HGameInstance* MakeGameInstance();
-

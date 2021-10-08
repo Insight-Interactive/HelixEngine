@@ -3,7 +3,7 @@
 
 #include "GameFramework/Actor/APlayerCharacter.h"
 
-#include "World/HWorld.h"
+#include "World/World.h"
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HControllerComponent.h"
 
@@ -27,7 +27,6 @@ APlayerCharacter::~APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorld()->GetOwningViewport()->LockMouseToScreenCenter();
 }
 
 void APlayerCharacter::Tick( float DeltaMs )

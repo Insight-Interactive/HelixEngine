@@ -4,8 +4,8 @@
 #include "Engine/Event/EventEmitter.h"
 
 
-class ICommandContext;
-class ViewportContext;
+class FCommandContext;
+class FViewportContext;
 
 class Panel : public EventEmitter<void, Event&>
 {
@@ -16,9 +16,9 @@ public:
 	virtual void UnInitialize() {}
 	
 	virtual void Tick( float DeltaTime ) {}
-	virtual void Render( ICommandContext& CmdCtx ) {}
+	virtual void Render( FCommandContext& CmdCtx ) {}
 
-	ViewportContext* GetOwningViewport();
+	FViewportContext* GetOwningViewport();
 
 protected:
 	Panel() 
@@ -28,10 +28,10 @@ protected:
 	{
 	}
 
-	void SetOwningViewport( ViewportContext* pOwningViewport );
+	void SetOwningViewport( FViewportContext* pOwningViewport );
 
 protected:
-	ViewportContext* m_OwningViewport;
+	FViewportContext* m_OwningViewport;
 
 };
 
@@ -39,12 +39,12 @@ protected:
 // Inline function implementations
 //
 
-inline ViewportContext* Panel::GetOwningViewport()
+inline FViewportContext* Panel::GetOwningViewport()
 {
 	return m_OwningViewport;
 }
 
-inline void Panel::SetOwningViewport( ViewportContext* pOwningViewport )
+inline void Panel::SetOwningViewport( FViewportContext* pOwningViewport )
 {
 	m_OwningViewport = pOwningViewport;
 }

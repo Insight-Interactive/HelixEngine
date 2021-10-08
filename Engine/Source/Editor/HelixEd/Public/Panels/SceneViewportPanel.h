@@ -17,7 +17,7 @@ public:
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;
-	virtual void Render( ICommandContext& CmdCtx ) override;
+	virtual void Render( FCommandContext& CmdCtx ) override;
 
 	/*
 		Set the debug camera as the main rendering camera 
@@ -37,7 +37,7 @@ protected:
 	void UnFreezeDebugCamera();
 
 private:
-	DescriptorHandle m_DescriptorHandle;
+	FDescriptorHandle m_DescriptorHandle;
 	uint32 m_HandleSize;
 
 	ADebugPawn* m_pDebugPawn;

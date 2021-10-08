@@ -8,17 +8,17 @@
 
 #include "RendererCore.h"
 
-class IRootParameter
+class FRootParameter
 {
 	friend class RootSignature;
 public:
 
-	IRootParameter()
+	FRootParameter()
 	{
 		m_RootParam.ParameterType = (ERootParameterType)0xFFFFFFFF;
 	}
 
-	~IRootParameter()
+	~FRootParameter()
 	{
 		Clear();
 	}
@@ -75,13 +75,13 @@ public:
 		m_RootParam.ParameterType = RPT_DescriptorTable;
 		m_RootParam.ShaderVisibility = Visibility;
 		m_RootParam.DescriptorTable.NumDescriptorRanges = RangeCount;
-		m_RootParam.DescriptorTable.pDescriptorRanges = new DescriptorRange[RangeCount];
+		m_RootParam.DescriptorTable.pDescriptorRanges = new FDescriptorRange[RangeCount];
 	}
 
 	void SetTableRange(uint32 RangeIndex, EDescriptorRangeType Type, uint32 Register, uint32 Count, uint32 Space = 0)
 	{
-		DescriptorRange* range = const_cast<DescriptorRange*>(m_RootParam.DescriptorTable.pDescriptorRanges + RangeIndex);
-		ZeroMemory(range, sizeof(DescriptorRange));
+		FDescriptorRange* range = const_cast<FDescriptorRange*>(m_RootParam.DescriptorTable.pDescriptorRanges + RangeIndex);
+		ZeroMemory(range, sizeof(FDescriptorRange));
 		range->Type = Type;
 		range->NumDescriptors = Count;
 		range->BaseShaderRegister = Register;
@@ -89,12 +89,12 @@ public:
 		range->OffsetInDescriptorsFromTableStart = HE_DESCRIPTOR_RANGE_OFFSET_APPEND;
 	}
 
-	const RootParameter& operator() (void) const { return m_RootParam; }
+	const FRootParameterDesc& operator() (void) const { return m_RootParam; }
 
 
 protected:
 
-	RootParameter m_RootParam;
+	FRootParameterDesc m_RootParam;
 };
 
 namespace DX12
@@ -107,20 +107,20 @@ namespace DX12
 // Root descriptor (CBV, SRV, or UAV) = 2 DWORDs each
 // Descriptor table pointer = 1 DWORD
 // Static samplers = 0 DWORDS (compiled into shader)
-class IRootSignature
+class FRootSignature
 {
-	friend class DynamicDescriptorHeapD3D12;
+	friend class FDynamicDescriptorHeapD3D12;
 
 public:
 
-	IRootSignature(uint32 NumRootParams = 0, uint32 NumStaticSamplers = 0)
+	FRootSignature(uint32 NumRootParams = 0, uint32 NumStaticSamplers = 0)
 		: m_Finalized(false)
 		, m_NumParameters(NumRootParams)
 	{
 		Reset(NumRootParams, NumStaticSamplers);
 	}
 
-	~IRootSignature()
+	~FRootSignature()
 	{
 	}
 
@@ -128,37 +128,37 @@ public:
 
 	virtual void* GetNativeSignature() = 0;
 
-	virtual void Initialize(const RootSignatureDesc& Desc) = 0;
+	virtual void Initialize(const FRootSignatureDesc& Desc) = 0;
 
 	void Reset(uint32 NumRootParams, uint32 NumStaticSamplers = 0)
 	{
 		if (NumRootParams > 0)
-			m_ParamArray.reset(new IRootParameter[NumRootParams]);
+			m_ParamArray.reset(new FRootParameter[NumRootParams]);
 		else
 			m_ParamArray = nullptr;
 		m_NumParameters = NumRootParams;
 
 		if (NumStaticSamplers > 0)
-			m_SamplerArray.reset(new StaticSamplerDesc[NumStaticSamplers]);
+			m_SamplerArray.reset(new FStaticSamplerDesc[NumStaticSamplers]);
 		else
 			m_SamplerArray = nullptr;
 		m_NumSamplers = NumStaticSamplers;
 		m_NumInitializedStaticSamplers = 0;
 	}
 
-	IRootParameter& operator[] (size_t EntryIndex)
+	FRootParameter& operator[] (size_t EntryIndex)
 	{
 		HE_ASSERT(EntryIndex < m_NumParameters);
 		return m_ParamArray.get()[EntryIndex];
 	}
 
-	const IRootParameter& operator[] (size_t EntryIndex) const
+	const FRootParameter& operator[] (size_t EntryIndex) const
 	{
 		HE_ASSERT(EntryIndex < m_NumParameters);
 		return m_ParamArray.get()[EntryIndex];
 	}
 
-	void InitStaticSampler(uint32 Register, const SamplerDesc& NonStaticSamplerDesc,
+	void InitStaticSampler(uint32 Register, const FSamplerDesc& NonStaticSamplerDesc,
 		EShaderVisibility Visibility = SV_All);
 
 	virtual void Finalize(const WChar* name, ERootSignatureFlags Flags = RSF_None) = 0;
@@ -171,7 +171,7 @@ protected:
 	uint32 m_DescriptorTableBitMap;		// One bit is set for root parameters that are non-sampler descriptor tables.
 	uint32 m_SamplerTableBitMap;		// One bit is set for root parameters that are sampler descriptor tables.
 	uint32 m_DescriptorTableSize[16];	// Non-sampler descriptor tables need to know their descriptor count.
-	std::unique_ptr<IRootParameter[]> m_ParamArray;
-	std::unique_ptr<StaticSamplerDesc[]> m_SamplerArray;
+	std::unique_ptr<FRootParameter[]> m_ParamArray;
+	std::unique_ptr<FStaticSamplerDesc[]> m_SamplerArray;
 
 };

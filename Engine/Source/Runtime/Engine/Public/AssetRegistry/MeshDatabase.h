@@ -3,11 +3,11 @@
 #include "AssetRegistry/DatabaseInterface.h"
 
 
-class MeshDatabase : public DatabaseInterface
+class FMeshDatabase : public FDatabaseInterface
 {
 public:
-	MeshDatabase();
-	virtual ~MeshDatabase();
+	FMeshDatabase();
+	virtual ~FMeshDatabase();
 	
 	virtual void Initialize( const Char* MeshDatabaseFile ) override;
 	virtual void UnInitialize() override;

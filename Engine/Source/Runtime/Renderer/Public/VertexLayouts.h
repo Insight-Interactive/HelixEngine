@@ -2,7 +2,7 @@
 
 #include "MathCore.h"
 
-struct Vertex3D
+struct FVertex3D
 {
 	FVector3 Position;
 	FVector3 Normal;
@@ -12,13 +12,13 @@ struct Vertex3D
 	FVector2 UV0;
 };
 
-struct Vertex2D
+struct FVertex2D
 {
 	FVector2 Position;
 	FVector2 UVs;
 };
 
-struct SimpleVertex3D
+struct FSimpleVertex3D
 {
 	FVector3 Position;
 };

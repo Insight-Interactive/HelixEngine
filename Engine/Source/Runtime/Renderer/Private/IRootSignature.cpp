@@ -2,13 +2,14 @@
 
 #include "IRootSignature.h"
 
-void IRootSignature::InitStaticSampler(
+
+void FRootSignature::InitStaticSampler(
     uint32 Register,
-    const SamplerDesc& NonStaticSamplerDesc,
+    const FSamplerDesc& NonStaticSamplerDesc,
     EShaderVisibility Visibility)
 {
     HE_ASSERT(m_NumInitializedStaticSamplers < m_NumSamplers);
-    StaticSamplerDesc& StaticSamplerDesc = m_SamplerArray[m_NumInitializedStaticSamplers++];
+    FStaticSamplerDesc& StaticSamplerDesc = m_SamplerArray[m_NumInitializedStaticSamplers++];
 
     StaticSamplerDesc.Filter = NonStaticSamplerDesc.Filter;
     StaticSamplerDesc.AddressU = NonStaticSamplerDesc.AddressU;

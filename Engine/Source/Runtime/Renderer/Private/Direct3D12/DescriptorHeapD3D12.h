@@ -5,13 +5,13 @@
 #include "IDescriptorHeap.h"
 
 
-class RENDER_API DescriptorHeapD3D12 : public IDescriptorHeap
+class RENDER_API FDescriptorHeapD3D12 : public FDescriptorHeap
 {
 public:
-    DescriptorHeapD3D12() 
+    FDescriptorHeapD3D12() 
     {
     }
-    ~DescriptorHeapD3D12() 
+    ~FDescriptorHeapD3D12() 
     {
         Destroy();
     }
@@ -23,15 +23,15 @@ public:
     void Destroy(void) { m_Heap = nullptr; }
 
     bool HasAvailableSpace(uint32_t Count) const { return Count <= m_NumFreeDescriptors; }
-    virtual DescriptorHandle Alloc(uint32 Count = 1) override;
+    virtual FDescriptorHandle Alloc(uint32 Count = 1) override;
 
-    DescriptorHandle operator[] (uint32_t arrayIdx) const { return m_FirstHandle + arrayIdx * m_DescriptorSize; }
+    FDescriptorHandle operator[] (uint32_t arrayIdx) const { return m_FirstHandle + arrayIdx * m_DescriptorSize; }
 
-    uint32_t GetOffsetOfHandle(const DescriptorHandle& DHandle) {
+    uint32_t GetOffsetOfHandle(const FDescriptorHandle& DHandle) {
         return (uint32_t)(DHandle.GetCpuPtr() - m_FirstHandle.GetCpuPtr()) / m_DescriptorSize;
     }
 
-    bool ValidateHandle(const DescriptorHandle& DHandle) const;
+    bool ValidateHandle(const FDescriptorHandle& DHandle) const;
 
     ID3D12DescriptorHeap* GetHeapPointer() const { return m_Heap.Get(); }
 
@@ -43,6 +43,6 @@ private:
     D3D12_DESCRIPTOR_HEAP_DESC m_HeapDesc;
     uint32_t m_DescriptorSize;
     uint32_t m_NumFreeDescriptors;
-    DescriptorHandle m_FirstHandle;
-    DescriptorHandle m_NextFreeHandle;
+    FDescriptorHandle m_FirstHandle;
+    FDescriptorHandle m_NextFreeHandle;
 };

@@ -1,23 +1,23 @@
 #pragma once
 
-#include "Renderer/FRenderPass.h"
+#include "Renderer/RenderPass.h"
 
 #include "ModelManager.h"
 #include "ITextureManager.h"
-#include "HTexture3D.h"
+#include "Texture3D.h"
 
 
-class SkyboxPass : public FRenderPass
+class FSkyboxPass : public FRenderPass
 {
 public:
-	SkyboxPass();
-	~SkyboxPass();
+	FSkyboxPass();
+	~FSkyboxPass();
 
 	void Initialize(EFormat RenderTargetFormat, EFormat DepthBufferFormat);
 	void UnInitialize();
 
-	void Bind(ICommandContext& GfxContext, IColorBuffer& RenderTarget, IDepthBuffer& DepthBuffer);
-	void UnBind(ICommandContext& GfxContext, IDepthBuffer& DepthBuffer);
+	void Bind(FCommandContext& GfxContext, FColorBuffer& RenderTarget, FDepthBuffer& DepthBuffer);
+	void UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer);
 
 	virtual void ReloadPipeline() override;
 
@@ -25,15 +25,15 @@ public:
 
 private:
 	// Dont use the FRenderPass interface. This pass is a special case.
-	virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) override {}
-	virtual void UnBind( ICommandContext& GfxContext ) {}
+	virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) override {}
+	virtual void UnBind( FCommandContext& GfxContext ) {}
 
 private:
 	StaticMeshGeometryRef m_SkyGeometry;
-	TextureRef m_SkyDiffuse;
+	HTextureRef m_SkyDiffuse;
 
-	IRootSignature* m_pRS;
-	IPipelineState* m_pPSO;
+	FRootSignature* m_pRS;
+	FPipelineState* m_pPSO;
 
 	EFormat m_RenderTargetFormat;
 	EFormat m_DepthTargetFormat;

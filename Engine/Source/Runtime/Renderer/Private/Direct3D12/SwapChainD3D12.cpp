@@ -1,6 +1,6 @@
 #include "RendererPCH.h"
 
-#include "SwapchainD3D12.h"
+#include "SwapChainD3D12.h"
 
 #include "RendererCore.h"
 #include "CommandManagerD3D12.h"
@@ -8,23 +8,23 @@
 #include "APIBridge/CommonFunctions.h"
 
 
-SwapChainD3D12::SwapChainD3D12()
+FSwapChainD3D12::FSwapChainD3D12()
 	: m_pID3D12DeviceRef(NULL)
 	, m_pDXGISwapChain(NULL)
 {
 }
 
-SwapChainD3D12::~SwapChainD3D12()
+FSwapChainD3D12::~FSwapChainD3D12()
 {
 	UnInitialize();
 }
 
-void SwapChainD3D12::Initialize(IDevice* pDevice)
+void FSwapChainD3D12::Initialize(FRenderDevice* pDevice)
 {
 	m_pDeviceRef = pDevice;
 }
 
-void SwapChainD3D12::Create(const SwapChainDescription& InitParams, IDXGIFactory6** ppDXGIFactory, CommandQueueD3D12* ppCommandQueue, ID3D12Device* pDevice)
+void FSwapChainD3D12::Create(const FSwapChainDesc& InitParams, IDXGIFactory6** ppDXGIFactory, FCommandQueueD3D12* ppCommandQueue, ID3D12Device* pDevice)
 {
 	HE_ASSERT(ppCommandQueue != NULL);
 	HE_ASSERT(ppDXGIFactory != NULL);
@@ -37,7 +37,7 @@ void SwapChainD3D12::Create(const SwapChainDescription& InitParams, IDXGIFactory
 	m_pID3D12DeviceRef = pDevice;
 	m_Desc = InitParams;
 	for (uint32 i = 0; i < InitParams.BufferCount; ++i)
-		m_DisplayPlanes.push_back(new ColorBufferD3D12());
+		m_DisplayPlanes.push_back(new FColorBufferD3D12());
 
 
 	CheckTearingSupport((*ppDXGIFactory));
@@ -65,7 +65,7 @@ void SwapChainD3D12::Create(const SwapChainDescription& InitParams, IDXGIFactory
 	BindSwapChainBackBuffers();
 }
 
-void SwapChainD3D12::UnInitialize()
+void FSwapChainD3D12::UnInitialize()
 {
 	HRESULT hr = m_pDXGISwapChain->SetFullscreenState(FALSE, NULL);
 	ThrowIfFailedMsg(hr, TEXT("Failed to bring the swapchain out of fullscreen mode!"));
@@ -73,7 +73,7 @@ void SwapChainD3D12::UnInitialize()
 	HE_COM_SAFE_RELEASE(m_pDXGISwapChain);
 }
 
-void SwapChainD3D12::CheckTearingSupport(IDXGIFactory6* pFactory)
+void FSwapChainD3D12::CheckTearingSupport(IDXGIFactory6* pFactory)
 {
 	HE_ASSERT(pFactory != NULL);
 
@@ -82,7 +82,7 @@ void SwapChainD3D12::CheckTearingSupport(IDXGIFactory6* pFactory)
 	SetIsTearingSupported(SUCCEEDED(hr) && AllowTearing);
 }
 
-void SwapChainD3D12::SwapBuffers()
+void FSwapChainD3D12::SwapBuffers()
 {
 	uint32 PresetFlags = (GetIsTearingSupported() && m_bFullScreenEnabled)
 		? DXGI_PRESENT_ALLOW_TEARING : 0;
@@ -91,7 +91,7 @@ void SwapChainD3D12::SwapBuffers()
 	MoveToNextFrame();
 }
 
-void SwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
+void FSwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
 {
 	// Flush the GPU and wait for all frames to finish rendering 
 	// before destroying the swapchain buffers.
@@ -101,7 +101,7 @@ void SwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
 	m_Desc.Height = Height;
 	for (uint64 i = 0; i < m_DisplayPlanes.size(); ++i)
 	{
-		DCast<GpuResourceD3D12*>(m_DisplayPlanes[i])->Destroy();
+		DCast<FGpuResourceD3D12*>(m_DisplayPlanes[i])->Destroy();
 	}
 	ResizeDXGIBuffers();
 	BindSwapChainBackBuffers();
@@ -110,7 +110,7 @@ void SwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
 	GCommandManager->IdleGpu();
 }
 
-void SwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)
+void FSwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)
 {
 	HE_ASSERT(NumBuffers <= DXGI_MAX_SWAP_CHAIN_BUFFERS);
 
@@ -118,15 +118,15 @@ void SwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)
 	ResizeDXGIBuffers();
 }
 
-void SwapChainD3D12::SetBackBufferFormat(EFormat& Format)
+void FSwapChainD3D12::SetBackBufferFormat(EFormat& Format)
 {
 	m_Desc.Format = Format;
 	ResizeDXGIBuffers();
 }
 
-void SwapChainD3D12::ToggleFullScreen(bool IsEnabled)
+void FSwapChainD3D12::ToggleFullScreen(bool IsEnabled)
 {
-	ISwapChain::ToggleFullScreen(IsEnabled);
+	FSwapChain::ToggleFullScreen(IsEnabled);
 
 	if (!GetIsTearingSupported())
 	{
@@ -146,7 +146,7 @@ void SwapChainD3D12::ToggleFullScreen(bool IsEnabled)
 	}
 }
 
-void SwapChainD3D12::ResizeDXGIBuffers()
+void FSwapChainD3D12::ResizeDXGIBuffers()
 {
 	DXGI_FORMAT Format = (DXGI_FORMAT)m_Desc.Format;
 	DXGI_SWAP_CHAIN_DESC1 DXGIDesc = { 0 };
@@ -159,7 +159,7 @@ void SwapChainD3D12::ResizeDXGIBuffers()
 	SetIsTearingSupported(DXGIDesc.Flags & DXGI_PRESENT_ALLOW_TEARING);
 }
 
-void SwapChainD3D12::BindSwapChainBackBuffers()
+void FSwapChainD3D12::BindSwapChainBackBuffers()
 {
 	for (uint32 i = 0; i < m_Desc.BufferCount; i++)
 	{

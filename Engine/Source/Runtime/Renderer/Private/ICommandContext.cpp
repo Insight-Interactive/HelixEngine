@@ -4,11 +4,11 @@
 #include "RendererCore.h"
 
 
-IContextManager::IContextManager()
+FContextManager::FContextManager()
 {
 }
 
-IContextManager::~IContextManager()
+FContextManager::~FContextManager()
 {
 	for (size_t i = 0; i < cx_ContextPoolSize; ++i)
 	{
@@ -19,9 +19,9 @@ IContextManager::~IContextManager()
 	}
 }
 
-ICommandContext& ICommandContext::Begin(const TChar* ID)
+FCommandContext& FCommandContext::Begin(const TChar* ID)
 {
-	ICommandContext* NewContext = GContextManager->AllocateContext(ECommandListType::CLT_Direct);
+	FCommandContext* NewContext = GContextManager->AllocateContext(ECommandListType::CLT_Direct);
 	NewContext->SetID(ID);
 	NewContext->BeginDebugMarker(ID);
 

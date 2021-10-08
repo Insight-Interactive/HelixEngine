@@ -7,11 +7,11 @@
 #include "PixelBufferD3D12.h"
 
 
-class RENDER_API DepthBufferD3D12 : public IDepthBuffer, public PixelBufferD3D12
+class RENDER_API FDepthBufferD3D12 : public FDepthBuffer, public FPixelBufferD3D12
 {
 public:
-	DepthBufferD3D12(float ClearDepth = 1.0f, uint8 ClearStencil = 0)
-		: IDepthBuffer(ClearDepth, ClearStencil)
+	FDepthBufferD3D12(float ClearDepth = 1.0f, uint8 ClearStencil = 0)
+		: FDepthBuffer(ClearDepth, ClearStencil)
 	{
 		m_hDSV[0].ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 		m_hDSV[1].ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
@@ -20,7 +20,7 @@ public:
 		m_hDepthSRV.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 		m_hStencilSRV.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 	}
-	virtual ~DepthBufferD3D12() {}
+	virtual ~FDepthBufferD3D12() {}
 
 	virtual void Create(const WChar* Name, uint32 Width, uint32 Height, EFormat Format) override;
 
@@ -34,7 +34,7 @@ public:
 
 protected:
 
-	void CreateDerivedViews(IDevice* Device, EFormat Format);
+	void CreateDerivedViews(FRenderDevice* Device, EFormat Format);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE m_hDSV[4];
 	D3D12_CPU_DESCRIPTOR_HANDLE m_hDepthSRV;

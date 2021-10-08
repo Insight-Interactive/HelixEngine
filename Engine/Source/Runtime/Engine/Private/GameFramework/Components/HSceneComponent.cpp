@@ -11,7 +11,7 @@ HSceneComponent::~HSceneComponent()
 {
 }
 
-void HSceneComponent::Render( ICommandContext& GfxContext )
+void HSceneComponent::Render( FCommandContext& GfxContext )
 {
 }
 

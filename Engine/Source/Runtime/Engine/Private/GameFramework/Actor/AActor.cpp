@@ -101,7 +101,7 @@ void AActor::Tick(float DeltaTime)
 	}
 }
 
-void AActor::Render(ICommandContext& GfxContext)
+void AActor::Render(FCommandContext& GfxContext)
 {
 	for (size_t i = 0; i < m_Components.size(); ++i)
 	{

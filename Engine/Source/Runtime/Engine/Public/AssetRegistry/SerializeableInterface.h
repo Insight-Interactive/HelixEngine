@@ -5,7 +5,7 @@
 typedef rapidjson::PrettyWriter<rapidjson::StringBuffer> WriteContext;
 typedef rapidjson::Value ReadContext;
 
-class SerializeableInterface
+class FSerializeableInterface
 {
 protected:
 	virtual void Serialize( const Char* Filepath ) {}

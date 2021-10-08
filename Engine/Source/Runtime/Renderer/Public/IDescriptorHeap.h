@@ -6,10 +6,10 @@
 #include "RendererCore.h"
 
 // This handle refers to a descriptor or a descriptor table (contiguous descriptors) that is shader visible.
-class DescriptorHandle
+class FDescriptorHandle
 {
 public:
-    DescriptorHandle()
+    FDescriptorHandle()
     {
         m_CpuHandle.Ptr = HE_INVALID_GPU_ADDRESS;
         m_GpuHandle.Ptr = HE_INVALID_GPU_ADDRESS;
@@ -17,21 +17,21 @@ public:
 
     /*
     // Should we allow constructing handles that might not be shader visible?
-    DescriptorHandle( D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle )
+    FDescriptorHandle( D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle )
         : m_CpuHandle(CpuHandle)
     {
         m_GpuHandle.ptr = D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
     }
     */
 
-    DescriptorHandle(CpuDescriptorHandle CpuHandle, GpuDescriptorHandle GpuHandle)
+    FDescriptorHandle(FCpuDescriptorHandle CpuHandle, FGpuDescriptorHandle GpuHandle)
         : m_CpuHandle(CpuHandle), m_GpuHandle(GpuHandle)
     {
     }
 
-    DescriptorHandle operator+ (int32 OffsetScaledByDescriptorSize) const
+    FDescriptorHandle operator+ (int32 OffsetScaledByDescriptorSize) const
     {
-        DescriptorHandle ret = *this;
+        FDescriptorHandle ret = *this;
         ret += OffsetScaledByDescriptorSize;
         return ret;
     }
@@ -44,9 +44,9 @@ public:
             m_GpuHandle.Ptr += OffsetScaledByDescriptorSize;
     }
 
-    const CpuDescriptorHandle* operator&() const { return &m_CpuHandle; }
-    operator CpuDescriptorHandle() const { return m_CpuHandle; }
-    operator GpuDescriptorHandle() const { return m_GpuHandle; }
+    const FCpuDescriptorHandle* operator&() const { return &m_CpuHandle; }
+    operator FCpuDescriptorHandle() const { return m_CpuHandle; }
+    operator FGpuDescriptorHandle() const { return m_GpuHandle; }
 
     size_t GetCpuPtr() const { return m_CpuHandle.Ptr; }
     uint64 GetGpuPtr() const { return m_GpuHandle.Ptr; }
@@ -54,21 +54,21 @@ public:
     bool IsShaderVisible() const { return m_GpuHandle.Ptr != HE_INVALID_GPU_ADDRESS; }
 
 private:
-    CpuDescriptorHandle m_CpuHandle;
-    GpuDescriptorHandle m_GpuHandle;
+    FCpuDescriptorHandle m_CpuHandle;
+    FGpuDescriptorHandle m_GpuHandle;
 };
 
 
-class RENDER_API IDescriptorHeap
+class RENDER_API FDescriptorHeap
 {
 public:
     virtual void* GetNativeHeap() = 0;
 
-    virtual DescriptorHandle Alloc(uint32 Count) = 0;
+    virtual FDescriptorHandle Alloc(uint32 Count) = 0;
 
 protected:
-    IDescriptorHeap() {}
-    virtual ~IDescriptorHeap() {}
+    FDescriptorHeap() {}
+    virtual ~FDescriptorHeap() {}
 
     virtual void Create(const WChar* DebugHeapName, EResourceHeapType Type, uint32 MaxCount) = 0;
 

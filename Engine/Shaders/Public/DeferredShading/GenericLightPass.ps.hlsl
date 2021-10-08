@@ -58,7 +58,7 @@ LP_PSOutput main(LP_PSInput Input)
 	
 	// DEBUG
 	//
-	//Output.Result = float4(LightLuminance, 1);
+	//Output.Result = float4(AlbedoSample, 1);
 	
 	return Output;
 }

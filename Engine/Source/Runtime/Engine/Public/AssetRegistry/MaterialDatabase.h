@@ -3,11 +3,11 @@
 #include "AssetRegistry/DatabaseInterface.h"
 
 
-class MaterialDatabase : public DatabaseInterface
+class FMaterialDatabase : public FDatabaseInterface
 {
 public:
-	MaterialDatabase();
-	virtual ~MaterialDatabase();
+	FMaterialDatabase();
+	virtual ~FMaterialDatabase();
 
 	virtual void Initialize( const Char* MaterialDatabaseFile ) override;
 	virtual void UnInitialize() override;

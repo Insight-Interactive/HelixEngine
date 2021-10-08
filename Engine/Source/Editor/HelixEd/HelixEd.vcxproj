@@ -17,28 +17,28 @@
       <Configuration>DebugEditor Win32</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor XboxOne|x64">
-      <Configuration>DebugEditor XboxOne</Configuration>
+    <ProjectConfiguration Include="DebugEditor Durango|x64">
+      <Configuration>DebugEditor Durango</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor XboxOne|Win32">
-      <Configuration>DebugEditor XboxOne</Configuration>
+    <ProjectConfiguration Include="DebugEditor Durango|Win32">
+      <Configuration>DebugEditor Durango</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor XboxOneX|x64">
-      <Configuration>DebugEditor XboxOneX</Configuration>
+    <ProjectConfiguration Include="DebugEditor Scorpio|x64">
+      <Configuration>DebugEditor Scorpio</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor XboxOneX|Win32">
-      <Configuration>DebugEditor XboxOneX</Configuration>
+    <ProjectConfiguration Include="DebugEditor Scorpio|Win32">
+      <Configuration>DebugEditor Scorpio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor PlayStation5|x64">
-      <Configuration>DebugEditor PlayStation5</Configuration>
+    <ProjectConfiguration Include="DebugEditor Prospero|x64">
+      <Configuration>DebugEditor Prospero</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditor PlayStation5|Win32">
-      <Configuration>DebugEditor PlayStation5</Configuration>
+    <ProjectConfiguration Include="DebugEditor Prospero|Win32">
+      <Configuration>DebugEditor Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Development Win64|x64">
@@ -57,28 +57,28 @@
       <Configuration>Development Win32</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development XboxOne|x64">
-      <Configuration>Development XboxOne</Configuration>
+    <ProjectConfiguration Include="Development Durango|x64">
+      <Configuration>Development Durango</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development XboxOne|Win32">
-      <Configuration>Development XboxOne</Configuration>
+    <ProjectConfiguration Include="Development Durango|Win32">
+      <Configuration>Development Durango</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development XboxOneX|x64">
-      <Configuration>Development XboxOneX</Configuration>
+    <ProjectConfiguration Include="Development Scorpio|x64">
+      <Configuration>Development Scorpio</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development XboxOneX|Win32">
-      <Configuration>Development XboxOneX</Configuration>
+    <ProjectConfiguration Include="Development Scorpio|Win32">
+      <Configuration>Development Scorpio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development PlayStation5|x64">
-      <Configuration>Development PlayStation5</Configuration>
+    <ProjectConfiguration Include="Development Prospero|x64">
+      <Configuration>Development Prospero</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development PlayStation5|Win32">
-      <Configuration>Development PlayStation5</Configuration>
+    <ProjectConfiguration Include="Development Prospero|Win32">
+      <Configuration>Development Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugGame Win64|x64">
@@ -97,28 +97,28 @@
       <Configuration>DebugGame Win32</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame XboxOne|x64">
-      <Configuration>DebugGame XboxOne</Configuration>
+    <ProjectConfiguration Include="DebugGame Durango|x64">
+      <Configuration>DebugGame Durango</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame XboxOne|Win32">
-      <Configuration>DebugGame XboxOne</Configuration>
+    <ProjectConfiguration Include="DebugGame Durango|Win32">
+      <Configuration>DebugGame Durango</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame XboxOneX|x64">
-      <Configuration>DebugGame XboxOneX</Configuration>
+    <ProjectConfiguration Include="DebugGame Scorpio|x64">
+      <Configuration>DebugGame Scorpio</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame XboxOneX|Win32">
-      <Configuration>DebugGame XboxOneX</Configuration>
+    <ProjectConfiguration Include="DebugGame Scorpio|Win32">
+      <Configuration>DebugGame Scorpio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame PlayStation5|x64">
-      <Configuration>DebugGame PlayStation5</Configuration>
+    <ProjectConfiguration Include="DebugGame Prospero|x64">
+      <Configuration>DebugGame Prospero</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame PlayStation5|Win32">
-      <Configuration>DebugGame PlayStation5</Configuration>
+    <ProjectConfiguration Include="DebugGame Prospero|Win32">
+      <Configuration>DebugGame Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ShippingGame Win64|x64">
@@ -137,28 +137,28 @@
       <Configuration>ShippingGame Win32</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame XboxOne|x64">
-      <Configuration>ShippingGame XboxOne</Configuration>
+    <ProjectConfiguration Include="ShippingGame Durango|x64">
+      <Configuration>ShippingGame Durango</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame XboxOne|Win32">
-      <Configuration>ShippingGame XboxOne</Configuration>
+    <ProjectConfiguration Include="ShippingGame Durango|Win32">
+      <Configuration>ShippingGame Durango</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame XboxOneX|x64">
-      <Configuration>ShippingGame XboxOneX</Configuration>
+    <ProjectConfiguration Include="ShippingGame Scorpio|x64">
+      <Configuration>ShippingGame Scorpio</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame XboxOneX|Win32">
-      <Configuration>ShippingGame XboxOneX</Configuration>
+    <ProjectConfiguration Include="ShippingGame Scorpio|Win32">
+      <Configuration>ShippingGame Scorpio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame PlayStation5|x64">
-      <Configuration>ShippingGame PlayStation5</Configuration>
+    <ProjectConfiguration Include="ShippingGame Prospero|x64">
+      <Configuration>ShippingGame Prospero</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ShippingGame PlayStation5|Win32">
-      <Configuration>ShippingGame PlayStation5</Configuration>
+    <ProjectConfiguration Include="ShippingGame Prospero|Win32">
+      <Configuration>ShippingGame Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -182,19 +182,19 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -212,19 +212,19 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -232,31 +232,31 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
@@ -272,19 +272,19 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -299,13 +299,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
@@ -314,13 +314,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
@@ -329,13 +329,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -344,13 +344,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -366,21 +366,21 @@
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-XboxOne\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-XboxOne\XboxOne\DebugEditor\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Durango\Durango\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-XboxOneX\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-XboxOneX\XboxOneX\DebugEditor\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Scorpio\Scorpio\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
-    <OutDir>..\..\..\..\Build-clang\DebugEditor-PlayStation5\</OutDir>
-    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugEditor-PlayStation5\PlayStation5\DebugEditor\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
+    <OutDir>..\..\..\..\Build-clang\DebugEditor-Prospero\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugEditor-Prospero\Prospero\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -396,21 +396,21 @@
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-XboxOne\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-XboxOne\XboxOne\Development\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Durango\Durango\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-XboxOneX\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-XboxOneX\XboxOneX\Development\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\Development-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Scorpio\Scorpio\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
-    <OutDir>..\..\..\..\Build-clang\Development-PlayStation5\</OutDir>
-    <IntDir>..\..\..\..\Build-clang\Intermediates\Development-PlayStation5\PlayStation5\Development\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
+    <OutDir>..\..\..\..\Build-clang\Development-Prospero\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\Development-Prospero\Prospero\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -426,21 +426,21 @@
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-XboxOne\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-XboxOne\XboxOne\DebugGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Durango\Durango\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-XboxOneX\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-XboxOneX\XboxOneX\DebugGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Scorpio\Scorpio\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
-    <OutDir>..\..\..\..\Build-clang\DebugGame-PlayStation5\</OutDir>
-    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugGame-PlayStation5\PlayStation5\DebugGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
+    <OutDir>..\..\..\..\Build-clang\DebugGame-Prospero\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\DebugGame-Prospero\Prospero\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -456,21 +456,21 @@
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-XboxOne\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-XboxOne\XboxOne\ShippingGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Durango\Durango\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-XboxOneX\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-XboxOneX\XboxOneX\ShippingGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
+    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Scorpio\Scorpio\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
-    <OutDir>..\..\..\..\Build-clang\ShippingGame-PlayStation5\</OutDir>
-    <IntDir>..\..\..\..\Build-clang\Intermediates\ShippingGame-PlayStation5\PlayStation5\ShippingGame\HelixEd\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
+    <OutDir>..\..\..\..\Build-clang\ShippingGame-Prospero\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\ShippingGame-Prospero\Prospero\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -512,12 +512,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -531,12 +531,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -550,12 +550,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -607,12 +607,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -626,12 +626,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -645,12 +645,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;HELIXED_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\..\Runtime\Core\Public;..\..\Runtime\Math\Public;..\..\Runtime\Renderer\Public;..\..\Runtime\Engine\Public;..\..\Runtime\Renderer\Private;..\..\..\ThirdParty\ImGui;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -670,20 +670,14 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
@@ -692,86 +686,62 @@
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -818,12 +788,12 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -840,12 +810,12 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;HE_WINDOWS_UNIVERSAL;HE_XBOX_ONE_X;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -862,12 +832,12 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>HelixEdPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;HE_PLAYSTATION;HE_PS5;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -889,7 +859,7 @@
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
     <ClInclude Include="Public\Developer\ADebugPawn.h" />
     <ClInclude Include="Public\Developer\ConsoleWindow.h" />
-    <ClInclude Include="Public\Editor\HEditorEngine.h" />
+    <ClInclude Include="Public\Editor\EditorEngine.h" />
     <ClInclude Include="Public\Editor\PreferencesViewport.h" />
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
@@ -906,193 +876,204 @@
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Private\Editor\HEditorEngine.cpp">
+    <ClCompile Include="Private\Editor\EditorEngine.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Private\Editor\PreferencesViewport.cpp" />
+    <ClCompile Include="Private\Editor\PreferencesViewport.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOne|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor XboxOneX|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor PlayStation5|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development XboxOne|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development XboxOneX|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development PlayStation5|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">Create</PrecompiledHeader>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\ConsoleOutputPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\ContentBrowserPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\DetailsPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\MenuBarPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\SceneViewportPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\ToolbarPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Panels\WorldOutlinePanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Tools\AssetImporter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Tools\ImGuiBuild.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Tools\PackageMaker.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOne|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame XboxOneX|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame PlayStation5|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

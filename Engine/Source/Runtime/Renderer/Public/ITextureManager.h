@@ -7,11 +7,11 @@
 #include "CommonEnums.h"
 #include "DataTypeWrappers.h"
 
-class ITexture;
+class HTexture;
 
-class RENDER_API IManagedTexture
+class RENDER_API HManagedTexture
 {
-	friend class TextureRef;
+	friend class HTextureRef;
 
 public:
 	void WaitForLoad() const;
@@ -20,7 +20,7 @@ public:
 	const String& GetCacheKey() const { return m_MapKey; }
 
 protected:
-	IManagedTexture(const std::string& Path)
+	HManagedTexture(const std::string& Path)
 		: m_MapKey(Path)
 	{
 	}
@@ -35,24 +35,24 @@ protected:
 	size_t m_ReferenceCount;
 };
 
-class RENDER_API ITextureManager
+class RENDER_API FTextureManager
 {
-	friend class IRenderContextFactory;
+	friend class FRenderContextFactory;
 	friend class D3D12RenderContextFactory;
-	friend class RenderContext;
+	friend class FRenderContext;
 public:
 
-	virtual TextureRef LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
+	virtual HTextureRef LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
 	virtual void DestroyTexture(const String& Key) = 0;
 
 private:
-	virtual IManagedTexture* FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
+	virtual HManagedTexture* FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB) = 0;
 
 	void DestroyDefaultTextures();
 
 protected:
-	ITextureManager() = default;
-	virtual ~ITextureManager() = default;
+	FTextureManager() = default;
+	virtual ~FTextureManager() = default;
 
 	virtual void Initialize() = 0;
 	virtual void UnInitialize() = 0;
@@ -67,14 +67,14 @@ protected:
 // count.  When the last reference is destroyed, the TextureManager is informed that
 // the texture should be deleted.
 //
-class TextureRef
+class HTextureRef
 {
 public:
 
-	TextureRef(const TextureRef& ref);
-	TextureRef(IManagedTexture* tex = nullptr);
-	virtual ~TextureRef();
-	TextureRef& operator=(const TextureRef& Other)
+	HTextureRef(const HTextureRef& ref);
+	HTextureRef(HManagedTexture* tex = nullptr);
+	virtual ~HTextureRef();
+	HTextureRef& operator=(const HTextureRef& Other)
 	{
 		this->m_Ref = Other.m_Ref;
 		return *this;
@@ -85,17 +85,17 @@ public:
 	}
 
 	void operator= (std::nullptr_t);
-	void operator= (TextureRef& rhs);
+	void operator= (HTextureRef& rhs);
 
 	// Check that this points to a valid texture (which loaded successfully)
 	bool IsValid() const;
 
 	// Get the texture pointer.  Client is responsible to not dereference
 	// null pointers.
-	const ITexture* Get() const;
+	const HTexture* Get() const;
 
-	const ITexture* operator->() const;
+	const HTexture* operator->() const;
 
 private:
-	IManagedTexture* m_Ref;
+	HManagedTexture* m_Ref;
 };

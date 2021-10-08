@@ -9,8 +9,8 @@
 #include "CriticalSection.h"
 
 
-class ISwapChain;
-class IColorBuffer;
+class FSwapChain;
+class FColorBuffer;
 
 enum EWindowMode
 {
@@ -23,9 +23,9 @@ const uint8 kMaxDebugNameLength = 64;
 const uint8 kMaxClassNameSize = 16;
 const uint8 kMaxWindowTitleLength = 64;
 
-class Window : public EventEmitter<void, Event&>
+class FWindow : public EventEmitter<void, Event&>
 {
-	friend class ViewportContext;
+	friend class FViewportContext;
 	friend class HEditorEngine;
 public:
 	/*
@@ -40,7 +40,7 @@ public:
 		bool bHasTitleBar;
 		bool bShowImmediate;
 		bool bAllowDropFiles;
-		Window* pParent;
+		FWindow* pParent;
 
 		Description()
 		{
@@ -49,9 +49,9 @@ public:
 	};
 
 
-	Window();
-	Window( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, Window* pParent );
-	virtual ~Window();
+	FWindow();
+	FWindow( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, FWindow* pParent );
+	virtual ~FWindow();
 
 	/*
 		Create the window and register it with the OS.
@@ -73,10 +73,10 @@ public:
 	void Maximize();
 	void Minimize();
 
-	IColorBuffer* GetRenderSurface();
+	FColorBuffer* GetRenderSurface();
 	void* GetNativeWindow();
 	void SetWindowMode( EWindowMode NewMode );
-	void SetParent( Window* pParent );
+	void SetParent( FWindow* pParent );
 	bool SetTitle( const TChar* NewTitle );
 	bool DoesAllowFileDrops();
 	void AllowFileDrops( bool bAllow );
@@ -85,12 +85,12 @@ public:
 	FVector2 GetDimensions() const;
 	bool HasTitleBar() const;
 	void GetTitle(TChar* OutTitleBuffer, uint32 BufferLength) const;
-	Window* GetParent();
+	FWindow* GetParent();
 	void AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback );
 	EWindowMode GetWindowMode() const;
 	void EnableVSync( bool VsyncEnabled );
 	bool IsVSyncEnabled() const;
-	ISwapChain* GetSwapChain();
+	FSwapChain* GetSwapChain();
 
 protected:
 	void OnWindowModeChanged();
@@ -108,7 +108,7 @@ protected:
 	TChar m_WindowClassName[kMaxClassNameSize];
 	TChar m_WindowTitle[kMaxWindowTitleLength];
 	TDynamicArray<OutVoidInEWindowModeFn*> m_OnWindowModeChangedCallbacks;
-	ISwapChain* m_pSwapChain;
+	FSwapChain* m_pSwapChain;
 
 	TChar m_DebugName[kMaxDebugNameLength];
 
@@ -121,6 +121,33 @@ protected:
 	RECT	m_WindowRect;
 #elif HE_WINDOWS_UNIVERSAL
 
+	enum
+	{
+		kMouseButton_Left = 0,
+		kMouseButton_Right = 1,
+		kMouseButton_Middle = 2,
+	};
+	// Buffer to itendify which mouse buttons are pressed
+	// Simply to keep track of their state, NOT to be used in input.
+	bool m_MousePressBuffer[3];
+	FVector2 m_LastMousePos;
+	bool m_IsActiated;
+	CoreWindow m_CoreWindow;
+
+	// Callback Functions
+	//
+	void OnActivated( const CoreWindow& Sender, const WindowActivatedEventArgs& Args );
+	void OnWindowClosed( const CoreWindow& Sender, const CoreWindowEventArgs& Args );
+	void OnSizeChanged( const CoreWindow& Sender, const WindowSizeChangedEventArgs& Args );
+	void OnAppSuspending( const IInspectable& Sender, const SuspendingEventArgs& Args );
+	void OnAppResuming( const IInspectable& Sender, const IInspectable& Args );
+	void OnKeyDown( const CoreWindow& Sender, const KeyEventArgs& Args );
+	void OnKeyUp( const CoreWindow& Sender, const KeyEventArgs& Args );
+	void OnMouseButtonPressed( const CoreWindow& Sender, const PointerEventArgs& Args );
+	void OnMouseButtonReleased( const CoreWindow& Sender, const PointerEventArgs& Args );
+	void OnPointerMoved( const CoreWindow& Sender, const PointerEventArgs& Args );
+	void OnMouseWheelMoved( const CoreWindow& Sender, const PointerEventArgs& Args );
+
 #endif
 };
 
@@ -129,47 +156,47 @@ protected:
 // Inline function implementations
 //
 
-inline bool Window::DoesAllowFileDrops()
+inline bool FWindow::DoesAllowFileDrops()
 {
 	return m_Desc.bAllowDropFiles;
 }
 
-inline uint32 Window::GetWidth() const
+inline uint32 FWindow::GetWidth() const
 {
 	return m_Desc.Width;
 }
 
-inline uint32 Window::GetHeight() const
+inline uint32 FWindow::GetHeight() const
 {
 	return m_Desc.Height;
 }
 
-inline FVector2 Window::GetDimensions() const
+inline FVector2 FWindow::GetDimensions() const
 {
 	return FVector2( float( m_Desc.Width ), float( m_Desc.Height ) );
 }
 
-inline bool Window::HasTitleBar() const
+inline bool FWindow::HasTitleBar() const
 {
 	return m_Desc.bHasTitleBar;
 }
 
-inline Window* Window::GetParent()
+inline FWindow* FWindow::GetParent()
 {
 	return m_Desc.pParent;
 }
 
-inline void Window::AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback )
+inline void FWindow::AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback )
 {
 	m_OnWindowModeChangedCallbacks.PushBack( pCallback );
 }
 
-inline EWindowMode Window::GetWindowMode() const
+inline EWindowMode FWindow::GetWindowMode() const
 {
 	return m_WindowMode;
 }
 
-inline void Window::SetWindowMode( EWindowMode NewMode )
+inline void FWindow::SetWindowMode( EWindowMode NewMode )
 {
 	HE_ASSERT( IsVisible() );
 
@@ -181,17 +208,17 @@ inline void Window::SetWindowMode( EWindowMode NewMode )
 		m_OnWindowModeChangedCallbacks[i]( m_WindowMode );
 }
 
-inline void Window::EnableVSync( bool VsyncEnabled )
+inline void FWindow::EnableVSync( bool VsyncEnabled )
 {
 	m_pSwapChain->ToggleVsync( VsyncEnabled );
 }
 
-inline bool Window::IsVSyncEnabled() const
+inline bool FWindow::IsVSyncEnabled() const
 {
 	return m_pSwapChain->GetIsVSyncEnabled();
 }
 
-inline ISwapChain* Window::GetSwapChain()
+inline FSwapChain* FWindow::GetSwapChain()
 {
 	return m_pSwapChain;
 }

@@ -5,19 +5,19 @@
 #include "System.h"
 
 
-void FrameTimeManager::Initialize()
+void FFrameTimeManager::Initialize()
 {
-	m_CpuTickDelta = 1.0 / (double)System::QueryPerformanceFrequency();
+	m_CpuTickDelta = 1.0 / (double)System::QueryPerfFrequency();
 }
 
-double FrameTimeManager::GetCurrentTick()
+double FFrameTimeManager::GetCurrentTick()
 {
-	return (double)System::QueryPerformanceCounter();
+	return (double)System::QueryPerfCounter();
 }
 
-void FrameTimeManager::Tick( bool VSyncEnabled, bool LimitTo30Hz )
+void FFrameTimeManager::Tick( bool VSyncEnabled, bool LimitTo30Hz )
 {
-	int64 CurrentTick = System::QueryPerformanceCounter();
+	int64 CurrentTick = System::QueryPerfCounter();
 
 	if (VSyncEnabled)
 		m_FrameTime = (LimitTo30Hz ? 2.f : 1.f) / 60.f;

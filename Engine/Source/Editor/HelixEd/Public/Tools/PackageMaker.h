@@ -2,11 +2,11 @@
 
 enum EBuildPlatform
 {
-	Playstation5,
+	Prospero,
 	Win32,
 	Win64,
-	XboxOne,
-	XboxOneX,
+	Durango,
+	Scorpio,
 
 	BuildPlatform_Count,
 };

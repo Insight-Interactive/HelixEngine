@@ -7,10 +7,10 @@
 
 class AActor;
 class HWorld;
-class ICommandContext;
+class FCommandContext;
 
 
-class HLevel : public HObject, public SerializeableInterface
+class HLevel : public HObject, public FSerializeableInterface
 {
 	friend class HWorld;
 	friend class WorldOutlinePanel;
@@ -31,7 +31,7 @@ protected:
 
 	void BeginPlay();
 	void Tick(float DeltaTime);
-	void Render(ICommandContext& CmdContext);
+	void Render(FCommandContext& CmdContext);
 
 	virtual void Serialize( WriteContext& Value ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;

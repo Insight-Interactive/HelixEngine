@@ -5,7 +5,7 @@
 
 
 // -----------------
-//	Window Events
+//	FWindow Events
 // -----------------
 
 class WindowClosedEvent : public Event

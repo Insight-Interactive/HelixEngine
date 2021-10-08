@@ -6,11 +6,11 @@
 #include "CriticalSection.h"
 #include "../D3DCommon/D3DCommon.h"
 
-class RENDER_API D3D12CommandAllocatorPool
+class RENDER_API FCommandAllocatorPoolD3D12
 {
 public:
-	D3D12CommandAllocatorPool(const D3D12_COMMAND_LIST_TYPE& Type);
-	~D3D12CommandAllocatorPool();
+	FCommandAllocatorPoolD3D12(const D3D12_COMMAND_LIST_TYPE& Type);
+	~FCommandAllocatorPoolD3D12();
 
 	void Initialize(ID3D12Device* pD3DDevice);
 

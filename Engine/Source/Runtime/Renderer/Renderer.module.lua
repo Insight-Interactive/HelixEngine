@@ -12,7 +12,7 @@ project ("Renderer")
 	staticruntime ("Off")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en-US")
+	defaultlanguage ("en")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
@@ -73,7 +73,7 @@ project ("Renderer")
 			"R_DEBUG=1",
 		}
 	
-	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
+	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32 or Durango or Scorpio" }
 		postbuildcommands
 		{
 			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua

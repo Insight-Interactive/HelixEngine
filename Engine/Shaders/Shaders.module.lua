@@ -5,6 +5,8 @@ project ("Shaders")
 	location ("./")
 	kind ("Utility")
 	targetname ("%{prj.name}")
+	systemversion ("latest")
+	defaultlanguage ("en-US")
 	targetdir( heGetBuildFolder() .. "/Shaders/" )
 	objdir( heGetBuildIntFolder() .. "/Shaders/" )
 	

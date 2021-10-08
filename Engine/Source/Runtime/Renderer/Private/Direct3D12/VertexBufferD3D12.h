@@ -7,12 +7,16 @@
 #include "GpuResourceD3D12.h"
 
 
-class RENDER_API VertexBufferD3D12 : public IVertexBuffer, public GpuResourceD3D12
+class RENDER_API FVertexBufferD3D12 : public FVertexBuffer, public FGpuResourceD3D12
 {
-	friend class GeometryBufferManagerD3D12;
+	friend class FGeometryBufferManagerD3D12;
 public:
-	VertexBufferD3D12() {}
-	virtual ~VertexBufferD3D12() {}
+	FVertexBufferD3D12() 
+	{
+	}
+	virtual ~FVertexBufferD3D12() 
+	{
+	}
 
 	virtual void* GetNativeBufferView() override { return RCast<void*>(&m_D3D12VertexBufferView); }
 

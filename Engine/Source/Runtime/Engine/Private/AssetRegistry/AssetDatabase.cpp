@@ -7,15 +7,15 @@
 #include "StringHelper.h"
 
 
-AssetDatabase::AssetDatabase()
+FAssetDatabase::FAssetDatabase()
 {
 }
 
-AssetDatabase::~AssetDatabase()
+FAssetDatabase::~FAssetDatabase()
 {
 }
 
-void AssetDatabase::Initialize( const Char* DatabaseFile )
+void FAssetDatabase::Initialize( const Char* DatabaseFile )
 {
 	// Load all the asset databases.
 	rapidjson::Document JsonDoc;
@@ -31,6 +31,7 @@ void AssetDatabase::Initialize( const Char* DatabaseFile )
 
 			// Database Name
 			Char StringBuff[HE_MAX_PATH];
+			ZeroMemory( StringBuff, sizeof( StringBuff ) );
 			String ProjectRelativePath;
 
 			JsonUtility::GetString( DbParam, "MeshDatabase", StringBuff, sizeof( StringBuff ) );
@@ -52,7 +53,7 @@ void AssetDatabase::Initialize( const Char* DatabaseFile )
 	}
 }
 
-void AssetDatabase::UnInitialize()
+void FAssetDatabase::UnInitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 

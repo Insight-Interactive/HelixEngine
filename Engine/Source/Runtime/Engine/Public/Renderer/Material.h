@@ -7,7 +7,7 @@
 #include "Renderer/ShaderRegisters.h"
 #include "Renderer/ConstantBufferStructures.h"
 
-class ICommandContext;
+class FCommandContext;
 
 typedef uint64 MaterialID;
 
@@ -32,7 +32,7 @@ public:
 	{
 	}
 
-	void Bind(ICommandContext& GfxContext);
+	void Bind(FCommandContext& GfxContext);
 	
 	void LoadFromFile( const String& Filepath );
 	
@@ -42,12 +42,12 @@ public:
 		return m_ConstantsData.Color;
 	}
 
-	TextureRef GetAlbedoTexture() const
+	HTextureRef GetAlbedoTexture() const
 	{
 		return m_AlbedoTexture;
 	}
 
-	TextureRef GetNormalTexture() const
+	HTextureRef GetNormalTexture() const
 	{
 		return m_NormalTexture;
 	}
@@ -62,14 +62,14 @@ public:
 		m_ConstantsData.Color = Color;
 	}
 
-	void SetAlbedoTexture(TextureRef TextureRef)
+	void SetAlbedoTexture(HTextureRef HTextureRef)
 	{
-		m_AlbedoTexture = TextureRef;
+		m_AlbedoTexture = HTextureRef;
 	}
 
-	void SetNormalTexture(TextureRef TextureRef)
+	void SetNormalTexture(HTextureRef HTextureRef)
 	{
-		m_NormalTexture = TextureRef;
+		m_NormalTexture = HTextureRef;
 	}
 
 	void SetType(EMaterialType Type)
@@ -88,9 +88,9 @@ public:
 	}
 
 protected:
-	void BindOpaque(ICommandContext& GfxContext);
+	void BindOpaque(FCommandContext& GfxContext);
 
-	void BindTranslucent(ICommandContext& GfxContext);
+	void BindTranslucent(FCommandContext& GfxContext);
 
 	void Initialize();
 
@@ -114,10 +114,10 @@ protected:
 	void WriteToFile();
 
 private:
-	IConstantBuffer* m_pConstantsCB;
+	FConstantBuffer* m_pConstantsCB;
 	MaterialConstantsCBData m_ConstantsData;
-	TextureRef m_AlbedoTexture;
-	TextureRef m_NormalTexture;
+	HTextureRef m_AlbedoTexture;
+	HTextureRef m_NormalTexture;
 #if IE_DEBUG
 	FString m_DebugName;
 #endif

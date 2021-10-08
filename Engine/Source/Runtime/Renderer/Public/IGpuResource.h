@@ -6,9 +6,9 @@
 #include "CommonEnums.h"
 
 
-class RENDER_API IGpuResource
+class RENDER_API FGpuResource
 {
-	friend class ICommandContext;
+	friend class FCommandContext;
 public:
 	//
 	// Getters/Setters
@@ -21,19 +21,19 @@ public:
 	FORCEINLINE uint32 GetVersionID() const { return m_VersionID; }
 
 protected:
-	IGpuResource(EResourceState CurrentState, EResourceState TransitionState)
+	FGpuResource(EResourceState CurrentState, EResourceState TransitionState)
 		: m_UsageState(CurrentState)
 		, m_TransitioningState(TransitionState)
 		, m_VersionID(0u)
 	{
 	}
-	IGpuResource()
+	FGpuResource()
 		: m_UsageState(RS_Common)
 		, m_TransitioningState(RESOURCE_STATE_INVALID)
 		, m_VersionID(0u)
 	{
 	}
-	virtual ~IGpuResource()
+	virtual ~FGpuResource()
 	{
 	}
 	virtual void Destroy() = 0;

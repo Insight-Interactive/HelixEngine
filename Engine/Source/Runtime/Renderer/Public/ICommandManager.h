@@ -3,14 +3,14 @@
 #include "RendererFwd.h"
 #include "CommonEnums.h"
 
-class IDevice;
-class ICommandContext;
+class FRenderDevice;
+class FCommandContext;
 class ICommandAllocator;
 
 
-class RENDER_API ICommandQueue
+class RENDER_API FCommandQueue
 {
-	friend class ICommandManager;
+	friend class FCommandManager;
 public:
 	virtual void* GetNativeQueue() = 0;
 
@@ -20,26 +20,26 @@ public:
 	void WaitForIdle() { WaitForFence(IncrementFence()); }
 
 protected:
-	ICommandQueue(const ECommandListType& Type)
+	FCommandQueue(const ECommandListType& Type)
 		: m_Type(Type)
 	{
 	}
-	virtual ~ICommandQueue()
+	virtual ~FCommandQueue()
 	{
 	}
 
 	ECommandListType m_Type;
 };
 
-class RENDER_API ICommandManager
+class RENDER_API FCommandManager
 {
-	friend class RenderContextFactoryD3D12;
-	friend class CommandManagerD3D12;
-	friend class RenderContext;
+	friend class FRenderContextFactoryD3D12;
+	friend class FCommandManagerD3D12;
+	friend class FRenderContext;
 public:
-	virtual void Initialize(IDevice* pDevice) = 0;
+	virtual void Initialize(FRenderDevice* pDevice) = 0;
 
-	virtual void CreateNewCommandContext(const ECommandListType& Type, ICommandContext** pContext, void** pData) = 0;
+	virtual void CreateNewCommandContext(const ECommandListType& Type, FCommandContext** pContext, void** pData) = 0;
 
 	virtual void WaitForFence(uint64 Value) = 0;
 	inline virtual void IdleGpu()
@@ -48,7 +48,7 @@ public:
 		//m_pComputeQueue->WaitForIdle(); // TODO: Add Compute functionality
 	}
 
-	inline ICommandQueue* GetQueue(ECommandListType Type)
+	inline FCommandQueue* GetQueue(ECommandListType Type)
 	{
 		switch (Type)
 		{
@@ -56,11 +56,11 @@ public:
 		case ECommandListType::CLT_Compute: return m_pComputeQueue;
 		default:
 			R_LOG(Warning, TEXT("Unidentified enum value provided when getting command queue: %i"), Type);
-			return (ICommandQueue*)(NULL);
+			return (FCommandQueue*)(NULL);
 		}
 	}
-	inline ICommandQueue* GetGraphicsQueue()	const { return m_pGraphicsQueue; }
-	inline ICommandQueue* GetComputeQueue()		const { return m_pComputeQueue; }
+	inline FCommandQueue* GetGraphicsQueue()	const { return m_pGraphicsQueue; }
+	inline FCommandQueue* GetComputeQueue()		const { return m_pComputeQueue; }
 
 	// Test to see if a fence has already been reached
 	inline bool IsFenceComplete(uint64 FenceValue)
@@ -69,13 +69,13 @@ public:
 	}
 
 protected:
-	ICommandManager()
+	FCommandManager()
 		: m_pDeviceRef(NULL)
 		, m_pGraphicsQueue(NULL)
 		, m_pComputeQueue(NULL)
 	{
 	}
-	virtual ~ICommandManager()
+	virtual ~FCommandManager()
 	{
 		UnInitialize();
 	}
@@ -88,12 +88,12 @@ protected:
 		m_pComputeQueue = NULL;
 	}
 
-	inline void SetGraphicsQueue(ICommandQueue* pCommandQueue) { m_pGraphicsQueue = pCommandQueue; }
+	inline void SetGraphicsQueue(FCommandQueue* pCommandQueue) { m_pGraphicsQueue = pCommandQueue; }
 
-	IDevice* m_pDeviceRef;
+	FRenderDevice* m_pDeviceRef;
 
 	// Implementations of this interface control the lifetime of these objects.
 	//
-	ICommandQueue* m_pGraphicsQueue;
-	ICommandQueue* m_pComputeQueue;
+	FCommandQueue* m_pGraphicsQueue;
+	FCommandQueue* m_pComputeQueue;
 };

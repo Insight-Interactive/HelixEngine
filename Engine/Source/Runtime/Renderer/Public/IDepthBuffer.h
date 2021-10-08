@@ -5,10 +5,10 @@
 
 enum EFormat;
 
-class RENDER_API IDepthBuffer
+class RENDER_API FDepthBuffer
 {
 public:
-	virtual ~IDepthBuffer() {}
+	virtual ~FDepthBuffer() {}
 
 	virtual void Create(const WChar* Name, uint32 Width, uint32 Height, EFormat Format) = 0;
 
@@ -22,7 +22,7 @@ public:
 	}
 
 protected:
-	IDepthBuffer(float ClearDepth, uint8 ClearStencil)
+	FDepthBuffer(float ClearDepth, uint8 ClearStencil)
 		: m_ClearDepth(ClearDepth)
 		, m_ClearStencil(ClearStencil)
 	{

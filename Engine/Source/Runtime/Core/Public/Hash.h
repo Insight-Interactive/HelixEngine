@@ -7,7 +7,7 @@
 // and AMD Bulldozer (Oct. 2011) processors.  I could put a runtime
 // check for this, but I'm just going to assume people playing with
 // DirectX 12 on Windows 10 have fairly recent machines.
-#if defined _M_X64 && !defined HE_PS5
+#if defined _M_X64 && !defined HE_PROSPERO
 #   define ENABLE_SSE_CRC32 1
 #   include <intrin.h>
 #else

@@ -9,10 +9,10 @@
 
 class AActor;
 class HWorld;
-class ICommandContext;
+class FCommandContext;
 
 HCOMPONENT()
-class HActorComponent : public HObject, public SerializeableInterface
+class HActorComponent : public HObject, public FSerializeableInterface
 {
 	friend class AActor;
 public:
@@ -40,7 +40,7 @@ protected:
 	virtual void OnAttach() {}
 	virtual void OnDetach() {}
 	virtual void OnDestroy() {}
-	virtual void Render( ICommandContext& GfxContext ) = 0;
+	virtual void Render( FCommandContext& GfxContext ) = 0;
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;

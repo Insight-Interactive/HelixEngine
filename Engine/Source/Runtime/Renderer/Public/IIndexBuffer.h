@@ -5,20 +5,20 @@
 
 #include "RendererCore.h"
 
-class ICommandContext;
+class FCommandContext;
 
-class RENDER_API IIndexBuffer
+class RENDER_API FIndexBuffer
 {
-	friend class IGeometryBufferManager;
+	friend class FGeometryBufferManager;
 public:
-	virtual ~IIndexBuffer() {}
+	virtual ~FIndexBuffer() {}
 
 	virtual void* GetNativeBufferView() = 0;
 
 	virtual void Create(const WChar* Name, uint32 IndexDataSize, void* pIndices) = 0;
 
 protected:
-	IIndexBuffer() {}
+	FIndexBuffer() {}
 
 	void SetUID(IndexBufferUID& NewUID) { m_UID = NewUID; }
 

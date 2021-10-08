@@ -37,7 +37,11 @@
 #endif
 // Alias for nullptr
 #define null							nullptr
-#define HE_PRAGMA( X )					__pragma (X)
+#if _MSC_VER
+#	define HE_PRAGMA( X )					__pragma (X)
+#else
+#	define HE_PRAGMA( X )					_Pragma (X)
+#endif
 // Force the client to store the output of a function.
 #define HE_NO_DISCARD					[[nodiscard]]
 // Text unicode complience helper.

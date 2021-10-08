@@ -37,7 +37,7 @@ struct ProjectionProperties
 HCOMPONENT()
 class HCameraComponent : public HActorComponent
 {
-	friend class CameraManager;
+	friend class HCameraManager;
 public:
 	HCameraComponent( const HName& Name );
 	virtual ~HCameraComponent();
@@ -61,7 +61,7 @@ public:
 	void SetFieldOfView( float Value );
 
 protected:
-	virtual void Render( ICommandContext& GfxContext ) override;
+	virtual void Render( FCommandContext& GfxContext ) override;
 
 private:
 	void BuildViewMatrix();

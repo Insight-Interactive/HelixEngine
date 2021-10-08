@@ -6,7 +6,7 @@
 #include "AssetRegistry/AssetDatabase.h"
 #include "FileSystem.h"
 #include "VertexLayouts.h"
-#include "AssetRegistry/HMeshAsset.h"
+#include "AssetRegistry/MeshAsset.h"
 
 #include "miniz.c"
 #include "ofbx.h"
@@ -86,7 +86,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 	DataBlob FileData = FileSystem::ReadRawData( Filename );
 
 	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
-	std::vector<Vertex3D> Verticies;
+	std::vector<FVertex3D> Verticies;
 	std::vector<uint32> Indices;
 
 	// Process the mesh as an fbx file.
@@ -110,7 +110,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 		// Read th FBX file data.
 		//
 		const ofbx::Mesh& Mesh = *pScene->getMesh( i );
-		std::vector<Vertex3D> Verticies; Verticies.reserve( Mesh.getGeometry()->getVertexCount() );
+		std::vector<FVertex3D> Verticies; Verticies.reserve( Mesh.getGeometry()->getVertexCount() );
 		std::vector<uint32> Indices; Indices.reserve( Mesh.getGeometry()->getIndexCount() );
 
 		String MeshName = StringHelper::GetFilenameFromDirectory( Mesh.name );
@@ -122,7 +122,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 
 		for (int i = 0; i < VertexCount; ++i)
 		{
-			Vertex3D Vertex;
+			FVertex3D Vertex;
 
 			Vertex.Position.x = (float)RawVerticies[i].x;
 			Vertex.Position.y = (float)RawVerticies[i].y;
@@ -196,9 +196,9 @@ void MeshImporter::ImportFbx( const Char* Filename )
 
 		// Write the fbx data to out to custom .hasset file.
 		//
-		MeshAssetHeader Header;
+		FMeshAssetHeader Header;
 		Header.NumVerticies = (uint32)Verticies.size();
-		Header.VertexSizeInBytes = sizeof( Vertex3D );
+		Header.VertexSizeInBytes = sizeof( FVertex3D );
 		Header.NumIndices = (uint32)Indices.size();
 		Header.IndexSizeInBytes = sizeof( uint32 );
 
@@ -209,11 +209,11 @@ void MeshImporter::ImportFbx( const Char* Filename )
 
 		if (Output->IsOpen())
 		{
-			Output->WriteData( &Header, sizeof( MeshAssetHeader ), 1 );
-			Output->WriteData( Verticies.data(), sizeof( Vertex3D ), Verticies.size() );
+			Output->WriteData( &Header, sizeof( FMeshAssetHeader ), 1 );
+			Output->WriteData( Verticies.data(), sizeof( FVertex3D ), Verticies.size() );
 			Output->WriteData( Indices.data(), sizeof( uint32 ), Indices.size() );
 
-			AssetDatabase::GetInstance()->RegisterMesh( MeshName.c_str(), OutputFile.c_str() );
+			FAssetDatabase::GetInstance()->RegisterMesh( MeshName.c_str(), OutputFile.c_str() );
 
 			HE_LOG( Log, TEXT( "Mesh import with path: \"%s\" successful." ), CharToTChar( Filename ) );
 		}

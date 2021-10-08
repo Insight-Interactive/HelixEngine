@@ -7,7 +7,7 @@
 #include "Renderer/Common.h"
 #include "Renderer/ShaderRegisters.h"
 #include "CommonStructHelpers.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "IRootSignature.h"
 #include "ICommandContext.h"
 #include "IGpuResource.h"
@@ -17,22 +17,22 @@
 #include "Engine/GameProject.h"
 
 
-SkyboxPass::SkyboxPass()
+FSkyboxPass::FSkyboxPass()
 {
 }
 
-SkyboxPass::~SkyboxPass()
+FSkyboxPass::~FSkyboxPass()
 {
 }
 
-void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferFormat)
+void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferFormat)
 {
 	m_DepthTargetFormat = DepthBufferFormat;
 	m_RenderTargetFormat = RenderTargetFormat;
 
 	// Resources
 	//
-	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20);
+	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20); 
 	String SkyTexture = FGameProject::GetInstance()->GetContentFolder() + "/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds";
 	m_SkyDiffuse = GTextureManager->LoadTexture(SkyTexture, DT_Magenta2D, false);
 
@@ -56,23 +56,23 @@ void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForma
 	DataBlob VSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.vs.cso");
 	DataBlob PSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.ps.cso");
 
-	InputElementDesc InputElements[1] =
+	FInputElementDesc InputElements[1] =
 	{
 		{ "POSITION",	0, F_R32G32B32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	};
 	const uint32 kNumInputElements = HE_ARRAYSIZE(InputElements);
 
-	DepthStencilStateDesc DepthStateDesc = {};
+	FDepthStencilStateDesc DepthStateDesc = {};
 	DepthStateDesc.DepthEnable = true;
 	DepthStateDesc.DepthWriteMask = DWM_All;
 	DepthStateDesc.DepthFunc = CF_LessEqual;
 
-	RasterizerDesc RasterStateDesc = {};
+	FRasterizerDesc RasterStateDesc = {};
 	RasterStateDesc.DepthClipEnabled = true;
 	RasterStateDesc.CullMode = CM_Front;
 	RasterStateDesc.FillMode = FM_Solid;
 
-	PipelineStateDesc PSODesc = {};
+	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = InputElements;
@@ -91,23 +91,23 @@ void SkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForma
 	GDevice->CreatePipelineState(PSODesc, &m_pPSO);
 }
 
-void SkyboxPass::UnInitialize()
+void FSkyboxPass::UnInitialize()
 {
 	HE_SAFE_DELETE_PTR( m_pRS );
 	HE_SAFE_DELETE_PTR( m_pPSO );
 }
 
-void SkyboxPass::Bind(ICommandContext& GfxContext, IColorBuffer& RenderTarget, IDepthBuffer& DepthBuffer)
+void FSkyboxPass::Bind(FCommandContext& GfxContext, FColorBuffer& RenderTarget, FDepthBuffer& DepthBuffer)
 {
 	GfxContext.BeginDebugMarker(TEXT("Sky Pass"));
 
 	//Transition
 	// 
 	// Color
-	IGpuResource& AlbedoGBufferResource = *DCast<IGpuResource*>(&RenderTarget);
+	FGpuResource& AlbedoGBufferResource = *DCast<FGpuResource*>(&RenderTarget);
 	GfxContext.TransitionResource(AlbedoGBufferResource, RS_RenderTarget);
 	// Depth
-	IGpuResource& DepthBufferResource = *DCast<IGpuResource*>(&DepthBuffer);
+	FGpuResource& DepthBufferResource = *DCast<FGpuResource*>(&DepthBuffer);
 	GfxContext.TransitionResource(DepthBufferResource, RS_DepthWrite);
 
 	// Set
@@ -115,7 +115,7 @@ void SkyboxPass::Bind(ICommandContext& GfxContext, IColorBuffer& RenderTarget, I
 	GfxContext.SetGraphicsRootSignature(*m_pRS);
 	GfxContext.SetPipelineState(*m_pPSO);
 
-	const IColorBuffer* pRTs[] = {
+	const FColorBuffer* pRTs[] = {
 				&RenderTarget,
 	};
 	GfxContext.OMSetRenderTargets(1, pRTs, &DepthBuffer);
@@ -123,7 +123,7 @@ void SkyboxPass::Bind(ICommandContext& GfxContext, IColorBuffer& RenderTarget, I
 
 }
 
-void SkyboxPass::UnBind(ICommandContext& GfxContext, IDepthBuffer& DepthBuffer)
+void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
 {
 	// Render
 	//
@@ -141,38 +141,38 @@ void SkyboxPass::UnBind(ICommandContext& GfxContext, IDepthBuffer& DepthBuffer)
 
 	// Transition
 	//
-	IGpuResource& DepthBufferResource = *DCast<IGpuResource*>(&DepthBuffer);
+	FGpuResource& DepthBufferResource = *DCast<FGpuResource*>(&DepthBuffer);
 	GfxContext.TransitionResource(DepthBufferResource, RS_DepthRead);
 
 	GfxContext.EndDebugMarker();
 }
 
-void SkyboxPass::ReloadPipeline()
+void FSkyboxPass::ReloadPipeline()
 {
 	HE_SAFE_DELETE_PTR( m_pPSO );
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/SkyboxPass.vs.cso" );
-	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/SkyboxPass.ps.cso" );
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/FSkyboxPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/FSkyboxPass.ps.cso" );
 
-	InputElementDesc InputElements[1] =
+	FInputElementDesc InputElements[1] =
 	{
 		{ "POSITION",	0, F_R32G32B32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	};
 	const uint32 kNumInputElements = HE_ARRAYSIZE( InputElements );
 
-	DepthStencilStateDesc DepthStateDesc = {};
+	FDepthStencilStateDesc DepthStateDesc = {};
 	DepthStateDesc.DepthEnable = true;
 	DepthStateDesc.DepthWriteMask = DWM_All;
 	DepthStateDesc.DepthFunc = CF_LessEqual;
 
-	RasterizerDesc RasterStateDesc = {};
+	FRasterizerDesc RasterStateDesc = {};
 	RasterStateDesc.DepthClipEnabled = true;
 	RasterStateDesc.CullMode = CM_Front;
 	RasterStateDesc.FillMode = FM_Solid;
 
-	PipelineStateDesc PSODesc = {};
+	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = InputElements;

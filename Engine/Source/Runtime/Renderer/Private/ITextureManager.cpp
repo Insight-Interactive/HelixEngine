@@ -6,7 +6,7 @@
 #include "ITexture.h"
 
 
-void IManagedTexture::WaitForLoad() const
+void HManagedTexture::WaitForLoad() const
 {
 	while ((volatile bool&)m_IsLoading)
 	{
@@ -14,7 +14,7 @@ void IManagedTexture::WaitForLoad() const
 	}
 }
 
-void IManagedTexture::Unload()
+void HManagedTexture::Unload()
 {
 	if (GTextureManager)
 	{
@@ -22,7 +22,7 @@ void IManagedTexture::Unload()
 	}
 }
 
-void ITextureManager::DestroyDefaultTextures()
+void FTextureManager::DestroyDefaultTextures()
 {
 	for (uint32 i = 0; i < DT_NumDefaultTextures; ++i)
 	{
@@ -33,26 +33,26 @@ void ITextureManager::DestroyDefaultTextures()
 }
 
 
-TextureRef::TextureRef(const TextureRef& ref)
+HTextureRef::HTextureRef(const HTextureRef& ref)
 	: m_Ref(ref.m_Ref)
 {
 	if (m_Ref != nullptr)
 		++m_Ref->m_ReferenceCount;
 }
 
-TextureRef::TextureRef(IManagedTexture* tex) : m_Ref(tex)
+HTextureRef::HTextureRef(HManagedTexture* tex) : m_Ref(tex)
 {
 	if (m_Ref != nullptr)
 		++m_Ref->m_ReferenceCount;
 }
 
-TextureRef::~TextureRef()
+HTextureRef::~HTextureRef()
 {
 	if (m_Ref != nullptr && --m_Ref->m_ReferenceCount == 0)
 		m_Ref->Unload();
 }
 
-void TextureRef::operator= (std::nullptr_t)
+void HTextureRef::operator= (std::nullptr_t)
 {
 	if (m_Ref != nullptr)
 		--m_Ref->m_ReferenceCount;
@@ -60,7 +60,7 @@ void TextureRef::operator= (std::nullptr_t)
 	m_Ref = nullptr;
 }
 
-void TextureRef::operator= (TextureRef& rhs)
+void HTextureRef::operator= (HTextureRef& rhs)
 {
 	if (m_Ref != nullptr)
 		--m_Ref->m_ReferenceCount;
@@ -71,18 +71,18 @@ void TextureRef::operator= (TextureRef& rhs)
 		++m_Ref->m_ReferenceCount;
 }
 
-bool TextureRef::IsValid() const
+bool HTextureRef::IsValid() const
 {
 	return m_Ref && m_Ref->IsValid();
 }
 
-const ITexture* TextureRef::Get() const
+const HTexture* HTextureRef::Get() const
 {
-	return DCast<ITexture*>(m_Ref);
+	return DCast<HTexture*>(m_Ref);
 }
 
-const ITexture* TextureRef::operator->() const
+const HTexture* HTextureRef::operator->() const
 {
 	HE_ASSERT(m_Ref != nullptr);
-	return DCast<ITexture*>(m_Ref);
+	return DCast<HTexture*>(m_Ref);
 }

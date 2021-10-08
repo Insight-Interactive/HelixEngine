@@ -1,30 +1,17 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
-
-// ---------
-// Input
-// ---------
-#define HE_INPUT_USE_KEYBOARD_MOUSE 1
-#define HE_INPUT_USE_GAMEPAD		1
-
-
-#ifdef HE_GAME_CONSOLE
-#	define HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH 0
-#else
-#	define HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH 1
-#endif
-
-
+// Entry Points
+//
 #ifdef HE_WINDOWS						
-#	define HE_ENTRY_POINT int APIENTRY wWinMain(					\
+#	define HE_ENTRY_POINT() int APIENTRY wWinMain(					\
 							_In_		HINSTANCE hInstance,		\
 							_In_opt_	HINSTANCE hPrevInstance,	\
 							_In_		LPWSTR CmdLine,				\
 							_In_		int nCmdShow)				
 
 #elif defined HE_PLAYSTATION
-#	define HE_ENTRY_POINT int main(int nCmdShow, wchar_t* CmdLine[]) 
+#	define HE_ENTRY_POINT() int main(int nCmdShow, wchar_t* CmdLine[]) 
 
 #endif
 
@@ -64,10 +51,10 @@
 #	define HE_PLATFORM_STRING "Windows 64"
 #elif HE_WIN32
 #	define HE_PLATFORM_STRING "Windows 32"
-#elif HE_XBOX_ONE
+#elif HE_DURANGO
 #	define HE_PLATFORM_STRING "Xbox One (Durango)"
-#elif HE_XBOX_ONE_X
+#elif HE_SCORPIO
 #	define HE_PLATFORM_STRING "Xbox One X (Scorpio)"
-#elif HE_PS5
+#elif HE_PROSPERO
 #	define HE_PLATFORM_STRING "PlayStation 5 (Prospero)"
 #endif

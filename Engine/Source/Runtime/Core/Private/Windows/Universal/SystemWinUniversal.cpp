@@ -26,16 +26,11 @@ namespace System
 
 	bool InitializePlatform()
 	{
-		// Init the COM library.
-		HRESULT hr = CoInitialize( NULL );
-		return SUCCEEDED( hr );
+		return true;
 	}
 
 	bool UninitializePlatform()
 	{
-		// Uninit the COM library.
-		CoUninitialize();
-
 		return true;
 	}
 
@@ -99,10 +94,10 @@ namespace System
 		{
 		}
 	}
+
 	void ProcessMessages()
 	{
-		// Do nothing for Windows Universal.
-		return;
+		CoreWindow::GetForCurrentThread().Dispatcher().ProcessEvents( CoreProcessEventsOption::ProcessAllIfPresent );
 	}
 
 	DLLHandle LoadDynamicLibrary(const wchar_t* Filepath)
@@ -121,7 +116,6 @@ namespace System
 	{
 		winrt::Windows::UI::Popups::MessageDialog Dialog(Message, Title);
 		Dialog.ShowAsync();
-
 		return (MessageDialogResult)-1;
 	}
 
@@ -200,14 +194,14 @@ namespace System
 		return GetCommandLineA();
 	}
 
-	uint64 QueryPerformanceCounter()
+	int64 QueryPerfCounter()
 	{
 		LARGE_INTEGER Tick = { 0 };
 		HE_ASSERT( QueryPerformanceCounter( &Tick ) == TRUE );
 		return (uint64)Tick.QuadPart;
 	}
 
-	uint64 QueryPerformanceFrequency()
+	int64 QueryPerfFrequency()
 	{
 		LARGE_INTEGER Frequency = { 0 };
 

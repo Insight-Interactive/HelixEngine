@@ -10,21 +10,21 @@
 #include "CommonStructs.h"
 #include "../D3DCommon/D3DCommon.h"
 
-class IDevice;
+class FRenderDevice;
 
 
-class RENDER_API PixelBufferD3D12 : public IPixelBuffer, public GpuResourceD3D12
+class RENDER_API FPixelBufferD3D12 : public FPixelBuffer, public FGpuResourceD3D12
 {
 public:
-	PixelBufferD3D12()
+	FPixelBufferD3D12()
 	{
 	}
-	virtual ~PixelBufferD3D12()
+	virtual ~FPixelBufferD3D12()
 	{
 	}
 
-	virtual ResourceDesc DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags) override;
-	virtual void AssociateWithResource(IDevice* Device, const WChar* Name, void* Resource, EResourceState CurrentState) override;
-	virtual void CreateTextureResource(IDevice* Device, const WChar* Name, const ResourceDesc& ResourceDesc, const ClearValue& ClearValue) override;
+	virtual FResourceDesc DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags) override;
+	virtual void AssociateWithResource(FRenderDevice* Device, const WChar* Name, void* Resource, EResourceState CurrentState) override;
+	virtual void CreateTextureResource(FRenderDevice* Device, const WChar* Name, const FResourceDesc& FResourceDesc, const FClearValue& ClearValue) override;
 
 };

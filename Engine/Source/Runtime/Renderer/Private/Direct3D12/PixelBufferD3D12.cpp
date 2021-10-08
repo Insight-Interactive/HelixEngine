@@ -1,17 +1,17 @@
 #include "RendererPCH.h"
 
 #include "PixelBufferD3D12.h"
-#include "DeviceD3D12.h"
+#include "RenderDeviceD3D12.h"
 
 
-ResourceDesc PixelBufferD3D12::DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags)
+FResourceDesc FPixelBufferD3D12::DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags)
 {
 	m_Width = Width;
 	m_Height = Height;
 	m_ArraySize = DepthOrArraySize;
 	m_Format = Format;
 
-	ResourceDesc Desc = {};
+	FResourceDesc Desc = {};
 	Desc.Alignment = 0;
 	Desc.DepthOrArraySize = (uint16)DepthOrArraySize;
 	Desc.Dimension = RD_Texture_2D;
@@ -27,7 +27,7 @@ ResourceDesc PixelBufferD3D12::DescribeTex2D(uint32 Width, uint32 Height, uint32
 	return Desc;
 }
 
-void PixelBufferD3D12::AssociateWithResource(IDevice* pDevice, const WChar* Name, void* pResource, EResourceState CurrentState)
+void FPixelBufferD3D12::AssociateWithResource(FRenderDevice* pDevice, const WChar* Name, void* pResource, EResourceState CurrentState)
 {
 	HE_ASSERT(pResource != NULL);
 
@@ -48,11 +48,11 @@ void PixelBufferD3D12::AssociateWithResource(IDevice* pDevice, const WChar* Name
 #endif // IE_DEBUG
 }
 
-void PixelBufferD3D12::CreateTextureResource(IDevice* pDevice, const WChar* Name, const ResourceDesc& ResourceDesc, const ClearValue& ClearValue)
+void FPixelBufferD3D12::CreateTextureResource(FRenderDevice* pDevice, const WChar* Name, const FResourceDesc& FResourceDesc, const FClearValue& ClearValue)
 {
 	HE_ASSERT(pDevice != NULL);
 
-	DeviceD3D12* pD3D12Device = DCast<DeviceD3D12*>(pDevice);
+	FRenderDeviceD3D12* pD3D12Device = DCast<FRenderDeviceD3D12*>(pDevice);
 	HE_ASSERT(pD3D12Device != NULL);
 
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(pD3D12Device->GetNativeDevice());
@@ -70,7 +70,7 @@ void PixelBufferD3D12::CreateTextureResource(IDevice* pDevice, const WChar* Name
 		HRESULT hr = pID3D12Device->CreateCommittedResource(
 			&HeapProps,
 			D3D12_HEAP_FLAG_NONE,
-			RCast<const D3D12_RESOURCE_DESC*>(&ResourceDesc),
+			RCast<const D3D12_RESOURCE_DESC*>(&FResourceDesc),
 			(D3D12_RESOURCE_STATES)RS_Common,
 			&D3D12ClearVal,
 			IID_PPV_ARGS(&m_pID3D12Resource)

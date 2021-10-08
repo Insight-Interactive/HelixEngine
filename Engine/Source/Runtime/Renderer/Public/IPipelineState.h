@@ -2,19 +2,19 @@
 
 #include "RendererFwd.h"
 
-struct PipelineStateDesc;
+struct FPipelineStateDesc;
 
-class RENDER_API IPipelineState
+class RENDER_API FPipelineState
 {
 public:
-	virtual ~IPipelineState()
+	virtual ~FPipelineState()
 	{
 	}
 	virtual void* GetNativePSO() = 0;
 
-	virtual void Initialize(const PipelineStateDesc& Desc) = 0;
+	virtual void Initialize(const FPipelineStateDesc& Desc) = 0;
 
 protected:
-	IPipelineState() {}
+	FPipelineState() {}
 
 };

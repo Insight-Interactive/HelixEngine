@@ -17,14 +17,14 @@ workspace ("HelixEngine")
 
 	configurations
 	{
-		-- Debug symbols for all engine modules activated. Optimal configuration for
-		-- adding and testing new engine features.
+		-- Debug symbols for all engine modules activated. 
+		-- Optimal configuration for adding and testing new engine features.
 		"DebugEditor",
 
 		-- Debug symbols for engine and game activated.
 		"Development",
 		
-		-- Optimized engine code with debug symbols for game code only.
+		-- Optimized engine code with debug symbols for game code only. Builds Standalone exe.
 		"DebugGame",
 
 		-- All engine and game code optimizations applied.
@@ -41,35 +41,35 @@ workspace ("HelixEngine")
 		"Win32",
 		
 		-- Universal Windows environment targeting the Xbox One console.
-		"XboxOne",
+		"Durango",
 		
 		-- Universal Windows environment targeting the Xbox One X console.
-		"XboxOneX",
+		"Scorpio",
 		
 		-- Sony platform targeting the Playstation 5 console.
-		"PlayStation5",
+		"Prospero",
 	}
 
-	-- filter "platforms:XboxOne"
-	-- 	defines "HE_XBOX_ONE"
-	-- 	system  ("WindowsUniversal")
-	-- 	consumewinrtextension ("false")
-	-- 	generatewinmd ("false")
-	-- 	architecture ("x64")
-
-	-- filter "platforms:XboxOneX"
-	-- 	defines "HE_XBOX_ONE_X"
-	-- 	system  ("WindowsUniversal")
-	-- 	consumewinrtextension ("false")
-	-- 	generatewinmd ("false")
-	-- 	architecture ("x64")
+--	filter "platforms:Durango"
+--		defines "HE_XBOX_ONE"
+--		system  ("WindowsUniversal")
+--		consumewinrtextension ("false")
+--		generatewinmd ("false")
+--		architecture ("x64")
+--
+--	filter "platforms:Scorpio"
+--		defines "HE_XBOX_ONE_X"
+--		system  ("WindowsUniversal")
+--		consumewinrtextension ("false")
+--		generatewinmd ("false")
+--		architecture ("x64")
 
 	filter "platforms:Win64"
 		defines "HE_WIN64"
 		system ("Windows")
 		architecture ("x64")
 
-	filter "platforms:PlayStation5"
+	filter "platforms:Prospero"
 		defines "HE_PS5"
 		system ("Windows")
 		toolset ("clang")
@@ -102,9 +102,13 @@ workspace ("HelixEngine")
 		
 	filter "configurations:DebugGame"
 		defines { "%{macros.dev}=1", "%{macros.debug}=1", "%{macros.debugGame}" }
-		runtime ("Release")
+		runtime ("Debug")
 		symbols ("On")
-		optimize ("On")
+		optimize ("Off")
+		
+--		runtime ("Release")
+--		symbols ("On")
+--		optimize ("On")
 		
 	filter "configurations:ShippingGame"
 		defines { "%{macros.shipping}=1" }

@@ -14,14 +14,14 @@
 // Various types of allocations may contain NULL pointers.  Check before dereferencing if you are unsure.
 struct DynAlloc
 {
-    DynAlloc(GpuResourceD3D12& BaseResource, uint64 ThisOffset, uint64 ThisSize)
+    DynAlloc(FGpuResourceD3D12& BaseResource, uint64 ThisOffset, uint64 ThisSize)
         : Buffer(BaseResource)
         , Offset(ThisOffset)
         , Size(ThisSize)
     {
     }
 
-    GpuResourceD3D12& Buffer;	// The D3D buffer associated with this memory.
+    FGpuResourceD3D12& Buffer;	// The D3D buffer associated with this memory.
     uint64 Offset;			// Offset from start of buffer resource
     uint64 Size;			// Reserved size of this allocation
     void* DataPtr;			// The CPU-writeable address
@@ -29,11 +29,11 @@ struct DynAlloc
 };
 
 
-class LinearAllocationPage : public GpuResourceD3D12
+class FLinearAllocationPage : public FGpuResourceD3D12
 {
 public:
-    LinearAllocationPage(ID3D12Resource* pResource, EResourceState Usage) 
-        : GpuResourceD3D12()
+    FLinearAllocationPage(ID3D12Resource* pResource, EResourceState Usage) 
+        : FGpuResourceD3D12()
     {
         m_pID3D12Resource.Attach(pResource);
         m_UsageState = Usage;
@@ -41,7 +41,7 @@ public:
         m_pID3D12Resource->Map(0, nullptr, &m_CpuVirtualAddress);
     }
 
-    ~LinearAllocationPage()
+    ~FLinearAllocationPage()
     {
         Unmap();
     }
@@ -83,20 +83,20 @@ enum
     CpuAllocatorPageSize = 0x200000	// 2MB
 };
 
-class LinearAllocatorPageManager
+class FLinearAllocatorPageManager
 {
 public:
 
-    LinearAllocatorPageManager();
-    LinearAllocationPage* RequestPage(void);
-    LinearAllocationPage* CreateNewPage(size_t PageSize = 0);
+    FLinearAllocatorPageManager();
+    FLinearAllocationPage* RequestPage(void);
+    FLinearAllocationPage* CreateNewPage(size_t PageSize = 0);
 
     // Discarded pages will get recycled.  This is for fixed size pages.
-    void DiscardPages(uint64_t FenceID, const std::vector<LinearAllocationPage*>& Pages);
+    void DiscardPages(uint64_t FenceID, const std::vector<FLinearAllocationPage*>& Pages);
 
     // Freed pages will be destroyed once their fence has passed.  This is for single-use,
     // "large" pages.
-    void FreeLargePages(uint64_t FenceID, const std::vector<LinearAllocationPage*>& Pages);
+    void FreeLargePages(uint64_t FenceID, const std::vector<FLinearAllocationPage*>& Pages);
 
     void Destroy(void) { m_PagePool.clear(); }
 
@@ -105,18 +105,18 @@ private:
     static LinearAllocatorType sm_AutoType;
 
     LinearAllocatorType m_AllocationType;
-    std::vector<std::unique_ptr<LinearAllocationPage> > m_PagePool;
-    std::queue<std::pair<uint64_t, LinearAllocationPage*> > m_RetiredPages;
-    std::queue<std::pair<uint64_t, LinearAllocationPage*> > m_DeletionQueue;
-    std::queue<LinearAllocationPage*> m_AvailablePages;
+    std::vector<std::unique_ptr<FLinearAllocationPage> > m_PagePool;
+    std::queue<std::pair<uint64_t, FLinearAllocationPage*> > m_RetiredPages;
+    std::queue<std::pair<uint64_t, FLinearAllocationPage*> > m_DeletionQueue;
+    std::queue<FLinearAllocationPage*> m_AvailablePages;
     CriticalSection m_Mutex;
 };
 
-class LinearAllocator
+class FLinearAllocator
 {
 public:
 
-    LinearAllocator(LinearAllocatorType Type) : m_AllocationType(Type), m_PageSize(0), m_CurOffset(~(size_t)0), m_CurPage(nullptr)
+    FLinearAllocator(LinearAllocatorType Type) : m_AllocationType(Type), m_PageSize(0), m_CurOffset(~(size_t)0), m_CurPage(nullptr)
     {
         HE_ASSERT(Type > LAT_InvalidAllocator && Type < LAT_NumAllocatorTypes);
         m_PageSize = (Type == LAT_GpuExclusive ? GpuAllocatorPageSize : CpuAllocatorPageSize);
@@ -136,12 +136,12 @@ private:
 
     DynAlloc AllocateLargePage(size_t SizeInBytes);
 
-    static LinearAllocatorPageManager sm_PageManager[2];
+    static FLinearAllocatorPageManager sm_PageManager[2];
 
     LinearAllocatorType m_AllocationType;
     size_t m_PageSize;
     size_t m_CurOffset;
-    LinearAllocationPage* m_CurPage;
-    std::vector<LinearAllocationPage*> m_RetiredPages;
-    std::vector<LinearAllocationPage*> m_LargePageList;
+    FLinearAllocationPage* m_CurPage;
+    std::vector<FLinearAllocationPage*> m_RetiredPages;
+    std::vector<FLinearAllocationPage*> m_LargePageList;
 };

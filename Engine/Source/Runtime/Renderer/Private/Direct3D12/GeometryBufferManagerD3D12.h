@@ -9,13 +9,13 @@
 #include "CriticalSection.h"
 
 
-class RENDER_API GeometryBufferManagerD3D12 : public IGeometryBufferManager
+class RENDER_API FGeometryBufferManagerD3D12 : public FGeometryBufferManager
 {
 public:
-	GeometryBufferManagerD3D12()
+	FGeometryBufferManagerD3D12()
 	{
 	}
-	virtual ~GeometryBufferManagerD3D12()
+	virtual ~FGeometryBufferManagerD3D12()
 	{
 	}
 
@@ -25,14 +25,14 @@ public:
 	virtual void DeAllocateVertexBuffer( VertexBufferUID& UID ) override;
 	virtual void DeAllocateIndexBuffer( IndexBufferUID& UID ) override;
 
-	virtual IVertexBuffer& GetVertexBufferByUID( const VertexBufferUID& UID ) override;
-	virtual IIndexBuffer& GetIndexBufferByUID( const IndexBufferUID& UID ) override;
+	virtual FVertexBuffer& GetVertexBufferByUID( const VertexBufferUID& UID ) override;
+	virtual FIndexBuffer& GetIndexBufferByUID( const IndexBufferUID& UID ) override;
 
 protected:
 	CriticalSection m_VertexBufferGuard;
 	CriticalSection m_IndexBufferGuard;
-	std::unordered_map<VertexBufferUID, VertexBufferD3D12> m_VertexBufferLUT;
-	std::unordered_map<IndexBufferUID, IndexBufferD3D12> m_IndexBufferLUT;
+	std::unordered_map<VertexBufferUID, FVertexBufferD3D12> m_VertexBufferLUT;
+	std::unordered_map<IndexBufferUID, FIndexBufferD3D12> m_IndexBufferLUT;
 
 };
 
@@ -40,13 +40,13 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE IVertexBuffer& GeometryBufferManagerD3D12::GetVertexBufferByUID( const VertexBufferUID& UID )
+FORCEINLINE FVertexBuffer& FGeometryBufferManagerD3D12::GetVertexBufferByUID( const VertexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_VERTEX_BUFFER_HANDLE );
 	return m_VertexBufferLUT.at( UID );
 }
 
-FORCEINLINE IIndexBuffer& GeometryBufferManagerD3D12::GetIndexBufferByUID( const IndexBufferUID& UID )
+FORCEINLINE FIndexBuffer& FGeometryBufferManagerD3D12::GetIndexBufferByUID( const IndexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_INDEX_BUFFER_HANDLE );
 	return m_IndexBufferLUT.at( UID );

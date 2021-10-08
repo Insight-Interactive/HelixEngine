@@ -5,26 +5,26 @@
 
 #include "FileSystem.h"
 #include "StringHelper.h"
-#include "AssetRegistry/HMeshAsset.h"
+#include "AssetRegistry/MeshAsset.h"
 #include "VertexLayouts.h"
 #include "Hash.h"
 
 
-extern StaticGeometryManager GStaticGeometryManager;
+extern FStaticGeometryManager GStaticGeometryManager;
 
 
-void ManagedStaticMeshGeometry::WaitForLoad() const
+void HManagedStaticMeshGeometry::WaitForLoad() const
 {
 	while ((volatile bool&)m_IsLoading)
 		std::this_thread::yield();
 }
 
-void ManagedStaticMeshGeometry::Unload()
+void HManagedStaticMeshGeometry::Unload()
 {
 	GStaticGeometryManager.DestroyMesh( m_MapKey );
 }
 
-StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
+StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
 {
 	HE_ASSERT( StringHelper::GetFileExtension( FilePath ) == "hasset" ); // Trying to load a file that is not an hasset.
 
@@ -40,7 +40,7 @@ StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const Strin
 	uint8* DataHead = Memory.GetBufferPointer();
 
 	// Copy the header information.
-	const MeshAssetHeader& MeshHeader = *(MeshAssetHeader*)DataHead;
+	const FMeshAssetHeader& MeshHeader = *(FMeshAssetHeader*)DataHead;
 	HE_ASSERT( MeshHeader.Type == AT_Mesh ); // Trying to parse an asset that is not a mesh!
 	DataHead += kMeshHeaderSizeInBytes;		// Now pointing to first vertex in the vertex buffer.
 
@@ -56,7 +56,7 @@ StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const Strin
 
 	// Create the mesh geometry, register it with the GPU and cache it.
 	uint64 NameHash = StringHash( MeshName.c_str(), MeshName.size() );
-	ManagedStaticMeshGeometry* pMesh = new ManagedStaticMeshGeometry( MeshName );
+	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
 	pMesh->SetHashName( NameHash );
 	pMesh->Create(
 		FirstVertex, MeshHeader.NumVerticies, MeshHeader.VertexSizeInBytes,
@@ -68,14 +68,14 @@ StaticMeshGeometryRef StaticGeometryManager::LoadHAssetMeshFromFile( const Strin
 	return m_ModelCache[MeshName]/*.get()*/;
 }
 
-StaticMeshGeometryRef StaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
+StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
 {
 #if HE_WITH_EDITOR
 	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
 #endif
 
 	uint64 HashName = StringHash( Name.c_str(), Name.size() );
-	ManagedStaticMeshGeometry* pMesh = new ManagedStaticMeshGeometry( Name );
+	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
 	pMesh->SetHashName( HashName );
 	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );

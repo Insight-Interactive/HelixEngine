@@ -4,9 +4,9 @@
 #include "RendererCore.h"
 
 
-class RENDER_API IGeometryBufferManager
+class RENDER_API FGeometryBufferManager
 {
-	friend class RenderContext;
+	friend class FRenderContext;
 public:
 	virtual VertexBufferUID AllocateVertexBuffer() = 0;
 	virtual IndexBufferUID AllocateIndexBuffer() = 0;
@@ -14,12 +14,12 @@ public:
 	virtual void DeAllocateVertexBuffer( VertexBufferUID& UID ) = 0;
 	virtual void DeAllocateIndexBuffer( IndexBufferUID& UID ) = 0;
 
-	virtual IVertexBuffer& GetVertexBufferByUID( const VertexBufferUID& UID ) = 0;
-	virtual IIndexBuffer& GetIndexBufferByUID( const IndexBufferUID& UID ) = 0;
+	virtual FVertexBuffer& GetVertexBufferByUID( const VertexBufferUID& UID ) = 0;
+	virtual FIndexBuffer& GetIndexBufferByUID( const IndexBufferUID& UID ) = 0;
 
 protected:
-	IGeometryBufferManager() {}
-	virtual ~IGeometryBufferManager() {}
+	FGeometryBufferManager() {}
+	virtual ~FGeometryBufferManager() {}
 
 	static VertexBufferUID SNextVertexBufferID;
 	static IndexBufferUID SNextIndexBufferID;

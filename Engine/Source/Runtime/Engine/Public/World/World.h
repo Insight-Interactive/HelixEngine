@@ -10,15 +10,15 @@
 class HLevel;
 class HCameraComponent;
 class APlayerCharacter;
-class ICommandContext;
-class ViewportContext;
+class FCommandContext;
+class FViewportContext;
 
 /*
 	The "World" is a high-level construct that contains all entities in the playable space.
 	The world contains a level which contains all actors. The name level is used interchangably 
 	for ease of use to the user.
 */
-class HWorld : public HObject, public SerializeableInterface
+class HWorld : public HObject, public FSerializeableInterface
 {
 	friend class WorldOutlinePanel;
 	friend class HEditorEngine;
@@ -33,13 +33,13 @@ public:
 
 	void BeginPlay();
 	void Tick(float DeltaTime);
-	void Render(ICommandContext& CmdContext);
+	void Render(FCommandContext& CmdContext);
 
-	CameraManager* GetCameraManager();
-	ViewportContext* GetOwningViewport();
+	HCameraManager* GetCameraManager();
+	FViewportContext* GetOwningViewport();
 	HCameraComponent* GetCurrentSceneRenderCamera();
 	void SetCurrentSceneRenderCamera(HCameraComponent* pCamera);
-	void SetViewport( ViewportContext* pViewport );
+	void SetViewport( FViewportContext* pViewport );
 
 	HLevel* GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
@@ -67,9 +67,9 @@ protected:
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
-	ViewportContext* m_pRenderingViewport;
+	FViewportContext* m_pRenderingViewport;
 
-	CameraManager m_CameraManager;
+	HCameraManager m_CameraManager;
 };
 
 
@@ -77,7 +77,7 @@ protected:
 // Inline function implementations
 //
 
-inline CameraManager* HWorld::GetCameraManager()
+inline HCameraManager* HWorld::GetCameraManager()
 {
 	return &m_CameraManager;
 }
@@ -92,12 +92,12 @@ inline void HWorld::SetCurrentSceneRenderCamera(HCameraComponent* pCamera)
 	m_RenderingCamera = pCamera;
 }
 
-inline ViewportContext* HWorld::GetOwningViewport()
+inline FViewportContext* HWorld::GetOwningViewport()
 {
 	return m_pRenderingViewport;
 }
 
-inline void HWorld::SetViewport( ViewportContext* pViewport )
+inline void HWorld::SetViewport( FViewportContext* pViewport )
 {
 	m_pRenderingViewport = pViewport;
 }

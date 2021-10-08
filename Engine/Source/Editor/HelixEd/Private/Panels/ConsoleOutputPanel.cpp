@@ -25,7 +25,7 @@ void ConsoleOutputPanel::Tick( float DeltaTime )
 {
 }
 
-void ConsoleOutputPanel::Render( ICommandContext& CmdCtx )
+void ConsoleOutputPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Console" );
 	{

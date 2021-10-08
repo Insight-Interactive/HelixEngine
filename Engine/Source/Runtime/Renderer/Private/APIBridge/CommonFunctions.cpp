@@ -2,6 +2,7 @@
 
 #include "APIBridge/CommonFunctions.h"
 
+
 namespace APIBridge
 {
 
@@ -72,11 +73,13 @@ namespace APIBridge
 		if (AllowTearing)
 		{
 			hr = (*ppInFactory)->MakeWindowAssociation(SCast<HWND>(NativeWindow), DXGI_MWA_NO_ALT_ENTER);
-			ThrowIfFailedMsg(hr, TEXT("Failed to Make Window Association"));
+			ThrowIfFailedMsg(hr, TEXT("Failed to Make FWindow Association"));
 		}
 #elif HE_WINDOWS_UNIVERSAL
+		//CoreWindow* pCoreWindow = RCast<CoreWindow*>( NativeWindow );
+		//void* abi = winrt::get_abi( *pCoreWindow );
 		hr = (*ppInFactory)->CreateSwapChainForCoreWindow(pDevice, RCast<::IUnknown*>(NativeWindow), Desc, NULL, &pTempSwapChain);
-		ThrowIfFailed(hr, TEXT("Failed to Create swap chain for CoreWindow!"));
+		ThrowIfFailedMsg(hr, TEXT("Failed to Create swap chain for CoreWindow!"));
 #endif
 
 		hr = pTempSwapChain->QueryInterface(IID_PPV_ARGS(ppOutSwapChain));

@@ -7,13 +7,13 @@
 
 #include "CriticalSection.h"
 
-class CommandContextD3D12;
+class FCommandContextD3D12;
 
-class RENDER_API DynamicDescriptorHeapD3D12 : public IDescriptorHeap
+class RENDER_API FDynamicDescriptorHeapD3D12 : public FDescriptorHeap
 {
 public:
-    DynamicDescriptorHeapD3D12(CommandContextD3D12& OwningContext, D3D12_DESCRIPTOR_HEAP_TYPE HeapType);
-    ~DynamicDescriptorHeapD3D12();
+    FDynamicDescriptorHeapD3D12(FCommandContextD3D12& OwningContext, D3D12_DESCRIPTOR_HEAP_TYPE HeapType);
+    ~FDynamicDescriptorHeapD3D12();
 
     static void DestroyAll(void)
     {
@@ -40,12 +40,12 @@ public:
     D3D12_GPU_DESCRIPTOR_HANDLE UploadDirect(D3D12_CPU_DESCRIPTOR_HANDLE Handles);
 
     // Deduce cache layout needed to support the descriptor tables needed by the root signature.
-    void ParseGraphicsRootSignature(const IRootSignature& RootSig)
+    void ParseGraphicsRootSignature(const FRootSignature& RootSig)
     {
         m_GraphicsHandleCache.ParseRootSignature(m_DescriptorType, RootSig);
     }
 
-    void ParseComputeRootSignature(const IRootSignature& RootSig)
+    void ParseComputeRootSignature(const FRootSignature& RootSig)
     {
         m_ComputeHandleCache.ParseRootSignature(m_DescriptorType, RootSig);
     }
@@ -78,16 +78,16 @@ private:
     virtual void Create(const TChar* DebugHeapName, EResourceHeapType Type, uint32 MaxCount) override { /* Intentionally Left Blank */ }
 
     // Non-static members
-    CommandContextD3D12& m_OwningContext;
+    FCommandContextD3D12& m_OwningContext;
     ID3D12DescriptorHeap* m_CurrentHeapPtr;
     const D3D12_DESCRIPTOR_HEAP_TYPE m_DescriptorType;
     uint32 m_DescriptorSize;
     uint32 m_CurrentOffset;
-    DescriptorHandle m_FirstDescriptor;
+    FDescriptorHandle m_FirstDescriptor;
     std::vector<ID3D12DescriptorHeap*> m_RetiredHeaps;
 
     // DONT CALL.
-    virtual DescriptorHandle Alloc(uint32 Count) override { return DescriptorHandle{}; }
+    virtual FDescriptorHandle Alloc(uint32 Count) override { return FDescriptorHandle{}; }
 
 
     // Describes a descriptor table entry:  a region of the handle cache and which handles have been set
@@ -120,7 +120,7 @@ private:
         static const uint32 kMaxNumDescriptorTables = 16;
 
         uint32 ComputeStagedSize();
-        void CopyAndBindStaleTables(D3D12_DESCRIPTOR_HEAP_TYPE Type, uint32 DescriptorSize, DescriptorHandle DestHandleStart, ID3D12GraphicsCommandList* CmdList,
+        void CopyAndBindStaleTables(D3D12_DESCRIPTOR_HEAP_TYPE Type, uint32 DescriptorSize, FDescriptorHandle DestHandleStart, ID3D12GraphicsCommandList* CmdList,
             void (STDMETHODCALLTYPE ID3D12GraphicsCommandList::* SetFunc)(UINT, D3D12_GPU_DESCRIPTOR_HANDLE));
 
         DescriptorTableCache m_RootDescriptorTable[kMaxNumDescriptorTables];
@@ -128,7 +128,7 @@ private:
 
         void UnbindAllValid();
         void StageDescriptorHandles(uint32 RootIndex, uint32 Offset, uint32 NumHandles, const D3D12_CPU_DESCRIPTOR_HANDLE Handles[]);
-        void ParseRootSignature(D3D12_DESCRIPTOR_HEAP_TYPE Type, const IRootSignature& RootSig);
+        void ParseRootSignature(D3D12_DESCRIPTOR_HEAP_TYPE Type, const FRootSignature& RootSig);
     };
 
     DescriptorHandleCache m_GraphicsHandleCache;
@@ -143,9 +143,9 @@ private:
     void RetireUsedHeaps(uint64 fenceValue);
     ID3D12DescriptorHeap* GetHeapPointer();
 
-    DescriptorHandle Allocate(uint32 Count)
+    FDescriptorHandle Allocate(uint32 Count)
     {
-        DescriptorHandle ret = m_FirstDescriptor + m_CurrentOffset * m_DescriptorSize;
+        FDescriptorHandle ret = m_FirstDescriptor + m_CurrentOffset * m_DescriptorSize;
         m_CurrentOffset += Count;
         return ret;
     }

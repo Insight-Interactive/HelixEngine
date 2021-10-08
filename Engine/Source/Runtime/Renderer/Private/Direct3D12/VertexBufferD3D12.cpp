@@ -3,12 +3,12 @@
 #include "VertexBufferD3D12.h"
 
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ICommandContext.h"
 #include "../D3DCommon/D3DCommon.h"
 
 
-void VertexBufferD3D12::Create(const WChar* Name, uint32 VertexDataSize, uint32 VertexStrideSize, void* pVerticies)
+void FVertexBufferD3D12::Create(const WChar* Name, uint32 VertexDataSize, uint32 VertexStrideSize, void* pVerticies)
 {
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
 	HE_ASSERT(pID3D12Device != NULL);
@@ -33,7 +33,7 @@ void VertexBufferD3D12::Create(const WChar* Name, uint32 VertexDataSize, uint32 
 
 	// Initialize Upload Heap.
 	//
-	GpuResourceD3D12 UploadHeap;
+	FGpuResourceD3D12 UploadHeap;
 	hr = pID3D12Device->CreateCommittedResource(
 		&HeapProps,
 		D3D12_HEAP_FLAG_NONE,
@@ -44,12 +44,12 @@ void VertexBufferD3D12::Create(const WChar* Name, uint32 VertexDataSize, uint32 
 	);
 	ThrowIfFailedMsg(hr, TEXT("Failed to create upload heap for vertex buffer!"));
 
-	SubResourceData vertexData = {};
+	FSubResourceData vertexData = {};
 	vertexData.pData = pVerticies;
 	vertexData.RowPitch = VertexDataSize;
 	vertexData.SlicePitch = VertexDataSize;
 
-	ICommandContext& InitContext = ICommandContext::Begin(L"");
+	FCommandContext& InitContext = FCommandContext::Begin(L"");
 	{
 		InitContext.UpdateSubresources(*this, UploadHeap, 0, 0, 1, vertexData);
 	}

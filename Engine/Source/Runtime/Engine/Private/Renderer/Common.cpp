@@ -9,7 +9,7 @@ MaterialManager GMaterialManager;
 LightManager GLightManager;
 
 
-InputElementDesc GSceneMeshInputElements[6] =
+FInputElementDesc GSceneMeshInputElements[6] =
 {
 	{ "POSITION",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "NORMAL",		0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
@@ -20,7 +20,7 @@ InputElementDesc GSceneMeshInputElements[6] =
 };
 const uint32 kNumSceneMeshCommonInputElements = HE_ARRAYSIZE(GSceneMeshInputElements);
 
-InputElementDesc GScreenSpaceInputElements[2] =
+FInputElementDesc GScreenSpaceInputElements[2] =
 {
 	{ "POSITION",	0, F_R32G32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "UVS",		0, F_R32G32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
@@ -29,7 +29,7 @@ const uint32 kNumScreenSpaceInputElements = HE_ARRAYSIZE(GScreenSpaceInputElemen
 
 
 constexpr float MinLOD = 0.0f, MaxLOD = 9.0f;
-SamplerDesc GLinearWrapSamplerDesc
+FSamplerDesc GLinearWrapSamplerDesc
 {
 	F_Comparison_Min_Mag_Mip_Linear,
 	TAM_Wrap,

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AssetRegistry/HAsset.h"
+#include "AssetRegistry/Asset.h"
 
 
 /////////////////////////
@@ -24,10 +24,10 @@
 //		
 /////////////////////////
 
-struct MeshAssetHeader
+struct FMeshAssetHeader
 {
 private:
-	friend class StaticGeometryManager;
+	friend class FStaticGeometryManager;
 	const EAssetType Type = AT_Mesh;
 	
 public:
@@ -52,7 +52,7 @@ public:
 	*/
 	uint32 IndexSizeInBytes;
 };
-static const uint32 kMeshHeaderSizeInBytes = sizeof( MeshAssetHeader );
+static const uint32 kMeshHeaderSizeInBytes = sizeof( FMeshAssetHeader );
 
 
 class HMeshAsset : public HAsset

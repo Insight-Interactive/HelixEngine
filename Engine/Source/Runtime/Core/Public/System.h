@@ -20,7 +20,7 @@ namespace System
 
 	struct ThreadId
 	{
-#ifdef HE_WINDOWS
+#if HE_WINDOWS
 		DWORD Id;
 		HANDLE Handle;
 
@@ -34,14 +34,20 @@ namespace System
 		MDR_Ok =
 #if HE_WINDOWS_DESKTOP
 		IDOK,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
 #endif
 		MDR_No =
 #if HE_WINDOWS_DESKTOP
 		IDNO,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
 #endif
 		MDR_Cancel = 
 #if HE_WINDOWS_DESKTOP
 		IDCANCEL,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
 #endif
 	};
 	enum MessageDialogInput
@@ -49,20 +55,24 @@ namespace System
 		MDI_Ok = 
 #if HE_WINDOWS_DESKTOP
 		MB_OK,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
 #endif
 		MDI_OkCancel = 
 #if HE_WINDOWS_DESKTOP
 		MB_OKCANCEL,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
 #endif
 	};
 
 	/*
-		Initialize any platform system dependencies. Return strue if succeeded, false if not.
+		Initialize any platform system dependencies. Returns true if succeeded, false if not.
 	*/
 	bool InitializePlatform();
 
 	/*
-		Uninitialize any platform system dependencies. Return strue if succeeded, false if not.
+		Uninitialize any platform system dependencies. Returns true if succeeded, false if not.
 	*/
 	bool UninitializePlatform();
 
@@ -166,10 +176,10 @@ namespace System
 	/*
 		Quiries the systems high performance system timer and returns the result.
 	*/
-	int64 QueryPerformanceCounter();
+	int64 QueryPerfCounter();
 
 	/*
 		Quiries the systems CPU tick frequency and returns the result.
 	*/
-	int64 QueryPerformanceFrequency();
+	int64 QueryPerfFrequency();
 }

@@ -5,13 +5,13 @@
 #include "RendererCore.h"
 #include "BackendCoreD3D12.h"
 #include "FileSystem.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "StringHelper.h"
 
 #include "Utility/DDSTextureLoader.h"
 
 
-void TextureManagerD3D12::Initialize()
+void FTextureManagerD3D12::Initialize()
 {
     uint32 MagentaPixel = 0xFFFF00FF;
     m_DefaultTextures[DT_Magenta2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &MagentaPixel);
@@ -34,7 +34,7 @@ void TextureManagerD3D12::Initialize()
     }
 }
 
-void TextureManagerD3D12::UnInitialize()
+void FTextureManagerD3D12::UnInitialize()
 {
     for (auto Iter = m_TextureCache.begin(); Iter != m_TextureCache.end(); ++Iter)
     {
@@ -43,14 +43,14 @@ void TextureManagerD3D12::UnInitialize()
     m_TextureCache.clear();
 }
 
-TextureRef TextureManagerD3D12::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+HTextureRef FTextureManagerD3D12::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
     return FindOrLoadTexture(FileName, Fallback, forceSRGB);
 }
 
-IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+HManagedTexture* FTextureManagerD3D12::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
-    ManagedTextureD3D12* pTexture = NULL;
+    HManagedTextureD3D12* pTexture = NULL;
 
     {
         ScopedCriticalSection Guard( m_Mutex );
@@ -72,7 +72,7 @@ IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, 
         else
         {
             // If it's not found, create a new managed texture and start loading it.
-            pTexture = new ManagedTextureD3D12(key);
+            pTexture = new HManagedTextureD3D12(key);
             m_TextureCache[key].reset(pTexture);
         }
     }
@@ -85,7 +85,7 @@ IManagedTexture* TextureManagerD3D12::FindOrLoadTexture(const String& FileName, 
     return pTexture;
 }
 
-void TextureManagerD3D12::DestroyTexture(const String& Key)
+void FTextureManagerD3D12::DestroyTexture(const String& Key)
 {
     m_Mutex.Enter();
 
@@ -96,10 +96,10 @@ void TextureManagerD3D12::DestroyTexture(const String& Key)
     m_Mutex.Exit();
 }
 
-void ManagedTextureD3D12::CreateFromMemory(DataBlob memory, EDefaultTexture fallback, bool bForceSRGB)
+void HManagedTextureD3D12::CreateFromMemory(DataBlob memory, EDefaultTexture fallback, bool bForceSRGB)
 {
     ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
-    TextureD3D12* pD3D12FallbackTexture = DCast<TextureD3D12*>( GetDefaultTexture(fallback) );
+    HTextureD3D12* pD3D12FallbackTexture = DCast<HTextureD3D12*>( GetDefaultTexture(fallback) );
     
     HE_ASSERT(pD3D12FallbackTexture != NULL);
     D3D12_CPU_DESCRIPTOR_HANDLE FallbackSRVHandle = pD3D12FallbackTexture->GetSRV();

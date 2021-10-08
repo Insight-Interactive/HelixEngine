@@ -28,7 +28,7 @@ void MenuBarPanel::Tick( float DeltaTime )
 
 }
 
-void MenuBarPanel::Render( ICommandContext& CmdCtx )
+void MenuBarPanel::Render( FCommandContext& CmdCtx )
 {
 	if (ImGui::BeginMainMenuBar())
 	{

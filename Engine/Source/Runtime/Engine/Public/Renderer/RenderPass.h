@@ -10,8 +10,8 @@
 
 
 class HCameraComponent;
-class ICommandContext;
-struct Rect;
+class FCommandContext;
+struct FRect;
 
 class FRenderPass
 {
@@ -19,12 +19,12 @@ public:
 	/*
 		Bind the pass for rendering.
 	*/
-	virtual void Bind( ICommandContext& GfxContext, const Rect& Viewrect ) = 0;
+	virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) = 0;
 	
 	/*
 		UnBinds the pass from rendering.
 	*/
-	virtual void UnBind( ICommandContext& GfxContext ) = 0;
+	virtual void UnBind( FCommandContext& GfxContext ) = 0;
 
 	/*
 		Retuns a reference to the currently rendering camera for this pass.

@@ -15,7 +15,7 @@ public:
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;
-	virtual void Render( ICommandContext& CmdCtx ) override;
+	virtual void Render( FCommandContext& CmdCtx ) override;
 
 	template <typename ClassType, typename MethodTarget>
 	void AddMenuItem( const Char* MenuName, const Char* ItemName, ClassType* Class, void(MethodTarget::* Fn)() );

@@ -3,15 +3,15 @@
 #include "DescriptorAllocatorD3D12.h"
 #include "../D3DCommon/D3DCommon.h"
 
-CriticalSection DescriptorAllocatorD3D12::sm_AllocationMutex;
-std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> DescriptorAllocatorD3D12::sm_DescriptorHeapPool;
+CriticalSection FDescriptorAllocatorD3D12::sm_AllocationMutex;
+std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> FDescriptorAllocatorD3D12::sm_DescriptorHeapPool;
 
-void DescriptorAllocatorD3D12::DestroyAll(void)
+void FDescriptorAllocatorD3D12::DestroyAll(void)
 {
     sm_DescriptorHeapPool.clear();
 }
 
-ID3D12DescriptorHeap* DescriptorAllocatorD3D12::RequestNewHeap(ID3D12Device* pDevice, D3D12_DESCRIPTOR_HEAP_TYPE Type)
+ID3D12DescriptorHeap* FDescriptorAllocatorD3D12::RequestNewHeap(ID3D12Device* pDevice, D3D12_DESCRIPTOR_HEAP_TYPE Type)
 {
     sm_AllocationMutex.Enter();
 
@@ -32,7 +32,7 @@ ID3D12DescriptorHeap* DescriptorAllocatorD3D12::RequestNewHeap(ID3D12Device* pDe
     return pHeap.Get();
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE DescriptorAllocatorD3D12::Allocate(ID3D12Device* pDevice, uint32 Count)
+D3D12_CPU_DESCRIPTOR_HANDLE FDescriptorAllocatorD3D12::Allocate(ID3D12Device* pDevice, uint32 Count)
 {
     HE_ASSERT(pDevice != NULL);
 

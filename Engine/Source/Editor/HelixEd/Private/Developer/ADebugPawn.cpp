@@ -4,7 +4,7 @@
 
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HControllerComponent.h"
-#include "World/HWorld.h"
+#include "World/World.h"
 
 
 ADebugPawn::ADebugPawn( HWorld* pWorld, const HName& Name )
@@ -51,7 +51,7 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 
 	if (m_CanMove)
 	{
-		ViewportContext* pViewport = GetWorld()->GetOwningViewport();
+		FViewportContext* pViewport = GetWorld()->GetOwningViewport();
 		if (pViewport->IsPressed( Key_W ))
 		{
 			MoveForward( 1.f );

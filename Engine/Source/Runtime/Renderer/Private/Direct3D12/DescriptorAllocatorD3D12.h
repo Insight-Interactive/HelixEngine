@@ -11,17 +11,17 @@
 // This is an unbounded resource descriptor allocator.  It is intended to provide space for CPU-visible
 // resource descriptors as resources are created.  For those that need to be made shader-visible, they
 // will need to be copied to a DescriptorHeap or a DynamicDescriptorHeap.
-class RENDER_API DescriptorAllocatorD3D12
+class RENDER_API FDescriptorAllocatorD3D12
 {
 public:
-	DescriptorAllocatorD3D12(EResourceHeapType Type)
+	FDescriptorAllocatorD3D12(EResourceHeapType Type)
 		: m_Type((D3D12_DESCRIPTOR_HEAP_TYPE)Type)
 		, m_CurrentHeap(NULL)
 		, m_DescriptorSize(0)
 	{
 		m_CurrentHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 	}
-	virtual ~DescriptorAllocatorD3D12() {}
+	virtual ~FDescriptorAllocatorD3D12() {}
 
 	D3D12_CPU_DESCRIPTOR_HANDLE Allocate(ID3D12Device* pDevice, uint32 Count);
 	static void DestroyAll(void);

@@ -5,7 +5,7 @@
 
 enum EFormat;
 
-class RENDER_API ITexture
+class RENDER_API HTexture
 {
 public:
 	virtual void Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData) = 0;
@@ -18,13 +18,13 @@ public:
 	FORCEINLINE uint32 GetDepth()	const { return m_Depth; }
 
 protected:
-	ITexture()
+	HTexture()
 		: m_Width(0)
 		, m_Height(0)
 		, m_Depth(0)
 	{
 	}
-	virtual ~ITexture() {}
+	virtual ~HTexture() {}
 
 	uint32 m_Width;
 	uint32 m_Height;

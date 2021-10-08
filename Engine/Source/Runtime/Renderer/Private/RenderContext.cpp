@@ -3,7 +3,7 @@
 #include "RenderContext.h"
 #include "RendererCore.h"
 #include "ISwapChain.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "ICommandContext.h"
 #include "ICommandManager.h"
 #include "ITextureManager.h"
@@ -19,12 +19,12 @@ const RenderBackendDescription RenderBackends[RB_Count] =
 };
 
 
-void RenderContext::Initialize()
+void FRenderContext::Initialize()
 {
 
 }
 
-void RenderContext::UnInitialize()
+void FRenderContext::UnInitialize()
 {
 	// Wait for all work on the GPU to finish.
 	GCommandManager->IdleGpu();
@@ -38,32 +38,32 @@ void RenderContext::UnInitialize()
 	HE_SAFE_DELETE_PTR(GTextureManager);
 }
 
-void RenderContext::PreFrame()
+void FRenderContext::PreFrame()
 {
 
 }
 
-void RenderContext::SubmitFrame()
+void FRenderContext::SubmitFrame()
 {
 
 }
 
-void RenderContext::PostFrame()
+void FRenderContext::PostFrame()
 {
 
 }
 
-void RenderContext::OnWindowWindowedModeEntered()
+void FRenderContext::OnWindowWindowedModeEntered()
 {
 
 }
 
-void RenderContext::OnWindowBorderlessModeEntered()
+void FRenderContext::OnWindowBorderlessModeEntered()
 {
 
 }
 
-void RenderContext::OnNativeResolutionChanged(const uint32& Width, const uint32& height)
+void FRenderContext::OnNativeResolutionChanged(const uint32& Width, const uint32& height)
 {
 
 }

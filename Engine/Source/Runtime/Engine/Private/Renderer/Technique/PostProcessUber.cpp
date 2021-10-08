@@ -8,35 +8,35 @@
 #include "Renderer/ConstantBufferStructures.h"
 
 
-PostProcesssUber::PostProcesssUber()
+FPostProcessUber::FPostProcessUber()
 {
 }
 
-PostProcesssUber::~PostProcesssUber()
+FPostProcessUber::~FPostProcessUber()
 {
 }
 
-void PostProcesssUber::Initialize( FVector2 RenderResolution )
+void FPostProcessUber::Initialize( FVector2 RenderResolution )
 {
 	GConstantBufferManager->CreateConstantBuffer( L"", &m_pPostProcessSettings, sizeof( PostProcessSettings ) );
 }
 
-void PostProcesssUber::UnInitialize()
+void FPostProcessUber::UnInitialize()
 {
 	GConstantBufferManager->DestroyConstantBuffer( m_pPostProcessSettings->GetUID() );
 }
 
-void PostProcesssUber::Bind( ICommandContext& GfxContext, const Rect& Viewrect )
+void FPostProcessUber::Bind( FCommandContext& GfxContext, const FRect& Viewrect )
 {
 
 }
 
-void PostProcesssUber::UnBind( ICommandContext& GfxContext )
+void FPostProcessUber::UnBind( FCommandContext& GfxContext )
 {
 
 }
 
-void PostProcesssUber::ReloadPipeline()
+void FPostProcessUber::ReloadPipeline()
 {
 
 }

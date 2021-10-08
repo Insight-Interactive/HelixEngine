@@ -10,6 +10,9 @@
     <Filter Include="Private\Direct3D12">
       <UniqueIdentifier>{44A0E302-3084-A458-99E4-9EAB85E78EDA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Editor">
+      <UniqueIdentifier>{367CE6C5-224A-DACB-0BDE-4AF2F74AB630}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\PCH">
       <UniqueIdentifier>{0AC21F53-7677-9848-FF6B-921F6B208F4C}</UniqueIdentifier>
     </Filter>
@@ -48,7 +51,10 @@
     <ClInclude Include="Public\Developer\ConsoleWindow.h">
       <Filter>Public\Developer</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Editor\HEditorEngine.h">
+    <ClInclude Include="Public\Editor\EditorEngine.h">
+      <Filter>Public\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\PreferencesViewport.h">
       <Filter>Public\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h">
@@ -81,7 +87,6 @@
     <ClInclude Include="Public\Tools\PackageMaker.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Editor\PreferencesViewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
@@ -93,8 +98,11 @@
     <ClCompile Include="Private\Direct3D12\HelixEdImGuiImplD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Editor\HEditorEngine.cpp">
-      <Filter>Private</Filter>
+    <ClCompile Include="Private\Editor\EditorEngine.cpp">
+      <Filter>Private\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\PreferencesViewport.cpp">
+      <Filter>Private\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <Filter>Private\PCH</Filter>
@@ -129,7 +137,6 @@
     <ClCompile Include="Private\Tools\PackageMaker.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Editor\PreferencesViewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

@@ -27,14 +27,14 @@ public:
 
 protected:
 	virtual void OnAttach() override;
-	virtual void Render(ICommandContext& GfxContext) override;
+	virtual void Render(FCommandContext& GfxContext) override;
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
 protected:
 	StaticMeshGeometryRef m_GeometryRef;
-	IConstantBuffer* m_pMeshWorldCB;
+	FConstantBuffer* m_pMeshWorldCB;
 	MaterialRef m_MaterialRef;
 	FTransform m_Transform;
 	bool m_bIsDrawEnabled;

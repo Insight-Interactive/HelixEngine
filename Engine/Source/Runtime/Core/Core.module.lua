@@ -10,7 +10,7 @@ project ("Core")
     staticruntime ("Off")
     targetname ("Helix-%{prj.name}")
     systemversion ("10.0.18362.0:latest")
-    defaultlanguage ("en-US")
+    defaultlanguage ("en")
     targetdir ( heGetBuildFolder() )
     objdir ( heGetBuildIntFolder() )
 
@@ -61,7 +61,7 @@ project ("Core")
             "Private/Windows/Desktop/**.inl",
         }
 
-   filter ("platforms:XboxOne or XboxOneX")
+   filter ("platforms:Durango or Scorpio")
        files
        {
            "Private/Windows/Universal/**.h",
@@ -70,7 +70,7 @@ project ("Core")
            "Private/Windows/Universal/**.appxmanifest",
        }
 
-    filter ("platforms:XboxOne or XboxOneX or Win64 or Win32")
+    filter ("platforms:Durango or Scorpio or Win64 or Win32")
         files
         {
             "Private/Windows/*.h",

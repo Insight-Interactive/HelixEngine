@@ -6,12 +6,12 @@
 
 #include "CommonEnums.h"
 
-class RENDER_API GpuResourceD3D12 : public IGpuResource
+class RENDER_API FGpuResourceD3D12 : public FGpuResource
 {
 public:
-	GpuResourceD3D12(ID3D12Resource* pResource, EResourceState CurrentState);
-	GpuResourceD3D12();
-	virtual ~GpuResourceD3D12();
+	FGpuResourceD3D12(ID3D12Resource* pResource, EResourceState CurrentState);
+	FGpuResourceD3D12();
+	virtual ~FGpuResourceD3D12();
 
 	virtual void Destroy() override;
 	inline void DestroyCOMResource() { HE_COM_SAFE_RELEASE(m_pID3D12Resource); }

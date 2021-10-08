@@ -7,14 +7,14 @@
 #include "GpuResourceD3D12.h"
 
 
-class RENDER_API IndexBufferD3D12 : public IIndexBuffer, public GpuResourceD3D12
+class RENDER_API FIndexBufferD3D12 : public FIndexBuffer, public FGpuResourceD3D12
 {
-	friend class GeometryBufferManagerD3D12;
+	friend class FGeometryBufferManagerD3D12;
 public:
-	IndexBufferD3D12()
+	FIndexBufferD3D12()
 	{
 	}
-	virtual ~IndexBufferD3D12() 
+	virtual ~FIndexBufferD3D12() 
 	{
 	}
 

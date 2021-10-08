@@ -2,23 +2,23 @@
 
 #include "PipelineStateD3D12.h"
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 #include "IRootSignature.h"
 
 #include "../D3DCommon/D3DCommon.h"
 
 
-PipelineStateD3D12::PipelineStateD3D12()
+FPipelineStateD3D12::FPipelineStateD3D12()
 	: m_pID3D12PipelineState(NULL)
 {
 }
 
-PipelineStateD3D12::~PipelineStateD3D12()
+FPipelineStateD3D12::~FPipelineStateD3D12()
 {
 	HE_COM_SAFE_RELEASE(m_pID3D12PipelineState);
 }
 
-void PipelineStateD3D12::Initialize(const PipelineStateDesc& Desc)
+void FPipelineStateD3D12::Initialize(const FPipelineStateDesc& Desc)
 {
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
 

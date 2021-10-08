@@ -3,7 +3,7 @@
 
 #include "Engine/HelixEngine.h"
 
-HE_ENTRY_POINT
+HE_ENTRY_POINT()
 {
 	GuardedMain( CmdLine );
 

@@ -10,11 +10,11 @@ extern class MaterialManager GMaterialManager;
 extern class LightManager GLightManager;
 
 // Input layouts.
-extern InputElementDesc GSceneMeshInputElements[];
+extern FInputElementDesc GSceneMeshInputElements[];
 extern const uint32 kNumSceneMeshCommonInputElements;
 
-extern InputElementDesc GScreenSpaceInputElements[];
+extern FInputElementDesc GScreenSpaceInputElements[];
 extern const uint32 kNumScreenSpaceInputElements;
 
 // Sampler Descriptions.
-extern SamplerDesc GLinearWrapSamplerDesc;
+extern FSamplerDesc GLinearWrapSamplerDesc;

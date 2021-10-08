@@ -1,14 +1,14 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "App/FApp.h"
+#include "App/App.h"
 #include "CommandLine.h"
 #include "RenderContext.h"
 #include "RendererInitializer.h"
 #include "Engine/ViewportContext.h"
 #include "Engine/FrameTimeManager.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "World/HWorld.h"
+#include "World/World.h"
 #include "Engine/GameProject.h"
 
 
@@ -35,7 +35,7 @@ public:
 		Returns a reference to the main client window. This will house the scene 
 		viewport in HelixEd or the main game in Shipping builds.
 	*/
-	ViewportContext& GetClientViewport();
+	FViewportContext& GetClientViewport();
 	
 	/*
 		Returns the time between frame buffer flips.
@@ -93,13 +93,13 @@ protected:
 	bool				m_IsInitialized;
 	bool				m_IsEditorPresent;
 	bool				m_IsPlayingInEditor;
-	FrameTimeManager	m_FrameTimeManager;
-	ViewportContext		m_MainViewPort;
-	RendererInitializer	m_RenderContextInitializer;
-	RenderContext		m_RenderContext;
+	FFrameTimeManager	m_FrameTimeManager;
+	FViewportContext		m_MainViewPort;
+	FRendererInitializer	m_RenderContextInitializer;
+	FRenderContext		m_RenderContext;
 	FApp				m_Application;
 	FGameProject		m_GameProject;
-	AssetDatabase		m_AssetDatabase;
+	FAssetDatabase		m_AssetDatabase;
 	HWorld				m_GameWorld;
 
 };
@@ -117,7 +117,7 @@ inline bool HEngine::IsInitialized() const
 	return m_IsInitialized;
 }
 
-inline ViewportContext& HEngine::GetClientViewport()
+inline FViewportContext& HEngine::GetClientViewport()
 {
 	return m_MainViewPort;
 }

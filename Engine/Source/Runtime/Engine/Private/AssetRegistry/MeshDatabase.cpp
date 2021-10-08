@@ -6,18 +6,18 @@
 #include "JsonUtility.h"
 
 
-MeshDatabase::MeshDatabase()
-	: DatabaseInterface("Mesh Database")
+FMeshDatabase::FMeshDatabase()
+	: FDatabaseInterface("Mesh Database")
 {
 
 }
 
-MeshDatabase::~MeshDatabase()
+FMeshDatabase::~FMeshDatabase()
 {
 
 }
 
-void MeshDatabase::Initialize( const Char* MeshDatabaseFile )
+void FMeshDatabase::Initialize( const Char* MeshDatabaseFile )
 {
 	// Load the mesh cache.
 	rapidjson::Document JsonDoc;
@@ -36,13 +36,13 @@ void MeshDatabase::Initialize( const Char* MeshDatabaseFile )
 	}
 }
 
-void MeshDatabase::UnInitialize()
+void FMeshDatabase::UnInitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing mesh database." ) );
 	m_Data.clear();
 }
 
-void MeshDatabase::SerializeToFile_Implementation( const Char* Filepath )
+void FMeshDatabase::SerializeToFile_Implementation( const Char* Filepath )
 {
 	rapidjson::StringBuffer StrBuffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> Writer( StrBuffer );

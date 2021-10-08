@@ -15,10 +15,10 @@
 
 class HWorld;
 class HActorComponent;
-class ICommandContext;
+class FCommandContext;
 
 HCLASS()
-class AActor : public HObject, public SerializeableInterface
+class AActor : public HObject, public FSerializeableInterface
 {
 	friend class HLevel;
 	friend class HWorld;
@@ -37,7 +37,7 @@ public:
 	FTransform& GetTransform();
 
 protected:
-	void Render( ICommandContext& GfxContext );
+	void Render( FCommandContext& GfxContext );
 	inline HWorld* GetWorld();
 	inline void SetOwningWorld( HWorld* pWorld );
 

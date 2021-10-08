@@ -3,15 +3,15 @@
 #include "AssetRegistry/DatabaseInterface.h"
 
 
-const String DatabaseInterface::s_InvalidAssetPath = "<Invalid Asset Path>";
+const String FDatabaseInterface::SInvalidAssetPath = "<Invalid Asset Path>";
 
-DatabaseInterface::DatabaseInterface( const String& Name )
+FDatabaseInterface::FDatabaseInterface( const String& Name )
 	: m_DatabaseName( Name )
 	, m_IsDirty( false )
 {
 }
 
-DatabaseInterface::~DatabaseInterface()
+FDatabaseInterface::~FDatabaseInterface()
 {
 
 }

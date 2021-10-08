@@ -2,7 +2,7 @@
 
 #include "Panels/ToolbarPanel.h"
 
-#include "Engine/HEngine.h"
+#include "Engine/Engine.h"
 #include "Engine/Event/EngineEvent.h"
 
 
@@ -26,7 +26,7 @@ void ToolbarPanel::Tick( float DeltaTime )
 {
 }
 
-void ToolbarPanel::Render( ICommandContext& CmdCtx )
+void ToolbarPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Tools" );
 	{

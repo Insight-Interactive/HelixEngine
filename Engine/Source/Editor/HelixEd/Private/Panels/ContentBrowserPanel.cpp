@@ -31,7 +31,7 @@ void ContentBrowserPanel::Tick( float DeltaTime )
 
 }
 
-void ContentBrowserPanel::Render( ICommandContext& CmdCtx )
+void ContentBrowserPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Content Browser" );
 	{

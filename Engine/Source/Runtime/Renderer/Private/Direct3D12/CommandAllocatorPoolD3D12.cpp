@@ -3,24 +3,24 @@
 #include "CommandAllocatorPoolD3D12.h"
 
 
-D3D12CommandAllocatorPool::D3D12CommandAllocatorPool(const D3D12_COMMAND_LIST_TYPE& Type)
+FCommandAllocatorPoolD3D12::FCommandAllocatorPoolD3D12(const D3D12_COMMAND_LIST_TYPE& Type)
 	: m_cCommandListType(Type)
 	, m_pID3D12Device(NULL)
 {
 }
 
-D3D12CommandAllocatorPool::~D3D12CommandAllocatorPool()
+FCommandAllocatorPoolD3D12::~FCommandAllocatorPoolD3D12()
 {
 	m_pID3D12Device = NULL;
 }
 
-void D3D12CommandAllocatorPool::Initialize(ID3D12Device* pD3DDevice)
+void FCommandAllocatorPoolD3D12::Initialize(ID3D12Device* pD3DDevice)
 {
 	HE_ASSERT(pD3DDevice != NULL);
 	m_pID3D12Device = pD3DDevice;
 }
 
-ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 CompletedFenceValue)
+ID3D12CommandAllocator* FCommandAllocatorPoolD3D12::RequestAllocator(uint64 CompletedFenceValue)
 {
 	m_AllocatorMutex.Enter();
 
@@ -54,7 +54,7 @@ ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 Compl
 	return pAllocator;
 }
 
-void D3D12CommandAllocatorPool::DiscardAllocator(uint64 FenceValue, ID3D12CommandAllocator* pAllocator)
+void FCommandAllocatorPoolD3D12::DiscardAllocator(uint64 FenceValue, ID3D12CommandAllocator* pAllocator)
 {
 	m_AllocatorMutex.Enter();
 

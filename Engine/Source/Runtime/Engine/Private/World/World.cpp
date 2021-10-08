@@ -1,10 +1,10 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
-#include "World/HWorld.h"
+#include "World/World.h"
 
-#include "World/HLevel.h"
-#include "Engine/HEngine.h"
+#include "World/Level.h"
+#include "Engine/Engine.h"
 #include "Renderer/LightManager.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 
@@ -90,7 +90,7 @@ void HWorld::Flush()
 	HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 }
 
-void HWorld::Render(ICommandContext& CmdContext)
+void HWorld::Render(FCommandContext& CmdContext)
 {
 	if(m_pPlayerCharacter != NULL)
 		m_pPlayerCharacter->Render( CmdContext );

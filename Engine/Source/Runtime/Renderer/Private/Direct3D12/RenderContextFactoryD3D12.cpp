@@ -4,7 +4,7 @@
 #include "RenderContextFactoryD3D12.h"
 
 
-#include "DeviceD3D12.h"
+#include "RenderDeviceD3D12.h"
 #include "CommandManagerD3D12.h"
 #include "CommandContextD3D12.h"
 #include "SwapchainD3D12.h"
@@ -20,17 +20,17 @@
 IDXGIFactory6* DXGIFactory;
 
 
-RenderContextFactoryD3D12::RenderContextFactoryD3D12()
+FRenderContextFactoryD3D12::FRenderContextFactoryD3D12()
 {
 	CreateDXGIFactory();
 }
 
-RenderContextFactoryD3D12::~RenderContextFactoryD3D12()
+FRenderContextFactoryD3D12::~FRenderContextFactoryD3D12()
 {
 	HE_COM_SAFE_RELEASE(DXGIFactory);
 }
 
-void RenderContextFactoryD3D12::CreateContext(RenderContext& OutContext)
+void FRenderContextFactoryD3D12::CreateContext(FRenderContext& OutContext)
 {
 	HE_ASSERT(DXGIFactory != NULL); // Cannot create D3D12 context with null dxgi factory.
 
@@ -52,9 +52,9 @@ void RenderContextFactoryD3D12::CreateContext(RenderContext& OutContext)
 	R_LOG(Log, TEXT("Render backend initialization complete."));
 }
 
-void RenderContextFactoryD3D12::CreateDevice(IDevice** OutDevice)
+void FRenderContextFactoryD3D12::CreateDevice(FRenderDevice** OutDevice)
 {
-	DeviceD3D12* pD3D12Device = CreateRenderComponentObject<DeviceD3D12>(OutDevice);
+	FRenderDeviceD3D12* pD3D12Device = CreateRenderComponentObject<FRenderDeviceD3D12>(OutDevice);
 	
 	DeviceInitParamsD3D12 DeviceInitParams;
 	ZeroMemory(&DeviceInitParams, sizeof(DeviceInitParamsD3D12));
@@ -67,7 +67,7 @@ void RenderContextFactoryD3D12::CreateDevice(IDevice** OutDevice)
 	pD3D12Device->Initialize(DeviceInitParams, DeviceQueryResult, RCast<void**>(&DXGIFactory));
 }
 
-void RenderContextFactoryD3D12::CreateDXGIFactory()
+void FRenderContextFactoryD3D12::CreateDXGIFactory()
 {
 	uint32 DXGIFactoryFlags = 0u;
 
@@ -92,19 +92,19 @@ void RenderContextFactoryD3D12::CreateDXGIFactory()
 	ThrowIfFailedMsg(hr, TEXT("Failed to create DXGI factory!"));
 }
 
-void RenderContextFactoryD3D12::CreateSwapChain(ISwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, ICommandManager* InCommandManager, IDevice* InDevice)
+void FRenderContextFactoryD3D12::CreateSwapChain(FSwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, FCommandManager* InCommandManager, FRenderDevice* InDevice)
 {
-	SwapChainD3D12* pD3D12SwapChain = CreateRenderComponentObject<SwapChainD3D12>(OutSwapChain);
+	FSwapChainD3D12* pD3D12SwapChain = CreateRenderComponentObject<FSwapChainD3D12>(OutSwapChain);
 
-	CommandManagerD3D12* pCommandManager = DCast<CommandManagerD3D12*>(InCommandManager);
+	FCommandManagerD3D12* pCommandManager = DCast<FCommandManagerD3D12*>(InCommandManager);
 	HE_ASSERT(pCommandManager != NULL); // Trying to create swap chain with invalid command manager.
 
 	HE_ASSERT(InDevice != NULL);
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(InDevice->GetNativeDevice());
 
-	CommandQueueD3D12* pD3D12CommandQueue = RCast<CommandQueueD3D12*>(pCommandManager->GetGraphicsQueue());
-	SwapChainDescription SwapChainInitParams;
-	ZeroMemory(&SwapChainInitParams, sizeof(SwapChainDescription));
+	FCommandQueueD3D12* pD3D12CommandQueue = RCast<FCommandQueueD3D12*>(pCommandManager->GetGraphicsQueue());
+	FSwapChainDesc SwapChainInitParams;
+	ZeroMemory(&SwapChainInitParams, sizeof(FSwapChainDesc));
 	SwapChainInitParams.Width = RenderSurfaceWidth;
 	SwapChainInitParams.Height = RenderSurfaceHeight;
 	SwapChainInitParams.BufferCount = 3;
@@ -116,35 +116,35 @@ void RenderContextFactoryD3D12::CreateSwapChain(ISwapChain** OutSwapChain, void*
 	pD3D12SwapChain->Create(SwapChainInitParams, &DXGIFactory, pD3D12CommandQueue, pID3D12Device);
 }
 
-void RenderContextFactoryD3D12::CreateCommandManager(ICommandManager** OutCommandManager, IDevice* InDevice)
+void FRenderContextFactoryD3D12::CreateCommandManager(FCommandManager** OutCommandManager, FRenderDevice* InDevice)
 {
 	HE_ASSERT(InDevice != NULL); // Trying to create command manager with null device.
 	
-	CommandManagerD3D12* pCommandManagerD3D12 = CreateRenderComponentObject<CommandManagerD3D12>(OutCommandManager);
+	FCommandManagerD3D12* pCommandManagerD3D12 = CreateRenderComponentObject<FCommandManagerD3D12>(OutCommandManager);
 	
 	pCommandManagerD3D12->Initialize(InDevice);
 }
 
-void RenderContextFactoryD3D12::CreateContextManager(IContextManager** OutCommandContext)
+void FRenderContextFactoryD3D12::CreateContextManager(FContextManager** OutCommandContext)
 {
-	CreateRenderComponentObject<ContextManagerD3D12>(OutCommandContext);
+	CreateRenderComponentObject<FContextManagerD3D12>(OutCommandContext);
 }
 
-void RenderContextFactoryD3D12::CreateGeometryManager(IGeometryBufferManager** OutGeometryManager)
+void FRenderContextFactoryD3D12::CreateGeometryManager(FGeometryBufferManager** OutGeometryManager)
 {
-	CreateRenderComponentObject<GeometryBufferManagerD3D12>(OutGeometryManager);
+	CreateRenderComponentObject<FGeometryBufferManagerD3D12>(OutGeometryManager);
 }
 
-void RenderContextFactoryD3D12::CreateConstantBufferManager(IConstantBufferManager** OutCBManager)
+void FRenderContextFactoryD3D12::CreateConstantBufferManager(FConstantBufferManager** OutCBManager)
 {
-	ConstantBufferManagerD3D12* pD3D12CBManager = CreateRenderComponentObject<ConstantBufferManagerD3D12>(OutCBManager);
+	FConstantBufferManagerD3D12* pD3D12CBManager = CreateRenderComponentObject<FConstantBufferManagerD3D12>(OutCBManager);
 	
 	pD3D12CBManager->Initialize();
 }
 
-void RenderContextFactoryD3D12::CreateTextureManager(ITextureManager** OutTexManager)
+void FRenderContextFactoryD3D12::CreateTextureManager(FTextureManager** OutTexManager)
 {
-	TextureManagerD3D12* pD3D12TexManager = CreateRenderComponentObject<TextureManagerD3D12>(OutTexManager);
+	FTextureManagerD3D12* pD3D12TexManager = CreateRenderComponentObject<FTextureManagerD3D12>(OutTexManager);
 
 	pD3D12TexManager->Initialize();
 }

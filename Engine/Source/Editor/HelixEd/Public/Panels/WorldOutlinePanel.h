@@ -12,5 +12,5 @@ public:
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;
-	virtual void Render( ICommandContext& CmdCtx ) override;
+	virtual void Render( FCommandContext& CmdCtx ) override;
 };

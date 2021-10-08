@@ -5,16 +5,16 @@
 #include "JsonUtility.h"
 
 
-MaterialDatabase::MaterialDatabase()
-	: DatabaseInterface( "Material Database" )
+FMaterialDatabase::FMaterialDatabase()
+	: FDatabaseInterface( "Material Database" )
 {
 }
 
-MaterialDatabase::~MaterialDatabase()
+FMaterialDatabase::~FMaterialDatabase()
 {
 }
 
-void MaterialDatabase::Initialize( const Char* MaterialDatabaseFile )
+void FMaterialDatabase::Initialize( const Char* MaterialDatabaseFile )
 {
 	// Load the texture cache.
 	rapidjson::Document JsonDoc;
@@ -33,13 +33,13 @@ void MaterialDatabase::Initialize( const Char* MaterialDatabaseFile )
 	}
 }
 
-void MaterialDatabase::UnInitialize()
+void FMaterialDatabase::UnInitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing material database." ) );
 	m_Data.clear();
 }
 
-void MaterialDatabase::SerializeToFile_Implementation( const Char* Filepath )
+void FMaterialDatabase::SerializeToFile_Implementation( const Char* Filepath )
 {
 	rapidjson::StringBuffer StrBuffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> Writer( StrBuffer );

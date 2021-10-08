@@ -6,20 +6,24 @@
 #include "RendererCore.h"
 
 
-class ICommandContext;
+class FCommandContext;
 
-class RENDER_API IVertexBuffer
+class RENDER_API FVertexBuffer
 {
-	friend class IGeometryBufferManager;
+	friend class FGeometryBufferManager;
 public:
-	virtual ~IVertexBuffer() {}
+	virtual ~FVertexBuffer() 
+	{
+	}
 
 	virtual void* GetNativeBufferView() = 0;
 
 	virtual void Create(const WChar* Name, uint32 VertexDataSize, uint32 VertexStrideSize, void* pVerticies) = 0;
 
 protected:
-	IVertexBuffer() {}
+	FVertexBuffer() 
+	{
+	}
 
 	void SetUID(VertexBufferUID& NewUID) { m_UID = NewUID; }
 

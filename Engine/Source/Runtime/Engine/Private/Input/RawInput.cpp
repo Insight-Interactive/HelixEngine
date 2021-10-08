@@ -3,10 +3,10 @@
 
 #include "Input/RawInput.h"
 
-#include "Engine/HEngine.h"
+#include "Engine/Engine.h"
 
 
-RawInputSurveyer::RawInputSurveyer()
+FRawInputSurveyer::FRawInputSurveyer()
 	: m_UseKeyBoardMouse( true )
 	, m_pSurveyingWindow( NULL )
 {
@@ -14,14 +14,14 @@ RawInputSurveyer::RawInputSurveyer()
 	ZeroMemory( m_Analogs, sizeof( m_Analogs ) );
 }
 
-RawInputSurveyer::~RawInputSurveyer()
+FRawInputSurveyer::~FRawInputSurveyer()
 {
 }
 
-void RawInputSurveyer::Initialize( void* pNativeWindow )
+void FRawInputSurveyer::Initialize( FWindow* pNativeWindow )
 {
 	SetWindow( pNativeWindow );
-
+	m_pGamepad = m_GamepadManager.CreateGamepad();
 #if HE_INPUT_USE_KEYBOARD_MOUSE
 	if (m_UseKeyBoardMouse)
 	{
@@ -30,7 +30,7 @@ void RawInputSurveyer::Initialize( void* pNativeWindow )
 #endif
 }
 
-void RawInputSurveyer::UnInitialize()
+void FRawInputSurveyer::UnInitialize()
 {
 #if HE_INPUT_USE_KEYBOARD_MOUSE
 	if (m_UseKeyBoardMouse)
@@ -40,33 +40,55 @@ void RawInputSurveyer::UnInitialize()
 #endif
 }
 
-void RawInputSurveyer::Update( float DeltaTime )
+void FRawInputSurveyer::Update( float DeltaTime )
 {
-	CopyMemory( m_Buttons[1], m_Buttons[0], sizeof( m_Buttons[0] ) );
-	ZeroMemory( m_Buttons[0], sizeof( m_Buttons[0] ) );
+	CopyMemory( m_Buttons[kState_Previous], m_Buttons[kState_Current], sizeof( m_Buttons[kState_Current] ) );
+	ZeroMemory( m_Buttons[kState_Current], sizeof( m_Buttons[kState_Current] ) );
 	ZeroMemory( m_Analogs, sizeof( m_Analogs ) );
 
-	m_Mouse.UpdateBuffers();
+
+#if HE_INPUT_USE_GAMEPAD
+	m_GamepadManager.Tick( DeltaTime );
+	
+	m_Buttons[kState_Current][AButton]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_A );
+	m_Buttons[kState_Current][BButton]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_B );
+	m_Buttons[kState_Current][XButton]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_X );
+	m_Buttons[kState_Current][YButton]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_Y );
+	m_Buttons[kState_Current][DPadUp]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_DPadUp );
+	m_Buttons[kState_Current][DPadDown]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_DPadDown );
+	m_Buttons[kState_Current][DPadLeft]		= m_pGamepad->IsButtonPressed( FGamepad::kButton_DPadLeft );
+	m_Buttons[kState_Current][DPadRight]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_DPadRight );
+	m_Buttons[kState_Current][StartButton]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_Start );
+	m_Buttons[kState_Current][BackButton]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_Select );
+	m_Buttons[kState_Current][LThumbClick]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_LeftThumb );
+	m_Buttons[kState_Current][RThumbClick]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_RightThumb );
+	m_Buttons[kState_Current][LShoulder]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_LeftShoulder );
+	m_Buttons[kState_Current][RShoulder]	= m_pGamepad->IsButtonPressed( FGamepad::kButton_RightShoulder );
+	SetAnalogValue( AnalogLeftTrigger, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_LeftTrigger ) );
+	SetAnalogValue( AnalogRightTrigger, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_RightTrigger ) );
+	SetAnalogValue( AnalogLeftStickX, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_LeftStickX) );
+	SetAnalogValue( AnalogLeftStickY, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_LeftStickY ) );
+	SetAnalogValue( AnalogRightStickX, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_RightStickX ) );
+	SetAnalogValue( AnalogRightStickY, m_pGamepad->GetAnalogValue( FGamepad::kAnalog_RightStickY ) );
 
 
-#ifdef HE_INPUT_USE_XINPUT
-	XINPUT_STATE newInputState;
+	/*XINPUT_STATE newInputState;
 	if (ERROR_SUCCESS == XInputGetState( 0, &newInputState ))
 	{
-		if (newInputState.Gamepad.wButtons & (1 << 0)) m_Buttons[0][DPadUp] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 1)) m_Buttons[0][DPadDown] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 2)) m_Buttons[0][DPadLeft] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 3)) m_Buttons[0][DPadRight] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 4)) m_Buttons[0][StartButton] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 5)) m_Buttons[0][BackButton] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 6)) m_Buttons[0][LThumbClick] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 7)) m_Buttons[0][RThumbClick] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 8)) m_Buttons[0][LShoulder] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 9)) m_Buttons[0][RShoulder] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 12)) m_Buttons[0][AButton] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 13)) m_Buttons[0][BButton] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 14)) m_Buttons[0][XButton] = true;
-		if (newInputState.Gamepad.wButtons & (1 << 15)) m_Buttons[0][YButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 0)) m_Buttons[kState_Current][DPadUp] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 1)) m_Buttons[kState_Current][DPadDown] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 2)) m_Buttons[kState_Current][DPadLeft] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 3)) m_Buttons[kState_Current][DPadRight] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 4)) m_Buttons[kState_Current][StartButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 5)) m_Buttons[kState_Current][BackButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 6)) m_Buttons[kState_Current][LThumbClick] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 7)) m_Buttons[kState_Current][RThumbClick] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 8)) m_Buttons[kState_Current][LShoulder] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 9)) m_Buttons[kState_Current][RShoulder] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 12)) m_Buttons[kState_Current][AButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 13)) m_Buttons[kState_Current][BButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 14)) m_Buttons[kState_Current][XButton] = true;
+		if (newInputState.Gamepad.wButtons & (1 << 15)) m_Buttons[kState_Current][YButton] = true;
 
 		SetAnalogValue( AnalogLeftTrigger, newInputState.Gamepad.bLeftTrigger / 255.0f );
 		SetAnalogValue( AnalogRightTrigger, newInputState.Gamepad.bRightTrigger / 255.0f );
@@ -74,60 +96,61 @@ void RawInputSurveyer::Update( float DeltaTime )
 		SetAnalogValue( AnalogLeftStickY, FilterAnalogInput( newInputState.Gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) );
 		SetAnalogValue( AnalogRightStickX, FilterAnalogInput( newInputState.Gamepad.sThumbRX, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ) );
 		SetAnalogValue( AnalogRightStickY, FilterAnalogInput( newInputState.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ) );
-	}
+	}*/
+
 #else
-	IVectorView<Gamepad^>^ gamepads = Gamepad::Gamepads;
-	if (gamepads->Size != 0)
-	{
-		IGamepad^ gamepad = gamepads->GetAt( 0 );
-		GamepadReading reading = gamepad->GetCurrentReading();
-		uint32_t Buttons = (uint32_t)reading.Buttons;
-		if (Buttons & (uint32_t)GamepadButtons::DPadUp) m_Buttons[0][kDPadUp] = true;
-		if (Buttons & (uint32_t)GamepadButtons::DPadDown) m_Buttons[0][kDPadDown] = true;
-		if (Buttons & (uint32_t)GamepadButtons::DPadLeft) m_Buttons[0][kDPadLeft] = true;
-		if (Buttons & (uint32_t)GamepadButtons::DPadRight) m_Buttons[0][kDPadRight] = true;
-		if (Buttons & (uint32_t)GamepadButtons::Menu) m_Buttons[0][kStartButton] = true;
-		if (Buttons & (uint32_t)GamepadButtons::View) m_Buttons[0][kBackButton] = true;
-		if (Buttons & (uint32_t)GamepadButtons::LeftThumbstick) m_Buttons[0][kLThumbClick] = true;
-		if (Buttons & (uint32_t)GamepadButtons::RightThumbstick) m_Buttons[0][kRThumbClick] = true;
-		if (Buttons & (uint32_t)GamepadButtons::LeftShoulder) m_Buttons[0][kLShoulder] = true;
-		if (Buttons & (uint32_t)GamepadButtons::RightShoulder) m_Buttons[0][kRShoulder] = true;
-		if (Buttons & (uint32_t)GamepadButtons::A) m_Buttons[0][kAButton] = true;
-		if (Buttons & (uint32_t)GamepadButtons::B) m_Buttons[0][kBButton] = true;
-		if (Buttons & (uint32_t)GamepadButtons::X) m_Buttons[0][kXButton] = true;
-		if (Buttons & (uint32_t)GamepadButtons::Y) m_Buttons[0][kYButton] = true;
+	//IVectorView<Gamepad^>^ gamepads = Gamepad::Gamepads;
+	//if (gamepads->Size != 0)
+	//{
+	//	IGamepad^ gamepad = gamepads->GetAt( 0 );
+	//	GamepadReading reading = gamepad->GetCurrentReading();
+	//	uint32_t Buttons = (uint32_t)reading.Buttons;
+	//	if (Buttons & (uint32_t)GamepadButtons::DPadUp) m_Buttons[0][kDPadUp] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::DPadDown) m_Buttons[0][kDPadDown] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::DPadLeft) m_Buttons[0][kDPadLeft] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::DPadRight) m_Buttons[0][kDPadRight] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::Menu) m_Buttons[0][kStartButton] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::View) m_Buttons[0][kBackButton] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::LeftThumbstick) m_Buttons[0][kLThumbClick] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::RightThumbstick) m_Buttons[0][kRThumbClick] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::LeftShoulder) m_Buttons[0][kLShoulder] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::RightShoulder) m_Buttons[0][kRShoulder] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::A) m_Buttons[0][kAButton] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::B) m_Buttons[0][kBButton] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::X) m_Buttons[0][kXButton] = true;
+	//	if (Buttons & (uint32_t)GamepadButtons::Y) m_Buttons[0][kYButton] = true;
 
-		static const float kAnalogStickDeadZone = 0.18f;
+	//	static const float kAnalogStickDeadZone = 0.18f;
 
-		m_Analogs[kAnalogLeftTrigger - AnalogLeftTrigger] = (float)reading.LeftTrigger;
-		m_Analogs[kAnalogRightTrigger - AnalogLeftTrigger] = (float)reading.RightTrigger;
-		m_Analogs[kAnalogLeftStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickX, kAnalogStickDeadZone );
-		m_Analogs[kAnalogLeftStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickY, kAnalogStickDeadZone );
-		m_Analogs[kAnalogRightStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickX, kAnalogStickDeadZone );
-		m_Analogs[kAnalogRightStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickY, kAnalogStickDeadZone );
-	}
+	//	m_Analogs[kAnalogLeftTrigger - AnalogLeftTrigger] = (float)reading.LeftTrigger;
+	//	m_Analogs[kAnalogRightTrigger - AnalogLeftTrigger] = (float)reading.RightTrigger;
+	//	m_Analogs[kAnalogLeftStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickX, kAnalogStickDeadZone );
+	//	m_Analogs[kAnalogLeftStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.LeftThumbstickY, kAnalogStickDeadZone );
+	//	m_Analogs[kAnalogRightStickX - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickX, kAnalogStickDeadZone );
+	//	m_Analogs[kAnalogRightStickY - AnalogLeftTrigger] = FilterAnalogInput( (float)reading.RightThumbstickY, kAnalogStickDeadZone );
+	//}
 
 #endif // HE_INPUT_USE_XINPUT
 
-#ifdef HE_INPUT_USE_KEYBOARD_MOUSE
+#if HE_INPUT_USE_KEYBOARD_MOUSE
 	KbmUpdate();
 
-	for (uint32_t i = 0; i < NumKeys; ++i)
+	for (uint32_t i = 0; i < kNumKeys; ++i)
 	{
-		m_Buttons[0][i] = m_Keyboard.GetState( i ) != 0;
+		m_Buttons[kState_Current][i] = m_Keyboard.GetKey( i ) != 0;
 	}
 
 #if HE_WINDOWS
-	for (uint32_t i = 0; i < 8; ++i)
+	for (uint32_t i = 0; i < kNumMouseInputs; ++i)
 	{
-		if (m_Mouse.GetButtonStateByIndex( i ) > 0) 
-			m_Buttons[0][Mouse0 + i] = true;
+		if (m_Mouse.GetButtonStateByIndex( i ) > 0)
+			m_Buttons[kState_Current][Mouse0 + i] = true;
 	}
 #endif
 
 	FVector2 MouseMoveDelta = m_Mouse.GetMoveDelta();
-	SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * .0018f );
-	SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * -.0018f );
+	SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * 0.0018f );
+	SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * -0.0018f );
 
 	float MouseVerticalScrollDelta = m_Mouse.GetVerticalScrollDelta();
 	if (MouseVerticalScrollDelta > 0)
@@ -141,9 +164,9 @@ void RawInputSurveyer::Update( float DeltaTime )
 	//
 	for (uint32_t i = 0; i < kNumDigitalInputs; ++i)
 	{
-		if (m_Buttons[0][i])
+		if (m_Buttons[kState_Current][i])
 		{
-			if (!m_Buttons[1][i])
+			if (!m_Buttons[kState_Previous][i])
 				m_HoldDuration[i] = 0.0f;
 			else
 				m_HoldDuration[i] += DeltaTime;
@@ -154,64 +177,50 @@ void RawInputSurveyer::Update( float DeltaTime )
 	{
 		m_AnalogsTC[i] = m_Analogs[i] * DeltaTime;
 	}
+#if HE_INPUT_USE_KEYBOARD_MOUSE
+	// Update mouse last so any information can be extracted 
+	// from it first, before it clears for the next frame.
+	m_Mouse.UpdateBuffers();
+
+#endif
 }
 
-bool RawInputSurveyer::IsMouseButtonPressed( DigitalInput di )
+bool FRawInputSurveyer::IsMouseButtonPressed( DigitalInput di )
 {
-#if HE_WINDOWS
-
-	int Key = 0;
-	switch (di)
-	{
-	case Mouse0:
-		Key = VK_LBUTTON;
-		break;
-	case Mouse1:
-		Key = VK_RBUTTON;
-		break;
-	case Mouse2:
-		Key = VK_MBUTTON;
-		break;
-	default:
-		HE_LOG( Log, TEXT( "[Input] Invalid mouse key provided when determining weather mouse button was pressed." ) );
-		break;
-	}
-	return ((1 << 15) & ::GetAsyncKeyState( Key ));
-	
-#endif // HE_WINDOWS
+	return m_Buttons[kState_Current][di];
 }
 
-bool RawInputSurveyer::IsAnyPressed()
+bool FRawInputSurveyer::IsAnyPressed()
 {
-	return m_Buttons[0] != 0;
+	return m_Buttons[kState_Current] != 0;
 }
 
-bool RawInputSurveyer::IsPressed( DigitalInput di )
+bool FRawInputSurveyer::IsPressed( DigitalInput di )
 {
-	return m_Buttons[0][di];
+	return m_Buttons[kState_Current][di];
 }
 
-bool RawInputSurveyer::IsFirstPressed( DigitalInput di )
+bool FRawInputSurveyer::IsFirstPressed( DigitalInput di )
 {
-	return m_Buttons[0][di] && !m_Buttons[1][di];
+	return m_Buttons[kState_Current][di] && !m_Buttons[kState_Previous][di];
 }
 
-bool RawInputSurveyer::IsReleased( DigitalInput di )
+bool FRawInputSurveyer::IsReleased( DigitalInput di )
 {
-	return !m_Buttons[0][di];
+	return !m_Buttons[kState_Current][di];
 }
 
-bool RawInputSurveyer::IsFirstReleased( DigitalInput di )
+bool FRawInputSurveyer::IsFirstReleased( DigitalInput di )
 {
-	return !m_Buttons[0][di] && m_Buttons[1][di];
+	return !m_Buttons[kState_Current][di] && m_Buttons[kState_Previous][di];
 }
 
-float RawInputSurveyer::GetDurationPressed( DigitalInput di )
+float FRawInputSurveyer::GetDurationPressed( DigitalInput di )
 {
 	return m_HoldDuration[di];
 }
 
-float RawInputSurveyer::GetAnalogInput( DigitalInput ai )
+float FRawInputSurveyer::GetAnalogInput( DigitalInput ai )
 {
 	HE_ASSERT( IsValidAnalogInput( ai ) );
 	// m_Analogs only stores values from AnalogLeftTrigger to AnalogMouseScroll 
@@ -219,7 +228,7 @@ float RawInputSurveyer::GetAnalogInput( DigitalInput ai )
 	return m_Analogs[ai - AnalogLeftTrigger];
 }
 
-float RawInputSurveyer::GetTimeCorrectedAnalogInput( DigitalInput ai )
+float FRawInputSurveyer::GetTimeCorrectedAnalogInput( DigitalInput ai )
 {
 	HE_ASSERT( IsValidAnalogInput( ai ) );
 	// m_Analogs only stores values from AnalogLeftTrigger to AnalogMouseScroll 
@@ -227,63 +236,69 @@ float RawInputSurveyer::GetTimeCorrectedAnalogInput( DigitalInput ai )
 	return m_AnalogsTC[ai - AnalogLeftTrigger];
 }
 
+
+// Keyboard and mouse functions
+//
+
 #if HE_INPUT_USE_KEYBOARD_MOUSE
-void RawInputSurveyer::KbmInitialize()
+void FRawInputSurveyer::KbmInitialize()
 {
 	// Acquire the hardware input interface.
 	m_RIDInterface.Setup();
 
 	// Setup the keyboard.
-	m_Keyboard.SetupPlatformRIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow );
+	m_Keyboard.SetupPlatformHIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow->GetNativeWindow() );
 
 	// Setup the mouse.
-	m_Mouse.SetupPlatformRIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow );
-	
+	m_Mouse.SetupPlatformHIDProvider( m_RIDInterface.GetInterface(), m_pSurveyingWindow->GetNativeWindow() );
+
 	HE_ASSERT( m_Mouse.IsValid() && m_Keyboard.IsValid() );
 
 	AcquireKeyboard();
 	KbmZeroInputs();
 }
 
-void RawInputSurveyer::KbmZeroInputs()
+void FRawInputSurveyer::KbmZeroInputs()
 {
 	m_Mouse.ZeroInput();
 	m_Keyboard.ZeroInput();
 }
 
-void RawInputSurveyer::KbmShutdown()
+void FRawInputSurveyer::KbmShutdown()
 {
 	m_Keyboard.Destroy();
 	m_Mouse.Destroy();
 	m_RIDInterface.Destroy();
 }
 
-void RawInputSurveyer::KbmUpdate()
+void FRawInputSurveyer::KbmUpdate()
 {
-	// Zero out the inputs if the application is out of focus.
+	// Zero out the inputs (to prevent unwanted movements) if the application 
+	// is out of focus and hand back the mouse and keyboard to the OS.
 	//
-	HWND NativeWindow = RCast<HWND>( m_pSurveyingWindow );
-	bool IsVisible = ::IsWindowVisible( NativeWindow ) != 0;
-	if (NativeWindow != m_pSurveyingWindow || !IsVisible)
+	if (!m_pSurveyingWindow->HasFocus())
 	{
 		KbmZeroInputs();
+		m_Mouse.Unacquire();
+		m_Keyboard.Unacquire();
 	}
 	else
 	{
-		if ( m_Mouse.GetIsAcquired() )
+		if (m_Mouse.GetIsAcquired())
 		{
-			AcquireMouse();
 			m_Mouse.QueryState();
 		}
-
-		AcquireKeyboard();
 		m_Keyboard.QueryState();
 	}
 }
 #endif //HE_INPUT_USE_KEYBOARD_MOUSE
 
+
+// Gamepad functions
+//
+
 #if HE_INPUT_USE_GAMEPAD
-float RawInputSurveyer::FilterAnalogInput( int Val, int DeadZone )
+float FRawInputSurveyer::FilterAnalogInput( int Val, int DeadZone )
 {
 #if HE_INPUT_USE_XINPUT
 	if (Val < 0)
@@ -311,5 +326,5 @@ float RawInputSurveyer::FilterAnalogInput( int Val, int DeadZone )
 	else
 		return 0.0f;
 #endif // HE_INPUT_USE_XINPUT
-}
+	}
 #endif // HE_INPUT_USE_GAMEPAD

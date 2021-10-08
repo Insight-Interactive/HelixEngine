@@ -7,10 +7,10 @@
 #include "LinearAllocator.h"
 
 #include "RendererCore.h"
-#include "IDevice.h"
+#include "IRenderDevice.h"
 
 
-void TextureD3D12::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData)
+void HTextureD3D12::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData)
 {
 	Destroy();
 
@@ -56,8 +56,8 @@ void TextureD3D12::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, E
 	uint32 NumSubresources = 1;
 	UINT64 uploadBufferSize = GetRequiredIntermediateSize(GetResource(), 0, NumSubresources);
 
-	ICommandContext& InitContext = ICommandContext::Begin(L"Texture Init");
-	CommandContextD3D12& D3D12InitContext = *DCast<CommandContextD3D12*>(&InitContext);
+	FCommandContext& InitContext = FCommandContext::Begin(L"Texture Init");
+	FCommandContextD3D12& D3D12InitContext = *DCast<FCommandContextD3D12*>(&InitContext);
 	{
 		// copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
 		DynAlloc mem = D3D12InitContext.ReserveUploadMemory(uploadBufferSize);
@@ -74,7 +74,7 @@ void TextureD3D12::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, E
 	AssociateWithShaderVisibleHeap();
 }
 
-void TextureD3D12::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitialData)
+void HTextureD3D12::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitialData)
 {
 	Destroy();
 
@@ -122,8 +122,8 @@ void TextureD3D12::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height,
 	uint32 NumSubresources = 1;
 	UINT64 uploadBufferSize = GetRequiredIntermediateSize(GetResource(), 0, NumSubresources);
 
-	ICommandContext& InitContext = ICommandContext::Begin(L"Texture Init");
-	CommandContextD3D12& D3D12InitContext = *DCast<CommandContextD3D12*>(&InitContext);
+	FCommandContext& InitContext = FCommandContext::Begin(L"Texture Init");
+	FCommandContextD3D12& D3D12InitContext = *DCast<FCommandContextD3D12*>(&InitContext);
 	{
 		// copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
 		DynAlloc mem = D3D12InitContext.ReserveUploadMemory(uploadBufferSize);
@@ -146,13 +146,13 @@ void TextureD3D12::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height,
 	pD3D12Device->CreateShaderResourceView(m_pID3D12Resource.Get(), &srvDesc, m_hCpuDescriptorHandle);
 }
 
-void TextureD3D12::Destroy()
+void HTextureD3D12::Destroy()
 {
-	GpuResourceD3D12::Destroy();
+	FGpuResourceD3D12::Destroy();
 	m_hCpuDescriptorHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 }
 
-void TextureD3D12::AssociateWithShaderVisibleHeap()
+void HTextureD3D12::AssociateWithShaderVisibleHeap()
 {
 	if (!GTextureHeap) return;
 
@@ -161,10 +161,10 @@ void TextureD3D12::AssociateWithShaderVisibleHeap()
 
 	// TODO: In order to get a linear disciptor table this might have to move to the material class
 	// So a descriptor range array in a single root parameter could fit all the descriptors inside 'SourceTextures' array
-	// Command context would have to change to have a 'DescriptorHandle' instead of a 'TextureRef' though.
+	// Command context would have to change to have a 'FDescriptorHandle' instead of a 'HTextureRef' though.
 	uint32 DestCount = s_NumTextures;
 	uint32 SourceCounts[s_NumTextures] = { 1 };
-	const ITexture* SourceTextures[s_NumTextures] =
+	const HTexture* SourceTextures[s_NumTextures] =
 	{
 		this
 	};

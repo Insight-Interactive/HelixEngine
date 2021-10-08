@@ -7,24 +7,25 @@
 #include "StaticMeshGeometry.h"
 #include "CriticalSection.h"
 
-class RENDER_API ManagedStaticMeshGeometry : public StaticMeshGeometry
+
+class RENDER_API HManagedStaticMeshGeometry : public HStaticMeshGeometry
 {
-	friend class StaticGeometryManager;
+	friend class FStaticGeometryManager;
 public:
-	ManagedStaticMeshGeometry()
+	HManagedStaticMeshGeometry()
 		: m_MapKey( "<default>" )
 		, m_IsValid( false )
 		, m_IsLoading( true )
 		, m_ReferenceCount( 0 )
 	{
 	}
-	virtual ~ManagedStaticMeshGeometry() = default;
+	virtual ~HManagedStaticMeshGeometry() = default;
 
 	void WaitForLoad() const;
 	bool IsValid( void ) const { return m_IsValid; }
 
 protected:
-	ManagedStaticMeshGeometry( const std::string& HashName )
+	HManagedStaticMeshGeometry( const std::string& HashName )
 		: m_MapKey( HashName )
 		, m_IsValid( false )
 		, m_IsLoading( true )
@@ -45,16 +46,16 @@ protected:
 	bool m_IsLoading;
 	uint64 m_ReferenceCount;
 };
-typedef std::shared_ptr<ManagedStaticMeshGeometry> StaticMeshGeometryRef;
+typedef std::shared_ptr<HManagedStaticMeshGeometry> StaticMeshGeometryRef;
 
 
-class RENDER_API StaticGeometryManager
+class RENDER_API FStaticGeometryManager
 {
 public:
-	StaticGeometryManager()
+	FStaticGeometryManager()
 	{
 	}
-	~StaticGeometryManager()
+	~FStaticGeometryManager()
 	{
 	}
 
@@ -90,7 +91,7 @@ private:
 // Inline function implementations
 //
 
-inline StaticMeshGeometryRef StaticGeometryManager::GetStaticMeshByName( const String& Name )
+inline StaticMeshGeometryRef FStaticGeometryManager::GetStaticMeshByName( const String& Name )
 {
 	auto Iter = m_ModelCache.find( Name );
 	if (Iter != m_ModelCache.end())
@@ -105,7 +106,7 @@ inline StaticMeshGeometryRef StaticGeometryManager::GetStaticMeshByName( const S
 	return NULL;
 }
 
-inline bool StaticGeometryManager::DestroyMesh( const String& Key )
+inline bool FStaticGeometryManager::DestroyMesh( const String& Key )
 {
 	auto Iter = m_ModelCache.find( Key );
 	if (Iter != m_ModelCache.end())
@@ -117,13 +118,13 @@ inline bool StaticGeometryManager::DestroyMesh( const String& Key )
 	return false;
 }
 
-inline bool StaticGeometryManager::MeshExists( const String& Name ) const
+inline bool FStaticGeometryManager::MeshExists( const String& Name ) const
 {
 	auto Iter = m_ModelCache.find( Name );
 	return Iter != m_ModelCache.end();
 }
 
-inline void StaticGeometryManager::FlushCache()
+inline void FStaticGeometryManager::FlushCache()
 {
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
 	{

@@ -26,7 +26,7 @@ struct ConsoleWindowDesc
 	bool CanClose = true;
 	// Output buffer dimensions.
 	FVector2 BufferDims = FVector2(700, 320);
-	// Window dimensions
+	// FWindow dimensions
 	FVector2 WindowDims = FVector2(170, 42);
 	// The default text color when adding text to the log.
 	EConsoleColor DefaultForegroundColor = CC_White;
