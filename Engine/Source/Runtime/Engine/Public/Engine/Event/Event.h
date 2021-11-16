@@ -164,11 +164,11 @@ public:
 		Ex) Dispach<MyEvent>( this, &SomeClass::SomeMemberFn );
 	*/
 	template <typename EventType, typename ClassTarget>
-	bool Dispatch( ClassTarget* pClass, bool(ClassTarget::* pFn)(EventType&) )
+	bool Dispatch( ClassTarget* pClass, bool(ClassTarget::* pMemberFn)(EventType&) )
 	{
 		if (m_Event.GetEventType() == EventType::GetStaticType())
 		{
-			m_Event.m_IsHandled = HE_INVOKE_MEMBER_FN( pClass, pFn, *(EventType*)&m_Event );
+			m_Event.m_IsHandled = HE_INVOKE_MEMBER_FN( pClass, pMemberFn, *(EventType*)&m_Event );
 			return true;
 		}
 		return false;

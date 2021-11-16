@@ -16,7 +16,6 @@
 HPointLightComponent::HPointLightComponent( const HName& Name )
 	: HActorComponent( Name )
 {
-	m_CanDrawDebugBillboard = GEngine->GetIsEditorPresent();
 	PointLightCBData* pNewLight = NULL;
 	GLightManager.AllocatePointLightData( m_PointLightHandle, &pNewLight );
 	if (pNewLight != NULL)
@@ -26,9 +25,10 @@ HPointLightComponent::HPointLightComponent( const HName& Name )
 		pNewLight->Position = m_Transform.GetPosition();
 	}
 
+	m_CanDrawDebugBillboard = GEngine->GetIsEditorPresent();
 	m_MeshWorldCB.Create( L"[PointLight Component] World CB" );
-	//m_MaterialRef = FAssetDatabase::GetInstance()->GetMaterial( /*"M_RustedMetal"*/FGUID::CreateFromString( "0d68e992-aa25-4aa4-9f81-0eb775320c1e" ) );
-	//m_LightDebugMesh = GeometryGenerator::GenerateScreenAlignedQuadMesh();
+	m_MaterialRef = FAssetDatabase::GetInstance()->GetMaterial( FGUID::CreateFromString( "d7d2911a-0461-4a69-b28d-259389c45f87" ) );
+	m_LightDebugMesh = FAssetDatabase::GetInstance()->GetStaticMesh(FGUID::CreateFromString("4539421c-d8b4-4936-bb0c-8dde1e24f9b9"));// GeometryGenerator::GenerateScreenAlignedQuadMesh();
 }
 
 HPointLightComponent::~HPointLightComponent()
@@ -65,38 +65,38 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 	// TODO Draw sphere showing light influence.
 
 	// Draw billboard.
-	//if (m_LightDebugMesh->IsValid() && GetCanDrawDebugBillboard())
-	//{
-	//	if (m_MaterialRef.IsValid())
-	//	{
-	//		// Set the material information.
-	//		m_MaterialRef->Bind( GfxContext );
-	//	}
+	if (m_LightDebugMesh->IsValid() && GetCanDrawDebugBillboard())
+	{
+		if (m_MaterialRef.IsValid())
+		{
+			// Set the material information.
+			m_MaterialRef->Bind( GfxContext );
+		}
 
-	//	// Update the billboard transform.
-	//	// Shrink/grow the card based on the distance to the camera.
-	//	const float kBillboardMaxScale = 5.f;
-	//	FTransform& CameraTransform = GetWorld()->GetCurrentSceneRenderCamera()->GetTransform();
-	//	const float CameraDistance = 
-	//		(CameraTransform.GetAbsoluteWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a squre root is inevitable.
-	//	const float ScaleFactor = HE_MIN( CameraDistance, kBillboardMaxScale );
-	//	m_BillboardTransform.SetScale( FVector3( ScaleFactor ) );
-	//	
-	//	m_BillboardTransform.SetPosition( m_Transform.GetPosition() );
-	//	m_BillboardTransform.LookAt( CameraTransform.GetAbsoluteWorldPosition() );
+		// Update the billboard transform.
+		// Shrink/grow the card based on the distance to the camera.
+		const float kBillboardMaxScale = 5.f;
+		FTransform& CameraTransform = GetWorld()->GetCurrentSceneRenderCamera()->GetTransform();
+		const float CameraDistance = 
+			(CameraTransform.GetAbsoluteWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a squre root is inevitable.
+		const float ScaleFactor = HE_MIN( CameraDistance, kBillboardMaxScale );
+		m_BillboardTransform.SetScale( FVector3( ScaleFactor ) );
+		
+		m_BillboardTransform.SetPosition( m_Transform.GetPosition() );
+		m_BillboardTransform.LookAt( CameraTransform.GetAbsoluteWorldPosition() );
 
-	//	// Set the world buffer.
-	//	MeshWorldCBData* pWorld = m_pMeshWorldCB->GetBufferPointer<MeshWorldCBData>();
-	//	pWorld->WorldMat = m_BillboardTransform.GetWorldMatrix().Transpose();
-	//	GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_pMeshWorldCB );
+		// Set the world buffer.
+		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
+		pWorld->kWorldMat = m_BillboardTransform.GetWorldMatrix().Transpose();
+		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
-	//	// TODO Request draw from model in model manager to render meshes of the same type in batches.
-	//	// Render the geometry.
-	//	GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
-	//	GfxContext.BindVertexBuffer( 0, m_LightDebugMesh->GetVertexBuffer() );
-	//	GfxContext.BindIndexBuffer( m_LightDebugMesh->GetIndexBuffer() );
-	//	GfxContext.DrawIndexedInstanced( m_LightDebugMesh->GetNumIndices(), 1, 0, 0, 0 );
-	//}
+		// TODO Request draw from model in model manager to render meshes of the same type in batches.
+		// Render the geometry.
+		GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
+		GfxContext.BindVertexBuffer( 0, m_LightDebugMesh->GetVertexBuffer() );
+		GfxContext.BindIndexBuffer( m_LightDebugMesh->GetIndexBuffer() );
+		GfxContext.DrawIndexedInstanced( m_LightDebugMesh->GetNumIndices(), 1, 0, 0, 0 );
+	}
 }
 
 void HPointLightComponent::Serialize( WriteContext& Output )

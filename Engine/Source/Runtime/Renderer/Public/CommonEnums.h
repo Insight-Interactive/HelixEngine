@@ -230,23 +230,23 @@ enum ELogicOp
 
 enum EColorWriteEnable
 {
-	CWE_Red = 1,
-	CWE_Green = 2,
-	CWE_Blue = 4,
-	CWE_Alpha = 8,
-	CWE_All = (((CWE_Red | CWE_Green) | CWE_Blue) | CWE_Alpha)
+	CWE_Red		= 1,
+	CWE_Green	= 2,
+	CWE_Blue	= 4,
+	CWE_Alpha	= 8,
+	CWE_All		= (((CWE_Red | CWE_Green) | CWE_Blue) | CWE_Alpha)
 };
 
 enum EStencilOp
 {
-	SO_Keep = 1,
-	SO_Zero = 2,
-	SO_Replace = 3,
-	SO_IncSat = 4,
-	SO_DecrSat = 5,
-	SO_Invert = 6,
-	SO_Incr = 7,
-	SO_Decr = 8,
+	SO_Keep		= 1,
+	SO_Zero		= 2,
+	SO_Replace	= 3,
+	SO_IncSat	= 4,
+	SO_DecrSat	= 5,
+	SO_Invert	= 6,
+	SO_Incr		= 7,
+	SO_Decr		= 8,
 };
 
 enum ERootSignatureFlags

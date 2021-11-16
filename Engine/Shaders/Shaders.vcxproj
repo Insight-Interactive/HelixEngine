@@ -475,11 +475,19 @@
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\ForwardShading\GenericForwardPass.ps.hlsl">
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\ForwardShading\GenericForwardPass.vs.hlsl">
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.vs.hlsl">
       <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>

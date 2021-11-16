@@ -24,6 +24,7 @@ FForwardRenderPass::~FForwardRenderPass()
 
 void FForwardRenderPass::Initialize( const FVector2& RenderResolution, const EFormat& RenderTargetFormat, const EFormat& DepthFormat )
 {
+	return;
 	m_RS.Reset( 6, 1 );
 	m_RS.InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
 	// Common
@@ -75,8 +76,8 @@ void FForwardRenderPass::Bind( FCommandContext& GfxContext, const FRect& Viewrec
 {
 	GfxContext.BeginDebugMarker( TEXT( "Geometry Pass" ) );
 
-	GfxContext.SetPipelineState( m_PSO );
-	GfxContext.SetGraphicsRootSignature( m_RS );
+	//GfxContext.SetPipelineState( m_PSO );
+	//GfxContext.SetGraphicsRootSignature( m_RS );
 
 	GfxContext.EndDebugMarker();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer/Technique/DeferredShadingTech.h"
+#include "Renderer/Technique/ForwardRenderPass.h"
 #include "Renderer/Technique/PostProcessUber.h"
 #include "Renderer/Technique/SkyPass.h"
 #include "DepthBuffer.h"
@@ -50,7 +51,7 @@ private:
 	// Rendering Resources
 	//
 	FDeferredShadingTech m_DeferredShader;
-	//FForwardRenderPass m_ForwardRenderPass;
+	FForwardRenderPass m_ForwardRenderPass;
 	FSkyboxPass m_SkyPass;
 	FPostProcessUber m_PostProcessPass;
 	StaticMeshGeometryRef m_pScreenQuadRef;

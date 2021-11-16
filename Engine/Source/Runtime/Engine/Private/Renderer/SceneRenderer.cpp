@@ -106,13 +106,6 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_SkyPass.UnBind(CmdContext, m_DepthBuffer);
 	}
 
-	if (Scene.DoesContainAnyTranslucentObjects())
-	{
-		m_DeferredShader.BindGeometryPass(CmdContext, Scissor);
-		Scene.RenderStaticLitTranslucentObjects( CmdContext );
-		m_DeferredShader.UnBindGeometryPass(CmdContext);
-	}
-
 	// Prep the render target to be rendered too.
 	//
 	const FColorBuffer* pRTs[] = { &RenderTarget };
@@ -130,33 +123,27 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 	}
 
 	// Forward Render Pass
-	//{
-	//	m_ForwardRenderPass.Bind( CmdContext, GetClientRect() );
-	//	FGpuResource& SceneDepthBufferResource = *DCast<FGpuResource*>(m_DeferredShader.GetGeometryPass().GetSceneDepthBuffer());
-	//	CmdContext.TransitionResource( SceneDepthBufferResource, RS_DepthWrite );
-	//	CmdContext.OMSetRenderTargets( 1, pRTs, m_DeferredShader.GetGeometryPass().GetSceneDepthBuffer() );
-	//
-	//	m_BillboardTransform.SetScale( 3.f, 3.f, 3.f );
-	//	m_BillboardTransform.SetPosition( -7.f, 0.f, 0.f );
-	//	// Set the world buffer.
-	//	MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-	//	pWorld->WorldMat = m_BillboardTransform.GetWorldMatrix().Transpose();
-	//	CmdContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
-	//
-	//	// Render the geometry.
-	//	CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-	//	CmdContext.BindVertexBuffer( 0, m_DebugMesh->GetVertexBuffer() );
-	//	CmdContext.BindIndexBuffer( m_DebugMesh->GetIndexBuffer() );
-	//	CmdContext.DrawIndexedInstanced( m_DebugMesh->GetNumIndices(), 1, 0, 0, 0 );
-	//
-	//	m_ForwardRenderPass.UnBind( CmdContext );
-	//}
+	if (Scene.DoesContainAnyTranslucentObjects())
+	{
+		m_ForwardRenderPass.Bind( CmdContext, Scissor );
+		CmdContext.TransitionResource(m_DepthBuffer, RS_DepthWrite );
+		CmdContext.OMSetRenderTargets( 1, pRTs, &m_DepthBuffer );
+		
+		SetCommonRenderState(CmdContext, true, true);
+		CmdContext.SetDescriptorHeap(RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap());
+
+		Scene.RenderStaticLitTranslucentObjects(CmdContext);
+	
+		m_ForwardRenderPass.UnBind( CmdContext );
+	}
 
 	// Post-Process Pass
 	{
-		/*m_PostProcessPass.Bind( CmdContext, GetClientRect() );
+		/*
+		m_PostProcessPass.Bind( CmdContext, GetClientRect() );
 
-		m_PostProcessPass.UnBind( CmdContext );*/
+		m_PostProcessPass.UnBind( CmdContext );
+		*/
 	}
 
 	CmdContext.End();

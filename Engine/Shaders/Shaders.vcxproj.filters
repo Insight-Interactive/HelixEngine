@@ -54,10 +54,16 @@
     <FxCompile Include="Public\DeferredShading\DefaultLightPass.ps.hlsl">
       <Filter>Public\DeferredShading</Filter>
     </FxCompile>
-    <FxCompile Include="Public\ForwardShading\GenericForwardPass.ps.hlsl">
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">
       <Filter>Public\ForwardShading</Filter>
     </FxCompile>
-    <FxCompile Include="Public\ForwardShading\GenericForwardPass.vs.hlsl">
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.vs.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.ps.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.vs.hlsl">
       <Filter>Public\ForwardShading</Filter>
     </FxCompile>
   </ItemGroup>

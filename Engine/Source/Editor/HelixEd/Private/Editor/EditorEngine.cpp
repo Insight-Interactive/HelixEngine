@@ -63,7 +63,7 @@ void HEditorEngine::Startup()
 	LoadEditorPreferences();
 
 	EnableDarkMode( m_UserPreferences.EnableDarkMode );
-
+	
 	ImGuiStyle& Style = ImGui::GetStyle();
 	Style.WindowRounding = 0.0f;
 	Style.Colors[ImGuiCol_WindowBg].w = 1.f;

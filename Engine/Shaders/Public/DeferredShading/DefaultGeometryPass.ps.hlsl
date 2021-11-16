@@ -8,8 +8,8 @@ HE_DECLARE_SAMPLERSTATE(LinearWrapSampler, 0);
 
 // Opaque material Textures
 //
-HE_DECLARE_TEXTURE2D( Albedo, 0);
-HE_DECLARE_TEXTURE2D( Normal, 1);
+HE_DECLARE_TEXTURE2D( MaterialAlbedo, 0);
+HE_DECLARE_TEXTURE2D( MaterialNormal, 1);
 
 //
 // Entry Point
@@ -18,8 +18,8 @@ GP_PSOutput main(GP_PSInput Input)
 {
 	GP_PSOutput Output;
 
-	float3 AlbedoSample = Albedo.Sample(LinearWrapSampler, Input.UVs).rgb;
-	float3 NormalSample = Normal.Sample(LinearWrapSampler, Input.UVs).rgb;
+	float3 AlbedoSample = MaterialAlbedo.Sample(LinearWrapSampler, Input.UVs).rgb;
+	float3 NormalSample = MaterialNormal.Sample(LinearWrapSampler, Input.UVs).rgb;
 
 	const float3x3 TangentToView = float3x3(normalize(Input.Tangent),
 											normalize(Input.BiTangent),

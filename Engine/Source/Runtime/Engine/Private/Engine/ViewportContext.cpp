@@ -117,10 +117,10 @@ void FViewportContext::ReloadRenderPipelines()
 	m_SceneRenderer.ReloadPipelines();
 }
 
+
 //
 // Event Processing
 //
-
 
 void FViewportContext::OnEvent( Event& e )
 {
@@ -139,7 +139,6 @@ void FViewportContext::OnEvent( Event& e )
 	// Keyboard
 	Dispatcher.Dispatch<KeyPressedEvent>( this, &FViewportContext::OnKeyPressed );
 	Dispatcher.Dispatch<KeyReleasedEvent>( this, &FViewportContext::OnKeyReleased );
-
 }
 
 bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )

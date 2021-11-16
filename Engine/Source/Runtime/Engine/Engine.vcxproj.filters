@@ -282,6 +282,7 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -461,6 +462,7 @@
     <ClCompile Include="Public\Renderer\Material.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

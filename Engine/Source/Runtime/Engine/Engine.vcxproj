@@ -982,6 +982,7 @@
     <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\SplashScreen.h" />
+    <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
     <ClInclude Include="Public\Engine\ViewportContext.h" />
     <ClInclude Include="Public\Engine\Window.h" />
     <ClInclude Include="Public\GameFramework\Actor\AActor.h" />
@@ -1043,6 +1044,7 @@
     <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\SplashScreen.cpp" />
+    <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
     <ClCompile Include="Private\Engine\ViewportContext.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp" />

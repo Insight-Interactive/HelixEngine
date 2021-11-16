@@ -32,11 +32,7 @@ static void SplashMain( void* pUserData );
 HEngine::HEngine( CommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
-#if HE_STANDALONE
-	, m_IsPlayingInEditor( true )
-#else
-	, m_IsPlayingInEditor( false )
-#endif
+	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds(0.0)
 {
 }
@@ -119,8 +115,8 @@ void HEngine::Startup()
 	FWindow::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar = true;
 	ClientDesc.bShowImmediate = false;
-	ClientDesc.Width = 1920;
-	ClientDesc.Height = 1080;
+	ClientDesc.Width = 1600;
+	ClientDesc.Height = 900;
 	ClientDesc.Title =
 #if HE_WITH_EDITOR
 		TEXT( "Helix Ed" ) " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]";
@@ -153,15 +149,15 @@ void HEngine::Startup()
 
 void HEngine::PostStartup()
 {
-	HE_LOG( Log, TEXT( "Beginning engine post-startup." ) );
+	HE_LOG(Log, TEXT("Beginning engine post-startup."));
 
 	GetClientViewport().Show();
 	GetClientViewport().BringToFocus();
-#if HE_STANDALONE
-	m_GameWorld.BeginPlay();
-	GGameInstance->OnGameSetFocus();
-#endif
-
+	if (IsPlayingInEditor())
+	{
+		m_GameWorld.BeginPlay();
+		GGameInstance->OnGameSetFocus();
+	}
 	m_IsInitialized = true;
 	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
 }
@@ -252,12 +248,10 @@ void HEngine::RenderClientViewport( float DeltaTime )
 	
 	FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
 	{
-		FColorBuffer& SwapChainSurface = *GetClientViewport().GetWindow().GetRenderSurface();
+		FColorBuffer& SwapChainSurface = *ClientViewport.GetWindow().GetRenderSurface();
 		CmdContext.TransitionResource( SwapChainSurface, RS_Present );
 	}
 	CmdContext.End();
-
-	ClientViewport.PresentOneFrame();
 }
 
 void HEngine::BackgroundUpdate( float DeltaTime )

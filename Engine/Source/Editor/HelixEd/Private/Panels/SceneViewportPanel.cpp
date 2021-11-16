@@ -104,7 +104,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		{
 			Buffer->GetSRVHandle(),
 		};
-		FDescriptorHandle dest = m_DescriptorHandle;// + 1 * m_HandleSize;
+		FDescriptorHandle dest = m_DescriptorHandle;
 		D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ dest.GetCpuPtr() };
 		pDevice->CopyDescriptors( 1, &CpuHandle, &DestCount, DestCount, SourceTextures, SourceCounts, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 

@@ -52,7 +52,7 @@ protected:
 
 	FTransform m_BillboardTransform;
 	StaticMeshGeometryRef m_LightDebugMesh;
-	TConstantBuffer<PointLightCBData> m_MeshWorldCB;
+	TConstantBuffer<MeshWorldCBData> m_MeshWorldCB;
 	MaterialRef m_MaterialRef;
 	bool m_CanDrawDebugBillboard;
 };

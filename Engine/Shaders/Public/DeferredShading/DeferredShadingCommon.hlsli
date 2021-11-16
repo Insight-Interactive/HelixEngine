@@ -26,6 +26,8 @@ struct GP_PSInput // VS Output
 // Pixel Stage
 struct GP_PSOutput
 {
+	// GBuffer
+
 	float4 Albedo	: SV_Target0;
 	float4 Normal	: SV_Target1;
 };

@@ -105,7 +105,7 @@ void FMaterial::LoadFromFile( const String& Filepath )
 	}
 }
 
-void FMaterial::BindDefaultLit(FCommandContext& GfxContext)
+void FMaterial::BindDefaultLit(FCommandContext& GfxContext) 
 {
 	// Set constants.
 	GfxContext.SetGraphicsRootSignature( m_RootSig );
@@ -122,7 +122,7 @@ void FMaterial::BindDefaultLit(FCommandContext& GfxContext)
 	}
 }
 
-void FMaterial::BindFoliage(FCommandContext& GfxContext)
+void FMaterial::BindFoliage(FCommandContext& GfxContext) 
 {
 	// TODO Forward transparent pass
 	// Set constants.
@@ -171,28 +171,48 @@ void FMaterial::BuildPipelineState()
 	DataBlob PSShader = FileSystem::ReadRawData( FAssetDatabase::GetInstance()->LookupShaderPath( m_PixelShaderGuid ).c_str() );
 
 	FPipelineStateDesc PSODesc = { 0 };
-	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
-	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
-	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
-	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
-	PSODesc.pRootSignature = &m_RootSig;
-	PSODesc.DepthStencilState = CDepthStencilStateDesc();
-	FBlendDesc BlendDesc = CBlendDesc();
-	if (GetShadingModel() == SM_Foliage)
+	PSODesc.VertexShader					= { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
+	PSODesc.PixelShader						= { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.InputLayout.pInputElementDescs	= GSceneMeshInputElements;
+	PSODesc.InputLayout.NumElements			= kNumSceneMeshCommonInputElements;
+	PSODesc.pRootSignature					= &m_RootSig;
+	PSODesc.DepthStencilState				= CDepthStencilStateDesc();
+	FBlendDesc BlendDesc					= CBlendDesc();
+	switch( GetShadingModel() )
 	{
-		for (uint32 i = 0; i < FSceneRenderer::GetNumGBuffers(); ++i)
+	case SM_Foliage:
 		{
-			BlendDesc.RenderTarget[i].BlendEnable = true;
-			BlendDesc.RenderTarget[i].SourceBlend = B_SourceAlpha;
-			BlendDesc.RenderTarget[i].DestBlend = B_InvSourceAlpha;
-			BlendDesc.RenderTarget[i].BlendOp = BO_Add;
+			BlendDesc.RenderTarget[0].BlendEnable			= true;
+			BlendDesc.RenderTarget[0].SourceBlend			= B_SourceAlpha;
+			BlendDesc.RenderTarget[0].DestBlend				= B_InvSourceAlpha;
+			BlendDesc.RenderTarget[0].BlendOp				= BO_Add;
+			BlendDesc.RenderTarget[0].SourceBlendAlpha		= B_One;
+			BlendDesc.RenderTarget[0].DestBlendAlpha		= B_Zero;
+			BlendDesc.RenderTarget[0].BlendOpAlpha			= BO_Add;
+			BlendDesc.RenderTarget[0].RenderTargetWriteMask = CWE_Red | CWE_Green | CWE_Blue;
 
-			BlendDesc.RenderTarget[i].SourceBlendAlpha = B_One;
-			BlendDesc.RenderTarget[i].DestBlendAlpha = B_Zero;
-			BlendDesc.RenderTarget[i].BlendOpAlpha = BO_Add;
-
-			BlendDesc.RenderTarget[i].RenderTargetWriteMask = CWE_All;
+			PSODesc.NumRenderTargets = 1;
+			PSODesc.RTVFormats[0] = F_R8G8B8A8_UNorm; // TODO: Should be the resolution of the render target.
 		}
+		break;
+	case SM_Unlit:
+		{
+			PSODesc.NumRenderTargets = 1;
+			PSODesc.RTVFormats[0] = F_R8G8B8A8_UNorm; // TODO: Should be the resolution of the render target.
+		}
+		break;
+	case SM_DefaultLit:
+		{
+			PSODesc.NumRenderTargets = FSceneRenderer::GetNumGBuffers();
+			for (uint32 i = 0; i < FSceneRenderer::GetNumGBuffers(); ++i)
+			{
+				PSODesc.RTVFormats[i] = FSceneRenderer::GetGBufferFormatForBuffer((FDeferredShadingTech::EGBuffers)i);
+			}
+		}
+		break;
+	default: 
+		HE_ASSERT(false);
+		break;
 	}
 	PSODesc.BlendState = BlendDesc;
 	FRasterizerDesc RasterDesc = CRasterizerDesc();
@@ -200,15 +220,10 @@ void FMaterial::BuildPipelineState()
 	{
 		RasterDesc.CullMode = CM_None;
 	}
-	PSODesc.RasterizerDesc = RasterDesc;
-	PSODesc.SampleMask = UINT_MAX;
-	PSODesc.PrimitiveTopologyType = PTT_Triangle;
-	PSODesc.NumRenderTargets = FSceneRenderer::GetNumGBuffers();
-	for (uint32 i = 0; i < FSceneRenderer::GetNumGBuffers(); ++i)
-	{
-		PSODesc.RTVFormats[i] = FSceneRenderer::GetGBufferFormatForBuffer( (FDeferredShadingTech::EGBuffers)i );
-	}
-	PSODesc.DSVFormat = FSceneRenderer::GetSceneDepthBufferForamt();
-	PSODesc.SampleDesc = { 1, 0 };
+	PSODesc.RasterizerDesc			= RasterDesc;
+	PSODesc.SampleMask				= UINT_MAX;
+	PSODesc.PrimitiveTopologyType	= PTT_Triangle;
+	PSODesc.DSVFormat				= FSceneRenderer::GetSceneDepthBufferForamt();
+	PSODesc.SampleDesc				= { 1, 0 };
 	m_Pipeline.Initialize( PSODesc );
 }

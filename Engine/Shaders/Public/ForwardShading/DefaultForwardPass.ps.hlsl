@@ -4,12 +4,12 @@
 
 // Samplers
 //
-HE_DECLARE_SAMPLERSTATE( g_LinearWrapSampler, 0);
+HE_DECLARE_SAMPLERSTATE( LinearWrapSampler, 0);
 
 // Opaque material Textures
 //
-HE_DECLARE_TEXTURE2D( g_MaterialAlbedo, 0);
-HE_DECLARE_TEXTURE2D( g_MaterialNormal, 1);
+HE_DECLARE_TEXTURE2D( MaterialAlbedo, 0);
+HE_DECLARE_TEXTURE2D( MaterialNormal, 1);
 
 //
 // Entry Point
@@ -17,13 +17,15 @@ HE_DECLARE_TEXTURE2D( g_MaterialNormal, 1);
 FP_PSOutput main( FP_PSInput Input )
 {
 	FP_PSOutput Output;
-	Output.LitPixel = float4(0.50, 0.0, 0.0, 0.25);
-	return Output;
+	//Output.LitPixel = float4(0.50, 0.0, 0.0, 0.25);
+	//return Output;
 
 	// Sample G-Buffer.
-	float3 AlbedoSample = g_MaterialAlbedo.Sample( g_LinearWrapSampler, Input.UVs ).rgb;
-	float3 NormalSample = g_MaterialAlbedo.Sample( g_LinearWrapSampler, Input.UVs ).rgb;
-	float3 WorldPos = Input.WorldPos;
+	float3 AlbedoSample = MaterialAlbedo.Sample( LinearWrapSampler, Input.UVs ).rgb;
+	float3 NormalSample = MaterialAlbedo.Sample( LinearWrapSampler, Input.UVs ).rgb;
+    float3 WorldPos = Input.WorldPos; 
+    Output.LitPixel = float4(AlbedoSample, .25);
+	return Output;
 
 	// Acummulate point light luminance.
 	float3 PointLightLuminance = float3(0.f, 0.f, 0.f);
