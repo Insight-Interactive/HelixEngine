@@ -2,7 +2,7 @@
 
 #include "RendererFwd.h"
 #include "CommonEnums.h"
-#include "../D3DCommon/D3DCommon.h"
+
 
 namespace APIBridge
 {

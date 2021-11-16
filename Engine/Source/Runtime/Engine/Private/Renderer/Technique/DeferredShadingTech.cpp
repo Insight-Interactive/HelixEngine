@@ -9,13 +9,13 @@
 #include "DataTypeWrappers.h"
 #include "FileSystem.h"
 #include "RendererCore.h"
-#include "IRenderDevice.h"
-#include "IGpuResource.h"
-#include "IRootSignature.h"
-#include "ICommandContext.h"
-#include "IDepthBuffer.h"
-#include "IPipelineState.h"
-#include "IColorBuffer.h"
+#include "RenderDevice.h"
+#include "GpuResource.h"
+#include "RootSignature.h"
+#include "CommandContext.h"
+#include "DepthBuffer.h"
+#include "PipelineState.h"
+#include "ColorBuffer.h"
 
 
 
@@ -34,9 +34,9 @@ FDeferredShadingTech::~FDeferredShadingTech()
 
 }
 
-void FDeferredShadingTech::Initialize(FVector2 RenderResolution, EFormat SwapchainFormat)
+void FDeferredShadingTech::Initialize(FVector2 RenderResolution, EFormat SwapchainFormat )
 {
-	m_GeometryPass.Initialize(RenderResolution);
+	m_GeometryPass.Initialize(RenderResolution );
 	m_LightPass.Initialize(RenderResolution, SwapchainFormat);
 }
 
@@ -51,6 +51,7 @@ void FDeferredShadingTech::UnInitialize()
 //
 
 FDeferredShadingTech::GeometryPass::GeometryPass()
+	: m_pSceneDepthBufferRef(NULL)
 {
 
 }
@@ -60,51 +61,46 @@ FDeferredShadingTech::GeometryPass::~GeometryPass()
 
 }
 
-void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolution)
+void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolution )
 {
-	GDevice->CreateRootSignature(&m_pRS);
-	m_pRS->Reset(6, 1);
-	(*m_pRS).InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
+	HE_ASSERT( m_pSceneDepthBufferRef != NULL ); // Trying to initialize geometry pass with no scene depth buffer! Call 'GeometryPass::SetDepthBuffer' before initilializing.
+
+	m_RS.Reset(6, 1);
+	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
-	(*m_pRS)[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
-	(*m_pRS)[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	(*m_pRS)[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
-	(*m_pRS)[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
+	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
+	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
+	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
+	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Albedo
-	(*m_pRS)[GRP_MaterialTextureAlbedo].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[GRP_MaterialTextureAlbedo].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
+	m_RS[GRP_MaterialTextureAlbedo].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[GRP_MaterialTextureAlbedo].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
 	// Normal
-	(*m_pRS)[GRP_MaterialTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[GRP_MaterialTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 1, 1);
-	(*m_pRS).Finalize(L"[Deferred Renderer][Geometry Pass] RootSig", RSF_AllowInputAssemblerLayout);
+	m_RS[GRP_MaterialTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[GRP_MaterialTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 1, 1);
+	m_RS.Finalize(L"[Deferred Renderer][Geometry Pass] RootSig", RSF_AllowInputAssemblerLayout);
 
 
 	// Create the render targets.
 	//
 	const uint32 NumMips = 1u;
-	GDevice->CreateColorBuffer(TEXT("[Geometry Pass][G-Buffer] Albedo Buffer"), (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm, &m_RenderTargets[GB_Albedo]);
-	GDevice->CreateColorBuffer(TEXT("[Geometry Pass][G-Buffer] Normal Buffer"), (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm, &m_RenderTargets[GB_Normal]);
-	GDevice->CreateColorBuffer(TEXT("[Geometry Pass][G-Buffer] Position Buffer"), (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R32G32B32A32_Float, &m_RenderTargets[GB_Position]);
-
-
-	// Create the depth buffer.
-	//
-	GDevice->CreateDepthBuffer(TEXT("[Geometry Pass] Scene Depth Buffer"), (uint32)RenderResolution.x, (uint32)RenderResolution.y, F_D32_Float, &m_pDepthBuffer);
+	m_RenderTargets[GB_Albedo].Create( L"[Geometry Pass][G-Buffer] Albedo Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm );
+	m_RenderTargets[GB_Normal].Create( L"[Geometry Pass][G-Buffer] Normal Buffer" , (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm );
 
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData("Shaders/GenericGeometryPass.vs.cso");
-	DataBlob PSShader = FileSystem::ReadRawData("Shaders/GenericGeometryPass.ps.cso");
+	DataBlob VSShader = FileSystem::ReadRawData("Shaders/Core/DefaultGeometryPass.vs.cso");
+	DataBlob PSShader = FileSystem::ReadRawData("Shaders/Core/DefaultGeometryPass.ps.cso");
 
 
-	FPipelineStateDesc PSODesc = {};
+	FPipelineStateDesc PSODesc = { 0 };
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
 	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = CDepthStencilStateDesc();
 	//PSODesc.DepthStencilState.DepthFunc = CF_GreaterEqual;
 	PSODesc.BlendState = CBlendDesc();
@@ -114,99 +110,63 @@ void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolu
 	PSODesc.NumRenderTargets = GB_NumBuffers;
 	for (uint32 i = 0; i < GB_NumBuffers; ++i)
 	{
-		PSODesc.RTVFormats[i] = DCast<FPixelBuffer*>(m_RenderTargets[i])->GetFormat();
+		PSODesc.RTVFormats[i] = m_RenderTargets[i].GetFormat();
 	}
-	PSODesc.DSVFormat = DCast<FPixelBuffer*>(m_pDepthBuffer)->GetFormat();
+	PSODesc.DSVFormat = m_pSceneDepthBufferRef->GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
-	GDevice->CreatePipelineState(PSODesc, &m_pPSO);
-
-
-	m_pDepthBufferGPUResource = DCast<FGpuResource*>(m_pDepthBuffer);;
+	m_PSO.Initialize( PSODesc );
 }
 
 void FDeferredShadingTech::GeometryPass::UnInitialize()
 {
-	HE_SAFE_DELETE_PTR(m_pDepthBuffer);
-	HE_SAFE_DELETE_PTR(m_pPSO);
-	HE_SAFE_DELETE_PTR(m_pRS);
-	for (uint32 i = 0; i < GB_NumBuffers; ++i)
-	{
-		HE_SAFE_DELETE_PTR(m_RenderTargets[i]);
-	}
+}
+
+
+void FDeferredShadingTech::GeometryPass::ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect)
+{
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Albedo), Viewrect);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Normal), Viewrect);
+	GfxContext.ClearDepth(*m_pSceneDepthBufferRef);
 }
 
 void FDeferredShadingTech::GeometryPass::Bind( FCommandContext& GfxContext, const FRect& Viewrect )
 {
+	HE_ASSERT(m_pSceneDepthBufferRef != NULL);
+
 	GfxContext.BeginDebugMarker(TEXT("Geometry Pass"));
 
 	// Transition
-	// 
-	// Color
-	FGpuResource& AlbedoGBufferResource = *GetGBufferColorBuffer( GB_Albedo ).As<FGpuResource*>();
-	GfxContext.TransitionResource(AlbedoGBufferResource, RS_RenderTarget);
-	FGpuResource& NormalGBufferResource = *GetGBufferColorBuffer( GB_Normal ).As<FGpuResource*>();
-	GfxContext.TransitionResource(NormalGBufferResource, RS_RenderTarget);
-	FGpuResource& PositionGBufferResource = *GetGBufferColorBuffer( GB_Position ).As<FGpuResource*>();
-	GfxContext.TransitionResource(PositionGBufferResource, RS_RenderTarget);
-	// Depth
-	FGpuResource& DepthBufferResource = *GetSceneDepthBuffer()->As<FGpuResource*>();
-	GfxContext.TransitionResource(DepthBufferResource, RS_DepthWrite);
+	GfxContext.TransitionResource( *m_pSceneDepthBufferRef, RS_DepthWrite );
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Albedo ), RS_RenderTarget);
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Normal ), RS_RenderTarget);
 
-	// Clear
-	//
-	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Albedo), Viewrect);
-	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Normal), Viewrect);
-	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Position), Viewrect);
-	GfxContext.ClearDepth(*GetSceneDepthBuffer());
-
-
-	// Set
-	//
-	const FColorBuffer* RTs[] =
-	{
-		m_RenderTargets[0], m_RenderTargets[1], m_RenderTargets[2]
-	};
+	// Set state
+	const FColorBuffer* RTs[] = { &m_RenderTargets[0], &m_RenderTargets[1], &m_RenderTargets[2] };
 	GfxContext.OMSetRenderTargets(
 		GB_NumBuffers,
 		RTs,
-		GetSceneDepthBuffer());
-	GfxContext.SetPipelineState(*m_pPSO);
-	GfxContext.SetGraphicsRootSignature(*m_pRS);
+		m_pSceneDepthBufferRef );
+	GfxContext.SetPipelineState(m_PSO);
+	GfxContext.SetGraphicsRootSignature(m_RS);
 }
 
 void FDeferredShadingTech::GeometryPass::UnBind(FCommandContext& GfxContext)
 {
-	FGpuResource& AlbedoGBufferResource = *GetGBufferColorBuffer( GB_Albedo ).As<FGpuResource*>();
-	GfxContext.TransitionResource(AlbedoGBufferResource, RS_PixelShaderResource);
-
-	FGpuResource& NormalGBufferResource = *GetGBufferColorBuffer( GB_Normal ).As<FGpuResource*>();
-	GfxContext.TransitionResource(NormalGBufferResource, RS_PixelShaderResource);
-
-	FGpuResource& PositionGBufferResource = *GetGBufferColorBuffer( GB_Position ).As<FGpuResource*>();
-	GfxContext.TransitionResource(PositionGBufferResource, RS_PixelShaderResource);
-
-	FGpuResource& DepthBuffferResource = *GetSceneDepthBuffer()->As<FGpuResource*>();
-	GfxContext.TransitionResource(DepthBuffferResource, RS_DepthRead);
-
 	GfxContext.EndDebugMarker();
 }
 
 void FDeferredShadingTech::GeometryPass::ReloadPipeline()
 {
-	HE_SAFE_DELETE_PTR( m_pPSO );
-
 	// Create the pipeline state.
-	//
-	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/GenericGeometryPass.vs.cso" );
-	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/GenericGeometryPass.ps.cso" );
-
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/Core/DefaultGeometryPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/DefaultGeometryPass.ps.cso" );
 
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
 	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = CDepthStencilStateDesc();
 	//PSODesc.DepthStencilState.DepthFunc = CF_GreaterEqual;
 	PSODesc.BlendState = CBlendDesc();
@@ -216,16 +176,11 @@ void FDeferredShadingTech::GeometryPass::ReloadPipeline()
 	PSODesc.NumRenderTargets = GB_NumBuffers;
 	for (uint32 i = 0; i < GB_NumBuffers; ++i)
 	{
-		PSODesc.RTVFormats[i] = DCast<FPixelBuffer*>( m_RenderTargets[i] )->GetFormat();
+		PSODesc.RTVFormats[i] = m_RenderTargets[i].GetFormat();
 	}
-	PSODesc.DSVFormat = DCast<FPixelBuffer*>( m_pDepthBuffer )->GetFormat();
+	PSODesc.DSVFormat = m_pSceneDepthBufferRef->GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
-	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
-}
-
-EFormat FDeferredShadingTech::GeometryPass::GetDepthFormat() const
-{
-	return DCast<FPixelBuffer*>(m_pDepthBuffer)->GetFormat();
+	m_PSO.Initialize( PSODesc );
 }
 
 
@@ -249,41 +204,40 @@ void FDeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolutio
 {
 	m_RenderTargetFormat = SwapchainFormatTEMP;
 
-	GDevice->CreateRootSignature(&m_pRS);
-	m_pRS->Reset(8, 1);
-	(*m_pRS).InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
+	m_RS.Reset(8, 1);
+	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
-	(*m_pRS)[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
-	(*m_pRS)[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	(*m_pRS)[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
-	(*m_pRS)[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
+	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
+	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
+	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
+	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Scene Depth
-	(*m_pRS)[LRP_GBufferTextureSceneDepth].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[LRP_GBufferTextureSceneDepth].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
+	m_RS[LRP_GBufferTextureSceneDepth].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureSceneDepth].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
 	// Albedo
-	(*m_pRS)[LRP_GBufferTextureAlbedo].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[LRP_GBufferTextureAlbedo].SetTableRange(0, DRT_ShaderResourceView, 1, 1);
+	m_RS[LRP_GBufferTextureAlbedo].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureAlbedo].SetTableRange(0, DRT_ShaderResourceView, 1, 1);
 	// Normal
-	(*m_pRS)[LRP_GBufferTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[LRP_GBufferTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 2, 1);
+	m_RS[LRP_GBufferTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 2, 1);
 	// Position
-	(*m_pRS)[LRP_GBufferTexturePosition].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[LRP_GBufferTexturePosition].SetTableRange(0, DRT_ShaderResourceView, 3, 1);
-	(*m_pRS).Finalize(L"[Deferred Renderer][Light Pass] RootSig", RSF_AllowInputAssemblerLayout);
+	m_RS[LRP_GBufferTexturePosition].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTexturePosition].SetTableRange(0, DRT_ShaderResourceView, 3, 1);
+	m_RS.Finalize(L"[Deferred Renderer][Light Pass] RootSig", RSF_AllowInputAssemblerLayout);
 
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData("Shaders/GenericLightPass.vs.cso");
-	DataBlob PSShader = FileSystem::ReadRawData("Shaders/GenericLightPass.ps.cso");
+	DataBlob VSShader = FileSystem::ReadRawData("Shaders/Core/ScreenAlignedQuad.vs.cso");
+	DataBlob PSShader = FileSystem::ReadRawData("Shaders/Core/DefaultLightPass.ps.cso");
 
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.NumElements = kNumScreenSpaceInputElements;
 	PSODesc.InputLayout.pInputElementDescs = GScreenSpaceInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState.DepthEnable = false;
 	PSODesc.BlendState = CBlendDesc();
 	PSODesc.RasterizerDesc = CRasterizerDesc();
@@ -292,26 +246,30 @@ void FDeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolutio
 	PSODesc.NumRenderTargets = 1;
 	PSODesc.RTVFormats[0] = m_RenderTargetFormat;// GetPassResultFormat();
 	PSODesc.SampleDesc = { 1, 0 };
-	GDevice->CreatePipelineState(PSODesc, &m_pPSO);
+	m_PSO.Initialize( PSODesc );
 }
 
 void FDeferredShadingTech::LightPass::UnInitialize()
 {
-	HE_SAFE_DELETE_PTR(m_pRS);
-	HE_SAFE_DELETE_PTR(m_pPSO);
 }
 
 void FDeferredShadingTech::LightPass::Bind(FCommandContext& GfxContext, const FRect& Viewrect)
 {
 	GfxContext.BeginDebugMarker(TEXT("Light Pass"));
 
-	GfxContext.SetPipelineState(*m_pPSO);
-	GfxContext.SetGraphicsRootSignature(*m_pRS);
+	// Transition
+	GfxContext.TransitionResource( *m_pSceneDepthBufferRef, RS_DepthRead );
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Albedo ), RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Normal ), RS_PixelShaderResource);
 
-	GfxContext.SetDepthBufferAsTexture(LRP_GBufferTextureSceneDepth,   m_GeometryPass.GetSceneDepthBuffer());
+	// Bind state
+	GfxContext.SetPipelineState(m_PSO);
+	GfxContext.SetGraphicsRootSignature(m_RS);
+
+	// Bind resources
+	GfxContext.SetDepthBufferAsTexture(LRP_GBufferTextureSceneDepth, m_pSceneDepthBufferRef );
 	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureAlbedo,   0, &m_GeometryPass.GetGBufferColorBuffer(GB_Albedo));
 	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureNormal,   0, &m_GeometryPass.GetGBufferColorBuffer(GB_Normal));
-	GfxContext.SetColorBufferAsTexture(LRP_GBufferTexturePosition, 0, &m_GeometryPass.GetGBufferColorBuffer(GB_Position));
 }
 
 void FDeferredShadingTech::LightPass::UnBind(FCommandContext& GfxContext)
@@ -321,26 +279,24 @@ void FDeferredShadingTech::LightPass::UnBind(FCommandContext& GfxContext)
 
 void FDeferredShadingTech::LightPass::ReloadPipeline()
 {
-	HE_SAFE_DELETE_PTR( m_pPSO );
-
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/GenericLightPass.vs.cso" );
-	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/GenericLightPass.ps.cso" );
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/Core/DefaultLightPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/DefaultLightPass.ps.cso" );
 
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.NumElements = kNumScreenSpaceInputElements;
 	PSODesc.InputLayout.pInputElementDescs = GScreenSpaceInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState.DepthEnable = false;
 	PSODesc.BlendState = CBlendDesc();
 	PSODesc.RasterizerDesc = CRasterizerDesc();
 	PSODesc.SampleMask = UINT_MAX;
 	PSODesc.PrimitiveTopologyType = PTT_Triangle;
 	PSODesc.NumRenderTargets = 1;
-	PSODesc.RTVFormats[0] = m_RenderTargetFormat;// GetPassResultFormat();
+	PSODesc.RTVFormats[0] = m_RenderTargetFormat;
 	PSODesc.SampleDesc = { 1, 0 };
-	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
+	m_PSO.Initialize( PSODesc );
 }

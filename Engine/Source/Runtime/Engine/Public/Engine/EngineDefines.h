@@ -41,13 +41,16 @@
 // Rendering
 // --------------
 //
+// General
+#define kMaxSceneDepth				1
+// Lighting
 #define HE_MAX_POINT_LIGHTS			4
 #define HE_MAX_SPOT_LIGHTS			4
 #define HE_MAX_DIRECTIONAL_LIGHTS	4
 // Shader constant buffer registers
-#define kSceneConstantsReg  b0
-#define kMeshWorldReg       b1
-#define kMaterialReg        b2
-#define kLightsReg          b3
+#define kSceneConstantsReg  0
+#define kMeshWorldReg       1
+#define kMaterialReg        2
+#define kLightsReg          3
 
 #endif

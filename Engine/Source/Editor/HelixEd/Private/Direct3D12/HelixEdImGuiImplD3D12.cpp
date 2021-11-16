@@ -42,8 +42,8 @@
 //  2018-02-22: Merged into master with all Win32 code synchronized to other examples.
 
 #include "HelixEdPCH.h"
-#include "Direct3D12/BackendCoreD3D12.h"
-#include "IDescriptorHeap.h"
+#include "RendererCore.h"
+#include "DescriptorHeap.h"
 
 #include "imgui.h"
 #include "HelixEdImGuiImplD3D12.h"
@@ -797,7 +797,7 @@ bool ImGui_ImplDX12_Init(ID3D12Device* device, int num_frames_in_flight, DXGI_FO
 
 	bd->pd3dDevice = device;
 	bd->RTVFormat = rtv_format;
-	bd->Handle = GTextureHeap->Alloc( 1 );
+	bd->Handle = GTextureHeap.Alloc( 1 );
 	bd->numFramesInFlight = num_frames_in_flight;
 
 	// Create a dummy ImGui_ImplDX12_ViewportData holder for the main viewport,
@@ -1046,7 +1046,7 @@ static void ImGui_ImplDX12_RenderWindow(ImGuiViewport* viewport, void*)
 		cmd_list->ClearRenderTargetView(vd->FrameCtx[back_buffer_idx].RenderTargetCpuDescriptors, (float*)&clear_color, 0, NULL);
 	
 	cmd_list->SetGraphicsRootSignature( bd->pRootSignature );
-	ID3D12DescriptorHeap* pHeap = RCast<ID3D12DescriptorHeap*>(GTextureHeap->GetNativeHeap());
+	ID3D12DescriptorHeap* pHeap = RCast<ID3D12DescriptorHeap*>(GTextureHeap.GetNativeHeap());
 	cmd_list->SetDescriptorHeaps( 1, &pHeap );
 
 	D3D12_GPU_DESCRIPTOR_HANDLE TextureGpuHandle{ bd->Handle.GetGpuPtr() };

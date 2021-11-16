@@ -27,14 +27,19 @@ function heGetRuntimeModuleRootDir()
     return "%{wks.location}/Engine/Source/Runtime/";
 end
 
+-- Returns the root directory of the shader library.
+function heGetShaderRootDir()
+    return "%{wks.location}/Engine/Shaders/";
+end
+
 -- Returns the root path of the Editor module.
 function heGetEditorModule( ModuleName )
-    return "%{wks.location}/Engine/Source/Editor/"
+    return "%{wks.location}/Engine/Source/Editor/";
 end
 
 -- Returns the root path of a third party module.
 function heGetThirdPartyRootDir()
-    return "%{wks.location}/Engine/ThirdParty/"
+    return "%{wks.location}/Engine/ThirdParty/";
 end
 
 -- Assemble and return the filepath of a engine runtime module. 
@@ -54,10 +59,10 @@ end
 
 -- Returns the public directory of a specified engine module.
 function heGetEngineRuntimeModulePublicDir( ModuleName )
-    return heGetRuntimeModuleRootDir() .. ModuleName .. "/Public/"
+    return heGetRuntimeModuleRootDir() .. ModuleName .. "/Public/";
 end
 
 -- Returns the private directory of a specified engine module.
 function heGetEngineRuntimeModulePrivateDir( ModuleName )
-    return heGetRuntimeModuleRootDir() .. ModuleName .. "/Private/"
+    return heGetRuntimeModuleRootDir() .. ModuleName .. "/Private/";
 end

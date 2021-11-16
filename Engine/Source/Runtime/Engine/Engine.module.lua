@@ -13,6 +13,7 @@ project ("Engine")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en")
+	locale("en-US")
 	targetdir( heGetBuildFolder() )
 	objdir( heGetBuildIntFolder() )
 	pchheader("EnginePCH.h")
@@ -78,7 +79,6 @@ project ("Engine")
 		"Math",
 		"Renderer",
 		"Shaders",
-		--"PackageMaker",
 		
 		-- Third Party libs
 		"D3D12.lib",
@@ -87,7 +87,9 @@ project ("Engine")
 
 	defines
 	{
+		"_CRT_SECURE_NO_WARNINGS",
 		"ENGINE_MODULE=1",
+		"R_WITH_D3D12=1",
 	}
 
 	flags
@@ -100,7 +102,7 @@ project ("Engine")
 -- 		"%{postBuildCommands.gameConfigCopy}",
 --		"%{postBuildCommands.clearModuleLibs}",
 --		"%{postBuildCommands.clearModuleLibLinkExtras}",
-		"%{postBuildCommands.clearModuleLibs}",
+--		"%{postBuildCommands.clearModuleLibs}",
 	}
 
 	dofile ("Helix/CommonEngineMacros.lua")
@@ -140,6 +142,10 @@ project ("Engine")
 		debugargs
 		{
 			"-launchcfg LaunchEditor",
+		}
+		links
+		{
+			"PackageCooker",
 		}
 
 	filter ("configurations:DebugGame or ShippingGame")

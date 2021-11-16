@@ -37,6 +37,7 @@ project ("Renderer")
 	includedirs
 	{
 		"Public/",
+		"Classes/",
 		"Private/PCH/",
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),

@@ -2,27 +2,38 @@
 
 #include "Engine/FrameTimeManager.h"
 
-#include "System.h"
 
+/*static*/ double FTimer::SCpuTickDelta = 0.0;
 
-void FFrameTimeManager::Initialize()
+// FTimer
+//
+
+FTimer::FTimer()
+	: m_Ticks( 0.0 )
+	, m_CurrentTick( 0 )
+	, m_FrameStartTick( 0 )
+	, m_IsInitilized( false )
 {
-	m_CpuTickDelta = 1.0 / (double)System::QueryPerfFrequency();
+	if (SCpuTickDelta == 0.0)
+		SCpuTickDelta = double( System::QueryPerfFrequency() );
 }
 
-double FFrameTimeManager::GetCurrentTick()
+FTimer::~FTimer()
 {
-	return (double)System::QueryPerfCounter();
+
 }
 
-void FFrameTimeManager::Tick( bool VSyncEnabled, bool LimitTo30Hz )
+void FTimer::Record()
 {
-	int64 CurrentTick = System::QueryPerfCounter();
+	if (!m_IsInitilized)
+	{
+		HE_LOG( Warning, TEXT( "Trying to tick a timer that has not been initilized! Timer measurements may be off by several seconds. Initialize the timer just before the first tick." ) );
+	}
+	m_CurrentTick = System::QueryPerfCounter();
+}
 
-	if (VSyncEnabled)
-		m_FrameTime = (LimitTo30Hz ? 2.f : 1.f) / 60.f;
-	else
-		m_FrameTime = TimeBetweenTicks( m_FrameStartTick, CurrentTick );
-
-	m_FrameStartTick = CurrentTick;
+void FTimer::Stop()
+{
+	m_Ticks = double(m_CurrentTick - m_FrameStartTick);
+	m_FrameStartTick = m_CurrentTick;
 }

@@ -2,10 +2,6 @@
 
 #include "AssetRegistry/AssetDatabase.h"
 
-#include "FileSystem.h"
-#include "JsonUtility.h"
-#include "StringHelper.h"
-
 
 FAssetDatabase::FAssetDatabase()
 {
@@ -15,45 +11,40 @@ FAssetDatabase::~FAssetDatabase()
 {
 }
 
-void FAssetDatabase::Initialize( const Char* DatabaseFile )
+void FAssetDatabase::Initialize( const Char* ManifestFile )
 {
 	// Load all the asset databases.
 	rapidjson::Document JsonDoc;
-	FileRef JsonSource( DatabaseFile, FUM_Read, CM_Text );
+	FileRef JsonSource( ManifestFile, FUM_Read, CM_Text );
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
-		const rapidjson::Value& AssetDbRoot = JsonDoc["AssetDatabase"];
-		// Loop over the actor's properties.
-		for (uint32 i = 0; i < AssetDbRoot.Size(); ++i)
+		enum
 		{
-			const rapidjson::Value& DbParam = AssetDbRoot[i];
+			kModelsDbIndex		= 0,
+			kTexturesDbIndex	= 1,
+			kMaterialsDbIndex	= 2,
+			kActorsDbIndex		= 3,
+			kShadersDbIndex		= 4
+		};
 
-			// Database Name
-			Char StringBuff[HE_MAX_PATH];
-			ZeroMemory( StringBuff, sizeof( StringBuff ) );
-			String ProjectRelativePath;
+		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
 
-			JsonUtility::GetString( DbParam, "MeshDatabase", StringBuff, sizeof( StringBuff ) );
-			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
-			m_MeshDatabase.Initialize( ProjectRelativePath.c_str() );
+		m_MeshDatabase.Deserialize( AssetDbRoot[kModelsDbIndex] );
+		m_TextureDatabase.Deserialize( AssetDbRoot[kTexturesDbIndex] );
+		m_MaterialDatabase.Deserialize( AssetDbRoot[kMaterialsDbIndex] );
+		m_ActorDatabase.Deserialize( AssetDbRoot[kActorsDbIndex] );
+		m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
 
-			JsonUtility::GetString( DbParam, "TextureDatabase", StringBuff, sizeof( StringBuff ) );
-			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
-			m_TextureDatabase.Initialize( ProjectRelativePath.c_str() );
-
-			JsonUtility::GetString( DbParam, "MaterialDatabase", StringBuff, sizeof( StringBuff ) );
-			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
-			m_MaterialDatabase.Initialize( ProjectRelativePath.c_str() );
-
-			JsonUtility::GetString( DbParam, "ActorDatabase", StringBuff, sizeof( StringBuff ) );
-			ProjectRelativePath = FGameProject::GetInstance()->GetProjectRoot() + StringBuff;
-			m_ActorDatabase.Initialize( ProjectRelativePath.c_str() );
-		}
+		m_MeshDatabase.Initialize();
+		m_TextureDatabase.Initialize();
+		m_MaterialDatabase.Initialize();
+		m_ActorDatabase.Initialize();
+		m_ShaderDatabase.Initialize();
 	}
 }
 
-void FAssetDatabase::UnInitialize()
+void FAssetDatabase::Uninitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 

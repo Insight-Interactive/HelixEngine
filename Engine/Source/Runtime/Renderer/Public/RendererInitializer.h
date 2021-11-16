@@ -12,10 +12,10 @@ class RENDER_API FRendererInitializer
 {
 	friend HEngine;
 public:
-	static void InitializeSwapChain( FSwapChain** pOutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height );
+	static void InitializeSwapChain( FSwapChain& OutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height );
 
 private:
-	static void InitializeContext( ERenderBackend API, FRenderContext& Context );
+	static void InitializeContext( FRenderContext& Context );
 	static void UnInitializeContext( FRenderContext& Context );
 
 };

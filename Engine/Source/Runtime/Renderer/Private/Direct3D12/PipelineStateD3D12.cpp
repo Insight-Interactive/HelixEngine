@@ -1,26 +1,28 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "PipelineStateD3D12.h"
+#include "PipelineState.h"
 #include "RendererCore.h"
-#include "IRenderDevice.h"
-#include "IRootSignature.h"
-
-#include "../D3DCommon/D3DCommon.h"
+#include "RenderDevice.h"
+#include "RootSignature.h"
 
 
-FPipelineStateD3D12::FPipelineStateD3D12()
+FPipelineState::FPipelineState()
 	: m_pID3D12PipelineState(NULL)
 {
 }
 
-FPipelineStateD3D12::~FPipelineStateD3D12()
+FPipelineState::~FPipelineState()
 {
 	HE_COM_SAFE_RELEASE(m_pID3D12PipelineState);
 }
 
-void FPipelineStateD3D12::Initialize(const FPipelineStateDesc& Desc)
+void FPipelineState::Initialize(const FPipelineStateDesc& Desc)
 {
-	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
+	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
+	
+	if (m_pID3D12PipelineState)
+		m_pID3D12PipelineState->Release();
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC PSODesc = {};
 	PSODesc.NodeMask = Desc.NodeMask;
@@ -108,5 +110,7 @@ void FPipelineStateD3D12::Initialize(const FPipelineStateDesc& Desc)
 	PSODesc.SampleDesc.Quality = Desc.SampleDesc.Quality;
 
 	HRESULT hr = pID3D12Device->CreateGraphicsPipelineState(&PSODesc, IID_PPV_ARGS(&m_pID3D12PipelineState));
-	ThrowIfFailedMsg(hr, TEXT("Failed to create D3D12 pipeline state!"));
+	ThrowIfFailedMsg(hr, "Failed to create D3D12 pipeline state!");
 }
+
+#endif // R_WITH_D3D12

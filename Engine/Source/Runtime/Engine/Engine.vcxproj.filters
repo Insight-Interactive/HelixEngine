@@ -111,13 +111,13 @@
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\MeshAsset.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\ShaderDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
     <ClInclude Include="Public\AssetRegistry\TextureDatabase.h">
@@ -174,10 +174,16 @@
     <ClInclude Include="Public\GameFramework\Components\HActorComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HBillboardComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h">
@@ -243,10 +249,19 @@
     <ClInclude Include="Public\Renderer\RenderPass.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Renderer\SceneRenderer.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Renderer\Shader.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Renderer\ShaderRegisters.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Public\Renderer\Technique\DeferredShadingTech.h">
+      <Filter>Public\Renderer\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Renderer\Technique\ForwardRenderPass.h">
       <Filter>Public\Renderer\Technique</Filter>
     </ClInclude>
     <ClInclude Include="Public\Renderer\Technique\PostProcessUber.h">
@@ -261,6 +276,9 @@
     <ClInclude Include="Public\World\Level.h">
       <Filter>Public\World</Filter>
     </ClInclude>
+    <ClInclude Include="Public\World\Scene.h">
+      <Filter>Public\World</Filter>
+    </ClInclude>
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
@@ -268,6 +286,12 @@
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
       <Filter>Private\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\ActorDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\Asset.cpp">
+      <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
@@ -278,10 +302,10 @@
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\MeshAsset.cpp">
+    <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
+    <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp">
@@ -326,10 +350,16 @@
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp">
@@ -386,7 +416,16 @@
     <ClCompile Include="Private\Renderer\MaterialManager.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\SceneRenderer.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Renderer\Shader.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp">
+      <Filter>Private\Renderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Renderer\Technique\ForwardRenderPass.cpp">
       <Filter>Private\Renderer\Technique</Filter>
     </ClCompile>
     <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp">
@@ -410,11 +449,11 @@
     <ClCompile Include="Private\World\Level.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
-    <ClCompile Include="Private\World\World.cpp">
+    <ClCompile Include="Private\World\Scene.cpp">
       <Filter>Private\World</Filter>
     </ClCompile>
-    <ClCompile Include="Public\AssetRegistry\ActorDatabase.cpp">
-      <Filter>Public\AssetRegistry</Filter>
+    <ClCompile Include="Private\World\World.cpp">
+      <Filter>Private\World</Filter>
     </ClCompile>
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>

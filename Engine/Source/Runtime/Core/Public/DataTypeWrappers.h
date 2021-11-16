@@ -16,6 +16,7 @@ struct DataBlob
 	const uint32 kInvalidDataSize = -1;
 public:
 	DataBlob()
+		: m_DataSize(0)
 	{
 	}
 	~DataBlob() = default;
@@ -38,7 +39,7 @@ public:
 	{
 		return m_ByteArray.Get()->Data();
 	}
-	inline size_t GetDataSize() const
+	inline uint32 GetDataSize() const
 	{
 		return m_DataSize;
 	}

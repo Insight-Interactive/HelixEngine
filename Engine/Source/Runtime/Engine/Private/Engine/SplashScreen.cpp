@@ -2,14 +2,14 @@
 
 #include "Engine/SplashScreen.h"
 
-#include "IRenderDevice.h"
-#include "ISwapChain.h"
-#include "IPixelBuffer.h"
-#include "IGpuResource.h"
-#include "IRootSignature.h"
-#include "IPipelineState.h"
-#include "ICommandManager.h"
-#include "ICommandContext.h"
+#include "RenderDevice.h"
+#include "SwapChain.h"
+#include "PixelBuffer.h"
+#include "GpuResource.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
+#include "CommandManager.h"
+#include "CommandContext.h"
 #include "CommonStructHelpers.h"
 #include "Renderer/Common.h"
 #include "Renderer/GeometryGenerator.h"
@@ -20,8 +20,6 @@
 
 FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
 	: FWindow( TEXT( "App Splash" ), HE_SPLASH_WIDTH, HE_SPLASH_HEIGHT, false, true, NULL )
-	, m_pRootSig(NULL)
-	, m_pPipeline(NULL)
 {
 	m_ViewPort.TopLeftX = 0.f;
 	m_ViewPort.TopLeftY = 0.f;
@@ -37,28 +35,27 @@ FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
 
 	GetSwapChain()->SetClearColor( FColor( 0.f, 0.f, 0.f ) );
 
-	m_SplashTexture = GTextureManager->LoadTexture( SplashTexturePath, DT_Magenta2D, false );
+	m_SplashTexture = GTextureManager.LoadTexture( SplashTexturePath, DT_Magenta2D, false );
 	m_ScreenQuadRef = GeometryGenerator::GenerateScreenAlignedQuadMesh();
 
-	GDevice->CreateRootSignature( &m_pRootSig );
-	m_pRootSig->Reset( 1, 1 );
-	(*m_pRootSig).InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
+	m_RootSig.Reset( 1, 1 );
+	m_RootSig.InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
 	// Common
-	(*m_pRootSig)[kSplashTextureRootIndex].InitAsDescriptorTable( 1, SV_Pixel );
-	(*m_pRootSig)[kSplashTextureRootIndex].SetTableRange( 0, DRT_ShaderResourceView, 0, 1 );
-	(*m_pRootSig).Finalize( L"[App Splash] RootSig", RSF_AllowInputAssemblerLayout );
+	m_RootSig[kSplashTextureRootIndex].InitAsDescriptorTable( 1, SV_Pixel );
+	m_RootSig[kSplashTextureRootIndex].SetTableRange( 0, DRT_ShaderResourceView, 0, 1 );
+	m_RootSig.Finalize( L"[App Splash] RootSig", RSF_AllowInputAssemblerLayout );
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/ScreenAlignedQuad.vs.cso" );
-	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/AppSlash.ps.cso" );
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/Core/ScreenAlignedQuad.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/AppSlash.ps.cso" );
 
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = GScreenSpaceInputElements;
 	PSODesc.InputLayout.NumElements = 2;
-	PSODesc.pRootSignature = m_pRootSig;
+	PSODesc.pRootSignature = &m_RootSig;
 	PSODesc.BlendState = CBlendDesc();
 	PSODesc.RasterizerDesc = CRasterizerDesc();
 	PSODesc.SampleMask = UINT_MAX;
@@ -66,39 +63,35 @@ FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
 	PSODesc.NumRenderTargets = 1;
 	PSODesc.RTVFormats[0] = DCast<FPixelBuffer*>( GetRenderSurface() )->GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
-	GDevice->CreatePipelineState( PSODesc, &m_pPipeline );
+	m_Pipeline.Initialize( PSODesc );
 }
 
 FSplashScreen::~FSplashScreen()
 {
 	// Flush the Gpu before destroying resources.
-	GCommandManager->IdleGpu();
-
-	HE_SAFE_DELETE_PTR( m_pRootSig );
-	HE_SAFE_DELETE_PTR( m_pPipeline );
+	GCommandManager.IdleGpu();
 }
 
 void FSplashScreen::Render( FCommandContext& CmdContext )
 {
-	FColorBuffer* pCurrentBackBuffer = GetRenderSurface();
-	FGpuResource& BackBufferResource = *pCurrentBackBuffer->As<FGpuResource*>();
+	FColorBuffer& CurrentBackBuffer = *GetRenderSurface();
 
-	CmdContext.TransitionResource( BackBufferResource, RS_RenderTarget );
+	CmdContext.TransitionResource( CurrentBackBuffer, RS_RenderTarget );
 
-	CmdContext.ClearColorBuffer( *pCurrentBackBuffer, GetScissorRect() );
+	CmdContext.ClearColorBuffer( CurrentBackBuffer, GetScissorRect() );
 	CmdContext.RSSetViewPorts( 1, &GetViewport() );
 
 	CmdContext.RSSetViewPorts( 1, &GetViewport() );
 	CmdContext.RSSetScissorRects( 1, &GetScissorRect() );
 
 	const FColorBuffer* RTs[] = {
-		pCurrentBackBuffer
+		&CurrentBackBuffer
 	};
 	CmdContext.OMSetRenderTargets( 1, RTs, NULL );
-	CmdContext.SetGraphicsRootSignature( *m_pRootSig );
-	CmdContext.SetPipelineState( *m_pPipeline );
+	CmdContext.SetGraphicsRootSignature( m_RootSig );
+	CmdContext.SetPipelineState( m_Pipeline );
 
-	CmdContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
+	CmdContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap() );
 	CmdContext.SetTexture( kSplashTextureRootIndex, m_SplashTexture );
 	
 	CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
@@ -106,6 +99,6 @@ void FSplashScreen::Render( FCommandContext& CmdContext )
 	CmdContext.BindIndexBuffer( m_ScreenQuadRef->GetIndexBuffer() );
 	CmdContext.DrawIndexedInstanced( m_ScreenQuadRef->GetNumIndices(), 1, 0, 0, 0 );
 
-	CmdContext.TransitionResource( BackBufferResource, RS_Present );
+	CmdContext.TransitionResource( CurrentBackBuffer, RS_Present );
 
 }

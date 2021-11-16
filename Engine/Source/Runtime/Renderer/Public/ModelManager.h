@@ -8,47 +8,51 @@
 #include "CriticalSection.h"
 
 
+/*
+	Light wrapper around HStaticMeshGeometry to define higher level loading state and 
+	cache storage inside FStaticGeometryManager.
+*/
 class RENDER_API HManagedStaticMeshGeometry : public HStaticMeshGeometry
 {
 	friend class FStaticGeometryManager;
 public:
-	HManagedStaticMeshGeometry()
-		: m_MapKey( "<default>" )
-		, m_IsValid( false )
-		, m_IsLoading( true )
-		, m_ReferenceCount( 0 )
+	virtual ~HManagedStaticMeshGeometry()
 	{
+		m_IsValid = false;
+		m_IsLoading = false;
 	}
-	virtual ~HManagedStaticMeshGeometry() = default;
-
-	void WaitForLoad() const;
-	bool IsValid( void ) const { return m_IsValid; }
+	void WaitForLoad()	const;
+	bool IsValid()		const { return m_IsValid; }
 
 protected:
-	HManagedStaticMeshGeometry( const std::string& HashName )
+	HManagedStaticMeshGeometry( const String& HashName )
 		: m_MapKey( HashName )
 		, m_IsValid( false )
 		, m_IsLoading( true )
-		, m_ReferenceCount( 0 )
 	{
-	}
-	void SetLoadCompleted( bool Completed )
-	{
-		m_IsLoading = !Completed;
-		m_IsValid = Completed;
 	}
 
-protected:
+	void SetLoadCompleted( bool IsCompleted )
+	{
+		m_IsLoading = !IsCompleted;
+		m_IsValid = IsCompleted;
+	}
+
 	void Unload();
 
+private:
 	String m_MapKey; // For deleting from the map later.
 	bool m_IsValid;
 	bool m_IsLoading;
-	uint64 m_ReferenceCount;
+
 };
 typedef std::shared_ptr<HManagedStaticMeshGeometry> StaticMeshGeometryRef;
+typedef StaticMeshGeometryRef HStaticMesh;
 
 
+/*
+	Keeps track of the static mesh geometry currently loaded in the world.
+*/
 class RENDER_API FStaticGeometryManager
 {
 public:
@@ -111,6 +115,7 @@ inline bool FStaticGeometryManager::DestroyMesh( const String& Key )
 	auto Iter = m_ModelCache.find( Key );
 	if (Iter != m_ModelCache.end())
 	{
+		ScopedCriticalSection Guard( m_MapMutex );
 		m_ModelCache.erase( Iter );
 		return true;
 	}
@@ -126,6 +131,9 @@ inline bool FStaticGeometryManager::MeshExists( const String& Name ) const
 
 inline void FStaticGeometryManager::FlushCache()
 {
+	R_LOG( Warning, TEXT( "Model cache being flushed!" ) );
+	ScopedCriticalSection Guard( m_MapMutex );
+
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
 	{
 		Iter->second.reset();

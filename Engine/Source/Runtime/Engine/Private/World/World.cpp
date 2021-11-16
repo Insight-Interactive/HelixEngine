@@ -12,6 +12,7 @@
 HWorld::HWorld()
 	: m_CameraManager(this)
 	, m_pLevel(NULL)
+	, m_Scene(this)
 	, m_pPlayerCharacter(NULL)
 	, m_RenderingCamera(NULL)
 	, m_pRenderingViewport(NULL)
@@ -54,7 +55,7 @@ void HWorld::Initialize(const Char* LevelURL )
 
 float HWorld::GetDeltaTime() const
 {
-	return GEngine->GetDeltaTime();
+	return (float)GEngine->GetDeltaTime();
 }
 
 void HWorld::BeginPlay()
@@ -81,6 +82,7 @@ void HWorld::Tick(float DeltaTime)
 void HWorld::Flush()
 {
 	HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
+	GCommandManager.IdleGpu();
 	if (m_pLevel != NULL)
 	{
 		m_pLevel->Flush();
@@ -94,6 +96,7 @@ void HWorld::Render(FCommandContext& CmdContext)
 {
 	if(m_pPlayerCharacter != NULL)
 		m_pPlayerCharacter->Render( CmdContext );
+
 	m_pLevel->Render(CmdContext);
 }
 

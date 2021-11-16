@@ -1,35 +1,37 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "RootSignatureD3D12.h"
+#include "RootSignature.h"
 
-#include "../D3DCommon/D3DCommon.h"
 #include "Hash.h"
 #include "CriticalSection.h"
-
 #include "RendererCore.h"
-#include "IRenderDevice.h"
+#include "RenderDevice.h"
+
 
 static std::map<size_t, ::Microsoft::WRL::ComPtr<ID3D12RootSignature>> s_RootSignatureHashMap;
 
-FRootSignatureD3D12::FRootSignatureD3D12()
-    : m_pID3D12RootSignature(NULL)
+FRootSignature::FRootSignature( uint32 NumRootParams, uint32 NumStaticSamplers)
+    : m_Finalized( false )
+    , m_NumParameters( NumRootParams )
+    , m_pID3D12RootSignature(NULL)
+{
+    Reset( NumRootParams, NumStaticSamplers );
+}
+
+FRootSignature::~FRootSignature()
 {
 }
 
-FRootSignatureD3D12::~FRootSignatureD3D12()
-{
-    HE_COM_SAFE_RELEASE(m_pID3D12RootSignature);
-}
 
-
-void FRootSignatureD3D12::DestroyAll(void)
+void FRootSignature::DestroyAll(void)
 {
     s_RootSignatureHashMap.clear();
 }
 
-void FRootSignatureD3D12::Initialize(const FRootSignatureDesc& Desc)
+void FRootSignature::Initialize(const FRootSignatureDesc& Desc)
 {
-    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
+    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
 
     CD3DX12_ROOT_SIGNATURE_DESC RSDesc;
     RSDesc.Init(Desc.NumParams, RCast<const D3D12_ROOT_PARAMETER*>(Desc.pParameters), Desc.NumStaticSamplers, RCast<const D3D12_STATIC_SAMPLER_DESC*>(Desc.pStaticSamplers), (D3D12_ROOT_SIGNATURE_FLAGS)Desc.Flags);
@@ -37,15 +39,15 @@ void FRootSignatureD3D12::Initialize(const FRootSignatureDesc& Desc)
     ID3DBlob* pSignature = NULL;
     ID3DBlob* pErrorBuffer = NULL;
     HRESULT hr = D3D12SerializeRootSignature(&RSDesc, D3D_ROOT_SIGNATURE_VERSION_1, &pSignature, &pErrorBuffer);
-    ThrowIfFailedMsg(hr, TEXT("Failed to deserialize root signature!"));
+    ThrowIfFailedMsg(hr, "Failed to deserialize root signature!");
     hr = pID3D12Device->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(&m_pID3D12RootSignature));
-    ThrowIfFailedMsg(hr, TEXT("Failed to create root signature!"));
+    ThrowIfFailedMsg(hr, "Failed to create root signature!");
 
     HE_COM_SAFE_RELEASE(pErrorBuffer);
     HE_COM_SAFE_RELEASE(pSignature);
 }
 
-void FRootSignatureD3D12::Finalize(const WChar* name, ERootSignatureFlags Flags)
+void FRootSignature::Finalize(const WChar* name, ERootSignatureFlags Flags)
 {
     if (m_Finalized)
         return;
@@ -111,7 +113,7 @@ void FRootSignatureD3D12::Finalize(const WChar* name, ERootSignatureFlags Flags)
 
     if (firstCompile)
     {
-        ID3D12Device* pD3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
+        ID3D12Device* pD3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
         ::Microsoft::WRL::ComPtr<ID3DBlob> pOutBlob, pErrorBlob;
 
         HRESULT hr = D3D12SerializeRootSignature(&RootDesc, D3D_ROOT_SIGNATURE_VERSION_1,
@@ -143,3 +145,5 @@ void FRootSignatureD3D12::Finalize(const WChar* name, ERootSignatureFlags Flags)
 
     m_Finalized = TRUE;
 }
+
+#endif // R_WITH_D3D12

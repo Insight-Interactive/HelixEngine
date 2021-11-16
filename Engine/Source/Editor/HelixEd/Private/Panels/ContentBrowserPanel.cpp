@@ -4,6 +4,7 @@
 
 #include "StringHelper.h"
 #include "System.h"
+#include "Engine/GameProject.h"
 
 
 ContentBrowserPanel::ContentBrowserPanel()
@@ -18,7 +19,9 @@ ContentBrowserPanel::~ContentBrowserPanel()
 
 void ContentBrowserPanel::Initialize()
 {
-
+	const String & GameProjectRoot = FGameProject::GetInstance()->GetContentFolder();
+	m_ProjectContentRoot = CharToTChar( GameProjectRoot );
+	m_ProjectContentRoot.append(TEXT("\\*"));
 }
 
 void ContentBrowserPanel::UnInitialize()
@@ -38,7 +41,7 @@ void ContentBrowserPanel::Render( FCommandContext& CmdCtx )
 		ImGuiTreeNodeFlags FolderNodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		if (ImGui::TreeNodeEx( "Content", ImGuiTreeNodeFlags_DefaultOpen ))
 		{
-			TraverseFolder( TEXT( "Content\\*" ) );
+			TraverseFolder( m_ProjectContentRoot.c_str() );
 
 			ImGui::TreePop();
 		}

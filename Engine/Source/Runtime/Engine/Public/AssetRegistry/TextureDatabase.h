@@ -8,8 +8,10 @@ class FTextureDatabase : public FDatabaseInterface
 public:
 	FTextureDatabase();
 	virtual ~FTextureDatabase();
+	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( WriteContext& Writer ) override;
 
-	virtual void Initialize( const Char* TextureDatabaseFile ) override;
+	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 
 protected:

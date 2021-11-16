@@ -1,23 +1,26 @@
 #pragma once
 
+#include "AssetRegistry/SerializeableInterface.h"
+
+#include "GUID.h"
 #include "StringHelper.h"
 
 
-class FDatabaseInterface
+class FDatabaseInterface : public FSerializeableInterface
 {
 	friend class FAssetDatabase;
 public:
-	virtual void Initialize( const Char* MaterialDatabaseFile ) = 0;
+	virtual void Initialize() = 0;
 	virtual void UnInitialize() = 0;
-	void RegisterAsset( const Char* TextureName, const Char* Filepath );
-	void UnRegisterAsset( const Char* TextureName );
+	void RegisterAsset( const FGUID& AssetGuid, const Char* Filepath );
+	void UnRegisterAsset( const FGUID& AssetGuid );
 
-	const String& GetValueByKey( const String& Key ) const;
+	const String& GetValueByKey( const FGUID& Key ) const;
 	bool GetIsDirty() const;
 	const String& GetName() const;
 
 protected:
-	FDatabaseInterface( const String& Name );
+	FDatabaseInterface( const String& Name = "Unnamed Database");
 	virtual ~FDatabaseInterface();
 
 	const String& GetInvalidAssetPath() const;
@@ -43,7 +46,7 @@ private:
 	static const String SInvalidAssetPath;
 
 protected:
-	std::unordered_map<String, String> m_Data;
+	std::unordered_map<FGUID, String, FGUIDHashFunction> m_Data;
 
 };
 
@@ -51,36 +54,38 @@ protected:
 // Inline function implementations
 //
 
-inline void FDatabaseInterface::RegisterAsset( const Char* Name, const Char* Filepath )
+FORCEINLINE void FDatabaseInterface::RegisterAsset( const FGUID& AssetGuid, const Char* Filepath )
 {
-	auto InsertResult = m_Data.try_emplace( String( Name ), String( Filepath ) );
+	auto InsertResult = m_Data.try_emplace( AssetGuid, String( Filepath ) );
 	if (InsertResult.second)
 	{
-		HE_LOG( Warning, TEXT( "Registered asset (\"%s\") into database (\"%s\")." ), CharToTChar( Name ), CharToTChar( m_DatabaseName ) );
+		GUIDString GuidStr = AssetGuid.ToString();
+		HE_LOG( Warning, TEXT( "Registered asset Guid(\"%s\") into database (\"%s\")." ), CharToTChar( (const char*)GuidStr.CStr()), CharToTChar( m_DatabaseName ) );
 		SetDirty( true );
 	}
 }
 
-inline void FDatabaseInterface::UnRegisterAsset( const Char* Name )
+FORCEINLINE void FDatabaseInterface::UnRegisterAsset( const FGUID& AssetGuid )
 {
-	auto Iter = m_Data.find( Name );
+	auto Iter = m_Data.find( AssetGuid );
 	if (Iter != m_Data.end())
 	{
 		m_Data.erase( Iter );
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Trying to unregister asset (\"%s\") from database (\"%s\") that does not exist!" ), CharToTChar( Name ), CharToTChar( m_DatabaseName ) );
+		GUIDString GuidStr = AssetGuid.ToString();
+		HE_LOG( Warning, TEXT( "Trying to unregister asset (\"%s\") from database (\"%s\") that does not exist!" ), CharToTChar( (const char*)GuidStr.CStr() ), CharToTChar( m_DatabaseName ) );
 		HE_ASSERT( false );
 	}
 }
 
-inline const String& FDatabaseInterface::GetInvalidAssetPath() const
+FORCEINLINE const String& FDatabaseInterface::GetInvalidAssetPath() const
 {
 	return SInvalidAssetPath;
 }
 
-inline void FDatabaseInterface::SerializeToFile( const Char* Filepath )
+FORCEINLINE void FDatabaseInterface::SerializeToFile( const Char* Filepath )
 {
 	if (GetIsDirty())
 	{
@@ -89,7 +94,7 @@ inline void FDatabaseInterface::SerializeToFile( const Char* Filepath )
 	}
 }
 
-inline const String& FDatabaseInterface::GetValueByKey( const String& Key ) const
+FORCEINLINE const String& FDatabaseInterface::GetValueByKey( const FGUID& Key ) const
 {
 	auto Iter = m_Data.find( Key );
 	if (Iter != m_Data.end())
@@ -103,17 +108,17 @@ inline const String& FDatabaseInterface::GetValueByKey( const String& Key ) cons
 	}
 }
 
-inline const String& FDatabaseInterface::GetName() const
+FORCEINLINE const String& FDatabaseInterface::GetName() const
 {
 	return m_DatabaseName;
 }
 
-inline bool FDatabaseInterface::GetIsDirty() const
+FORCEINLINE bool FDatabaseInterface::GetIsDirty() const
 {
 	return m_IsDirty;
 }
 
-inline void FDatabaseInterface::SetDirty( bool IsDirty )
+FORCEINLINE void FDatabaseInterface::SetDirty( bool IsDirty )
 {
 	m_IsDirty = IsDirty;
 }

@@ -4,13 +4,17 @@
 #include "Renderer/Material.h"
 
 
-class ManagedMaterial : public HMaterial
+class ManagedMaterial : public FMaterial
 {
 	friend class MaterialRef;
 	friend class MaterialManager;
 public:
-	ManagedMaterial() = default;
-	virtual ~ManagedMaterial() = default;
+	ManagedMaterial()
+	{
+	}
+	virtual ~ManagedMaterial()
+	{
+	}
 
 	void WaitForLoad() const;
 
@@ -59,14 +63,16 @@ public:
 
 	// Get the texture pointer.  Client is responsible to not dereference
 	// null pointers.
-	HMaterial* Get();
+	FMaterial* Get();
 
-	HMaterial* operator->();
+	FMaterial* operator->();
+	const FMaterial* operator->() const;
 
 private:
 	ManagedMaterial* m_Ref;
 };
 
+typedef MaterialRef HMaterial;
 
 
 class MaterialManager
@@ -75,7 +81,7 @@ public:
 	MaterialManager() = default;
 	~MaterialManager() = default;
 
-	MaterialRef LoadMaterialFromFile(const String& Path);
+	MaterialRef FindOrLoadMaterialFromFile(const String& Path);
 
 	void DestroyMaterial(const String& Key);
 
@@ -85,7 +91,7 @@ public:
 	}
 
 private:
-	std::map< String, std::unique_ptr<ManagedMaterial> > m_MaterialCache;
+	std::unordered_map< String, std::unique_ptr<ManagedMaterial> > m_MaterialCache;
 
 	CriticalSection m_MapMutex;
 };

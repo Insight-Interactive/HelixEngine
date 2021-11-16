@@ -21,24 +21,24 @@ const float kDefaultBrightness = 20.f;
 
 HE_ALIGN( 16 ) struct SceneConstantsCBData
 {
-	FMatrix ViewMat;
-	FMatrix ProjMat;
-	FMatrix InverseViewMat;
-	FMatrix InverseProjMat;
-	FVector3 CameraPos;
-	float WorldTime;
-	float CameraNearZ;
-	float CameraFarZ;
+	FMatrix kViewMat;
+	FMatrix kProjMat;
+	FMatrix kInverseViewMat;
+	FMatrix kInverseProjMat;
+	FVector3 kCameraPos;
+	float kWorldTime;
+	float kCameraNearZ;
+	float kCameraFarZ;
 };
 HE_ALIGN( 16 ) struct MeshWorldCBData
 {
 	// World space model matrix.
-	FMatrix WorldMat;
+	FMatrix kWorldMat;
 };
 HE_ALIGN( 16 ) struct MaterialConstantsCBData
 {
 	// Color override.
-	FVector4 Color;
+	FVector4 kColor;
 };
 
 // Light Structures

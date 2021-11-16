@@ -3,13 +3,12 @@
 
 #include "GameFramework/Actor/AActor.h"
 
-#include "ICommandContext.h"
+#include "CommandContext.h"
 #include "GameFramework/Components/HActorComponent.h"
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "JsonUtility.h"
 
 
 AActor::AActor( HWorld* pWorld, const HName& Name )
@@ -31,7 +30,27 @@ void AActor::Serialize( WriteContext& Output )
 		Output.Key( HE_STRINGIFY( AActor ) );
 		Output.StartArray();
 		{
+			Output.StartObject();
+			{
+				Output.Key( "ObjectName" );
+				Output.String( TCharToChar( GetObjectName().c_str() ) );
+			}
+			Output.EndObject();
 
+			Output.StartObject();
+			{
+				Output.Key( "GUID" );
+				Output.String( GetGuid().ToString().CStr() );
+			}
+			Output.EndObject();
+
+			Output.Key( "Components" );
+			Output.StartArray();
+			{
+				for (uint32 i = 0; i < m_Components.size(); ++i)
+					m_Components[i]->Serialize( Output );
+			}
+			Output.EndArray();
 		}
 		Output.EndArray();
 	}
@@ -47,6 +66,12 @@ void AActor::Deserialize( const ReadContext& Value )
 	char ObjectNameBuffer[32];
 	JsonUtility::GetString( HObjectProps, "ObjectName", ObjectNameBuffer, sizeof( ObjectNameBuffer ) );
 	SetObjectName( CharToTChar( ObjectNameBuffer ) );
+
+	// GUID
+	Char GuidStr[64];
+	ZeroMemory( GuidStr, sizeof( GuidStr ) );
+	JsonUtility::GetString( ActorProps, "GUID", GuidStr, sizeof( GuidStr ) );
+	FGUID Guid = FGUID::CreateFromString( GuidStr );
 
 	// Loop over all the actor's components.
 	const Char* StaticMeshKey		= "StaticMesh";

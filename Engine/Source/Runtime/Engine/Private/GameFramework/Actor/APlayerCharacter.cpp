@@ -38,10 +38,9 @@ void APlayerCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		float DT = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->GetTransform().Rotate( -Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
-		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
-		//m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
+		FTransform& CameraTransform = m_pCameraComponent->GetTransform();
+		CameraTransform.Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
+		m_Transform.SetRotation( CameraTransform.GetRotation() );
 	}
 }
 
@@ -52,7 +51,6 @@ void APlayerCharacter::LookRight( float Value )
 		float DeltaTime = GetWorld()->GetDeltaTime();
 		m_pCameraComponent->GetTransform().Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * DeltaTime, 0.0f );
 		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
-		//m_Transform.SetRotationMatrix( m_pCameraComponent->GetTransform().GetRotationMatrix() );
 	}
 }
 

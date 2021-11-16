@@ -3,7 +3,7 @@
 
 #include "Containers/TDynamicArray.h"
 #include "Callbacks.h"
-#include "ISwapChain.h"
+#include "SwapChain.h"
 #include "Engine/Event/Event.h"
 #include "Engine/Event/EventEmitter.h"
 #include "CriticalSection.h"
@@ -14,9 +14,22 @@ class FColorBuffer;
 
 enum EWindowMode
 {
-	WM_Borderless = 1,
-	WM_Windowed = 2,
-	WM_FullScreen = WM_Borderless,
+	/*
+		Standard window mode that can be dragged and resized with the pointer.
+	*/
+	WM_Windowed		= 1,
+
+	/*
+		Resize the window to match the display dimensions exactly. Covering up the title bar and the windows task bar.
+	*/
+	WM_Borderless	= 2,
+
+	/*
+		Put the window in fullscreen allowing the application to take full advantage 
+		of the display monitor. Essentially borderles mode, but with slightly better 
+		performance on some platforms at the cost of window switchability.
+	*/
+	WM_FullScreen	= 3,
 };
 
 const uint8 kMaxDebugNameLength = 64;
@@ -86,7 +99,6 @@ public:
 	bool HasTitleBar() const;
 	void GetTitle(TChar* OutTitleBuffer, uint32 BufferLength) const;
 	FWindow* GetParent();
-	void AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback );
 	EWindowMode GetWindowMode() const;
 	void EnableVSync( bool VsyncEnabled );
 	bool IsVSyncEnabled() const;
@@ -108,7 +120,7 @@ protected:
 	TChar m_WindowClassName[kMaxClassNameSize];
 	TChar m_WindowTitle[kMaxWindowTitleLength];
 	TDynamicArray<OutVoidInEWindowModeFn*> m_OnWindowModeChangedCallbacks;
-	FSwapChain* m_pSwapChain;
+	FSwapChain m_SwapChain;
 
 	TChar m_DebugName[kMaxDebugNameLength];
 
@@ -186,11 +198,6 @@ inline FWindow* FWindow::GetParent()
 	return m_Desc.pParent;
 }
 
-inline void FWindow::AttachWindowModeListener( OutVoidInEWindowModeFn* pCallback )
-{
-	m_OnWindowModeChangedCallbacks.PushBack( pCallback );
-}
-
 inline EWindowMode FWindow::GetWindowMode() const
 {
 	return m_WindowMode;
@@ -203,22 +210,19 @@ inline void FWindow::SetWindowMode( EWindowMode NewMode )
 	m_WindowMode = NewMode;
 
 	OnWindowModeChanged();
-
-	for (uint64 i = 0; i < m_OnWindowModeChangedCallbacks.Size(); i++)
-		m_OnWindowModeChangedCallbacks[i]( m_WindowMode );
 }
 
 inline void FWindow::EnableVSync( bool VsyncEnabled )
 {
-	m_pSwapChain->ToggleVsync( VsyncEnabled );
+	m_SwapChain.ToggleVsync( VsyncEnabled );
 }
 
 inline bool FWindow::IsVSyncEnabled() const
 {
-	return m_pSwapChain->GetIsVSyncEnabled();
+	return m_SwapChain.GetIsVSyncEnabled();
 }
 
 inline FSwapChain* FWindow::GetSwapChain()
 {
-	return m_pSwapChain;
+	return &m_SwapChain;
 }

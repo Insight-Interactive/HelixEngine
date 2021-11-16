@@ -499,7 +499,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -514,16 +514,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -538,16 +535,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -562,16 +556,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -586,16 +577,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -610,16 +598,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -634,16 +619,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -658,16 +640,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -682,16 +661,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -706,16 +682,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -730,16 +703,13 @@
       <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -756,16 +726,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -782,16 +749,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -808,16 +772,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -834,16 +795,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -860,16 +818,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -891,16 +846,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -922,16 +874,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -953,16 +902,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;ENGINE_MODULE=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -984,16 +930,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;ENGINE_MODULE=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -1015,9 +958,6 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <PostBuildEvent>
-      <Command>DEL "$(TargetDir)/*.lib"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Private\PCH\EnginePCH.h" />
@@ -1027,9 +967,9 @@
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h" />
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h" />
-    <ClInclude Include="Public\AssetRegistry\MeshAsset.h" />
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h" />
+    <ClInclude Include="Public\AssetRegistry\ShaderDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\TextureDatabase.h" />
     <ClInclude Include="Public\Engine\Engine.h" />
     <ClInclude Include="Public\Engine\EngineDefines.h" />
@@ -1048,8 +988,10 @@
     <ClInclude Include="Public\GameFramework\Actor\APawn.h" />
     <ClInclude Include="Public\GameFramework\Actor\APlayerCharacter.h" />
     <ClInclude Include="Public\GameFramework\Components\HActorComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HBillboardComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h" />
@@ -1071,21 +1013,27 @@
     <ClInclude Include="Public\Renderer\Material.h" />
     <ClInclude Include="Public\Renderer\MaterialManager.h" />
     <ClInclude Include="Public\Renderer\RenderPass.h" />
+    <ClInclude Include="Public\Renderer\SceneRenderer.h" />
+    <ClInclude Include="Public\Renderer\Shader.h" />
     <ClInclude Include="Public\Renderer\ShaderRegisters.h" />
     <ClInclude Include="Public\Renderer\Technique\DeferredShadingTech.h" />
+    <ClInclude Include="Public\Renderer\Technique\ForwardRenderPass.h" />
     <ClInclude Include="Public\Renderer\Technique\PostProcessUber.h" />
     <ClInclude Include="Public\Renderer\Technique\SkyPass.h" />
     <ClInclude Include="Public\World\CameraManager.h" />
     <ClInclude Include="Public\World\Level.h" />
+    <ClInclude Include="Public\World\Scene.h" />
     <ClInclude Include="Public\World\World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp" />
+    <ClCompile Include="Private\AssetRegistry\ActorDatabase.cpp" />
+    <ClCompile Include="Private\AssetRegistry\Asset.cpp" />
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp" />
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp" />
-    <ClCompile Include="Private\AssetRegistry\MeshAsset.cpp" />
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp" />
+    <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp" />
     <ClCompile Include="Private\Engine\BuildConfigValidation.cpp" />
     <ClCompile Include="Private\Engine\Engine.cpp" />
@@ -1100,8 +1048,10 @@
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\APlayerCharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp" />
@@ -1148,7 +1098,10 @@
     <ClCompile Include="Private\Renderer\Common.cpp" />
     <ClCompile Include="Private\Renderer\LightManager.cpp" />
     <ClCompile Include="Private\Renderer\MaterialManager.cpp" />
+    <ClCompile Include="Private\Renderer\SceneRenderer.cpp" />
+    <ClCompile Include="Private\Renderer\Shader.cpp" />
     <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp" />
+    <ClCompile Include="Private\Renderer\Technique\ForwardRenderPass.cpp" />
     <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp" />
     <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp" />
     <ClCompile Include="Private\Windows\Desktop\FileExplorerWinDesktop.cpp">
@@ -1195,8 +1148,8 @@
     </ClCompile>
     <ClCompile Include="Private\World\CameraManager.cpp" />
     <ClCompile Include="Private\World\Level.cpp" />
+    <ClCompile Include="Private\World\Scene.cpp" />
     <ClCompile Include="Private\World\World.cpp" />
-    <ClCompile Include="Public\AssetRegistry\ActorDatabase.cpp" />
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp" />
     <ClCompile Include="Public\Renderer\Material.cpp" />
   </ItemGroup>
@@ -1220,6 +1173,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shaders\Shaders.vcxproj">
       <Project>{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Editor\PackageCooker\PackageCooker.vcxproj">
+      <Project>{F4D4E73E-6095-6375-29D0-ACF2954FA851}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Editor\HelixEd\HelixEd.vcxproj">
       <Project>{28AD979D-948C-1639-9DA4-A10F09037D9A}</Project>

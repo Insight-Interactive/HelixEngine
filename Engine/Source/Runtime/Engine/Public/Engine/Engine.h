@@ -38,9 +38,14 @@ public:
 	FViewportContext& GetClientViewport();
 	
 	/*
-		Returns the time between frame buffer flips.
+		Returns the time between frame buffer flips in miliseconds.
 	*/
-	float GetDeltaTime() const;
+	double GetDeltaTime() const;
+
+	/*
+		Returns the time in seconds since app launch.
+	*/
+	double GetAppSeconds() const;
 
 	/*
 		Returns true if the editor is present, false if not. Editor is present if "-launchcfg LaunchEditor" is 
@@ -70,6 +75,7 @@ protected:
 
 	void Update();
 	void BackgroundUpdate( float DeltaTime );
+	void TickTimers();
 
 	virtual void RenderClientViewport( float DeltaTime );
 
@@ -90,17 +96,18 @@ protected:
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 
 protected:
-	bool				m_IsInitialized;
-	bool				m_IsEditorPresent;
-	bool				m_IsPlayingInEditor;
-	FFrameTimeManager	m_FrameTimeManager;
+	bool					m_IsInitialized;
+	bool					m_IsEditorPresent;
+	bool					m_IsPlayingInEditor;
+	FFrameTimer				m_FrameTimer;
+	double					m_AppSeconds;
 	FViewportContext		m_MainViewPort;
 	FRendererInitializer	m_RenderContextInitializer;
-	FRenderContext		m_RenderContext;
-	FApp				m_Application;
-	FGameProject		m_GameProject;
-	FAssetDatabase		m_AssetDatabase;
-	HWorld				m_GameWorld;
+	FRenderContext			m_RenderContext;
+	FApp					m_Application;
+	FGameProject			m_GameProject;
+	FAssetDatabase			m_AssetDatabase;
+	HWorld					m_GameWorld;
 
 };
 
@@ -112,42 +119,53 @@ extern ThreadPool* GThreadPool;
 // Inline function implementations
 //
 
-inline bool HEngine::IsInitialized() const
+FORCEINLINE bool HEngine::IsInitialized() const
 {
 	return m_IsInitialized;
 }
 
-inline FViewportContext& HEngine::GetClientViewport()
+FORCEINLINE FViewportContext& HEngine::GetClientViewport()
 {
 	return m_MainViewPort;
 }
 
-inline float HEngine::GetDeltaTime() const
+FORCEINLINE double HEngine::GetDeltaTime() const
 {
-	return (float)m_FrameTimeManager.GetFrameTime();
+	return m_FrameTimer.GetTimeMiliSeconds();
 }
 
-inline bool HEngine::GetIsEditorPresent()
+FORCEINLINE double HEngine::GetAppSeconds() const
 {
-#if HE_SHIPPING
+	return m_AppSeconds;
+}
+
+FORCEINLINE void HEngine::TickTimers()
+{
+	m_FrameTimer.Tick();
+	m_AppSeconds += m_FrameTimer.GetTimeMiliSeconds();
+}
+
+FORCEINLINE bool HEngine::GetIsEditorPresent()
+{
+#if HE_STANDALONE
 	return false;
 #else
 	return m_IsEditorPresent;
 #endif
 }
 
-inline bool HEngine::IsPlayingInEditor()
+FORCEINLINE bool HEngine::IsPlayingInEditor()
 {
-#if HE_SHIPPING
+#if HE_STANDALONE
 	return true;
 #else
 	return m_IsPlayingInEditor;
 #endif
 }
 
-inline void HEngine::SetIsPlayingInEditor( bool IsPlaying )
+FORCEINLINE void HEngine::SetIsPlayingInEditor( bool IsPlaying )
 {
-#if HE_SHIPPING
+#if HE_STANDALONE
 	m_IsPlayingInEditor = true;
 #else
 	m_IsPlayingInEditor = IsPlaying;

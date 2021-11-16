@@ -7,13 +7,13 @@
 #include "Renderer/Common.h"
 #include "Renderer/ShaderRegisters.h"
 #include "CommonStructHelpers.h"
-#include "IRenderDevice.h"
-#include "IRootSignature.h"
-#include "ICommandContext.h"
-#include "IGpuResource.h"
-#include "IDepthBuffer.h"
-#include "IColorBuffer.h"
-#include "IPipelineState.h"
+#include "RenderDevice.h"
+#include "RootSignature.h"
+#include "CommandContext.h"
+#include "GpuResource.h"
+#include "DepthBuffer.h"
+#include "ColorBuffer.h"
+#include "PipelineState.h"
 #include "Engine/GameProject.h"
 
 
@@ -34,27 +34,26 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 	//
 	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20); 
 	String SkyTexture = FGameProject::GetInstance()->GetContentFolder() + "/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds";
-	m_SkyDiffuse = GTextureManager->LoadTexture(SkyTexture, DT_Magenta2D, false);
+	m_SkyDiffuse = GTextureManager.LoadTexture(SkyTexture, DT_Magenta2D, false);
 
 
 	// Create the pipeline state.
 	//
-	GDevice->CreateRootSignature(&m_pRS);
-	m_pRS->Reset(5, 1);
-	(*m_pRS).InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
+	m_RS.Reset(5, 1);
+	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
-	(*m_pRS)[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
-	(*m_pRS)[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	(*m_pRS)[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
-	(*m_pRS)[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
+	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
+	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
+	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
+	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Sky Cubemap
-	(*m_pRS)[SPRP_Diffuse].InitAsDescriptorTable(1, SV_Pixel);
-	(*m_pRS)[SPRP_Diffuse].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
-	m_pRS->Finalize(TEXT("Skybox Pass RootSignature"), RSF_AllowInputAssemblerLayout);
+	m_RS[SPRP_Diffuse].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[SPRP_Diffuse].SetTableRange(0, DRT_ShaderResourceView, 0, 1);
+	m_RS.Finalize(TEXT("Skybox Pass RootSignature"), RSF_AllowInputAssemblerLayout);
 
-	DataBlob VSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.vs.cso");
-	DataBlob PSShader = FileSystem::ReadRawData("Shaders/SkyboxPass.ps.cso");
+	DataBlob VSShader = FileSystem::ReadRawData("Shaders/Core/SkyboxPass.vs.cso");
+	DataBlob PSShader = FileSystem::ReadRawData("Shaders/Core/SkyboxPass.ps.cso");
 
 	FInputElementDesc InputElements[1] =
 	{
@@ -77,7 +76,7 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = InputElements;
 	PSODesc.InputLayout.NumElements = kNumInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = DepthStateDesc;
 	PSODesc.BlendState = CBlendDesc();
 	PSODesc.RasterizerDesc = RasterStateDesc;
@@ -87,40 +86,33 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 	PSODesc.RTVFormats[0] = RenderTargetFormat;
 	PSODesc.SampleDesc = { 1, 0 };
 	PSODesc.DSVFormat = DepthBufferFormat;
-
-	GDevice->CreatePipelineState(PSODesc, &m_pPSO);
+	m_PSO.Initialize( PSODesc );
 }
 
 void FSkyboxPass::UnInitialize()
 {
-	HE_SAFE_DELETE_PTR( m_pRS );
-	HE_SAFE_DELETE_PTR( m_pPSO );
 }
 
 void FSkyboxPass::Bind(FCommandContext& GfxContext, FColorBuffer& RenderTarget, FDepthBuffer& DepthBuffer)
 {
-	GfxContext.BeginDebugMarker(TEXT("Sky Pass"));
+	GfxContext.BeginDebugMarker( L"Sky Pass" );
 
 	//Transition
 	// 
 	// Color
-	FGpuResource& AlbedoGBufferResource = *DCast<FGpuResource*>(&RenderTarget);
-	GfxContext.TransitionResource(AlbedoGBufferResource, RS_RenderTarget);
+	GfxContext.TransitionResource( RenderTarget, RS_RenderTarget);
 	// Depth
-	FGpuResource& DepthBufferResource = *DCast<FGpuResource*>(&DepthBuffer);
-	GfxContext.TransitionResource(DepthBufferResource, RS_DepthWrite);
+	GfxContext.TransitionResource( DepthBuffer, RS_DepthWrite);
 
 	// Set
 	//
-	GfxContext.SetGraphicsRootSignature(*m_pRS);
-	GfxContext.SetPipelineState(*m_pPSO);
+	GfxContext.SetGraphicsRootSignature(m_RS);
+	GfxContext.SetPipelineState(m_PSO);
 
 	const FColorBuffer* pRTs[] = {
 				&RenderTarget,
 	};
 	GfxContext.OMSetRenderTargets(1, pRTs, &DepthBuffer);
-
-
 }
 
 void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
@@ -139,22 +131,15 @@ void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
 	else
 		HE_LOG(Warning, TEXT("Trying to render a skybox with invalid geometry!"));
 
-	// Transition
-	//
-	FGpuResource& DepthBufferResource = *DCast<FGpuResource*>(&DepthBuffer);
-	GfxContext.TransitionResource(DepthBufferResource, RS_DepthRead);
-
 	GfxContext.EndDebugMarker();
 }
 
 void FSkyboxPass::ReloadPipeline()
 {
-	HE_SAFE_DELETE_PTR( m_pPSO );
-
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/FSkyboxPass.vs.cso" );
-	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/FSkyboxPass.ps.cso" );
+	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/Core/SkyboxPass.vs.cso" );
+	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/SkyboxPass.ps.cso" );
 
 	FInputElementDesc InputElements[1] =
 	{
@@ -177,7 +162,7 @@ void FSkyboxPass::ReloadPipeline()
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = InputElements;
 	PSODesc.InputLayout.NumElements = kNumInputElements;
-	PSODesc.pRootSignature = m_pRS;
+	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = DepthStateDesc;
 	PSODesc.BlendState = CBlendDesc();
 	PSODesc.RasterizerDesc = RasterStateDesc;
@@ -187,6 +172,5 @@ void FSkyboxPass::ReloadPipeline()
 	PSODesc.RTVFormats[0] = m_RenderTargetFormat;
 	PSODesc.SampleDesc = { 1, 0 };
 	PSODesc.DSVFormat = m_DepthTargetFormat;
-
-	GDevice->CreatePipelineState( PSODesc, &m_pPSO );
+	m_PSO.Initialize( PSODesc );
 }

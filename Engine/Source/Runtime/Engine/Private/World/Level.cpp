@@ -5,13 +5,9 @@
 
 #include "RendererCore.h"
 #include "World/World.h"
-#include "FileSystem.h"
-#include "StringHelper.h"
 #include "GameFramework/Actor/AActor.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 #include "AssetRegistry/AssetDatabase.h"
-
-#include "JsonUtility.h"
 
 
 HLevel::HLevel( HWorld* pOwner )
@@ -60,7 +56,8 @@ void HLevel::Serialize( WriteContext& Output )
 {
 	for (auto Iter = m_Actors.begin(); Iter != m_Actors.end(); ++Iter)
 	{
-		Output.Key( TCharToChar( (*Iter)->GetObjectName() ) );
+		AActor& CurrentActor = (**Iter);
+		Output.Key( CurrentActor.GetGuid().ToString().CStr() );
 		// Serialize the objects world transform as it exists in the level.
 		Output.StartArray();
 		{
@@ -71,7 +68,7 @@ void HLevel::Serialize( WriteContext& Output )
 				{
 					Output.StartObject();
 					{
-						FTransform& ActorTransform = (*Iter)->GetTransform();
+						FTransform& ActorTransform = CurrentActor.GetTransform();
 						// Position
 						Output.Key( "PositionX" );
 						Output.Double( ActorTransform.GetPosition().x );
@@ -111,10 +108,10 @@ void HLevel::Deserialize( const ReadContext& Value )
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
 	{
-		String ActorName = itr->name.GetString();
 		const rapidjson::Value& ActorWorldProps = itr->value;
 
-		const String& ActorFilePath = FAssetDatabase::GetInstance()->LookupActor( ActorName );
+		FGUID ActorGuid = FGUID::CreateFromString( itr->name.GetString() );
+		const String& ActorFilePath = FAssetDatabase::GetInstance()->LookupActor( ActorGuid );
 		HE_ASSERT( !ActorFilePath.empty() );
 
 		// Load the actor
@@ -124,8 +121,8 @@ void HLevel::Deserialize( const ReadContext& Value )
 		JsonUtility::LoadDocument( JsonSource, JsonDoc );
 		if (JsonDoc.IsObject())
 		{
-			const Char* kBaseActorType = HE_STRINGIFY( AActor );
-			const Char* kPlayerCharacterType = HE_STRINGIFY( APlayerCharacter );
+			const Char* kBaseActorType			= HE_STRINGIFY( AActor );
+			const Char* kPlayerCharacterType	= HE_STRINGIFY( APlayerCharacter );
 			for (rapidjson::Value::ConstMemberIterator Itr = JsonDoc.MemberBegin();
 				Itr != JsonDoc.MemberEnd(); ++Itr)
 			{

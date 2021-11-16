@@ -5,11 +5,11 @@
 #include "System.h"
 #include "StringHelper.h"
 #include "ThreadPool.h"
-#include "IRenderDevice.h"
-#include "IGpuResource.h"
-#include "ITextureManager.h"
-#include "ICommandContext.h"
-#include "ICommandManager.h"
+#include "RenderDevice.h"
+#include "GpuResource.h"
+#include "TextureManager.h"
+#include "CommandContext.h"
+#include "CommandManager.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Engine/Event/EngineEvent.h"
@@ -19,9 +19,10 @@
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"
 
-#include "Direct3D12/TextureD3D12.h"
-#include "Direct3D12/ColorBufferD3D12.h"
-#include "Direct3D12/CommandContextD3D12.h"
+#include "Texture.h"
+#include "ColorBuffer.h"
+#include "CommandContext.h"
+#include "RenderDevice.h"
 
 
 HEditorEngine::HEditorEngine( CommandLine& CmdLine )
@@ -67,7 +68,7 @@ void HEditorEngine::Startup()
 	Style.WindowRounding = 0.0f;
 	Style.Colors[ImGuiCol_WindowBg].w = 1.f;
 
-	void* hwnd = GetClientViewport().GetWindow().GetNativeWindow();
+	void* hwnd = *(HWND*)GetClientViewport().GetWindow().GetNativeWindow();
 	bool ImGuiImplWin32Succeeded = ImGui_ImplWin32_Init( hwnd );
 	HE_ASSERT( ImGuiImplWin32Succeeded );
 	SetupImGuiRenderBackend();
@@ -79,7 +80,7 @@ void HEditorEngine::Startup()
 	TChar Buffer[300];
 	ZeroMemory( Buffer, sizeof(Buffer) );
 	FileResult.lStructSize = sizeof( OPENFILENAME );
-	FileResult.hwndOwner = RCast<HWND>(GetClientViewport().GetWindow().GetNativeWindow());
+	FileResult.hwndOwner = *RCast<HWND*>(GetClientViewport().GetWindow().GetNativeWindow());
 	FileResult.lpstrFile = Buffer;
 	FileResult.nMaxFile = 300;
 	FileResult.Flags = OFN_EXPLORER;
@@ -206,22 +207,13 @@ void HEditorEngine::SetupImGuiRenderBackend()
 	FSwapChain* pClientSwapChain = GetClientViewport().GetWindow().GetSwapChain();
 	DXGI_FORMAT SwapChainFmt = (DXGI_FORMAT)pClientSwapChain->GetBackBufferFormat();
 	int NumBackBuffers = pClientSwapChain->GetNumBackBuffers();
+	
+#if HE_WINDOWS
+	ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
+	bool ImGuiD3D12Succeeded = ImGui_ImplDX12_Init( pD3D12Device, NumBackBuffers, SwapChainFmt );
+	HE_ASSERT( ImGuiD3D12Succeeded );
 
-	switch (FRenderContext::GetInstance()->GetBackendType())
-	{
-	case RB_Direct3D11:
-		HE_ASSERT( false );
-		break;
-	case RB_Direct3D12:
-	{
-		ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
-		bool ImGuiD3D12Succeeded = ImGui_ImplDX12_Init( pD3D12Device, NumBackBuffers, SwapChainFmt );
-		HE_ASSERT( ImGuiD3D12Succeeded );
-		break;
-	}
-	default:
-		HE_ASSERT( false );
-	}
+#endif
 }
 
 void StandaloneGameLaunch( void* )
@@ -263,7 +255,7 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	//	if (!Loaded)
 	//	{
 	//		Loaded = true;
-	//		pTexture = GTextureManager->LoadTexture( "Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false );
+	//		pTexture = GTextureManager.LoadTexture( "Content/Textures/RustedIron/RustedIron_Albedo.dds", DT_Magenta2D, false );
 	//	}
 	//	const HTextureD3D12* pD3D12Tex = DCast<const HTextureD3D12*>( pTexture.Get() );
 	//	D3D12_GPU_DESCRIPTOR_HANDLE TextureHandle{ pD3D12Tex->GetShaderVisibleDescriptorHandle().GetGpuPtr() };
@@ -277,6 +269,23 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	//	}*/
 	//}
 	//ImGui::End();
+
+	ImGui::Begin( "Set Window Mode" );
+	{
+		if (ImGui::Button( "Windowed" ))
+		{
+			GetClientViewport().SetWindowMode( WM_Windowed );
+		}
+		if (ImGui::Button( "Borderless" ))
+		{
+			GetClientViewport().SetWindowMode( WM_Borderless );
+		}
+		if (ImGui::Button( "Fullscreen" ))
+		{
+			GetClientViewport().SetWindowMode( WM_FullScreen );
+		}
+	}
+	ImGui::End();
 
 
 	FColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
@@ -298,7 +307,7 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 		UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
 		UIContext.ClearColorBuffer( *pSwapChainSurface, GetClientViewport().GetClientRect() );
 
-		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
+		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap() );
 		const FColorBuffer* pRTs[] = {
 			pSwapChainSurface
 		};
@@ -612,7 +621,7 @@ void HEditorEngine::OnEditorPreferencesViewportClosed()
 void HEditorEngine::OnReloadPipelineShaders()
 {
 	HE_LOG( Log, TEXT( "Starting shader pipeline reload." ) );
-	GCommandManager->IdleGpu();
+	GCommandManager.IdleGpu();
 	GetClientViewport().ReloadRenderPipelines();
 	HE_LOG( Log, TEXT( "Shader pipeline reload completed." ) );
 }

@@ -28,7 +28,8 @@ FInputElementDesc GScreenSpaceInputElements[2] =
 const uint32 kNumScreenSpaceInputElements = HE_ARRAYSIZE(GScreenSpaceInputElements);
 
 
-constexpr float MinLOD = 0.0f, MaxLOD = 9.0f;
+const float kMinTexLOD = 0.0f;
+const float kMaxTexLOD = 9.0f;
 FSamplerDesc GLinearWrapSamplerDesc
 {
 	F_Comparison_Min_Mag_Mip_Linear,
@@ -39,6 +40,6 @@ FSamplerDesc GLinearWrapSamplerDesc
 	1,
 	CF_LessEqual,
 	{ 0, 0, 0, 0 },
-	0.f, // Min LOD
-	9.f, // Max LOD
+	kMinTexLOD,
+	kMaxTexLOD,
 };

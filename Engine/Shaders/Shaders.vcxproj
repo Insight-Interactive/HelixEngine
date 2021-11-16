@@ -315,84 +315,84 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
-    <OutDir>..\..\Build-msc-v142\DebugEditor-Win64\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Win64\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugEditor-Win64\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Win64\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
-    <OutDir>..\..\Build-msc-v142\DebugEditor-Win32\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Win32\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugEditor-Win32\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Win32\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
-    <OutDir>..\..\Build-msc-v142\DebugEditor-Durango\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Durango\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugEditor-Durango\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Durango\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
-    <OutDir>..\..\Build-msc-v142\DebugEditor-Scorpio\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Scorpio\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugEditor-Scorpio\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugEditor-Scorpio\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
-    <OutDir>..\..\Build-clang\DebugEditor-Prospero\Shaders\</OutDir>
-    <IntDir>..\..\Build-clang\Intermediates\DebugEditor-Prospero\Shaders\</IntDir>
+    <OutDir>..\..\Build-clang\DebugEditor-Prospero\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-clang\Intermediates\DebugEditor-Prospero\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
-    <OutDir>..\..\Build-msc-v142\Development-Win64\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Win64\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\Development-Win64\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Win64\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
-    <OutDir>..\..\Build-msc-v142\Development-Win32\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Win32\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\Development-Win32\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Win32\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
-    <OutDir>..\..\Build-msc-v142\Development-Durango\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Durango\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\Development-Durango\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Durango\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
-    <OutDir>..\..\Build-msc-v142\Development-Scorpio\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Scorpio\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\Development-Scorpio\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\Development-Scorpio\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
-    <OutDir>..\..\Build-clang\Development-Prospero\Shaders\</OutDir>
-    <IntDir>..\..\Build-clang\Intermediates\Development-Prospero\Shaders\</IntDir>
+    <OutDir>..\..\Build-clang\Development-Prospero\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-clang\Intermediates\Development-Prospero\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
-    <OutDir>..\..\Build-msc-v142\DebugGame-Win64\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Win64\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugGame-Win64\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Win64\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
-    <OutDir>..\..\Build-msc-v142\DebugGame-Win32\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Win32\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugGame-Win32\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Win32\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
-    <OutDir>..\..\Build-msc-v142\DebugGame-Durango\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Durango\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugGame-Durango\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Durango\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
-    <OutDir>..\..\Build-msc-v142\DebugGame-Scorpio\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Scorpio\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\DebugGame-Scorpio\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\DebugGame-Scorpio\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
-    <OutDir>..\..\Build-clang\DebugGame-Prospero\Shaders\</OutDir>
-    <IntDir>..\..\Build-clang\Intermediates\DebugGame-Prospero\Shaders\</IntDir>
+    <OutDir>..\..\Build-clang\DebugGame-Prospero\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-clang\Intermediates\DebugGame-Prospero\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
-    <OutDir>..\..\Build-msc-v142\ShippingGame-Win64\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Win64\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\ShippingGame-Win64\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Win64\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
-    <OutDir>..\..\Build-msc-v142\ShippingGame-Win32\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Win32\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\ShippingGame-Win32\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Win32\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
-    <OutDir>..\..\Build-msc-v142\ShippingGame-Durango\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Durango\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\ShippingGame-Durango\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Durango\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
-    <OutDir>..\..\Build-msc-v142\ShippingGame-Scorpio\Shaders\</OutDir>
-    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Scorpio\Shaders\</IntDir>
+    <OutDir>..\..\Build-msc-v142\ShippingGame-Scorpio\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v142\Intermediates\ShippingGame-Scorpio\Shaders\Core\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
-    <OutDir>..\..\Build-clang\ShippingGame-Prospero\Shaders\</OutDir>
-    <IntDir>..\..\Build-clang\Intermediates\ShippingGame-Prospero\Shaders\</IntDir>
+    <OutDir>..\..\Build-clang\ShippingGame-Prospero\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-clang\Intermediates\ShippingGame-Prospero\Shaders\Core\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
   </ItemDefinitionGroup>
@@ -451,27 +451,45 @@
       <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.ps.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomGeometryPass.ps.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.vs.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomGeometryPass.vs.hlsl">
       <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericLightPass.ps.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomLightPass.ps.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericLightPass.vs.hlsl">
+    <FxCompile Include="Public\DeferredShading\DefaultGeometryPass.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultGeometryPass.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultLightPass.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\GenericForwardPass.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\GenericForwardPass.vs.hlsl">
       <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Public\Core\Common.hlsli" />
     <None Include="Public\Core\Core.hlsli" />
     <None Include="Public\Core\LightsFwd.hlsli" />
     <None Include="Public\DeferredShading\DeferredShadingCommon.hlsli" />
+    <None Include="Public\ForwardShading\ForwardShadingCommon.hlsli" />
     <None Include="Shaders.module.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

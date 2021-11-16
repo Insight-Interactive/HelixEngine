@@ -16,23 +16,30 @@ class FTextureManager;
 
 class RENDER_API FRenderContextFactory
 {
-protected:
-	virtual void CreateContext(FRenderContext& OutContext) = 0;
+public:
+	FRenderContextFactory();
+	~FRenderContextFactory();
 
+	void CreateContext(FRenderContext& OutContext);
+	void CreateSwapChain( FSwapChain& OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, FCommandManager& InCommandManager, FRenderDevice& InDevice );
+
+protected:
 	FORCEINLINE void InitializeMainComponents();
 
-	virtual void CreateDevice(FRenderDevice** OutDevice) = 0;
-	virtual void CreateSwapChain(FSwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, FCommandManager* InCommandManager, FRenderDevice* InDevice) = 0;
-	virtual void CreateCommandManager(FCommandManager** OutCommandManager, FRenderDevice* InDevice) = 0;
-	virtual void CreateContextManager(FContextManager** OutCommandContext) = 0;
-	virtual void CreateGeometryManager(FGeometryBufferManager** OutGeometryManager) = 0;
-	virtual void CreateConstantBufferManager(FConstantBufferManager** OutCBManager) = 0;
-	virtual void CreateTextureManager(FTextureManager** OutTexManager) = 0;
+	void CreateDevice(FRenderDevice& OutDevice);
+	void CreateCommandManager(FCommandManager& OutCommandManager);
+	void CreateContextManager(FContextManager& OutCommandContext);
+	void CreateGeometryManager(FGeometryBufferManager& OutGeometryManager);
+	void CreateTextureManager(FTextureManager& OutTexManager);
 
-protected:
-	FRenderContextFactory()
-	{
-	}
+private:
+
+#if R_WITH_D3D12
+	IDXGIFactory6* m_pDXGIFactory;
+
+	void CreateDXGIFactory();
+
+#endif // R_WITH_D3D12
 
 };
 
@@ -43,8 +50,8 @@ protected:
 
 FORCEINLINE void FRenderContextFactory::InitializeMainComponents()
 {
-	CreateDevice(&GDevice);
+	CreateDevice(GGraphicsDevice);
 
-	CreateCommandManager(&GCommandManager, GDevice);
-	CreateContextManager(&GContextManager);
+	CreateCommandManager(GCommandManager);
+	CreateContextManager(GContextManager);
 }

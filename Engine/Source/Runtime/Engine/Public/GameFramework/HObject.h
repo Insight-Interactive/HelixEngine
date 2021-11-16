@@ -9,12 +9,15 @@ public:
 	void SetObjectName( const HName& Name );
 	const HName& GetObjectName() const;
 
+	const FGUID& GetGuid() const;
+
 protected:
 	HObject( const HName& Name = TEXT("Unamed HObject") );
 	virtual ~HObject();
 
 private:
 	HName m_Name;
+	FGUID m_Guid;
 
 };
 
@@ -23,12 +26,17 @@ private:
 // Inline function implementations
 //
 
-inline void HObject::SetObjectName( const HName& Name )
+FORCEINLINE const FGUID& HObject::GetGuid() const
+{
+	return m_Guid;
+}
+
+FORCEINLINE void HObject::SetObjectName( const HName& Name )
 {
 	m_Name = Name;
 }
 
-inline const HName& HObject::GetObjectName() const
+FORCEINLINE const HName& HObject::GetObjectName() const
 {
 	return m_Name;
 }

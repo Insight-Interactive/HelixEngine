@@ -242,12 +242,14 @@ inline bool FRawInputSurveyer::GetIsKeyboardAcquired()
 
 inline float FRawInputSurveyer::GetMouseMoveDeltaX()
 {
-	return m_Mouse.GetMoveDeltaX();
+	return m_Analogs[AnalogMouseX - AnalogLeftTrigger];
+	//return m_Mouse.GetMoveDeltaX();
 }
 
 inline float FRawInputSurveyer::GetMouseMoveDeltaY()
 {
-	return m_Mouse.GetMoveDeltaY();
+	return m_Analogs[AnalogMouseY - AnalogLeftTrigger];
+	//return m_Mouse.GetMoveDeltaY();
 }
 
 inline void FRawInputSurveyer::SetMouseMoveDelta( float XValue, float YValue )

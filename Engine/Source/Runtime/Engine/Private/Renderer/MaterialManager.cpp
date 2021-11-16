@@ -59,15 +59,21 @@ bool MaterialRef::IsValid() const
 	return m_Ref && m_Ref->IsValid();
 }
 
-HMaterial* MaterialRef::Get()
+FMaterial* MaterialRef::Get()
 {
-	return (HMaterial*)m_Ref;
+	return (FMaterial*)m_Ref;
 }
 
-HMaterial* MaterialRef::operator->()
+FMaterial* MaterialRef::operator->()
 {
 	HE_ASSERT(m_Ref != nullptr);
-	return (HMaterial*)m_Ref;
+	return (FMaterial*)m_Ref;
+}
+
+const FMaterial* MaterialRef::operator->() const
+{
+	HE_ASSERT( m_Ref != nullptr );
+	return (const FMaterial*)m_Ref;
 }
 
 
@@ -75,48 +81,41 @@ HMaterial* MaterialRef::operator->()
 // Material Manager Implementation
 //
 
-MaterialRef MaterialManager::LoadMaterialFromFile(const String& Path)
+MaterialRef MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 {
-	ManagedMaterial* pMat = NULL;
+	ManagedMaterial* pMaterial = NULL;
 
 	String Name = StringHelper::GetFilenameFromDirectoryNoExtension( Path );
 	{
-		m_MapMutex.Enter();
-
-		uint64 HashName = std::hash<String>{}(Name);
+		ScopedCriticalSection Guard( m_MapMutex );
 
 		auto Iter = m_MaterialCache.find(Name);
 		if (Iter != m_MaterialCache.end())
 		{
-			pMat = Iter->second.get();
-			pMat->WaitForLoad();
+			pMaterial = Iter->second.get();
+			pMaterial->WaitForLoad();
 		}
 		else
 		{
-			pMat = new ManagedMaterial(Name);
-			// TODO load from file here.
-			m_MaterialCache[Name].reset(pMat);
+			pMaterial = new ManagedMaterial(Name);
+			m_MaterialCache[Name].reset(pMaterial);
 
-			//DataBlob Data = FileSystem::ReadRawData(Path.c_str());
-			//pMat->CreateFromMemory(Data);
-			pMat->LoadFromFile( Path );
-			pMat->Initialize();
-			pMat->SetDebugName(Name);
-			pMat->SetUID(HashName);
-			pMat->SetLoadCompleted(true);
+			pMaterial->LoadFromFile( Path );
+			pMaterial->SetDebugName(Name);
+			pMaterial->SetLoadCompleted(true);
 		}
 
-		m_MapMutex.Exit();
 	}
 	return GetMaterialByName( Name );
 }
 
 void MaterialManager::DestroyMaterial(const String& Key)
 {
+	ScopedCriticalSection Guard(m_MapMutex);
+
 	auto Iter = m_MaterialCache.find(Key);
 	if (Iter != m_MaterialCache.end())
 	{
-		(*Iter).second.get()->UnInitialize();
 		m_MaterialCache.erase(Iter);
 	}
 }

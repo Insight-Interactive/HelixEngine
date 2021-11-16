@@ -10,6 +10,7 @@
 #include "FileSystem.h"
 #include "Transform.h"
 #include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
 
 
 namespace JsonUtility
@@ -25,6 +26,11 @@ namespace JsonUtility
 		be used instead to reuse file descriptors. Returns true if succeeded false if not.
 	*/
 	bool LoadDocument( const char* Filename, rapidjson::Document& OutDocument );
+
+	/*
+		Writes json data to a specified file. Returns true if succeeded, false if not.
+	*/
+	bool WriteDocument( const Char* DestinationFile, rapidjson::StringBuffer& Buffer );
 
 	/*
 		Reads and returns a integer property from a json value. Returns true if succeeded false if not.

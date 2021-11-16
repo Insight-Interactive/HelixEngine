@@ -7,10 +7,10 @@
 
 class HControllerComponent;
 
-static const float kDefaultMovementSpeed = 50.f;
+static const float kDefaultMovementSpeed = 32.f;
 static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 2.f;
-static const float kDefaultCameraPitchSpeedMultiplier = 80.f;
-static const float kDefaultCameraYawSpeedMultiplier = 80.f;
+static const float kDefaultCameraPitchSpeedMultiplier = 25.f;
+static const float kDefaultCameraYawSpeedMultiplier = 25.f;
 
 HCLASS()
 class APawn : public AActor

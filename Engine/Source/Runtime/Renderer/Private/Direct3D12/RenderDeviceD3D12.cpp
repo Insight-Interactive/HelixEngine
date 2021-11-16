@@ -1,32 +1,31 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "RenderDeviceD3D12.h"
+#include "RenderDevice.h"
 
 #include "RendererCore.h"
-#include "PipelineStateD3D12.h"
-#include "RootSignatureD3D12.h"
-#include "ColorBufferD3D12.h"
-#include "DescriptorHeapD3D12.h"
-#include "DepthBufferD3D12.h"
-#include "TextureD3D12.h"
+#include "PipelineState.h"
+#include "RootSignature.h"
+#include "ColorBuffer.h"
+#include "DescriptorHeap.h"
+#include "DepthBuffer.h"
+#include "Texture.h"
 
-FRenderDeviceD3D12::FRenderDeviceD3D12()
+
+FRenderDevice::FRenderDevice()
 	: m_pD3DDevice(NULL)
 {
 }
 
-FRenderDeviceD3D12::~FRenderDeviceD3D12()
+FRenderDevice::~FRenderDevice()
 {
 	UnInitialize();
 }
 
-void FRenderDeviceD3D12::Initialize(const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult, void** ppFactoryContext)
+void FRenderDevice::Initialize(const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult, void** ppFactoryContext)
 {
 	IDXGIFactory6** ppDXGIFactory = RCast<IDXGIFactory6**>(ppFactoryContext);
 	HE_ASSERT( ppDXGIFactory != NULL );
-
-	const DeviceInitParamsD3D12& D3D12InitParams = SCast<const DeviceInitParamsD3D12&>(InitParams);
-	DeviceQueryResultD3D12& D3D12QueryResult = SCast<DeviceQueryResultD3D12&>(OutDeviceQueryResult);
 
 	// Create the Device
 	//
@@ -35,61 +34,32 @@ void FRenderDeviceD3D12::Initialize(const DeviceInitParams& InitParams, DeviceQu
 		// Force the device to be a software adapter. NOT recommended for games.
 		IDXGIAdapter* pWarpAdapter = NULL;
 		HRESULT hr = (*ppDXGIFactory)->EnumWarpAdapter(IID_PPV_ARGS(&pWarpAdapter));
-		ThrowIfFailedMsg(hr, TEXT("Failed to enumerate warp adapter!"));
+		ThrowIfFailedMsg(hr, "Failed to enumerate warp adapter!");
 
 		hr = D3D12CreateDevice(
 			pWarpAdapter,
-			D3D12InitParams.MinFeatureLevel,
+			InitParams.MinFeatureLevel,
 			IID_PPV_ARGS(&m_pD3DDevice)
 		);
-		ThrowIfFailedMsg(hr, TEXT("Failed to create D3D12 warp device!"));
+		ThrowIfFailedMsg(hr, "Failed to create D3D12 warp device!");
 		
 		pWarpAdapter->Release();
 	}
 	else
 	{
 		IDXGIAdapter1* pHardwareAdapter;
-		GetHardwareAdapter((*ppDXGIFactory), &pHardwareAdapter, D3D12InitParams, D3D12QueryResult);
+		GetHardwareAdapter((*ppDXGIFactory), &pHardwareAdapter, InitParams, OutDeviceQueryResult );
 
 		HRESULT hr = D3D12CreateDevice(
 			pHardwareAdapter,
-			D3D12InitParams.MinFeatureLevel,
+			InitParams.MinFeatureLevel,
 			IID_PPV_ARGS(&m_pD3DDevice)
 		);
-		ThrowIfFailedMsg(hr, TEXT("Failed to create D3D12 device!"));
+		ThrowIfFailedMsg(hr, "Failed to create D3D12 device!");
 	}
 }
 
-void FRenderDeviceD3D12::CreatePipelineState(const FPipelineStateDesc& PSODesc, FPipelineState** ppOutPSO)
-{
-	FPipelineStateD3D12* pD3D12PSO = CreateRenderComponentObject<FPipelineStateD3D12>(ppOutPSO);
-	pD3D12PSO->Initialize(PSODesc);
-}
-
-void FRenderDeviceD3D12::CreateRootSignature(FRootSignature** ppOutSignature)
-{
-	FRootSignatureD3D12* pD3D12RS = CreateRenderComponentObject<FRootSignatureD3D12>(ppOutSignature);
-}
-void FRenderDeviceD3D12::CreateDescriptorHeap(const TChar* DebugHeapName, EResourceHeapType&& Type, uint32&& MaxCount, FDescriptorHeap** ppOutHeap)
-{
-	(*ppOutHeap) = CreateRenderComponentObject<FDescriptorHeapD3D12>(ppOutHeap);
-	FDescriptorHeapD3D12* pHeap = DCast<FDescriptorHeapD3D12*>(*ppOutHeap);
-	pHeap->Create(DebugHeapName, Type, MaxCount);
-}
-
-void FRenderDeviceD3D12::CreateColorBuffer(const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format, FColorBuffer** ppOutColorBuffer)
-{
-	(*ppOutColorBuffer) = new FColorBufferD3D12();
-	(*ppOutColorBuffer)->Create(this, Name, Width, Height, NumMips, Format);
-}
-
-void FRenderDeviceD3D12::CreateDepthBuffer(const TChar* Name, uint32 Width, uint32 Height, EFormat Format, FDepthBuffer** ppOutDepthBuffer)
-{
-	(*ppOutDepthBuffer) = new FDepthBufferD3D12();
-	(*ppOutDepthBuffer)->Create(Name, Width, Height, Format);
-}
-
-void FRenderDeviceD3D12::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const HTexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
+void FRenderDevice::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const HTexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
 {
 	constexpr uint32 kMaxHandles = 12;
 	D3D12_CPU_DESCRIPTOR_HANDLE SourceStarts[kMaxHandles];
@@ -99,13 +69,13 @@ void FRenderDeviceD3D12::CopyDescriptors(uint32 NumDestDescriptorRanges, const F
 	D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ pDestDescriptorRangeStarts->Ptr };
 	for (uint32 i = 0; i < NumSrcDescriptorRanges; i++)
 	{
-		const HTextureD3D12* Tex = DCast<const HTextureD3D12*>(pSrcDescriptorRangeStarts[i]);
+		const HTexture* Tex = DCast<const HTexture*>(pSrcDescriptorRangeStarts[i]);
 		SourceStarts[i] = Tex->GetSRV();
 	}
 	m_pD3DDevice->CopyDescriptors(NumDestDescriptorRanges, &CpuHandle, (const UINT*)pDestDescriptorRangeSizes, NumSrcDescriptorRanges, SourceStarts, (const UINT*)pSrcDescriptorRangeSizes, (D3D12_DESCRIPTOR_HEAP_TYPE)DescriptorHeapsType);
 }
 
-void FRenderDeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** ppAdapter, const DeviceInitParamsD3D12& InitParams, DeviceQueryResultD3D12& OutDeviceQueryResult)
+void FRenderDevice::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** ppAdapter, const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult)
 {
 	Microsoft::WRL::ComPtr<IDXGIAdapter1> pAdapter;
 	*ppAdapter = NULL;
@@ -141,7 +111,7 @@ void FRenderDeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapte
 						(*ppAdapter)->Release();
 
 					*ppAdapter = pAdapter.Detach();
-					OutDeviceQueryResult.IsDXRSupported = true;
+					OutDeviceQueryResult.IsRealtimeRTSupported = true;
 
 					R_LOG(Log, TEXT("Found suitable D3D 12 hardware that can support DXR: %s"), Desc.Description);
 					continue;
@@ -170,7 +140,7 @@ void FRenderDeviceD3D12::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapte
 	R_LOG(Log, TEXT("\"%s\" selected as D3D 12 graphics hardware."), OutDeviceQueryResult.DeviceName);
 }
 
-void FRenderDeviceD3D12::UnInitialize()
+void FRenderDevice::UnInitialize()
 {
 	HE_COM_SAFE_RELEASE(m_pD3DDevice);
 }
@@ -181,20 +151,22 @@ void FRenderDeviceD3D12::UnInitialize()
 // Utility Functions
 // 
 
-bool FRenderDeviceD3D12::CheckSM6Support(ID3D12Device* pDevice)
+bool FRenderDevice::CheckSM6Support(ID3D12Device* pDevice)
 {
 	HE_ASSERT(pDevice != NULL); // Cannot check for device feature support with a null device.
 	D3D12_FEATURE_DATA_SHADER_MODEL sm6_0{ D3D_SHADER_MODEL_6_0 };
 	HRESULT hr = pDevice->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &sm6_0, sizeof(sm6_0));
-	ThrowIfFailedMsg(hr, TEXT("Failed to query feature support for shader model 6 with device."));
+	ThrowIfFailedMsg(hr, "Failed to query feature support for shader model 6 with device.");
 	return (sm6_0.HighestShaderModel >= D3D_SHADER_MODEL_6_0);
 }
 
-bool FRenderDeviceD3D12::CheckDXRSupport(ID3D12Device* pDevice)
+bool FRenderDevice::CheckDXRSupport(ID3D12Device* pDevice)
 {
 	HE_ASSERT(pDevice != NULL); // Cannot check for device feature support with a null device.
 	D3D12_FEATURE_DATA_D3D12_OPTIONS5 Options5 = {};
 	HRESULT hr = pDevice->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS5, &Options5, sizeof(Options5));
-	ThrowIfFailedMsg(hr, TEXT("Failed to query feature support for ray trace with device."));
+	ThrowIfFailedMsg(hr, "Failed to query feature support for ray trace with device.");
 	return (Options5.RaytracingTier > D3D12_RAYTRACING_TIER_1_0);
 }
+
+#endif // R_WITH_D3D12

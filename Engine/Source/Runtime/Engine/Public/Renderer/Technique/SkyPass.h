@@ -3,8 +3,10 @@
 #include "Renderer/RenderPass.h"
 
 #include "ModelManager.h"
-#include "ITextureManager.h"
+#include "TextureManager.h"
 #include "Texture3D.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
 
 
 class FSkyboxPass : public FRenderPass
@@ -32,8 +34,8 @@ private:
 	StaticMeshGeometryRef m_SkyGeometry;
 	HTextureRef m_SkyDiffuse;
 
-	FRootSignature* m_pRS;
-	FPipelineState* m_pPSO;
+	FRootSignature m_RS;
+	FPipelineState m_PSO;
 
 	EFormat m_RenderTargetFormat;
 	EFormat m_DepthTargetFormat;

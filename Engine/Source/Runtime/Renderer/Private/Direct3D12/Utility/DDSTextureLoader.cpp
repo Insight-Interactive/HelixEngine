@@ -19,14 +19,16 @@
 //--------------------------------------------------------------------------------------
 
 #include <RendererPCH.h>
+#if R_WITH_D3D12
 
 #include "../Utility/DDSTextureLoader.h"
 
 #include "dds.h"
-#include "../GpuResourceD3D12.h"
-#include "../CommandContextD3D12.h"
-#include "../LinearAllocator.h"
+#include "GpuResource.h"
+#include "CommandContext.h"
+#include "LinearAllocator.h"
 #include "RendererCore.h"
+
 
 struct handle_closer { void operator()(HANDLE h) { if (h) CloseHandle(h); } };
 typedef std::unique_ptr<void, handle_closer> ScopedHandle;
@@ -1190,22 +1192,21 @@ static HRESULT CreateTextureFromDDS(_In_ ID3D12Device* d3dDevice,
 
         if (SUCCEEDED(hr))
         {
-            FGpuResourceD3D12 DestTexture(*texture, RS_CopyDestination);
-
+            FGpuResource DestTexture(*texture, RS_CopyDestination);
+            
             {
                 uint32 NumSubresources = arraySize;
                 NumSubresources *= (uint32)mipCount;
                 UINT64 uploadBufferSize = GetRequiredIntermediateSize(*texture, 0, NumSubresources);
 
                 FCommandContext& InitContext = FCommandContext::Begin(L"Texture Init");
-                FCommandContextD3D12& D3D12InitContext = *DCast<FCommandContextD3D12*>(&InitContext);
                 {
-                    // copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
-                    DynAlloc mem = D3D12InitContext.ReserveUploadMemory(uploadBufferSize);
-                    UpdateSubresources(RCast<ID3D12GraphicsCommandList*>(InitContext.GetNativeContext()), *texture, mem.Buffer.GetResource(), 0, 0, NumSubresources, initData.get());
+                    // Copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
+                    DynAlloc mem = InitContext.ReserveUploadMemory(uploadBufferSize);
+                    ::UpdateSubresources((ID3D12GraphicsCommandList*)InitContext.GetNativeContext(), (ID3D12Resource*)DestTexture.GetResource(), (ID3D12Resource*)mem.Buffer.GetResource(), 0, 0, NumSubresources, initData.get());
                     InitContext.TransitionResource(DestTexture, RS_GenericRead);
                 }
-                // Execute the command list and wait for it to finish so we can release the upload buffer
+                // Execute the command list and wait for it to finish so we can release the upload buffer.
                 InitContext.End(true);
             }
         }
@@ -1370,3 +1371,5 @@ HRESULT CreateDDSTextureFromFile(
 
     return hr;
 }
+
+#endif // R_WITH_D3D12

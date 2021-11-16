@@ -2,6 +2,17 @@
 
 #include "GameFramework/Components/HControllerComponent.h"
 
+HControllerComponent::HControllerComponent(const HName& Name)
+	: HActorComponent( Name )
+{
+
+}
+
+HControllerComponent::~HControllerComponent()
+{
+
+}
+
 void HControllerComponent::AddGamepadVibration(uint32 PlayerIndex, EGampadRumbleMotor Motor, float Amount)
 {
 	//FInputDispatcher::Get().AddGamepadVibration(PlayerIndex, Motor, Amount);

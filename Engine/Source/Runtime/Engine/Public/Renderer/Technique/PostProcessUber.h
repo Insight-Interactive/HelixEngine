@@ -2,9 +2,11 @@
 
 #include "Renderer/RenderPass.h"
 
-class FRootSignature;
-class FPipelineState;
-class FConstantBuffer;
+#include "RootSignature.h"
+#include "PipelineState.h"
+#include "ConstantBuffer.h"
+
+
 enum EFormat;
 
 class FPostProcessUber : public FRenderPass
@@ -24,9 +26,9 @@ public:
 protected:
 
 	// Pipeline
-	FRootSignature* m_pRS;
-	FPipelineState* m_pPSO;
+	//FRootSignature m_RS;
+	//FPipelineState m_PSO;
 
-	FConstantBuffer* m_pPostProcessSettings;
+	//TConstantBuffer<PostProcessSettings> m_PostProcessSettings;
 
 };

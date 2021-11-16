@@ -9,7 +9,10 @@ public:
 	FMaterialDatabase();
 	virtual ~FMaterialDatabase();
 
-	virtual void Initialize( const Char* MaterialDatabaseFile ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( WriteContext& Writer ) override;
+
+	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 
 protected:

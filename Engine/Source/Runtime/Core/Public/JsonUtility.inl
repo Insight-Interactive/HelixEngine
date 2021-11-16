@@ -17,6 +17,20 @@ inline bool JsonUtility::LoadDocument( const char* Filename, rapidjson::Document
 	return LoadDocument( JsonSource, OutDocument );
 }
 
+inline bool JsonUtility::WriteDocument( const Char* DestinationFile, rapidjson::StringBuffer& Buffer )
+{
+	FileRef OutFile( DestinationFile, FUM_Write, CM_Text );
+	if (OutFile->IsOpen())
+	{
+		if (!OutFile->WriteData( (void*)Buffer.GetString(), Buffer.GetSize(), 1 ))
+		{
+			HE_ASSERT( false );
+			return false;
+		}
+	}
+	return true;
+}
+
 inline bool JsonUtility::GetInteger( const rapidjson::Value& Value, const char* PropertyName, int32& OutInteger )
 {
 	HE_ASSERT( PropertyName != NULL );

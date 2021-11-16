@@ -1,11 +1,18 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "ColorBufferD3D12.h"
-#include "IRenderDevice.h"
+#include "ColorBuffer.h"
+
+#include "RenderDevice.h"
 #include "RendererCore.h"
-#include "BackendCoreD3D12.h"
+#include "RendererCore.h"
 
-FColorBufferD3D12::FColorBufferD3D12()
+
+FColorBuffer::FColorBuffer()
+    : m_ClearColor( 0.f, 0.f, 0.f, 1.f )
+    , m_NumMipMaps( 0u )
+    , m_FragmentCount( 1u )
+    , m_SampleCount( 1u )
 {
     m_RTVHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
     m_SRVHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
@@ -13,20 +20,20 @@ FColorBufferD3D12::FColorBufferD3D12()
         m_UAVHandle[i].ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 }
 
-FColorBufferD3D12::~FColorBufferD3D12()
+FColorBuffer::~FColorBuffer()
 {
 }
 
-void FColorBufferD3D12::CreateFromSwapChain(FRenderDevice* pDevice, const TChar* Name, void* pResource)
+void FColorBuffer::CreateFromSwapChain(const WChar* Name, void* pResource)
 {
-    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(pDevice->GetNativeDevice());
-    AssociateWithResource(pDevice, Name, pResource, RS_Present);
+    ID3D12Device* pID3D12Device = (ID3D12Device*)GGraphicsDevice.GetNativeDevice();
+    AssociateWithResource( GGraphicsDevice, Name, pResource, RS_Present);
 
     m_RTVHandle = AllocateDescriptor(pID3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
     pID3D12Device->CreateRenderTargetView(RCast<ID3D12Resource*>(pResource), NULL, m_RTVHandle);
 }
 
-void FColorBufferD3D12::Create(FRenderDevice* pDevice, const TChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format)
+void FColorBuffer::Create(const WChar* Name, uint32 Width, uint32 Height, uint32 NumMips, EFormat Format)
 {
     NumMips = (NumMips == 0 ? ComputeNumMips(Width, Height) : NumMips);
     EResourceFlags Flags = CombineResourceFlags();
@@ -42,21 +49,20 @@ void FColorBufferD3D12::Create(FRenderDevice* pDevice, const TChar* Name, uint32
     ClearValue.Color[3] = m_ClearColor.A;
 
 
-    CreateTextureResource(GDevice, Name, ResourceDesc, ClearValue);
-    CreateDerivedViews(GDevice, Format, 1, NumMips);
+    CreateTextureResource( GGraphicsDevice, Name, ResourceDesc, ClearValue);
+    CreateDerivedViews( GGraphicsDevice, Format, 1, NumMips);
 }
 
-void FColorBufferD3D12::DestroyAPIResource()
+void FColorBuffer::DestroyAPIResource()
 {
     HE_COM_SAFE_RELEASE( m_pID3D12Resource );
 }
 
-void FColorBufferD3D12::CreateDerivedViews(FRenderDevice* pDevice, EFormat Format, uint32 ArraySize, uint32 NumMips)
+void FColorBuffer::CreateDerivedViews(FRenderDevice& Device, EFormat Format, uint32 ArraySize, uint32 NumMips)
 {
     HE_ASSERT(ArraySize == 1 || NumMips == 1); // We don't support auto-mips on texture arrays.
-    HE_ASSERT(pDevice != NULL);
 
-    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(pDevice->GetNativeDevice());
+    ID3D12Device* pID3D12Device = (ID3D12Device*)Device.GetNativeDevice();
 
     m_NumMipMaps = NumMips - 1;
 
@@ -134,3 +140,5 @@ void FColorBufferD3D12::CreateDerivedViews(FRenderDevice* pDevice, EFormat Forma
         UAVDesc.Texture2D.MipSlice++;
     }
 }
+
+#endif // R_WITH_D3D12

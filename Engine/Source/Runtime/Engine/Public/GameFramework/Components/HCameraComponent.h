@@ -5,7 +5,7 @@
 #include "GameFramework/Components/HActorComponent.h"
 
 const float kDefaultFOV = 75.f;
-const float kDefaultNearZ = 0.001f;
+const float kDefaultNearZ = 0.1f;
 const float kDefaultFarZ = 1000.f;
 
 enum EViewType
@@ -16,9 +16,6 @@ enum EViewType
 
 struct ProjectionProperties
 {
-	const float kDefaultNearZ = 0.01f;
-	const float kDefaultFarZ = 1000.f;
-
 	constexpr ProjectionProperties()
 		: NearZ( kDefaultNearZ )
 		, FarZ( kDefaultFarZ )
@@ -39,8 +36,7 @@ class HCameraComponent : public HActorComponent
 {
 	friend class HCameraManager;
 public:
-	HCameraComponent( const HName& Name );
-	virtual ~HCameraComponent();
+	HE_COMPONENT_GENERATED_BODY( HCameraComponent )
 
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaTime ) override;

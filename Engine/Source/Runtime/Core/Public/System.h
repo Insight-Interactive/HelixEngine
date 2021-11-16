@@ -24,8 +24,8 @@ namespace System
 		DWORD Id;
 		HANDLE Handle;
 
-		bool operator == (const ThreadId& rhs) { return rhs.Id == this->Id; }
-		bool operator != (const ThreadId& rhs) { return rhs.Id != this->Id; }
+		FORCEINLINE bool operator == (const ThreadId& rhs) { return rhs.Id == this->Id; }
+		FORCEINLINE bool operator != (const ThreadId& rhs) { return rhs.Id != this->Id; }
 #endif
 	};
 

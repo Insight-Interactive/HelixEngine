@@ -21,12 +21,12 @@ SP_PSInput main(SP_VSInput Input)
 {
     SP_PSInput Output;
     
-    matrix ViewNoMovement = ViewMat;
+    matrix ViewNoMovement = kCameraView;
     ViewNoMovement._41 = 0;
     ViewNoMovement._42 = 0;
     ViewNoMovement._43 = 0;
     
-    matrix ViewProjection = mul(ViewNoMovement, ProjMat);
+    matrix ViewProjection = mul(ViewNoMovement, kCameraProjection);
     Output.Position = mul(float4(Input.Position, 1.f), ViewProjection);
     Output.Position.z = Output.Position.w;
     

@@ -2,8 +2,8 @@
 
 #include "Panels/SceneViewportPanel.h"
 
-#include "Direct3D12/ColorBufferD3D12.h"
-#include "IRenderDevice.h"
+#include "ColorBuffer.h"
+#include "RenderDevice.h"
 #include "Engine/Engine.h"
 #include "Input/RawInput.h"
 #include "World/Level.h"
@@ -27,8 +27,8 @@ SceneViewportPanel::~SceneViewportPanel()
 
 void SceneViewportPanel::Initialize()
 {
-	m_DescriptorHandle = GTextureHeap->Alloc( 1 );
-	ID3D12Device* pDevice = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
+	m_DescriptorHandle = GTextureHeap.Alloc( 1 );
+	ID3D12Device* pDevice = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 	m_HandleSize = pDevice->GetDescriptorHandleIncrementSize( D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
 	m_pDebugPawn = new ADebugPawn( &GetOwningViewport()->GetWorld(), TEXT("Editor Debug Pawn"));
@@ -72,13 +72,13 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		{
 			m_IsCameraRotating = true;
 
-			HWND Window = (HWND)GetOwningViewport()->GetWindow().GetNativeWindow();
+			HWND* Window = (HWND*)GetOwningViewport()->GetWindow().GetNativeWindow();
 			RECT rcClip;           // new area for ClipCursor
 			RECT rcOldClip;        // previous area for ClipCursor
 
 			::GetClipCursor( &rcOldClip );
 			
-			::GetWindowRect( Window, &rcClip );
+			::GetWindowRect( *Window, &rcClip );
 
 			::ClipCursor( &rcClip );
 
@@ -88,7 +88,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		m_IsCameraRotating = ImGui::IsMouseDown( ImGuiMouseButton_Right );
 		m_pDebugPawn->SetCanRotateCamera( m_IsCameraRotating );
 
-		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Left ))
+		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Left ) && GEngine->IsPlayingInEditor())
 		{
 			GetOwningViewport()->GetInputDispatcher()->SetCanDispatchListeners( true );
 			GGameInstance->OnGameSetFocus();
@@ -96,8 +96,8 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 
 		// Render the scene to the viewport.
 		//
-		FColorBufferD3D12* Buffer = GetOwningViewport()->GetPreDisplayBuffer()->As<FColorBufferD3D12*>();
-		ID3D12Device* pDevice = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
+		FColorBuffer* Buffer = GetOwningViewport()->GetPreDisplayBuffer();
+		ID3D12Device* pDevice = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 		uint32_t DestCount = 1;
 		uint32_t SourceCounts[] = { 1 };
 		D3D12_CPU_DESCRIPTOR_HANDLE SourceTextures[] =

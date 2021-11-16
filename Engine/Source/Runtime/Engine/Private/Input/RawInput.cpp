@@ -148,9 +148,10 @@ void FRawInputSurveyer::Update( float DeltaTime )
 	}
 #endif
 
+	const float kMouseSmoothing = 0.0018f;
 	FVector2 MouseMoveDelta = m_Mouse.GetMoveDelta();
-	SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * 0.0018f );
-	SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * -0.0018f );
+	SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * kMouseSmoothing );
+	SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * kMouseSmoothing );
 
 	float MouseVerticalScrollDelta = m_Mouse.GetVerticalScrollDelta();
 	if (MouseVerticalScrollDelta > 0)

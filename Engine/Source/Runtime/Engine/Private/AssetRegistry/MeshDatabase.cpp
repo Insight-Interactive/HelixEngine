@@ -2,9 +2,6 @@
 
 #include "AssetRegistry/MeshDatabase.h"
 
-#include "FileSystem.h"
-#include "JsonUtility.h"
-
 
 FMeshDatabase::FMeshDatabase()
 	: FDatabaseInterface("Mesh Database")
@@ -17,23 +14,31 @@ FMeshDatabase::~FMeshDatabase()
 
 }
 
-void FMeshDatabase::Initialize( const Char* MeshDatabaseFile )
+void FMeshDatabase::Deserialize( const ReadContext& Value )
 {
-	// Load the mesh cache.
-	rapidjson::Document JsonDoc;
-	FileRef JsonSource( MeshDatabaseFile, FUM_Read, CM_Text );
-	JsonUtility::LoadDocument( JsonSource, JsonDoc );
-	if (JsonDoc.IsObject())
+	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
+		itr != Value.MemberEnd(); ++itr)
 	{
-		for (rapidjson::Value::ConstMemberIterator itr = JsonDoc.MemberBegin();
-			itr != JsonDoc.MemberEnd(); ++itr)
-		{
-			String MeshName = itr->name.GetString();
-			String MeshPath = itr->value.GetString();
-			HE_LOG( Log, TEXT( "Loading material into database: %s with path %s" ), CharToTChar( MeshName ), CharToTChar( MeshPath ) );
-			m_Data[MeshName] = MeshPath;
-		}
+		const Char* MeshGuidStr = itr->name.GetString();
+		FGUID MeshGUID = FGUID::CreateFromString( MeshGuidStr );
+		String MeshPath = itr->value.GetString();
+		HE_LOG( Log, TEXT( "Loading mesh (GUID: %s) into database with path %s" ), CharToTChar( MeshGuidStr ), CharToTChar( MeshPath ) );
+
+		m_Data[MeshGUID] = MeshPath;
 	}
+}
+
+void FMeshDatabase::Serialize( WriteContext& Writer )
+{
+	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
+	{
+		Writer.Key( Iter->first.ToString().CStr() );
+		Writer.String( Iter->second.c_str() );
+	}
+}
+
+void FMeshDatabase::Initialize()
+{
 }
 
 void FMeshDatabase::UnInitialize()
@@ -51,7 +56,8 @@ void FMeshDatabase::SerializeToFile_Implementation( const Char* Filepath )
 	{
 		for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 		{
-			Writer.Key( Iter->first.c_str() );
+			GUIDString GuidStr = Iter->first.ToString();
+			Writer.Key( (const char*)GuidStr.CStr() );
 			Writer.String( Iter->second.c_str() );
 		}
 	}

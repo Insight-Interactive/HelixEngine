@@ -1,10 +1,11 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "GeometryBufferManagerD3D12.h"
-#include "ICommandManager.h"
+#include "GeometryBufferManager.h"
+#include "CommandManager.h"
 
 
-VertexBufferUID FGeometryBufferManagerD3D12::AllocateVertexBuffer()
+VertexBufferUID FGeometryBufferManager::AllocateVertexBuffer()
 {
 	ScopedCriticalSection Guard( m_VertexBufferGuard );
 
@@ -17,7 +18,7 @@ VertexBufferUID FGeometryBufferManagerD3D12::AllocateVertexBuffer()
 	return NewUID;
 }
 
-IndexBufferUID FGeometryBufferManagerD3D12::AllocateIndexBuffer()
+IndexBufferUID FGeometryBufferManager::AllocateIndexBuffer()
 {
 	ScopedCriticalSection Guard( m_IndexBufferGuard );
 
@@ -29,25 +30,26 @@ IndexBufferUID FGeometryBufferManagerD3D12::AllocateIndexBuffer()
 	return NewUID;
 }
 
-void FGeometryBufferManagerD3D12::DeAllocateVertexBuffer( VertexBufferUID& UID )
+void FGeometryBufferManager::DeAllocateVertexBuffer( VertexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_VERTEX_BUFFER_HANDLE );
 
 	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGpu();
+	GCommandManager.IdleGpu();
 
 	m_VertexBufferLUT.erase( UID );
 	UID = HE_INVALID_VERTEX_BUFFER_HANDLE;
 }
 
-void FGeometryBufferManagerD3D12::DeAllocateIndexBuffer( IndexBufferUID& UID )
+void FGeometryBufferManager::DeAllocateIndexBuffer( IndexBufferUID& UID )
 {
 	HE_ASSERT( UID != HE_INVALID_INDEX_BUFFER_HANDLE );
 	
 	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGpu();
+	GCommandManager.IdleGpu();
 
 	m_IndexBufferLUT.erase( UID );
 	UID = HE_INVALID_INDEX_BUFFER_HANDLE;
 }
 
+#endif // R_WITH_D3D12

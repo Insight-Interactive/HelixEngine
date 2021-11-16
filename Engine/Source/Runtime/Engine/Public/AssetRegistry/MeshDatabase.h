@@ -8,8 +8,11 @@ class FMeshDatabase : public FDatabaseInterface
 public:
 	FMeshDatabase();
 	virtual ~FMeshDatabase();
-	
-	virtual void Initialize( const Char* MeshDatabaseFile ) override;
+
+	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( WriteContext& Writer ) override;
+
+	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 	
 protected:

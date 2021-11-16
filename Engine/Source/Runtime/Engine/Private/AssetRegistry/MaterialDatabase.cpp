@@ -1,8 +1,7 @@
 #include "EnginePCH.h"
 
 #include "AssetRegistry/MaterialDatabase.h"
-#include "FileSystem.h"
-#include "JsonUtility.h"
+#include "..\..\Public\AssetRegistry\MaterialDatabase.h"
 
 
 FMaterialDatabase::FMaterialDatabase()
@@ -14,23 +13,31 @@ FMaterialDatabase::~FMaterialDatabase()
 {
 }
 
-void FMaterialDatabase::Initialize( const Char* MaterialDatabaseFile )
+void FMaterialDatabase::Deserialize( const ReadContext& Value )
 {
-	// Load the texture cache.
-	rapidjson::Document JsonDoc;
-	FileRef JsonSource( MaterialDatabaseFile, FUM_Read, CM_Text );
-	JsonUtility::LoadDocument( JsonSource, JsonDoc );
-	if (JsonDoc.IsObject())
+	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
+		itr != Value.MemberEnd(); ++itr)
 	{
-		for (rapidjson::Value::ConstMemberIterator itr = JsonDoc.MemberBegin();
-			itr != JsonDoc.MemberEnd(); ++itr)
-		{
-			String MatName = itr->name.GetString();
-			String MatPath = itr->value.GetString();
-			HE_LOG( Log, TEXT( "Loading material into database: %s with path %s" ), CharToTChar( MatName ), CharToTChar( MatPath ) );
-			m_Data[MatName] = MatPath;
-		}
+		const Char* MaterialGuidStr = itr->name.GetString();
+		FGUID MaterialGUID = FGUID::CreateFromString( MaterialGuidStr );
+		String MaterialPath = itr->value.GetString();
+		HE_LOG( Log, TEXT( "Loading material (GUID: %s) into database with path %s" ), CharToTChar( MaterialGuidStr ), CharToTChar( MaterialPath ) );
+
+		m_Data[MaterialGUID] = MaterialPath;
 	}
+}
+
+void FMaterialDatabase::Serialize( WriteContext& Writer )
+{
+	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
+	{
+		Writer.Key( Iter->first.ToString().CStr() );
+		Writer.String( Iter->second.c_str() );
+	}
+}
+
+void FMaterialDatabase::Initialize()
+{
 }
 
 void FMaterialDatabase::UnInitialize()
@@ -48,7 +55,8 @@ void FMaterialDatabase::SerializeToFile_Implementation( const Char* Filepath )
 	{
 		for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 		{
-			Writer.Key( Iter->first.c_str() );
+			GUIDString GuidStr = Iter->first.ToString();
+			Writer.Key( (const char*)GuidStr.CStr() );
 			Writer.String( Iter->second.c_str() );
 		}
 	}

@@ -5,6 +5,7 @@
 
 #include "World/CameraManager.h"
 #include "AssetRegistry/SerializeableInterface.h"
+#include "World/Scene.h"
 
 
 class HLevel;
@@ -25,7 +26,7 @@ class HWorld : public HObject, public FSerializeableInterface
 	using Super = HObject;
 public:
 	HWorld();
-	~HWorld();
+	virtual ~HWorld();
 
 	void Initialize( const Char* LevelURL );
 	void Flush();
@@ -41,6 +42,7 @@ public:
 	void SetCurrentSceneRenderCamera(HCameraComponent* pCamera);
 	void SetViewport( FViewportContext* pViewport );
 
+	HScene* GetScene();
 	HLevel* GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
@@ -62,6 +64,7 @@ protected:
 
 protected:
 	HLevel* m_pLevel;
+	HScene m_Scene;
 	APlayerCharacter* m_pPlayerCharacter;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
 	String m_Filepath;
@@ -77,42 +80,47 @@ protected:
 // Inline function implementations
 //
 
-inline HCameraManager* HWorld::GetCameraManager()
+FORCEINLINE HScene* HWorld::GetScene()
+{
+	return &m_Scene;
+}
+
+FORCEINLINE HCameraManager* HWorld::GetCameraManager()
 {
 	return &m_CameraManager;
 }
 
-inline HCameraComponent* HWorld::GetCurrentSceneRenderCamera()
+FORCEINLINE HCameraComponent* HWorld::GetCurrentSceneRenderCamera()
 {
 	return m_RenderingCamera;
 }
 
-inline void HWorld::SetCurrentSceneRenderCamera(HCameraComponent* pCamera)
+FORCEINLINE void HWorld::SetCurrentSceneRenderCamera(HCameraComponent* pCamera)
 {
 	m_RenderingCamera = pCamera;
 }
 
-inline FViewportContext* HWorld::GetOwningViewport()
+FORCEINLINE FViewportContext* HWorld::GetOwningViewport()
 {
 	return m_pRenderingViewport;
 }
 
-inline void HWorld::SetViewport( FViewportContext* pViewport )
+FORCEINLINE void HWorld::SetViewport( FViewportContext* pViewport )
 {
 	m_pRenderingViewport = pViewport;
 }
 
-inline HLevel* HWorld::GetCurrentLevel()
+FORCEINLINE HLevel* HWorld::GetCurrentLevel()
 {
 	return m_pLevel;
 }
 
-inline void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
+FORCEINLINE void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
 {
 	m_PlayerCharacterRefs.push_back( pCharacter );
 }
 
-inline APlayerCharacter* HWorld::GetPlayerCharacter( uint32 Index )
+FORCEINLINE APlayerCharacter* HWorld::GetPlayerCharacter( uint32 Index )
 {
 	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
 	return m_PlayerCharacterRefs[Index];

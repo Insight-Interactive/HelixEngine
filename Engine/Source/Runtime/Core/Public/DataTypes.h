@@ -72,6 +72,7 @@
 // The max path for a string of characters (analogous to microsoft's MAX_PATH).
 #define HE_MAX_PATH						260
 #define HE_MAX(a, b)					( ((a) > (b)) ? (a) : (b) )
+#define HE_MIN(a, b)					( ((a) > (b)) ? (b) : (a) )
 #define HE_PRAGMA_DISABLE(PragmaCode, ...)			\
 		HE_PRAGMA (warning (push))					\
 		HE_PRAGMA (warning (disable : PragmaCode))	\
@@ -81,7 +82,6 @@
 #define HE_HeapAlloc(Size)				::malloc(Size)
 #define HE_HeapFree(HeapPtr)			::free(HeapPtr)
 #define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)
-
 
 
 //-----------------------------------
@@ -237,7 +237,50 @@ typedef std::stringstream TStringStream;
 
 #endif // _UNICODE
 
+#if HE_WINDOWS
+	/*
+		If the HRESULT fails a message box is presented to the user indicating the problem.
+	*/
+#	define ThrowIfFailedMsg(Hr, Message)														\
+	if( FAILED(Hr) )																			\
+	{																							\
+		WChar MsgBuffer[64];																	\
+		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));												\
+		::swprintf_s( MsgBuffer, L"HRESULT Failed: %u - %s", Hr, LONG_STR( Message ) );			\
+		System::CreateMessageBox( MsgBuffer, L"Error!", System::MessageDialogInput::MDI_Ok );	\
+		HE_ASSERT( false );																		\
+	}
 
+#	define ASSERT_SUCCEEDED(Hr)																\
+	if( !SUCCEEDED(hr) )																		\
+	{																							\
+		WChar MsgBuffer[64];																	\
+		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));												\
+		::swprintf_s( MsgBuffer, L"HRESULT Failed: %u", Hr );									\
+		System::CreateMessageBox( MsgBuffer, L"Error!", System::MessageDialogInput::MDI_Ok );	\
+		HE_ASSERT( false );																		\
+	}
+#endif
+
+
+//-----------------------------------
+//		System Text Manipulation
+//-----------------------------------
+//
+//
+#if _MSC_VER
+#	define HE_DISABLE_MSVC_WARNINGS				\
+	HE_PRAGMA ( warning ( push )	)			\
+	HE_PRAGMA ( warning ( disable : 26812) )	 // The enum type '' is unscoped.Prefer 'enum class' over 'enum'
+
+
+#	define HE_RESTORE_MSVC_WARNINGS \
+	HE_PRAGMA ( warning ( pop ) )		
+#else
+#	define HE_DISABLE_MSVC_WARNINGS
+#	define HE_RESTORE_MSVC_WARNINGS
+
+#endif
 
 
 #include "EnumHelper.h"

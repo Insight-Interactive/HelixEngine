@@ -7,7 +7,7 @@
 #include "Engine/Engine.h"
 
 
-APawn::APawn( HWorld* pWorld, const HName& Name )
+APawn::APawn( HWorld* pWorld, const HName& Name)
 	: AActor( pWorld, Name )
 	, m_CameraPitchSpeedMultiplier(kDefaultCameraPitchSpeedMultiplier)
 	, m_CameraYawSpeedMultiplier(kDefaultCameraYawSpeedMultiplier)

@@ -50,4 +50,6 @@ void DetailsPanel::PreviewActor( AActor* pActor )
 	ImGui::DragFloat( "Pos Z: ", &Values.z );
 
 	pActor->GetTransform().SetPosition( Values );
+
+	ImGui::Text( "Class Guid: %s", pActor->GetGuid().ToString().CStr() );
 }

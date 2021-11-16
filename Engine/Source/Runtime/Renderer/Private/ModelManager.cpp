@@ -5,7 +5,7 @@
 
 #include "FileSystem.h"
 #include "StringHelper.h"
-#include "AssetRegistry/MeshAsset.h"
+#include "AssetRegistry/Asset.h"
 #include "VertexLayouts.h"
 #include "Hash.h"
 
@@ -40,9 +40,9 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	uint8* DataHead = Memory.GetBufferPointer();
 
 	// Copy the header information.
-	const FMeshAssetHeader& MeshHeader = *(FMeshAssetHeader*)DataHead;
+	const HMeshAsset::HMeshAssetHeader& MeshHeader = *(HMeshAsset::HMeshAssetHeader*)DataHead;
 	HE_ASSERT( MeshHeader.Type == AT_Mesh ); // Trying to parse an asset that is not a mesh!
-	DataHead += kMeshHeaderSizeInBytes;		// Now pointing to first vertex in the vertex buffer.
+	DataHead += HMeshAsset::kMeshHeaderSizeInBytes;		// Now pointing to first vertex in the vertex buffer.
 
 	// Get the vertex data.
 	const uint32 VertexBufferSize = MeshHeader.NumVerticies * MeshHeader.VertexSizeInBytes;
@@ -63,9 +63,10 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 		FirstIndex, IndexBufferSize, MeshHeader.NumIndices
 	);
 	pMesh->SetLoadCompleted( true );
-	m_ModelCache[MeshName].reset( pMesh );
 
-	return m_ModelCache[MeshName]/*.get()*/;
+	ScopedCriticalSection Guard( m_MapMutex );
+	m_ModelCache[MeshName].reset( pMesh );
+	return m_ModelCache[MeshName];
 }
 
 StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
@@ -80,7 +81,7 @@ StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::strin
 	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );
 
+	ScopedCriticalSection Guard( m_MapMutex );
 	m_ModelCache[Name].reset( pMesh );
-
 	return m_ModelCache[Name];
 }

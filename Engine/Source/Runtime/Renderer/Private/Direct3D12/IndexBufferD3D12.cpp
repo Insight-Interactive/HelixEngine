@@ -1,15 +1,15 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "IndexBufferD3D12.h"
-#include "IRenderDevice.h"
+#include "IndexBuffer.h"
+#include "RenderDevice.h"
 #include "RendererCore.h"
-#include "ICommandContext.h"
-#include "../D3DCommon/D3DCommon.h"
+#include "CommandContext.h"
 
 
-void FIndexBufferD3D12::Create(const WChar* Name, uint32 IndexDataSize, void* pIndices)
+void FIndexBuffer::Create(const WChar* Name, uint32 IndexDataSize, void* pIndices)
 {
-	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
+	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
 	HE_ASSERT( pID3D12Device != NULL );
 	auto ResDesc = CD3DX12_RESOURCE_DESC::Buffer(IndexDataSize);
 	auto HeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
@@ -23,7 +23,7 @@ void FIndexBufferD3D12::Create(const WChar* Name, uint32 IndexDataSize, void* pI
 		D3D12_RESOURCE_STATE_COPY_DEST,
 		nullptr,
 		IID_PPV_ARGS(&m_pID3D12Resource));
-	ThrowIfFailedMsg(hr, TEXT("Failed to create commited resource!"));
+	ThrowIfFailedMsg(hr, "Failed to create commited resource!");
 #if R_DEBUG_GPU_RESOURCES
 	m_pID3D12Resource->SetName(Name);
 #endif // IE_DEBUG
@@ -31,16 +31,16 @@ void FIndexBufferD3D12::Create(const WChar* Name, uint32 IndexDataSize, void* pI
 
 	// Initialize Upload Heap.
 	//
-	FGpuResourceD3D12 UploadHeap;
+	FGpuResource UploadHeap;
 	hr = pID3D12Device->CreateCommittedResource(
 		&HeapProps,
 		D3D12_HEAP_FLAG_NONE,
 		&ResDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(UploadHeap.GetAddressOf())
+		IID_PPV_ARGS( (ID3D12Resource**)UploadHeap.GetAddressOf() )
 	);
-	ThrowIfFailedMsg(hr, TEXT("Failed to create upload heap for vertex buffer!"));
+	ThrowIfFailedMsg(hr, "Failed to create upload heap for vertex buffer!");
 
 	FSubResourceData vertexData = {};
 	vertexData.pData = pIndices;
@@ -60,3 +60,5 @@ void FIndexBufferD3D12::Create(const WChar* Name, uint32 IndexDataSize, void* pI
 	m_D3D12IndexBufferView.Format = (DXGI_FORMAT)F_R32_UINT;
 	m_D3D12IndexBufferView.SizeInBytes = IndexDataSize;
 }
+
+#endif // R_WITH_D3D12

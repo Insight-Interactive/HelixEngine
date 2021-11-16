@@ -56,6 +56,7 @@ project ("HelixEd")
 	defines
 	{
 		"HELIXED_MODULE=1",
+		"R_WITH_D3D12=1",
 	}
 
 	flags

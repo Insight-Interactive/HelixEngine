@@ -16,11 +16,11 @@ struct SP_PSOutput
 
 // Samplers
 //
-SamplerState g_LinearWrapSampler : register(s0);
+HE_DECLARE_SAMPLERSTATE( LinearWrapSampler, 0);
 
 // Textures
 //
-TextureCube g_SkyMap : register(t0);
+HE_DECLARE_TEXTURECUBE( SkyMap, 0);
 
 //
 // Entry Point
@@ -29,7 +29,7 @@ SP_PSOutput main(SP_PSInput Input)
 {
     SP_PSOutput Output;
     
-    float3 Color = g_SkyMap.Sample(g_LinearWrapSampler, Input.UVs).rgb;
+    float3 Color = SkyMap.Sample(LinearWrapSampler, Input.UVs).rgb;
     Output.FragColor = float4(Color, 1.f);
     
     return Output;

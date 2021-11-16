@@ -26,6 +26,19 @@
 #	include <ShlObj.h>		// File dialogs
 #	include <Shlwapi.h>		// IUnknown overrides
 #	include <Windowsx.h>
+#	include <wrl/client.h>
+#	include <rpc.h>
+
+#	pragma comment(lib, "rpcrt4.lib")
+
+#	if R_WITH_D3D12
+#		include <d3d12.h>
+#		ifdef NTDDI_WIN10_RS2
+#			include <dxgi1_6.h>
+#		else
+#			include <dxgi1_5.h>
+#		endif
+#endif
 
 //	Input
 // 
@@ -69,7 +82,12 @@
 
 #include "CoreFwd.h"
 #include "MathCore.h"
+#include "System.h"
+#include "FileSystem.h"
+#include "JsonUtility.h"
+#include "StringHelper.h"
 
+#include "GUID.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
 

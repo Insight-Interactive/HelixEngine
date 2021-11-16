@@ -57,6 +57,9 @@
     <ClInclude Include="Public\FrameTimer.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GUID.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Handle.h">
       <Filter>Public</Filter>
     </ClInclude>

@@ -11,8 +11,7 @@ class HSceneComponent : public HActorComponent
 	friend class AActor;
 	using Super = HActorComponent;
 public:
-	HSceneComponent( const HName& Name );
-	virtual ~HSceneComponent();
+	HE_COMPONENT_GENERATED_BODY( HSceneComponent )
 
 	FVector3 GetPosition() const;
 	FVector3 GetRotation() const;

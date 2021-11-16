@@ -13,10 +13,9 @@ struct GP_VSInput
 	float4 Color		: COLOR;
 	float2 UVs			: UVS;
 };
-struct GP_PSInput
+struct GP_PSInput // VS Output
 {
 	float4 Position		: SV_POSITION;
-	float3 WorldPos		: WORLDPOS;
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float3 BiTangent	: BITANGENT;
@@ -29,7 +28,6 @@ struct GP_PSOutput
 {
 	float4 Albedo	: SV_Target0;
 	float4 Normal	: SV_Target1;
-	float4 Position : SV_Target2;
 };
 
 

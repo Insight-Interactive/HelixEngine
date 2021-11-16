@@ -3,7 +3,10 @@
 #include "Engine/Window.h"
 
 #include "ModelManager.h"
-#include "ITextureManager.h"
+#include "TextureManager.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
+
 
 class FCommandContext;
 class FRootSignature;
@@ -34,8 +37,8 @@ protected:
 
 	// Rendering Resources.
 	//
-	FRootSignature* m_pRootSig;
-	FPipelineState* m_pPipeline;
+	FRootSignature m_RootSig;
+	FPipelineState m_Pipeline;
 	StaticMeshGeometryRef m_ScreenQuadRef;
 	HTextureRef m_SplashTexture;
 };

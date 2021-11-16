@@ -1,10 +1,12 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "PixelBufferD3D12.h"
-#include "RenderDeviceD3D12.h"
+#include "PixelBuffer.h"
+
+#include "RenderDevice.h"
 
 
-FResourceDesc FPixelBufferD3D12::DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags)
+FResourceDesc FPixelBuffer::DescribeTex2D(uint32 Width, uint32 Height, uint32 DepthOrArraySize, uint32 NumMips, EFormat Format, uint32 Flags)
 {
 	m_Width = Width;
 	m_Height = Height;
@@ -27,11 +29,11 @@ FResourceDesc FPixelBufferD3D12::DescribeTex2D(uint32 Width, uint32 Height, uint
 	return Desc;
 }
 
-void FPixelBufferD3D12::AssociateWithResource(FRenderDevice* pDevice, const WChar* Name, void* pResource, EResourceState CurrentState)
+void FPixelBuffer::AssociateWithResource(FRenderDevice& Device, const WChar* DebugName, void* pResource, EResourceState CurrentState)
 {
 	HE_ASSERT(pResource != NULL);
 
-	ID3D12Resource* pD3D12Resource = RCast<ID3D12Resource*>(pResource);
+	ID3D12Resource* pD3D12Resource = (ID3D12Resource*)pResource;
 	m_pID3D12Resource.Attach(pD3D12Resource);
 
 	D3D12_RESOURCE_DESC Desc = pD3D12Resource->GetDesc();
@@ -44,18 +46,13 @@ void FPixelBufferD3D12::AssociateWithResource(FRenderDevice* pDevice, const WCha
 	m_Format = (EFormat)Desc.Format;
 
 #if HE_DEBUG
-	pD3D12Resource->SetName(Name);
+	pD3D12Resource->SetName( DebugName );
 #endif // IE_DEBUG
 }
 
-void FPixelBufferD3D12::CreateTextureResource(FRenderDevice* pDevice, const WChar* Name, const FResourceDesc& FResourceDesc, const FClearValue& ClearValue)
+void FPixelBuffer::CreateTextureResource(FRenderDevice& Device, const WChar* DebugName, const FResourceDesc& FResourceDesc, const FClearValue& ClearValue, const EResourceState& InitialState )
 {
-	HE_ASSERT(pDevice != NULL);
-
-	FRenderDeviceD3D12* pD3D12Device = DCast<FRenderDeviceD3D12*>(pDevice);
-	HE_ASSERT(pD3D12Device != NULL);
-
-	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(pD3D12Device->GetNativeDevice());
+	ID3D12Device* pID3D12Device = (ID3D12Device*)Device.GetNativeDevice();
 	HE_ASSERT(pID3D12Device != NULL);
 
 	D3D12_CLEAR_VALUE D3D12ClearVal;
@@ -71,18 +68,19 @@ void FPixelBufferD3D12::CreateTextureResource(FRenderDevice* pDevice, const WCha
 			&HeapProps,
 			D3D12_HEAP_FLAG_NONE,
 			RCast<const D3D12_RESOURCE_DESC*>(&FResourceDesc),
-			(D3D12_RESOURCE_STATES)RS_Common,
+			(D3D12_RESOURCE_STATES)InitialState,
 			&D3D12ClearVal,
 			IID_PPV_ARGS(&m_pID3D12Resource)
 		);
-		ThrowIfFailedMsg(hr, TEXT("Failed to create committed GPU resource!"));
+		ThrowIfFailedMsg(hr, "Failed to create committed GPU resource!");
 	}
 	
-	m_UsageState = RS_Common;
+	m_UsageState = InitialState;
 	m_GpuVirtualAddress = HE_D3D12_GPU_VIRTUAL_ADDRESS_NULL;
 
 #if R_DEBUG_GPU_RESOURCES
-	m_pID3D12Resource->SetName(Name);
+	m_pID3D12Resource->SetName( DebugName );
 #endif
 }
 
+#endif // R_WITH_D3D12

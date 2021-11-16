@@ -3,36 +3,42 @@
 
 #include "Renderer/Material.h"
 #include "RendererCore.h"
-#include "StringHelper.h"
-#include "ICommandContext.h"
-#include "IConstantBufferManager.h"
+#include "CommandContext.h"
+#include "ConstantBuffer.h"
 #include "Renderer/ConstantBufferStructures.h"
 #include "AssetRegistry/AssetDatabase.h"
+#include "CommonStructHelpers.h"
+#include "Renderer/SceneRenderer.h"
 
-#include "FileSystem.h"
-#include "JsonUtility.h"
+
+/* static */ MaterialID FMaterial::SNextMaterialID = 0;
 
 
-void HMaterial::Initialize()
+FMaterial::FMaterial()
+	: m_UID( HE_INVALID_MATERIAL_ID )
+	, m_BlendMode( MBM_Opaque )
+	, m_Domain( MD_Surface )
+	, m_ShadingModel( SM_DefaultLit )
+	, m_IsTwoSided( false )
 {
-	// Init constant buffers
-	GConstantBufferManager->CreateConstantBuffer(TEXT("Material Params"), &m_pConstantsCB, sizeof(MaterialConstantsCBData));
+	SetMaterialID( SNextMaterialID++ );
+	m_ConstantsCB.Create( L"Material Params" );
 }
 
-void HMaterial::UnInitialize()
+FMaterial::~FMaterial()
 {
-	GConstantBufferManager->DestroyConstantBuffer(m_pConstantsCB->GetUID());
+	m_ConstantsCB.Destroy();
 }
 
-void HMaterial::Bind(FCommandContext& GfxContext)
+void FMaterial::Bind(FCommandContext& GfxContext)
 {
-	switch (m_Type)
+	switch (GetShadingModel())
 	{
-	case MT_Opaque:
-		BindOpaque(GfxContext);
+	case SM_DefaultLit:
+		BindDefaultLit(GfxContext);
 		break;
-	case MT_Translucent:
-		BindTranslucent(GfxContext);
+	case SM_Foliage:
+		BindFoliage(GfxContext);
 		break;
 	default:
 		HE_ASSERT(false); // Invalid material type provided when binding for draw.
@@ -40,133 +46,169 @@ void HMaterial::Bind(FCommandContext& GfxContext)
 	}
 }
 
-void HMaterial::LoadFromFile( const String& Filepath )
+void FMaterial::LoadFromFile( const String& Filepath )
 {
+	SetDebugName(StringHelper::GetFilenameFromDirectoryNoExtension(Filepath));
+
 	rapidjson::Document JsonDoc;
 	FileRef JsonSource( Filepath.c_str(), FUM_Read, CM_Text );
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
-		const rapidjson::Value& MatRoot = JsonDoc["Material"];
-		// Loop over the actor's properties.
-		for (uint32 i = 0; i < MatRoot.Size(); ++i)
+		enum
 		{
-			const rapidjson::Value& MaterialParam = MatRoot[i];
-			
-			Char TextureNameBuffer[32];
-			
-			JsonUtility::GetString( MaterialParam, "AlbedoTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
-			SetAlbedoTexture( FAssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
+			kParameters	= 0,
+			kResources	= 1,
+			kShaders	= 2,
+		};
+		const rapidjson::Value& MaterialRoot = JsonDoc["Material"];
 
-			JsonUtility::GetString( MaterialParam, "NormalTexture", TextureNameBuffer, sizeof( TextureNameBuffer ) );
-			SetNormalTexture( FAssetDatabase::GetInstance()->GetTexture( TextureNameBuffer ) );
-		}
+		
+		// Load the material's parameters.
+		const rapidjson::Value& Parameters = MaterialRoot[kParameters];
+	
+		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EMaterialBlendMode ), (int32&)m_BlendMode );
+		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EMaterialDomain ), (int32&)m_Domain );
+		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EShadingModel ), (int32&)m_ShadingModel );
+		JsonUtility::GetBoolean( Parameters, HE_STRINGIFY( IsTwoSided ), m_IsTwoSided );
+
+
+		// Load the material's resources.
+		const rapidjson::Value& Resources = MaterialRoot[kResources];
+
+		// Load material textures.
+		Char TextureGuidBuffer[64];
+		ZeroMemory( TextureGuidBuffer, sizeof( TextureGuidBuffer ) );
+		JsonUtility::GetString( Resources, "AlbedoTexture", TextureGuidBuffer, sizeof( TextureGuidBuffer ) );
+		FGUID AlbedoGuid = FGUID::CreateFromString( TextureGuidBuffer );
+		SetAlbedoTexture( FAssetDatabase::GetInstance()->GetTexture( AlbedoGuid ) );
+
+		ZeroMemory( TextureGuidBuffer, sizeof( TextureGuidBuffer ) );
+		JsonUtility::GetString( Resources, "NormalTexture", TextureGuidBuffer, sizeof( TextureGuidBuffer ) );
+		FGUID NormalGuid = FGUID::CreateFromString( TextureGuidBuffer );
+		SetNormalTexture( FAssetDatabase::GetInstance()->GetTexture( NormalGuid ) );
+
+
+		// Load the material's shaders.
+		const rapidjson::Value& Shaders = MaterialRoot[kShaders];
+
+		Char ShaderPathBuffer[HE_MAX_PATH];
+		ZeroMemory( ShaderPathBuffer, sizeof( ShaderPathBuffer ) );
+		JsonUtility::GetString( Shaders, "VertexShader", ShaderPathBuffer, sizeof( ShaderPathBuffer ) );
+		m_VertexShaderGuid = FGUID::CreateFromString( ShaderPathBuffer );
+
+		ZeroMemory( ShaderPathBuffer, sizeof( ShaderPathBuffer ) );
+		JsonUtility::GetString( Shaders, "PixelShader", ShaderPathBuffer, sizeof( ShaderPathBuffer ) );
+		m_PixelShaderGuid = FGUID::CreateFromString( ShaderPathBuffer );
+
+		BuildPipelineState();
 	}
 }
 
-void HMaterial::CreateFromMemory(DataBlob Memory)
-{
-	Initialize();
-	return;
-	uint8* Data = Memory.GetBufferPointer();
-
-	// 'A'
-	Data++;
-	// Albedo Str Len
-	uint8 AlbedoStrLen = *Data;
-	char* AlbedoStr = (char*)_malloca(AlbedoStrLen + 1); // Allocate the string to store the path + null char
-	Data++;
-
-	// N
-	Data++;
-	uint8 NormalStrLen = *Data;
-	char* NormalStr = (char*)_malloca(NormalStrLen + 1); // Allocate the string to store the path + null char
-	Data++;
-
-	memcpy(AlbedoStr, Data, AlbedoStrLen);
-	AlbedoStr[AlbedoStrLen] = '\0';
-	Data += AlbedoStrLen;
-
-	memcpy(NormalStr, Data, NormalStrLen);
-	NormalStr[NormalStrLen] = '\0';
-
-	// Load the resources.
-	m_AlbedoTexture = GTextureManager->LoadTexture(AlbedoStr, DT_Magenta2D, false);
-	m_NormalTexture = GTextureManager->LoadTexture(NormalStr, DT_Magenta2D, false);
-
-
-	Initialize();
-}
-
-void HMaterial::WriteToFile()
-{
-	// --------
-	//  Header
-	// --------
-	// A # -> Key String and Size in Bytes
-	// N # -> Key String and Size in Bytes
-	// R # -> Key String and Size in Bytes
-	// M # -> Key String and Size in Bytes
-	// Albedo tex path
-	// Normal tex path
-	// Roughness tex path
-	// Metallic tex path
-
-
-	// Set the Length of the textures file path if it is valid.
-#define SetTexturePathLength(TexPtr, DstPtr) \
-		if (TexPtr.IsValid())\
-			*DstPtr = (uint8)TexPtr.GetCacheKey().length();\
-		else\
-			*DstPtr = 0;\
-
-		// Tex specifier + Int to store path str length + String lengths
-	size_t DataLengths = 2 + 2 + m_AlbedoTexture.GetCacheKey().length() + m_NormalTexture.GetCacheKey().length();
-
-	char* pFileMem = (char*)_alloca(DataLengths);
-	void* pMemStart = pFileMem;
-	ZeroMemory(pFileMem, DataLengths);
-
-	// Write the header.
-	*pFileMem = 'A'; pFileMem++;
-	SetTexturePathLength(m_AlbedoTexture, pFileMem) pFileMem++;
-	*pFileMem = 'N'; pFileMem++;
-	SetTexturePathLength(m_NormalTexture, pFileMem) pFileMem++;
-
-	// Wrtie the data.
-	String Albedo = m_AlbedoTexture.GetCacheKey();
-	memcpy(pFileMem, Albedo.c_str(), Albedo.length());
-	pFileMem += Albedo.length();
-
-	String Normal = m_NormalTexture.GetCacheKey();
-	memcpy(pFileMem, Normal.c_str(), Normal.length());
-
-
-	FILE* pFile = NULL;
-	fopen_s(&pFile, "M_RustedMetal.ieMat", "wb");
-	fwrite(pMemStart, DataLengths, 1, pFile);
-
-	fclose(pFile);
-
-#undef SetTexturePathLength
-
-}
-
-void HMaterial::BindOpaque(FCommandContext& GfxContext)
+void FMaterial::BindDefaultLit(FCommandContext& GfxContext)
 {
 	// Set constants.
-	MaterialConstantsCBData* pMat = m_pConstantsCB->GetBufferPointer<MaterialConstantsCBData>();
-	pMat->Color = m_ConstantsData.Color;
-	GfxContext.SetGraphicsConstantBuffer(kMaterial, m_pConstantsCB);
+	GfxContext.SetGraphicsRootSignature( m_RootSig );
+	GfxContext.SetPipelineState( m_Pipeline );
+	GfxContext.SetGraphicsConstantBuffer( kMaterial, m_ConstantsCB );
 
 	// Set Textures.
 	{
-		GfxContext.SetTexture(GRP_MaterialTextureAlbedo, m_AlbedoTexture);
-		GfxContext.SetTexture(GRP_MaterialTextureNormal, m_NormalTexture);
+		if (m_AlbedoTexture.IsValid())
+			GfxContext.SetTexture( GRP_MaterialTextureAlbedo, m_AlbedoTexture );
+
+		if (m_NormalTexture.IsValid())
+			GfxContext.SetTexture( GRP_MaterialTextureNormal, m_NormalTexture );
 	}
 }
 
-void HMaterial::BindTranslucent(FCommandContext& GfxContext)
+void FMaterial::BindFoliage(FCommandContext& GfxContext)
 {
 	// TODO Forward transparent pass
+	// Set constants.
+	GfxContext.SetGraphicsRootSignature( m_RootSig );
+	GfxContext.SetPipelineState( m_Pipeline );
+	GfxContext.SetGraphicsConstantBuffer( kMaterial, m_ConstantsCB );
+
+	// Set Textures.
+	{
+		if (m_AlbedoTexture.IsValid())
+			GfxContext.SetTexture( GRP_MaterialTextureAlbedo, m_AlbedoTexture );
+
+		if (m_NormalTexture.IsValid())
+			GfxContext.SetTexture( GRP_MaterialTextureNormal, m_NormalTexture );
+	}
+}
+
+void FMaterial::BuildPipelineState()
+{
+	WString RootSigName = L"";
+#if HE_DEBUG
+	RootSigName += L"Material RootSignature - ";
+	RootSigName += StringHelper::UTF8ToUTF16(GetDebugName());
+#endif
+
+	m_RootSig.Reset( 6, 1 );
+	m_RootSig.InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
+	// Common
+	m_RootSig[kSceneConstants].InitAsConstantBuffer( kSceneConstants, SV_All );
+	m_RootSig[kMeshWorld].InitAsConstantBuffer( kMeshWorld, SV_Vertex );
+	m_RootSig[kMaterial].InitAsConstantBuffer( kMaterial, SV_Pixel );
+	m_RootSig[kLights].InitAsConstantBuffer( kLights, SV_Pixel );
+	// Pipeline
+	// TODO: These texture slots should be generated dynamically via shader serialization.
+	// Albedo
+	m_RootSig[GRP_MaterialTextureAlbedo].InitAsDescriptorTable( 1, SV_Pixel );
+	m_RootSig[GRP_MaterialTextureAlbedo].SetTableRange( 0, DRT_ShaderResourceView, 0, 1 );
+	// Normal
+	m_RootSig[GRP_MaterialTextureNormal].InitAsDescriptorTable( 1, SV_Pixel );
+	m_RootSig[GRP_MaterialTextureNormal].SetTableRange( 0, DRT_ShaderResourceView, 1, 1 );
+	m_RootSig.Finalize(RootSigName.c_str(), RSF_AllowInputAssemblerLayout);
+
+	// Create the pipeline state.
+	//
+	DataBlob VSShader = FileSystem::ReadRawData( FAssetDatabase::GetInstance()->LookupShaderPath( m_VertexShaderGuid ).c_str() );
+	DataBlob PSShader = FileSystem::ReadRawData( FAssetDatabase::GetInstance()->LookupShaderPath( m_PixelShaderGuid ).c_str() );
+
+	FPipelineStateDesc PSODesc = { 0 };
+	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
+	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
+	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
+	PSODesc.pRootSignature = &m_RootSig;
+	PSODesc.DepthStencilState = CDepthStencilStateDesc();
+	FBlendDesc BlendDesc = CBlendDesc();
+	if (GetShadingModel() == SM_Foliage)
+	{
+		for (uint32 i = 0; i < FSceneRenderer::GetNumGBuffers(); ++i)
+		{
+			BlendDesc.RenderTarget[i].BlendEnable = true;
+			BlendDesc.RenderTarget[i].SourceBlend = B_SourceAlpha;
+			BlendDesc.RenderTarget[i].DestBlend = B_InvSourceAlpha;
+			BlendDesc.RenderTarget[i].BlendOp = BO_Add;
+
+			BlendDesc.RenderTarget[i].SourceBlendAlpha = B_One;
+			BlendDesc.RenderTarget[i].DestBlendAlpha = B_Zero;
+			BlendDesc.RenderTarget[i].BlendOpAlpha = BO_Add;
+
+			BlendDesc.RenderTarget[i].RenderTargetWriteMask = CWE_All;
+		}
+	}
+	PSODesc.BlendState = BlendDesc;
+	FRasterizerDesc RasterDesc = CRasterizerDesc();
+	if (GetIsTwoSided())
+	{
+		RasterDesc.CullMode = CM_None;
+	}
+	PSODesc.RasterizerDesc = RasterDesc;
+	PSODesc.SampleMask = UINT_MAX;
+	PSODesc.PrimitiveTopologyType = PTT_Triangle;
+	PSODesc.NumRenderTargets = FSceneRenderer::GetNumGBuffers();
+	for (uint32 i = 0; i < FSceneRenderer::GetNumGBuffers(); ++i)
+	{
+		PSODesc.RTVFormats[i] = FSceneRenderer::GetGBufferFormatForBuffer( (FDeferredShadingTech::EGBuffers)i );
+	}
+	PSODesc.DSVFormat = FSceneRenderer::GetSceneDepthBufferForamt();
+	PSODesc.SampleDesc = { 1, 0 };
+	m_Pipeline.Initialize( PSODesc );
 }

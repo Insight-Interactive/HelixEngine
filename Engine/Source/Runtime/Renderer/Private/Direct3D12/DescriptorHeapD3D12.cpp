@@ -1,22 +1,23 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "DescriptorHeapD3D12.h"
+#include "DescriptorHeap.h"
 
 #include "RendererCore.h"
-#include "IRenderDevice.h"
+#include "RenderDevice.h"
 
 //
 // DescriptorHeap implementation
 //
 
-void FDescriptorHeapD3D12::Create(const WChar* Name, EResourceHeapType Type, uint32 MaxCount)
+void FDescriptorHeap::Create(const WChar* Name, EResourceHeapType Type, uint32 MaxCount)
 {
     m_HeapDesc.Type = (D3D12_DESCRIPTOR_HEAP_TYPE)Type;
     m_HeapDesc.NumDescriptors = MaxCount;
     m_HeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
     m_HeapDesc.NodeMask = 1;
 
-    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GDevice->GetNativeDevice());
+    ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
     HE_ASSERT(pID3D12Device != NULL);
 
     pID3D12Device->CreateDescriptorHeap(&m_HeapDesc, IID_PPV_ARGS(m_Heap.ReleaseAndGetAddressOf()));
@@ -31,22 +32,20 @@ void FDescriptorHeapD3D12::Create(const WChar* Name, EResourceHeapType Type, uin
     m_NumFreeDescriptors = m_HeapDesc.NumDescriptors;
     FCpuDescriptorHandle CpuHandle{ m_Heap->GetCPUDescriptorHandleForHeapStart().ptr };
     FGpuDescriptorHandle GpuHandle{ m_Heap->GetGPUDescriptorHandleForHeapStart().ptr };
-    m_FirstHandle = FDescriptorHandle(
-        CpuHandle,
-        GpuHandle);
+    m_FirstHandle = FDescriptorHandle(CpuHandle, GpuHandle);
     m_NextFreeHandle = m_FirstHandle;
 }
 
-FDescriptorHandle FDescriptorHeapD3D12::Alloc(uint32 Count)
+FDescriptorHandle FDescriptorHeap::Alloc(uint32 Count)
 {
-    HE_ASSERT(HasAvailableSpace(Count)); // Descriptor Heap out of space.  Increase heap size.
+    HE_ASSERT(HasAvailableSpace(Count)); // Descriptor Heap out of space. Increase heap size.
     FDescriptorHandle ret = m_NextFreeHandle;
     m_NextFreeHandle += Count * m_DescriptorSize;
     m_NumFreeDescriptors -= Count;
     return ret;
 }
 
-bool FDescriptorHeapD3D12::ValidateHandle(const FDescriptorHandle& DHandle) const
+bool FDescriptorHeap::ValidateHandle(const FDescriptorHandle& DHandle) const
 {
     if (DHandle.GetCpuPtr() < m_FirstHandle.GetCpuPtr() ||
         DHandle.GetCpuPtr() >= m_FirstHandle.GetCpuPtr() + m_HeapDesc.NumDescriptors * m_DescriptorSize)
@@ -58,3 +57,5 @@ bool FDescriptorHeapD3D12::ValidateHandle(const FDescriptorHandle& DHandle) cons
 
     return true;
 }
+
+#endif // R_WITH_D3D12

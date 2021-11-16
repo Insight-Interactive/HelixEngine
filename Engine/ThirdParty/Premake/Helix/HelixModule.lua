@@ -13,6 +13,15 @@ function heGetModulePublicDir( ModuleName )
     end
 end
 
+function heGetModuleClassesDir( ModuleName )
+    if ModuleName == "Game"
+    then
+        return heGetGameModuleRootDir() .. "Classes/";
+    else
+        return heGetRuntimeModuleRootDir() .. ModuleName .. "/Classes/";
+    end
+end
+
 function heGetThirdPartyModule( ModuleName )
     return heGetThirdPartyRootDir() .. ModuleName .. "/";
 end

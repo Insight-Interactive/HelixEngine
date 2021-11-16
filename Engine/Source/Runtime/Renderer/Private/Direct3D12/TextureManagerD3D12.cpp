@@ -1,40 +1,35 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "TextureManagerD3D12.h"
+#include "TextureManager.h"
 
 #include "RendererCore.h"
-#include "BackendCoreD3D12.h"
+#include "RendererCore.h"
 #include "FileSystem.h"
-#include "IRenderDevice.h"
+#include "RenderDevice.h"
 #include "StringHelper.h"
-
 #include "Utility/DDSTextureLoader.h"
 
 
-void FTextureManagerD3D12::Initialize()
+void FTextureManager::Initialize()
 {
     uint32 MagentaPixel = 0xFFFF00FF;
-    m_DefaultTextures[DT_Magenta2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &MagentaPixel);
+    GDefaultTextures[DT_Magenta2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &MagentaPixel);
     uint32 BlackOpaqueTexel = 0xFF000000;
-    m_DefaultTextures[DT_BlackOpaque2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &BlackOpaqueTexel);
+    GDefaultTextures[DT_BlackOpaque2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &BlackOpaqueTexel);
     uint32 BlackTransparentTexel = 0x00000000;
-    m_DefaultTextures[DT_BlackTransparent2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &BlackTransparentTexel);
+    GDefaultTextures[DT_BlackTransparent2D].Create2D( 4, 1, 1, F_R8G8B8A8_UNorm, &BlackTransparentTexel );
     uint32 WhiteOpaqueTexel = 0xFFFFFFFF;
-    m_DefaultTextures[DT_WhiteOpaque2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &WhiteOpaqueTexel);
+    GDefaultTextures[DT_WhiteOpaque2D].Create2D( 4, 1, 1, F_R8G8B8A8_UNorm, &WhiteOpaqueTexel );
     uint32 WhiteTransparentTexel = 0x00FFFFFF;
-    m_DefaultTextures[DT_WhiteTransparent2D].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &WhiteTransparentTexel);
+    GDefaultTextures[DT_WhiteTransparent2D].Create2D( 4, 1, 1, F_R8G8B8A8_UNorm, &WhiteTransparentTexel );
     uint32 FlatNormalTexel = 0x00FF8080;
-    m_DefaultTextures[DT_DefaultNormalMap].Create2D(4, 1, 1, F_R8G8B8A8_UNorm, &FlatNormalTexel);
+    GDefaultTextures[DT_DefaultNormalMap].Create2D( 4, 1, 1, F_R8G8B8A8_UNorm, &FlatNormalTexel );
     uint32 BlackCubeTexels[6] = {};
-    m_DefaultTextures[DT_BlackCubeMap].CreateCube(4, 1, 1, F_R8G8B8A8_UNorm, BlackCubeTexels);
-
-    for (uint32 i = 0; i < DT_NumDefaultTextures; ++i)
-    {
-        GDefaultTextures[i] = &m_DefaultTextures[i];
-    }
+    GDefaultTextures[DT_BlackCubeMap].CreateCube(4, 1, 1, F_R8G8B8A8_UNorm, BlackCubeTexels);
 }
 
-void FTextureManagerD3D12::UnInitialize()
+void FTextureManager::UnInitialize()
 {
     for (auto Iter = m_TextureCache.begin(); Iter != m_TextureCache.end(); ++Iter)
     {
@@ -43,14 +38,14 @@ void FTextureManagerD3D12::UnInitialize()
     m_TextureCache.clear();
 }
 
-HTextureRef FTextureManagerD3D12::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+HTextureRef FTextureManager::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
     return FindOrLoadTexture(FileName, Fallback, forceSRGB);
 }
 
-HManagedTexture* FTextureManagerD3D12::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+HManagedTexture* FTextureManager::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
-    HManagedTextureD3D12* pTexture = NULL;
+    HManagedTexture* pTexture = NULL;
 
     {
         ScopedCriticalSection Guard( m_Mutex );
@@ -72,7 +67,7 @@ HManagedTexture* FTextureManagerD3D12::FindOrLoadTexture(const String& FileName,
         else
         {
             // If it's not found, create a new managed texture and start loading it.
-            pTexture = new HManagedTextureD3D12(key);
+            pTexture = new HManagedTexture(key);
             m_TextureCache[key].reset(pTexture);
         }
     }
@@ -85,7 +80,7 @@ HManagedTexture* FTextureManagerD3D12::FindOrLoadTexture(const String& FileName,
     return pTexture;
 }
 
-void FTextureManagerD3D12::DestroyTexture(const String& Key)
+void FTextureManager::DestroyTexture(const String& Key)
 {
     m_Mutex.Enter();
 
@@ -96,13 +91,12 @@ void FTextureManagerD3D12::DestroyTexture(const String& Key)
     m_Mutex.Exit();
 }
 
-void HManagedTextureD3D12::CreateFromMemory(DataBlob memory, EDefaultTexture fallback, bool bForceSRGB)
+void HManagedTexture::CreateFromMemory(DataBlob memory, EDefaultTexture fallback, bool bForceSRGB)
 {
-    ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GDevice->GetNativeDevice() );
-    HTextureD3D12* pD3D12FallbackTexture = DCast<HTextureD3D12*>( GetDefaultTexture(fallback) );
+    ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
+    HTexture& pD3D12FallbackTexture = GetDefaultTexture(fallback);
     
-    HE_ASSERT(pD3D12FallbackTexture != NULL);
-    D3D12_CPU_DESCRIPTOR_HANDLE FallbackSRVHandle = pD3D12FallbackTexture->GetSRV();
+    D3D12_CPU_DESCRIPTOR_HANDLE FallbackSRVHandle = pD3D12FallbackTexture.GetSRV();
 
     if (!memory.IsValid())
     {
@@ -114,10 +108,10 @@ void HManagedTextureD3D12::CreateFromMemory(DataBlob memory, EDefaultTexture fal
         m_hCpuDescriptorHandle = AllocateDescriptor(pD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
         HRESULT hr = CreateDDSTextureFromMemory(pD3D12Device, (const uint8_t*)memory.GetBufferPointer(), memory.GetDataSize(),
-            0, bForceSRGB, GetAddressOf(), m_hCpuDescriptorHandle);
+            0, bForceSRGB, (ID3D12Resource**)GetAddressOf(), m_hCpuDescriptorHandle);
         if (SUCCEEDED(hr))
         {
-            D3D12_RESOURCE_DESC Desc = GetResource()->GetDesc();
+            D3D12_RESOURCE_DESC Desc = ((ID3D12Resource*)GetResource())->GetDesc();
             m_Width = (uint32_t)Desc.Width;
             m_Height = Desc.Height;
             m_Depth = Desc.DepthOrArraySize;
@@ -134,3 +128,5 @@ void HManagedTextureD3D12::CreateFromMemory(DataBlob memory, EDefaultTexture fal
     AssociateWithShaderVisibleHeap();
     m_IsLoading = false;
 }
+
+#endif // R_WITH_D3D12

@@ -7,9 +7,15 @@ project ("Shaders")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en-US")
-	targetdir( heGetBuildFolder() .. "/Shaders/" )
-	objdir( heGetBuildIntFolder() .. "/Shaders/" )
+
+    --filter{ "configurations:DebugEditor or Development" }
+	    targetdir( heGetBuildFolder() .. "/Shaders/Core/" )
+	    objdir( heGetBuildIntFolder() .. "/Shaders/Core/" )
 	
+    --filter{ "configurations:DebugGame or ShippingGame" }
+    --    targetdir( heGetBuildFolder() .. "/Data/Shaders/" )
+	--    objdir( heGetBuildIntFolder() .. "/Data/Shaders/" )
+
     files
     {
         "Shaders.module.lua",

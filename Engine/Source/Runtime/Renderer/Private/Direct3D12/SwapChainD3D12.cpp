@@ -1,43 +1,53 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "SwapChainD3D12.h"
+#include "SwapChain.h"
 
 #include "RendererCore.h"
-#include "CommandManagerD3D12.h"
-#include "ColorBufferD3D12.h"
+#include "CommandManager.h"
+#include "ColorBuffer.h"
 #include "APIBridge/CommonFunctions.h"
 
 
-FSwapChainD3D12::FSwapChainD3D12()
-	: m_pID3D12DeviceRef(NULL)
+FSwapChain::FSwapChain()
+	: m_FrameIndex( 0 )
+	, m_ClearColor( 0.f, 0.f, 0.f )
+	, m_bFullScreenEnabled( false )
+	, m_bVSyncEnabled( false )
+	, m_bAllowTearing( false )
+	, m_pDeviceRef( NULL )
+	, m_DisplayPlanes()
+	, m_pID3D12DeviceRef(NULL)
 	, m_pDXGISwapChain(NULL)
 {
 }
 
-FSwapChainD3D12::~FSwapChainD3D12()
+FSwapChain::~FSwapChain()
 {
+	m_pDeviceRef = NULL;
 	UnInitialize();
 }
 
-void FSwapChainD3D12::Initialize(FRenderDevice* pDevice)
+void FSwapChain::Initialize(FRenderDevice& Device)
 {
-	m_pDeviceRef = pDevice;
+	m_pDeviceRef = &Device;
 }
 
-void FSwapChainD3D12::Create(const FSwapChainDesc& InitParams, IDXGIFactory6** ppDXGIFactory, FCommandQueueD3D12* ppCommandQueue, ID3D12Device* pDevice)
+void FSwapChain::Create(const FSwapChainDesc& InitParams, IDXGIFactory6** ppDXGIFactory, FCommandQueue* ppCommandQueue, ID3D12Device* pDevice)
 {
 	HE_ASSERT(ppCommandQueue != NULL);
 	HE_ASSERT(ppDXGIFactory != NULL);
 	HE_ASSERT(ppDXGIFactory != NULL);
 	HE_ASSERT(pDevice != NULL);
 
-	ID3D12CommandQueue* pCommandQueue = RCast<ID3D12CommandQueue*>(ppCommandQueue->GetNativeQueue());
+	ID3D12CommandQueue* pCommandQueue = (ID3D12CommandQueue*)ppCommandQueue->GetNativeQueue();
 	HE_ASSERT(pCommandQueue != NULL);
 
 	m_pID3D12DeviceRef = pDevice;
 	m_Desc = InitParams;
+	m_DisplayPlanes.reserve( InitParams.BufferCount );
 	for (uint32 i = 0; i < InitParams.BufferCount; ++i)
-		m_DisplayPlanes.push_back(new FColorBufferD3D12());
+		m_DisplayPlanes.emplace_back();
 
 
 	CheckTearingSupport((*ppDXGIFactory));
@@ -65,15 +75,20 @@ void FSwapChainD3D12::Create(const FSwapChainDesc& InitParams, IDXGIFactory6** p
 	BindSwapChainBackBuffers();
 }
 
-void FSwapChainD3D12::UnInitialize()
+void FSwapChain::UnInitialize()
 {
-	HRESULT hr = m_pDXGISwapChain->SetFullscreenState(FALSE, NULL);
-	ThrowIfFailedMsg(hr, TEXT("Failed to bring the swapchain out of fullscreen mode!"));
+	// Swapchain can be destroyed manually or via the destructor. Either way, the 
+	// destructor will eventually get here. Make sure there is something to destory before doing it.
+	if (m_pDXGISwapChain) 
+	{
+		HRESULT hr = m_pDXGISwapChain->SetFullscreenState(FALSE, NULL);
+		ThrowIfFailedMsg(hr, "Failed to bring the swapchain out of fullscreen mode!");
 
-	HE_COM_SAFE_RELEASE(m_pDXGISwapChain);
+		HE_COM_SAFE_RELEASE(m_pDXGISwapChain);
+	}
 }
 
-void FSwapChainD3D12::CheckTearingSupport(IDXGIFactory6* pFactory)
+void FSwapChain::CheckTearingSupport(IDXGIFactory6* pFactory)
 {
 	HE_ASSERT(pFactory != NULL);
 
@@ -82,35 +97,39 @@ void FSwapChainD3D12::CheckTearingSupport(IDXGIFactory6* pFactory)
 	SetIsTearingSupported(SUCCEEDED(hr) && AllowTearing);
 }
 
-void FSwapChainD3D12::SwapBuffers()
+void FSwapChain::SwapBuffers()
 {
 	uint32 PresetFlags = (GetIsTearingSupported() && m_bFullScreenEnabled)
 		? DXGI_PRESENT_ALLOW_TEARING : 0;
-	m_pDXGISwapChain->Present(SCast<uint32>(m_bVSyncEnabled), PresetFlags);
+	HRESULT hr = m_pDXGISwapChain->Present(SCast<uint32>(m_bVSyncEnabled), PresetFlags);
+	ThrowIfFailedMsg( hr, "Failed to present image from DXGI swapchain!" );
 
 	MoveToNextFrame();
 }
 
-void FSwapChainD3D12::Resize(const uint32& Width, const uint32& Height)
+void FSwapChain::Resize(const uint32& Width, const uint32& Height)
 {
+	if (m_pDXGISwapChain == NULL)
+		return;
+
 	// Flush the GPU and wait for all frames to finish rendering 
 	// before destroying the swapchain buffers.
-	GCommandManager->IdleGpu();
+	GCommandManager.IdleGpu();
 
 	m_Desc.Width = Width;
 	m_Desc.Height = Height;
 	for (uint64 i = 0; i < m_DisplayPlanes.size(); ++i)
 	{
-		DCast<FGpuResourceD3D12*>(m_DisplayPlanes[i])->Destroy();
+		m_DisplayPlanes[i].Destroy();
 	}
 	ResizeDXGIBuffers();
 	BindSwapChainBackBuffers();
 	SetCurrentFrameIndex( m_pDXGISwapChain->GetCurrentBackBufferIndex() );
 
-	GCommandManager->IdleGpu();
+	GCommandManager.IdleGpu();
 }
 
-void FSwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)
+void FSwapChain::SetNumBackBuffes(uint32 NumBuffers)
 {
 	HE_ASSERT(NumBuffers <= DXGI_MAX_SWAP_CHAIN_BUFFERS);
 
@@ -118,56 +137,63 @@ void FSwapChainD3D12::SetNumBackBuffes(uint32 NumBuffers)
 	ResizeDXGIBuffers();
 }
 
-void FSwapChainD3D12::SetBackBufferFormat(EFormat& Format)
+void FSwapChain::SetBackBufferFormat(EFormat& Format)
 {
 	m_Desc.Format = Format;
 	ResizeDXGIBuffers();
 }
 
-void FSwapChainD3D12::ToggleFullScreen(bool IsEnabled)
+void FSwapChain::ToggleFullScreen(bool IsEnabled)
 {
-	FSwapChain::ToggleFullScreen(IsEnabled);
+	SetIsFullScreenEnabled( IsEnabled );
 
 	if (!GetIsTearingSupported())
 	{
 		HRESULT hr = S_OK;
 		BOOL FullScreenState;
 		hr = m_pDXGISwapChain->GetFullscreenState(&FullScreenState, NULL);
-		ThrowIfFailedMsg(hr, TEXT("Failed to get full screen state for swap chain!"))
+		ThrowIfFailedMsg( hr, "Failed to get full screen state for swap chain!" );
 
-			if (IsEnabled && FullScreenState)
-			{
-				R_LOG(Warning, TEXT("Full screen state is already active."));
-				return;
-			}
+		if (IsEnabled && FullScreenState)
+		{
+			R_LOG(Warning, TEXT("Full screen state is already active."));
+			return;
+		}
 
 		hr = m_pDXGISwapChain->SetFullscreenState(!FullScreenState, NULL);
-		ThrowIfFailedMsg(hr, TEXT("Failed to set fullscreen state for swap chain!"));
+		ThrowIfFailedMsg(hr, "Failed to set fullscreen state for swap chain!");
 	}
 }
 
-void FSwapChainD3D12::ResizeDXGIBuffers()
+void FSwapChain::ResizeDXGIBuffers()
 {
+	if (m_pDXGISwapChain == NULL)
+		return;
+
 	DXGI_FORMAT Format = (DXGI_FORMAT)m_Desc.Format;
 	DXGI_SWAP_CHAIN_DESC1 DXGIDesc = { 0 };
 	m_pDXGISwapChain->GetDesc1(&DXGIDesc);
 
 	HRESULT hr = m_pDXGISwapChain->ResizeBuffers(m_Desc.BufferCount, m_Desc.Width, m_Desc.Height, Format, DXGIDesc.Flags);
-	ThrowIfFailedMsg(hr, TEXT("Failed to resize DXGI swap chain."));
+	ThrowIfFailedMsg(hr, "Failed to resize DXGI swap chain.");
 
 	m_pDXGISwapChain->GetDesc1(&DXGIDesc);
 	SetIsTearingSupported(DXGIDesc.Flags & DXGI_PRESENT_ALLOW_TEARING);
 }
 
-void FSwapChainD3D12::BindSwapChainBackBuffers()
+void FSwapChain::BindSwapChainBackBuffers()
 {
+	if (m_pDXGISwapChain == NULL)
+		return;
+
 	for (uint32 i = 0; i < m_Desc.BufferCount; i++)
 	{
 		Microsoft::WRL::ComPtr<ID3D12Resource> DisplayPlane;
 		HRESULT hr = m_pDXGISwapChain->GetBuffer(i, IID_PPV_ARGS(&DisplayPlane));
-		ThrowIfFailedMsg(hr, TEXT("Failed to bind buffer with DXGI swapchain back buffer!"));
+		ThrowIfFailedMsg(hr, "Failed to bind buffer with DXGI swapchain back buffer!");
 
-		HE_ASSERT(m_DisplayPlanes[i] != NULL);
-		m_DisplayPlanes[i]->CreateFromSwapChain(m_pDeviceRef, TEXT("SwapChain display plane"), DisplayPlane.Detach());
+		m_DisplayPlanes[i].CreateFromSwapChain(TEXT("SwapChain display plane"), DisplayPlane.Detach());
 	}
 }
+
+#endif // R_WITH_D3D12

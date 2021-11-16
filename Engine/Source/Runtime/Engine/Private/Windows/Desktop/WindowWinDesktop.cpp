@@ -6,7 +6,6 @@
 #include "System.h"
 #include "Engine/Engine.h"
 
-#include "RenderContextFactoryD3D12.h"
 #include "RendererInitializer.h"
 #include "Input/InputEnums.h"
 #include "Input/KeyEvent.h"
@@ -97,7 +96,7 @@ void FWindow::Create( const FWindow::Description& Desc )
 	::AdjustWindowRect( &WindowRect, WS_OVERLAPPEDWINDOW, FALSE );
 
 	m_WindowStyle = m_Desc.bHasTitleBar ? WS_OVERLAPPEDWINDOW : WS_POPUPWINDOW | WS_VISIBLE;
-	HWND hParent = m_Desc.pParent ? (HWND)m_Desc.pParent->GetNativeWindow() : NULL;
+	HWND hParent = m_Desc.pParent ? *(HWND*)m_Desc.pParent->GetNativeWindow() : NULL;
 
 	m_hWindowHandle = ::CreateWindowEx(
 		NULL,					// FWindow ExStyles
@@ -154,7 +153,7 @@ void FWindow::Destroy()
 			return;
 		}
 
-		HE_SAFE_DELETE_PTR( m_pSwapChain );
+		m_SwapChain.UnInitialize();
 	}
 }
 
@@ -211,7 +210,7 @@ void FWindow::Minimize()
 
 void FWindow::PresentOneFrame()
 {
-	m_pSwapChain->SwapBuffers();
+	m_SwapChain.SwapBuffers();
 }
 
 bool FWindow::SetTitle( const TChar* NewTitle )
@@ -247,12 +246,12 @@ void FWindow::AllowFileDrops( bool bAllow )
 
 FColorBuffer* FWindow::GetRenderSurface()
 {
-	return m_pSwapChain->GetColorBufferForCurrentFrame();
+	return &m_SwapChain.GetColorBufferForCurrentFrame();
 }
 
 void* FWindow::GetNativeWindow()
 {
-	return RCast<void*>(m_hWindowHandle);
+	return (void*)&m_hWindowHandle;
 }
 
 void FWindow::SetParent( FWindow* pParent )
@@ -283,18 +282,66 @@ void FWindow::OnWindowModeChanged()
 {
 	switch (GetWindowMode())
 	{
+	case EWindowMode::WM_Borderless:
+	{
+		//
+		// Bring us into borderless mode.
+		//
+		HE_LOG( Log, TEXT( "Entering borderless mode." ) );
+
+		// Make the window borderless so that the client area can fill the screen.
+		SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
+		
+		// Save the old window rect so we can restore it when exiting fullscreen mode.
+		::GetWindowRect( m_hWindowHandle, &m_WindowRect );
+
+		// Get the settings of the primary display.
+		DEVMODE DevMode = {};
+		DevMode.dmSize = sizeof( DEVMODE );
+		EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
+
+		RECT FullscreenWindowRect =
+		{
+			DevMode.dmPosition.x,
+			DevMode.dmPosition.y,
+			DevMode.dmPosition.x + (LONG)DevMode.dmPelsWidth,
+			DevMode.dmPosition.y + (LONG)DevMode.dmPelsHeight
+		};
+
+		SetWindowPos(
+			m_hWindowHandle,
+			HWND_TOPMOST,
+			FullscreenWindowRect.left,
+			FullscreenWindowRect.top,
+			FullscreenWindowRect.right,
+			FullscreenWindowRect.bottom,
+			SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+
+		//// Get the new window dimensions.
+		//uint32 NewWidth( FullscreenWindowRect.right - FullscreenWindowRect.left );
+		//uint32 NewHeight( FullscreenWindowRect.bottom - FullscreenWindowRect.top );
+
+		//// Resize the window's swapchain.
+		////GetSwapChain()->Resize( NewWidth, NewHeight );
+
+		//// Emit the resize event.
+		//WindowResizeEvent e( NewWidth, NewHeight );
+
+		break;
+	}
 	case EWindowMode::WM_FullScreen:
 	{
 		//
 		// Bring us into fullscreen mode.
 		//
 		HE_LOG( Log, TEXT( "Entering fullscreen mode." ) );
+		
+		GetSwapChain()->ToggleFullScreen( !m_SwapChain.GetIsFullScreenEnabled() );
 
 		// Save the old window rect so we can restore it when exiting fullscreen mode.
 		::GetWindowRect( m_hWindowHandle, &m_WindowRect );
-
-		// Make the window borderless so that the client area can fill the screen.
-		SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
 
 		// Get the settings of the primary display.
 		DEVMODE DevMode = {};
@@ -319,23 +366,27 @@ void FWindow::OnWindowModeChanged()
 			SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
 		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
-
-		GetSwapChain()->ToggleFullScreen( !m_pSwapChain->GetIsFullScreenEnabled() );
 		
 		// Get the new window dimensions.
 		uint32 NewWidth( FullscreenWindowRect.right - FullscreenWindowRect.left );
 		uint32 NewHeight( FullscreenWindowRect.bottom - FullscreenWindowRect.top );
 
 		// Resize the window's swapchain.
-		GetSwapChain()->Resize( NewWidth, NewHeight );
+		//GetSwapChain()->Resize( NewWidth, NewHeight );
 
 		// Emit the resize event.
 		WindowResizeEvent e( NewWidth, NewHeight );
 		EmitEvent( e );
+		
+		break;
 	}
-	break;
 	case EWindowMode::WM_Windowed:
 	{
+		//
+		// Bring us into windowed mode.
+		//
+		HE_LOG( Log, TEXT( "Entering windowed mode." ) );
+
 		::SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle );
 
 		::SetWindowPos(
@@ -347,17 +398,20 @@ void FWindow::OnWindowModeChanged()
 			m_WindowRect.bottom - m_WindowRect.top,
 			SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
+		
 		::ShowWindow( m_hWindowHandle, SW_NORMAL );
-
-		HE_LOG( Log, TEXT( "Exiting fullscreen mode." ) );
+		
+		// Resize the window's swapchain.
+		// Note: Let WM_SIZE handle the swapchain resize. 
+		
+		break;
 	}
-	break;
 	}
 }
 
 void FWindow::CreateSwapChain()
 {
-	FRendererInitializer::InitializeSwapChain( &m_pSwapChain, GetNativeWindow(), GetWidth(), GetHeight() );
+	FRendererInitializer::InitializeSwapChain( m_SwapChain, GetNativeWindow(), GetWidth(), GetHeight() );
 }
 
 //
@@ -419,21 +473,37 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		return 0;
 	}
 #endif // HE_WITH_EDITOR
-	case WM_EXITSIZEMOVE:
+	case WM_SIZE:
 	{
+		switch (wParam)
+		{
+		case SIZE_MAXIMIZED:
+		{
+			WindowMaximizedEvent e;
+			pWindow->EmitEvent( e );
+			break;
+		}
+		case SIZE_MINIMIZED:
+		{
+			WindowMinimizedEvent e;
+			pWindow->EmitEvent( e );
+			break;
+		}
+		default:
+			break;
+		}
+
 		// Get the new window dimensions.
-		RECT ClientRect = {};
-		GetClientRect( hWnd, &ClientRect );
-		uint32 NewWidth ( ClientRect.right - ClientRect.left );
-		uint32 NewHeight( ClientRect.bottom - ClientRect.top );
+		uint32 NewWidth = LOWORD( lParam );
+		uint32 NewHeight = HIWORD( lParam );
 
 		// Resize the window's swapchain.
 		pWindow->GetSwapChain()->Resize( NewWidth, NewHeight );
-			
+
 		// Emit the resize event.
 		WindowResizeEvent e( NewWidth, NewHeight );
 		pWindow->EmitEvent( e );
-		
+
 		return 0;
 	}
 	case WM_KILLFOCUS:

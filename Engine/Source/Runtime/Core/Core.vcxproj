@@ -892,6 +892,7 @@
     <ClInclude Include="Public\EnumHelper.h" />
     <ClInclude Include="Public\FileSystem.h" />
     <ClInclude Include="Public\FrameTimer.h" />
+    <ClInclude Include="Public\GUID.h" />
     <ClInclude Include="Public\Handle.h" />
     <ClInclude Include="Public\Hash.h" />
     <ClInclude Include="Public\JsonUtility.h" />

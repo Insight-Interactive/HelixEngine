@@ -1,9 +1,13 @@
 #pragma once
 
-#include "CommonEnums.h"
-#include "IPixelBuffer.h"
-
 #include "Renderer/RenderPass.h"
+
+#include "CommonEnums.h"
+#include "PixelBuffer.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
+#include "ColorBuffer.h"
+#include "DepthBuffer.h"
 
 
 class FCommandContext;
@@ -20,52 +24,58 @@ public:
 	FDeferredShadingTech();
 	~FDeferredShadingTech();
 
-	void Initialize(FVector2 RenderResolution, EFormat SwapchainFormat);
+	void Initialize(FVector2 RenderResolution, EFormat SwapchainFormat );
 	void UnInitialize();
 
 	void ReloadPipeline();
 
+	void BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect);
+	void BindLightPass(FCommandContext& GfxContext, const FRect& Viewrect);
+	void UnBindGeometryPass(FCommandContext& GfxContext);
+	void UnBindLightPass(FCommandContext& GfxContext);
+
+	void ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect);
+
 	enum EGBuffers
 	{
-		GB_Albedo = 0,
-		GB_Normal = 1,
-		GB_Position = 2,
+		GB_Albedo		= 0,
+		GB_Normal		= 1,
 
-		GB_NumBuffers = 3,
+		GB_NumBuffers,
 	};
 
 	class GeometryPass : public FRenderPass
 	{
+		friend class FDeferredShadingTech;
 	public:
 		GeometryPass();
 		virtual ~GeometryPass();
 
-		void Initialize(const FVector2& RenderResolution);
+		void Initialize(const FVector2& RenderResolution );
 		void UnInitialize();
 
+		void ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect);
+		FColorBuffer& GetGBufferColorBuffer(EGBuffers GBuffer);
+		void SetDepthBuffer(FDepthBuffer& DepthBuffer);
+
+	private:
 		virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) override;
 		virtual void UnBind( FCommandContext& GfxContext ) override;
-
 		virtual void ReloadPipeline() override;
-
-		inline FColorBuffer& operator[]( size_t Index );
-		inline FColorBuffer& GetGBufferColorBuffer( EGBuffers GBuffer ) const;
-		inline FDepthBuffer* GetSceneDepthBuffer() const;
-
-		EFormat GetDepthFormat() const;
 
 	protected:
 		// Pipeline
-		FRootSignature* m_pRS;
-		FPipelineState* m_pPSO;
+		FRootSignature m_RS;
+		FPipelineState m_PSO;
 		// Resources
-		FColorBuffer* m_RenderTargets[GB_NumBuffers];
-		FDepthBuffer* m_pDepthBuffer;
-		FGpuResource* m_pDepthBufferGPUResource;
+		FColorBuffer m_RenderTargets[GB_NumBuffers];
+		// References
+		FDepthBuffer* m_pSceneDepthBufferRef;
 	};
 
 	class LightPass : public FRenderPass
 	{
+		friend class FDeferredShadingTech;
 	public:
 		LightPass( FDeferredShadingTech::GeometryPass& GeometryPass );
 		virtual ~LightPass();
@@ -73,19 +83,24 @@ public:
 		void Initialize(const FVector2& RenderResolution, EFormat SwapchainFormatTEMP);
 		void UnInitialize();
 
+		void SetDepthBuffer(FDepthBuffer& DepthBuffer);
+
+	private:
 		virtual void Bind(FCommandContext& GfxContext, const FRect& Viewrect) override;
 		virtual void UnBind(FCommandContext& GfxContext) override;
-
 		virtual void ReloadPipeline() override;
 
 	protected:
 		FDeferredShadingTech::GeometryPass& m_GeometryPass;
 
 		// Pipeline
-		FRootSignature* m_pRS;
-		FPipelineState* m_pPSO;
+		FRootSignature m_RS;
+		FPipelineState m_PSO;
 
+		// Resources
 		EFormat m_RenderTargetFormat;
+		// References
+		FDepthBuffer* m_pSceneDepthBufferRef;
 	};
 
 	GeometryPass& GetGeometryPass();
@@ -106,18 +121,43 @@ private:
 // Deferred Shading Tech
 //
 
-inline void FDeferredShadingTech::ReloadPipeline()
+FORCEINLINE void FDeferredShadingTech::ReloadPipeline()
 {
 	m_GeometryPass.ReloadPipeline();
 	m_LightPass.ReloadPipeline();
 }
 
-inline FDeferredShadingTech::GeometryPass& FDeferredShadingTech::GetGeometryPass()
+FORCEINLINE void FDeferredShadingTech::BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect)
+{
+	GetGeometryPass().Bind(GfxContext, Viewrect);
+}
+
+FORCEINLINE void FDeferredShadingTech::BindLightPass(FCommandContext& GfxContext, const FRect& Viewrect)
+{
+	GetLightPass().Bind(GfxContext, Viewrect);
+}
+
+FORCEINLINE void FDeferredShadingTech::UnBindGeometryPass(FCommandContext& GfxContext)
+{
+	GetGeometryPass().UnBind(GfxContext);
+}
+
+FORCEINLINE void FDeferredShadingTech::UnBindLightPass(FCommandContext& GfxContext)
+{
+	GetLightPass().UnBind(GfxContext);
+}
+
+FORCEINLINE void FDeferredShadingTech::ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect)
+{
+	GetGeometryPass().ClearGBuffers(GfxContext, Viewrect);
+}
+
+FORCEINLINE FDeferredShadingTech::GeometryPass& FDeferredShadingTech::GetGeometryPass()
 {
 	return m_GeometryPass;
 }
 
-inline FDeferredShadingTech::LightPass& FDeferredShadingTech::GetLightPass()
+FORCEINLINE FDeferredShadingTech::LightPass& FDeferredShadingTech::GetLightPass()
 {
 	return m_LightPass;
 }
@@ -126,18 +166,22 @@ inline FDeferredShadingTech::LightPass& FDeferredShadingTech::GetLightPass()
 // Geometry Pass
 //
 
-inline FColorBuffer& FDeferredShadingTech::GeometryPass::operator[]( size_t Index )
-{
-	return GetGBufferColorBuffer( (EGBuffers)Index );
-}
-
-inline FColorBuffer& FDeferredShadingTech::GeometryPass::GetGBufferColorBuffer( EGBuffers GBuffer ) const
+FORCEINLINE FColorBuffer& FDeferredShadingTech::GeometryPass::GetGBufferColorBuffer( EGBuffers GBuffer )
 {
 	HE_ASSERT( GBuffer < GB_NumBuffers&& GBuffer > -1 ); // Index out of range!
-	return (*m_RenderTargets[GBuffer]);
+	return m_RenderTargets[GBuffer];
 }
 
-inline FDepthBuffer* FDeferredShadingTech::GeometryPass::GetSceneDepthBuffer() const
+FORCEINLINE void FDeferredShadingTech::GeometryPass::SetDepthBuffer( FDepthBuffer& DepthBuffer )
 {
-	return m_pDepthBuffer;
+	m_pSceneDepthBufferRef = &DepthBuffer;
+}
+
+
+// Light Pass
+//
+
+FORCEINLINE void FDeferredShadingTech::LightPass::SetDepthBuffer( FDepthBuffer& DepthBuffer )
+{
+	m_pSceneDepthBufferRef = &DepthBuffer;
 }

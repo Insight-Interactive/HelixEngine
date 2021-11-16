@@ -18,5 +18,5 @@ public:
 
 protected:
 	void TraverseFolder( const TChar* Folder );
-
+	HName m_ProjectContentRoot;
 };

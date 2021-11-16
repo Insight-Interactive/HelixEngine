@@ -1,12 +1,13 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
+#include "AssetRegistry/Asset.h"
 #include "GameFramework/HObject.h"
 #include "AssetRegistry/SerializeableInterface.h"
+
 #include "Transform.h"
 
-
-#define HE_GENERATED_BODY( Class )						\
+#define HE_GENERATED_BODY( Class )																\
 			Class( HWorld* pWorld, const HName& Name );	\
 			virtual ~Class();							
 
@@ -64,6 +65,7 @@ protected:
 template <typename ComponentType, typename ... InitArgs>
 inline ComponentType* AActor::AddComponent( InitArgs ... args )
 {
+	// Create, initialize and attach the component to the actor.
 	HActorComponent* pNewComponent = new ComponentType( args... );
 	pNewComponent->SetOwner( this );
 	pNewComponent->OnCreate();

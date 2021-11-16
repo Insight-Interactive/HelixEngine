@@ -7,6 +7,18 @@
 #include "StringHelper.h"
 
 
+HActorComponent::HActorComponent( const HName& Name )
+	: HObject( Name )
+	, m_pOwner( NULL )
+{
+
+}
+
+HActorComponent::~HActorComponent()
+{
+
+}
+
 HWorld* HActorComponent::GetWorld()
 {
 	HE_ASSERT( m_pOwner != NULL ); // Cannot get the world using a null actor. Are you trying to get the world from a component constructur?

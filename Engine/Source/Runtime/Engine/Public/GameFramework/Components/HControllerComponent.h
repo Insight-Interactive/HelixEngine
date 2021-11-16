@@ -18,13 +18,7 @@ HCOMPONENT()
 class HControllerComponent : public HActorComponent
 {
 public:
-	HControllerComponent(const HName& Name)
-		: HActorComponent(Name)
-	{
-	}
-	virtual ~HControllerComponent()
-	{
-	}
+	HE_COMPONENT_GENERATED_BODY( HControllerComponent )
 
 	/*
 		Bind a function to an input axis event defined in the user settings.

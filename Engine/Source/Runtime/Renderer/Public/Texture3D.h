@@ -9,8 +9,8 @@
 */
 #pragma once
 
-#include "ITextureManager.h"
-#include "ITexture.h"
+#include "TextureManager.h"
+#include "Texture.h"
 
 class HTexture3D : public HTextureRef
 {

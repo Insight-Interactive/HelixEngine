@@ -9,9 +9,9 @@
 #include "FileSystem.h"
 #include "System.h"
 
-#include "IGpuResource.h"
-#include "ICommandContext.h"
-#include "ICommandManager.h"
+#include "GpuResource.h"
+#include "CommandContext.h"
+#include "CommandManager.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
 
@@ -32,7 +32,12 @@ static void SplashMain( void* pUserData );
 HEngine::HEngine( CommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
+#if HE_STANDALONE
+	, m_IsPlayingInEditor( true )
+#else
 	, m_IsPlayingInEditor( false )
+#endif
+	, m_AppSeconds(0.0)
 {
 }
 
@@ -88,10 +93,7 @@ void HEngine::Startup()
 #endif
 
 	// Initialize the renderer.
-	ERenderBackend API = RB_Direct3D12; // TODO: Get from ini file
-	FRendererInitializer::InitializeContext( API, m_RenderContext );
-
-	m_FrameTimeManager.Initialize();
+	FRendererInitializer::InitializeContext( m_RenderContext );
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
@@ -109,7 +111,8 @@ void HEngine::Startup()
 	//GGameInstance = MakeGameInstance();
 	GGameInstance = new HGameInstance();
 
-	String AssetDatabaseRoot = FGameProject::GetInstance()->GetContentFolder() + "/DataCache/AssetDatabase.json";
+	//String AssetDatabaseRoot = FGameProject::GetInstance()->GetContentFolder() + "/DataCache/AssetDatabase.json";
+	String AssetDatabaseRoot = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
 	FAssetDatabase::GetInstance()->Initialize( AssetDatabaseRoot.c_str() );
 
 	// Create and initialize the main client window.
@@ -159,9 +162,6 @@ void HEngine::PostStartup()
 	GGameInstance->OnGameSetFocus();
 #endif
 
-	//EWindowMode ClientWindowMode = WM_FullScreen;
-	//m_MainViewPort.GetWindow().SetWindowMode(ClientWindowMode);
-
 	m_IsInitialized = true;
 	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
 }
@@ -170,6 +170,7 @@ void HEngine::PreShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine pre-shutdown." ) );
 
+	GCommandManager.IdleGpu();
 	HE_LOG( Log, TEXT( "Engine pre-shutdown complete." ) );
 }
 
@@ -181,7 +182,7 @@ void HEngine::Shutdown()
 	GetClientViewport().Uninitialize();
 	m_GameWorld.Flush();
 
-	FAssetDatabase::GetInstance()->UnInitialize();
+	FAssetDatabase::GetInstance()->Uninitialize();
 
 	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );
 }
@@ -192,6 +193,7 @@ void HEngine::PostShutdown()
 	FRendererInitializer::UnInitializeContext( m_RenderContext );
 	HE_SAFE_DELETE_PTR( GThreadPool );
 	System::UninitializePlatform();
+	HE_SAFE_DELETE_PTR( GGameInstance );
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
 
@@ -199,22 +201,19 @@ void HEngine::Update()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 
+	//EWindowMode ClientWindowMode = WM_Borderless;
+	//m_MainViewPort.GetWindow().SetWindowMode(ClientWindowMode);
+
+	m_FrameTimer.Initialize();
 	while (FApp::GetInstance()->IsRunning())
 	{
 		System::ProcessMessages();
 
+		TickTimers();
+		float DeltaTime = (float)GetDeltaTime();
 
-		// The system could have processed a quit request. 
-		// Check one more time before proceeding with the loop.
-		if (!FApp::GetInstance()->IsRunning()) break;
-
-		float DeltaTime = GetDeltaTime();
-
-		//bool Pressed = GetClientViewport().GetInputDispatcher()->GetInputSureyor().IsMouseButtonPressed( Mouse0 );
-		//HE_LOG( Log, TEXT( "Pressed: %i" ), (int)Pressed );
-
-		// Check if the main viewport has focus. There will only be one window 
-		// in shipping builds.
+		// Check if the main viewport has focus. There will 
+		// only be one window in shipping builds.
 #if HE_STANDALONE
 		if (!GetClientViewport().HasFocus())
 		{
@@ -225,9 +224,23 @@ void HEngine::Update()
 		m_GameWorld.Tick( DeltaTime );
 
 		RenderClientViewport( DeltaTime );
+		GetClientViewport().PresentOneFrame();
+		
+		static float SecondTimer = 0.f;
+		static float FPS = 0.f;
+		SecondTimer += DeltaTime;
+		if (SecondTimer > 1.f)
+		{
+			HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
+			FPS = 0.f;
+			SecondTimer = 0.f;
+		}
+		else
+			FPS++;
 
-		m_FrameTimeManager.Tick( GetClientViewport().GetWindow().IsVSyncEnabled(), false );
+		//HE_LOG( Log, TEXT( "Delta time: %f | Seconds: %f" ), m_FrameTimer.GetTimeMiliSeconds(), m_AppSeconds );
 	}
+
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );
 }
 
@@ -236,13 +249,11 @@ void HEngine::RenderClientViewport( float DeltaTime )
 	FViewportContext& ClientViewport = GetClientViewport();
 	ClientViewport.Update( DeltaTime );
 	ClientViewport.Render();
-
+	
 	FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
 	{
-		FColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
-		FGpuResource* SwapChainGpuResource = pSwapChainSurface->As<FGpuResource*>();
-
-		CmdContext.TransitionResource( *SwapChainGpuResource, RS_Present );
+		FColorBuffer& SwapChainSurface = *GetClientViewport().GetWindow().GetRenderSurface();
+		CmdContext.TransitionResource( SwapChainSurface, RS_Present );
 	}
 	CmdContext.End();
 

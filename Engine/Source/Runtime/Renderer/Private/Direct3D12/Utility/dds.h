@@ -17,6 +17,8 @@
 // http://go.microsoft.com/fwlink/?LinkId=248929
 //--------------------------------------------------------------------------------------
 
+#if R_WITH_D3D12
+
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -221,3 +223,5 @@ namespace DirectX
     static_assert(sizeof(DDS_HEADER_DXT10) == 20, "DDS DX10 Extended Header size mismatch");
 
 }; // namespace
+
+#endif // R_WITH_D3D12

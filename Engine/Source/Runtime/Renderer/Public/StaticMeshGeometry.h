@@ -3,7 +3,7 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-#include "IGeometryBufferManager.h"
+#include "GeometryBufferManager.h"
 #include "RendererCore.h"
 
 
@@ -29,6 +29,10 @@ struct FDrawArgs
 	IndexBufferUID IndexBufferHandle;
 };
 
+/*
+	Base class for all static geometry that exists in the world. That is, a peice of 
+	geometry with static unskinned polygons.
+*/
 class RENDER_API HStaticMeshGeometry
 {
 	friend class FStaticGeometryManager;
@@ -45,19 +49,19 @@ public:
 	//
 	// Getters and Setters
 	//
-	inline FVertexBuffer& GetVertexBuffer();
-	inline FIndexBuffer& GetIndexBuffer();
-	inline uint32 GetNumVerticies() const;
-	inline uint32 GetNumIndices() const;
-	inline uint64 GetUID() const;
+	FVertexBuffer& GetVertexBuffer();
+	FIndexBuffer& GetIndexBuffer();
+	uint32 GetNumVerticies() const;
+	uint32 GetNumIndices() const;
+	uint64 GetUID() const;
 
 	void Create( void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices );
 
 private:
-	inline void Initialize();
-	inline void UnInitialize();
+	void Initialize();
+	void UnInitialize();
 
-	inline void SetHashName( uint64 NewUID );
+	void SetHashName( uint64 NewUID );
 
 
 protected:
@@ -75,12 +79,12 @@ protected:
 
 inline FVertexBuffer& HStaticMeshGeometry::GetVertexBuffer()
 {
-	return GGeometryManager->GetVertexBufferByUID( m_DrawArgs.VertexBufferHandle );
+	return GGeometryManager.GetVertexBufferByUID( m_DrawArgs.VertexBufferHandle );
 }
 
 inline FIndexBuffer& HStaticMeshGeometry::GetIndexBuffer()
 {
-	return GGeometryManager->GetIndexBufferByUID( m_DrawArgs.IndexBufferHandle );
+	return GGeometryManager.GetIndexBufferByUID( m_DrawArgs.IndexBufferHandle );
 }
 
 inline uint32 HStaticMeshGeometry::GetNumVerticies() const
@@ -100,17 +104,14 @@ inline uint64 HStaticMeshGeometry::GetUID() const
 
 inline void HStaticMeshGeometry::Initialize()
 {
-	m_DrawArgs.VertexBufferHandle = GGeometryManager->AllocateVertexBuffer();
-	m_DrawArgs.IndexBufferHandle = GGeometryManager->AllocateIndexBuffer();
+	m_DrawArgs.VertexBufferHandle = GGeometryManager.AllocateVertexBuffer();
+	m_DrawArgs.IndexBufferHandle = GGeometryManager.AllocateIndexBuffer();
 }
 
 inline void HStaticMeshGeometry::UnInitialize()
 {
-	if (GGeometryManager)
-	{
-		GGeometryManager->DeAllocateVertexBuffer( m_DrawArgs.VertexBufferHandle );
-		GGeometryManager->DeAllocateIndexBuffer( m_DrawArgs.IndexBufferHandle );
-	}
+	GGeometryManager.DeAllocateVertexBuffer( m_DrawArgs.VertexBufferHandle );
+	GGeometryManager.DeAllocateIndexBuffer( m_DrawArgs.IndexBufferHandle );
 }
 
 inline void HStaticMeshGeometry::SetHashName( uint64 NewGUID )

@@ -27,7 +27,7 @@ public:
 		m_Position = Other.m_Position;
 		m_Rotation = Other.m_Rotation;
 		m_pParent = Other.m_pParent;
-		m_Children = Other.m_Children;
+		m_Children = std::move(Other.m_Children);
 
 		ComputeAllMatriciesAndUpdateChildren();
 
@@ -85,7 +85,7 @@ public:
 	{
 		if (m_pParent != NULL)
 		{
-			return m_pParent->GetPosition() + m_Position;
+			return m_pParent->GetAbsoluteWorldPosition() + m_Position;
 		}
 		return m_Position;
 	}
@@ -149,7 +149,7 @@ public:
 	void Scale(float X, float Y, float Z);
 
 	/*
-		FTransform the point to look at a point in space.
+		Rotate the transform to look at a point in space.
 	*/
 	void LookAt(const FVector3& LookAtPos);
 
@@ -183,15 +183,15 @@ public:
 
 	FMatrix& GetTranslationMatrixRef() { return m_TranslationMat; }
 	FMatrix GetTranslationMatrix() { return m_TranslationMat; }
-	void SetTranslationMatrix(FMatrix matrix) { m_TranslationMat = matrix; UpdateLocalMatrix(); }
+	void SetTranslationMatrix(const FMatrix& Matrix) { m_TranslationMat = Matrix; UpdateLocalMatrix(); }
 
 	FMatrix& GetRotationMatrixRef() { return m_RotationMat; }
 	FMatrix GetRotationMatrix() { return m_RotationMat; }
-	void SetRotationMatrix(FMatrix matrix) { m_RotationMat = matrix; UpdateLocalMatrix(); }
+	void SetRotationMatrix(const FMatrix& Matrix) { m_RotationMat = Matrix; UpdateLocalMatrix(); }
 
 	FMatrix& GetScaleMatrixRef() { return m_ScaleMat; }
 	FMatrix GetScaleMatrix() { return m_ScaleMat; }
-	void SetScaleMatrix(FMatrix matrix) { m_ScaleMat = matrix; UpdateLocalMatrix(); }
+	void SetScaleMatrix(const FMatrix& Matrix) { m_ScaleMat = Matrix; UpdateLocalMatrix(); }
 
 
 protected:
@@ -227,7 +227,6 @@ protected:
 	void ScaleLocalMatrix();
 	void RotateLocalMatrix();
 	void ComputeAllMatriciesAndUpdateChildren();
-	void UpdateLocalVectors();
 
 	FTransform* m_pParent;
 	std::vector<FTransform*> m_Children;
@@ -242,13 +241,6 @@ protected:
 	FVector3 m_Position;
 	FVector3 m_Rotation;
 	FVector3 m_Scale;
-
-	FVector3 m_LocalForward = FVector3::Forward;
-	FVector3 m_LocalBackward = FVector3::Backward;
-	FVector3 m_LocalLeft = FVector3::Left;
-	FVector3 m_LocalRight = FVector3::Right;
-	FVector3 m_LocalUp = FVector3::Up;
-	FVector3 m_LocalDown = FVector3::Down;
 };
 
 #include "Transform.inl"

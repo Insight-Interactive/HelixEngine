@@ -63,16 +63,6 @@ FORCEINLINE void FTransform::ComputeAllMatriciesAndUpdateChildren()
 	UpdateChildren();
 }
 
-FORCEINLINE void FTransform::UpdateLocalVectors()
-{
-	RotateVector(m_LocalUp, FVector3::Up, m_RotationMat);
-	RotateVector(m_LocalDown, FVector3::Down, m_RotationMat);
-	RotateVector(m_LocalLeft, FVector3::Left, m_RotationMat);
-	RotateVector(m_LocalRight, FVector3::Right, m_RotationMat);
-	RotateVector(m_LocalForward, FVector3::Forward, m_RotationMat);
-	RotateVector(m_LocalBackward, FVector3::Backward, m_RotationMat);
-}
-
 FORCEINLINE void FTransform::Translate(const FVector3& Translation)
 {
 	Translate(Translation.x, Translation.y, Translation.z);
@@ -80,10 +70,7 @@ FORCEINLINE void FTransform::Translate(const FVector3& Translation)
 
 FORCEINLINE void FTransform::Translate(float X, float Y, float Z)
 {
-	float NewX = m_Position.x + X;
-	float NewY = m_Position.x + Y;
-	float NewZ = m_Position.x + Z;
-	SetPosition(NewX, NewY, NewZ);
+	SetPosition( m_Position.x + X, m_Position.y + Y, m_Position.z + Z);
 }
 
 FORCEINLINE void FTransform::Rotate(const FVector3& Rotation)
@@ -158,67 +145,69 @@ FORCEINLINE void FTransform::SetScale(const FVector3& Scale)
 
 FORCEINLINE FVector3 FTransform::GetLocalUp()
 {
-	RotateVector(m_LocalUp, FVector3::Up, m_RotationMat);
-	return m_LocalUp;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Up, m_RotationMat );
+	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalDown()
 {
-	RotateVector(m_LocalDown, FVector3::Down, m_RotationMat);
-	return m_LocalDown;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Down, m_RotationMat);
+	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalLeft()
 {
-	RotateVector(m_LocalLeft, FVector3::Left, m_RotationMat);
-	return m_LocalLeft;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Left, m_RotationMat);
+	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalRight()
 {
-	RotateVector(m_LocalRight, FVector3::Right, m_RotationMat);
-	return m_LocalRight;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Right, m_RotationMat);
+	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalForward()
 {
-	RotateVector(m_LocalForward, FVector3::Forward, m_RotationMat);
-	return m_LocalForward;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Forward, m_RotationMat);
+	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalBackward()
 {
-	RotateVector(m_LocalBackward, FVector3::Backward, m_RotationMat);
-	return m_LocalBackward;
+	FVector3 Result = FVector3::Zero;
+	RotateVector( Result, FVector3::Backward, m_RotationMat);
+	return Result;
 }
 
 
-FORCEINLINE void FTransform::LookAt(const FVector3& target)
+FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 {
-	// Verify that look at pos is not the same as Model pos. They cannot be the same as that wouldn't make sense and would result in undefined behavior
-	if (target == m_Position)
-	{
+	if (Target == m_Position)
 		return;
+
+	FVector3 Direction = Target - m_Position;
+
+
+	float Pitch = 0.0f;
+	if (Direction.y != 0.0f)
+	{
+		const float Distance = sqrtf( Direction.x * Direction.x + Direction.z * Direction.z );
+		Pitch = atanf( Direction.y / Distance);
 	}
 
-	float pitch = 0.0f;
-	if (target.y != 0.0f)
-	{
-		const float distance = sqrtf(target.x * target.x + target.z * target.z);
-		pitch = atanf(target.y / distance);
-	}
+	float Yaw = 0.0f;
+	if (Direction.x != 0.0f)
+		Yaw = atanf( Direction.x / Direction.z );
+	if (Direction.z > 0)
+		Yaw += DirectX::XM_PI;
 
-	float yaw = 0.0f;
-	if (target.x != 0.0f)
-	{
-		yaw = atanf(target.x / target.z);
-	}
-	if (target.z > 0)
-	{
-		yaw += DirectX::XM_PI;
-	}
-
-	SetRotation(pitch, yaw, 0.0f);
+	SetRotation(Pitch, Yaw, 0.0f);
 }
 
 FORCEINLINE void FTransform::SetLocalMatrix(const FMatrix& matrix)

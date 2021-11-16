@@ -48,6 +48,22 @@ private:
 };
 
 
+class WindowMaximizedEvent : public Event
+{
+public:
+	EVENT_CLASS_TYPE( ET_WindowMaximized )
+		EVENT_CLASS_CATEGORY( EC_Window )
+};
+
+
+class WindowMinimizedEvent : public Event
+{
+public:
+	EVENT_CLASS_TYPE( ET_WindowMinimized )
+		EVENT_CLASS_CATEGORY( EC_Window )
+};
+
+
 class WindowFocusEvent : public Event
 {
 public:

@@ -2,7 +2,7 @@
 
 #include "Panels/Panel.h"
 
-#include "IDescriptorHeap.h"
+#include "DescriptorHeap.h"
 
 
 class ADebugPawn;

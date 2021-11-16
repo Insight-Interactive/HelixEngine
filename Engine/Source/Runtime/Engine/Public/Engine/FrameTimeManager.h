@@ -1,37 +1,65 @@
 #pragma once
 
 
-class FFrameTimeManager
+/*
+	Standard timer that starts and stops recording explicitly.
+*/
+class FTimer
 {
 public:
-	FFrameTimeManager()
-		: m_FrameTime( 0.0 )
-		, m_FrameRate( 0.0 )
-		, m_FrameStartTick( 0 )
-		, m_CpuTickDelta( 0.0 )
-	{
-	}
-	~FFrameTimeManager()
-	{
-	}
+	FTimer();
+	~FTimer();
 
 	void Initialize();
-	void Tick( bool VSyncEnabled, bool LimitTo30Hz );
 
-	double GetFrameTime() const;
-	double GetFrameRate() const;
-	double GetCurrentTick();
+	void Record();
+	void Stop();
 
-private:
-	double TicksToSeconds( int64_t TickCount );
-	double TicksToMillisecs( int64_t TickCount );
-	double TimeBetweenTicks( int64_t Tick1, int64_t Tick2 );
+	double GetTimeMicroSeconds() const;
+	double GetTimeMiliSeconds() const;
+	double GetTimeSeconds() const;
+
 
 private:
-	double m_FrameTime;
-	double m_FrameRate;
+	double m_Ticks;
+	int64 m_CurrentTick;
 	int64 m_FrameStartTick;
-	double m_CpuTickDelta;
+	bool m_IsInitilized;
+
+	static double SCpuTickDelta;
+};
+
+/*
+	Timer that measures the timer between each Tick() call.
+*/
+class FFrameTimer : public FTimer
+{
+public:
+	FFrameTimer()
+	{
+	}
+	~FFrameTimer()
+	{
+	}
+
+	void Tick();
+
+};
+
+/*
+	Timer that starts when constructed and ends when destructed.
+*/
+class FScopeTimer : public FTimer
+{
+public:
+	FScopeTimer()
+	{
+		Record();
+	}
+	~FScopeTimer()
+	{
+		Stop();
+	}
 
 };
 
@@ -39,27 +67,41 @@ private:
 // Inline function implementations
 //
 
-inline double FFrameTimeManager::GetFrameTime() const
+
+// FTimer
+//
+
+FORCEINLINE void FTimer::Initialize()
 {
-	return m_FrameTime;
+	if (!m_IsInitilized)
+	{
+		m_IsInitilized = true;
+		Record();
+		Stop();
+	}
 }
 
-inline double FFrameTimeManager::GetFrameRate() const
+FORCEINLINE double FTimer::GetTimeMicroSeconds() const
 {
-	return (m_FrameTime == 0.f) ? 0.f : 1.f / m_FrameTime;
+	return ( m_Ticks * 1000000) / SCpuTickDelta;
 }
 
-inline double FFrameTimeManager::TicksToSeconds( int64 TickCount )
+FORCEINLINE double FTimer::GetTimeMiliSeconds() const
 {
-	return (double)TickCount * m_CpuTickDelta;
+	return m_Ticks * 1 / SCpuTickDelta;
 }
 
-inline double FFrameTimeManager::TicksToMillisecs( int64 TickCount )
+FORCEINLINE double FTimer::GetTimeSeconds() const
 {
-	return (double)TickCount * m_CpuTickDelta * 1000.0;
+	return m_Ticks / SCpuTickDelta;
 }
 
-inline double FFrameTimeManager::TimeBetweenTicks( int64 Tick1, int64 Tick2 )
+
+// FFrameTimer
+//
+
+FORCEINLINE void FFrameTimer::Tick()
 {
-	return TicksToSeconds( Tick2 - Tick1 );
+	Record();
+	Stop();
 }

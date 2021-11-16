@@ -21,6 +21,10 @@ public:
 	*/
 	static DataBlob ReadRawData(const char* Path);
 
+	/*
+		Returns true if a file exists on disk, false if not.
+		@param Filepath - The file to check.
+	*/
 	static bool DoesFileExist( const char* Filepath );
 
 };

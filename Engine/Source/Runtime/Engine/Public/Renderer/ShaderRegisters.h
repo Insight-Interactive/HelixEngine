@@ -1,20 +1,22 @@
 #pragma once
 
+#include "Engine/EngineDefines.h"
+
 
 /*
 	Common root parameters that each root signature MUST use.
 	If a pass requeres additional root parameters (textures, buffers, etc.)
-	their first element must be equal to `kNumCommonRootParams`. The order after
+	their first element must be equal to `kLights + 1`. The order after
 	that does not matter and is up to the user.
 */
 enum ECommonRootParamsBuffers
 {
-	kSceneConstants = 0,
-	kMeshWorld = 1,
-	kMaterial = 2,
-	kLights = 3,
+	kSceneConstants = kSceneConstantsReg,
+	kMeshWorld		= kMeshWorldReg,
+	kMaterial		= kMaterialReg,
+	kLights			= kLightsReg,
 
-	kNumCommonRootParams = kLights + 1,
+	kNumCommonRootParams,
 };
 
 
@@ -23,7 +25,7 @@ enum ECommonRootParamsBuffers
 //
 enum EGeometryPassRootParams
 {
-	GRP_MaterialTextureAlbedo = kLights + 1,
+	GRP_MaterialTextureAlbedo = ECommonRootParamsBuffers::kNumCommonRootParams,
 	GRP_MaterialTextureNormal = GRP_MaterialTextureAlbedo + 1,
 
 	GRP_NumParams = 2,
@@ -44,7 +46,7 @@ enum EGeometryPassDescriptorRanges
 //
 enum ELightPassRootParams
 {
-	LRP_GBufferTextureSceneDepth = kLights + 1,
+	LRP_GBufferTextureSceneDepth = ECommonRootParamsBuffers::kNumCommonRootParams,
 	LRP_GBufferTextureAlbedo = LRP_GBufferTextureSceneDepth + 1,
 	LRP_GBufferTextureNormal = LRP_GBufferTextureAlbedo + 1,
 	LRP_GBufferTexturePosition = LRP_GBufferTextureNormal + 1,
@@ -69,7 +71,7 @@ enum ELightPassDescriptorRanges
 //
 enum ESkyPassRootParams
 {
-	SPRP_Diffuse = kLights + 1,
+	SPRP_Diffuse = ECommonRootParamsBuffers::kNumCommonRootParams,
 };
 enum ESkyPassDEscriptorRanges
 {

@@ -2,11 +2,11 @@
 
 #include "Tools/AssetImporter.h"
 
-#include "StringHelper.h"
-#include "AssetRegistry/AssetDatabase.h"
 #include "FileSystem.h"
+#include "StringHelper.h"
 #include "VertexLayouts.h"
-#include "AssetRegistry/MeshAsset.h"
+#include "AssetRegistry/Asset.h"
+#include "AssetRegistry/AssetDatabase.h"
 
 #include "miniz.c"
 #include "ofbx.h"
@@ -196,24 +196,26 @@ void MeshImporter::ImportFbx( const Char* Filename )
 
 		// Write the fbx data to out to custom .hasset file.
 		//
-		FMeshAssetHeader Header;
+		HMeshAsset::HMeshAssetHeader Header;
 		Header.NumVerticies = (uint32)Verticies.size();
 		Header.VertexSizeInBytes = sizeof( FVertex3D );
 		Header.NumIndices = (uint32)Indices.size();
 		Header.IndexSizeInBytes = sizeof( uint32 );
 
-		String OutputFile( "Content/" );
+		String OutputFile = FGameProject::GetInstance()->GetContentFolder();
+		OutputFile.append( "/" );
 		OutputFile.append( MeshName );
 		OutputFile.append( ".hasset" );
 		FileRef Output( OutputFile.c_str(), FUM_Write, CM_Binary );
 
 		if (Output->IsOpen())
 		{
-			Output->WriteData( &Header, sizeof( FMeshAssetHeader ), 1 );
+			Output->WriteData( &Header, sizeof( HMeshAsset::HMeshAssetHeader ), 1 );
 			Output->WriteData( Verticies.data(), sizeof( FVertex3D ), Verticies.size() );
 			Output->WriteData( Indices.data(), sizeof( uint32 ), Indices.size() );
 
-			FAssetDatabase::GetInstance()->RegisterMesh( MeshName.c_str(), OutputFile.c_str() );
+			FGUID Guid = FGUID::Generate();
+			FAssetDatabase::GetInstance()->RegisterMesh( Guid, OutputFile.c_str() );
 
 			HE_LOG( Log, TEXT( "Mesh import with path: \"%s\" successful." ), CharToTChar( Filename ) );
 		}

@@ -6,17 +6,23 @@
 #include "Transform.h"
 #include "Renderer/LightManager.h"
 
+#include "Renderer/MaterialManager.h"
+#include "ModelManager.h"
+#include "ConstantBuffer.h"
+
 
 extern LightManager GLightManager;
 
+/*
+	A light that emits energy from a single point in space in all directions.
+*/
 HCOMPONENT()
 class HPointLightComponent : public HActorComponent
 {
 	friend class AActor;
 	using Super = HActorComponent;
 public:
-	HPointLightComponent( const HName& Name );
-	virtual ~HPointLightComponent();
+	HE_COMPONENT_GENERATED_BODY( HPointLightComponent )
 
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaTime ) override;
@@ -37,10 +43,18 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
+	bool GetCanDrawDebugBillboard() const;
+	void SetCanDrawDebugBillboard(bool CanDraw);
+
 protected:
 	PointLightDataHandle m_PointLightHandle;
 	FTransform m_Transform;
 
+	FTransform m_BillboardTransform;
+	StaticMeshGeometryRef m_LightDebugMesh;
+	TConstantBuffer<PointLightCBData> m_MeshWorldCB;
+	MaterialRef m_MaterialRef;
+	bool m_CanDrawDebugBillboard;
 };
 
 //
@@ -104,4 +118,14 @@ inline void HPointLightComponent::SetBrightness( float NewBrightness )
 	{
 		pData->Brightness = NewBrightness;
 	}
+}
+
+inline bool HPointLightComponent::GetCanDrawDebugBillboard() const
+{
+	return m_CanDrawDebugBillboard;
+}
+
+inline void HPointLightComponent::SetCanDrawDebugBillboard( bool CanDraw )
+{
+	m_CanDrawDebugBillboard = CanDraw;
 }

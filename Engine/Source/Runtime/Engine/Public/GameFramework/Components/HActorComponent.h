@@ -5,7 +5,12 @@
 #include "AssetRegistry/SerializeableInterface.h"
 
 
+#define HE_COMPONENT_GENERATED_BODY( Class )	\
+			Class( const HName& Name );			\
+			virtual ~Class();
+
 #define HCOMPONENT()
+
 
 class AActor;
 class HWorld;
@@ -19,15 +24,8 @@ public:
 	inline AActor* GetOwner() const;
 
 protected:
-	HActorComponent( const HName& Name )
-		: HObject( Name )
-		, m_pOwner( NULL )
-
-	{
-	}
-	virtual ~HActorComponent()
-	{
-	}
+	HE_COMPONENT_GENERATED_BODY( HActorComponent )
+	
 
 	void SetOwner( AActor* pNewOwner );
 	AActor* GetOwner();
@@ -40,7 +38,7 @@ protected:
 	virtual void OnAttach() {}
 	virtual void OnDetach() {}
 	virtual void OnDestroy() {}
-	virtual void Render( FCommandContext& GfxContext ) = 0;
+	virtual void Render( FCommandContext& GfxContext ) {}
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
