@@ -1,10 +1,6 @@
 #include "../../Public/Core/Core.hlsli"
 
 
-// Samplers
-//
-HE_DECLARE_SAMPLERSTATE(LinearWrapSampler, 0);
-
 // Textures
 //
 HE_DECLARE_TEXTURE2D( SplashImage, 0);

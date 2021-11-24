@@ -14,10 +14,6 @@ struct SP_PSOutput
     float4 FragColor : SV_TARGET;
 };
 
-// Samplers
-//
-HE_DECLARE_SAMPLERSTATE( LinearWrapSampler, 0);
-
 // Textures
 //
 HE_DECLARE_TEXTURECUBE( SkyMap, 0);

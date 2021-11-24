@@ -21,6 +21,9 @@ public:
 	void SetRotation( const FVector3& NewRotation );
 	void SetScale( const FVector3& NewScale );
 
+	const FTransform& GetTransform() const;
+	FTransform& GetTransform();
+
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
@@ -64,4 +67,14 @@ FORCEINLINE void HSceneComponent::SetRotation( const FVector3& NewRotation )
 FORCEINLINE void HSceneComponent::SetScale( const FVector3& NewScale )
 {
 	m_Transform.SetScale( NewScale );
+}
+
+FORCEINLINE const FTransform& HSceneComponent::GetTransform() const
+{
+	return m_Transform;
+}
+
+FORCEINLINE FTransform& HSceneComponent::GetTransform() 
+{
+	return m_Transform;
 }

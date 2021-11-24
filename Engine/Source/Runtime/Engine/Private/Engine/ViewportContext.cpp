@@ -103,8 +103,7 @@ void FViewportContext::InitializeRenderingResources()
 	ZeroMemory( &InitParams, sizeof( InitParams ) );
 	InitParams.RenderingResolution = m_Window.GetDimensions();
 	InitParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
-	InitParams.NumBackBuffers = m_Window.GetSwapChain()->GetNumBackBuffers();
-	m_SceneRenderer.Initialize( InitParams );
+	m_SceneRenderer.Initialize( InitParams, *this );
 
 	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
 	EFormat SwapchainFormat = m_Window.GetSwapChain()->GetBackBufferFormat();

@@ -158,6 +158,9 @@
     <ClCompile Include="Private\CommandContext.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\ConstantBuffer.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Direct3D12\ColorBufferD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>

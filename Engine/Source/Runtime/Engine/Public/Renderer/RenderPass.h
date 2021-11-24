@@ -10,11 +10,13 @@
 
 
 class HCameraComponent;
+class FViewportContext;
 class FCommandContext;
 struct FRect;
 
 class FRenderPass
 {
+	friend class FSceneRenderer;
 public:
 	/*
 		Bind the pass for rendering.
@@ -31,12 +33,14 @@ public:
 		Can be null if some passes do not require a camera.
 	*/
 	HCameraComponent* GetRenderingCamera();
+	FViewportContext* GetOwningViewport();
 
 	virtual void ReloadPipeline() = 0;
 
 protected:
 	void SetRenderingCamera( HCameraComponent* pCamera );
-	
+	void SetOwningViewport( FViewportContext* pViewport );
+
 	FRenderPass()
 	{
 	}
@@ -44,7 +48,11 @@ protected:
 	{
 	}
 
+	// The currently rendering camera for this render pass.
 	HCameraComponent* m_pRenderingCamera;
+	// The viewport that owns this render pass.
+	FViewportContext* m_pOwningViewport;
+
 };
 
 
@@ -52,12 +60,26 @@ protected:
 // Inline function implementations
 //
 
-inline HCameraComponent* FRenderPass::GetRenderingCamera()
+FORCEINLINE HCameraComponent* FRenderPass::GetRenderingCamera()
 {
 	return m_pRenderingCamera;
 }
 
-inline void FRenderPass::SetRenderingCamera( HCameraComponent* pCamera )
+FORCEINLINE FViewportContext* FRenderPass::GetOwningViewport()
+{
+	return m_pOwningViewport;
+}
+
+FORCEINLINE void FRenderPass::SetRenderingCamera( HCameraComponent* pCamera )
 {
 	m_pRenderingCamera = pCamera;
+}
+
+FORCEINLINE void FRenderPass::SetOwningViewport(FViewportContext* pViewport)
+{
+	if (pViewport == NULL)
+	{
+		HE_LOG(Warning, TEXT("Setting null viewport for render pass. Was this intended?"));
+	}
+	m_pOwningViewport = pViewport;
 }

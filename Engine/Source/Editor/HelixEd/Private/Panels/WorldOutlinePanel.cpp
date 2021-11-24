@@ -35,6 +35,7 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 		for (uint32 j = 0; j < pLevel->m_Actors.size(); j++)
 		{
 			AActor* pCurrentActor = pLevel->m_Actors[j];
+
 			const HName& ActorName = pCurrentActor->GetObjectName();
 			if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))
 			{

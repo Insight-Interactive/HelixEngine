@@ -16,6 +16,7 @@ public:
 public:
 	inline ShaderType GetType() const { return m_Type; }
 
+
 protected:
 	FShader( const FGUID& Guid, const char* Filepath, const ShaderType& Type )
 		: HShaderAsset( Guid )

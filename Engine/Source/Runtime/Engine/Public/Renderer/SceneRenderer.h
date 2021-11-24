@@ -6,23 +6,27 @@
 #include "Renderer/Technique/SkyPass.h"
 #include "DepthBuffer.h"
 #include "Renderer/ConstantBufferStructures.h"
+#include "Common.h"
 
 
 static const EFormat kSceneDepthFormat = F_D32_Float;
 static const EFormat kGBufferFormats[] =
 {
-	F_R8G8B8A8_UNorm, // Albedo
-	F_R8G8B8A8_UNorm, // Normal
+	F_R8G8B8A8_UNorm,		// Albedo
+	F_R16G16B16A16_UNorm,	// Normal
+	F_R8_UNorm,				// Roughness
+	F_R8_UNorm,				// Metallic
+	F_R8_UNorm,				// Specular
 };
 
 struct FSceneRendererInitParams
 {
 	FVector2 RenderingResolution;
 	EFormat BackBufferFormat;
-	uint32 NumBackBuffers;
 };
 
 class HScene;
+class FViewportContext;
 
 class FSceneRenderer
 {
@@ -30,7 +34,7 @@ public:
 	FSceneRenderer();
 	~FSceneRenderer();
 
-	void Initialize(const FSceneRendererInitParams& InitParams);
+	void Initialize(const FSceneRendererInitParams& InitParams, FViewportContext& OwningViewport);
 	void Uninitialize();
 
 	void RenderScene( HScene& Scene, FColorBuffer& RenderTarget, const FViewPort& View, const FRect& Scissor, uint32 SwapchainFrameIndex, HCameraComponent* pRenderingCamera );
@@ -40,6 +44,28 @@ public:
 	static EFormat GetSceneDepthBufferForamt();
 	static EFormat GetGBufferFormatForBuffer( FDeferredShadingTech::EGBuffers BufferIndex );
 	static uint32 GetNumGBuffers();
+
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame(StringHashValue NameHash, uint32 FrameIndex)
+	{
+		HE_ASSERT(FrameIndex <= HE_MAX_SWAPCHAIN_BACK_BUFFERS);
+
+		auto Iter = m_ReservedConstBuffers.find(NameHash);
+		if (Iter != m_ReservedConstBuffers.end())
+		{
+			return Iter->second[FrameIndex];
+		}
+		return nullptr;
+	}
+
+	bool ReservedBufferExistsByHashName(int32 NameHash)
+	{
+		return GetReservedConstantBufferByHashNameForCurrentFrame(NameHash) != nullptr;
+	}
+
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame(StringHashValue NameHash)
+	{
+		return GetReservedConstantBufferByHashNameForFrame(NameHash, m_SwapchainFrameIndex);
+	}
 
 private:
 	void SetCommonRenderState( FCommandContext& CmdContext, bool UploadLights, bool UploadSceneConsts );
@@ -56,13 +82,14 @@ private:
 	FPostProcessUber m_PostProcessPass;
 	StaticMeshGeometryRef m_pScreenQuadRef;
 	// Constant buffers
-	std::vector<TConstantBuffer<SceneConstantsCBData>> m_SceneConstantBuffers; // One buffer per-frame
-	std::vector<TConstantBuffer<SceneLightsCBData>> m_LightConstantBuffers; // One buffer per-frame
+	// Contains hashed names and lookups for the reserved constant buffers in shaders.
+	std::unordered_map<StringHashValue, std::vector<FConstantBufferInterface*>> m_ReservedConstBuffers;
 	EFormat m_DepthBufferFormat;
 	FDepthBuffer m_DepthBuffer;
 
 	uint32 m_SwapchainFrameIndex;
 	HCameraComponent* m_pRenderingCamera;
+	FViewportContext* m_pOwningViewport;
 };
 
 
@@ -82,22 +109,28 @@ FORCEINLINE /*static*/ EFormat FSceneRenderer::GetGBufferFormatForBuffer( FDefer
 	return kGBufferFormats[(uint32)BufferIndex];
 }
 
-FORCEINLINE void FSceneRenderer::ReloadPipelines()
-{
-	m_DeferredShader.ReloadPipeline();
-}
-
 FORCEINLINE /*static*/ uint32 FSceneRenderer::GetNumGBuffers()
 {
 	return (uint32)FDeferredShadingTech::GB_NumBuffers;
 }
 
+FORCEINLINE void FSceneRenderer::ReloadPipelines()
+{
+	m_DeferredShader.ReloadPipeline();
+}
+
 FORCEINLINE TConstantBuffer<SceneConstantsCBData>& FSceneRenderer::GetSceneConstBufferForCurrentFrame()
 {
-	return m_SceneConstantBuffers[m_SwapchainFrameIndex];
+	const StringHashValue StrHash = StringHash(HE_STRINGIFY(SceneConstants_CB));
+	TConstantBuffer<SceneConstantsCBData>* pConstBuffer = RCast< TConstantBuffer<SceneConstantsCBData>* >(m_ReservedConstBuffers[StrHash][m_SwapchainFrameIndex]);
+	HE_ASSERT(pConstBuffer != NULL);
+	return *pConstBuffer;
 }
 
 FORCEINLINE TConstantBuffer<SceneLightsCBData>& FSceneRenderer::GetLightConstBufferForCurrentFrame()
 {
-	return m_LightConstantBuffers[m_SwapchainFrameIndex];
+	const StringHashValue StrHash = StringHash(HE_STRINGIFY(SceneLights_CB));
+	TConstantBuffer<SceneLightsCBData>* pConstBuffer = RCast< TConstantBuffer<SceneLightsCBData>* >(m_ReservedConstBuffers[StrHash][m_SwapchainFrameIndex]);
+	HE_ASSERT(pConstBuffer != NULL);
+	return *pConstBuffer;
 }

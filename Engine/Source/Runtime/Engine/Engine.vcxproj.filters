@@ -13,6 +13,9 @@
     <Filter Include="Private\Engine">
       <UniqueIdentifier>{85299AC6-71F7-8DCC-5A8B-FEF246F86931}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Engine\Subsystem">
+      <UniqueIdentifier>{A348867A-8F6D-D5FA-B8B8-BA8AA43CD418}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\GameFramework">
       <UniqueIdentifier>{373E6A8D-A3AA-2588-6C9E-BDE5D8C947F0}</UniqueIdentifier>
     </Filter>
@@ -66,6 +69,9 @@
     </Filter>
     <Filter Include="Public\Engine\Event">
       <UniqueIdentifier>{9AB2DA56-0614-B864-8F81-FE16FBE1EE23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Engine\Subsystem">
+      <UniqueIdentifier>{A762A96B-139A-F102-1CA4-5526885A18FC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\GameFramework">
       <UniqueIdentifier>{BBF67F95-A785-095F-50A4-1D5A3C121A05}</UniqueIdentifier>
@@ -156,6 +162,12 @@
     <ClInclude Include="Public\Engine\SplashScreen.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\Subsystem\PhysicsSubsystem.h">
+      <Filter>Public\Engine\Subsystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h">
+      <Filter>Public\Engine\Subsystem</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Engine\ViewportContext.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -194,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Game.h">
+      <Filter>Public\GameFramework</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\GameInstance.h">
       <Filter>Public\GameFramework</Filter>
@@ -255,6 +270,9 @@
     <ClInclude Include="Public\Renderer\Shader.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Renderer\ShaderReflection.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Renderer\ShaderRegisters.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
@@ -282,7 +300,6 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -336,6 +353,12 @@
     <ClCompile Include="Private\Engine\SplashScreen.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Engine\Subsystem\PhysicsSubsystem.cpp">
+      <Filter>Private\Engine\Subsystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp">
+      <Filter>Private\Engine\Subsystem</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Engine\ViewportContext.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
@@ -371,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Game.cpp">
+      <Filter>Private\GameFramework</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\GameInstance.cpp">
       <Filter>Private\GameFramework</Filter>
@@ -423,6 +449,9 @@
     <ClCompile Include="Private\Renderer\Shader.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\ShaderReflection.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp">
       <Filter>Private\Renderer\Technique</Filter>
     </ClCompile>
@@ -462,7 +491,6 @@
     <ClCompile Include="Public\Renderer\Material.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

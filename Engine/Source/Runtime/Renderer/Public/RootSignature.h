@@ -10,12 +10,12 @@
 
 class FRootParameter
 {
-	friend class RootSignature;
+	friend class FRootSignature;
 public:
 
 	FRootParameter()
 	{
-		m_RootParam.ParameterType = (ERootParameterType)0xFFFFFFFF;
+		m_RootParam.ParameterType = HE_INVALID_ROOT_PARAM_TYPE;
 	}
 
 	~FRootParameter()
@@ -28,7 +28,7 @@ public:
 		if (m_RootParam.ParameterType == RPT_DescriptorTable)
 			delete[] m_RootParam.DescriptorTable.pDescriptorRanges;
 
-		m_RootParam.ParameterType = (ERootParameterType)0xFFFFFFFF;
+		m_RootParam.ParameterType = HE_INVALID_ROOT_PARAM_TYPE;
 	}
 
 	void InitAsConstants(uint32 Register, uint32 NumDwords, EShaderVisibility Visibility = SV_All, uint32 Space = 0)
@@ -91,6 +91,9 @@ public:
 
 	const FRootParameterDesc& operator() (void) const { return m_RootParam; }
 
+	void SetVisibility(EShaderVisibility NewVisibility) { m_RootParam.ShaderVisibility = NewVisibility; }
+	ERootParameterType GetType() const { return m_RootParam.ParameterType; }
+	bool IsValid() const { return GetType() != HE_INVALID_ROOT_PARAM_TYPE; }
 
 protected:
 
@@ -142,6 +145,19 @@ public:
 	{
 		HE_ASSERT(EntryIndex < m_NumParameters);
 		return m_ParamArray.get()[EntryIndex];
+	}
+
+	/*
+		Returns the first unoccupied root parameter index or -1 if none are available;
+	*/
+	uint32 GetNextUnoccupiedIndex() const
+	{
+		for (uint32 i = 0; i < m_NumParameters; ++i)
+		{
+			if (!(*this)[i].IsValid())
+				return i;
+		}
+		return -1;
 	}
 
 	void InitStaticSampler(uint32 Register, const FSamplerDesc& NonStaticSamplerDesc,

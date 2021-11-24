@@ -13,7 +13,6 @@ enum ECommonRootParamsBuffers
 {
 	kSceneConstants = kSceneConstantsReg,
 	kMeshWorld		= kMeshWorldReg,
-	kMaterial		= kMaterialReg,
 	kLights			= kLightsReg,
 
 	kNumCommonRootParams,
@@ -27,6 +26,8 @@ enum EGeometryPassRootParams
 {
 	GRP_MaterialTextureAlbedo = ECommonRootParamsBuffers::kNumCommonRootParams,
 	GRP_MaterialTextureNormal = GRP_MaterialTextureAlbedo + 1,
+	GRP_MaterialTextureRoughness = GRP_MaterialTextureNormal + 1,
+	GRP_MaterialTextureMetallic = GRP_MaterialTextureRoughness + 1,
 
 	GRP_NumParams = 2,
 };
@@ -49,11 +50,11 @@ enum ELightPassRootParams
 	LRP_GBufferTextureSceneDepth = ECommonRootParamsBuffers::kNumCommonRootParams,
 	LRP_GBufferTextureAlbedo = LRP_GBufferTextureSceneDepth + 1,
 	LRP_GBufferTextureNormal = LRP_GBufferTextureAlbedo + 1,
-	LRP_GBufferTexturePosition = LRP_GBufferTextureNormal + 1,
-	//LRP_GBufferTextureMetallic	= 2,
-	//LRP_GBufferTextureRoughness	= 3,
+	LRP_GBufferTextureMetallic	= LRP_GBufferTextureNormal + 1,
+	LRP_GBufferTextureRoughness	= LRP_GBufferTextureMetallic + 1,
+	LRP_GBufferTextureSpecular	= LRP_GBufferTextureRoughness + 1,
 
-	LRP_NumParams = 3,
+	LRP_NumParams = 9,
 };
 enum ELightPassDescriptorRanges
 {

@@ -79,7 +79,6 @@ protected:
 class HTextureRef
 {
 public:
-
 	HTextureRef(const HTextureRef& ref);
 	HTextureRef(HManagedTexture* tex = nullptr);
 	virtual ~HTextureRef();

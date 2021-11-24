@@ -103,8 +103,51 @@ void HLevel::Serialize( WriteContext& Output )
 	}
 }
 
+class ARotatingActor : public AActor
+{
+public:
+	HE_GENERATED_BODY(ARotatingActor)
+
+		virtual void Tick(float DT) override;
+
+	virtual void BeginPlay() override;
+private:
+	HStaticMeshComponent* pMesh;
+};
+
+ARotatingActor::ARotatingActor(HWorld* pWorld, const HName& Name)
+	 : AActor(pWorld, Name)
+{
+	pMesh = AddComponent<HStaticMeshComponent>(TEXT("Cube Mesh"));
+	pMesh->SetMesh(FAssetDatabase::GetInstance()->GetStaticMesh(FGUID::CreateFromString("4539421c-d8b4-4936-bb0c-8dde1e24f9b9")));
+	pMesh->SetMaterial(FAssetDatabase::GetInstance()->GetMaterial(FGUID::CreateFromString("0d68e992-aa25-4aa4-9f81-0eb775320c1e")));
+
+}
+
+ARotatingActor::~ARotatingActor()
+{
+
+}
+
+void ARotatingActor::Tick(float DT)
+{
+	FVector3 Rot = pMesh->GetRotation();
+	Rot.y += 0.005f;
+	pMesh->SetRotation(Rot);
+
+}
+
+void ARotatingActor::BeginPlay()
+{
+	GetTransform().SetPosition(-40.f, 0.f, 0.f);
+	GetTransform().SetScale(10.f, 10.f, 10.f);
+
+}
+
 void HLevel::Deserialize( const ReadContext& Value )
 {
+	CreateActor<ARotatingActor>(TEXT("Rotating Actor Inst"));
+
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
 	{

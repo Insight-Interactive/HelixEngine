@@ -10,16 +10,18 @@
 #include "PipelineState.h"
 #include "RootSignature.h"
 #include "GUID.h"
+#include "StringHelper.h"
 
 
 class FCommandContext;
+class FShaderReflection;
 
-typedef uint64 MaterialID;
+typedef uint32 MaterialID;
 
 enum EShadingModel
 {
 	SM_DefaultLit	= 0, // Is lit by lights inside the world. Material will be used in Physically-Based lighting.
-	SM_Unlit		= 1, // TODO: Implement unlit light pass. Is not lit by lights inside the world.
+	SM_Unlit		= 1, // Implement unlit light pass. Is not lit by lights inside the world.
 	SM_Foliage		= 2, // Tree leaves and grass.
 };
 
@@ -31,7 +33,7 @@ enum EMaterialDomain
 enum EMaterialBlendMode
 {
 	MBM_Opaque		= 0, // Replace whatever color is currently in the render target when this material is rendered.
-	// TODO: MDM_Masked		= 1, //
+	// TODO: MDM_Masked		= 1, 
 	// TODO: MBM_Translucent	= 2,
 };
 
@@ -47,29 +49,45 @@ public:
 
 	bool IsValid();
 
+	//
+	// Material Info
+	//
+
 	const String& GetDebugName() const;
 	MaterialID GetUID() const;
-	HTextureRef GetAlbedoTexture() const;
-	HTextureRef GetNormalTexture() const;
 	EMaterialBlendMode GetBlendMode() const;
 	EMaterialDomain GetDomain() const;
 	EShadingModel GetShadingModel() const;
 	bool GetIsTwoSided() const;
-	void SetColor( FVector4& Color );
-	void SetAlbedoTexture( HTextureRef HTextureRef );
-	void SetNormalTexture( HTextureRef HTextureRef );
 	void SetBlendMode( EMaterialBlendMode Type );
 	void SetDomain(EMaterialDomain Domain);
 	void SetShadingModel(EShadingModel Model);
 	void SetIsTwoSided(bool IsTwoSided);
 
-protected:
-	void BindDefaultLit(FCommandContext& GfxContext);
-	void BindFoliage(FCommandContext& GfxContext);
+	//
+	// Resource Binding
+	//
 
+	/*
+		Set a texture in the shader.
+		@param TextureName - The name of the texture declared inside the shader.
+		@param Texture - The texture resource to bind to the shader.
+	*/
+	bool SetTexture(const Char* TextureName, HTextureRef Texture);
+
+	/*
+		Set a float value in the shader.
+		@param VariableName - The name of the variable inside the declared constant buffer.
+		@param Value - The value to set in the shader.
+	*/
+	bool SetFloat(const Char* VariableName, const float& Value);
+
+protected:
+	void Destroy();
 	void SetMaterialID( const MaterialID& NewId );
 	void SetDebugName( const String& Name );
 	void BuildPipelineState();
+	void ReflectShader(FRootSignature& outSignature, EShaderVisibility ShaderType, const FShaderReflection& Reflector);
 
 private:
 	MaterialID m_UID;
@@ -77,9 +95,6 @@ private:
 	String m_DebugName;
 #endif
 
-	TConstantBuffer<MaterialConstantsCBData> m_ConstantsCB;
-	HTextureRef m_AlbedoTexture;
-	HTextureRef m_NormalTexture;
 	FGUID		m_PixelShaderGuid;
 	FGUID		m_VertexShaderGuid;
 
@@ -90,6 +105,20 @@ private:
 
 	FPipelineState m_Pipeline;
 	FRootSignature m_RootSig;
+
+
+	// TODO: Make these only accessible in the material instance.
+	// Resource mappings
+	
+	// Constant buffer mappings for each shader.
+	// < ConstBufferHashName, <RootParmIndex, CBDataForEachFrame> >
+	std::unordered_map< StringHashValue, std::pair<uint32, std::vector<FConstantBufferInterface*>> > m_ConstBuffersMappings;
+	// Texture mappings for each shader.
+	// < HashName, <RootParamIndex, Texture> > 
+	std::unordered_map< int32, std::pair<uint32, HTextureRef> > m_TextureMappings;
+	// Variable mappings for const buffers.
+	// < VarNameHash, <OwningBuffer, PtrForPerFrameData in m_ConstBufferMappings> >
+	std::unordered_map< StringHashValue, std::vector<std::pair<FConstantBufferInterface*, uint8*>> > m_ConstBufferVarMappings;
 
 private:
 	static MaterialID SNextMaterialID;
@@ -105,16 +134,6 @@ private:
 FORCEINLINE bool FMaterial::IsValid()
 {
 	return m_UID != HE_INVALID_MATERIAL_ID;
-}
-
-FORCEINLINE HTextureRef FMaterial::GetAlbedoTexture() const
-{
-	return m_AlbedoTexture;
-}
-
-FORCEINLINE HTextureRef FMaterial::GetNormalTexture() const
-{
-	return m_NormalTexture;
 }
 
 FORCEINLINE EMaterialBlendMode FMaterial::GetBlendMode() const
@@ -145,21 +164,6 @@ FORCEINLINE const String& FMaterial::GetDebugName() const
 FORCEINLINE MaterialID FMaterial::GetUID() const
 {
 	return m_UID;
-}
-
-FORCEINLINE void FMaterial::SetColor( FVector4& Color )
-{
-	m_ConstantsCB.GetBufferPointer()->kColor = Color;
-}
-
-FORCEINLINE void FMaterial::SetAlbedoTexture( HTextureRef HTextureRef )
-{
-	m_AlbedoTexture = HTextureRef;
-}
-
-FORCEINLINE void FMaterial::SetNormalTexture( HTextureRef HTextureRef )
-{
-	m_NormalTexture = HTextureRef;
 }
 
 FORCEINLINE void FMaterial::SetBlendMode( EMaterialBlendMode Type )
@@ -196,4 +200,37 @@ FORCEINLINE void FMaterial::SetDebugName( const String& Name )
 #if HE_DEBUG
 	m_DebugName = Name;
 #endif
+}
+
+FORCEINLINE bool FMaterial::SetTexture(const Char* TextureName, HTextureRef Texture)
+{
+	StringHashValue NameHash = StringHash(TextureName);
+	auto Iter = m_TextureMappings.find(NameHash);
+	if (Iter != m_TextureMappings.end())
+	{
+		(*Iter).second.second = Texture;
+		return true;
+	}
+	HE_LOG(Warning, TEXT("Trying to set texture with in material %s with invalid semantic name: %s"), CharToTChar(m_DebugName), CharToTChar(TextureName));
+	return false;
+}
+
+FORCEINLINE bool FMaterial::SetFloat(const Char* VariableName, const float& Value)
+{
+	StringHashValue NameHash = StringHash(VariableName);
+	auto& Iter = m_ConstBufferVarMappings.find(NameHash);
+	if (Iter != m_ConstBufferVarMappings.end())
+	{
+		for (uint32 i = 0; i < HE_MAX_SWAPCHAIN_BACK_BUFFERS; ++i)
+		{
+			// Copy the data to each frame buffer inside m_ConstBufferMappings.
+			memcpy(Iter->second[i].second, &Value, sizeof(float));
+
+			// Mark the buffer dirty to indicate a re-upload to the Gpu.
+			Iter->second[i].first->SetDirty(true);
+		}
+		return true;
+	}
+	HE_LOG(Warning, TEXT("Trying to set a buffer constant in material %s with variable \"%s\" that does not exist!"), CharToTChar(m_DebugName), CharToTChar(VariableName));
+	return false;
 }

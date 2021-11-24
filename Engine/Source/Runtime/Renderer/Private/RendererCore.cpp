@@ -30,7 +30,7 @@ FStaticGeometryManager GStaticGeometryManager;
 //
 HTexture& GetDefaultTexture(EDefaultTexture TexID)
 {
-	HE_ASSERT(TexID < DT_NumDefaultTextures&& TexID > -1);
+	HE_ASSERT(TexID < DT_NumDefaultTextures && TexID > -1);
 	return GDefaultTextures[TexID];
 }
 

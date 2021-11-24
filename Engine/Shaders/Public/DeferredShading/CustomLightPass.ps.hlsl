@@ -3,10 +3,6 @@
 #include "DeferredShadingCommon.hlsli"
 
 
-// Samplers
-//
-HE_DECLARE_SAMPLERSTATE( LinearWrapSampler, 0);
-
 // GBuffer Inputs
 //
 HE_DECLARE_TEXTURE2D( SceneDepth      , 0);

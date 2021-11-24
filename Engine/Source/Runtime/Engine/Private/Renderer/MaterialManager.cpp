@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Renderer/MaterialManager.h"
@@ -116,6 +117,16 @@ void MaterialManager::DestroyMaterial(const String& Key)
 	auto Iter = m_MaterialCache.find(Key);
 	if (Iter != m_MaterialCache.end())
 	{
+		Iter->second->Destroy();
 		m_MaterialCache.erase(Iter);
 	}
+}
+
+void MaterialManager::FlushMaterialCache()
+{
+	for(auto& Iter : m_MaterialCache)
+	{
+		Iter.second->Destroy();
+	}
+	m_MaterialCache.clear();
 }

@@ -65,6 +65,25 @@ namespace System
 		0,
 #endif
 	};
+	enum MessageDialogIcon
+	{
+		MDIcon_Critical = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONHAND,
+#endif
+		MDIcon_Question = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONQUESTION,
+#endif
+		MDIcon_Warning = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONWARNING,
+#endif
+		MDIcon_Info = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONINFORMATION,
+#endif
+	};
 
 	/*
 		Initialize any platform system dependencies. Returns true if succeeded, false if not.
@@ -104,7 +123,7 @@ namespace System
 		@param Type - The type of message box to be displayed.
 		@param pParentWindow - A pointer to the native window's handle.
 	*/
-	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, void* pParentWindow = NULL);
+	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon = MDIcon_Warning, void* pParentWindow = NULL);
 
 	/*
 		Loads a DLL into the curent application's address space.

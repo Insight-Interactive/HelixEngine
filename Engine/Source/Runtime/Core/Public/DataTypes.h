@@ -241,25 +241,28 @@ typedef std::stringstream TStringStream;
 	/*
 		If the HRESULT fails a message box is presented to the user indicating the problem.
 	*/
-#	define ThrowIfFailedMsg(Hr, Message)														\
-	if( FAILED(Hr) )																			\
-	{																							\
-		WChar MsgBuffer[64];																	\
-		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));												\
-		::swprintf_s( MsgBuffer, L"HRESULT Failed: %u - %s", Hr, LONG_STR( Message ) );			\
-		System::CreateMessageBox( MsgBuffer, L"Error!", System::MessageDialogInput::MDI_Ok );	\
-		HE_ASSERT( false );																		\
+#	define ThrowIfFailedMsg(Hr, Message)																					\
+	if( FAILED(Hr) )																										\
+	{																														\
+		using namespace System;																								\
+		WChar MsgBuffer[128];																								\
+		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));																			\
+		::swprintf_s( MsgBuffer, L"%u - %s", Hr, LONG_STR( Message ) );														\
+		CreateMessageBox( MsgBuffer, L"HRESULT Failed!", MessageDialogInput::MDI_Ok, MessageDialogIcon::MDIcon_Critical );	\
+		HE_ASSERT( false );																									\
 	}
 
-#	define ASSERT_SUCCEEDED(Hr)																\
-	if( !SUCCEEDED(hr) )																		\
-	{																							\
-		WChar MsgBuffer[64];																	\
-		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));												\
-		::swprintf_s( MsgBuffer, L"HRESULT Failed: %u", Hr );									\
-		System::CreateMessageBox( MsgBuffer, L"Error!", System::MessageDialogInput::MDI_Ok );	\
-		HE_ASSERT( false );																		\
+#	define ASSERT_SUCCEEDED(Hr)																								\
+	if( !SUCCEEDED(hr) )																									\
+	{																														\
+		using namespace System;																								\
+		WChar MsgBuffer[128];																								\
+		ZeroMemory(MsgBuffer, sizeof(MsgBuffer));																			\
+		::swprintf_s( MsgBuffer, L"%u", Hr );																				\
+		CreateMessageBox( MsgBuffer, L"HRESULT Failed!", MessageDialogInput::MDI_Ok, MessageDialogIcon::MDIcon_Critical );	\
+		HE_ASSERT( false );																									\
 	}
+#define ResetHr(hr) (hr = S_OK)
 #endif
 
 

@@ -11,10 +11,10 @@
 #include "GameFramework/Actor/AActor.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "World/World.h"
-
+#include "Engine/Engine.h"
 
 HStaticMeshComponent::HStaticMeshComponent(const HName& Name)
-	: HActorComponent(Name)
+	: HSceneComponent(Name)
 {
 	m_MeshWorldCB.Create( L"[Static Mesh Component] World CB" );
 }
@@ -27,7 +27,7 @@ HStaticMeshComponent::~HStaticMeshComponent()
 void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 {
 	if (!GetIsDrawEnabled()) return;
-
+	
 	if (m_Material.IsValid())
 	{
 		// Set the material information.
@@ -38,7 +38,8 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 	{
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat =  m_Transform.GetWorldMatrix().Transpose();
+		pWorld->kWorldMat =  GetTransform().GetWorldMatrix().Transpose();
+		m_MeshWorldCB.SetDirty(true);
 		GfxContext.SetGraphicsConstantBuffer(kMeshWorld, m_MeshWorldCB);
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.

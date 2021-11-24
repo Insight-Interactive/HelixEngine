@@ -88,8 +88,8 @@ void FRenderContextFactory::CreateSwapChain(FSwapChain& OutSwapChain, void* pNat
 	ZeroMemory(&SwapChainInitParams, sizeof(FSwapChainDesc));
 	SwapChainInitParams.Width = RenderSurfaceWidth;
 	SwapChainInitParams.Height = RenderSurfaceHeight;
-	SwapChainInitParams.BufferCount = 3;
-	SwapChainInitParams.Format = F_R8G8B8A8_UNorm;
+	SwapChainInitParams.BufferCount = HE_MAX_SWAPCHAIN_BACK_BUFFERS;
+	SwapChainInitParams.Format = F_R8G8B8A8_UNorm; // TODO: Check for HDR display support
 	SwapChainInitParams.SampleDesc.Count = 1;
 	SwapChainInitParams.SampleDesc.Quality = 0;
 	SwapChainInitParams.NativeWindow = pNativeSurface;

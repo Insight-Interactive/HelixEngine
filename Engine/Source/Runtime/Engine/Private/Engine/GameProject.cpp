@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Engine/GameProject.h"
@@ -36,6 +37,6 @@ void FGameProject::Startup( const Char* HProjectFilpath )
 	}
 	else
 	{
-		System::CreateMessageBox( L"No game project/content found is specified directory!", L"Error", System::MessageDialogInput::MDI_Ok );
+		System::CreateMessageBox( L"No game project/content found is specified directory!", L"Error", System::MessageDialogInput::MDI_Ok, System::MessageDialogIcon::MDIcon_Critical);
 	}
 }

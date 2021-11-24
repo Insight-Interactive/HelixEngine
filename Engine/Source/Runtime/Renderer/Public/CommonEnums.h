@@ -13,37 +13,40 @@ enum ECommandListType
 
 enum EFormat
 {
-	F_Unknown = 0,
-	F_R32G32B32A32_Float = 2,
-	F_R32G32B32_Float = 6,
-	F_R32G8X24_Typeless = 19,
-	F_R32G32_Float = 16,
-	F_D32_Float_S8X24_Typeless = 20,
-	F_R32_Float_X8X24_Typeless = 21,
-	F_X32_Typeless_G8X24_UInt = 22,
-	F_R8G8B8A8_Typeless = 27,
-	F_R8G8B8A8_UNorm = 28,
-	F_R8G8B8A8_UNorm_SRGB = 29,
-	F_R32_Typeless = 39,
-	F_D32_Float = 40,
-	F_R32_Float = 41,
-	F_R32_UINT = 42,
+	F_Unknown					= 0,
+	F_R32G32B32A32_Float		= 2,
+	F_R32G32B32_Float			= 6,
+	F_R16G16B16A16_UNorm		= 11,
+	F_R32G8X24_Typeless			= 19,
+	F_R32G32_Float				= 16,
+	F_D32_Float_S8X24_Typeless	= 20,
+	F_R32_Float_X8X24_Typeless	= 21,
+	F_X32_Typeless_G8X24_UInt	= 22,
+	F_R8G8B8A8_Typeless			= 27,
+	F_R8G8B8A8_UNorm			= 28,
+	F_R8G8B8A8_UNorm_SRGB		= 29,
+	F_R32_Typeless				= 39,
+	F_D32_Float					= 40,
+	F_R32_Float					= 41,
+	F_R32_UINT					= 42,
 
-	F_R24G8_Typeless = 44,
-	R_D24_UNorm_S8_UInt = 45,
-	F_R24_UNorm_X8_Typeless = 46,
-	F_X24_Typeless_G8_UInt = 47,
+	F_R24G8_Typeless			= 44,
+	R_D24_UNorm_S8_UInt			= 45,
+	F_R24_UNorm_X8_Typeless		= 46,
+	F_X24_Typeless_G8_UInt		= 47,
 
-	F_R16_Typeless = 53,
-	F_D16_UNorm = 55,
-	F_R16_UNorm = 56,
+	F_R16_Typeless				= 53,
+	F_D16_UNorm					= 55,
+	F_R16_UNorm					= 56,
 
-	F_B8G8R8A8_UNorm = 87,
-	F_B8G8R8X8_UNorm = 88,
-	F_B8G8R8X8_UNorm_SRGB = 93,
-	F_B8G8R8X8_UNorm_Typeless = 92,
-	F_B8G8R8A8_UNorm_Typeless = 90,
-	F_B8G8R8A8_UNorm_SRGB = 91,
+	F_R8_UNorm					= 61,
+
+	F_B8G8R8A8_UNorm			= 87,
+	F_B8G8R8X8_UNorm			= 88,
+	F_B8G8R8X8_UNorm_SRGB		= 93,
+	F_B8G8R8X8_UNorm_Typeless	= 92,
+	F_B8G8R8A8_UNorm_Typeless	= 90,
+	F_B8G8R8A8_UNorm_SRGB		= 91,
 
 };
 
@@ -230,11 +233,12 @@ enum ELogicOp
 
 enum EColorWriteEnable
 {
-	CWE_Red		= 1,
-	CWE_Green	= 2,
-	CWE_Blue	= 4,
-	CWE_Alpha	= 8,
-	CWE_All		= (((CWE_Red | CWE_Green) | CWE_Blue) | CWE_Alpha)
+	CWE_Red			= 1,
+	CWE_Green		= 2,
+	CWE_Blue		= 4,
+	CWE_Alpha		= 8,
+	CWE_ColorOnly	= ((CWE_Red | CWE_Green) | CWE_Blue),
+	CWE_All			= (((CWE_Red | CWE_Green) | CWE_Blue) | CWE_Alpha)
 };
 
 enum EStencilOp
@@ -329,6 +333,7 @@ enum ERootParameterType
 	RPT_ShaderResourceView = (RPT_ConstantBufferView + 1),
 	RPT_UnorderedAccessView = (RPT_ShaderResourceView + 1),
 };
+#define HE_INVALID_ROOT_PARAM_TYPE (ERootParameterType)0xFFFFFFFF;
 
 enum EShaderVisibility
 {

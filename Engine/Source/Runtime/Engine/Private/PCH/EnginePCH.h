@@ -3,6 +3,7 @@
 
 
 #include <map>
+#include <array>
 #include <queue>
 #include <string>
 #include <thread>
@@ -33,6 +34,9 @@
 
 #	if R_WITH_D3D12
 #		include <d3d12.h>
+#		include <D3D12shader.h>
+#		include <d3dcompiler.h>
+
 #		ifdef NTDDI_WIN10_RS2
 #			include <dxgi1_6.h>
 #		else

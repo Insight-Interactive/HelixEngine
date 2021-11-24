@@ -17,7 +17,6 @@ class FRootSignature;
 class FPipelineState;
 class FGpuResource;
 
-
 class FDeferredShadingTech
 {
 public:
@@ -28,6 +27,7 @@ public:
 	void UnInitialize();
 
 	void ReloadPipeline();
+	void SetOwningViewport(FViewportContext* pViewport);
 
 	void BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect);
 	void BindLightPass(FCommandContext& GfxContext, const FRect& Viewrect);
@@ -40,6 +40,9 @@ public:
 	{
 		GB_Albedo		= 0,
 		GB_Normal		= 1,
+		GB_Roughness	= 2,
+		GB_Metallic		= 3,
+		GB_Specular		= 4,
 
 		GB_NumBuffers,
 	};
@@ -125,6 +128,12 @@ FORCEINLINE void FDeferredShadingTech::ReloadPipeline()
 {
 	m_GeometryPass.ReloadPipeline();
 	m_LightPass.ReloadPipeline();
+}
+
+FORCEINLINE void FDeferredShadingTech::SetOwningViewport(FViewportContext* pViewport)
+{
+	GetGeometryPass().SetOwningViewport(pViewport);
+	GetLightPass().SetOwningViewport(pViewport);
 }
 
 FORCEINLINE void FDeferredShadingTech::BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect)

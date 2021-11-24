@@ -51,7 +51,7 @@ struct ActionMapping
 
 using ActionCallback	= std::function<void( void )>;
 using AxisCallback		= std::function<void( float )>;
-using ActionPair		= std::pair<int32, EInputEvent>;
+using ActionPair		= std::pair<StringHashValue, EInputEvent>;
 
 class Event;
 
@@ -129,8 +129,8 @@ private:
 	*/
 	bool GetCanDispatchListeners() const;
 
-	void AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey, const Char* HintName = NULL );
-	void AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale, const Char* HintName = NULL );
+	void AddActionMappingInternal( StringHashValue HintHash, DigitalInput MappedKey, const Char* HintName = NULL );
+	void AddAxisMappingInternal( StringHashValue HintHash, DigitalInput MappedKey, float Scale, const Char* HintName = NULL );
 
 	/*
 		Extension of "ProcessInputEvent" that allows the function call and event declaration to be declared inline.
@@ -197,7 +197,7 @@ private:
 	std::vector<ActionMappingInternal> m_ActionMappings;
 
 	// Holds all callback funcitons and their corisponding hints found the Axis mappings stored in FInputDispatcher::m_AxisMappings.
-	std::map<int32, std::vector<AxisCallback>> m_AxisCallbacks;
+	std::map<StringHashValue, std::vector<AxisCallback>> m_AxisCallbacks;
 
 	// Holds all callback funcitons and their corisponding hints found the actoin mappings stored in FInputDispatcher::m_ActionMappings.
 	std::map<ActionPair, std::vector<ActionCallback>> m_ActionCallbacks;
@@ -257,7 +257,7 @@ FORCEINLINE void FInputDispatcher::AddAxisMapping( const char* Hint, DigitalInpu
 	);
 }
 
-FORCEINLINE void FInputDispatcher::AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey, const Char* HintName )
+FORCEINLINE void FInputDispatcher::AddActionMappingInternal(StringHashValue HintHash, DigitalInput MappedKey, const Char* HintName )
 {
 	ActionMappingInternal Mapping(HintHash, MappedKey);
 #if HE_WITH_EDITOR
@@ -266,7 +266,7 @@ FORCEINLINE void FInputDispatcher::AddActionMappingInternal( int32 HintHash, Dig
 	m_ActionMappings.emplace_back( Mapping );
 }
 
-FORCEINLINE void FInputDispatcher::AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale, const Char* HintName )
+FORCEINLINE void FInputDispatcher::AddAxisMappingInternal(StringHashValue HintHash, DigitalInput MappedKey, float Scale, const Char* HintName )
 {
 	AxisMappingInternal Mapping( HintHash, MappedKey, Scale );
 #if HE_WITH_EDITOR

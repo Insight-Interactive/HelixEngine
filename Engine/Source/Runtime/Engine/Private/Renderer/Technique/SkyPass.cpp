@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Renderer/Technique/SkyPass.h"
@@ -39,12 +40,11 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 
 	// Create the pipeline state.
 	//
-	m_RS.Reset(5, 1);
+	m_RS.Reset(4, 1);
 	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
 	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
 	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Sky Cubemap

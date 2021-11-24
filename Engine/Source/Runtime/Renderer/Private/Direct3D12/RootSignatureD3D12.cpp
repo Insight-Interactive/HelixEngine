@@ -116,18 +116,16 @@ void FRootSignature::Finalize(const WChar* name, ERootSignatureFlags Flags)
         ID3D12Device* pD3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
         ::Microsoft::WRL::ComPtr<ID3DBlob> pOutBlob, pErrorBlob;
 
-        HRESULT hr = D3D12SerializeRootSignature(&RootDesc, D3D_ROOT_SIGNATURE_VERSION_1,
-            pOutBlob.GetAddressOf(), pErrorBlob.GetAddressOf());
+        HRESULT hr = D3D12SerializeRootSignature(&RootDesc, D3D_ROOT_SIGNATURE_VERSION_1, pOutBlob.GetAddressOf(), pErrorBlob.GetAddressOf());
+        ThrowIfFailedMsg(hr, "Failed to serialize D3D12 root signature!");
         if (pErrorBlob != NULL)
         {
             R_LOG(Error, TEXT("Error while compiling RootSignature: %s"), (TChar*)pErrorBlob->GetBufferPointer())
         }
-
-        hr = D3D12SerializeRootSignature(&RootDesc, D3D_ROOT_SIGNATURE_VERSION_1, pOutBlob.GetAddressOf(), pErrorBlob.GetAddressOf());
-        ASSERT_SUCCEEDED(hr);
+        ResetHr(hr);
 
         hr = pD3D12Device->CreateRootSignature(1, pOutBlob->GetBufferPointer(), pOutBlob->GetBufferSize(), IID_PPV_ARGS(&m_pID3D12RootSignature));
-        ASSERT_SUCCEEDED(hr);
+        ThrowIfFailedMsg(hr, "Failed to create root signature!");
 
 #if R_DEBUG_GPU_RESOURCES
         m_pID3D12RootSignature->SetName(name);

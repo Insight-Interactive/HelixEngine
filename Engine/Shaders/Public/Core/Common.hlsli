@@ -1,9 +1,10 @@
-
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 /*
     Puts a value back into normalized device coordinates.
 */
 #define ToNDC(Value) Value * 2 - 1
 
+#define PI 3.14159265359
 
 float3 ConstructWorldPosFromDepth(float Depth, float2 TexCoords, float4x4 InverseViewMatrix, float4x4 InverseProjectionMatrix)
 {

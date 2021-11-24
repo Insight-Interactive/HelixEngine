@@ -33,7 +33,7 @@ protected:
 	}
 
 protected:
-	bool IsValid(void) const { return GetAlbedoTexture().IsValid() && GetNormalTexture().IsValid(); }
+	//bool IsValid(void) const { return GetAlbedoTexture().IsValid() && GetNormalTexture().IsValid(); }
 	void Unload();
 
 	String m_MapKey; // For deleting from the map later.
@@ -89,6 +89,8 @@ public:
 	{
 		return m_MaterialCache.at(Id).get();
 	}
+
+	void FlushMaterialCache();
 
 private:
 	std::unordered_map< String, std::unique_ptr<ManagedMaterial> > m_MaterialCache;

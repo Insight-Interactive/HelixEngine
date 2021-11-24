@@ -116,6 +116,9 @@
     <ClCompile Include="Private\FileSystem.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Guid.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Logger.cpp">
       <Filter>Private</Filter>
     </ClCompile>

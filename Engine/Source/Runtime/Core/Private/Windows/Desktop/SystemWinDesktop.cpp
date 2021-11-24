@@ -121,9 +121,10 @@ namespace System
 		return (int32)::FreeLibrary( (HMODULE)Handle );
 	}
 
-	MessageDialogResult CreateMessageBox( const WChar* Message, const WChar* Title, MessageDialogInput Type, void* pParentWindow/* = NULL*/ )
+	MessageDialogResult CreateMessageBox( const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon, void* pParentWindow/* = NULL*/ )
 	{
-		return (MessageDialogResult)::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, (UINT)Type );
+		UINT Flags = Icon | MB_DEFBUTTON1 | MB_SYSTEMMODAL;
+		return (MessageDialogResult)::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, (UINT)Type | Flags );
 	}
 
 	TChar* GetLastSystemError()

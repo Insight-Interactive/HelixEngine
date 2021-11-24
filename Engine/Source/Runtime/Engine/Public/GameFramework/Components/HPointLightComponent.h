@@ -20,6 +20,7 @@ HCOMPONENT()
 class HPointLightComponent : public HActorComponent
 {
 	friend class AActor;
+	friend class HScene;
 	using Super = HActorComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HPointLightComponent )
@@ -75,7 +76,6 @@ inline FColor HPointLightComponent::GetColor() const
 		RetVal.R = pData->Color.x;
 		RetVal.G = pData->Color.y;
 		RetVal.B = pData->Color.z;
-		RetVal.A = pData->Color.w;
 	}
 	return RetVal;
 }
@@ -107,7 +107,7 @@ inline void HPointLightComponent::SetColor( const FColor& NewColor )
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != NULL)
 	{
-		pData->Color = NewColor.ToVector4();
+		pData->Color = NewColor.ToVector3();
 	}
 }
 

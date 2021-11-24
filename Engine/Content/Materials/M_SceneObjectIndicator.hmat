@@ -1,0 +1,18 @@
+{
+  "Material": [
+    {
+      "EMaterialBlendMode": 0,
+      "EMaterialDomain": 0,
+      "EShadingModel": 2,
+      "IsTwoSided": false
+    },
+    {
+      "AlbedoTexture": "149ac663-a662-4d51-a57b-8253b53f80bc",
+      "NormalTexture": "22f34b3e-b377-4ec5-9e47-dd2aa1225216"
+    },
+    {
+      "VertexShader": "ada4a5fc-7395-4db6-81bc-863c0add8066",
+      "PixelShader": "c7cd8297-1098-446c-8d01-7d175f81564c"
+    }
+  ]
+}

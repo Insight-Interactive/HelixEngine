@@ -1,6 +1,11 @@
 #pragma once
 
-#include <Rpc.h>
+#include "DebugAssert.h"
+#include "DataTypes.h"
+
+#if HE_WINDOWS
+#	include <Rpc.h>
+#endif
 
 class FGUID;
 
@@ -26,13 +31,21 @@ public:
 		ZeroMemory( &m_UUID, sizeof( m_UUID ) );
 #endif
 	}
+	FGUID(const Char* GuidStr)
+		: FGUID()
+	{
+		FGUID::CreateFromString(GuidStr, *this);
+	}
+	FGUID(uint32 InitialValue)
+	{
+#if HE_WINDOWS
+		memset(&m_UUID, InitialValue, sizeof(m_UUID));
+#endif
+	}
 	~FGUID()
 	{
 	}
-	FGUID( const Char* GuidStr )
-	{
-		FGUID::CreateFromString( GuidStr, *this );
-	}
+
 
 	bool operator == ( const FGUID& Other ) const
 	{
@@ -49,12 +62,14 @@ public:
 	const void* GetNativeGUID() const;
 
 	GUIDString ToString() const;
-
-
+	
 private:
 #if HE_WINDOWS
 	UUID m_UUID;
 #endif
+
+private:
+	static const FGUID kInvalidGuid;
 
 };
 

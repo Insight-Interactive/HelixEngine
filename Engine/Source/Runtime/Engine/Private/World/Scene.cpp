@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "World/Scene.h"
@@ -19,41 +20,11 @@ HScene::~HScene()
 
 }
 
-void HScene::RenderStaticUnlitOpaqueOjects(FCommandContext& CmdContext)
-{
-	CmdContext.BeginDebugMarker(L"Render Opaque Unlit");
-	{
-		for (auto Iter = m_StaticMeshs.begin(); Iter != m_FirstTranslucent; ++Iter)
-		{
-			HStaticMeshComponent& StaticMesh = (**Iter);
-
-			if (StaticMesh.GetMaterial()->GetShadingModel() == SM_Unlit)
-				StaticMesh.Render(CmdContext);
-		}
-	}
-	CmdContext.EndDebugMarker();
-}
-
-void HScene::RenderStaticUnlitTranslucentObjects(FCommandContext& CmdContext)
-{
-	CmdContext.BeginDebugMarker(L"Render Translucent Unlit");
-	{
-		for (auto Iter = m_FirstTranslucent; Iter != m_StaticMeshs.end(); ++Iter)
-		{
-			HStaticMeshComponent& StaticMesh = (**Iter);
-
-			if (StaticMesh.GetMaterial()->GetShadingModel() == SM_Unlit)
-				StaticMesh.Render(CmdContext);
-		}
-	}
-	CmdContext.EndDebugMarker();
-}
-
 void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)
 {
 	CmdContext.BeginDebugMarker(L"Render Opaque Lit");
 	{
-		for (auto Iter = m_StaticMeshs.begin(); Iter != m_FirstTranslucent; ++Iter)
+		for (auto Iter = m_StaticMeshs.begin(); Iter != m_FirstTranslucentOrUnlit; ++Iter)
 		{
 			HStaticMeshComponent& StaticMesh = (**Iter);
 			if (StaticMesh.GetMaterial()->GetShadingModel() == SM_DefaultLit)
@@ -63,17 +34,25 @@ void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)
 	CmdContext.EndDebugMarker();
 }
 
-void HScene::RenderStaticLitTranslucentObjects(FCommandContext& CmdContext)
+void HScene::RenderStaticTranslucentAndUnlitObjects(FCommandContext& CmdContext)
 {
 	CmdContext.BeginDebugMarker(L"Render Translucent Lit");
 	{
-		for (auto Iter = m_FirstTranslucent; Iter != m_StaticMeshs.end(); ++Iter)
+		for (auto Iter = m_FirstTranslucentOrUnlit; Iter != m_StaticMeshs.end(); ++Iter)
 		{
 			HStaticMeshComponent& StaticMesh = (**Iter);
 
 			EShadingModel ShadingMod = StaticMesh.GetMaterial()->GetShadingModel();
-			if (ShadingMod == SM_DefaultLit || ShadingMod == SM_Foliage)
-				StaticMesh.Render(CmdContext);
+			StaticMesh.Render(CmdContext);
+		}
+	}
+	CmdContext.EndDebugMarker();
+
+	CmdContext.BeginDebugMarker(L"Render Lights");
+	{
+		for (size_t i = 0; i < m_PointLights.size(); ++i)
+		{
+			m_PointLights[i]->Render(CmdContext);
 		}
 	}
 	CmdContext.EndDebugMarker();

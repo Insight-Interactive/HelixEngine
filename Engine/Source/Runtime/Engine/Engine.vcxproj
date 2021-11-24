@@ -982,6 +982,7 @@
     <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\SplashScreen.h" />
+    <ClInclude Include="Public\Engine\Subsystem\PhysicsSubsystem.h" />
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
     <ClInclude Include="Public\Engine\ViewportContext.h" />
     <ClInclude Include="Public\Engine\Window.h" />
@@ -996,6 +997,7 @@
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h" />
+    <ClInclude Include="Public\GameFramework\Game.h" />
     <ClInclude Include="Public\GameFramework\GameInstance.h" />
     <ClInclude Include="Public\GameFramework\HObject.h" />
     <ClInclude Include="Public\Input\Gamepad.h" />
@@ -1016,6 +1018,7 @@
     <ClInclude Include="Public\Renderer\RenderPass.h" />
     <ClInclude Include="Public\Renderer\SceneRenderer.h" />
     <ClInclude Include="Public\Renderer\Shader.h" />
+    <ClInclude Include="Public\Renderer\ShaderReflection.h" />
     <ClInclude Include="Public\Renderer\ShaderRegisters.h" />
     <ClInclude Include="Public\Renderer\Technique\DeferredShadingTech.h" />
     <ClInclude Include="Public\Renderer\Technique\ForwardRenderPass.h" />
@@ -1044,6 +1047,7 @@
     <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\SplashScreen.cpp" />
+    <ClCompile Include="Private\Engine\Subsystem\PhysicsSubsystem.cpp" />
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
     <ClCompile Include="Private\Engine\ViewportContext.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp" />
@@ -1057,6 +1061,7 @@
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Game.cpp" />
     <ClCompile Include="Private\GameFramework\GameInstance.cpp" />
     <ClCompile Include="Private\GameFramework\HObject.cpp" />
     <ClCompile Include="Private\Input\Gamepad.cpp" />
@@ -1102,6 +1107,7 @@
     <ClCompile Include="Private\Renderer\MaterialManager.cpp" />
     <ClCompile Include="Private\Renderer\SceneRenderer.cpp" />
     <ClCompile Include="Private\Renderer\Shader.cpp" />
+    <ClCompile Include="Private\Renderer\ShaderReflection.cpp" />
     <ClCompile Include="Private\Renderer\Technique\DeferredShadingTech.cpp" />
     <ClCompile Include="Private\Renderer\Technique\ForwardRenderPass.cpp" />
     <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp" />

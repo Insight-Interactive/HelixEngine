@@ -496,6 +496,7 @@
     <None Include="Public\Core\Common.hlsli" />
     <None Include="Public\Core\Core.hlsli" />
     <None Include="Public\Core\LightsFwd.hlsli" />
+    <None Include="Public\Core\PBRCommon.hlsli" />
     <None Include="Public\DeferredShading\DeferredShadingCommon.hlsli" />
     <None Include="Public\ForwardShading\ForwardShadingCommon.hlsli" />
     <None Include="Shaders.module.lua" />

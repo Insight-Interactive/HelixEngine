@@ -16,7 +16,8 @@
 #include "DepthBuffer.h"
 #include "PipelineState.h"
 #include "ColorBuffer.h"
-
+#include "Renderer/SceneRenderer.h"
+#include "Engine/ViewportContext.h"
 
 
 //
@@ -61,16 +62,17 @@ FDeferredShadingTech::GeometryPass::~GeometryPass()
 
 }
 
+#include <D3D12shader.h>
+#include <d3dcompiler.h>
 void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolution )
 {
 	HE_ASSERT( m_pSceneDepthBufferRef != NULL ); // Trying to initialize geometry pass with no scene depth buffer! Call 'GeometryPass::SetDepthBuffer' before initilializing.
 
-	m_RS.Reset(6, 1);
+	m_RS.Reset(7, 1);
 	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
 	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
 	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Albedo
@@ -79,14 +81,23 @@ void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolu
 	// Normal
 	m_RS[GRP_MaterialTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
 	m_RS[GRP_MaterialTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 1, 1);
+	// Roughness
+	m_RS[GRP_MaterialTextureRoughness].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[GRP_MaterialTextureRoughness].SetTableRange(0, DRT_ShaderResourceView, 2, 1);
+	// Metallic
+	m_RS[GRP_MaterialTextureMetallic].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[GRP_MaterialTextureMetallic].SetTableRange(0, DRT_ShaderResourceView, 3, 1);
 	m_RS.Finalize(L"[Deferred Renderer][Geometry Pass] RootSig", RSF_AllowInputAssemblerLayout);
 
 
 	// Create the render targets.
 	//
-	const uint32 NumMips = 1u;
-	m_RenderTargets[GB_Albedo].Create( L"[Geometry Pass][G-Buffer] Albedo Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm );
-	m_RenderTargets[GB_Normal].Create( L"[Geometry Pass][G-Buffer] Normal Buffer" , (uint32)RenderResolution.x, (uint32)RenderResolution.y, NumMips, F_R8G8B8A8_UNorm );
+	const uint32 kNumMips = 1u;
+	m_RenderTargets[GB_Albedo].Create( L"[G-Buffer] Albedo Buffer",			(uint32)RenderResolution.x, (uint32)RenderResolution.y, kNumMips, kGBufferFormats[GB_Albedo]);
+	m_RenderTargets[GB_Normal].Create( L"[G-Buffer] Normal Buffer" ,		(uint32)RenderResolution.x, (uint32)RenderResolution.y, kNumMips, kGBufferFormats[GB_Normal]);
+	m_RenderTargets[GB_Roughness].Create( L"[G-Buffer] Roughness Buffer",	(uint32)RenderResolution.x, (uint32)RenderResolution.y, kNumMips, kGBufferFormats[GB_Roughness]);
+	m_RenderTargets[GB_Metallic].Create( L"[G-Buffer] Metallic Buffer" ,	(uint32)RenderResolution.x, (uint32)RenderResolution.y, kNumMips, kGBufferFormats[GB_Metallic]);
+	m_RenderTargets[GB_Specular].Create( L"[G-Buffer] Specular Buffer" ,	(uint32)RenderResolution.x, (uint32)RenderResolution.y, kNumMips, kGBufferFormats[GB_Specular]);
 
 
 	// Create the pipeline state.
@@ -124,9 +135,12 @@ void FDeferredShadingTech::GeometryPass::UnInitialize()
 
 void FDeferredShadingTech::GeometryPass::ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect)
 {
-	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Albedo), Viewrect);
-	GfxContext.ClearColorBuffer(GetGBufferColorBuffer(GB_Normal), Viewrect);
-	GfxContext.ClearDepth(*m_pSceneDepthBufferRef);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer( GB_Albedo ),		Viewrect);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer( GB_Normal ),		Viewrect);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer( GB_Roughness ),	Viewrect);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer( GB_Metallic ),	Viewrect);
+	GfxContext.ClearColorBuffer(GetGBufferColorBuffer( GB_Specular ),	Viewrect);
+	GfxContext.ClearDepth( *m_pSceneDepthBufferRef );
 }
 
 void FDeferredShadingTech::GeometryPass::Bind( FCommandContext& GfxContext, const FRect& Viewrect )
@@ -136,12 +150,15 @@ void FDeferredShadingTech::GeometryPass::Bind( FCommandContext& GfxContext, cons
 	GfxContext.BeginDebugMarker(TEXT("Geometry Pass"));
 
 	// Transition
-	GfxContext.TransitionResource( *m_pSceneDepthBufferRef, RS_DepthWrite );
-	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Albedo ), RS_RenderTarget);
-	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Normal ), RS_RenderTarget);
+	GfxContext.TransitionResource( *m_pSceneDepthBufferRef,					RS_DepthWrite );
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Albedo ),		RS_RenderTarget);
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Normal ),		RS_RenderTarget);
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Roughness ),	RS_RenderTarget);
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Metallic ),	RS_RenderTarget);
+	GfxContext.TransitionResource( GetGBufferColorBuffer( GB_Specular ),	RS_RenderTarget);
 
 	// Set state
-	const FColorBuffer* RTs[] = { &m_RenderTargets[0], &m_RenderTargets[1], &m_RenderTargets[2] };
+	const FColorBuffer* RTs[] = { &m_RenderTargets[0], &m_RenderTargets[1], &m_RenderTargets[2], &m_RenderTargets[3],&m_RenderTargets[4] };
 	GfxContext.OMSetRenderTargets(
 		GB_NumBuffers,
 		RTs,
@@ -204,12 +221,11 @@ void FDeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolutio
 {
 	m_RenderTargetFormat = SwapchainFormatTEMP;
 
-	m_RS.Reset(8, 1);
+	m_RS.Reset(9, 1);
 	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
 	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
-	m_RS[kMaterial].InitAsConstantBuffer(kMaterial, SV_Pixel);
 	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
 	// Pipeline
 	// Scene Depth
@@ -221,9 +237,15 @@ void FDeferredShadingTech::LightPass::Initialize(const FVector2& RenderResolutio
 	// Normal
 	m_RS[LRP_GBufferTextureNormal].InitAsDescriptorTable(1, SV_Pixel);
 	m_RS[LRP_GBufferTextureNormal].SetTableRange(0, DRT_ShaderResourceView, 2, 1);
-	// Position
-	m_RS[LRP_GBufferTexturePosition].InitAsDescriptorTable(1, SV_Pixel);
-	m_RS[LRP_GBufferTexturePosition].SetTableRange(0, DRT_ShaderResourceView, 3, 1);
+	// Roughness
+	m_RS[LRP_GBufferTextureRoughness].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureRoughness].SetTableRange(0, DRT_ShaderResourceView, 3, 1);
+	// Metallic
+	m_RS[LRP_GBufferTextureMetallic].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureMetallic].SetTableRange(0, DRT_ShaderResourceView, 4, 1);
+	// Specular
+	m_RS[LRP_GBufferTextureSpecular].InitAsDescriptorTable(1, SV_Pixel);
+	m_RS[LRP_GBufferTextureSpecular].SetTableRange(0, DRT_ShaderResourceView, 5, 1);
 	m_RS.Finalize(L"[Deferred Renderer][Light Pass] RootSig", RSF_AllowInputAssemblerLayout);
 
 
@@ -259,8 +281,11 @@ void FDeferredShadingTech::LightPass::Bind(FCommandContext& GfxContext, const FR
 
 	// Transition
 	GfxContext.TransitionResource( *m_pSceneDepthBufferRef, RS_DepthRead );
-	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Albedo ), RS_PixelShaderResource);
-	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Normal ), RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Albedo ),		RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Normal ),		RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Roughness ),	RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Metallic ),		RS_PixelShaderResource);
+	GfxContext.TransitionResource( m_GeometryPass.GetGBufferColorBuffer( GB_Specular ),		RS_PixelShaderResource);
 
 	// Bind state
 	GfxContext.SetPipelineState(m_PSO);
@@ -268,8 +293,11 @@ void FDeferredShadingTech::LightPass::Bind(FCommandContext& GfxContext, const FR
 
 	// Bind resources
 	GfxContext.SetDepthBufferAsTexture(LRP_GBufferTextureSceneDepth, m_pSceneDepthBufferRef );
-	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureAlbedo,   0, &m_GeometryPass.GetGBufferColorBuffer(GB_Albedo));
-	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureNormal,   0, &m_GeometryPass.GetGBufferColorBuffer(GB_Normal));
+	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureAlbedo,	0, &m_GeometryPass.GetGBufferColorBuffer(GB_Albedo));
+	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureNormal,	0, &m_GeometryPass.GetGBufferColorBuffer(GB_Normal));
+	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureRoughness, 0, &m_GeometryPass.GetGBufferColorBuffer(GB_Roughness));
+	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureMetallic,  0, &m_GeometryPass.GetGBufferColorBuffer(GB_Metallic));
+	GfxContext.SetColorBufferAsTexture(LRP_GBufferTextureSpecular,  0, &m_GeometryPass.GetGBufferColorBuffer(GB_Specular));
 }
 
 void FDeferredShadingTech::LightPass::UnBind(FCommandContext& GfxContext)

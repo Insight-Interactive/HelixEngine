@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "../../../Source/Runtime/Engine/Public/Engine/EngineDefines.h"
 #include "LightsFwd.hlsli"
 
@@ -6,6 +7,7 @@
 // Core Types and Macros for Rendering 
 //
 #define R_WITH_D3D12 1
+
 // Type wrappers
 #if R_WITH_D3D12 // TODO make this macro work to generate const buffers for each platform.
 
@@ -20,8 +22,12 @@
 
 #endif
 
+
+//
 // Constant Buffers
-HE_DECLARE_CONSTANT_BUFFER(SceneConstants, kSceneConstantsReg )
+//
+
+HE_DECLARE_CONSTANT_BUFFER(SceneConstants_CB, kSceneConstantsReg)
 {
     float4x4 kCameraView;
     float4x4 kCameraProjection;
@@ -33,17 +39,12 @@ HE_DECLARE_CONSTANT_BUFFER(SceneConstants, kSceneConstantsReg )
     float kCameraFarZ;
 }
 
-HE_DECLARE_CONSTANT_BUFFER(MeshWorld, kMeshWorldReg)
+HE_DECLARE_CONSTANT_BUFFER(MeshWorld_CB, kMeshWorldReg)
 {
     float4x4 kWorldMat;
 }
 
-HE_DECLARE_CONSTANT_BUFFER(MaterialConstants, kMaterialReg)
-{
-    float4 kMaterialColor;
-};
-
-HE_DECLARE_CONSTANT_BUFFER(SceneLights, kLightsReg)
+HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 {
     uint kNumPointLights;
     uint kNumDirectionalLights;
@@ -52,3 +53,10 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights, kLightsReg)
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
 	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 }
+
+
+//
+// Samplers
+//
+
+HE_DECLARE_SAMPLERSTATE(LinearWrapSampler, 0);

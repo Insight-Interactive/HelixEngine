@@ -112,7 +112,7 @@ namespace System
 		return (int32)::FreeLibrary((HMODULE)Handle);
 	}
 
-	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, void* pParentWindow/* = NULL*/)
+	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon, void* pParentWindow/* = NULL*/)
 	{
 		winrt::Windows::UI::Popups::MessageDialog Dialog(Message, Title);
 		Dialog.ShowAsync();

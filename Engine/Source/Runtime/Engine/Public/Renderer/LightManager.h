@@ -210,7 +210,7 @@ FORCEINLINE void LightManager::InitializePointLightData(PointLightCBData& Light)
 {
 	ZeroMemory(&Light, sizeof(PointLightCBData));
 	Light.Brightness = kDefaultBrightness;
-	Light.Color = FVector4::One;
+	Light.Color = FVector3::One;
 }
 
 FORCEINLINE void LightManager::InitializeDirectionalLightData(DirectionalLightCBData& Light)

@@ -53,7 +53,7 @@ HE_ALIGN( 16 ) struct PointLightCBData
 	float Radius;
 
 	// The color of the light. Fourth component is unused.
-	FVector4				Color;
+	FVector3				Color;
 
 	// The brightness the light will illuminate.
 	float					Brightness;

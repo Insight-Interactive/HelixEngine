@@ -950,6 +950,7 @@
     <ClCompile Include="Private\APIBridge\CommonFunctions.cpp" />
     <ClCompile Include="Private\APIBridge\EnumTranslations.cpp" />
     <ClCompile Include="Private\CommandContext.cpp" />
+    <ClCompile Include="Private\ConstantBuffer.cpp" />
     <ClCompile Include="Private\Direct3D12\ColorBufferD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\CommandAllocatorPoolD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\CommandContextD3D12.cpp" />

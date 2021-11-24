@@ -4,10 +4,10 @@
 #include "Engine/Engine.h"
 
 #include "System.h"
-#include "GameFramework/GameInstance.h"
 #include "ThreadPool.h"
 #include "FileSystem.h"
-#include "System.h"
+#include "GameFramework/Game.h"
+#include "GameFramework/GameInstance.h"
 
 #include "GpuResource.h"
 #include "CommandContext.h"
@@ -107,7 +107,6 @@ void HEngine::Startup()
 	//GGameInstance = MakeGameInstance();
 	GGameInstance = new HGameInstance();
 
-	//String AssetDatabaseRoot = FGameProject::GetInstance()->GetContentFolder() + "/DataCache/AssetDatabase.json";
 	String AssetDatabaseRoot = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
 	FAssetDatabase::GetInstance()->Initialize( AssetDatabaseRoot.c_str() );
 
@@ -179,6 +178,7 @@ void HEngine::Shutdown()
 	m_GameWorld.Flush();
 
 	FAssetDatabase::GetInstance()->Uninitialize();
+	GMaterialManager.FlushMaterialCache();
 
 	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );
 }
@@ -196,9 +196,6 @@ void HEngine::PostShutdown()
 void HEngine::Update()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
-
-	//EWindowMode ClientWindowMode = WM_Borderless;
-	//m_MainViewPort.GetWindow().SetWindowMode(ClientWindowMode);
 
 	m_FrameTimer.Initialize();
 	while (FApp::GetInstance()->IsRunning())
@@ -233,8 +230,6 @@ void HEngine::Update()
 		}
 		else
 			FPS++;
-
-		//HE_LOG( Log, TEXT( "Delta time: %f | Seconds: %f" ), m_FrameTimer.GetTimeMiliSeconds(), m_AppSeconds );
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );

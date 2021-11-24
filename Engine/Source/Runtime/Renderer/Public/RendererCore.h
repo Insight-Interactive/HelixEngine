@@ -23,6 +23,9 @@
 #define HE_D3D12_RENDER_BACKEND_NAME "Direct3D 12"
 #define HE_D3D11_RENDER_BACKEND_NAME "Direct3D 11"
 
+// The maximum number of back buffers a swapchain can have.
+#define HE_MAX_SWAPCHAIN_BACK_BUFFERS	3
+
 
 class FStaticGeometryManager;
 class MaterialManager;
@@ -70,9 +73,7 @@ extern FRenderDevice GGraphicsDevice;
 extern FGeometryBufferManager GGeometryManager;
 // Texture overlord.
 extern FTextureManager GTextureManager;
-// Default texture containter.
-// The texture manager manages the lifetime of the objects this array's elements point too.
-// Each API has their own texture type.
+// Default texture container.
 extern HTexture GDefaultTextures[];
 // Heap holding all shader visible textures.
 extern FDescriptorHeap GTextureHeap;

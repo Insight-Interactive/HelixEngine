@@ -3,6 +3,14 @@
 #include "DataTypes.h"
 
 
+// ---------------
+//      Types
+// ---------------
+
+// Represents a hashed string.
+typedef int32 StringHashValue;
+
+
 // This requires SSE4.2 which is present on Intel Nehalem (Nov. 2008)
 // and AMD Bulldozer (Oct. 2011) processors.  I could put a runtime
 // check for this, but I'm just going to assume people playing with
@@ -77,10 +85,30 @@ FORCEINLINE size_t HashState(const T* StateDesc, size_t Count = 1, size_t Hash =
 }
 
 template <typename CharType>
-FORCEINLINE int32 StringHash( const CharType* String, uint64 Length)
+FORCEINLINE StringHashValue StringHash( const CharType* String, uint64 Length)
 {
     int32 HashResult = 0;
     while ((*String != NULL) && (Length-- != 0))
+    {
+        HashResult += *String;
+        HashResult += (HashResult << 10);
+        HashResult ^= (HashResult >> 6);
+        String++;
+    }
+
+    HashResult += (HashResult << 3);
+    HashResult ^= (HashResult >> 11);
+    HashResult += (HashResult << 15);
+
+    return HashResult;
+}
+
+
+template <typename CharType>
+FORCEINLINE StringHashValue StringHash(const CharType* String)
+{
+    int32 HashResult = 0;
+    while (*String != NULL)
     {
         HashResult += *String;
         HashResult += (HashResult << 10);

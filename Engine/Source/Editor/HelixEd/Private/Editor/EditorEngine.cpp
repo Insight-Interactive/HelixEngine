@@ -43,8 +43,6 @@ void HEditorEngine::Startup()
 {
 	Super::Startup();
 
-
-
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
@@ -74,24 +72,6 @@ void HEditorEngine::Startup()
 	SetupImGuiRenderBackend();
 
 	SetupEditorPanels();
-
-
-	/*OPENFILENAME FileResult = {0};
-	TChar Buffer[300];
-	ZeroMemory( Buffer, sizeof(Buffer) );
-	FileResult.lStructSize = sizeof( OPENFILENAME );
-	FileResult.hwndOwner = *RCast<HWND*>(GetClientViewport().GetWindow().GetNativeWindow());
-	FileResult.lpstrFile = Buffer;
-	FileResult.nMaxFile = 300;
-	FileResult.Flags = OFN_EXPLORER;
-	FileResult.lpstrFilter = NULL;
-	FileResult.lpstrCustomFilter = NULL;
-	FileResult.nFilterIndex = 0;
-	FileResult.lpstrFileTitle = NULL;
-	FileResult.lpstrInitialDir = TEXT("C:\\Dev\\");
-	FileResult.lpstrTitle = NULL;
-	GetOpenFileName( &FileResult );
-	int val;*/
 }
 
 void HEditorEngine::LoadEditorPreferences()
@@ -200,6 +180,9 @@ void HEditorEngine::SaveEditorPreferences()
 			HE_ASSERT( false );
 		}
 	}
+
+	// Save the editor layout.
+	ImGui::SaveIniSettingsToDisk((FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini").c_str());
 }
 
 void HEditorEngine::SetupImGuiRenderBackend()
@@ -232,7 +215,7 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	ImGui::DockSpaceOverViewport( 0, ImGuiDockNodeFlags_PassthruCentralNode );
+	ImGui::DockSpaceOverViewport( NULL, ImGuiDockNodeFlags_PassthruCentralNode );
 
 	// Update the client world and viewport.
 	GetClientViewport().Update( DeltaTime );
@@ -586,7 +569,7 @@ void HEditorEngine::OnExitMenuItem()
 void HEditorEngine::OnSaveMenuItem()
 {
 	using namespace System;
-	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel );
+	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, System::MessageDialogIcon::MDIcon_Question);
 	if (Result == MDR_Ok)
 	{
 		FAssetDatabase::GetInstance()->SaveAssetDatabases();

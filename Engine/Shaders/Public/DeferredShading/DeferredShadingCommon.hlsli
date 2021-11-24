@@ -28,8 +28,11 @@ struct GP_PSOutput
 {
 	// GBuffer
 
-	float4 Albedo	: SV_Target0;
-	float4 Normal	: SV_Target1;
+	float4 Albedo		: SV_Target0;
+	float4 Normal		: SV_Target1;
+	float1 Roughness	: SV_Target2;
+	float1 Metallic		: SV_Target3;
+	float1 Specular		: SV_Target4;
 };
 
 

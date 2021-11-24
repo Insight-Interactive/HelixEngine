@@ -2,10 +2,6 @@
 #include "ForwardShadingCommon.hlsli"
 
 
-// Samplers
-//
-HE_DECLARE_SAMPLERSTATE(LinearWrapSampler, 0);
-
 // Opaque material Textures
 //
 HE_DECLARE_TEXTURE2D(MaterialAlbedo, 0);

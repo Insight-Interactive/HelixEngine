@@ -913,6 +913,7 @@
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp" />
     <ClCompile Include="Private\FileSystem.cpp" />
+    <ClCompile Include="Private\Guid.cpp" />
     <ClCompile Include="Private\Logger.cpp" />
     <ClCompile Include="Private\PCH\CorePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

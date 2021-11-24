@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Components/HBillboardComponent.h"
@@ -23,7 +24,7 @@ void HBillboardComponent::BeginPlay()
 
 void HBillboardComponent::Tick( float DeltaTime )
 {
-	GetTransform().SetRotation( GetWorld()->GetCurrentSceneRenderCamera()->GetTransform().GetRotation() );
+	SetRotation( GetWorld()->GetCurrentSceneRenderCamera()->GetTransform().GetRotation() );
 }
 
 void HBillboardComponent::OnCreate()

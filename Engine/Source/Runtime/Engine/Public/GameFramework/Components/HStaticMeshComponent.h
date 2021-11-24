@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameFramework/Components/HActorComponent.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 #include "Transform.h"
 #include "ModelManager.h"
@@ -9,7 +9,7 @@
 
 
 HCOMPONENT()
-class HStaticMeshComponent : public HActorComponent
+class HStaticMeshComponent : public HSceneComponent
 {
 	friend class AActor;
 	friend class HScene;
@@ -22,7 +22,6 @@ public:
 	void SetMaterial( MaterialRef Material );
 
 	HMaterial& GetMaterial();
-	FTransform& GetTransform();
 	bool GetIsDrawEnabled() const;
 	void SetIsDrawEnabled(bool bVisible);
 	bool IsOpaque() const;
@@ -40,7 +39,6 @@ protected:
 	HStaticMesh m_Geometry;
 	TConstantBuffer<MeshWorldCBData> m_MeshWorldCB;
 	HMaterial m_Material;
-	FTransform m_Transform;
 	bool m_bIsDrawEnabled;
 
 };
@@ -63,11 +61,6 @@ FORCEINLINE void HStaticMeshComponent::SetMaterial( MaterialRef Material )
 FORCEINLINE HMaterial& HStaticMeshComponent::GetMaterial()
 { 
 	return m_Material; 
-}
-
-FORCEINLINE FTransform& HStaticMeshComponent::GetTransform()
-{ 
-	return m_Transform; 
 }
 
 FORCEINLINE bool HStaticMeshComponent::IsOpaque() const

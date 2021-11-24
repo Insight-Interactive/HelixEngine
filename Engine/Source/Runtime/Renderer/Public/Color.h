@@ -36,6 +36,10 @@ public:
 		return FVector4( R, G, B, A );
 	}
 
+	FORCEINLINE FVector3 ToVector3() const
+	{
+		return FVector3(R, G, B);
+	}
 
 	float R, G, B, A;
 };

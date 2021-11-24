@@ -11,9 +11,10 @@
 //
 
 
-// ---------
-// Input
-// ---------
+// ----------------------------
+//			Input
+// ----------------------------
+
 #define HE_INPUT_USE_KEYBOARD_MOUSE 1
 #define HE_INPUT_USE_GAMEPAD		1
 
@@ -23,9 +24,9 @@
 #endif
 
 
-// ---------
-// Splash
-// ---------
+// ----------------------------
+//			Splash
+// ----------------------------
 
 #define HE_SPLASH_WIDTH		900
 #define HE_SPLASH_HEIGHT	450
@@ -37,20 +38,30 @@
 #endif
 
 
-// --------------
-// Rendering
-// --------------
-//
+// ----------------------------
+//			Rendering
+// ----------------------------
+
 // General
-#define kMaxSceneDepth				1
+#define HE_MAX_SCENE_DEPTH			1
 // Lighting
 #define HE_MAX_POINT_LIGHTS			4
 #define HE_MAX_SPOT_LIGHTS			4
 #define HE_MAX_DIRECTIONAL_LIGHTS	4
 // Shader constant buffer registers
+// These register indicies are reserved and constant across all shaders and must NOT be changed!
+// New constant buffers should reside in indicies immediatly following the last index to insude no buffer registers are duplicated.
 #define kSceneConstantsReg  0
 #define kMeshWorldReg       1
-#define kMaterialReg        2
-#define kLightsReg          3
+#define kLightsReg          2
 
-#endif
+// Simple redefines of symbols so they can match in the C++ code and in the shaders.
+// Shaders just get the value of the macro, C++ just stringifies the macro.
+// Constant buffers
+#define SceneConstants_CB	SceneConstants_CB
+#define MeshWorld_CB		MeshWorld_CB
+#define SceneLights_CB		SceneLights_CB
+// Samplers
+#define LinearWrapSampler	LinearWrapSampler
+
+#endif // ENGINEDEFINES_H

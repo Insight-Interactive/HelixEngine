@@ -55,7 +55,7 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 
 
 	// Create the mesh geometry, register it with the GPU and cache it.
-	uint64 NameHash = StringHash( MeshName.c_str(), MeshName.size() );
+	StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
 	pMesh->SetHashName( NameHash );
 	pMesh->Create(
@@ -75,7 +75,7 @@ StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::strin
 	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
 #endif
 
-	uint64 HashName = StringHash( Name.c_str(), Name.size() );
+	StringHashValue HashName = StringHash( Name.c_str(), Name.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
 	pMesh->SetHashName( HashName );
 	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );

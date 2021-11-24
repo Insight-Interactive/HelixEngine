@@ -53,6 +53,7 @@ public:
 	bool HasFocus();
 	void Show();
 	void Hide();
+	uint32 GetFrameIndex();
 
 	// Input
 	//
@@ -72,6 +73,7 @@ public:
 	// Hide the mouse if it is shown.
 	void HideMouse();
 
+	FSceneRenderer& GetSceneRenderer();
 	FViewPort& GetClientViewport();
 	FRect& GetClientRect();
 	HWorld& GetWorld();
@@ -85,6 +87,8 @@ protected:
 	void InitializeRenderingResources();
 	void ReloadRenderPipelines();
 
+	// Rendering
+	//
 	void RenderWorld(FColorBuffer& RenderTarget );
 
 	// Event Processing
@@ -129,6 +133,11 @@ FORCEINLINE bool FViewportContext::IsValid()
 FORCEINLINE HWorld& FViewportContext::GetWorld()
 {
 	return *m_WorldInView;
+}
+
+FORCEINLINE FSceneRenderer& FViewportContext::GetSceneRenderer()
+{
+	return m_SceneRenderer;
 }
 
 FORCEINLINE void FViewportContext::SetWorld( HWorld* pWorldToView )
@@ -194,6 +203,11 @@ FORCEINLINE void FViewportContext::Show()
 FORCEINLINE void FViewportContext::Hide()
 {
 	m_Window.Hide();
+}
+
+FORCEINLINE uint32 FViewportContext::GetFrameIndex()
+{
+	return GetWindow().GetSwapChain()->GetCurrentFrameIndex();
 }
 
 FORCEINLINE FWindow& FViewportContext::GetWindow()

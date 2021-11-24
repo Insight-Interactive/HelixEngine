@@ -3,6 +3,7 @@
 #include "GameFramework/HObject.h"
 
 #include "GameFramework/Components/HStaticMeshComponent.h"
+#include "GameFramework/Components/HPointLightComponent.h"
 
 
 class FCommandContext;
@@ -18,18 +19,18 @@ public:
 
 	/*
 		Sorts the scene opaque objects first transparent last.
-		Turns: ottoo into: ooott
+		Turns: ottooto into: oooottt
 	*/
 	void SortStaticTransparentObjects();
 	bool DoesContainAnyTranslucentObjects();
 
-	void RenderStaticUnlitOpaqueOjects( FCommandContext& CmdContext );
-	void RenderStaticUnlitTranslucentObjects( FCommandContext& CmdContext );
 	void RenderStaticLitOpaqueObjects( FCommandContext& CmdContext );
-	void RenderStaticLitTranslucentObjects( FCommandContext& CmdContext );
+	void RenderStaticTranslucentAndUnlitObjects( FCommandContext& CmdContext );
 
 	void AddStaticMesh( HStaticMeshComponent* pStaticMesh );
 	bool RemoveStaticMesh( HStaticMeshComponent* pStaticMesh );
+	void AddPointLight(HPointLightComponent* pPointLight);
+	bool RemovePointLight(HPointLightComponent* pPointLight);
 
 protected:
 	HWorld* GetWorld();
@@ -38,9 +39,9 @@ private:
 
 private:
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
-	std::vector<HStaticMeshComponent*>::iterator m_FirstTranslucent;
+	std::vector<HStaticMeshComponent*>::iterator m_FirstTranslucentOrUnlit;
 
-	//std::vector<HPointLightComponent*> m_PointLights;
+	std::vector<HPointLightComponent*> m_PointLights;
 	HWorld* m_pOwner;
 };
 
@@ -65,6 +66,22 @@ FORCEINLINE bool HScene::RemoveStaticMesh( HStaticMeshComponent* pStaticMesh )
 	return false;
 }
 
+FORCEINLINE void HScene::AddPointLight(HPointLightComponent* pPointLight)
+{
+	m_PointLights.push_back(pPointLight);
+}
+
+FORCEINLINE bool HScene::RemovePointLight(HPointLightComponent* pPointLight)
+{
+	auto Iter = std::find(m_PointLights.begin(), m_PointLights.end(), pPointLight);
+	if (Iter != m_PointLights.end())
+	{
+		m_PointLights.erase(Iter);
+		return true;
+	}
+	return false;
+}
+
 FORCEINLINE HWorld* HScene::GetWorld()
 {
 	return m_pOwner;
@@ -81,14 +98,15 @@ FORCEINLINE void HScene::SortStaticTransparentObjects()
 	// Get the first transparent object in the mesh list. This will be our 
 	// starting point for the translucent pass.
 	// TODO: This is O(n) will not scale well for a large number of meshes!
-	m_FirstTranslucent = std::find_if(m_StaticMeshs.begin(), m_StaticMeshs.end(),
+	m_FirstTranslucentOrUnlit = std::find_if(m_StaticMeshs.begin(), m_StaticMeshs.end(),
 		[](HStaticMeshComponent* Mesh)
 		{
-			return Mesh->GetMaterial()->GetShadingModel() == SM_Foliage;
+			EShadingModel ShadingMode = Mesh->GetMaterial()->GetShadingModel();
+			return ShadingMode == SM_Foliage || ShadingMode == SM_Unlit;
 		});
 }
 
 FORCEINLINE bool HScene::DoesContainAnyTranslucentObjects()
 {
-	return m_FirstTranslucent != m_StaticMeshs.end();
+	return m_FirstTranslucentOrUnlit != m_StaticMeshs.end();
 }
