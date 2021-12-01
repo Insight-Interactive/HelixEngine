@@ -7,11 +7,11 @@
 #include "World/World.h"
 
 
-ADebugPawn::ADebugPawn( HWorld* pWorld, const HName& Name )
-	: APawn( pWorld, Name )
+ADebugPawn::ADebugPawn( FActorInitArgs& InitArgs )
+	: APawn( InitArgs )
 {
 	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "Debug Camera" ) );
-	m_pCameraComponent->GetTransform().SetParent( &m_Transform );
+	m_pCameraComponent->AttachTo(GetRootComponent());
 	m_CanMove = true;
 }
 
@@ -82,9 +82,8 @@ void ADebugPawn::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		FTransform& CameraTransform = m_pCameraComponent->GetTransform();
-		CameraTransform.Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
-		m_Transform.SetRotation( CameraTransform.GetRotation() );
+		m_pCameraComponent->Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
+		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
 	}
 }
 
@@ -92,9 +91,8 @@ void ADebugPawn::LookRight( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		FTransform& CameraTransform = m_pCameraComponent->GetTransform();
-		CameraTransform.Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f );
-		m_Transform.SetRotation( CameraTransform.GetRotation() );
+		m_pCameraComponent->Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f );
+		m_pRootComponent->SetRotation(m_pCameraComponent->GetRotation() );
 	}
 }
 

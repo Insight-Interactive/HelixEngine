@@ -105,11 +105,6 @@ FORCEINLINE FViewportContext* HWorld::GetOwningViewport()
 	return m_pRenderingViewport;
 }
 
-FORCEINLINE void HWorld::SetViewport( FViewportContext* pViewport )
-{
-	m_pRenderingViewport = pViewport;
-}
-
 FORCEINLINE HLevel* HWorld::GetCurrentLevel()
 {
 	return m_pLevel;

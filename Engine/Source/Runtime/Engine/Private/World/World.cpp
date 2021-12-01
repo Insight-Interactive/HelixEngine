@@ -5,6 +5,7 @@
 
 #include "World/Level.h"
 #include "Engine/Engine.h"
+#include "Engine/ViewportContext.h"
 #include "Renderer/LightManager.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 
@@ -58,9 +59,16 @@ float HWorld::GetDeltaTime() const
 	return (float)GEngine->GetDeltaTime();
 }
 
+void HWorld::SetViewport( FViewportContext* pViewport )
+{
+	m_pRenderingViewport = pViewport;
+	m_pRenderingViewport->SetWorld( this );
+}
+
 void HWorld::BeginPlay()
 {
-	m_pPlayerCharacter = new APlayerCharacter( this, TEXT( "Player Character" ) );
+	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ) };
+	m_pPlayerCharacter = new APlayerCharacter( InitArgs );
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
 	AddPlayerCharacterRef( m_pPlayerCharacter );
 

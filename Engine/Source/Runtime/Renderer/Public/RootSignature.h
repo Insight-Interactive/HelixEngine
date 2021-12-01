@@ -113,6 +113,8 @@ public:
 
 	FRootSignature( uint32 NumRootParams = 0, uint32 NumStaticSamplers = 0 );
 	~FRootSignature();
+	FRootSignature( const FRootSignature& Other );
+	FRootSignature& operator = ( const FRootSignature& Other );
 
 	void DestroyAll(void);
 
@@ -187,6 +189,32 @@ protected:
 //
 // Inline function implementations
 //
+
+FORCEINLINE FRootSignature::FRootSignature( const FRootSignature& Other )
+{
+	*this = Other;
+}
+
+FORCEINLINE FRootSignature& FRootSignature::operator = ( const FRootSignature& Other )
+{
+	m_Finalized = Other.m_Finalized;
+	m_NumParameters = Other.m_NumParameters;
+	m_NumSamplers = Other.m_NumSamplers;
+	m_NumInitializedStaticSamplers = Other.m_NumInitializedStaticSamplers;
+	m_DescriptorTableBitMap = Other.m_DescriptorTableBitMap;
+	m_SamplerTableBitMap = Other.m_SamplerTableBitMap;
+	memcpy( &m_DescriptorTableSize, Other.m_DescriptorTableSize, sizeof( m_DescriptorTableSize ) );
+	m_ParamArray.reset( new FRootParameter[m_NumParameters] );
+	memcpy( m_ParamArray.get(), Other.m_ParamArray.get(), sizeof( FRootParameter ) * m_NumParameters );
+	m_SamplerArray.reset( new FStaticSamplerDesc[m_NumSamplers] );
+	memcpy( m_SamplerArray.get(), Other.m_SamplerArray.get(), sizeof( FStaticSamplerDesc ) * m_NumSamplers );
+
+#if R_WITH_D3D12
+	m_pID3D12RootSignature = Other.m_pID3D12RootSignature;
+#endif
+
+	return *this;
+}
 
 FORCEINLINE void* FRootSignature::GetNativeSignature() 
 {

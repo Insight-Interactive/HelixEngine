@@ -1104,6 +1104,7 @@
     </ClCompile>
     <ClCompile Include="Private\Renderer\Common.cpp" />
     <ClCompile Include="Private\Renderer\LightManager.cpp" />
+    <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />
     <ClCompile Include="Private\Renderer\MaterialManager.cpp" />
     <ClCompile Include="Private\Renderer\SceneRenderer.cpp" />
     <ClCompile Include="Private\Renderer\Shader.cpp" />
@@ -1159,7 +1160,7 @@
     <ClCompile Include="Private\World\Scene.cpp" />
     <ClCompile Include="Private\World\World.cpp" />
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp" />
-    <ClCompile Include="Public\Renderer\Material.cpp" />
+    <ClCompile Include="Private\Renderer\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

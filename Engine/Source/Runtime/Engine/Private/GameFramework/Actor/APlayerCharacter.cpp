@@ -8,15 +8,14 @@
 #include "GameFramework/Components/HControllerComponent.h"
 
 
-APlayerCharacter::APlayerCharacter( HWorld* pWorld, const HName& Name )
-	: APawn( pWorld, Name )
+APlayerCharacter::APlayerCharacter( FActorInitArgs& InitArgs )
+	: APawn( InitArgs )
 	, m_CanRotateCamera( true )
 {
 	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "Player camera" ) );
+	m_pCameraComponent->AttachTo(GetRootComponent());
 
-	m_pCameraComponent->GetTransform().SetParent( &m_Transform );
-	m_Transform.SetPosition( 0.f, 0.f, -28.f );
-
+	m_pRootComponent->SetPosition( 0.f, 0.f, -28.f );
 }
 
 APlayerCharacter::~APlayerCharacter()
@@ -38,9 +37,9 @@ void APlayerCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		FTransform& CameraTransform = m_pCameraComponent->GetTransform();
-		CameraTransform.Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
-		m_Transform.SetRotation( CameraTransform.GetRotation() );
+		float DeltaTime = GetWorld()->GetDeltaTime();
+		m_pCameraComponent->Rotate( Value * m_CameraPitchSpeedMultiplier * DeltaTime, 0.0f, 0.0f );
+		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
 	}
 }
 
@@ -49,8 +48,8 @@ void APlayerCharacter::LookRight( float Value )
 	if (m_CanRotateCamera)
 	{
 		float DeltaTime = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->GetTransform().Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * DeltaTime, 0.0f );
-		m_Transform.SetRotation( m_pCameraComponent->GetTransform().GetRotation() );
+		m_pCameraComponent->Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * DeltaTime, 0.0f );
+		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
 	}
 }
 

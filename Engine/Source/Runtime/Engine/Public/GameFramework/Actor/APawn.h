@@ -38,7 +38,6 @@ public:
 	float GetHorizontalLookSpeed() const;
 	void SetVerticalLookSpeed( float Speed );
 	void SetHorizontalLookSpeed( float Speed );
-	FTransform& GetTransform();
 
 protected:
 	virtual void SetupController(HControllerComponent& Controller)
@@ -59,8 +58,7 @@ protected:
 	float m_Velocity;
 	bool m_bIsSprinting;
 	HControllerComponent* m_pController;
-	FTransform m_Transform;
-
+	HSceneComponent* m_pRootComponent;
 
 private:
 	float m_CurrentModementSpeed;
@@ -100,9 +98,4 @@ inline void APawn::SetHorizontalLookSpeed( float Speed )
 inline float APawn::GetMovementSpeed() const
 {
 	return m_MovementSpeed;
-}
-
-inline FTransform& APawn::GetTransform()
-{
-	return m_Transform;
 }

@@ -3,15 +3,15 @@
 #include "TSingleton.h"
 
 #include "AssetRegistry/MeshDatabase.h"
-#include "AssetRegistry/TextureDatabase.h"
-#include "AssetRegistry/MaterialDatabase.h"
 #include "AssetRegistry/ActorDatabase.h"
 #include "AssetRegistry/ShaderDatabase.h"
+#include "AssetRegistry/TextureDatabase.h"
+#include "AssetRegistry/MaterialDatabase.h"
 
-#include "TextureManager.h"
 #include "ModelManager.h"
-#include "Renderer/MaterialManager.h"
+#include "TextureManager.h"
 #include "Engine/GameProject.h"
+#include "Renderer/MaterialManager.h"
 
 
 /*
@@ -19,7 +19,7 @@
 	just references on where to find them on disk. The use of global asset mangers (such as GTextureManager)
 	should should not be used; use this class instead.
 */
-class FAssetDatabase : public TSingleton<FAssetDatabase>
+class FAssetDatabase
 {
 	friend class HEngine;
 	friend class HEditorEngine;
@@ -28,10 +28,10 @@ class FAssetDatabase : public TSingleton<FAssetDatabase>
 	friend class HLevel;
 public:
 
-	HTextureRef GetTexture( const FGUID& Guid );
-	StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
-	MaterialRef GetMaterial( const FGUID& Guid );
-	String LookupShaderPath( const FGUID& Guid );
+	static HTextureRef GetTexture( const FGUID& Guid );
+	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
+	static MaterialRef GetMaterial( const FGUID& Guid );
+	static String LookupShaderPath( const FGUID& Guid );
 
 protected:
 	FAssetDatabase();
@@ -41,35 +41,38 @@ protected:
 		Initialize and load each asset database.
 		@param ManifestFile - Manifest file containing the references for each asset database.
 	*/
-	void Initialize( const Char* ManifestFile );
-	void Uninitialize();
+	static void Initialize( const Char* ManifestFile );
+	static void Uninitialize();
 
-	bool SaveAssetDatabases();
-	bool IsAnyDatabaseDirty() const;
+	static bool SaveAssetDatabases();
+	static bool IsAnyDatabaseDirty();
 
-	void RegisterMesh( const FGUID& MeshGuid, const Char* Filepath );
-	void RegisterTexture( const FGUID& TextureGuid, const Char* Filepath );
-	void RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath );
-	void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
-	void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
+	static void RegisterMesh( const FGUID& MeshGuid, const Char* Filepath );
+	static void RegisterTexture( const FGUID& TextureGuid, const Char* Filepath );
+	static void RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath );
+	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
+	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
 
-	const String LookupMesh( const FGUID& Guid ) const;
-	const String LookupTexture( const FGUID& Guid ) const;
-	const String LookupMaterial( const FGUID& Guid ) const;
-	const String LookupActor( const FGUID& Guid ) const;
-	const String LookupShader( const FGUID& Guid ) const;
+	static const String LookupMesh( const FGUID& Guid );
+	static const String LookupTexture( const FGUID& Guid );
+	static const String LookupMaterial( const FGUID& Guid );
+	static const String LookupActor( const FGUID& Guid );
+	static const String LookupShader( const FGUID& Guid );
 
-	FMeshDatabase& GetMeshDatabase();
-	FTextureDatabase& GetTextureDatabase();
-	FMaterialDatabase& GetMaterialDatabase();
-	FActorDatabase& GetActorDatabase();
+	static FMeshDatabase& GetMeshDatabase();
+	static FTextureDatabase& GetTextureDatabase();
+	static FMaterialDatabase& GetMaterialDatabase();
+	static FActorDatabase& GetActorDatabase();
 
 protected:
 	FMeshDatabase		m_MeshDatabase;
-	FTextureDatabase	m_TextureDatabase;
-	FMaterialDatabase	m_MaterialDatabase;
 	FActorDatabase		m_ActorDatabase;
 	FShaderDatabase		m_ShaderDatabase;
+	FTextureDatabase	m_TextureDatabase;
+	FMaterialDatabase	m_MaterialDatabase;
+
+private:
+	static FAssetDatabase* SInstance;
 
 };
 
@@ -78,47 +81,47 @@ protected:
 //
 
 
-FORCEINLINE HTextureRef FAssetDatabase::GetTexture( const FGUID& Guid )
+/*static*/ FORCEINLINE HTextureRef FAssetDatabase::GetTexture( const FGUID& Guid )
 {
-	return GTextureManager.LoadTexture( LookupTexture( Guid ), DT_Magenta2D, false );
+	return GTextureManager.LoadTexture( SInstance->LookupTexture( Guid ), DT_Magenta2D, false );
 }
 
-FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
+/*static*/ FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
 {
-	return GStaticGeometryManager.LoadHAssetMeshFromFile( LookupMesh( Guid ) );
+	return GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
 }
 
-FORCEINLINE MaterialRef FAssetDatabase::GetMaterial( const FGUID& Guid )
+/*static*/ FORCEINLINE MaterialRef FAssetDatabase::GetMaterial( const FGUID& Guid )
 {
-	return GMaterialManager.FindOrLoadMaterialFromFile( LookupMaterial( Guid ) );
+	return GMaterialManager.FindOrLoadMaterialFromFile( SInstance->LookupMaterial( Guid ) );
 }
 
-FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
+/*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
-	return LookupShader( Guid );
+	return SInstance->LookupShader( Guid );
 }
 
-FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
+/*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
 {
-	return m_MeshDatabase;
+	return SInstance->m_MeshDatabase;
 }
 
-FORCEINLINE FTextureDatabase& FAssetDatabase::GetTextureDatabase()
+/*static*/ FORCEINLINE FTextureDatabase& FAssetDatabase::GetTextureDatabase()
 {
-	return m_TextureDatabase;
+	return SInstance->m_TextureDatabase;
 }
 
-FORCEINLINE FMaterialDatabase& FAssetDatabase::GetMaterialDatabase()
+/*static*/ FORCEINLINE FMaterialDatabase& FAssetDatabase::GetMaterialDatabase()
 {
-	return m_MaterialDatabase;
+	return SInstance->m_MaterialDatabase;
 }
 
-FORCEINLINE FActorDatabase& FAssetDatabase::GetActorDatabase()
+/*static*/ FORCEINLINE FActorDatabase& FAssetDatabase::GetActorDatabase()
 {
-	return m_ActorDatabase;
+	return SInstance->m_ActorDatabase;
 }
 
-FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
+/*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 {
 	rapidjson::StringBuffer StrBuffer;
 	WriteContext Writer( StrBuffer );
@@ -128,23 +131,23 @@ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 		Writer.Key( HE_STRINGIFY( FAssetDatabase ) );
 		Writer.StartArray();
 			Writer.StartObject();
-				m_MeshDatabase.Serialize(Writer);
+				SInstance->m_MeshDatabase.Serialize(Writer);
 			Writer.EndObject();
 
 			Writer.StartObject();
-				m_TextureDatabase.Serialize(Writer);
+				SInstance->m_TextureDatabase.Serialize(Writer);
 			Writer.EndObject();
 			
 			Writer.StartObject();
-				m_MaterialDatabase.Serialize(Writer);
+				SInstance->m_MaterialDatabase.Serialize(Writer);
 			Writer.EndObject();
 			
 			Writer.StartObject();
-				m_ActorDatabase.Serialize(Writer);
+				SInstance->m_ActorDatabase.Serialize( Writer );
 			Writer.EndObject();
-			
+
 			Writer.StartObject();
-				m_ShaderDatabase.Serialize(Writer);
+				SInstance->m_ShaderDatabase.Serialize(Writer);
 			Writer.EndObject();
 		Writer.EndArray();
 	}
@@ -156,57 +159,57 @@ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 	return !IsAnyDatabaseDirty() && IsWriteSuccessful;
 }
 
-FORCEINLINE bool FAssetDatabase::IsAnyDatabaseDirty() const
+/*static*/ FORCEINLINE bool FAssetDatabase::IsAnyDatabaseDirty()
 {
-	return m_MeshDatabase.GetIsDirty() || m_TextureDatabase.GetIsDirty() || m_MaterialDatabase.GetIsDirty() || m_ActorDatabase.GetIsDirty();
+	return SInstance->m_MeshDatabase.GetIsDirty() || SInstance->m_TextureDatabase.GetIsDirty() || SInstance->m_MaterialDatabase.GetIsDirty() || SInstance->m_ActorDatabase.GetIsDirty();
 }
 
-FORCEINLINE void FAssetDatabase::RegisterMesh( const FGUID& MeshGuid, const Char* Filepath )
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterMesh( const FGUID& MeshGuid, const Char* Filepath )
 {
-	m_MeshDatabase.RegisterAsset( MeshGuid, Filepath );
+	SInstance->m_MeshDatabase.RegisterAsset( MeshGuid, Filepath );
 }
 
-FORCEINLINE void FAssetDatabase::RegisterTexture( const FGUID& TextureGuid, const Char* Filepath )
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterTexture( const FGUID& TextureGuid, const Char* Filepath )
 {
-	m_TextureDatabase.RegisterAsset( TextureGuid, Filepath );
+	SInstance->m_TextureDatabase.RegisterAsset( TextureGuid, Filepath );
 }
 
-FORCEINLINE void FAssetDatabase::RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath )
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath )
 {
-	m_MaterialDatabase.RegisterAsset( MaterialGuid, Filepath );
+	SInstance->m_MaterialDatabase.RegisterAsset( MaterialGuid, Filepath );
 }
 
-FORCEINLINE void FAssetDatabase::RegisterActor( const FGUID& ActorGuid, const Char* Filepath )
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterActor( const FGUID& ActorGuid, const Char* Filepath )
 {
-	m_ActorDatabase.RegisterAsset( ActorGuid, Filepath );
+	SInstance->m_ActorDatabase.RegisterAsset( ActorGuid, Filepath );
 }
 
-FORCEINLINE void FAssetDatabase::RegisterShader( const FGUID& ShaderGuid, const Char* Filepath )
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterShader( const FGUID& ShaderGuid, const Char* Filepath )
 {
-	m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
+	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
-FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid ) const
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid )
 {
-	return FGameProject::GetInstance()->GetProjectRoot() + m_MeshDatabase.GetValueByKey( Guid );
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MeshDatabase.GetValueByKey( Guid );
 }
 
-FORCEINLINE const String FAssetDatabase::LookupTexture( const FGUID& Guid ) const
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupTexture( const FGUID& Guid )
 {
-	return FGameProject::GetInstance()->GetProjectRoot() + m_TextureDatabase.GetValueByKey( Guid );
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_TextureDatabase.GetValueByKey( Guid );
 }
 
-FORCEINLINE const String FAssetDatabase::LookupMaterial( const FGUID& Guid ) const
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupMaterial( const FGUID& Guid )
 {
-	return FGameProject::GetInstance()->GetProjectRoot() + m_MaterialDatabase.GetValueByKey( Guid );
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MaterialDatabase.GetValueByKey( Guid );
 }
 
-FORCEINLINE const String FAssetDatabase::LookupActor( const FGUID& Guid ) const
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupActor( const FGUID& Guid )
 {
-	return FGameProject::GetInstance()->GetProjectRoot() + m_ActorDatabase.GetValueByKey( Guid );
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ActorDatabase.GetValueByKey( Guid );
 }
 
-FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid ) const
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
-	return m_ShaderDatabase.GetValueByKey( Guid );
+	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
 }

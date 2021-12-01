@@ -215,7 +215,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 			Output->WriteData( Indices.data(), sizeof( uint32 ), Indices.size() );
 
 			FGUID Guid = FGUID::Generate();
-			FAssetDatabase::GetInstance()->RegisterMesh( Guid, OutputFile.c_str() );
+			FAssetDatabase::RegisterMesh( Guid, OutputFile.c_str() );
 
 			HE_LOG( Log, TEXT( "Mesh import with path: \"%s\" successful." ), CharToTChar( Filename ) );
 		}

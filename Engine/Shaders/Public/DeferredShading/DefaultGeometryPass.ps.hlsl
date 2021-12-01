@@ -38,6 +38,7 @@ GP_PSOutput main(GP_PSInput Input)
     Output.Roughness = RoughnessSample;
     Output.Metallic	 = MetallicSample;
     Output.Specular	 = 0.04f;
+    //Output.Emissive = float3(0.f, 0.f, 0.f);
 	
 	return Output;
 }

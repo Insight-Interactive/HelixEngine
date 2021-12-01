@@ -9,7 +9,6 @@ class AActor;
 class HWorld;
 class FCommandContext;
 
-
 class HLevel : public HObject, public FSerializeableInterface
 {
 	friend class HWorld;
@@ -21,8 +20,8 @@ public:
 
 	void Flush();
 
-	template <typename ActorType, typename ... InitArgs>
-	ActorType* CreateActor(const HName& Name = TEXT(""), InitArgs ... args);
+	template <typename ActorType>
+	ActorType* CreateActor(const HName& Name = TEXT("<Unnamed Actor>"));
 
 	HWorld* GetWorld();
 
@@ -48,12 +47,13 @@ protected:
 // Inline function implementations
 //
 
-template <typename ActorType, typename ... InitArgs>
-inline ActorType* HLevel::CreateActor(const HName& Name, InitArgs ... args)
+template <typename ActorType>
+inline ActorType* HLevel::CreateActor(const HName& Name)
 {
-	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world.
+	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world!
 
-	AActor* pNewActor = new ActorType( m_pOwningWorld, Name, args...);
+	FActorInitArgs InitArgs{ m_pOwningWorld, Name };
+	AActor* pNewActor = new ActorType( InitArgs);
 	HE_ASSERT(pNewActor != NULL);
 
 	GuardedAddActor(pNewActor);

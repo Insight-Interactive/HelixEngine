@@ -3,8 +3,8 @@
 
 #include "GameFramework/Components/HControllerComponent.h"
 
-HControllerComponent::HControllerComponent(const HName& Name)
-	: HActorComponent( Name )
+HControllerComponent::HControllerComponent(FComponentInitArgs& InitArgs)
+	: HActorComponent( InitArgs )
 {
 
 }

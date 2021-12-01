@@ -19,9 +19,9 @@
 #if HE_ENABLE_LOGS
 	extern class Logger GEngineLogger;
 	/*
-		Log a message to the console.
+		Log a message to the console. Text should be in TChar's.
 		@param Severety - The severity of the error.
-		@param fmt - the format to display when writing to the console.
+		@param fmt - The format to display when writing to the console.
 		@param __VA_ARGS__ - Optional arguments to supply when printing.
 	*/
 #	define HE_LOG(Severity, Fmt, ...) GEngineLogger.LogHelper(ELogSeverity::Severity, Fmt, HE_FILE, HE_FUNCTION, __LINE__, __VA_ARGS__)

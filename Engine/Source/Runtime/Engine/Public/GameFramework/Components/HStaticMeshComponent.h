@@ -4,8 +4,9 @@
 
 #include "Transform.h"
 #include "ModelManager.h"
-#include "Renderer/MaterialManager.h"
 #include "ConstantBuffer.h"
+#include "Renderer/MaterialManager.h"
+#include "Renderer/ConstantBufferStructures.h"
 
 
 HCOMPONENT()
@@ -13,7 +14,7 @@ class HStaticMeshComponent : public HSceneComponent
 {
 	friend class AActor;
 	friend class HScene;
-	using Super = HActorComponent;
+	using Super = HSceneComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HStaticMeshComponent )
 
@@ -36,10 +37,10 @@ protected:
 	virtual void Deserialize( const ReadContext& Value ) override;
 
 protected:
-	HStaticMesh m_Geometry;
-	TConstantBuffer<MeshWorldCBData> m_MeshWorldCB;
-	HMaterial m_Material;
-	bool m_bIsDrawEnabled;
+	HStaticMesh							m_MeshAsset;
+	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
+	HMaterial							m_MaterialAsset;
+	bool								m_bIsDrawEnabled;
 
 };
 
@@ -50,22 +51,22 @@ protected:
 
 FORCEINLINE void HStaticMeshComponent::SetMesh( StaticMeshGeometryRef Mesh ) 
 { 
-	m_Geometry = Mesh; 
+	m_MeshAsset = Mesh;
 }
 
 FORCEINLINE void HStaticMeshComponent::SetMaterial( MaterialRef Material ) 
 { 
-	m_Material = Material; 
+	m_MaterialAsset = Material;
 }
 
 FORCEINLINE HMaterial& HStaticMeshComponent::GetMaterial()
 { 
-	return m_Material; 
+	return m_MaterialAsset;
 }
 
 FORCEINLINE bool HStaticMeshComponent::IsOpaque() const
 {
-	return m_Material->GetShadingModel() != EShadingModel::SM_Foliage;
+	return m_MaterialAsset->GetShadingModel() != EShadingModel::SM_Foliage;
 }
 
 FORCEINLINE  bool HStaticMeshComponent::GetIsDrawEnabled() const

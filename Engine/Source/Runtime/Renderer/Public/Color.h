@@ -27,6 +27,10 @@ public:
 		, A(1.f)
 	{
 	}
+	FORCEINLINE FColor( float rgba )
+		: FColor(rgba, rgba, rgba, rgba )
+	{
+	}
 	FORCEINLINE ~FColor()
 	{
 	}

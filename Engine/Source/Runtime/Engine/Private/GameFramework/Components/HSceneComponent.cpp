@@ -3,9 +3,19 @@
 
 #include "GameFramework/Components/HSceneComponent.h"
 
-HSceneComponent::HSceneComponent( const HName& Name )
-	: HActorComponent(Name)
+#include "GameFramework/Actor/AActor.h"
+
+
+HSceneComponent::HSceneComponent( FComponentInitArgs& InitArgs )
+	: HActorComponent( InitArgs )
+	, m_pParent( nullptr )
+	, m_IsStatic( false )
 {
+	AActor* pOwner = GetOwner();
+	if (pOwner->GetRootComponent() == nullptr)
+		pOwner->SetRootComponent( this );
+	else
+		AttachTo( pOwner->GetRootComponent() );
 }
 
 HSceneComponent::~HSceneComponent()
@@ -18,16 +28,60 @@ void HSceneComponent::Render( FCommandContext& GfxContext )
 
 void HSceneComponent::Serialize( WriteContext& Output )
 {
-	Super::Serialize( Output );
+	Output.Key( HE_STRINGIFY( HSceneComponent ) );
+	Output.StartArray();
+	{
+		// Outer properties.
+		Output.StartObject();
+		{
+			Super::Serialize( Output );
+		}
+		Output.EndObject();
 
+		// Transform properties.
+		Output.StartObject();
+		{
+			Output.Key( HE_STRINGIFY( m_Transform ) );
+			Output.StartArray();
+			{
+				FVector3 Pos = m_Transform.GetPosition();
+				FVector3 Rot = m_Transform.GetRotation();
+				FVector3 Sca = m_Transform.GetScale();
+
+				Output.Key( "PositionX" );
+				Output.Double( Pos.x );
+				Output.Key( "PositionY" );
+				Output.Double( Pos.y );
+				Output.Key( "PositionZ" );
+				Output.Double( Pos.z );
+
+				Output.Key( "RotationX" );
+				Output.Double( Rot.x );
+				Output.Key( "RotationY" );
+				Output.Double( Rot.y );
+				Output.Key( "RotationZ" );
+				Output.Double( Rot.z );
+
+				Output.Key( "ScaleX" );
+				Output.Double( Sca.x );
+				Output.Key( "ScaleY" );
+				Output.Double( Sca.y );
+				Output.Key( "ScaleZ" );
+				Output.Double( Sca.z );
+			}
+			Output.EndArray();
+		}
+		Output.EndObject();
+	}
+	Output.EndArray();
 }
 
-void HSceneComponent::Deserialize( const ReadContext& Value ) 
+void HSceneComponent::Deserialize( const ReadContext& Value )
 {
 	Super::Deserialize( Value[0] );
 
 	const rapidjson::Value& SceneComponent = Value[1];
-	const rapidjson::Value& LocalTransform = SceneComponent["LocalTransform"][0];
+	const rapidjson::Value& LocalTransform = SceneComponent[HE_STRINGIFY( m_Transform )][0];
 
 	// FTransform
 	FVector3 Position, Rotation, Scale;

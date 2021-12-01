@@ -23,9 +23,11 @@ FP_PSOutput main( FP_PSInput Input )
 	FP_PSOutput Output;
 
 	// Sample material textures.
-    float3 AlbedoSample = pow(abs(MaterialAlbedo.Sample(LinearWrapSampler, Input.UVs).rgb), float3(2.2, 2.2, 2.2));
+    float4 AlbedoSample = MaterialAlbedo.Sample(LinearWrapSampler, Input.UVs).rgba;
     //float3 NormalSample = MaterialNormal.Sample(LinearWrapSampler, Input.UVs).rgb;
     
-    Output.LitPixel = float4(AlbedoSample, kOpacity);
+    float3 Albedo = pow(abs(AlbedoSample.rgb), float3(2.2, 2.2, 2.2));
+    
+    Output.LitPixel = float4(Albedo, kOpacity);
     return Output;
 }

@@ -7,9 +7,9 @@
 #include "StringHelper.h"
 
 
-HActorComponent::HActorComponent( const HName& Name )
-	: HObject( Name )
-	, m_pOwner( NULL )
+HActorComponent::HActorComponent(FComponentInitArgs& InitArgs)
+	: HObject( InitArgs.Name )
+	, m_pOwner( CCast<AActor*>(InitArgs.pOwner) )
 {
 
 }
@@ -27,7 +27,11 @@ HWorld* HActorComponent::GetWorld()
 
 void HActorComponent::Serialize( WriteContext& Output )
 {
+	Output.Key("ObjectName");
+	Output.String( TCharToChar(GetObjectName()) );
 
+	Output.Key("ObjectGUID");
+	Output.String(GetGuid().ToString().CStr());
 }
 
 void HActorComponent::Deserialize( const ReadContext& Value )
@@ -36,4 +40,10 @@ void HActorComponent::Deserialize( const ReadContext& Value )
 	char ObjectNameBuffer[32];
 	JsonUtility::GetString( Value, "ObjectName", ObjectNameBuffer, sizeof( ObjectNameBuffer ) );
 	SetObjectName( CharToTChar( ObjectNameBuffer ) );
+
+	Char GuidStr[64];
+	ZeroMemory(GuidStr, sizeof(GuidStr));
+	JsonUtility::GetString(Value, "ObjectGUID", GuidStr, sizeof(GuidStr));
+	FGUID ObjectGuid = FGUID::CreateFromString(GuidStr);
+	SetGuid(ObjectGuid);
 }

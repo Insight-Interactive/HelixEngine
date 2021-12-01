@@ -126,7 +126,7 @@ void FRootSignature::Finalize(const WChar* name, ERootSignatureFlags Flags)
 
         hr = pD3D12Device->CreateRootSignature(1, pOutBlob->GetBufferPointer(), pOutBlob->GetBufferSize(), IID_PPV_ARGS(&m_pID3D12RootSignature));
         ThrowIfFailedMsg(hr, "Failed to create root signature!");
-
+        
 #if R_DEBUG_GPU_RESOURCES
         m_pID3D12RootSignature->SetName(name);
 #endif

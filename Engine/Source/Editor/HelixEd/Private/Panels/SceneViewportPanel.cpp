@@ -31,7 +31,8 @@ void SceneViewportPanel::Initialize()
 	ID3D12Device* pDevice = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 	m_HandleSize = pDevice->GetDescriptorHandleIncrementSize( D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
-	m_pDebugPawn = new ADebugPawn( &GetOwningViewport()->GetWorld(), TEXT("Editor Debug Pawn"));
+	FActorInitArgs InitArgs{ &GetOwningViewport()->GetWorld(), TEXT( "Editor Debug Pawn" ) };
+	m_pDebugPawn = new ADebugPawn( InitArgs );
 	m_pDebugPawn->BeginPlay();
 	
 	ActivateDebugCamera();

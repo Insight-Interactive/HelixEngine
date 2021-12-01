@@ -3,19 +3,16 @@
 
 #include "GameFramework/Actor/AActor.h"
 
-#include "CommandContext.h"
 #include "GameFramework/Components/HActorComponent.h"
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
-#include "GameFramework/Components/HSceneComponent.h"
-#include "AssetRegistry/AssetDatabase.h"
 
 
-AActor::AActor( HWorld* pWorld, const HName& Name )
-	: HObject( Name )
-	, m_pOwningWorld( pWorld )
+AActor::AActor( FActorInitArgs& InitArgs )
+	: HObject( InitArgs.Name )
+	, m_pOwningWorld( CCast<HWorld*>(InitArgs.pWorld) )
+	, m_pRoot( nullptr )
 {
-
 }
 
 AActor::~AActor()
@@ -34,6 +31,8 @@ void AActor::Serialize( WriteContext& Output )
 			{
 				Output.Key( "ObjectName" );
 				Output.String( TCharToChar( GetObjectName().c_str() ) );
+				Output.Key( "ObjectGUID" );
+				Output.String( GetGuid().ToString().CStr() );
 			}
 			Output.EndObject();
 
@@ -48,7 +47,11 @@ void AActor::Serialize( WriteContext& Output )
 			Output.StartArray();
 			{
 				for (uint32 i = 0; i < m_Components.size(); ++i)
+				{
+					Output.StartObject();
 					m_Components[i]->Serialize( Output );
+					Output.EndObject();
+				}
 			}
 			Output.EndArray();
 		}
@@ -57,7 +60,7 @@ void AActor::Serialize( WriteContext& Output )
 	Output.EndObject();
 }
 
-void AActor::Deserialize( const ReadContext& Value ) 
+void AActor::Deserialize( const ReadContext& Value )
 {
 	const rapidjson::Value& HObjectProps = Value[0];
 	const rapidjson::Value& ActorProps = Value[1];
@@ -70,13 +73,13 @@ void AActor::Deserialize( const ReadContext& Value )
 	// GUID
 	Char GuidStr[64];
 	ZeroMemory( GuidStr, sizeof( GuidStr ) );
-	JsonUtility::GetString( ActorProps, "GUID", GuidStr, sizeof( GuidStr ) );
-	FGUID Guid = FGUID::CreateFromString( GuidStr );
+	JsonUtility::GetString( HObjectProps, "ObjectGUID", GuidStr, sizeof( GuidStr ) );
+	SetGuid( FGUID::CreateFromString( GuidStr ) );
 
 	// Loop over all the actor's components.
-	const Char* StaticMeshKey		= "StaticMesh";
-	const Char* PointLightKey		= "PointLight";
-	const Char* SceneComponentKey	= "SceneComponent";
+	const Char* StaticMeshKey = HE_STRINGIFY( HStaticMeshComponent );
+	const Char* PointLightKey = HE_STRINGIFY( HPointLightComponent );
+	const Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -84,7 +87,7 @@ void AActor::Deserialize( const ReadContext& Value )
 
 		if (CurrentComponent.HasMember( StaticMeshKey ))
 		{
-			AddComponent<HStaticMeshComponent>( TEXT("<Unnamed Static Mesh Component>") )
+			AddComponent<HStaticMeshComponent>( TEXT( "<Unnamed Static Mesh Component>" ) )
 				->Deserialize( CurrentComponent[StaticMeshKey] );
 		}
 		else if (CurrentComponent.HasMember( PointLightKey ))
@@ -96,6 +99,11 @@ void AActor::Deserialize( const ReadContext& Value )
 		{
 			AddComponent<HSceneComponent>( TEXT( "<Unnamed Scene Component>" ) )
 				->Deserialize( CurrentComponent[SceneComponentKey] );
+		}
+		else
+		{
+			HE_LOG( Error, TEXT( "Unrecognized component type when deserializing actor with name: %s" ), GetObjectName().c_str() );
+			HE_ASSERT( false );
 		}
 	}
 }
@@ -118,19 +126,19 @@ void AActor::BeginPlay()
 	}
 }
 
-void AActor::Tick(float DeltaTime)
+void AActor::Tick( float DeltaTime )
 {
 	for (uint64 i = 0; i < m_Components.size(); ++i)
 	{
-		m_Components[i]->Tick(DeltaTime);
+		m_Components[i]->Tick( DeltaTime );
 	}
 }
 
-void AActor::Render(FCommandContext& GfxContext)
+void AActor::Render( FCommandContext& GfxContext )
 {
 	for (size_t i = 0; i < m_Components.size(); ++i)
 	{
-		m_Components[i]->Render(GfxContext);
+		m_Components[i]->Render( GfxContext );
 	}
 }
 

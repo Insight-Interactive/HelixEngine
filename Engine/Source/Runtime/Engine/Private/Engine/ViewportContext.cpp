@@ -6,22 +6,8 @@
 #include "World/World.h"
 #include "Engine/Engine.h"
 #include "Engine/Event/EngineEvent.h"
-#include "Input/MouseEvent.h"
 #include "Input/KeyEvent.h"
-#include "RenderDevice.h"
-#include "GpuResource.h"
-#include "CommandContext.h"
-#include "ConstantBuffer.h"
-#include "Renderer/Common.h"
-#include "Renderer/LightManager.h"
-#include "Renderer/MaterialManager.h"
-#include "Renderer/ShaderRegisters.h"
-#include "Renderer/GeometryGenerator.h"
-#include "Renderer/ConstantBufferStructures.h"
-#include "GameFramework/Components/HCameraComponent.h"
-
-// TEMP
-#include "DepthBuffer.h"
+#include "Input/MouseEvent.h"
 
 
 FViewportContext::FViewportContext()
@@ -84,6 +70,11 @@ void FViewportContext::Render()
 		// Render directly to the swapchain.
 		RenderWorld( SwapChainBackBuffer );
 	}
+}
+
+void FViewportContext::SetWorld( HWorld* pWorldToView )
+{
+	m_WorldInView = pWorldToView;
 }
 
 void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )

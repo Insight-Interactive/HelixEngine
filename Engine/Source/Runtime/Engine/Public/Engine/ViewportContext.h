@@ -140,11 +140,6 @@ FORCEINLINE FSceneRenderer& FViewportContext::GetSceneRenderer()
 	return m_SceneRenderer;
 }
 
-FORCEINLINE void FViewportContext::SetWorld( HWorld* pWorldToView )
-{
-	m_WorldInView = pWorldToView;
-}
-
 FORCEINLINE FInputDispatcher* FViewportContext::GetInputDispatcher()
 {
 	return &m_InputDispatcher;

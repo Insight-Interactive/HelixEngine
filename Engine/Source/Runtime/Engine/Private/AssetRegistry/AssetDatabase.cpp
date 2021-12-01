@@ -4,15 +4,26 @@
 #include "AssetRegistry/AssetDatabase.h"
 
 
+/*static*/ FAssetDatabase* FAssetDatabase::SInstance = nullptr;
+
 FAssetDatabase::FAssetDatabase()
 {
+	if (SInstance == nullptr)
+	{
+		SInstance = this;
+	}
+	else
+	{
+		HE_ASSERT( false );
+		HE_LOG( Error, TEXT( "Asset database already exists!" ) );
+	}
 }
 
 FAssetDatabase::~FAssetDatabase()
 {
 }
 
-void FAssetDatabase::Initialize( const Char* ManifestFile )
+/*static*/ void FAssetDatabase::Initialize( const Char* ManifestFile )
 {
 	// Load all the asset databases.
 	rapidjson::Document JsonDoc;
@@ -31,26 +42,26 @@ void FAssetDatabase::Initialize( const Char* ManifestFile )
 
 		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
 
-		m_MeshDatabase.Deserialize( AssetDbRoot[kModelsDbIndex] );
-		m_TextureDatabase.Deserialize( AssetDbRoot[kTexturesDbIndex] );
-		m_MaterialDatabase.Deserialize( AssetDbRoot[kMaterialsDbIndex] );
-		m_ActorDatabase.Deserialize( AssetDbRoot[kActorsDbIndex] );
-		m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
+		SInstance->m_MeshDatabase.Deserialize( AssetDbRoot[kModelsDbIndex] );
+		SInstance->m_TextureDatabase.Deserialize( AssetDbRoot[kTexturesDbIndex] );
+		SInstance->m_MaterialDatabase.Deserialize( AssetDbRoot[kMaterialsDbIndex] );
+		SInstance->m_ActorDatabase.Deserialize( AssetDbRoot[kActorsDbIndex] );
+		SInstance->m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
 
-		m_MeshDatabase.Initialize();
-		m_TextureDatabase.Initialize();
-		m_MaterialDatabase.Initialize();
-		m_ActorDatabase.Initialize();
-		m_ShaderDatabase.Initialize();
+		SInstance->m_MeshDatabase.Initialize();
+		SInstance->m_TextureDatabase.Initialize();
+		SInstance->m_MaterialDatabase.Initialize();
+		SInstance->m_ActorDatabase.Initialize();
+		SInstance->m_ShaderDatabase.Initialize();
 	}
 }
 
-void FAssetDatabase::Uninitialize()
+/*static*/ void FAssetDatabase::Uninitialize()
 {
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 
-	m_MeshDatabase.UnInitialize();
-	m_TextureDatabase.UnInitialize();
-	m_MaterialDatabase.UnInitialize();
-	m_ActorDatabase.UnInitialize();
+	SInstance->m_MeshDatabase.UnInitialize();
+	SInstance->m_TextureDatabase.UnInitialize();
+	SInstance->m_MaterialDatabase.UnInitialize();
+	SInstance->m_ActorDatabase.UnInitialize();
 }

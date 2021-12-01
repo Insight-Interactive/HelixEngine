@@ -1,52 +1,55 @@
 #pragma once
 
-#include "RendererCore.h"
-#include "TextureManager.h"
-
-#include "Renderer/Common.h"
-#include "Renderer/ShaderRegisters.h"
-#include "Renderer/ConstantBufferStructures.h"
-#include "ConstantBuffer.h"
-#include "PipelineState.h"
-#include "RootSignature.h"
 #include "GUID.h"
 #include "StringHelper.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
+#include "TextureManager.h"
+#include "ConstantBuffer.h"
+#include "Renderer/Common.h"
 
 
 class FCommandContext;
 class FShaderReflection;
 
-typedef uint32 MaterialID;
-
 enum EShadingModel
 {
-	SM_DefaultLit	= 0, // Is lit by lights inside the world. Material will be used in Physically-Based lighting.
-	SM_Unlit		= 1, // Implement unlit light pass. Is not lit by lights inside the world.
-	SM_Foliage		= 2, // Tree leaves and grass.
+	SM_DefaultLit = 0,	// Is lit by lights inside the world. Material will be used in Physically-Based lighting.
+	SM_Unlit = 1,		// Implement unlit light pass. Is not lit by lights inside the world.
+	SM_Foliage = 2,		// Tree leaves and grass.
 };
 
 enum EMaterialDomain
 {
-	MD_Surface		= 0, // Default material that will be placed in the world.
+	MD_Surface = 0, // Default material that will be placed in the world.
 };
 
 enum EMaterialBlendMode
 {
-	MBM_Opaque		= 0, // Replace whatever color is currently in the render target when this material is rendered.
+	MBM_Opaque = 0, // Replace whatever color is currently in the render target when this material is rendered.
 	// TODO: MDM_Masked		= 1, 
 	// TODO: MBM_Translucent	= 2,
 };
 
+
+// < VarNameHash, <OwningBuffer, <PtrForPerFrameData in m_ConstBufferMappings(<Buffer Pointer, DataPointer for variable inside the const buffer>) >> >
+typedef std::unordered_map< StringHashValue, std::vector< std::pair<FConstantBufferInterface*, uint8* > > >		ConstantBufferVariableMap;
+// < ConstBufferHashName, <RootParmIndex, CBDataForEachFrame> >
+typedef std::unordered_map< StringHashValue, std::pair< uint32, std::vector< FConstantBufferInterface* > > >	ConstantBufferMap;
+// < HashName, <RootParamIndex, Texture> > 
+typedef std::unordered_map< int32, std::pair< uint32, HTextureRef > >											TextureMap;
+
 class FMaterial
 {
 	friend class MaterialManager;
+	friend class FMaterialInstance;
 public:
 	FMaterial();
 	virtual ~FMaterial();
 
-	void Bind(FCommandContext& GfxContext);
+	void Bind( FCommandContext& GfxContext );
 	void LoadFromFile( const String& Filepath );
-
+	void Compile();
 	bool IsValid();
 
 	//
@@ -54,15 +57,15 @@ public:
 	//
 
 	const String& GetDebugName() const;
-	MaterialID GetUID() const;
+	FGUID GetGUID() const;
 	EMaterialBlendMode GetBlendMode() const;
 	EMaterialDomain GetDomain() const;
 	EShadingModel GetShadingModel() const;
 	bool GetIsTwoSided() const;
 	void SetBlendMode( EMaterialBlendMode Type );
-	void SetDomain(EMaterialDomain Domain);
-	void SetShadingModel(EShadingModel Model);
-	void SetIsTwoSided(bool IsTwoSided);
+	void SetDomain( EMaterialDomain Domain );
+	void SetShadingModel( EShadingModel Model );
+	void SetIsTwoSided( bool IsTwoSided );
 
 	//
 	// Resource Binding
@@ -73,24 +76,29 @@ public:
 		@param TextureName - The name of the texture declared inside the shader.
 		@param Texture - The texture resource to bind to the shader.
 	*/
-	bool SetTexture(const Char* TextureName, HTextureRef Texture);
+	bool SetTexture( const Char* TextureName, HTextureRef Texture );
 
 	/*
 		Set a float value in the shader.
 		@param VariableName - The name of the variable inside the declared constant buffer.
 		@param Value - The value to set in the shader.
 	*/
-	bool SetFloat(const Char* VariableName, const float& Value);
+	bool SetFloat( const Char* VariableName, const float& Value );
+
 
 protected:
 	void Destroy();
-	void SetMaterialID( const MaterialID& NewId );
+	void SetMaterialGUID( const FGUID& NewId );
 	void SetDebugName( const String& Name );
 	void BuildPipelineState();
-	void ReflectShader(FRootSignature& outSignature, EShaderVisibility ShaderType, const FShaderReflection& Reflector);
+	void ReflectShader( FRootSignature& outSignature, EShaderVisibility ShaderType, const FShaderReflection& Reflector );
+
+	void BuildRootSignature();
 
 private:
-	MaterialID m_UID;
+	FGUID m_GUID;
+
+protected:
 #if HE_DEBUG
 	String m_DebugName;
 #endif
@@ -107,21 +115,42 @@ private:
 	FRootSignature m_RootSig;
 
 
-	// TODO: Make these only accessible in the material instance.
 	// Resource mappings
-	
-	// Constant buffer mappings for each shader.
-	// < ConstBufferHashName, <RootParmIndex, CBDataForEachFrame> >
-	std::unordered_map< StringHashValue, std::pair<uint32, std::vector<FConstantBufferInterface*>> > m_ConstBuffersMappings;
-	// Texture mappings for each shader.
-	// < HashName, <RootParamIndex, Texture> > 
-	std::unordered_map< int32, std::pair<uint32, HTextureRef> > m_TextureMappings;
-	// Variable mappings for const buffers.
-	// < VarNameHash, <OwningBuffer, PtrForPerFrameData in m_ConstBufferMappings> >
-	std::unordered_map< StringHashValue, std::vector<std::pair<FConstantBufferInterface*, uint8*>> > m_ConstBufferVarMappings;
+	// TODO: Make these only accessible in the material instance.
+	//
 
-private:
-	static MaterialID SNextMaterialID;
+	// Constant buffer mappings for each shader.
+	ConstantBufferMap			m_ConstBuffersMappings;
+	// Texture mappings for each shader.
+	TextureMap					m_TextureMappings;
+	// Variable mappings for const buffers.
+	ConstantBufferVariableMap	m_ConstBufferVarMappings;
+
+};
+
+
+class FMaterialInstance
+{
+	using Super = FMaterial;
+public:
+	FMaterialInstance();
+	virtual ~FMaterialInstance();
+
+	void LoadFromFile( const Char* Filepath );
+
+	bool SetTexture( const Char* TextureName, HTextureRef Texture );
+	bool SetFloat( const Char* VariableName, const float& Value );
+
+protected:
+	FGUID m_GUID;
+	FMaterial* m_Parent;
+
+	// Constant buffer mappings for each shader.
+	ConstantBufferMap			m_ConstBuffersMappings;
+	// Texture mappings for each shader.
+	TextureMap					m_TextureMappings;
+	// Variable mappings for const buffers.
+	ConstantBufferVariableMap	m_ConstBufferVarMappings;
 
 };
 
@@ -131,9 +160,17 @@ private:
 //
 
 
+// FMaterial
+//
+
+FORCEINLINE void FMaterial::Compile()
+{
+	BuildPipelineState();
+}
+
 FORCEINLINE bool FMaterial::IsValid()
 {
-	return m_UID != HE_INVALID_MATERIAL_ID;
+	return m_GUID.IsValid();
 }
 
 FORCEINLINE EMaterialBlendMode FMaterial::GetBlendMode() const
@@ -158,12 +195,16 @@ FORCEINLINE bool FMaterial::GetIsTwoSided() const
 
 FORCEINLINE const String& FMaterial::GetDebugName() const
 {
+#if HE_DEBUG
 	return m_DebugName;
+#else
+	return "";
+#endif
 }
 
-FORCEINLINE MaterialID FMaterial::GetUID() const
+FORCEINLINE FGUID FMaterial::GetGUID() const
 {
-	return m_UID;
+	return m_GUID;
 }
 
 FORCEINLINE void FMaterial::SetBlendMode( EMaterialBlendMode Type )
@@ -172,27 +213,27 @@ FORCEINLINE void FMaterial::SetBlendMode( EMaterialBlendMode Type )
 	BuildPipelineState();
 }
 
-FORCEINLINE void FMaterial::SetDomain(EMaterialDomain Domain)
+FORCEINLINE void FMaterial::SetDomain( EMaterialDomain Domain )
 {
 	m_Domain = Domain;
 	BuildPipelineState();
 }
 
-FORCEINLINE void FMaterial::SetShadingModel(EShadingModel Model)
+FORCEINLINE void FMaterial::SetShadingModel( EShadingModel Model )
 {
 	m_ShadingModel = Model;
 	BuildPipelineState();
 }
 
-FORCEINLINE void FMaterial::SetIsTwoSided(bool IsTwoSided)
+FORCEINLINE void FMaterial::SetIsTwoSided( bool IsTwoSided )
 {
 	m_IsTwoSided = IsTwoSided;
 	BuildPipelineState();
 }
 
-FORCEINLINE void FMaterial::SetMaterialID( const MaterialID& NewId )
+FORCEINLINE void FMaterial::SetMaterialGUID( const FGUID& NewId )
 {
-	m_UID = NewId;
+	m_GUID = NewId;
 }
 
 FORCEINLINE void FMaterial::SetDebugName( const String& Name )
@@ -202,35 +243,50 @@ FORCEINLINE void FMaterial::SetDebugName( const String& Name )
 #endif
 }
 
-FORCEINLINE bool FMaterial::SetTexture(const Char* TextureName, HTextureRef Texture)
+FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTextureRef Texture )
 {
-	StringHashValue NameHash = StringHash(TextureName);
-	auto Iter = m_TextureMappings.find(NameHash);
+	StringHashValue NameHash = StringHash( TextureName );
+	auto Iter = m_TextureMappings.find( NameHash );
 	if (Iter != m_TextureMappings.end())
 	{
 		(*Iter).second.second = Texture;
 		return true;
 	}
-	HE_LOG(Warning, TEXT("Trying to set texture with in material %s with invalid semantic name: %s"), CharToTChar(m_DebugName), CharToTChar(TextureName));
+	HE_LOG( Warning, TEXT( "Trying to set texture with in material \"%s\" with invalid semantic name: %s" ), CharToTChar( m_DebugName ), CharToTChar( TextureName ) );
 	return false;
 }
 
-FORCEINLINE bool FMaterial::SetFloat(const Char* VariableName, const float& Value)
+FORCEINLINE bool FMaterial::SetFloat( const Char* VariableName, const float& Value )
 {
-	StringHashValue NameHash = StringHash(VariableName);
-	auto& Iter = m_ConstBufferVarMappings.find(NameHash);
+	StringHashValue NameHash = StringHash( VariableName );
+	auto& Iter = m_ConstBufferVarMappings.find( NameHash );
 	if (Iter != m_ConstBufferVarMappings.end())
 	{
 		for (uint32 i = 0; i < HE_MAX_SWAPCHAIN_BACK_BUFFERS; ++i)
 		{
 			// Copy the data to each frame buffer inside m_ConstBufferMappings.
-			memcpy(Iter->second[i].second, &Value, sizeof(float));
+			memcpy( Iter->second[i].second, &Value, sizeof( float ) );
 
 			// Mark the buffer dirty to indicate a re-upload to the Gpu.
-			Iter->second[i].first->SetDirty(true);
+			Iter->second[i].first->SetDirty( true );
 		}
 		return true;
 	}
-	HE_LOG(Warning, TEXT("Trying to set a buffer constant in material %s with variable \"%s\" that does not exist!"), CharToTChar(m_DebugName), CharToTChar(VariableName));
+	HE_LOG( Warning, TEXT( "Trying to set buffer constant in material \"%s\" with invalid semantic name: %s" ), CharToTChar( m_DebugName ), CharToTChar( VariableName ) );
 	return false;
+}
+
+
+// FMaterialInstance
+//
+
+FORCEINLINE FMaterialInstance::FMaterialInstance()
+	: m_GUID( FGUID::Invalid )
+{
+
+}
+
+FORCEINLINE FMaterialInstance::~FMaterialInstance()
+{
+
 }

@@ -78,8 +78,12 @@ typedef MaterialRef HMaterial;
 class MaterialManager
 {
 public:
-	MaterialManager() = default;
-	~MaterialManager() = default;
+	MaterialManager() 
+	{
+	}
+	~MaterialManager() 
+	{
+	}
 
 	MaterialRef FindOrLoadMaterialFromFile(const String& Path);
 

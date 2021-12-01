@@ -488,9 +488,10 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Public\Renderer\Material.cpp">
+    <ClCompile Include="Private\Renderer\Material.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

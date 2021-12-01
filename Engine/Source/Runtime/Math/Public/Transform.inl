@@ -1,51 +1,38 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
+/*
+	Inline function implementations for FTransform class.
+*/
 
-
-FORCEINLINE void FTransform::AddChild(FTransform& Child)
+FORCEINLINE FTransform::FTransform()
+	: m_Position(FVector3::Zero)
+	, m_Rotation(FVector3::Zero)
+	, m_Scale(FVector3::One)
 {
-	m_Children.push_back(&Child);
 }
 
-FORCEINLINE bool FTransform::RemoveChild(FTransform* Child)
+FORCEINLINE FTransform::~FTransform()
 {
-	auto Iter = std::find( m_Children.begin(), m_Children.end(), Child );
-	if (Iter != m_Children.end())
-	{
-		m_Children.erase( Iter );
-		return true;
-	}
-	return false;
 }
 
-FORCEINLINE void FTransform::ReAssignChildrenToParent()
+FORCEINLINE FTransform::FTransform(FTransform&& Other) noexcept
 {
-	if (m_Children.size() == 0) 
-		return;
+	m_Scale = Other.m_Scale;
+	m_Position = Other.m_Position;
+	m_Rotation = Other.m_Rotation;
 
-	for (size_t i = 0; i < m_Children.size(); ++i)
-	{
-		m_Children[i]->SetParent(GetParent());
-	}
 }
 
-FORCEINLINE void FTransform::ComputeWorldMatrix()
+FORCEINLINE FTransform::FTransform(const FTransform& FTransform)
 {
-	if (m_pParent != NULL)
-	{
-		m_WorldMatrix = m_LocalMatrix * m_pParent->GetWorldMatrix();
-	}
-	else
-	{
-		m_WorldMatrix = m_LocalMatrix;
-	}
-	UpdateChildren();
+	*this = FTransform;
 }
 
-FORCEINLINE void FTransform::UpdateChildren()
+FORCEINLINE FTransform& FTransform::operator = (const FTransform& Other)
 {
-	for (size_t i = 0; i < m_Children.size(); ++i)
-	{
-		m_Children[i]->ComputeWorldMatrix();
-	}
+	m_Position = Other.m_Position;
+	m_Scale = Other.m_Scale;
+	m_Rotation = Other.m_Rotation;
+	return *this;
 }
 
 FORCEINLINE void FTransform::RotateVector(FVector3& outResult, const FVector3& inTarget, const FMatrix& inRotationMatrix)
@@ -53,22 +40,13 @@ FORCEINLINE void FTransform::RotateVector(FVector3& outResult, const FVector3& i
 	outResult = XMVector3TransformCoord(inTarget, inRotationMatrix);
 }
 
-FORCEINLINE void FTransform::ComputeAllMatriciesAndUpdateChildren()
-{
-	TranslateLocalMatrix();
-	ScaleLocalMatrix();
-	RotateLocalMatrix();
-	UpdateLocalMatrix();
-	ComputeWorldMatrix();
-	UpdateChildren();
-}
 
 FORCEINLINE void FTransform::Translate(const FVector3& Translation)
 {
 	Translate(Translation.x, Translation.y, Translation.z);
 }
 
-FORCEINLINE void FTransform::Translate(float X, float Y, float Z)
+FORCEINLINE void FTransform::Translate(const float& X, const float& Y, const float& Z)
 {
 	SetPosition( m_Position.x + X, m_Position.y + Y, m_Position.z + Z);
 }
@@ -78,54 +56,44 @@ FORCEINLINE void FTransform::Rotate(const FVector3& Rotation)
 	Rotate(Rotation.x, Rotation.y, Rotation.z);
 }
 
-FORCEINLINE void FTransform::Rotate(float Pitch, float Yaw, float Roll)
+FORCEINLINE void FTransform::Rotate(const float& Pitch, const float& Yaw, const float& Roll)
 {
 	m_Rotation.x += Pitch;
 	m_Rotation.y += Yaw;
 	m_Rotation.z += Roll;
-	RotateLocalMatrix();
-	UpdateLocalMatrix();
 }
 
-FORCEINLINE void FTransform::Scale(const FVector3& NewScale)
+FORCEINLINE void FTransform::Scale(const FVector3& Scaling)
 {
-	Scale(NewScale.x, NewScale.y, NewScale.z);
+	Scale(Scaling.x, Scaling.y, Scaling.z);
 }
 
-FORCEINLINE void FTransform::Scale(float X, float Y, float Z)
+FORCEINLINE void FTransform::Scale(const float& X, const float& Y, const float& Z)
 {
 	m_Scale.x += X;
 	m_Scale.y += Y;
 	m_Scale.z += Z;
-	ScaleLocalMatrix();
-	UpdateLocalMatrix();
 }
 
-FORCEINLINE void FTransform::SetPosition(float X, float Y, float Z)
+FORCEINLINE void FTransform::SetPosition(const float& X, const float& Y, const float& Z)
 {
 	m_Position.x = X;
 	m_Position.y = Y;
 	m_Position.z = Z;
-	TranslateLocalMatrix();
-	UpdateLocalMatrix();
 }
 
-FORCEINLINE void FTransform::SetRotation(float Pitch, float Yaw, float Roll)
+FORCEINLINE void FTransform::SetRotation(const float& Pitch, const float& Yaw, const float& Roll)
 {
 	m_Rotation.x = Pitch;
 	m_Rotation.y = Yaw;
 	m_Rotation.z = Roll;
-	RotateLocalMatrix();
-	UpdateLocalMatrix();
 }
 
-FORCEINLINE void FTransform::SetScale(float X, float Y, float Z)
+FORCEINLINE void FTransform::SetScale(const float& X, const float& Y, const float& Z)
 {
 	m_Scale.x = X;
 	m_Scale.y = Y;
 	m_Scale.z = Z;
-	ScaleLocalMatrix();
-	UpdateLocalMatrix();
 }
 
 FORCEINLINE void FTransform::SetPosition(const FVector3& Position)
@@ -146,45 +114,44 @@ FORCEINLINE void FTransform::SetScale(const FVector3& Scale)
 FORCEINLINE FVector3 FTransform::GetLocalUp()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Up, m_RotationMat );
+	RotateVector( Result, FVector3::Up, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalDown()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Down, m_RotationMat);
+	RotateVector( Result, FVector3::Down, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalLeft()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Left, m_RotationMat);
+	RotateVector( Result, FVector3::Left, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalRight()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Right, m_RotationMat);
+	RotateVector( Result, FVector3::Right, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalForward()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Forward, m_RotationMat);
+	RotateVector( Result, FVector3::Forward, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalBackward()
 {
 	FVector3 Result = FVector3::Zero;
-	RotateVector( Result, FVector3::Backward, m_RotationMat);
+	RotateVector( Result, FVector3::Backward, GetRotationMatrix() );
 	return Result;
 }
-
 
 FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 {
@@ -210,33 +177,31 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 	SetRotation(Pitch, Yaw, 0.0f);
 }
 
-FORCEINLINE void FTransform::SetLocalMatrix(const FMatrix& matrix)
+FORCEINLINE FMatrix FTransform::GetLocalMatrix() const
 {
-	m_LocalMatrix = matrix;
+	FMatrix Translation;
+	FMatrix Rotation;
+	FMatrix Scale;
+
+	Translation = GetTranslationMatrix();
+	Rotation = GetRotationMatrix();
+	Scale = GetScaleMatrix();
+
+	return Scale * Rotation * Translation;
 }
 
-FORCEINLINE void FTransform::SetWorldMatrix(const FMatrix& matrix)
-{
-	m_WorldMatrix = matrix;
+FORCEINLINE FMatrix FTransform::GetTranslationMatrix() const 
+{ 
+	return DirectX::XMMatrixTranslationFromVector(m_Position); 
 }
 
-FORCEINLINE void FTransform::UpdateLocalMatrix()
-{
-	m_LocalMatrix = m_ScaleMat * m_TranslationMat * m_RotationMat;
-	ComputeWorldMatrix();
+FORCEINLINE FMatrix FTransform::GetRotationMatrix() const 
+{ 
+	return DirectX::XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z); 
 }
 
-FORCEINLINE void FTransform::TranslateLocalMatrix()
-{
-	m_TranslationMat = DirectX::XMMatrixTranslationFromVector(m_Position);
+FORCEINLINE FMatrix FTransform::GetScaleMatrix() const 
+{ 
+	return DirectX::XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
 }
 
-FORCEINLINE void FTransform::ScaleLocalMatrix()
-{
-	m_ScaleMat = DirectX::XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
-}
-
-FORCEINLINE void FTransform::RotateLocalMatrix()
-{
-	m_RotationMat = DirectX::XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
-}

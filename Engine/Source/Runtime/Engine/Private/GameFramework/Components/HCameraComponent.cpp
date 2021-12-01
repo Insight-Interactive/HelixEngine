@@ -8,8 +8,8 @@
 #include "World/World.h"
 
 
-HCameraComponent::HCameraComponent(const HName& Name)
-	: HActorComponent(Name)
+HCameraComponent::HCameraComponent(FComponentInitArgs& InitArgs)
+	: HSceneComponent(InitArgs)
 {
 }
 

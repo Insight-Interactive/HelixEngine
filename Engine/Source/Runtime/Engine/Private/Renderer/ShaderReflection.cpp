@@ -81,6 +81,6 @@ void FShaderReflection::GetConstantBufferByName(const Char* Name, FConstantBuffe
 		ThrowIfFailedMsg(hr, "Failed to get shader veriable!");
 
 		outBuffer.Variables[i].Name			= VarDesc.Name;
-		outBuffer.Variables[i].SizeInBtytes	= VarDesc.Size;
+		outBuffer.Variables[i].SizeInBytes	= VarDesc.Size;
 	}
 }

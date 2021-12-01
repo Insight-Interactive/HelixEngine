@@ -3,8 +3,9 @@
 
 #include "World/Level.h"
 
-#include "RendererCore.h"
 #include "World/World.h"
+#include "RendererCore.h"
+#include "Engine/Engine.h"
 #include "GameFramework/Actor/AActor.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 #include "AssetRegistry/AssetDatabase.h"
@@ -68,30 +69,32 @@ void HLevel::Serialize( WriteContext& Output )
 				{
 					Output.StartObject();
 					{
-						FTransform& ActorTransform = CurrentActor.GetTransform();
-						// Position
-						Output.Key( "PositionX" );
-						Output.Double( ActorTransform.GetPosition().x );
-						Output.Key( "PositionY" );
-						Output.Double( ActorTransform.GetPosition().y );
-						Output.Key( "PositionZ" );
-						Output.Double( ActorTransform.GetPosition().z );
+						if (HSceneComponent* pRoot = CurrentActor.GetRootComponent())
+						{
+							// Position
+							Output.Key( "PositionX" );
+							Output.Double( pRoot->GetPosition().x );
+							Output.Key( "PositionY" );
+							Output.Double( pRoot->GetPosition().y );
+							Output.Key( "PositionZ" );
+							Output.Double( pRoot->GetPosition().z );
 
-						// Rotation
-						Output.Key( "RotationX" );
-						Output.Double( ActorTransform.GetRotation().x );
-						Output.Key( "RotationY" );
-						Output.Double( ActorTransform.GetRotation().y );
-						Output.Key( "RotationZ" );
-						Output.Double( ActorTransform.GetRotation().z );
+							// Rotation
+							Output.Key( "RotationX" );
+							Output.Double( pRoot->GetRotation().x );
+							Output.Key( "RotationY" );
+							Output.Double( pRoot->GetRotation().y );
+							Output.Key( "RotationZ" );
+							Output.Double( pRoot->GetRotation().z );
 
-						// Scale
-						Output.Key( "ScaleX" );
-						Output.Double( ActorTransform.GetScale().x );
-						Output.Key( "ScaleY" );
-						Output.Double( ActorTransform.GetScale().y );
-						Output.Key( "ScaleZ" );
-						Output.Double( ActorTransform.GetScale().z );
+							// Scale
+							Output.Key( "ScaleX" );
+							Output.Double( pRoot->GetScale().x );
+							Output.Key( "ScaleY" );
+							Output.Double( pRoot->GetScale().y );
+							Output.Key( "ScaleZ" );
+							Output.Double( pRoot->GetScale().z );
+						}
 					}
 					Output.EndObject();
 				}
@@ -106,22 +109,36 @@ void HLevel::Serialize( WriteContext& Output )
 class ARotatingActor : public AActor
 {
 public:
-	HE_GENERATED_BODY(ARotatingActor)
-
-		virtual void Tick(float DT) override;
+	HE_GENERATED_BODY( ARotatingActor )
 
 	virtual void BeginPlay() override;
+	virtual void Tick( float DeltaTime ) override;
+
 private:
 	HStaticMeshComponent* pMesh;
+	HPointLightComponent* pLight;
+
 };
 
-ARotatingActor::ARotatingActor(HWorld* pWorld, const HName& Name)
-	 : AActor(pWorld, Name)
+ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
+	: AActor( InitArgs )
 {
-	pMesh = AddComponent<HStaticMeshComponent>(TEXT("Cube Mesh"));
-	pMesh->SetMesh(FAssetDatabase::GetInstance()->GetStaticMesh(FGUID::CreateFromString("4539421c-d8b4-4936-bb0c-8dde1e24f9b9")));
-	pMesh->SetMaterial(FAssetDatabase::GetInstance()->GetMaterial(FGUID::CreateFromString("0d68e992-aa25-4aa4-9f81-0eb775320c1e")));
+	m_pRoot = AddComponent<HSceneComponent>( TEXT( "Root" ) );
 
+	m_pRoot->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
+	m_pRoot->SetScale( FVector3( 10.f, 10.f, 10.f ) );
+
+	pMesh = AddComponent<HStaticMeshComponent>( TEXT( "Cube Mesh" ) );
+	pMesh->SetMesh( FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) ) );
+	pMesh->SetMaterial( FAssetDatabase::GetMaterial( FGUID::CreateFromString( "0d68e992-aa25-4aa4-9f81-0eb775320c1e" ) ) );
+
+	pLight = AddComponent<HPointLightComponent>( TEXT( "PointLight" ) );
+	pLight->SetBrightness( 800.f );
+	pLight->SetColor( FColor( 0.f, 255.f, 0.f ) );
+	pLight->SetPosition( 8.f, 12.f, 0.f );
+
+	pLight->AttachTo( m_pRoot );
+	pMesh->AttachTo( m_pRoot );
 }
 
 ARotatingActor::~ARotatingActor()
@@ -129,32 +146,25 @@ ARotatingActor::~ARotatingActor()
 
 }
 
-void ARotatingActor::Tick(float DT)
+void ARotatingActor::Tick( float DeltaTime )
 {
-	FVector3 Rot = pMesh->GetRotation();
-	Rot.y += 0.005f;
-	pMesh->SetRotation(Rot);
+	pMesh->Rotate( 0.f, 0.005f, 0.f );
 
 }
 
 void ARotatingActor::BeginPlay()
 {
-	GetTransform().SetPosition(-40.f, 0.f, 0.f);
-	GetTransform().SetScale(10.f, 10.f, 10.f);
 
 }
 
 void HLevel::Deserialize( const ReadContext& Value )
 {
-	CreateActor<ARotatingActor>(TEXT("Rotating Actor Inst"));
+	CreateActor<ARotatingActor>( TEXT( "Rotating Actor Inst" ) );
 
-	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
-		itr != Value.MemberEnd(); ++itr)
+	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{
-		const rapidjson::Value& ActorWorldProps = itr->value;
-
-		FGUID ActorGuid = FGUID::CreateFromString( itr->name.GetString() );
-		const String& ActorFilePath = FAssetDatabase::GetInstance()->LookupActor( ActorGuid );
+		FGUID ActorGuid = FGUID::CreateFromString( Iter->name.GetString() );
+		const String& ActorFilePath = FAssetDatabase::LookupActor( ActorGuid );
 		HE_ASSERT( !ActorFilePath.empty() );
 
 		// Load the actor
@@ -164,12 +174,11 @@ void HLevel::Deserialize( const ReadContext& Value )
 		JsonUtility::LoadDocument( JsonSource, JsonDoc );
 		if (JsonDoc.IsObject())
 		{
-			const Char* kBaseActorType			= HE_STRINGIFY( AActor );
-			const Char* kPlayerCharacterType	= HE_STRINGIFY( APlayerCharacter );
-			for (rapidjson::Value::ConstMemberIterator Itr = JsonDoc.MemberBegin();
-				Itr != JsonDoc.MemberEnd(); ++Itr)
+			const Char* kBaseActorType = HE_STRINGIFY( AActor );
+			const Char* kPlayerCharacterType = HE_STRINGIFY( APlayerCharacter );
+			for (auto Itr = JsonDoc.MemberBegin(); Itr != JsonDoc.MemberEnd(); ++Itr)
 			{
-				String ObjectType = Itr->name.GetString();
+				const String ObjectType = Itr->name.GetString();
 				if (ObjectType == kBaseActorType)
 				{
 					const rapidjson::Value& ActorObject = JsonDoc[kBaseActorType];
@@ -177,15 +186,34 @@ void HLevel::Deserialize( const ReadContext& Value )
 					// Create the actor and deserialize its components.
 					AActor* pNewActor = CreateActor<AActor>( TEXT( "<Unnamed Actor>" ) );
 					pNewActor->Deserialize( ActorObject );
-					JsonUtility::GetTransform( ActorWorldProps[0], "WorldTransform", pNewActor->GetTransform() );
+					if (HSceneComponent* pRoot = pNewActor->GetRootComponent())
+					{
+						FTransform Transform;
+						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
+						pRoot->SetPosition( Transform.GetPosition() );
+						pRoot->SetRotation( Transform.GetRotation() );
+						pRoot->SetScale( Transform.GetScale() );
+					}
 				}
 				else if (ObjectType == kPlayerCharacterType)
 				{
 					APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>( TEXT( "<Unnamed Player Character>" ) );
 					GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
 					GetWorld()->AddPlayerCharacterRef( pPlayer );
+					if (HSceneComponent* pRoot = pPlayer->GetRootComponent())
+					{
+						FTransform Transform;
+						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
+						pRoot->SetPosition( Transform.GetPosition() );
+						pRoot->SetRotation( Transform.GetRotation() );
+						pRoot->SetScale( Transform.GetScale() );
+					}
 				}
 			}
+		}
+		else
+		{
+			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorFilePath ) );
 		}
 	}
 }

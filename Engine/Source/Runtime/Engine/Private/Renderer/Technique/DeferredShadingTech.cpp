@@ -62,8 +62,6 @@ FDeferredShadingTech::GeometryPass::~GeometryPass()
 
 }
 
-#include <D3D12shader.h>
-#include <d3dcompiler.h>
 void FDeferredShadingTech::GeometryPass::Initialize(const FVector2& RenderResolution )
 {
 	HE_ASSERT( m_pSceneDepthBufferRef != NULL ); // Trying to initialize geometry pass with no scene depth buffer! Call 'GeometryPass::SetDepthBuffer' before initilializing.

@@ -5,8 +5,8 @@
 #include "AssetRegistry/SerializeableInterface.h"
 
 
-#define HE_COMPONENT_GENERATED_BODY( Class )	\
-			Class( const HName& Name );			\
+#define HE_COMPONENT_GENERATED_BODY( Class )		\
+			Class( FComponentInitArgs& InitArgs );	\
 			virtual ~Class();
 
 #define HCOMPONENT()
@@ -16,27 +16,42 @@ class AActor;
 class HWorld;
 class FCommandContext;
 
+struct FComponentInitArgs
+{
+	const HName&	Name;
+	const AActor*	pOwner;
+};
+
+/*
+	Base class for all actor components.
+*/
 HCOMPONENT()
 class HActorComponent : public HObject, public FSerializeableInterface
 {
 	friend class AActor;
 public:
-	inline AActor* GetOwner() const;
+	// Returns the Actor class this component belongs too.
+	AActor* GetOwner();
 
 protected:
 	HE_COMPONENT_GENERATED_BODY( HActorComponent )
 	
 
-	void SetOwner( AActor* pNewOwner );
-	AActor* GetOwner();
+	// Returns the world the component resides in.
 	HWorld* GetWorld();
 
+	// Called on the first frame of the game.
 	virtual void BeginPlay() {}
+	// Called once every frame.
 	virtual void Tick( float DeltaTime ) {}
 
+	// Called when the component is initialy created.
 	virtual void OnCreate() {}
+	// Called when the component is attached to its owning actor.
 	virtual void OnAttach() {}
+	// Clled when the component is detached from its owning actor.
 	virtual void OnDetach() {}
+	// Clled when the component is destroyed and released from memory.
 	virtual void OnDestroy() {}
 	virtual void Render( FCommandContext& GfxContext ) {}
 
@@ -53,17 +68,8 @@ protected:
 // Inline function implmentations
 //
 
-inline AActor* HActorComponent::GetOwner() const
-{
-	return m_pOwner;
-}
 
-inline void HActorComponent::SetOwner( AActor* pNewOwner )
-{
-	m_pOwner = pNewOwner;
-}
-
-inline AActor* HActorComponent::GetOwner()
+FORCEINLINE AActor* HActorComponent::GetOwner()
 {
 	return m_pOwner;
 }

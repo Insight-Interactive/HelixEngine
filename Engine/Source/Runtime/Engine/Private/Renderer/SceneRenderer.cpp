@@ -4,12 +4,13 @@
 #include "Renderer/SceneRenderer.h"
 
 #include "World/Scene.h"
+#include "RendererCore.h"
+#include "Engine/Engine.h"
 #include "CommandContext.h"
+#include "Renderer/LightManager.h"
+#include "Renderer/ShaderRegisters.h"
 #include "Renderer/GeometryGenerator.h"
 #include "GameFramework/Components/HCameraComponent.h"
-#include "Engine/Engine.h"
-#include "RendererCore.h"
-#include "Renderer/LightManager.h"
 
 
 FSceneRenderer::FSceneRenderer()
@@ -195,8 +196,8 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 				pCBData.kInverseViewMat = pCBData.kInverseViewMat.Transpose();
 				pCBData.kInverseProjMat = pCBData.kInverseProjMat.Transpose();
 
-				pCBData.kCameraPos		= m_pRenderingCamera->GetTransform().GetAbsoluteWorldPosition();
-				pCBData.kCameraFarZ	= m_pRenderingCamera->GetFarZ();
+				pCBData.kCameraPos		= m_pRenderingCamera->GetAbsoluteWorldPosition();
+				pCBData.kCameraFarZ		= m_pRenderingCamera->GetFarZ();
 				pCBData.kCameraNearZ	= m_pRenderingCamera->GetNearZ();
 			}
 			pCBData.kWorldTime		= (float)GEngine->GetAppSeconds();

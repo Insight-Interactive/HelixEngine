@@ -8,8 +8,8 @@
 #include "World/World.h"
 
 
-HBillboardComponent::HBillboardComponent( const HName& Name )
-	: HStaticMeshComponent( Name )
+HBillboardComponent::HBillboardComponent(FComponentInitArgs& InitArgs)
+	: HStaticMeshComponent( InitArgs )
 {
 }
 
@@ -24,7 +24,6 @@ void HBillboardComponent::BeginPlay()
 
 void HBillboardComponent::Tick( float DeltaTime )
 {
-	SetRotation( GetWorld()->GetCurrentSceneRenderCamera()->GetTransform().GetRotation() );
 }
 
 void HBillboardComponent::OnCreate()

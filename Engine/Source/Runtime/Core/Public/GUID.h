@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "DebugAssert.h"
@@ -25,51 +26,33 @@ private:
 class FGUID
 {
 public:
-	FGUID()
-	{
-#if HE_WINDOWS
-		ZeroMemory( &m_UUID, sizeof( m_UUID ) );
-#endif
-	}
-	FGUID(const Char* GuidStr)
-		: FGUID()
-	{
-		FGUID::CreateFromString(GuidStr, *this);
-	}
-	FGUID(uint32 InitialValue)
-	{
-#if HE_WINDOWS
-		memset(&m_UUID, InitialValue, sizeof(m_UUID));
-#endif
-	}
-	~FGUID()
-	{
-	}
+	FGUID();
+	FGUID(const Char* GuidStr);
+	FGUID(uint32 InitialValue);
+	FGUID(const FGUID& Other);
+	~FGUID();
+	FGUID& operator = (const FGUID& Other);
+	bool operator == (const FGUID& Other) const;
+	bool operator != (const FGUID& Other) const;
 
-
-	bool operator == ( const FGUID& Other ) const
-	{
-#if HE_WINDOWS
-		return memcmp( &m_UUID, &Other.m_UUID, sizeof( m_UUID ) ) == 0;
-#endif
-	}
+	bool IsValid() const;
+	const void* GetNativeGUID() const;
+	GUIDString ToString() const;
 
 	static FGUID Generate();
 	static void Generate( FGUID& outResult );
 	static FGUID CreateFromString( const Char* String );
 	static void CreateFromString( const Char* String, FGUID& outResult );
 	
-	const void* GetNativeGUID() const;
+public:
+	static const FGUID Invalid;
+	static const FGUID Zero;
 
-	GUIDString ToString() const;
-	
 private:
 #if HE_WINDOWS
 	UUID m_UUID;
 #endif
 
-private:
-	static const FGUID kInvalidGuid;
 
 };
 
@@ -116,8 +99,65 @@ FORCEINLINE const char* GUIDString::CStr()
 	return (const char*)m_GuidString;
 }
 
+
 // FGUID
 //
+
+FORCEINLINE FGUID::FGUID()
+{
+#if HE_WINDOWS
+	ZeroMemory(&m_UUID, sizeof(m_UUID));
+#endif
+}
+
+FORCEINLINE FGUID::FGUID(const Char* GuidStr)
+	: FGUID()
+{
+	FGUID::CreateFromString(GuidStr, *this);
+}
+
+FORCEINLINE FGUID::FGUID(uint32 InitialValue)
+{
+#if HE_WINDOWS
+	memset(&m_UUID, InitialValue, sizeof(m_UUID));
+#endif
+}
+
+FORCEINLINE FGUID::FGUID( const FGUID& Other )
+{
+	*this = Other;
+}
+
+FORCEINLINE FGUID::~FGUID()
+{
+}
+
+FORCEINLINE bool FGUID::IsValid() const
+{
+	return *this != FGUID::Invalid;
+}
+
+FORCEINLINE FGUID& FGUID::operator = (const FGUID& Other)
+{
+	if (this == &Other)
+		return *this;
+
+	memcpy(&this->m_UUID, &Other.m_UUID, sizeof(m_UUID));
+
+	return *this;
+}
+
+FORCEINLINE bool FGUID::operator == (const FGUID& Other) const
+{
+#if HE_WINDOWS
+	return memcmp(&m_UUID, &Other.m_UUID, sizeof(m_UUID)) == 0;
+#endif
+}
+
+FORCEINLINE bool FGUID::operator != (const FGUID& Other) const
+{
+	return !(*this == Other);
+}
 
 FORCEINLINE /*static*/ FGUID FGUID::Generate()
 {

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Transform.h"
-#include "GameFramework/Components/HActorComponent.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 const float kDefaultFOV = 75.f;
 const float kDefaultNearZ = 0.1f;
@@ -32,7 +32,7 @@ struct ProjectionProperties
 };
 
 HCOMPONENT()
-class HCameraComponent : public HActorComponent
+class HCameraComponent : public HSceneComponent
 {
 	friend class HCameraManager;
 public:
@@ -46,7 +46,6 @@ public:
 
 	void SetProjectionValues( float FOVDegrees, float NearZ, float FarZ );
 
-	FTransform& GetTransform();
 	const FMatrix& GetViewMatrix();
 	const FMatrix& GetProjectionMatrix();
 	float GetNearZ();
@@ -63,7 +62,6 @@ private:
 	void BuildViewMatrix();
 
 protected:
-	FTransform m_Transform;
 	ProjectionProperties m_ViewProps;
 	float m_FieldOfView;
 
@@ -73,11 +71,6 @@ protected:
 //
 // Inline function implementations
 //
-
-inline FTransform& HCameraComponent::GetTransform()
-{
-	return m_Transform;
-}
 
 inline const FMatrix& HCameraComponent::GetViewMatrix()
 {
@@ -121,9 +114,10 @@ inline void HCameraComponent::SetFieldOfView( float Value )
 
 inline void HCameraComponent::BuildViewMatrix()
 {
+	const FVector3 WorldPos = GetAbsoluteWorldPosition();
 	m_ViewProps.ViewMat = XMMatrixLookAtLH(
-		m_Transform.GetAbsoluteWorldPosition()
-		, m_Transform.GetAbsoluteWorldPosition() + m_Transform.GetLocalForward()
-		, m_Transform.GetLocalUp()
+		WorldPos, 
+		WorldPos + GetLocalForward(),
+		GetLocalUp()
 	);
 }

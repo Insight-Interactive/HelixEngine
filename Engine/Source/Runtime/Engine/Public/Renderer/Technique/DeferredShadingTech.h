@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Renderer/RenderPass.h"
@@ -10,12 +11,12 @@
 #include "DepthBuffer.h"
 
 
-class FCommandContext;
 class FColorBuffer;
 class FDepthBuffer;
+class FGpuResource;
 class FRootSignature;
 class FPipelineState;
-class FGpuResource;
+class FCommandContext;
 
 class FDeferredShadingTech
 {

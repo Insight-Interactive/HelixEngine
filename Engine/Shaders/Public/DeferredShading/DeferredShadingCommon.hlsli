@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 
 //
 // Geometry Pass In/Out Structures
@@ -33,6 +34,7 @@ struct GP_PSOutput
 	float1 Roughness	: SV_Target2;
 	float1 Metallic		: SV_Target3;
 	float1 Specular		: SV_Target4;
+	//float1 Emissive		: SV_Target5;
 };
 
 

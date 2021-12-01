@@ -90,6 +90,7 @@ protected:
 	void SetupEditorPanels();
 	int32 TranslateMouseButton( DigitalInput MouseKeycode );
 	void PackageGame();
+	void RegisterEditorOnlyAssets();
 
 protected:
 	PreferencesViewport m_PreferencesViewport;

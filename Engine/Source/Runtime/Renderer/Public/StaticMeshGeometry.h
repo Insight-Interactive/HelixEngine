@@ -5,6 +5,7 @@
 
 #include "GeometryBufferManager.h"
 #include "RendererCore.h"
+#include "GUID.h"
 
 
 struct FDrawArgs
@@ -53,7 +54,7 @@ public:
 	FIndexBuffer& GetIndexBuffer();
 	uint32 GetNumVerticies() const;
 	uint32 GetNumIndices() const;
-	uint64 GetUID() const;
+	FGUID GetGUID() const;
 
 	void Create( void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices );
 
@@ -61,13 +62,13 @@ private:
 	void Initialize();
 	void UnInitialize();
 
-	void SetHashName( uint64 NewUID );
+	void SetHashName( const FGUID& NewUID );
 
 
 protected:
 	FDrawArgs m_DrawArgs;
 
-	uint64 m_Uid;
+	FGUID m_Guid;
 	// TODO AABB for culling
 };
 
@@ -97,9 +98,9 @@ inline uint32 HStaticMeshGeometry::GetNumIndices() const
 	return m_DrawArgs.NumIndices;
 }
 
-inline uint64 HStaticMeshGeometry::GetUID() const
+inline FGUID HStaticMeshGeometry::GetGUID() const
 {
-	return m_Uid;
+	return m_Guid;
 }
 
 inline void HStaticMeshGeometry::Initialize()
@@ -114,7 +115,7 @@ inline void HStaticMeshGeometry::UnInitialize()
 	GGeometryManager.DeAllocateIndexBuffer( m_DrawArgs.IndexBufferHandle );
 }
 
-inline void HStaticMeshGeometry::SetHashName( uint64 NewGUID )
+inline void HStaticMeshGeometry::SetHashName( const FGUID& NewGUID )
 {
-	m_Uid = NewGUID;
+	m_Guid = NewGUID;
 }

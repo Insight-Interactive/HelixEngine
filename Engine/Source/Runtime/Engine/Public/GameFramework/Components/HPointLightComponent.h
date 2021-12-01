@@ -1,14 +1,13 @@
 #pragma once
 
-#include "GameFramework/Components/HActorComponent.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 #include "Color.h"
 #include "Transform.h"
-#include "Renderer/LightManager.h"
-
-#include "Renderer/MaterialManager.h"
 #include "ModelManager.h"
 #include "ConstantBuffer.h"
+#include "Renderer/LightManager.h"
+#include "Renderer/MaterialManager.h"
 
 
 extern LightManager GLightManager;
@@ -17,11 +16,11 @@ extern LightManager GLightManager;
 	A light that emits energy from a single point in space in all directions.
 */
 HCOMPONENT()
-class HPointLightComponent : public HActorComponent
+class HPointLightComponent : public HSceneComponent
 {
 	friend class AActor;
 	friend class HScene;
-	using Super = HActorComponent;
+	using Super = HSceneComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HPointLightComponent )
 
@@ -31,10 +30,8 @@ public:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
 
-	FVector3 GetPosition() const;
 	FColor GetColor() const;
 	float GetBrightness() const;
-	void SetPosition( const FVector3& NewPosition );
 	void SetColor( const FColor& NewColor );
 	void SetBrightness( float NewBrightness );
 
@@ -44,34 +41,31 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
+	virtual void OnPositionChanged() override;
+
 	bool GetCanDrawDebugBillboard() const;
-	void SetCanDrawDebugBillboard(bool CanDraw);
 
 protected:
 	PointLightDataHandle m_PointLightHandle;
-	FTransform m_Transform;
 
+	// Billboard info
 	FTransform m_BillboardTransform;
 	StaticMeshGeometryRef m_LightDebugMesh;
 	TConstantBuffer<MeshWorldCBData> m_MeshWorldCB;
 	MaterialRef m_MaterialRef;
-	bool m_CanDrawDebugBillboard;
+
 };
+
 
 //
 // Inline function implementations
 //
 
-inline FVector3 HPointLightComponent::GetPosition() const
-{
-	return m_Transform.GetPosition();
-}
-
 inline FColor HPointLightComponent::GetColor() const
 {
-	FColor RetVal( 0.f, 0.f, 0.f, 0.f );
+	FColor RetVal( 0.f );
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != NULL)
+	if (pData != nullptr)
 	{
 		RetVal.R = pData->Color.x;
 		RetVal.G = pData->Color.y;
@@ -83,7 +77,7 @@ inline FColor HPointLightComponent::GetColor() const
 inline float HPointLightComponent::GetBrightness() const
 {
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != NULL)
+	if (pData != nullptr)
 	{
 		return pData->Brightness;
 	}
@@ -91,21 +85,19 @@ inline float HPointLightComponent::GetBrightness() const
 	return 0.f;
 }
 
-inline void HPointLightComponent::SetPosition( const FVector3& NewPosition )
+inline void HPointLightComponent::OnPositionChanged()
 {
-	m_Transform.SetPosition( NewPosition );
-
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != NULL)
+	if (pData != nullptr)
 	{
-		pData->Position = NewPosition;
+		pData->Position = GetAbsoluteWorldPosition();
 	}
 }
 
 inline void HPointLightComponent::SetColor( const FColor& NewColor )
 {
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != NULL)
+	if (pData != nullptr)
 	{
 		pData->Color = NewColor.ToVector3();
 	}
@@ -114,18 +106,8 @@ inline void HPointLightComponent::SetColor( const FColor& NewColor )
 inline void HPointLightComponent::SetBrightness( float NewBrightness )
 {
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != NULL)
+	if (pData != nullptr)
 	{
 		pData->Brightness = NewBrightness;
 	}
-}
-
-inline bool HPointLightComponent::GetCanDrawDebugBillboard() const
-{
-	return m_CanDrawDebugBillboard;
-}
-
-inline void HPointLightComponent::SetCanDrawDebugBillboard( bool CanDraw )
-{
-	m_CanDrawDebugBillboard = CanDraw;
 }

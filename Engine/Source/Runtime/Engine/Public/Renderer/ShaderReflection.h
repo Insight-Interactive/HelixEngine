@@ -26,7 +26,7 @@ struct FShaderResourceDescription
 struct FShaderVariableDescription
 {
 	const Char* Name;
-	uint32 SizeInBtytes;
+	uint32 SizeInBytes;
 };
 
 /*

@@ -14,15 +14,13 @@ FPipelineState::FPipelineState()
 
 FPipelineState::~FPipelineState()
 {
-	HE_COM_SAFE_RELEASE(m_pID3D12PipelineState);
 }
 
 void FPipelineState::Initialize(const FPipelineStateDesc& Desc)
 {
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
 	
-	if (m_pID3D12PipelineState)
-		m_pID3D12PipelineState->Release();
+	HE_COM_SAFE_RELEASE( m_pID3D12PipelineState );
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC PSODesc = {};
 	PSODesc.NodeMask = Desc.NodeMask;

@@ -108,7 +108,7 @@ void HEngine::Startup()
 	GGameInstance = new HGameInstance();
 
 	String AssetDatabaseRoot = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
-	FAssetDatabase::GetInstance()->Initialize( AssetDatabaseRoot.c_str() );
+	FAssetDatabase::Initialize( AssetDatabaseRoot.c_str() );
 
 	// Create and initialize the main client window.
 	FWindow::Description ClientDesc = {};
@@ -135,20 +135,19 @@ void HEngine::Startup()
 
 	m_GameWorld.SetViewport( &GetClientViewport() );
 
-	// TODO Get this from the DefaultEngine.ini
-	String StartingWorldPath = FGameProject::GetInstance()->GetContentFolder() + "/Levels/TestLevel.hlevel";
-	m_GameWorld.Initialize( StartingWorldPath.c_str() );
-	GetClientViewport().SetWorld( &m_GameWorld );
-
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultInput.ini";
-	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
-
 	HE_LOG( Log, TEXT( "Engine startup complete." ) );
 }
 
 void HEngine::PostStartup()
 {
 	HE_LOG(Log, TEXT("Beginning engine post-startup."));
+
+	// TODO Get this from the DefaultEngine.ini
+	String StartingWorldPath = FGameProject::GetInstance()->GetContentFolder() + "/Levels/TestLevel.hlevel";
+	m_GameWorld.Initialize( StartingWorldPath.c_str() );
+
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultInput.ini";
+	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
 	GetClientViewport().Show();
 	GetClientViewport().BringToFocus();
@@ -177,7 +176,7 @@ void HEngine::Shutdown()
 	GetClientViewport().Uninitialize();
 	m_GameWorld.Flush();
 
-	FAssetDatabase::GetInstance()->Uninitialize();
+	FAssetDatabase::Uninitialize();
 	GMaterialManager.FlushMaterialCache();
 
 	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );

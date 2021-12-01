@@ -50,7 +50,7 @@ HE_ALIGN( 16 ) struct PointLightCBData
 	FVector3				Position;
 
 	// The radial influence of the light.
-	float Radius;
+	float					Radius;
 
 	// The color of the light. Fourth component is unused.
 	FVector3				Color;

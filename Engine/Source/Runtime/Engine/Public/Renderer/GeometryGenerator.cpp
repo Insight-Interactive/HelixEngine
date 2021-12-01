@@ -20,8 +20,8 @@ namespace GeometryGenerator
 			0, 1, 3,
 			0, 3, 2
 		};
-		const uint32 NumIndices = HE_ARRAYSIZE(Indices);
-		const uint32 IndexBufferSize = NumIndices * sizeof(uint32);
+		const uint32 NumIndices			= HE_ARRAYSIZE(Indices);
+		const uint32 IndexBufferSize	= NumIndices * sizeof(uint32);
 
 		FVertex2D Verts[] =
 		{
@@ -30,8 +30,8 @@ namespace GeometryGenerator
 			{ { -1.0f,-1.0f }, { 0.0f, 1.0f } }, // Bottom Left
 			{ {  1.0f,-1.0f }, { 1.0f, 1.0f } }, // Bottom Right
 		};
-		const uint32 NumVerts = HE_ARRAYSIZE(Verts);
-		const uint32 VertexBufferSize = NumVerts * sizeof(FVertex2D);
+		const uint32 NumVerts			= HE_ARRAYSIZE(Verts);
+		const uint32 VertexBufferSize	= NumVerts * sizeof(FVertex2D);
 
 		return GStaticGeometryManager.RegisterGeometry(
 			QuadGeometryName,

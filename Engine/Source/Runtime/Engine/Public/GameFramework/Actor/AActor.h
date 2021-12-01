@@ -3,16 +3,20 @@
 
 #include "AssetRegistry/Asset.h"
 #include "GameFramework/HObject.h"
+#include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
 
-#include "Transform.h"
-
 #define HE_GENERATED_BODY( Class )																\
-			Class( HWorld* pWorld, const HName& Name );	\
+			Class( FActorInitArgs& InitArgs );	\
 			virtual ~Class();							
 
 #define HCLASS()
 
+struct FActorInitArgs
+{
+	const HWorld*	pWorld;
+	const HName&	Name;
+};
 
 class HWorld;
 class HActorComponent;
@@ -24,23 +28,33 @@ class AActor : public HObject, public FSerializeableInterface
 	friend class HLevel;
 	friend class HWorld;
 	friend class HActorComponent;
+	friend class DetailsPanel;
+	using Super = HObject;
 public:
 	HE_GENERATED_BODY( AActor )
 
+	// Called once when the game has started playing.
 	virtual void BeginPlay();
+	// Called once per frame.
 	virtual void Tick( float DeltaTime );
 
-	template <typename ComponentType, typename ... InitArgs>
-	inline ComponentType* AddComponent( InitArgs ... args );
+	// Add a component to the actor.
+	template <typename ComponentType>
+	ComponentType* AddComponent(const HName& Name);
 
+	// Remove all components from the actor.
 	void RemoveAllComponents();
+	// Finds and returns a component by its unique id. nullptr if the component is not found.
+	HActorComponent* GetComponentByGuid(const FGUID& Guid);
 
-	FTransform& GetTransform();
+
+	void SetRootComponent(HSceneComponent* pRoot);
+	HSceneComponent* GetRootComponent();
 
 protected:
 	void Render( FCommandContext& GfxContext );
-	inline HWorld* GetWorld();
-	inline void SetOwningWorld( HWorld* pWorld );
+	HWorld* GetWorld();
+	void SetOwningWorld( HWorld* pWorld );
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
@@ -52,8 +66,8 @@ protected:
 protected:
 	std::vector<HActorComponent*> m_Components;
 	HWorld* m_pOwningWorld;
-	HName m_DisplayName;
-	FTransform m_Transform;
+
+	HSceneComponent* m_pRoot;
 
 };
 
@@ -62,12 +76,12 @@ protected:
 // Inline function implementations
 //
 
-template <typename ComponentType, typename ... InitArgs>
-inline ComponentType* AActor::AddComponent( InitArgs ... args )
+template <typename ComponentType>
+FORCEINLINE ComponentType* AActor::AddComponent( const HName& Name )
 {
 	// Create, initialize and attach the component to the actor.
-	HActorComponent* pNewComponent = new ComponentType( args... );
-	pNewComponent->SetOwner( this );
+	FComponentInitArgs InitArgs{ Name, this };
+	HActorComponent* pNewComponent = new ComponentType(InitArgs);
 	pNewComponent->OnCreate();
 	pNewComponent->OnAttach();
 
@@ -76,17 +90,32 @@ inline ComponentType* AActor::AddComponent( InitArgs ... args )
 	return SCast<ComponentType*>( pNewComponent );
 }
 
-inline HWorld* AActor::GetWorld()
+FORCEINLINE HActorComponent* AActor::GetComponentByGuid(const FGUID& Guid)
+{
+	for (auto* Iter : m_Components)
+	{
+		if (Iter->GetGuid() == Guid)
+			return Iter;
+	}
+	return nullptr;
+}
+
+FORCEINLINE HWorld* AActor::GetWorld()
 {
 	return m_pOwningWorld;
 }
 
-inline void AActor::SetOwningWorld( HWorld* pWorld )
+FORCEINLINE void AActor::SetOwningWorld( HWorld* pWorld )
 {
 	m_pOwningWorld = pWorld;
 }
 
-inline FTransform& AActor::GetTransform()
+FORCEINLINE void AActor::SetRootComponent(HSceneComponent* pRoot)
 {
-	return m_Transform;
+	m_pRoot = pRoot;
+}
+
+FORCEINLINE HSceneComponent* AActor::GetRootComponent()
+{
+	return m_pRoot;
 }

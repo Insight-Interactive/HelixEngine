@@ -15,6 +15,8 @@ protected:
 	HObject( const HName& Name = TEXT("Unamed HObject") );
 	virtual ~HObject();
 
+	void SetGuid(const FGUID& NewGuid);
+
 private:
 	HName m_Name;
 	FGUID m_Guid;
@@ -39,4 +41,9 @@ FORCEINLINE void HObject::SetObjectName( const HName& Name )
 FORCEINLINE const HName& HObject::GetObjectName() const
 {
 	return m_Name;
+}
+
+FORCEINLINE void HObject::SetGuid(const FGUID& NewGuid)
+{
+	m_Guid = NewGuid;
 }

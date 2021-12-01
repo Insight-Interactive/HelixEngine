@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 
 //
 // Main Pass In/Out Structures

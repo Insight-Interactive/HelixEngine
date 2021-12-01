@@ -104,6 +104,7 @@ FORCEINLINE const String& FDatabaseInterface::GetValueByKey( const FGUID& Key ) 
 	else
 	{
 		HE_LOG( Error, TEXT( "Trying to find a item that has not been registered with the database. Has it been imported into the project?" ) );
+		HE_ASSERT( false );
 		return GetInvalidAssetPath();
 	}
 }

@@ -72,6 +72,8 @@ void HEditorEngine::Startup()
 	SetupImGuiRenderBackend();
 
 	SetupEditorPanels();
+
+	RegisterEditorOnlyAssets();
 }
 
 void HEditorEngine::LoadEditorPreferences()
@@ -132,7 +134,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraPos = m_SceneViewport.GetDebugPawn()->GetTransform().GetPosition();
+				FVector3 DebugCameraPos = m_SceneViewport.GetDebugPawn()->GetRootComponent()->GetPosition();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraPos.x );
 				Writer.Key( "Y" );
@@ -149,7 +151,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraRot = m_SceneViewport.GetDebugPawn()->GetTransform().GetRotation();
+				FVector3 DebugCameraRot = m_SceneViewport.GetDebugPawn()->GetRootComponent()->GetRotation();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraRot.x );
 				Writer.Key( "Y" );
@@ -368,8 +370,8 @@ void HEditorEngine::SetupEditorPanels()
 
 	m_ToolbarPanel.AddListener( this, &HEditorEngine::OnEvent );
 	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
-	pDebugPawn->GetTransform().SetPosition( m_UserPreferences.DebugCameraPosition );
-	pDebugPawn->GetTransform().SetRotation( m_UserPreferences.DebugCameraRotation );
+	pDebugPawn->GetRootComponent()->SetPosition( m_UserPreferences.DebugCameraPosition );
+	pDebugPawn->GetRootComponent()->SetRotation( m_UserPreferences.DebugCameraRotation );
 	pDebugPawn->SetVerticalLookSpeed( m_UserPreferences.DebugCameraPitchSpeed );
 	pDebugPawn->SetHorizontalLookSpeed( m_UserPreferences.DebugCameraYawSpeed );
 	m_WorldOutline.AddListener( this, &HEditorEngine::OnEvent );
@@ -498,6 +500,15 @@ void HEditorEngine::PackageGame()
 	PackageMaker::BuildPackage( DebugGame, Win64, GameName.c_str(), ProjLocation.c_str(), GameTargetBuildDir.c_str() );
 }
 
+void HEditorEngine::RegisterEditorOnlyAssets()
+{
+	// Textures
+	FAssetDatabase::RegisterTexture( FGUID::CreateFromString( "f82b1d85-d192-4264-9cda-f2787718af53" ), "Content\\Engine\\Textures\\LevelEditorTextures\\T_PointLight.dds" );
+
+	// Materials
+	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
+}
+
 bool HEditorEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
 {
 
@@ -513,7 +524,7 @@ bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
-	if (FAssetDatabase::GetInstance()->IsAnyDatabaseDirty())
+	if (FAssetDatabase::IsAnyDatabaseDirty())
 	{
 		OnSaveMenuItem();
 	}
@@ -528,12 +539,14 @@ bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
 
 bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 {
+	// Reset editor state if necessary.
 	SetIsPlayingInEditor( true );
+	m_DetailsPanel.SetSelectedObject( nullptr );
 	m_SceneViewport.DeactivateDebugCamera();
 
+	// Start simulating the game.
 	GetClientViewport().GetInputDispatcher()->SetCanDispatchListeners( true );
 	GGameInstance->OnGameSetFocus();
-
 	// TODO Check if the world is dirty, ask to save if it first before playing.
 	m_GameWorld.ReloadAndBeginPlay();
 
@@ -542,6 +555,9 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 
 bool HEditorEngine::OnAppEndPlay( AppEndPlayEvent& e )
 {
+	// Reset editor state if necissary
+	m_DetailsPanel.SetSelectedObject( nullptr );
+
 	SetIsPlayingInEditor( false );
 	m_GameWorld.Reload();
 	m_SceneViewport.ActivateDebugCamera();
@@ -572,7 +588,7 @@ void HEditorEngine::OnSaveMenuItem()
 	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, System::MessageDialogIcon::MDIcon_Question);
 	if (Result == MDR_Ok)
 	{
-		FAssetDatabase::GetInstance()->SaveAssetDatabases();
+		FAssetDatabase::SaveAssetDatabases();
 		// World saves a reference to its own filepath, use null to satisfy the argument.
 		m_GameWorld.Serialize( NULL );
 	}
