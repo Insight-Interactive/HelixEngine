@@ -52,7 +52,7 @@ inline ActorType* HLevel::CreateActor(const HName& Name)
 {
 	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world!
 
-	FActorInitArgs InitArgs{ m_pOwningWorld, Name };
+	FActorInitArgs InitArgs{ m_pOwningWorld, Name, false };
 	AActor* pNewActor = new ActorType( InitArgs);
 	HE_ASSERT(pNewActor != NULL);
 

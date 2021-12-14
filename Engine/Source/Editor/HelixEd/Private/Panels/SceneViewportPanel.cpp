@@ -31,7 +31,7 @@ void SceneViewportPanel::Initialize()
 	ID3D12Device* pDevice = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 	m_HandleSize = pDevice->GetDescriptorHandleIncrementSize( D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
-	FActorInitArgs InitArgs{ &GetOwningViewport()->GetWorld(), TEXT( "Editor Debug Pawn" ) };
+	FActorInitArgs InitArgs{ &GetOwningViewport()->GetWorld(), TEXT( "Editor Debug Pawn" ), true };
 	m_pDebugPawn = new ADebugPawn( InitArgs );
 	m_pDebugPawn->BeginPlay();
 	
@@ -45,8 +45,8 @@ void SceneViewportPanel::UnInitialize()
 
 void SceneViewportPanel::Tick( float DeltaTime ) 
 {
-	m_DeltaTime = DeltaTime;
-	m_pDebugPawn->Tick( DeltaTime );
+	if(m_IsCameraRotating)
+		m_pDebugPawn->Tick( DeltaTime );
 
 	if (GetOwningViewport()->IsPressed( Key_LShift ) && GetOwningViewport()->IsFirstPressed( Key_Escape ))
 	{
@@ -72,22 +72,16 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ) || m_IsCameraRotating)
 		{
 			m_IsCameraRotating = true;
-
-			HWND* Window = (HWND*)GetOwningViewport()->GetWindow().GetNativeWindow();
-			RECT rcClip;           // new area for ClipCursor
-			RECT rcOldClip;        // previous area for ClipCursor
-
-			::GetClipCursor( &rcOldClip );
-			
-			::GetWindowRect( *Window, &rcClip );
-
-			::ClipCursor( &rcClip );
-
-			::ClipCursor( &rcOldClip );
+			GetOwningViewport()->LockMouseToScreenCenter();
 		}
 		// Don't stop rotating until the user lets go of the mouse button.
 		m_IsCameraRotating = ImGui::IsMouseDown( ImGuiMouseButton_Right );
 		m_pDebugPawn->SetCanRotateCamera( m_IsCameraRotating );
+
+		if (!m_IsCameraRotating)
+		{
+			GetOwningViewport()->UnlockMouseFromScreenCenter();
+		}
 
 		if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Left ) && GEngine->IsPlayingInEditor())
 		{
@@ -105,11 +99,11 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		{
 			Buffer->GetSRVHandle(),
 		};
-		FDescriptorHandle dest = m_DescriptorHandle;
-		D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ dest.GetCpuPtr() };
+		FDescriptorHandle Dest = m_DescriptorHandle;
+		D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ Dest.GetCpuPtr() };
 		pDevice->CopyDescriptors( 1, &CpuHandle, &DestCount, DestCount, SourceTextures, SourceCounts, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
-		ImGui::Image( (ImTextureID)dest.GetGpuPtr(), ImGui::GetWindowSize() );
+		ImGui::Image( (ImTextureID)Dest.GetGpuPtr(), ImGui::GetWindowSize() );
 	}
 	ImGui::End();
 

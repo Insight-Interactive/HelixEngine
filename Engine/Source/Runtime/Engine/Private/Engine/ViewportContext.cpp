@@ -119,6 +119,7 @@ void FViewportContext::OnEvent( Event& e )
 	// Window
 	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &FViewportContext::OnWindowLostFocus );
 	Dispatcher.Dispatch<WindowFocusEvent>( this, &FViewportContext::OnWindowFocus );
+	Dispatcher.Dispatch<WindowResizeEvent>( this, &FViewportContext::OnWindowResize );
 
 	// Mouse
 	Dispatcher.Dispatch<MouseRawPointerMovedEvent>( this, &FViewportContext::OnMouseRawPointerMoved );
@@ -139,6 +140,24 @@ bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )
 
 bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
 {
+
+	return false;
+}
+
+bool FViewportContext::OnWindowResize( WindowResizeEvent& e )
+{
+	GCommandManager.IdleGpu();
+
+	if (!GEngine->GetIsEditorPresent())
+	{
+		m_SceneRenderer.ResizeBuffers( e.GetWidth(), e.GetHeight() );
+		m_SceneRenderTarget.Create( L"Pre-Display Buffer", e.GetWidth(), e.GetHeight(), 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
+
+		m_ViewPort.Width		= (float)e.GetWidth();
+		m_ViewPort.Height		= (float)e.GetHeight();
+		m_ScissorRect.Right		= e.GetWidth();
+		m_ScissorRect.Bottom	= e.GetHeight();
+	}
 
 	return false;
 }

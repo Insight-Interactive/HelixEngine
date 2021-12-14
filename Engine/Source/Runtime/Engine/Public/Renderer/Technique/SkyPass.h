@@ -22,6 +22,7 @@ public:
 	void UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer);
 
 	virtual void ReloadPipeline() override;
+	virtual void Resize( const uint32& Width, const uint32& Height ) override;
 
 	//void SetSkyTexture( HTexture3D Texture );
 

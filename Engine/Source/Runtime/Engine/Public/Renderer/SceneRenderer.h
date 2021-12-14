@@ -39,34 +39,17 @@ public:
 	void Uninitialize();
 
 	void RenderScene( HScene& Scene, FColorBuffer& RenderTarget, const FViewPort& View, const FRect& Scissor, uint32 SwapchainFrameIndex, HCameraComponent* pRenderingCamera );
-
+	void ResizeBuffers( uint32 Width, uint32 Height );
 	void ReloadPipelines();
 
 	static EFormat GetSceneDepthBufferForamt();
 	static EFormat GetGBufferFormatForBuffer( FDeferredShadingTech::EGBuffers BufferIndex );
 	static uint32 GetNumGBuffers();
 
-	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame(StringHashValue NameHash, uint32 FrameIndex)
-	{
-		HE_ASSERT(FrameIndex <= HE_MAX_SWAPCHAIN_BACK_BUFFERS);
+	bool ReservedBufferExistsByHashName( int32 NameHash );
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame( StringHashValue NameHash );
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex );
 
-		auto Iter = m_ReservedConstBuffers.find(NameHash);
-		if (Iter != m_ReservedConstBuffers.end())
-		{
-			return Iter->second[FrameIndex];
-		}
-		return nullptr;
-	}
-
-	bool ReservedBufferExistsByHashName(int32 NameHash)
-	{
-		return GetReservedConstantBufferByHashNameForCurrentFrame(NameHash) != nullptr;
-	}
-
-	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame(StringHashValue NameHash)
-	{
-		return GetReservedConstantBufferByHashNameForFrame(NameHash, m_SwapchainFrameIndex);
-	}
 
 private:
 	void SetCommonRenderState( FCommandContext& CmdContext, bool UploadLights, bool UploadSceneConsts );
@@ -134,4 +117,26 @@ FORCEINLINE TConstantBuffer<SceneLightsCBData>& FSceneRenderer::GetLightConstBuf
 	TConstantBuffer<SceneLightsCBData>* pConstBuffer = RCast< TConstantBuffer<SceneLightsCBData>* >(m_ReservedConstBuffers[StrHash][m_SwapchainFrameIndex]);
 	HE_ASSERT(pConstBuffer != NULL);
 	return *pConstBuffer;
+}
+
+FORCEINLINE bool FSceneRenderer::ReservedBufferExistsByHashName( int32 NameHash )
+{
+	return GetReservedConstantBufferByHashNameForCurrentFrame( NameHash ) != nullptr;
+}
+
+FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForCurrentFrame( StringHashValue NameHash )
+{
+	return GetReservedConstantBufferByHashNameForFrame( NameHash, m_SwapchainFrameIndex );
+}
+
+FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex )
+{
+	HE_ASSERT( FrameIndex <= HE_MAX_SWAPCHAIN_BACK_BUFFERS );
+
+	auto Iter = m_ReservedConstBuffers.find( NameHash );
+	if (Iter != m_ReservedConstBuffers.end())
+	{
+		return Iter->second[FrameIndex];
+	}
+	return nullptr;
 }

@@ -440,6 +440,12 @@
     <ClCompile Include="Private\Renderer\LightManager.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\Material.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Renderer\MaterialInstance.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Renderer\MaterialManager.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
@@ -488,10 +494,6 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Renderer\Material.cpp">
-      <Filter>Public\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

@@ -3,6 +3,9 @@
 
 #include "AssetRegistry/AssetDatabase.h"
 
+#include "Engine/Engine.h"
+#include "Engine/GameProject.h"
+
 
 /*static*/ FAssetDatabase* FAssetDatabase::SInstance = nullptr;
 
@@ -23,11 +26,11 @@ FAssetDatabase::~FAssetDatabase()
 {
 }
 
-/*static*/ void FAssetDatabase::Initialize( const Char* ManifestFile )
+/*static*/ void FAssetDatabase::Initialize()
 {
 	// Load all the asset databases.
 	rapidjson::Document JsonDoc;
-	FileRef JsonSource( ManifestFile, FUM_Read, CM_Text );
+	FileRef JsonSource( FGameProject::GetInstance()->GetProjectRoot() + kAssetManifestFilename, FUM_Read, CM_Text );
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
@@ -53,6 +56,11 @@ FAssetDatabase::~FAssetDatabase()
 		SInstance->m_MaterialDatabase.Initialize();
 		SInstance->m_ActorDatabase.Initialize();
 		SInstance->m_ShaderDatabase.Initialize();
+	}
+	else
+	{
+		System::CreateMessageBox( L"No asset manifest found!", L"Missing data", System::MDI_Ok, System::MDIcon_Critical );
+		GEngine->RequestShutdown();
 	}
 }
 

@@ -79,6 +79,9 @@ extern HTexture GDefaultTextures[];
 extern FDescriptorHeap GTextureHeap;
 // Manager of all static mesh geometry in the world.
 extern FStaticGeometryManager GStaticGeometryManager;
+// Common resolution formats an application may use.
+extern const FResolution GCommonResolutions[];
+
 
 // ----------
 //	Typedefs

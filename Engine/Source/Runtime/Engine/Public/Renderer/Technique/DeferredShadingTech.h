@@ -24,26 +24,27 @@ public:
 	FDeferredShadingTech();
 	~FDeferredShadingTech();
 
-	void Initialize(FVector2 RenderResolution, EFormat SwapchainFormat );
+	void Initialize( FVector2 RenderResolution, EFormat SwapchainFormat );
 	void UnInitialize();
 
 	void ReloadPipeline();
-	void SetOwningViewport(FViewportContext* pViewport);
+	void SetOwningViewport( FViewportContext* pViewport );
+	void Resize( const uint32& Width, const uint32& Height );
 
-	void BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect);
-	void BindLightPass(FCommandContext& GfxContext, const FRect& Viewrect);
-	void UnBindGeometryPass(FCommandContext& GfxContext);
-	void UnBindLightPass(FCommandContext& GfxContext);
+	void BindGeometryPass( FCommandContext& GfxContext, const FRect& Viewrect );
+	void BindLightPass( FCommandContext& GfxContext, const FRect& Viewrect );
+	void UnBindGeometryPass( FCommandContext& GfxContext );
+	void UnBindLightPass( FCommandContext& GfxContext );
 
-	void ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect);
+	void ClearGBuffers( FCommandContext& GfxContext, const FRect& Viewrect );
 
 	enum EGBuffers
 	{
-		GB_Albedo		= 0,
-		GB_Normal		= 1,
-		GB_Roughness	= 2,
-		GB_Metallic		= 3,
-		GB_Specular		= 4,
+		GB_Albedo = 0,
+		GB_Normal = 1,
+		GB_Roughness = 2,
+		GB_Metallic = 3,
+		GB_Specular = 4,
 
 		GB_NumBuffers,
 	};
@@ -55,17 +56,18 @@ public:
 		GeometryPass();
 		virtual ~GeometryPass();
 
-		void Initialize(const FVector2& RenderResolution );
+		void Initialize( const FVector2& RenderResolution );
 		void UnInitialize();
 
-		void ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect);
-		FColorBuffer& GetGBufferColorBuffer(EGBuffers GBuffer);
-		void SetDepthBuffer(FDepthBuffer& DepthBuffer);
+		void ClearGBuffers( FCommandContext& GfxContext, const FRect& Viewrect );
+		FColorBuffer& GetGBufferColorBuffer( EGBuffers GBuffer );
+		void SetDepthBuffer( FDepthBuffer& DepthBuffer );
 
 	private:
 		virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) override;
 		virtual void UnBind( FCommandContext& GfxContext ) override;
 		virtual void ReloadPipeline() override;
+		virtual void Resize( const uint32& Width, const uint32& Height ) override;
 
 	protected:
 		// Pipeline
@@ -83,16 +85,17 @@ public:
 	public:
 		LightPass( FDeferredShadingTech::GeometryPass& GeometryPass );
 		virtual ~LightPass();
-		
-		void Initialize(const FVector2& RenderResolution, EFormat SwapchainFormatTEMP);
+
+		void Initialize( const FVector2& RenderResolution, EFormat SwapchainFormatTEMP );
 		void UnInitialize();
 
-		void SetDepthBuffer(FDepthBuffer& DepthBuffer);
+		void SetDepthBuffer( FDepthBuffer& DepthBuffer );
 
 	private:
-		virtual void Bind(FCommandContext& GfxContext, const FRect& Viewrect) override;
-		virtual void UnBind(FCommandContext& GfxContext) override;
+		virtual void Bind( FCommandContext& GfxContext, const FRect& Viewrect ) override;
+		virtual void UnBind( FCommandContext& GfxContext ) override;
 		virtual void ReloadPipeline() override;
+		virtual void Resize( const uint32& Width, const uint32& Height ) override;
 
 	protected:
 		FDeferredShadingTech::GeometryPass& m_GeometryPass;
@@ -131,35 +134,41 @@ FORCEINLINE void FDeferredShadingTech::ReloadPipeline()
 	m_LightPass.ReloadPipeline();
 }
 
-FORCEINLINE void FDeferredShadingTech::SetOwningViewport(FViewportContext* pViewport)
+FORCEINLINE void FDeferredShadingTech::SetOwningViewport( FViewportContext* pViewport )
 {
-	GetGeometryPass().SetOwningViewport(pViewport);
-	GetLightPass().SetOwningViewport(pViewport);
+	GetGeometryPass().SetOwningViewport( pViewport );
+	GetLightPass().SetOwningViewport( pViewport );
 }
 
-FORCEINLINE void FDeferredShadingTech::BindGeometryPass(FCommandContext& GfxContext, const FRect& Viewrect)
+FORCEINLINE void FDeferredShadingTech::Resize( const uint32& Width, const uint32& Height )
 {
-	GetGeometryPass().Bind(GfxContext, Viewrect);
+	GetGeometryPass().Resize( Width, Height );
+	GetLightPass().Resize( Width, Height );
 }
 
-FORCEINLINE void FDeferredShadingTech::BindLightPass(FCommandContext& GfxContext, const FRect& Viewrect)
+FORCEINLINE void FDeferredShadingTech::BindGeometryPass( FCommandContext& GfxContext, const FRect& Viewrect )
 {
-	GetLightPass().Bind(GfxContext, Viewrect);
+	GetGeometryPass().Bind( GfxContext, Viewrect );
 }
 
-FORCEINLINE void FDeferredShadingTech::UnBindGeometryPass(FCommandContext& GfxContext)
+FORCEINLINE void FDeferredShadingTech::BindLightPass( FCommandContext& GfxContext, const FRect& Viewrect )
 {
-	GetGeometryPass().UnBind(GfxContext);
+	GetLightPass().Bind( GfxContext, Viewrect );
 }
 
-FORCEINLINE void FDeferredShadingTech::UnBindLightPass(FCommandContext& GfxContext)
+FORCEINLINE void FDeferredShadingTech::UnBindGeometryPass( FCommandContext& GfxContext )
 {
-	GetLightPass().UnBind(GfxContext);
+	GetGeometryPass().UnBind( GfxContext );
 }
 
-FORCEINLINE void FDeferredShadingTech::ClearGBuffers(FCommandContext& GfxContext, const FRect& Viewrect)
+FORCEINLINE void FDeferredShadingTech::UnBindLightPass( FCommandContext& GfxContext )
 {
-	GetGeometryPass().ClearGBuffers(GfxContext, Viewrect);
+	GetLightPass().UnBind( GfxContext );
+}
+
+FORCEINLINE void FDeferredShadingTech::ClearGBuffers( FCommandContext& GfxContext, const FRect& Viewrect )
+{
+	GetGeometryPass().ClearGBuffers( GfxContext, Viewrect );
 }
 
 FORCEINLINE FDeferredShadingTech::GeometryPass& FDeferredShadingTech::GetGeometryPass()

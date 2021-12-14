@@ -10,8 +10,9 @@
 
 AActor::AActor( FActorInitArgs& InitArgs )
 	: HObject( InitArgs.Name )
-	, m_pOwningWorld( CCast<HWorld*>(InitArgs.pWorld) )
 	, m_pRoot( nullptr )
+	, m_pOwningWorld( CCast<HWorld*>( InitArgs.pWorld ) )
+	, m_IsDynamicInstance( InitArgs.bIsDynamicInstance )
 {
 }
 
@@ -22,6 +23,9 @@ AActor::~AActor()
 
 void AActor::Serialize( WriteContext& Output )
 {
+	if (m_IsDynamicInstance)
+		return;
+
 	Output.StartObject();
 	{
 		Output.Key( HE_STRINGIFY( AActor ) );
@@ -38,22 +42,20 @@ void AActor::Serialize( WriteContext& Output )
 
 			Output.StartObject();
 			{
-				Output.Key( "GUID" );
-				Output.String( GetGuid().ToString().CStr() );
+				Output.Key( "Components" );
+				Output.StartArray();
+				{
+					for (uint32 i = 0; i < m_Components.size(); ++i)
+					{
+						Output.StartObject();
+						m_Components[i]->Serialize( Output );
+						Output.EndObject();
+					}
+				}
+				Output.EndArray();
 			}
 			Output.EndObject();
 
-			Output.Key( "Components" );
-			Output.StartArray();
-			{
-				for (uint32 i = 0; i < m_Components.size(); ++i)
-				{
-					Output.StartObject();
-					m_Components[i]->Serialize( Output );
-					Output.EndObject();
-				}
-			}
-			Output.EndArray();
 		}
 		Output.EndArray();
 	}
@@ -62,8 +64,13 @@ void AActor::Serialize( WriteContext& Output )
 
 void AActor::Deserialize( const ReadContext& Value )
 {
-	const rapidjson::Value& HObjectProps = Value[0];
-	const rapidjson::Value& ActorProps = Value[1];
+	enum
+	{
+		kHObjectProps = 0,
+		kActorProps = 1,
+	};
+	const rapidjson::Value& HObjectProps = Value[kHObjectProps];
+	const rapidjson::Value& ActorProps = Value[kActorProps];
 
 	// Object Name
 	char ObjectNameBuffer[32];

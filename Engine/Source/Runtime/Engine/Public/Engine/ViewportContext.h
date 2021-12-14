@@ -9,20 +9,18 @@
 #include "Input/InputDispatcher.h"
 #include "Renderer/SceneRenderer.h"
 
-// TEMP
-#include "Renderer/MaterialManager.h"
-
 
 class HWorld;
-class FDeferredShadingTech;;
-class FPostProcessUber;
 class FSkyboxPass;
+class FPostProcessUber;
+class FDeferredShadingTech;;
 class WindowFocusEvent;
 class WindowLostFocusEvent;
-class MouseRawPointerMovedEvent;
+class WindowResizeEvent;
 class MouseWheelScrolledEvent;
 class MouseButtonPressedEvent;
 class MouseButtonReleasedEvent;
+class MouseRawPointerMovedEvent;
 class KeyPressedEvent;
 class KeyReleasedEvent;
 
@@ -96,6 +94,7 @@ protected:
 	void OnEvent( Event& e );
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 	bool OnWindowFocus( WindowFocusEvent& e );
+	bool OnWindowResize( WindowResizeEvent& e );
 	bool OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e );
 	bool OnMouseWheelScrolled( MouseWheelScrolledEvent& e );
 	bool OnMouseButtonPressed( MouseButtonPressedEvent& e );

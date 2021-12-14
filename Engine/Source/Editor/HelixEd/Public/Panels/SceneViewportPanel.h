@@ -42,7 +42,6 @@ private:
 
 	ADebugPawn* m_pDebugPawn;
 
-	float m_DeltaTime;
 	bool m_IsCameraRotating;
 };
 

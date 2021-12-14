@@ -1,13 +1,16 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "HelixEdPCH.h"
 
 #include "Panels/WorldOutlinePanel.h"
-#include "Engine/Engine.h"
+
 #include "World/Level.h"
-#include "GameFramework/Actor/AActor.h"
+#include "Engine/Engine.h"
 #include "Engine/Event/EngineEvent.h"
+#include "GameFramework/Actor/AActor.h"
 
 
 WorldOutlinePanel::WorldOutlinePanel()
+	: m_pWorld( nullptr )
 {
 }
 
@@ -31,21 +34,24 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "World Outliner" );
 	{
-		HLevel* pLevel = GEngine->GetClientViewport().GetWorld().GetCurrentLevel();
-		for (uint32 j = 0; j < pLevel->m_Actors.size(); j++)
+		if (m_pWorld)
 		{
-			AActor* pCurrentActor = pLevel->m_Actors[j];
-
-			const HName& ActorName = pCurrentActor->GetObjectName();
-			if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))
+			HLevel* pLevel = m_pWorld->GetCurrentLevel();
+			for (uint32 j = 0; j < pLevel->m_Actors.size(); j++)
 			{
-				if (ImGui::IsItemClicked())
+				AActor* pCurrentActor = pLevel->m_Actors[j];
+
+				const HName& ActorName = pCurrentActor->GetObjectName();
+				if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))
 				{
-					ObjectSelectedEvent e;
-					e.SetSelectedObject( pCurrentActor );
-					EmitEvent( e );
+					if (ImGui::IsItemClicked())
+					{
+						ObjectSelectedEvent e;
+						e.SetSelectedObject( pCurrentActor );
+						EmitEvent( e );
+					}
+					ImGui::TreePop();
 				}
-				ImGui::TreePop();
 			}
 		}
 	}

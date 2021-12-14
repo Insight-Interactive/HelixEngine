@@ -19,7 +19,7 @@
 
 #if R_WITH_D3D12
 
-#if defined(_MSC_VER)
+#if defined(HE_COMPILE_MSVC)
 #pragma once
 #endif
 

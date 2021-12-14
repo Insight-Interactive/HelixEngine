@@ -67,7 +67,7 @@ class RENDER_API FCommandManager
 	friend class FRenderContext;
 public:
 	FCommandManager()
-		: m_pDeviceRef( NULL )
+		: m_pDeviceRef( nullptr )
 		, m_GraphicsQueue( CLT_Direct )
 		, m_ComputeQueue( CLT_Compute )
 	{
@@ -83,9 +83,9 @@ public:
 	void CreateNewCommandContext(const ECommandListType& Type, FCommandContext** pContext, void** pData);
 	void WaitForFence(uint64 Value);
 	void IdleGpu();
-	FCommandQueue* GetQueue( const ECommandListType& Type );
-	FCommandQueue* GetGraphicsQueue();
-	FCommandQueue* GetComputeQueue();
+	FCommandQueue& GetQueue( const ECommandListType& Type );
+	FCommandQueue& GetGraphicsQueue();
+	FCommandQueue& GetComputeQueue();
 
 	// Test to see if a fence has already been reached
 	bool IsFenceComplete( uint64 FenceValue );
@@ -133,7 +133,7 @@ FORCEINLINE void* FCommandQueue::RequestAllocator()
 
 FORCEINLINE bool FCommandManager::IsFenceComplete( uint64 FenceValue )
 {
-	return GetQueue( ECommandListType( FenceValue >> 56 ) )->IsFenceCompleted( FenceValue );
+	return GetQueue( ECommandListType( FenceValue >> 56 ) ).IsFenceCompleted( FenceValue );
 }
 
 FORCEINLINE void FCommandManager::IdleGpu()
@@ -142,26 +142,25 @@ FORCEINLINE void FCommandManager::IdleGpu()
 	m_ComputeQueue.WaitForIdle(); // TODO: Add Compute functionality
 }
 
-FORCEINLINE FCommandQueue* FCommandManager::GetQueue( const ECommandListType& Type )
+FORCEINLINE FCommandQueue& FCommandManager::GetQueue( const ECommandListType& Type )
 {
 	switch (Type)
 	{
-	case ECommandListType::CLT_Direct: 
-		return &m_GraphicsQueue;
 	case ECommandListType::CLT_Compute: 
-		return &m_ComputeQueue;
+		return m_ComputeQueue;
+	case ECommandListType::CLT_Direct:
 	default:
-		R_LOG( Warning, TEXT( "Unidentified enum value provided when getting command queue: %i" ), Type );
-		return (FCommandQueue*)(NULL);
+		return m_GraphicsQueue;
+		R_LOG( Warning, TEXT( "Unidentified enum value provided when getting command queue: %i! Returning graphics queue as fallback." ), Type );
 	}
 }
 
-FORCEINLINE FCommandQueue* FCommandManager::GetGraphicsQueue()
+FORCEINLINE FCommandQueue& FCommandManager::GetGraphicsQueue()
 {
-	return &m_GraphicsQueue; 
+	return m_GraphicsQueue; 
 }
 
-FORCEINLINE FCommandQueue* FCommandManager::GetComputeQueue()
+FORCEINLINE FCommandQueue& FCommandManager::GetComputeQueue()
 { 
-	return &m_ComputeQueue; 
+	return m_ComputeQueue; 
 }

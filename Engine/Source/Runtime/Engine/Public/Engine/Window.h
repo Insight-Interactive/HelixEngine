@@ -48,8 +48,7 @@ public:
 	struct Description
 	{
 		const TChar* Title;
-		uint32 Width;
-		uint32 Height;
+		FResolution Resolution;
 		bool bHasTitleBar;
 		bool bShowImmediate;
 		bool bAllowDropFiles;
@@ -103,6 +102,7 @@ public:
 	void EnableVSync( bool VsyncEnabled );
 	bool IsVSyncEnabled() const;
 	FSwapChain* GetSwapChain();
+	FRect GetRect() const;
 
 protected:
 	void OnWindowModeChanged();
@@ -113,6 +113,7 @@ protected:
 		need this for mouse input messages.
 	*/
 	void MakeMoueWindowAssociation();
+	static FRect BuildCenterScreenAlignedRect(const FResolution& WindowResolution);
 
 protected:
 	Description m_Desc;
@@ -130,7 +131,6 @@ protected:
 #ifdef HE_WINDOWS_DESKTOP
 	HWND	m_hWindowHandle;
 	uint32	m_WindowStyle;
-	RECT	m_WindowRect;
 #elif HE_WINDOWS_UNIVERSAL
 
 	enum
@@ -175,17 +175,17 @@ inline bool FWindow::DoesAllowFileDrops()
 
 inline uint32 FWindow::GetWidth() const
 {
-	return m_Desc.Width;
+	return m_Desc.Resolution.Width;
 }
 
 inline uint32 FWindow::GetHeight() const
 {
-	return m_Desc.Height;
+	return m_Desc.Resolution.Height;
 }
 
 inline FVector2 FWindow::GetDimensions() const
 {
-	return FVector2( float( m_Desc.Width ), float( m_Desc.Height ) );
+	return FVector2( float( m_Desc.Resolution.Width ), float( m_Desc.Resolution.Height ) );
 }
 
 inline bool FWindow::HasTitleBar() const
@@ -207,6 +207,11 @@ inline void FWindow::SetWindowMode( EWindowMode NewMode )
 {
 	HE_ASSERT( IsVisible() );
 
+	if (m_WindowMode == NewMode)
+	{
+		HE_LOG( Warning, TEXT( "Trying to set window mode with same mode on window: %s" ), m_DebugName );
+		return;
+	}
 	m_WindowMode = NewMode;
 
 	OnWindowModeChanged();

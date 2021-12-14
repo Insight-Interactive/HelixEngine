@@ -22,6 +22,7 @@ public:
 	virtual void UnBind( FCommandContext& GfxContext ) override;
 
 	virtual void ReloadPipeline() override;
+	virtual void Resize( const uint32& Width, const uint32& Height ) override;
 
 protected:
 	// Pipeline

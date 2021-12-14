@@ -2,27 +2,22 @@
 
 #include "Editor/EditorEngine.h"
 
-#include "System.h"
-#include "StringHelper.h"
 #include "ThreadPool.h"
-#include "RenderDevice.h"
-#include "GpuResource.h"
-#include "TextureManager.h"
-#include "CommandContext.h"
-#include "CommandManager.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
-#include "Engine/Event/EngineEvent.h"
-#include "Developer/ADebugPawn.h"
-#include "GameFramework/Components/HCameraComponent.h"
 #include "Tools/PackageMaker.h"
+#include "Developer/ADebugPawn.h"
+#include "Engine/Event/EngineEvent.h"
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"
-
+#include "GameFramework/Components/HCameraComponent.h"
 #include "Texture.h"
 #include "ColorBuffer.h"
-#include "CommandContext.h"
+#include "GpuResource.h"
 #include "RenderDevice.h"
+#include "CommandContext.h"
+#include "TextureManager.h"
+#include "CommandManager.h"
 
 
 HEditorEngine::HEditorEngine( CommandLine& CmdLine )
@@ -375,6 +370,7 @@ void HEditorEngine::SetupEditorPanels()
 	pDebugPawn->SetVerticalLookSpeed( m_UserPreferences.DebugCameraPitchSpeed );
 	pDebugPawn->SetHorizontalLookSpeed( m_UserPreferences.DebugCameraYawSpeed );
 	m_WorldOutline.AddListener( this, &HEditorEngine::OnEvent );
+	m_WorldOutline.SetWorld( &m_GameWorld );
 }
 
 //
@@ -585,7 +581,7 @@ void HEditorEngine::OnExitMenuItem()
 void HEditorEngine::OnSaveMenuItem()
 {
 	using namespace System;
-	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, System::MessageDialogIcon::MDIcon_Question);
+	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, MDIcon_Question);
 	if (Result == MDR_Ok)
 	{
 		FAssetDatabase::SaveAssetDatabases();
@@ -606,8 +602,8 @@ void HEditorEngine::OnEditorPreferencesMenuItem()
 	FWindow::Description Desc = { };
 	Desc.bHasTitleBar = true;
 	Desc.bShowImmediate = true;
-	Desc.Width = 1920;
-	Desc.Height = 1080;
+	Desc.Resolution.Width = 1920;
+	Desc.Resolution.Height = 1080;
 	Desc.Title = TEXT( "Editor Preferences" );
 	m_PreferencesViewport.Initialize( Desc );
 }

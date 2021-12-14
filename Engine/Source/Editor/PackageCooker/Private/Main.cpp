@@ -98,5 +98,17 @@ int main( int32 argc, Char* argv[] )
 	// Exec
 	system( CopyCmd );
 
+	// Copy the "AssetManifest" file.
+	// Src
+	LOG( Log, TEXT( "Copying AssetManifest file... " ) );
+	strcpy_s( SrcDir, InputDirectory );
+	strcat_s( SrcDir, "\\AssetManifest.json" );
+	// Dst
+	strcpy_s( DstDir, OutputDirectory );
+	strcat_s( DstDir, "\\" );
+	sprintf_s( CopyCmd, "xcopy /q /y /i %s %s", SrcDir, DstDir );
+	// Exec
+	system( CopyCmd );
+
 	return 0;
 }

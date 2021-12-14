@@ -144,7 +144,7 @@ void FCommandContext::Reset()
 	// request a new allocator.
 	HE_ASSERT(m_pID3D12CommandList != nullptr && m_pID3D12CurrentCmdAllocator == nullptr);
 
-	m_pID3D12CurrentCmdAllocator = (ID3D12CommandAllocator*)GCommandManager.GetQueue(m_Type)->RequestAllocator();
+	m_pID3D12CurrentCmdAllocator = (ID3D12CommandAllocator*)GCommandManager.GetQueue(m_Type).RequestAllocator();
 	m_pID3D12CommandList->Reset(m_pID3D12CurrentCmdAllocator, NULL);
 
 	// TODO Reset root signature
@@ -408,8 +408,8 @@ uint64 FCommandContext::Flush(bool WaitForCompletion/* = false*/)
 
 	HE_ASSERT(m_pID3D12CurrentCmdAllocator != NULL);
 
-	FCommandQueue* pQueue = GCommandManager.GetGraphicsQueue();
-	uint64 FenceValue = pQueue->ExecuteCommandList(m_pID3D12CommandList);
+	FCommandQueue& Queue = GCommandManager.GetGraphicsQueue();
+	uint64 FenceValue = Queue.ExecuteCommandList(m_pID3D12CommandList);
 
 	if (WaitForCompletion)
 		GCommandManager.WaitForFence(FenceValue);
@@ -429,10 +429,10 @@ uint64 FCommandContext::End(bool WaitForCompletion/* = false*/)
 	FlushResourceBarriers();
 	EndDebugMarker();
 
-	FCommandQueue* pQueue = GCommandManager.GetQueue(m_Type);
+	FCommandQueue& Queue = GCommandManager.GetQueue(m_Type);
 
-	uint64 FenceValue = pQueue->ExecuteCommandList(m_pID3D12CommandList);
-	pQueue->DiscardAllocator(FenceValue, m_pID3D12CurrentCmdAllocator);
+	uint64 FenceValue = Queue.ExecuteCommandList(m_pID3D12CommandList);
+	Queue.DiscardAllocator(FenceValue, m_pID3D12CurrentCmdAllocator);
 	m_pID3D12CurrentCmdAllocator = NULL;
 
 	m_CpuLinearAllocator.CleanupUsedPages(FenceValue);
@@ -441,7 +441,7 @@ uint64 FCommandContext::End(bool WaitForCompletion/* = false*/)
 	m_DynamicSamplerDescriptorHeap.CleanupUsedHeaps(FenceValue);
 
 	if (WaitForCompletion)
-		pQueue->WaitForFence(FenceValue);
+		Queue.WaitForFence(FenceValue);
 
 	GContextManager.FreeContext(this);
 

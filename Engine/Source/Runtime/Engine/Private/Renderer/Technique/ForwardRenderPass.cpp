@@ -42,3 +42,8 @@ void FForwardRenderPass::ReloadPipeline()
 {
 
 }
+
+void FForwardRenderPass::Resize( const uint32& Width, const uint32& Height ) 
+{
+
+}

@@ -54,9 +54,8 @@ struct FSwapChainDesc
 {
 	uint32 Width;
 	uint32 Height;
-	uint32 BufferCount;
 	FSampleDesc SampleDesc;
-	EFormat Format;
+	ESwapchainBitDepth BackBufferColorDepth;
 	void* NativeWindow;
 };
 
@@ -273,7 +272,10 @@ struct FGpuDescriptorHandle
 	uint64 Ptr;
 };
 
-struct FBlob
+struct FResolution
 {
-
+	uint32 Width;
+	uint32 Height;
 };
+
+

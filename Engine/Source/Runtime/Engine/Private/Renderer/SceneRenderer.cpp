@@ -176,6 +176,14 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 	CmdContext.End();
 }
 
+void FSceneRenderer::ResizeBuffers( uint32 Width, uint32 Height )
+{
+	m_DeferredShader.Resize( Width, Height );
+	m_DepthBuffer.Create( L"[Geometry Pass] Scene Depth Buffer", Width, Height, F_D32_Float );
+	m_ForwardRenderPass.Resize( Width, Height );
+	m_SkyPass.Resize( Width, Height );
+	m_PostProcessPass.Resize( Width, Height );
+}
 
 void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool UploadLights, bool UploadSceneConsts )
 {

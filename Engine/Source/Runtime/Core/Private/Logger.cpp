@@ -103,7 +103,7 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		Printf( OutputBuffer );
 		Printf( TEXT("\n") );
 	}
-#if _MSC_VER
+#if HE_COMPILE_MSVC
 	if ( IsDebuggerPresent() )
 	{
 		OutputDebugString(TraceBuffer);

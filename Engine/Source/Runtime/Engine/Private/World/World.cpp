@@ -67,7 +67,7 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 
 void HWorld::BeginPlay()
 {
-	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ) };
+	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ), true };
 	m_pPlayerCharacter = new APlayerCharacter( InitArgs );
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
 	AddPlayerCharacterRef( m_pPlayerCharacter );
@@ -177,6 +177,7 @@ void HWorld::Deserialize( const ReadContext& Value )
 {
 	float TickInterval = 0.f;
 	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );
+
 	Char WorldName[64];
 	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
 	Super::SetObjectName( CharToTChar( WorldName ) );

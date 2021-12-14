@@ -79,10 +79,6 @@ project ("Engine")
 		"Math",
 		"Renderer",
 		"Shaders",
-		
-		-- Third Party libs
-		"D3D12.lib",
-		"DXGI.lib",
 	}
 
 	defines

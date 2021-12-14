@@ -1,20 +1,19 @@
 #pragma once
 
 #include "RendererFwd.h"
-#include "CoreFwd.h"
 
 #include "GpuResource.h"
 
-#include "RendererCore.h"
-#include "CriticalSection.h"
-#include "CommandManager.h"
-#include "RenderDevice.h"
 #include "System.h"
+#include "RendererCore.h"
+#include "RenderDevice.h"
+#include "CriticalSection.h"
+
 
 /*
 	Base class all constant buffers should derive from.
 */
-class FConstantBufferInterface : public FGpuResource
+class RENDER_API FConstantBufferInterface : public FGpuResource
 {
 public:
 	virtual ~FConstantBufferInterface()
@@ -23,31 +22,32 @@ public:
 
 	ConstantBufferUID GetUID() const;
 
-	virtual void Create(const WChar* Name, uint32 Size) = 0;
+	virtual void Create( const WChar* Name, uint32 Size ) = 0;
 	virtual void Destroy() = 0;
 	virtual void UploadBuffer() = 0;
 
-	void SetDirty(bool IsDirty);
+	bool IsValid() const;
+	void SetDirty( bool IsDirty );
 	bool GetIsDirty() const;
 	uint32 GetBufferSize() const;
 
 protected:
 	FConstantBufferInterface()
-		: m_BufferSize(0)
-		, m_UID(HE_INVALID_CONSTANT_BUFFER_HANDLE)
-		, m_IsDirty(true)
+		: m_BufferSize( 0 )
+		, m_UID( HE_INVALID_CONSTANT_BUFFER_HANDLE )
+		, m_IsDirty( true )
 #if R_WITH_D3D12
-		, m_pWritePointer(NULL)
+		, m_pWritePointer( nullptr )
 #endif
 	{
 	}
 
-	void CreateAPIBuffer(const WChar* Name);
+	void CreateAPIBuffer( const WChar* Name );
 #if R_WITH_D3D12
 	D3D12_CPU_DESCRIPTOR_HANDLE CBV() const;
 	void* GetGPUWritePointer();
 #endif
-	static uint32 GetAlignedBufferSize(const uint32 BufferSize, const uint32 Alignment);
+	static uint32 GetAlignedBufferSize( const uint32 BufferSize, const uint32 Alignment );
 
 protected:
 #if R_WITH_D3D12
@@ -58,10 +58,10 @@ protected:
 	uint32 m_BufferSize;
 	bool m_IsDirty;
 
-	void SetUID(const ConstantBufferUID& UID);
+	void SetUID( const ConstantBufferUID& UID );
 	static ConstantBufferUID AllocBufferUID();
 
-private: 
+private:
 	static CriticalSection SBufferIdGuard;
 	static ConstantBufferUID SNextAvailableBufferID;
 
@@ -75,16 +75,14 @@ class RENDER_API FConstantBuffer : public FConstantBufferInterface
 {
 public:
 	FConstantBuffer()
-		: m_pData(NULL)
+		: m_pData( nullptr )
 	{
-
 	}
 	virtual ~FConstantBuffer()
 	{
-
 	}
 
-	virtual void Create(const WChar* Name, uint32 Size) override;
+	virtual void Create( const WChar* Name, uint32 Size ) override;
 	virtual void Destroy() override;
 	virtual void UploadBuffer() override;
 
@@ -114,7 +112,7 @@ public:
 	{
 	}
 
-	virtual void Create( const WChar* Name, uint32 Size = 0/* Ignored for this buffer type.. */) override;
+	virtual void Create( const WChar* Name, uint32 Size = 0/* Ignored for this buffer type.. */ ) override;
 	virtual void Destroy() override;
 
 	BufferDataType* GetBufferPointer();
@@ -123,7 +121,8 @@ public:
 protected:
 	virtual void UploadBuffer() override;
 
-	uint8 m_Data[sizeof(BufferDataType)];
+protected:
+	uint8 m_Data[sizeof( BufferDataType )];
 
 };
 
@@ -143,7 +142,7 @@ FORCEINLINE ConstantBufferUID FConstantBufferInterface::GetUID() const
 
 FORCEINLINE void FConstantBufferInterface::SetUID( const ConstantBufferUID& UID )
 {
-	if(m_UID == HE_INVALID_CONSTANT_BUFFER_HANDLE)
+	if (m_UID == HE_INVALID_CONSTANT_BUFFER_HANDLE)
 		m_UID = UID;
 }
 
@@ -152,7 +151,12 @@ FORCEINLINE uint32 FConstantBufferInterface::GetBufferSize() const
 	return m_BufferSize;
 }
 
-FORCEINLINE void FConstantBufferInterface::SetDirty(bool IsDirty)
+FORCEINLINE bool FConstantBufferInterface::IsValid() const
+{
+	return m_BufferSize > 0 && m_UID != HE_INVALID_CONSTANT_BUFFER_HANDLE;
+}
+
+FORCEINLINE void FConstantBufferInterface::SetDirty( bool IsDirty )
 {
 	m_IsDirty = IsDirty;
 }
@@ -162,11 +166,11 @@ FORCEINLINE bool FConstantBufferInterface::GetIsDirty() const
 	return m_IsDirty;
 }
 
-FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer(const WChar* Name)
+FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer( const WChar* Name )
 {
 #if R_WITH_D3D12
 
-	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>(GGraphicsDevice.GetNativeDevice());
+	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 	D3D12_RESOURCE_DESC ResDesc = { };
 	ResDesc.Width = GetBufferSize();
 	ResDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
@@ -192,26 +196,26 @@ FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer(const WChar* Name)
 		&ResDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&m_pID3D12Resource)
+		IID_PPV_ARGS( &m_pID3D12Resource )
 	);
-	ThrowIfFailedMsg(hr, "Failed to create default heap for vertex buffer!");
+	ThrowIfFailedMsg( hr, "Failed to create default heap for vertex buffer!" );
 
 #if R_DEBUG_GPU_RESOURCES
-	m_pID3D12Resource->SetName(Name);
+	m_pID3D12Resource->SetName( Name );
 #endif 
 
 	m_GpuVirtualAddress = m_pID3D12Resource->GetGPUVirtualAddress();
 
 	D3D12_RANGE ReadRange = { 0 };        // We do not intend to read from this resource on the CPU.
-	hr = m_pID3D12Resource->Map(0, &ReadRange, &m_pWritePointer);
-	ThrowIfFailedMsg(hr, "Failed to create committed resource for constant buffer!");
+	hr = m_pID3D12Resource->Map( 0, &ReadRange, &m_pWritePointer );
+	ThrowIfFailedMsg( hr, "Failed to create committed resource for constant buffer!" );
 
-	m_CBV = AllocateDescriptor(pID3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	m_CBV = AllocateDescriptor( pID3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC CBVDesc = {};
 	CBVDesc.SizeInBytes = GetBufferSize();
 	CBVDesc.BufferLocation = m_pID3D12Resource->GetGPUVirtualAddress();
-	pID3D12Device->CreateConstantBufferView(&CBVDesc, m_CBV);
+	pID3D12Device->CreateConstantBufferView( &CBVDesc, m_CBV );
 #endif // R_WITH_D3D12
 }
 
@@ -229,12 +233,12 @@ FORCEINLINE void* FConstantBufferInterface::GetGPUWritePointer()
 
 /* static */ FORCEINLINE ConstantBufferUID FConstantBufferInterface::AllocBufferUID()
 {
-	ScopedCriticalSection Guard(SBufferIdGuard);
+	ScopedCriticalSection Guard( SBufferIdGuard );
 	SNextAvailableBufferID++;
 	return SNextAvailableBufferID;
 }
 
-/* static */ FORCEINLINE uint32 FConstantBufferInterface::GetAlignedBufferSize(const uint32 BufferSize, const uint32 Alignment)
+/* static */ FORCEINLINE uint32 FConstantBufferInterface::GetAlignedBufferSize( const uint32 BufferSize, const uint32 Alignment )
 {
 	return (BufferSize + (Alignment - 1)) & ~(Alignment - 1);
 }
@@ -249,37 +253,37 @@ FORCEINLINE void FConstantBuffer::UploadBuffer()
 		return;
 
 #if R_WITH_D3D12
-	memcpy(GetGPUWritePointer(), (const void*)m_pData, GetBufferSize());
+	memcpy( GetGPUWritePointer(), (const void*)m_pData, GetBufferSize() );
 #endif // R_WITH_D3D12
 
-	SetDirty(false);
+	SetDirty( false );
 }
 
-FORCEINLINE void FConstantBuffer::Create(const WChar* Name, uint32 Size)
+FORCEINLINE void FConstantBuffer::Create( const WChar* Name, uint32 Size )
 {
 	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
 	{
-		R_LOG(Warning, TEXT("Trying to re-create a constant buffer that has already been inititlized."));
-		HE_ASSERT(false);
+		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
+		HE_ASSERT( false );
 		return;
 	}
-	SetUID(AllocBufferUID());
+	SetUID( AllocBufferUID() );
 
-	m_BufferSize = GetAlignedBufferSize(Size, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
+	m_BufferSize = GetAlignedBufferSize( Size, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT );
 
 	// Allocate the Gpu memory.
-	CreateAPIBuffer(Name);
+	CreateAPIBuffer( Name );
 
 	// Allocate the Cpu memory.
-	m_pData = (uint8*)HE_HeapAlloc(Size);
-	HE_ASSERT(m_pData != NULL);
-	ZeroMemory(m_pData, Size);
+	m_pData = (uint8*)HE_HeapAlloc( Size );
+	HE_ASSERT( m_pData != NULL );
+	ZeroMemory( m_pData, Size );
 }
 
 FORCEINLINE void FConstantBuffer::Destroy()
 {
 	if (m_pData != NULL)
-		HE_HeapFree(m_pData);
+		HE_HeapFree( m_pData );
 }
 
 FORCEINLINE uint8* FConstantBuffer::GetBufferPointer()
@@ -306,7 +310,7 @@ FORCEINLINE BufferDataType* TConstantBuffer<BufferDataType>::GetBufferPointer()
 template <typename BufferDataType>
 FORCEINLINE void TConstantBuffer<BufferDataType>::UploadBuffer()
 {
-	HE_ASSERT(m_BufferSize > 0); // Trying to upload a buffer that has not been created! Did you forget to call FConstantBufferInterface::Create()?
+	HE_ASSERT( IsValid() ); // Trying to upload a buffer that has not been created! Did you forget to call FConstantBufferInterface::Create()?
 
 	if (!GetIsDirty())
 		return;
@@ -315,21 +319,21 @@ FORCEINLINE void TConstantBuffer<BufferDataType>::UploadBuffer()
 	memcpy( GetGPUWritePointer(), (const void*)m_Data, GetBufferSize() );
 #endif // R_WITH_D3D12
 
-	SetDirty(false);
+	SetDirty( false );
 }
 
 template <typename BufferDataType>
-FORCEINLINE void TConstantBuffer<BufferDataType>::Create( const WChar* Name, uint32 Size/*Ignored*/)
+FORCEINLINE void TConstantBuffer<BufferDataType>::Create( const WChar* Name, uint32 Size/*Ignored*/ )
 {
 	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
 	{
 		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
-		HE_ASSERT(false);
+		HE_ASSERT( false );
 		return;
 	}
-	SetUID(AllocBufferUID());
+	SetUID( AllocBufferUID() );
 
 	m_BufferSize = GetAlignedBufferSize( sizeof( BufferDataType ), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT );
-	
+
 	CreateAPIBuffer( Name );
 }

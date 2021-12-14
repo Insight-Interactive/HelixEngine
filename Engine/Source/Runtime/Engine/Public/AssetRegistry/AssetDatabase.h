@@ -14,6 +14,8 @@
 #include "Renderer/MaterialManager.h"
 
 
+static const char* kAssetManifestFilename = "AssetManifest.json";
+
 /*
 	Master database containing specialized databases for all project assets. Does not hold data for assets,
 	just references on where to find them on disk. The use of global asset mangers (such as GTextureManager)
@@ -41,7 +43,7 @@ protected:
 		Initialize and load each asset database.
 		@param ManifestFile - Manifest file containing the references for each asset database.
 	*/
-	static void Initialize( const Char* ManifestFile );
+	static void Initialize();
 	static void Uninitialize();
 
 	static bool SaveAssetDatabases();

@@ -22,6 +22,18 @@ FTextureManager GTextureManager;
 HTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;
 FStaticGeometryManager GStaticGeometryManager;
+const FResolution GCommonResolutions[9] =
+{
+    { 800,  600  },
+    { 1200, 900  },
+    { 1280, 720  },
+    { 1600, 900  },
+    { 1920, 1080 },
+    { 1920, 1200 },
+    { 2560, 1440 },
+    { 3440, 1440 },
+    { 3840, 2160 },
+};
 
 
 // -----------------------------

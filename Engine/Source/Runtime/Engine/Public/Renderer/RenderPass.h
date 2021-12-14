@@ -28,6 +28,8 @@ public:
 	*/
 	virtual void UnBind( FCommandContext& GfxContext ) = 0;
 
+	virtual void Resize( const uint32& Width, const uint32& Height ) = 0;
+
 	/*
 		Retuns a reference to the currently rendering camera for this pass.
 		Can be null if some passes do not require a camera.

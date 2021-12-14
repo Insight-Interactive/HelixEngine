@@ -6,7 +6,7 @@
 #include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
 
-#define HE_GENERATED_BODY( Class )																\
+#define HE_GENERATED_BODY( Class )				\
 			Class( FActorInitArgs& InitArgs );	\
 			virtual ~Class();							
 
@@ -16,6 +16,7 @@ struct FActorInitArgs
 {
 	const HWorld*	pWorld;
 	const HName&	Name;
+	const bool		bIsDynamicInstance;
 };
 
 class HWorld;
@@ -41,12 +42,10 @@ public:
 	// Add a component to the actor.
 	template <typename ComponentType>
 	ComponentType* AddComponent(const HName& Name);
-
 	// Remove all components from the actor.
 	void RemoveAllComponents();
 	// Finds and returns a component by its unique id. nullptr if the component is not found.
 	HActorComponent* GetComponentByGuid(const FGUID& Guid);
-
 
 	void SetRootComponent(HSceneComponent* pRoot);
 	HSceneComponent* GetRootComponent();
@@ -65,10 +64,10 @@ protected:
 
 protected:
 	std::vector<HActorComponent*> m_Components;
+	HSceneComponent* m_pRoot;
 	HWorld* m_pOwningWorld;
 
-	HSceneComponent* m_pRoot;
-
+	bool m_IsDynamicInstance;
 };
 
 

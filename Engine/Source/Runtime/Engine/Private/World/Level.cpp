@@ -64,41 +64,33 @@ void HLevel::Serialize( WriteContext& Output )
 		{
 			Output.StartObject();
 			{
-				Output.Key( "WorldTransform" );
-				Output.StartArray();
+				if (HSceneComponent* pRoot = CurrentActor.GetRootComponent())
 				{
-					Output.StartObject();
-					{
-						if (HSceneComponent* pRoot = CurrentActor.GetRootComponent())
-						{
-							// Position
-							Output.Key( "PositionX" );
-							Output.Double( pRoot->GetPosition().x );
-							Output.Key( "PositionY" );
-							Output.Double( pRoot->GetPosition().y );
-							Output.Key( "PositionZ" );
-							Output.Double( pRoot->GetPosition().z );
+					// Position
+					Output.Key( "PositionX" );
+					Output.Double( pRoot->GetPosition().x );
+					Output.Key( "PositionY" );
+					Output.Double( pRoot->GetPosition().y );
+					Output.Key( "PositionZ" );
+					Output.Double( pRoot->GetPosition().z );
 
-							// Rotation
-							Output.Key( "RotationX" );
-							Output.Double( pRoot->GetRotation().x );
-							Output.Key( "RotationY" );
-							Output.Double( pRoot->GetRotation().y );
-							Output.Key( "RotationZ" );
-							Output.Double( pRoot->GetRotation().z );
+					// Rotation
+					Output.Key( "RotationX" );
+					Output.Double( pRoot->GetRotation().x );
+					Output.Key( "RotationY" );
+					Output.Double( pRoot->GetRotation().y );
+					Output.Key( "RotationZ" );
+					Output.Double( pRoot->GetRotation().z );
 
-							// Scale
-							Output.Key( "ScaleX" );
-							Output.Double( pRoot->GetScale().x );
-							Output.Key( "ScaleY" );
-							Output.Double( pRoot->GetScale().y );
-							Output.Key( "ScaleZ" );
-							Output.Double( pRoot->GetScale().z );
-						}
-					}
-					Output.EndObject();
+					// Scale
+					Output.Key( "ScaleX" );
+					Output.Double( pRoot->GetScale().x );
+					Output.Key( "ScaleY" );
+					Output.Double( pRoot->GetScale().y );
+					Output.Key( "ScaleZ" );
+					Output.Double( pRoot->GetScale().z );
 				}
-				Output.EndArray();
+
 			}
 			Output.EndObject();
 		}
@@ -128,7 +120,7 @@ ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 	m_pRoot->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
 	m_pRoot->SetScale( FVector3( 10.f, 10.f, 10.f ) );
 
-	pMesh = AddComponent<HStaticMeshComponent>( TEXT( "Cube Mesh" ) );
+	pMesh = AddComponent<HStaticMeshComponent>( TEXT( "CubeMesh" ) );
 	pMesh->SetMesh( FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) ) );
 	pMesh->SetMaterial( FAssetDatabase::GetMaterial( FGUID::CreateFromString( "0d68e992-aa25-4aa4-9f81-0eb775320c1e" ) ) );
 
@@ -159,7 +151,7 @@ void ARotatingActor::BeginPlay()
 
 void HLevel::Deserialize( const ReadContext& Value )
 {
-	CreateActor<ARotatingActor>( TEXT( "Rotating Actor Inst" ) );
+	//CreateActor<ARotatingActor>( TEXT( "Rotating Actor Inst" ) );
 
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{

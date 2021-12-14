@@ -32,8 +32,8 @@ FWindow::FWindow( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitl
 {
 	Description Desc;
 	Desc.Title = Title;
-	Desc.Width = Width;
-	Desc.Height = Height;
+	Desc.Resolution.Width = Width;
+	Desc.Resolution.Height = Height;
 	Desc.bHasTitleBar = bHasTitleBar;
 	Desc.bShowImmediate = bShowImmediate;
 	Desc.pParent = pParent;
@@ -86,14 +86,7 @@ void FWindow::Create( const FWindow::Description& Desc )
 
 
 	// Assemble a rect to align the window with the center to the screen.
-	RECT WindowRect = { 0 };
-	int centerScreenX	= ::GetSystemMetrics( SM_CXSCREEN ) / 2 - m_Desc.Width / 2;
-	int centerScreenY	= ::GetSystemMetrics( SM_CYSCREEN ) / 2 - m_Desc.Height / 2;
-	WindowRect.left		= centerScreenX;
-	WindowRect.top		= centerScreenY + 35;
-	WindowRect.right	= WindowRect.left + m_Desc.Width;
-	WindowRect.bottom	= WindowRect.top + m_Desc.Height;
-	::AdjustWindowRect( &WindowRect, WS_OVERLAPPEDWINDOW, FALSE );
+	FRect WindowRect = BuildCenterScreenAlignedRect( m_Desc.Resolution );
 
 	m_WindowStyle = m_Desc.bHasTitleBar ? WS_OVERLAPPEDWINDOW : WS_POPUPWINDOW | WS_VISIBLE;
 	HWND hParent = m_Desc.pParent ? *(HWND*)m_Desc.pParent->GetNativeWindow() : NULL;
@@ -104,10 +97,10 @@ void FWindow::Create( const FWindow::Description& Desc )
 		m_Desc.Title,			// FWindow Title
 		m_WindowStyle,			// FWindow Style
 
-		WindowRect.left,						// Start X
-		WindowRect.top,							// Start Y
-		WindowRect.right - WindowRect.left,		// Width
-		WindowRect.bottom - WindowRect.top,		// Height
+		WindowRect.Left,						// Start X
+		WindowRect.Top,							// Start Y
+		WindowRect.Right - WindowRect.Left,		// Width
+		WindowRect.Bottom - WindowRect.Top,		// Height
 
 		hParent,				// Parent window
 		NULL,					// Menu
@@ -265,6 +258,13 @@ void FWindow::SetParent( FWindow* pParent )
 	::SetParent( m_hWindowHandle, hParent );
 }
 
+FRect FWindow::GetRect() const
+{
+	RECT Rect = {};
+	GetWindowRect( m_hWindowHandle, &Rect );
+	return FRect{ Rect.left, Rect.top, Rect.right, Rect.bottom };
+}
+
 void FWindow::MakeMoueWindowAssociation()
 {
 	RAWINPUTDEVICE RID = {};
@@ -278,135 +278,130 @@ void FWindow::MakeMoueWindowAssociation()
 	}
 }
 
+/*static*/ FRect FWindow::BuildCenterScreenAlignedRect( const FResolution& WindowResolution )
+{
+	FRect WindowRect = { };
+	int CenterScreenX = ::GetSystemMetrics( SM_CXSCREEN ) / 2 - WindowResolution.Width / 2;
+	int CenterScreenY = ::GetSystemMetrics( SM_CYSCREEN ) / 2 - WindowResolution.Height / 2;
+	WindowRect.Left		= CenterScreenX;
+	WindowRect.Top		= CenterScreenY + 35;
+	WindowRect.Right	= WindowRect.Left + WindowResolution.Width;
+	WindowRect.Bottom	= WindowRect.Top + WindowResolution.Height;
+
+	return WindowRect;
+}
+
 void FWindow::OnWindowModeChanged()
 {
 	switch (GetWindowMode())
 	{
 	case EWindowMode::WM_Borderless:
-	{
-		//
-		// Bring us into borderless mode.
-		//
-		HE_LOG( Log, TEXT( "Entering borderless mode." ) );
-
-		// Make the window borderless so that the client area can fill the screen.
-		SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
-		
-		// Save the old window rect so we can restore it when exiting fullscreen mode.
-		::GetWindowRect( m_hWindowHandle, &m_WindowRect );
-
-		// Get the settings of the primary display.
-		DEVMODE DevMode = {};
-		DevMode.dmSize = sizeof( DEVMODE );
-		EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
-
-		RECT FullscreenWindowRect =
 		{
-			DevMode.dmPosition.x,
-			DevMode.dmPosition.y,
-			DevMode.dmPosition.x + (LONG)DevMode.dmPelsWidth,
-			DevMode.dmPosition.y + (LONG)DevMode.dmPelsHeight
-		};
+			//
+			// Bring us into borderless mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering borderless mode." ), m_DebugName );
 
-		SetWindowPos(
-			m_hWindowHandle,
-			HWND_TOPMOST,
-			FullscreenWindowRect.left,
-			FullscreenWindowRect.top,
-			FullscreenWindowRect.right,
-			FullscreenWindowRect.bottom,
-			SWP_FRAMECHANGED | SWP_NOACTIVATE );
+			GetSwapChain()->ToggleFullScreen( true );
 
-		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+			// Make the window borderless so that the client area can fill the screen.
+			SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
 
-		//// Get the new window dimensions.
-		//uint32 NewWidth( FullscreenWindowRect.right - FullscreenWindowRect.left );
-		//uint32 NewHeight( FullscreenWindowRect.bottom - FullscreenWindowRect.top );
+			// Get the settings of the primary display.
+			DEVMODE DevMode = {};
+			DevMode.dmSize = sizeof( DEVMODE );
+			EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
 
-		//// Resize the window's swapchain.
-		////GetSwapChain()->Resize( NewWidth, NewHeight );
+			RECT FullscreenWindowRect =
+			{
+				DevMode.dmPosition.x,
+				DevMode.dmPosition.y,
+				DevMode.dmPosition.x + (LONG)DevMode.dmPelsWidth,
+				DevMode.dmPosition.y + (LONG)DevMode.dmPelsHeight
+			};
 
-		//// Emit the resize event.
-		//WindowResizeEvent e( NewWidth, NewHeight );
+			SetWindowPos(
+				m_hWindowHandle,
+				HWND_TOPMOST,
+				FullscreenWindowRect.left,
+				FullscreenWindowRect.top,
+				FullscreenWindowRect.right,
+				FullscreenWindowRect.bottom,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
-		break;
-	}
+			ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+
+			break;
+		}
 	case EWindowMode::WM_FullScreen:
-	{
-		//
-		// Bring us into fullscreen mode.
-		//
-		HE_LOG( Log, TEXT( "Entering fullscreen mode." ) );
-		
-		GetSwapChain()->ToggleFullScreen( !m_SwapChain.GetIsFullScreenEnabled() );
-
-		// Save the old window rect so we can restore it when exiting fullscreen mode.
-		::GetWindowRect( m_hWindowHandle, &m_WindowRect );
-
-		// Get the settings of the primary display.
-		DEVMODE DevMode = {};
-		DevMode.dmSize = sizeof( DEVMODE );
-		EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
-
-		RECT FullscreenWindowRect = 
 		{
-			DevMode.dmPosition.x,
-			DevMode.dmPosition.y,
-			DevMode.dmPosition.x + (LONG) DevMode.dmPelsWidth,
-			DevMode.dmPosition.y + (LONG) DevMode.dmPelsHeight 
-		};
+			//
+			// Bring us into fullscreen mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering fullscreen mode." ), m_DebugName );
 
-		SetWindowPos(
-			m_hWindowHandle,
-			HWND_TOPMOST,
-			FullscreenWindowRect.left,
-			FullscreenWindowRect.top,
-			FullscreenWindowRect.right,
-			FullscreenWindowRect.bottom,
-			SWP_FRAMECHANGED | SWP_NOACTIVATE );
+			GetSwapChain()->ToggleFullScreen( true );
 
-		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+			// Get the settings of the primary display.
+			DEVMODE DevMode = {};
+			DevMode.dmSize = sizeof( DEVMODE );
+			EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
+
+			RECT FullscreenWindowRect = 
+			{
+				DevMode.dmPosition.x,
+				DevMode.dmPosition.y,
+				DevMode.dmPosition.x + (LONG) DevMode.dmPelsWidth,
+				DevMode.dmPosition.y + (LONG) DevMode.dmPelsHeight 
+			};
+
+			SetWindowPos(
+				m_hWindowHandle,
+				HWND_TOPMOST,
+				FullscreenWindowRect.left,
+				FullscreenWindowRect.top,
+				FullscreenWindowRect.right,
+				FullscreenWindowRect.bottom,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+			ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
 		
-		// Get the new window dimensions.
-		uint32 NewWidth( FullscreenWindowRect.right - FullscreenWindowRect.left );
-		uint32 NewHeight( FullscreenWindowRect.bottom - FullscreenWindowRect.top );
-
-		// Resize the window's swapchain.
-		//GetSwapChain()->Resize( NewWidth, NewHeight );
-
-		// Emit the resize event.
-		WindowResizeEvent e( NewWidth, NewHeight );
-		EmitEvent( e );
-		
-		break;
-	}
+			break;
+		}
 	case EWindowMode::WM_Windowed:
-	{
-		//
-		// Bring us into windowed mode.
-		//
-		HE_LOG( Log, TEXT( "Entering windowed mode." ) );
+		{
+			//
+			// Bring us into windowed mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering window mode." ), m_DebugName );
 
-		::SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle );
+			GetSwapChain()->ToggleFullScreen( false );
 
-		::SetWindowPos(
-			m_hWindowHandle,
-			HWND_NOTOPMOST,
-			m_WindowRect.left,
-			m_WindowRect.top,
-			m_WindowRect.right - m_WindowRect.left,
-			m_WindowRect.bottom - m_WindowRect.top,
-			SWP_FRAMECHANGED | SWP_NOACTIVATE );
+			::SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle );
+		
+			FRect DefaultRect = FWindow::BuildCenterScreenAlignedRect( GCommonResolutions[k720p] );
+
+			::SetWindowPos(
+				m_hWindowHandle,
+				HWND_NOTOPMOST,
+				DefaultRect.Left,
+				DefaultRect.Top,
+				DefaultRect.Right  - DefaultRect.Left,
+				DefaultRect.Bottom - DefaultRect.Top,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
 		
-		::ShowWindow( m_hWindowHandle, SW_NORMAL );
+			::ShowWindow( m_hWindowHandle, SW_NORMAL );
 		
-		// Resize the window's swapchain.
-		// Note: Let WM_SIZE handle the swapchain resize. 
-		
+			break;
+		}
+	default:
 		break;
 	}
-	}
+
+	// Resize the window's swapchain.
+	// Note: Let WM_SIZE handle the swapchain resize. 
+
 }
 
 void FWindow::CreateSwapChain()
@@ -494,8 +489,8 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		}
 
 		// Get the new window dimensions.
-		uint32 NewWidth = LOWORD( lParam );
-		uint32 NewHeight = HIWORD( lParam );
+		uint32 NewWidth		= LOWORD( lParam );
+		uint32 NewHeight	= HIWORD( lParam );
 
 		// Resize the window's swapchain.
 		pWindow->GetSwapChain()->Resize( NewWidth, NewHeight );

@@ -51,8 +51,8 @@ void FCommandManager::CreateNewCommandContext( const ECommandListType& Type, FCo
 
 void FCommandManager::WaitForFence( uint64 FenceValue )
 {
-	FCommandQueue* Queue = GCommandManager.GetQueue( (ECommandListType)(FenceValue >> 56) );
-	Queue->WaitForFence( FenceValue );
+	FCommandQueue& Queue = GCommandManager.GetQueue( (ECommandListType)(FenceValue >> 56) );
+	Queue.WaitForFence( FenceValue );
 }
 
 

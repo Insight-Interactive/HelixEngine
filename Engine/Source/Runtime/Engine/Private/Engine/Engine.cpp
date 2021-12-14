@@ -33,7 +33,7 @@ HEngine::HEngine( CommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
-	, m_AppSeconds(0.0)
+	, m_AppSeconds( 0.0 )
 {
 }
 
@@ -69,13 +69,6 @@ void HEngine::PreStartup()
 
 	System::InitializePlatform();
 
-	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
-}
-
-void HEngine::Startup()
-{
-	HE_LOG( Log, TEXT( "Starting up engine." ) );
-
 	// Initialize the thread pool.
 	GThreadPool = new ThreadPool( System::GetProcessorCount(), NULL );
 	GThreadPool->SpawnWorkers();
@@ -90,6 +83,13 @@ void HEngine::Startup()
 
 	// Initialize the renderer.
 	FRendererInitializer::InitializeContext( m_RenderContext );
+
+	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
+}
+
+void HEngine::Startup()
+{
+	HE_LOG( Log, TEXT( "Starting up engine." ) );
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
@@ -107,22 +107,20 @@ void HEngine::Startup()
 	//GGameInstance = MakeGameInstance();
 	GGameInstance = new HGameInstance();
 
-	String AssetDatabaseRoot = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
-	FAssetDatabase::Initialize( AssetDatabaseRoot.c_str() );
+	FAssetDatabase::Initialize();
 
 	// Create and initialize the main client window.
 	FWindow::Description ClientDesc = {};
-	ClientDesc.bHasTitleBar = true;
-	ClientDesc.bShowImmediate = false;
-	ClientDesc.Width = 1600;
-	ClientDesc.Height = 900;
-	ClientDesc.Title =
+	ClientDesc.bHasTitleBar		= true;
+	ClientDesc.bShowImmediate	= false;
+	ClientDesc.Resolution		= GCommonResolutions[k1080p];
+	ClientDesc.Title			=
 #if HE_WITH_EDITOR
 		TEXT( "Helix Ed" ) " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]";
 #else
 		FApp::GetInstance()->GetName();
 #endif
-	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
+	ClientDesc.bAllowDropFiles	= GetIsEditorPresent();
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
@@ -140,7 +138,7 @@ void HEngine::Startup()
 
 void HEngine::PostStartup()
 {
-	HE_LOG(Log, TEXT("Beginning engine post-startup."));
+	HE_LOG( Log, TEXT( "Beginning engine post-startup." ) );
 
 	// TODO Get this from the DefaultEngine.ini
 	String StartingWorldPath = FGameProject::GetInstance()->GetContentFolder() + "/Levels/TestLevel.hlevel";
@@ -217,7 +215,7 @@ void HEngine::Update()
 
 		RenderClientViewport( DeltaTime );
 		GetClientViewport().PresentOneFrame();
-		
+
 		static float SecondTimer = 0.f;
 		static float FPS = 0.f;
 		SecondTimer += DeltaTime;
@@ -239,7 +237,7 @@ void HEngine::RenderClientViewport( float DeltaTime )
 	FViewportContext& ClientViewport = GetClientViewport();
 	ClientViewport.Update( DeltaTime );
 	ClientViewport.Render();
-	
+
 	FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
 	{
 		FColorBuffer& SwapChainSurface = *ClientViewport.GetWindow().GetRenderSurface();

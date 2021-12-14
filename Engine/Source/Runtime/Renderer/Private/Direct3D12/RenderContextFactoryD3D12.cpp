@@ -83,18 +83,17 @@ void FRenderContextFactory::CreateSwapChain(FSwapChain& OutSwapChain, void* pNat
 {
 	ID3D12Device* pID3D12Device = (ID3D12Device*)InDevice.GetNativeDevice();
 
-	FCommandQueue* pD3D12CommandQueue = InCommandManager.GetGraphicsQueue();
+	FCommandQueue& pD3D12CommandQueue = InCommandManager.GetGraphicsQueue();
 	FSwapChainDesc SwapChainInitParams;
 	ZeroMemory(&SwapChainInitParams, sizeof(FSwapChainDesc));
-	SwapChainInitParams.Width = RenderSurfaceWidth;
-	SwapChainInitParams.Height = RenderSurfaceHeight;
-	SwapChainInitParams.BufferCount = HE_MAX_SWAPCHAIN_BACK_BUFFERS;
-	SwapChainInitParams.Format = F_R8G8B8A8_UNorm; // TODO: Check for HDR display support
-	SwapChainInitParams.SampleDesc.Count = 1;
-	SwapChainInitParams.SampleDesc.Quality = 0;
-	SwapChainInitParams.NativeWindow = pNativeSurface;
+	SwapChainInitParams.Width					= RenderSurfaceWidth;
+	SwapChainInitParams.Height					= RenderSurfaceHeight;
+	SwapChainInitParams.BackBufferColorDepth	= BD_8; // TODO: Check for HDR display support
+	SwapChainInitParams.SampleDesc.Count		= 1;
+	SwapChainInitParams.SampleDesc.Quality		= 0;
+	SwapChainInitParams.NativeWindow			= pNativeSurface;
 	OutSwapChain.Initialize(InDevice);
-	OutSwapChain.Create(SwapChainInitParams, &m_pDXGIFactory, pD3D12CommandQueue, pID3D12Device);
+	OutSwapChain.Create(SwapChainInitParams, &m_pDXGIFactory, pD3D12CommandQueue, *pID3D12Device);
 }
 
 void FRenderContextFactory::CreateCommandManager(FCommandManager& OutCommandManager)

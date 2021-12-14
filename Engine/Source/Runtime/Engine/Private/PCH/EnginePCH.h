@@ -36,6 +36,9 @@
 #		include <d3d12.h>
 #		include <D3D12shader.h>
 #		include <d3dcompiler.h>
+#		pragma comment(lib, "D3DCompiler.lib")
+#		pragma comment(lib, "D3D12.lib")
+#		pragma comment(lib, "DXGI.lib")
 
 #		ifdef NTDDI_WIN10_RS2
 #			include <dxgi1_6.h>

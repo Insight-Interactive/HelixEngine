@@ -174,3 +174,8 @@ void FSkyboxPass::ReloadPipeline()
 	PSODesc.DSVFormat = m_DepthTargetFormat;
 	m_PSO.Initialize( PSODesc );
 }
+
+void FSkyboxPass::Resize( const uint32& Width, const uint32& Height ) 
+{
+
+}

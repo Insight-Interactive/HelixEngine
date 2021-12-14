@@ -1,4 +1,7 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
+
+#include "GUID.h"
 
 /*
 	The base class for all objects that exist in the world.

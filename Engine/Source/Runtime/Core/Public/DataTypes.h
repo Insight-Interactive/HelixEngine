@@ -10,15 +10,28 @@
 #pragma once
 
 
+
+//-----------------------------------
+//		Compiler Macros
+//-----------------------------------
+//
+// 
+#ifdef _MSC_VER
+#	define HE_COMPILE_MSVC 1
+#else 
+#	define HE_COMPILE_MSVC 0
+#endif
+
 //-----------------------------------
 //		Common Macros
 //-----------------------------------
 //
+// 
 // Safely checks a pointer and deletes it if it is non-null.
 #define HE_SAFE_DELETE_PTR( Ptr )			if( (Ptr) != NULL ) { delete	(Ptr); (Ptr) = NULL; }
 #define HE_SAFE_DELETE_PTR_ARRAY( Ptr )		if( (Ptr) != NULL ) { delete[]	(Ptr); }
 // Safely checks a COM pointer and deletes it if it is non-null.
-#define HE_COM_SAFE_RELEASE( ComObject )	if( (ComObject) ) { (ComObject)->Release(); (ComObject) = nullptr; }
+#define HE_COM_SAFE_RELEASE( ComObject )	if( (ComObject) != nullptr ) { (ComObject)->Release(); (ComObject) = nullptr; }
 // Turn characters into a string of text.
 #define HE_STRINGIFY( Value )			#Value
 // Force the compiler to inline a piece of code.
@@ -37,7 +50,7 @@
 #endif
 // Alias for nullptr
 #define null							nullptr
-#if _MSC_VER
+#if HE_COMPILE_MSVC
 #	define HE_PRAGMA( X )					__pragma (X)
 #else
 #	define HE_PRAGMA( X )					_Pragma (X)
@@ -252,6 +265,9 @@ typedef std::stringstream TStringStream;
 		HE_ASSERT( false );																									\
 	}
 
+/*
+	Assert that an HRESULT succeeded with S_OK.
+*/
 #	define ASSERT_SUCCEEDED(Hr)																								\
 	if( !SUCCEEDED(hr) )																									\
 	{																														\
@@ -262,19 +278,24 @@ typedef std::stringstream TStringStream;
 		CreateMessageBox( MsgBuffer, L"HRESULT Failed!", MessageDialogInput::MDI_Ok, MessageDialogIcon::MDIcon_Critical );	\
 		HE_ASSERT( false );																									\
 	}
-#define ResetHr(hr) (hr = S_OK)
+
+/*
+	Reset an HRESULT to the default value.
+*/
+#	define ResetHr(Hr) (Hr = S_OK)
+
 #endif
 
 
-//-----------------------------------
-//		System Text Manipulation
-//-----------------------------------
+//---------------------------------------
+//		Compiler Warning Supression
+//---------------------------------------
 //
 //
-#if _MSC_VER
+#if HE_COMPILE_MSVC
 #	define HE_DISABLE_MSVC_WARNINGS				\
 	HE_PRAGMA ( warning ( push )	)			\
-	HE_PRAGMA ( warning ( disable : 26812) )	 // The enum type '' is unscoped.Prefer 'enum class' over 'enum'
+	HE_PRAGMA ( warning ( disable : 26812) )	 // The enum type '<SomeType>' is unscoped.Prefer 'enum class' over 'enum'
 
 
 #	define HE_RESTORE_MSVC_WARNINGS \

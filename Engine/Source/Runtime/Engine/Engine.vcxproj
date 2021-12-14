@@ -511,7 +511,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -532,7 +532,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -553,7 +553,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -574,7 +574,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -595,7 +595,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -616,7 +616,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -637,7 +637,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -658,7 +658,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -679,7 +679,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -700,7 +700,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>D3D12.lib;DXGI.lib;WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -721,7 +721,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -744,7 +744,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -767,7 +767,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -790,7 +790,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -813,7 +813,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -841,7 +841,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -869,7 +869,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -897,7 +897,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -925,7 +925,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -953,7 +953,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Renderer.lib;D3D12.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -1104,6 +1104,7 @@
     </ClCompile>
     <ClCompile Include="Private\Renderer\Common.cpp" />
     <ClCompile Include="Private\Renderer\LightManager.cpp" />
+    <ClCompile Include="Private\Renderer\Material.cpp" />
     <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />
     <ClCompile Include="Private\Renderer\MaterialManager.cpp" />
     <ClCompile Include="Private\Renderer\SceneRenderer.cpp" />
@@ -1160,7 +1161,6 @@
     <ClCompile Include="Private\World\Scene.cpp" />
     <ClCompile Include="Private\World\World.cpp" />
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp" />
-    <ClCompile Include="Private\Renderer\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />
