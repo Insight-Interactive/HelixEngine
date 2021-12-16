@@ -106,7 +106,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 	Scene.SortStaticTransparentObjects();
 
 	//
-	// Opaque objects get defered shading. Translucent or unlit objects get forward shading.
+	// Opaque objects get deferred shading. Translucent or unlit objects get forward shading.
 	//
 	
 	// Render static opaque objects

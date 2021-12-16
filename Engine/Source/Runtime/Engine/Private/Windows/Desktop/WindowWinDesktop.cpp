@@ -237,9 +237,9 @@ void FWindow::AllowFileDrops( bool bAllow )
 	DragAcceptFiles( m_hWindowHandle, (BOOL)bAllow );
 }
 
-FColorBuffer* FWindow::GetRenderSurface()
+FColorBuffer& FWindow::GetRenderSurface()
 {
-	return &m_SwapChain.GetColorBufferForCurrentFrame();
+	return m_SwapChain.GetColorBufferForCurrentFrame();
 }
 
 void* FWindow::GetNativeWindow()

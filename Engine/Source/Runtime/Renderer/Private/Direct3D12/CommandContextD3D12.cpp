@@ -127,10 +127,9 @@ void FCommandContext::BindDescriptorHeaps()
 
 void FCommandContext::Initialize()
 {
-	FCommandContext* pThisContext = RCast<FCommandContext*>(this);
 	void** pThisAllocator = RCast<void**>(&m_pID3D12CurrentCmdAllocator);
 
-	GCommandManager.CreateNewCommandContext(m_Type, &pThisContext, pThisAllocator);
+	GCommandManager.CreateNewCommandContext(m_Type, *this, pThisAllocator);
 }
 
 void FCommandContext::UnInitialize()
@@ -167,8 +166,8 @@ void FCommandContext::EndDebugMarker()
 
 void FCommandContext::ClearState(FPipelineState* pNewPipelineState)
 {
-	ID3D12PipelineState* pD3D12PipeState = NULL;
-	if (pNewPipelineState != NULL)
+	ID3D12PipelineState* pD3D12PipeState = nullptr;
+	if (pNewPipelineState != nullptr)
 	{
 		pD3D12PipeState = (ID3D12PipelineState*)pNewPipelineState->GetNativePSO();
 	}
@@ -186,7 +185,7 @@ void FCommandContext::OMSetRenderTargets(uint32 NumRTVs, const FColorBuffer* Tar
 		RTVHandles[i] = Targets[i]->GetRTVHandle();
 	}
 
-	if (pDepthBuffer != NULL)
+	if (pDepthBuffer != nullptr)
 	{
 		D3D12_CPU_DESCRIPTOR_HANDLE DSVHandle;
 		DSVHandle = pDepthBuffer->GetDSV();

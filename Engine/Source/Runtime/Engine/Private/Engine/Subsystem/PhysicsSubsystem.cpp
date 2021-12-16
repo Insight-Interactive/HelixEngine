@@ -3,10 +3,33 @@
 
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 
-HPhysicsSyubsystem::HPhysicsSyubsystem()
+#include "App/App.h"
+
+
+FPhysicsSubsystem::FPhysicsSubsystem()
+	: FSubsystemInterface("Physics Subsystem")
 {
 }
 
-HPhysicsSyubsystem::~HPhysicsSyubsystem()
+FPhysicsSubsystem::~FPhysicsSubsystem()
 {
+}
+
+void FPhysicsSubsystem::Initialize()
+{
+
+}
+
+void FPhysicsSubsystem::UnInitialize()
+{
+	TerminateAsyncProcess();
+}
+
+void FPhysicsSubsystem::RunAsync_Implementation()
+{
+	while (m_IsRunning)
+	{
+	}
+
+	HE_LOG( Log, TEXT( "Exiting physics subsystem async run loop." ) );
 }

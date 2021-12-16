@@ -32,7 +32,7 @@ enum EWindowMode
 	WM_FullScreen	= 3,
 };
 
-const uint8 kMaxDebugNameLength = 64;
+const uint8 kMaxDebugNameLength = 128;
 const uint8 kMaxClassNameSize = 16;
 const uint8 kMaxWindowTitleLength = 64;
 
@@ -85,7 +85,7 @@ public:
 	void Maximize();
 	void Minimize();
 
-	FColorBuffer* GetRenderSurface();
+	FColorBuffer& GetRenderSurface();
 	void* GetNativeWindow();
 	void SetWindowMode( EWindowMode NewMode );
 	void SetParent( FWindow* pParent );

@@ -25,11 +25,17 @@ void FGameProject::Startup( const Char* HProjectFilpath )
 		JsonUtility::LoadDocument( WorldJsonSource, WorldJsonDoc );
 		if (WorldJsonDoc.IsObject())
 		{
-			Char GameName[32];
-			JsonUtility::GetString( WorldJsonDoc, "GameName", GameName, sizeof( GameName ) );
-			String GameNameStr = GameName;
-			const HName TargetName = CharToTChar( GameNameStr );
-			FApp::GetInstance()->SetName(TargetName.c_str());
+			Char NameBuffer[32];
+
+			// Set game name.
+			JsonUtility::GetString( WorldJsonDoc, "GameName", NameBuffer, sizeof( NameBuffer ) );
+			FApp::GetInstance()->SetName( CharToTChar( String( NameBuffer) ) );
+
+			ZeroMemory( NameBuffer, sizeof( NameBuffer ) );
+
+			// Set project name.
+			JsonUtility::GetString( WorldJsonDoc, "ProjectName", NameBuffer, sizeof( NameBuffer ) );
+			m_ProjectName = CharToTChar( String( NameBuffer ) );
 		}
 	
 		String ProjectRoot = StringHelper::GetDirectoryFromPath( HProjectFilpath ) + "\\";

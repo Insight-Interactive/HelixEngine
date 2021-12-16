@@ -29,8 +29,10 @@ void FCommandManager::UnInitialize()
 	m_pDeviceRef = NULL;
 }
 
-void FCommandManager::CreateNewCommandContext( const ECommandListType& Type, FCommandContext** pContext, void** pCommandAllocator )
+void FCommandManager::CreateNewCommandContext( const ECommandListType& Type, FCommandContext& Context, void** pCommandAllocator )
 {
+	HE_ASSERT( pCommandAllocator != nullptr );
+
 	ID3D12Device* pID3D12Device = (ID3D12Device*)m_pDeviceRef->GetNativeDevice();
 	switch (Type)
 	{
@@ -38,12 +40,15 @@ void FCommandManager::CreateNewCommandContext( const ECommandListType& Type, FCo
 		(*pCommandAllocator) = m_GraphicsQueue.RequestAllocator();
 		break;
 	case ECommandListType::CLT_Compute:
+		// TODO
 		break;
 	default:
+		R_LOG( Error, TEXT("Unrecognized command list type provided while creating a new command context!"));
+		HE_ASSERT( false );
 		break;
 	}
 
-	ID3D12GraphicsCommandList** pD3D12CmdList = RCast<ID3D12GraphicsCommandList**>( (*pContext)->GetNativeContextAddress() );
+	ID3D12GraphicsCommandList** pD3D12CmdList = RCast<ID3D12GraphicsCommandList**>( Context.GetNativeContextAddress() );
 
 	HRESULT hr = pID3D12Device->CreateCommandList( 0, (D3D12_COMMAND_LIST_TYPE)Type, RCast<ID3D12CommandAllocator*>( *pCommandAllocator ), NULL, IID_PPV_ARGS( pD3D12CmdList ) );
 	ThrowIfFailedMsg( hr, "Failed to create command list!" );
@@ -78,12 +83,11 @@ uint64 FCommandQueue::ExecuteCommandList( void* pNativeCommandList )
 	m_FenceMutex.Enter();
 
 	ID3D12CommandList* pCommandList = (ID3D12CommandList*)pNativeCommandList;
-
+	
 	HRESULT hr = ((ID3D12GraphicsCommandList*)pCommandList)->Close();
-	ThrowIfFailedMsg( hr, "Failed to close command list!" );
+	ThrowIfFailedMsg( hr, "Failed to close graphics command list!" );
 
 	m_pID3D12CommandQueue->ExecuteCommandLists( 1, &pCommandList );
-
 	m_pID3D12CommandQueue->Signal( m_pFence, m_NextFenceValue );
 
 	m_FenceMutex.Exit();

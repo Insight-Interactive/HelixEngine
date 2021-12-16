@@ -7,16 +7,34 @@
 #include "GameFramework/Components/HPointLightComponent.h"
 
 
+struct FSceneRenderParams
+{
+	class FSceneRenderer* pRenderer;
+	bool FlipSwapChainBuffers;
+
+	class FColorBuffer* pRenderTarget;
+	FViewPort* pView;
+	FRect* pScissor;
+	class FViewportContext* pRenderingViewport;
+	class HCameraComponent* pRenderingCamera;
+};
+
 class FCommandContext;
+class FSceneRenderer;
 class HWorld;
 
 class HScene : public HObject
 {
 	using Super = HObject;
-	friend class FSceneRenderer;
+	friend class FRenderingSubsystem;
 public:
 	HScene( HWorld* pOwner );
 	virtual ~HScene();
+
+	void RequestRender( FSceneRenderParams& RenderParams );
+	bool IsRendering() const;
+	void WaitForRenderingFinished();
+	FSceneRenderParams& GetRenderParams();
 
 	/*
 		Sorts the scene opaque objects first transparent last.
@@ -35,10 +53,16 @@ public:
 
 protected:
 	HWorld* GetWorld();
+	void OnRenderingFinished()
+	{
+		m_IsRendering = false;
+	}
+
 
 private:
+	bool m_IsRendering;
+	FSceneRenderParams m_RenderParams;
 
-private:
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
 	std::vector<HStaticMeshComponent*>::iterator m_FirstTranslucentOrUnlit;
 
@@ -50,6 +74,30 @@ private:
 //
 // Inline function implementations
 //
+
+FORCEINLINE void HScene::RequestRender( FSceneRenderParams& RenderParams )
+{
+	m_RenderParams = RenderParams;
+	m_IsRendering = true;
+}
+
+FORCEINLINE bool HScene::IsRendering() const 
+{ 
+	return m_IsRendering; 
+}
+
+FORCEINLINE void HScene::WaitForRenderingFinished()
+{
+	while (m_IsRendering)
+	{
+		// Wait for the render thread to finish render this scene.
+	}
+}
+
+FORCEINLINE FSceneRenderParams& HScene::GetRenderParams()
+{ 
+	return m_RenderParams; 
+}
 
 FORCEINLINE void HScene::AddStaticMesh( HStaticMeshComponent* pStaticMesh )
 {

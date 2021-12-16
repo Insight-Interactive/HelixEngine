@@ -914,6 +914,7 @@
     <ClInclude Include="Public\ColorBuffer.h" />
     <ClInclude Include="Public\CommandAllocatorPool.h" />
     <ClInclude Include="Public\CommandContext.h" />
+    <ClInclude Include="Public\CommandList.h" />
     <ClInclude Include="Public\CommandManager.h" />
     <ClInclude Include="Public\CommonEnums.h" />
     <ClInclude Include="Public\CommonStructHelpers.h" />

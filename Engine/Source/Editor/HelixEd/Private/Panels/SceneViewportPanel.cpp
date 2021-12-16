@@ -89,6 +89,8 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 			GGameInstance->OnGameSetFocus();
 		}
 
+		GetOwningViewport()->GetWorld().GetScene()->WaitForRenderingFinished();
+
 		// Render the scene to the viewport.
 		//
 		FColorBuffer* Buffer = GetOwningViewport()->GetPreDisplayBuffer();

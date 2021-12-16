@@ -2,6 +2,8 @@
 
 #include "TSingleton.h"
 
+#include "App/App.h"
+
 
 /*
 	Represents a game project that the engine is currently editing and/or playing.
@@ -15,6 +17,7 @@ public:
 	const String& GetContentFolder() const;
 
 	const HName& GetGameName() const;
+	const HName& GetProjectName() const;
 
 protected:
 	FGameProject();
@@ -27,7 +30,7 @@ protected:
 	void SetProjectRootDirectory( const Char* ProjectRoot );
 
 private:
-	HName m_GameName;
+	HName m_ProjectName;
 
 	String m_ProjectRoot;
 	String m_ConfigDirectory;
@@ -50,7 +53,12 @@ FORCEINLINE const String& FGameProject::GetContentFolder() const
 
 FORCEINLINE const HName& FGameProject::GetGameName() const
 {
-	return m_GameName;
+	return FApp::GetInstance()->GetName();
+}
+
+FORCEINLINE const HName& FGameProject::GetProjectName() const
+{
+	return m_ProjectName;
 }
 
 FORCEINLINE void FGameProject::SetProjectRootDirectory( const Char* ProjectRoot )

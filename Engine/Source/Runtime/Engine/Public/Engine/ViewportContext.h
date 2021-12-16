@@ -30,6 +30,7 @@ class FViewportContext
 	friend class HEngine;
 	friend class HEditorEngine;
 	friend class SceneViewportPanel;
+	friend class FRenderingSubsystem;
 public:
 	FViewportContext();
 	~FViewportContext();

@@ -177,6 +177,8 @@ void FSwapChain::ResizeDXGIBuffers()
 
 	m_pDXGISwapChain->GetDesc1( &DXGIDesc );
 	SetIsTearingSupported( DXGIDesc.Flags & DXGI_PRESENT_ALLOW_TEARING );
+
+	m_FrameIndex = m_pDXGISwapChain->GetCurrentBackBufferIndex();
 }
 
 // Compute the overlay area of two rectangles, A and B.
@@ -273,6 +275,8 @@ void FSwapChain::BindSwapChainBackBuffers()
 
 		m_DisplayBuffers[i].CreateFromSwapChain( TEXT( "SwapChain display buffer" ), DisplayPlane.Detach() );
 	}
+
+	m_FrameIndex = m_pDXGISwapChain->GetCurrentBackBufferIndex();
 }
 
 #endif // R_WITH_D3D12

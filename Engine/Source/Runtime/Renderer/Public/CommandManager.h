@@ -80,14 +80,19 @@ public:
 	void Initialize(FRenderDevice& pDevice);
 	void UnInitialize();
 
-	void CreateNewCommandContext(const ECommandListType& Type, FCommandContext** pContext, void** pData);
+	void CreateNewCommandContext(const ECommandListType& Type, FCommandContext& pContext, void** pCommandAllocator );
 	void WaitForFence(uint64 Value);
+	/*
+		Master function for flushing all work from the Gpu.
+	*/
 	void IdleGpu();
 	FCommandQueue& GetQueue( const ECommandListType& Type );
 	FCommandQueue& GetGraphicsQueue();
 	FCommandQueue& GetComputeQueue();
 
-	// Test to see if a fence has already been reached
+	/*
+		Returns true if a fence has already been reached, false if not.
+	*/
 	bool IsFenceComplete( uint64 FenceValue );
 
 protected:

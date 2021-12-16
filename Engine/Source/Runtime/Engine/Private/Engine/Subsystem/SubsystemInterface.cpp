@@ -3,13 +3,45 @@
 
 #include "Engine/Subsystem/SubsystemInterface.h"
 
+static void SubsystemRunAsyncHelper( void* pClass );
 
-HSubsystemInterface::HSubsystemInterface()
+FSubsystemInterface::FSubsystemInterface( Char* DebugName )
+	: m_IsRunning( false )
+{
+#if HE_DEBUG
+	strcpy_s( m_DebugName, DebugName );
+#endif // HE_DEBUG
+}
+
+FSubsystemInterface::~FSubsystemInterface()
 {
 
 }
 
-HSubsystemInterface::~HSubsystemInterface()
+void FSubsystemInterface::RunAsync()
 {
+	Char ThreadName[256];
+	sprintf_s( ThreadName, "Helix Engine Subsystem Thread: %s", m_DebugName );
+	System::CreateAndRunThread( ThreadName, 0, SubsystemRunAsyncHelper, this );
 
+	m_IsRunning = true;
+}
+
+
+// Static methods
+
+class FSubsystemAsyncRunHelper
+{
+public:
+	FSubsystemAsyncRunHelper( FSubsystemInterface* pSubsystem )
+	{
+		pSubsystem->RunAsync_Implementation();
+	}
+};
+
+/*static*/ void SubsystemRunAsyncHelper( void* pClass )
+{
+	FSubsystemInterface* pSubsystem = SCast< FSubsystemInterface*>( pClass );
+
+	FSubsystemAsyncRunHelper Runner( pSubsystem );
 }
