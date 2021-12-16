@@ -6,12 +6,14 @@
 
 #include "MathCore.h"
 
-
+/*
+	Represents 3D transformations in the world.
+*/
 class MATH_API FTransform
 {
 public:
-	FTransform::FTransform();
-	FTransform::~FTransform();
+	FTransform();
+	~FTransform();
 	FTransform( FTransform&& Other ) noexcept;
 	FTransform( const FTransform& FTransform );
 	FTransform& operator = ( const FTransform& Other );

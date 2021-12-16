@@ -58,7 +58,9 @@ void FViewportContext::Update( float DeltaTime )
 
 void FViewportContext::Render()
 {
-	FColorBuffer& SwapChainBackBuffer = *m_Window.GetRenderSurface();
+	// Wait for the previous frame to finish rendering.
+	HScene& Scene = *m_WorldInView->GetScene();
+	Scene.WaitForRenderingFinished();
 
 	if (GEngine->GetIsEditorPresent())
 	{
@@ -68,7 +70,7 @@ void FViewportContext::Render()
 	else
 	{
 		// Render directly to the swapchain.
-		RenderWorld( SwapChainBackBuffer );
+		RenderWorld( m_Window.GetRenderSurface() );
 	}
 }
 
@@ -82,10 +84,15 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	if (m_WorldInView == NULL) 
 		return;
 
-	m_SceneRenderer.RenderScene( 
-		*m_WorldInView->GetScene(), 
-		RenderTarget, GetClientViewport(), GetClientRect(), m_Window.GetSwapChain()->GetCurrentFrameIndex(),
-		m_WorldInView->GetCurrentSceneRenderCamera() );
+	FSceneRenderParams RenderParams = {};
+	RenderParams.pRenderer				= &m_SceneRenderer;
+	RenderParams.FlipSwapChainBuffers	= !GEngine->GetIsEditorPresent();
+	RenderParams.pRenderTarget			= &RenderTarget;
+	RenderParams.pView					= &GetClientViewport();
+	RenderParams.pScissor				= &GetClientRect();
+	RenderParams.pRenderingViewport		= this;
+	RenderParams.pRenderingCamera		= m_WorldInView->GetCurrentSceneRenderCamera();
+	m_WorldInView->GetScene()->RequestRender( RenderParams );
 }
 
 void FViewportContext::InitializeRenderingResources()
@@ -146,10 +153,11 @@ bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
 
 bool FViewportContext::OnWindowResize( WindowResizeEvent& e )
 {
-	GCommandManager.IdleGpu();
-
 	if (!GEngine->GetIsEditorPresent())
 	{
+		// Only resize the buffers if we the editor is not present. 
+		// Otherwise we are rendering to a texture.
+		GCommandManager.IdleGpu();
 		m_SceneRenderer.ResizeBuffers( e.GetWidth(), e.GetHeight() );
 		m_SceneRenderTarget.Create( L"Pre-Display Buffer", e.GetWidth(), e.GetHeight(), 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
 

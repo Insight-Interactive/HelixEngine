@@ -20,15 +20,16 @@ std::queue<ID3D12DescriptorHeap*>                           FDynamicDescriptorHe
 
 ID3D12DescriptorHeap* FDynamicDescriptorHeap::RequestDescriptorHeap( EResourceHeapType HeapType)
 {
-    SMutex.Enter();
 
     uint32 idx = HeapType == D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER ? 1 : 0;
 
+    SMutex.Enter();
     while (!SRetiredDescriptorHeaps[idx].empty() && GCommandManager.IsFenceComplete(SRetiredDescriptorHeaps[idx].front().first))
     {
         SAvailableDescriptorHeaps[idx].push(SRetiredDescriptorHeaps[idx].front().second);
         SRetiredDescriptorHeaps[idx].pop();
     }
+    SMutex.Exit();
 
     if (!SAvailableDescriptorHeaps[idx].empty())
     {
@@ -51,16 +52,15 @@ ID3D12DescriptorHeap* FDynamicDescriptorHeap::RequestDescriptorHeap( EResourceHe
         SDescriptorHeapPool[idx].emplace_back(HeapPtr);
         return HeapPtr.Get();
     }
-    SMutex.Exit();
 }
 
 void FDynamicDescriptorHeap::DiscardDescriptorHeaps( EResourceHeapType HeapType, uint64 FenceValue, const std::vector<ID3D12DescriptorHeap*>& UsedHeaps)
 {
     uint32 idx = HeapType == D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER ? 1 : 0;
-    SMutex.Enter();
+    
+    ScopedCriticalSection Guard( SMutex );
     for (auto iter = UsedHeaps.begin(); iter != UsedHeaps.end(); ++iter)
         SRetiredDescriptorHeaps[idx].push(std::make_pair(FenceValue, *iter));
-    SMutex.Exit();
 }
 
 void FDynamicDescriptorHeap::RetireCurrentHeap(void)

@@ -20,7 +20,7 @@
 #include "CommandManager.h"
 
 
-HEditorEngine::HEditorEngine( CommandLine& CmdLine )
+HEditorEngine::HEditorEngine( FCommandLine& CmdLine )
 	: Super( CmdLine )
 {
 }
@@ -212,11 +212,12 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	ImGui::DockSpaceOverViewport( NULL, ImGuiDockNodeFlags_PassthruCentralNode );
+	ImGui::DockSpaceOverViewport( nullptr, ImGuiDockNodeFlags_PassthruCentralNode );
 
 	// Update the client world and viewport.
-	GetClientViewport().Update( DeltaTime );
 	GetClientViewport().Render();
+	// Wait for the current frame to finish rendering, we'll need it for the editor panels.
+	//m_GameWorld.GetScene()->WaitForRenderingFinished();
 
 	/*if (m_PreferencesViewport.IsValid())
 	{
@@ -268,7 +269,7 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	ImGui::End();
 
 
-	FColorBuffer* pSwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
+	FColorBuffer& SwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
 	FCommandContext& UIContext = FCommandContext::Begin( TEXT( "Draw Editor" ) );
 	{
 		UIContext.BeginDebugMarker( TEXT( "Draw Panels" ) );
@@ -283,13 +284,12 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 
 		ImGui::Render();
 
-		FGpuResource& SwapChainGpuResource = *DCast<FGpuResource*>( pSwapChainSurface );
-		UIContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
-		UIContext.ClearColorBuffer( *pSwapChainSurface, GetClientViewport().GetClientRect() );
+		UIContext.TransitionResource( SwapChainSurface, RS_RenderTarget );
+		UIContext.ClearColorBuffer( SwapChainSurface, GetClientViewport().GetClientRect() );
 
 		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap() );
 		const FColorBuffer* pRTs[] = {
-			pSwapChainSurface
+			&SwapChainSurface
 		};
 		UIContext.OMSetRenderTargets( 1, pRTs, NULL );
 
@@ -303,7 +303,7 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault( NULL, (void*)pCommandList );
 		}
-		UIContext.TransitionResource( SwapChainGpuResource, RS_Present );
+		UIContext.TransitionResource( SwapChainSurface, RS_Present );
 	}
 	UIContext.End();
 
@@ -503,6 +503,10 @@ void HEditorEngine::RegisterEditorOnlyAssets()
 
 	// Materials
 	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
+	
+	// Prevent editor only assets from dirtying the databases.
+	FAssetDatabase::GetTextureDatabase().SetDirty( false );
+	FAssetDatabase::GetMaterialDatabase().SetDirty( false );
 }
 
 bool HEditorEngine::OnWindowLostFocus( WindowLostFocusEvent& e )

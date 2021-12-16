@@ -17,7 +17,7 @@ class HEngineLaunchBootstraper
 public:
 	static void Execute( HEngine** pEngine, WChar* Commandline )
 	{
-		CommandLine Args;
+		FCommandLine Args;
 		Args.Process( Commandline );
 
 #if HE_WITH_EDITOR

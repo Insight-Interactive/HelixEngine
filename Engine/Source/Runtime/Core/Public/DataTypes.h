@@ -95,7 +95,7 @@
 #define HE_HeapAlloc(Size)				::malloc(Size)
 #define HE_HeapFree(HeapPtr)			::free(HeapPtr)
 #define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)
-
+#define HE_UNUSED_PARAM(Value)			(void)Value;
 
 //-----------------------------------
 //		Container Debug Levels
@@ -167,7 +167,7 @@ typedef unsigned long long uint64;
 //
 /*
 	A UTF - 16 character.
-*/ 
+*/
 typedef wchar_t WChar;
 
 /*
@@ -251,9 +251,9 @@ typedef std::stringstream TStringStream;
 #endif // _UNICODE
 
 #if HE_WINDOWS
-	/*
-		If the HRESULT fails a message box is presented to the user indicating the problem.
-	*/
+/*
+	If the HRESULT fails a message box is presented to the user indicating the problem.
+*/
 #	define ThrowIfFailedMsg(Hr, Message)																					\
 	if( FAILED(Hr) )																										\
 	{																														\

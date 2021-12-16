@@ -9,6 +9,7 @@
 class FDatabaseInterface : public FSerializeableInterface
 {
 	friend class FAssetDatabase;
+	friend class HEditorEngine;
 public:
 	virtual void Initialize() = 0;
 	virtual void UnInitialize() = 0;

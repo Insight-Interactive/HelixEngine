@@ -3,13 +3,14 @@
 
 #include "App/App.h"
 #include "CommandLine.h"
+#include "World/World.h"
 #include "RenderContext.h"
-#include "RendererInitializer.h"
+#include "Engine/GameProject.h"
 #include "Engine/ViewportContext.h"
 #include "Engine/FrameTimeManager.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "World/World.h"
-#include "Engine/GameProject.h"
+#include "Engine/Subsystem/PhysicsSubsystem.h"
+#include "Engine/Subsystem/RenderingSubsystem.h"
 
 
 class WindowClosedEvent;
@@ -36,6 +37,11 @@ public:
 		viewport in HelixEd or the main game in Shipping builds.
 	*/
 	FViewportContext& GetClientViewport();
+
+	/*
+		Returns a reference to the main game world.
+	*/
+	HWorld& GetGameWorld();
 	
 	/*
 		Returns the time between frame buffer flips in miliseconds.
@@ -60,7 +66,7 @@ public:
 
 
 protected:
-	HEngine( CommandLine& CmdLine );
+	HEngine( FCommandLine& CmdLine );
 	virtual ~HEngine();
 	HE_DECL_NON_COPYABLE( HEngine );
 
@@ -102,13 +108,15 @@ protected:
 	FFrameTimer				m_FrameTimer;
 	double					m_AppSeconds;
 	FViewportContext		m_MainViewPort;
-	FRendererInitializer	m_RenderContextInitializer;
 	FRenderContext			m_RenderContext;
 	FApp					m_Application;
 	FGameProject			m_GameProject;
 	FAssetDatabase			m_AssetDatabase;
 	HWorld					m_GameWorld;
 
+	// Subsystems
+	FPhysicsSubsystem		m_PhysicsSubsystem;
+	FRenderingSubsystem		m_ReneringSubsystem;
 };
 
 extern HEngine* GEngine;
@@ -127,6 +135,11 @@ FORCEINLINE bool HEngine::IsInitialized() const
 FORCEINLINE FViewportContext& HEngine::GetClientViewport()
 {
 	return m_MainViewPort;
+}
+
+FORCEINLINE HWorld& HEngine::GetGameWorld()
+{
+	return m_GameWorld;
 }
 
 FORCEINLINE double HEngine::GetDeltaTime() const

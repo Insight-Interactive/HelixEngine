@@ -51,13 +51,13 @@ public:
 	void Reset();
 
 	static FCommandContext& Begin(const TChar* ID);
+	uint64 End(bool WaitForCompletion = false);
+	uint64 Flush(bool WaitForCompletion = false);
 
 	void BeginDebugMarker(const WChar* Message);
 	void EndDebugMarker();
 	void ClearState(FPipelineState* pNewPipelineState);
 
-	uint64 Flush(bool WaitForCompletion = false);
-	uint64 End(bool WaitForCompletion = false);
 
 	void OMSetRenderTargets(uint32 NumRTVs, const FColorBuffer* Targets[], FDepthBuffer* pDepthBuffer);
 

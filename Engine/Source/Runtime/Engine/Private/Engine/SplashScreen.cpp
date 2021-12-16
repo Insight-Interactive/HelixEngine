@@ -62,7 +62,7 @@ FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
 	PSODesc.SampleMask = UINT_MAX;
 	PSODesc.PrimitiveTopologyType = PTT_Triangle;
 	PSODesc.NumRenderTargets = 1;
-	PSODesc.RTVFormats[0] = DCast<FPixelBuffer*>( GetRenderSurface() )->GetFormat();
+	PSODesc.RTVFormats[0] = GetRenderSurface().GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
 	m_Pipeline.Initialize( PSODesc );
 }
@@ -75,7 +75,7 @@ FSplashScreen::~FSplashScreen()
 
 void FSplashScreen::Render( FCommandContext& CmdContext )
 {
-	FColorBuffer& CurrentBackBuffer = *GetRenderSurface();
+	FColorBuffer& CurrentBackBuffer = GetRenderSurface();
 
 	CmdContext.TransitionResource( CurrentBackBuffer, RS_RenderTarget );
 

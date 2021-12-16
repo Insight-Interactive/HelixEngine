@@ -12,14 +12,15 @@
 #include "GpuResource.h"
 #include "CommandContext.h"
 #include "CommandManager.h"
+#include "RendererInitializer.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
 
 
-HEngine* GEngine = NULL;
 Logger GEngineLogger;
-ThreadPool* GThreadPool = NULL;
-HGameInstance* GGameInstance = NULL;
+HEngine* GEngine = nullptr;
+ThreadPool* GThreadPool = nullptr;
+HGameInstance* GGameInstance = nullptr;
 
 // Static function declarations
 //
@@ -29,7 +30,7 @@ static void SplashMain( void* pUserData );
 // Engine
 //
 
-HEngine::HEngine( CommandLine& CmdLine )
+HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
@@ -84,6 +85,13 @@ void HEngine::PreStartup()
 	// Initialize the renderer.
 	FRendererInitializer::InitializeContext( m_RenderContext );
 
+	// Initialize Subsystems
+	m_ReneringSubsystem.Initialize();
+	m_PhysicsSubsystem.Initialize();
+
+	m_ReneringSubsystem.RunAsync();
+	m_PhysicsSubsystem.RunAsync();
+
 	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
 }
 
@@ -114,11 +122,16 @@ void HEngine::Startup()
 	ClientDesc.bHasTitleBar		= true;
 	ClientDesc.bShowImmediate	= false;
 	ClientDesc.Resolution		= GCommonResolutions[k1080p];
-	ClientDesc.Title			=
 #if HE_WITH_EDITOR
-		TEXT( "Helix Ed" ) " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]";
+	HName EngineTitle			=  TEXT( "Helix Editor" ) ;
+	EngineTitle					+= TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
+	EngineTitle					+= TEXT( " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]" );
+	if (!GetIsEditorPresent())
+		EngineTitle += TEXT( " (Standalone)" );
+
+	ClientDesc.Title			=  EngineTitle.c_str();
 #else
-		FApp::GetInstance()->GetName();
+	ClientDesc.Title			= FApp::GetInstance()->GetName();
 #endif
 	ClientDesc.bAllowDropFiles	= GetIsEditorPresent();
 	m_MainViewPort.Initialize( ClientDesc );
@@ -154,6 +167,8 @@ void HEngine::PostStartup()
 		m_GameWorld.BeginPlay();
 		GGameInstance->OnGameSetFocus();
 	}
+	m_ReneringSubsystem.PushSceneForRendering( *m_GameWorld.GetScene() );
+
 	m_IsInitialized = true;
 	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
 }
@@ -183,10 +198,16 @@ void HEngine::Shutdown()
 void HEngine::PostShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
+	
 	FRendererInitializer::UnInitializeContext( m_RenderContext );
 	HE_SAFE_DELETE_PTR( GThreadPool );
+
 	System::UninitializePlatform();
 	HE_SAFE_DELETE_PTR( GGameInstance );
+
+	m_ReneringSubsystem.UnInitialize();
+	m_PhysicsSubsystem.UnInitialize();
+
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
 
@@ -198,9 +219,10 @@ void HEngine::Update()
 	while (FApp::GetInstance()->IsRunning())
 	{
 		System::ProcessMessages();
-
 		TickTimers();
 		float DeltaTime = (float)GetDeltaTime();
+
+		GetClientViewport().Update( DeltaTime );
 
 		// Check if the main viewport has focus. There will 
 		// only be one window in shipping builds.
@@ -214,8 +236,7 @@ void HEngine::Update()
 		m_GameWorld.Tick( DeltaTime );
 
 		RenderClientViewport( DeltaTime );
-		GetClientViewport().PresentOneFrame();
-
+		
 		static float SecondTimer = 0.f;
 		static float FPS = 0.f;
 		SecondTimer += DeltaTime;
@@ -234,16 +255,7 @@ void HEngine::Update()
 
 void HEngine::RenderClientViewport( float DeltaTime )
 {
-	FViewportContext& ClientViewport = GetClientViewport();
-	ClientViewport.Update( DeltaTime );
-	ClientViewport.Render();
-
-	FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
-	{
-		FColorBuffer& SwapChainSurface = *ClientViewport.GetWindow().GetRenderSurface();
-		CmdContext.TransitionResource( SwapChainSurface, RS_Present );
-	}
-	CmdContext.End();
+	GetClientViewport().Render();
 }
 
 void HEngine::BackgroundUpdate( float DeltaTime )
@@ -258,7 +270,7 @@ void HEngine::OnEvent( Event& e )
 {
 	EventDispatcher Dispatcher( e );
 
-	// FWindow
+	// Window
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEngine::OnClientWindowClosed );
 }
 
@@ -281,10 +293,11 @@ void HEngine::RequestShutdown()
 
 /* static */ void SplashMain( void* pUserData )
 {
-	(void)pUserData;
+	HE_UNUSED_PARAM( pUserData );
+	
 	String SplashTextureDir =
 #if HE_WITH_EDITOR
-		"../../Engine/Content/Textures/Splash/HelixEd-Splash.dds";
+		FGameProject::GetInstance()->GetContentFolder() + "/Engine/Textures/Splash/HelixEd-Splash.dds";
 #else
 		"";
 #endif
