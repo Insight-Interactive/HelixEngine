@@ -47,7 +47,7 @@ class HEditorEngine : public HEngine
 	HE_DECL_NON_COPYABLE( HEditorEngine );
 	using Super = HEngine;
 public:
-	HEditorEngine( CommandLine& CmdLine );
+	HEditorEngine( FCommandLine& CmdLine );
 	virtual ~HEditorEngine();
 
 	virtual void PreStartup() override;

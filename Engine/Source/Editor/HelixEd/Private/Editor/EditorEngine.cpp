@@ -20,7 +20,7 @@
 #include "CommandManager.h"
 
 
-HEditorEngine::HEditorEngine( CommandLine& CmdLine )
+HEditorEngine::HEditorEngine( FCommandLine& CmdLine )
 	: Super( CmdLine )
 {
 }

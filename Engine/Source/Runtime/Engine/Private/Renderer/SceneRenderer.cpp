@@ -88,12 +88,12 @@ void FSceneRenderer::Uninitialize()
 
 void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, const FViewPort& View, const FRect& Scissor, uint32 SwapchainFrameIndex, HCameraComponent* pRenderingCamera )
 {
-	m_SwapchainFrameIndex = SwapchainFrameIndex;
-	m_pRenderingCamera = pRenderingCamera;
+	m_SwapchainFrameIndex	= SwapchainFrameIndex;
+	m_pRenderingCamera		= pRenderingCamera;
 
 	FCommandContext& CmdContext = FCommandContext::Begin( L"Render Pass" );
 
-	// Prep the render target to be rendered too.
+	// Prep the render target to be rendered to.
 	CmdContext.TransitionResource( RenderTarget, RS_RenderTarget );
 	CmdContext.ClearColorBuffer(RenderTarget, Scissor);
 	CmdContext.RSSetViewPorts(1, &View);

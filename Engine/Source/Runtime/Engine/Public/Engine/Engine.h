@@ -66,7 +66,7 @@ public:
 
 
 protected:
-	HEngine( CommandLine& CmdLine );
+	HEngine( FCommandLine& CmdLine );
 	virtual ~HEngine();
 	HE_DECL_NON_COPYABLE( HEngine );
 

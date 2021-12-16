@@ -17,8 +17,8 @@
 #include "Engine/Event/EngineEvent.h"
 
 
-HEngine* GEngine = nullptr;
 Logger GEngineLogger;
+HEngine* GEngine = nullptr;
 ThreadPool* GThreadPool = nullptr;
 HGameInstance* GGameInstance = nullptr;
 
@@ -30,7 +30,7 @@ static void SplashMain( void* pUserData );
 // Engine
 //
 
-HEngine::HEngine( CommandLine& CmdLine )
+HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
@@ -270,7 +270,7 @@ void HEngine::OnEvent( Event& e )
 {
 	EventDispatcher Dispatcher( e );
 
-	// FWindow
+	// Window
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEngine::OnClientWindowClosed );
 }
 
@@ -293,7 +293,7 @@ void HEngine::RequestShutdown()
 
 /* static */ void SplashMain( void* pUserData )
 {
-	(void)pUserData;
+	HE_UNUSED_PARAM( pUserData );
 	
 	String SplashTextureDir =
 #if HE_WITH_EDITOR

@@ -3,11 +3,11 @@
 #include "CoreFwd.h"
 
 
-class CommandLine
+class FCommandLine
 {
 public:
-	CommandLine();
-	~CommandLine();
+	FCommandLine();
+	~FCommandLine();
 
 	void Process( const WChar* CommandLine );
 
@@ -23,12 +23,12 @@ private:
 // Inline function implementations
 //
 
-inline WString& CommandLine::operator[]( const WString& Key )
+inline WString& FCommandLine::operator[]( const WString& Key )
 {
 	return m_CommandLineArgs[Key];
 }
 
-inline bool CommandLine::CommandExists( const WString& Key )
+inline bool FCommandLine::CommandExists( const WString& Key )
 {
 	return m_CommandLineArgs.find( Key ) != m_CommandLineArgs.end();
 }

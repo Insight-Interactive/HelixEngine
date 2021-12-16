@@ -3,17 +3,17 @@
 #include "CommandLine.h"
 
 
-CommandLine::CommandLine()
+FCommandLine::FCommandLine()
 {
 
 }
 
-CommandLine::~CommandLine()
+FCommandLine::~FCommandLine()
 {
 
 }
 
-void CommandLine::Process( const WChar* CommandLine )
+void FCommandLine::Process( const WChar* CommandLine )
 {
 	uint64 i = 0;
 	bool FoundKey = false;
