@@ -42,6 +42,9 @@
     <ClInclude Include="Public\APIBridge\EnumTranslations.h">
       <Filter>Public\APIBridge</Filter>
     </ClInclude>
+    <ClInclude Include="Public\BatchRenderer.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Color.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -155,6 +158,9 @@
     <ClCompile Include="Private\APIBridge\EnumTranslations.cpp">
       <Filter>Private\APIBridge</Filter>
     </ClCompile>
+    <ClCompile Include="Private\BatchRenderer.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\CommandContext.cpp">
       <Filter>Private</Filter>
     </ClCompile>
@@ -254,6 +260,7 @@
     <ClCompile Include="Private\TextureManager.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Color.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer.module.lua" />

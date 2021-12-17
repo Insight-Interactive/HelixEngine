@@ -16,6 +16,9 @@ class AActor;
 class HWorld;
 class FCommandContext;
 
+/*
+	Common parameters used to initialize a new component onto an actor.
+*/
 struct FComponentInitArgs
 {
 	const HName&	Name;
@@ -23,7 +26,8 @@ struct FComponentInitArgs
 };
 
 /*
-	Base class for all actor components.
+	Base class for all actor components. An Actor is defined by multiple 
+	components which bestow behavior to it.
 */
 HCOMPONENT()
 class HActorComponent : public HObject, public FSerializeableInterface

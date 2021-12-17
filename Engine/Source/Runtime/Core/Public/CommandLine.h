@@ -11,7 +11,7 @@ public:
 
 	void Process( const WChar* CommandLine );
 
-	WString& operator[]( const WString& Key );
+	const WString& operator[]( const WString& Key );
 	bool CommandExists( const WString& Key );
 
 private:
@@ -23,12 +23,12 @@ private:
 // Inline function implementations
 //
 
-inline WString& FCommandLine::operator[]( const WString& Key )
+FORCEINLINE const WString& FCommandLine::operator[]( const WString& Key )
 {
 	return m_CommandLineArgs[Key];
 }
 
-inline bool FCommandLine::CommandExists( const WString& Key )
+FORCEINLINE bool FCommandLine::CommandExists( const WString& Key )
 {
 	return m_CommandLineArgs.find( Key ) != m_CommandLineArgs.end();
 }

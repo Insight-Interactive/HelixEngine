@@ -182,3 +182,8 @@ void HWorld::Deserialize( const ReadContext& Value )
 	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
 	Super::SetObjectName( CharToTChar( WorldName ) );
 }
+
+void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
+{
+	GetOwningViewport()->GetSceneRenderer().DrawDebugLine( LineInfo );
+}

@@ -56,6 +56,7 @@ class FGeometryBufferManager;
 class FTextureManager;
 class FConstantBufferInterface;
 class FDescriptorHandle;
+class FBatchRenderer;
 
 
 // ------------------

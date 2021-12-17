@@ -11,6 +11,8 @@
 #include "AssetRegistry/AssetDatabase.h"
 #include "Renderer/ConstantBufferStructures.h"
 #include "GameFramework/Actor/AActor.h"
+#include "World/World.h"
+#include "BatchRenderer.h"
 
 
 HStaticMeshComponent::HStaticMeshComponent(FComponentInitArgs& InitArgs)
@@ -18,6 +20,11 @@ HStaticMeshComponent::HStaticMeshComponent(FComponentInitArgs& InitArgs)
 {
 	m_MeshWorldCB.Create( L"[Static Mesh Component] World CB" );
 
+	FDebugLineRenderInfo LineInfo = {};
+	LineInfo.Start = GetOwner()->GetRootComponent()->GetAbsoluteWorldPosition();
+	LineInfo.End = GetAbsoluteWorldPosition();
+	LineInfo.Lifetime = 20.f;
+	GetWorld()->DrawDebugLine( LineInfo );
 }
 
 HStaticMeshComponent::~HStaticMeshComponent()
@@ -52,6 +59,8 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 		GfxContext.BindIndexBuffer(m_MeshAsset->GetIndexBuffer());
 		GfxContext.DrawIndexedInstanced(m_MeshAsset->GetNumIndices(), 1, 0, 0, 0);
 	}
+
+
 }
 
 void HStaticMeshComponent::OnCreate() 

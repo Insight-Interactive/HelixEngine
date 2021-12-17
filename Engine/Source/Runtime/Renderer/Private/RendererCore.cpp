@@ -4,10 +4,11 @@
 
 #include "ModelManager.h"
 #include "RenderDevice.h"
+#include "BatchRenderer.h"
 #include "CommandManager.h"
 #include "CommandContext.h"
-#include "GeometryBufferManager.h"
 #include "TextureManager.h"
+#include "GeometryBufferManager.h"
 
 
 // -----------------------------

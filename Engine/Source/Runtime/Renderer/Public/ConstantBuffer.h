@@ -169,26 +169,26 @@ FORCEINLINE bool FConstantBufferInterface::GetIsDirty() const
 FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer( const WChar* Name )
 {
 #if R_WITH_D3D12
-
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
+	
 	D3D12_RESOURCE_DESC ResDesc = { };
-	ResDesc.Width = GetBufferSize();
-	ResDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	ResDesc.Alignment = 0;
-	ResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	ResDesc.Height = 1;
-	ResDesc.DepthOrArraySize = 1;
-	ResDesc.MipLevels = 1;
-	ResDesc.Format = DXGI_FORMAT_UNKNOWN;
-	ResDesc.SampleDesc = { 1, 0 };
-	ResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	ResDesc.Width				= GetBufferSize();
+	ResDesc.Flags				= D3D12_RESOURCE_FLAG_NONE;
+	ResDesc.Alignment			= 0;
+	ResDesc.Dimension			= D3D12_RESOURCE_DIMENSION_BUFFER;
+	ResDesc.Height				= 1;
+	ResDesc.DepthOrArraySize	= 1;
+	ResDesc.MipLevels			= 1;
+	ResDesc.Format				= DXGI_FORMAT_UNKNOWN;
+	ResDesc.SampleDesc			= { 1, 0 };
+	ResDesc.Layout				= D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	D3D12_HEAP_PROPERTIES HeapProps = { };
-	HeapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
-	HeapProps.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-	HeapProps.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-	HeapProps.CreationNodeMask = 1;
-	HeapProps.VisibleNodeMask = 1;
+	HeapProps.Type					= D3D12_HEAP_TYPE_UPLOAD;
+	HeapProps.CPUPageProperty		= D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	HeapProps.MemoryPoolPreference	= D3D12_MEMORY_POOL_UNKNOWN;
+	HeapProps.CreationNodeMask		= 1;
+	HeapProps.VisibleNodeMask		= 1;
 
 	HRESULT hr = pID3D12Device->CreateCommittedResource(
 		&HeapProps,
@@ -199,22 +199,20 @@ FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer( const WChar* Name )
 		IID_PPV_ARGS( &m_pID3D12Resource )
 	);
 	ThrowIfFailedMsg( hr, "Failed to create default heap for vertex buffer!" );
-
 #if R_DEBUG_GPU_RESOURCES
 	m_pID3D12Resource->SetName( Name );
 #endif 
-
 	m_GpuVirtualAddress = m_pID3D12Resource->GetGPUVirtualAddress();
 
-	D3D12_RANGE ReadRange = { 0 };        // We do not intend to read from this resource on the CPU.
+	D3D12_RANGE ReadRange = {};        // We do not intend to read from this resource on the CPU.
 	hr = m_pID3D12Resource->Map( 0, &ReadRange, &m_pWritePointer );
 	ThrowIfFailedMsg( hr, "Failed to create committed resource for constant buffer!" );
 
 	m_CBV = AllocateDescriptor( pID3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC CBVDesc = {};
-	CBVDesc.SizeInBytes = GetBufferSize();
-	CBVDesc.BufferLocation = m_pID3D12Resource->GetGPUVirtualAddress();
+	CBVDesc.SizeInBytes		= GetBufferSize();
+	CBVDesc.BufferLocation	= m_pID3D12Resource->GetGPUVirtualAddress();
 	pID3D12Device->CreateConstantBufferView( &CBVDesc, m_CBV );
 #endif // R_WITH_D3D12
 }

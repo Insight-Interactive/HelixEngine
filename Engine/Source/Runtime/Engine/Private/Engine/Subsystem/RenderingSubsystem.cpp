@@ -51,16 +51,18 @@ void FRenderingSubsystem::RunAsync_Implementation()
 					SceneRenderParams.pRenderingCamera );
 
 
-				// Transition.
-				FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
-				{
-					CmdContext.TransitionResource( RenderTarget, RS_Present );
-				}
-				CmdContext.End();
-
 				// Present.
 				if (SceneRenderParams.FlipSwapChainBuffers)
+				{
+					// Transition.
+					FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
+					{
+						CmdContext.TransitionResource( RenderTarget, RS_Present );
+					}
+					CmdContext.End();
+
 					SceneRenderParams.pRenderingViewport->PresentOneFrame();
+				}
 
 				Scene.OnRenderingFinished();
 			}

@@ -910,6 +910,7 @@
     <ClInclude Include="Private\PCH\RendererPCH.h" />
     <ClInclude Include="Public\APIBridge\CommonFunctions.h" />
     <ClInclude Include="Public\APIBridge\EnumTranslations.h" />
+    <ClInclude Include="Public\BatchRenderer.h" />
     <ClInclude Include="Public\Color.h" />
     <ClInclude Include="Public\ColorBuffer.h" />
     <ClInclude Include="Public\CommandAllocatorPool.h" />
@@ -949,6 +950,8 @@
   <ItemGroup>
     <ClCompile Include="Private\APIBridge\CommonFunctions.cpp" />
     <ClCompile Include="Private\APIBridge\EnumTranslations.cpp" />
+    <ClCompile Include="Private\BatchRenderer.cpp" />
+    <ClCompile Include="Private\Color.cpp" />
     <ClCompile Include="Private\CommandContext.cpp" />
     <ClCompile Include="Private\ConstantBuffer.cpp" />
     <ClCompile Include="Private\Direct3D12\ColorBufferD3D12.cpp" />

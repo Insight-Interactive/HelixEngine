@@ -44,6 +44,8 @@ public:
 
 	FWindow& GetWindow();
 	FColorBuffer* GetPreDisplayBuffer();
+	FColorBuffer& GetMainSceneRenderTarget();
+	FDepthBuffer& GetSceneDepthBuffer();
 	FInputDispatcher* GetInputDispatcher();
 
 	void SetWindowMode( const EWindowMode& Mode );
@@ -213,6 +215,11 @@ FORCEINLINE FWindow& FViewportContext::GetWindow()
 FORCEINLINE FColorBuffer* FViewportContext::GetPreDisplayBuffer()
 {
 	return &m_SceneRenderTarget;
+}
+
+FORCEINLINE FDepthBuffer& FViewportContext::GetSceneDepthBuffer()
+{
+	return m_DepthBuffer;
 }
 
 FORCEINLINE FViewPort& FViewportContext::GetClientViewport()

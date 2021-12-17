@@ -165,6 +165,9 @@
     <ClInclude Include="Public\Engine\Subsystem\PhysicsSubsystem.h">
       <Filter>Public\Engine\Subsystem</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\Subsystem\RenderingSubsystem.h">
+      <Filter>Public\Engine\Subsystem</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h">
       <Filter>Public\Engine\Subsystem</Filter>
     </ClInclude>
@@ -249,6 +252,9 @@
     <ClInclude Include="Public\Renderer\ConstantBufferStructures.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Renderer\Debug.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Renderer\GeometryGenerator.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
@@ -300,7 +306,6 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\Subsystem\RenderingSubsystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -355,6 +360,9 @@
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\Subsystem\PhysicsSubsystem.cpp">
+      <Filter>Private\Engine\Subsystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\Subsystem\RenderingSubsystem.cpp">
       <Filter>Private\Engine\Subsystem</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp">
@@ -438,6 +446,9 @@
     <ClCompile Include="Private\Renderer\Common.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\Debug.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Renderer\LightManager.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
@@ -495,7 +506,6 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\Subsystem\RenderingSubsystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />
