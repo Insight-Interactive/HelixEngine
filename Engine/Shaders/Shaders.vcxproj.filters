@@ -4,6 +4,9 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Debug">
+      <UniqueIdentifier>{76695299-E229-CECF-AB64-174D17E412AC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Sky">
       <UniqueIdentifier>{26D41F53-9289-9848-1B7E-921F87328F4C}</UniqueIdentifier>
     </Filter>
@@ -24,6 +27,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Private\Debug\DebugLine.ps.hlsl">
+      <Filter>Private\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Private\Debug\DebugLine.vs.hlsl">
+      <Filter>Private\Debug</Filter>
+    </FxCompile>
     <FxCompile Include="Private\Sky\SkyboxPass.ps.hlsl">
       <Filter>Private\Sky</Filter>
     </FxCompile>
@@ -87,5 +96,6 @@
       <Filter>Public\ForwardShading</Filter>
     </None>
     <None Include="Shaders.module.lua" />
+    <None Include="Private\Debug\DebugCommon.hlsli" />
   </ItemGroup>
 </Project>

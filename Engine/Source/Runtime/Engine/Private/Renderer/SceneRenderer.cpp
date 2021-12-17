@@ -67,6 +67,18 @@ void FSceneRenderer::Initialize( const FSceneRendererInitParams& InitParams, FVi
 	//m_PostProcessPass.Initialize( RenderResolution );
 
 	m_pScreenQuadRef = GeometryGenerator::GenerateScreenAlignedQuadMesh();
+
+	m_BatchRenderer.Initialize( m_pOwningViewport->GetMainSceneRenderTarget(), m_DepthBuffer );
+
+	FDebugLineRenderInfo Info = {};
+	Info.Start = FVector3::Zero;
+	Info.End = FVector3::One * 200.f;
+	Info.Color = FColor::RedOpaque;
+	Info.Lifetime = 10.f;
+	m_BatchRenderer.SubmitLineRenderRequest( Info );
+	Info.End = -FVector3::One * 200.f;
+	Info.Color = FColor::GreenOpaque;
+	m_BatchRenderer.SubmitLineRenderRequest( Info );
 }
 
 void FSceneRenderer::Uninitialize()
@@ -164,6 +176,15 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_ForwardRenderPass.UnBind( CmdContext );
 	}
 
+	// Render Debug Lines
+	{
+		m_BatchRenderer.SetRenderTarget( m_pOwningViewport->GetMainSceneRenderTarget() );
+		m_BatchRenderer.PreRender( CmdContext );
+		SetCommonRenderState( CmdContext, false, true );
+		m_BatchRenderer.Tick( (float)GEngine->GetDeltaTime() );
+		m_BatchRenderer.Render( CmdContext );
+	}
+
 	// Post-Process Pass
 	{
 		/*
@@ -234,4 +255,9 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 		}
 		CmdContext.SetGraphicsConstantBuffer( kLights, Buffer);
 	}
+}
+
+void FSceneRenderer::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
+{
+	m_BatchRenderer.SubmitLineRenderRequest( LineInfo );
 }

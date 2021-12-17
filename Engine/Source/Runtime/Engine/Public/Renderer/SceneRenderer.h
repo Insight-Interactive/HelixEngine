@@ -8,6 +8,7 @@
 #include "DepthBuffer.h"
 #include "Renderer/ConstantBufferStructures.h"
 #include "Common.h"
+#include "BatchRenderer.h"
 
 
 static const EFormat kSceneDepthFormat = F_D32_Float;
@@ -50,6 +51,7 @@ public:
 	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame( StringHashValue NameHash );
 	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex );
 
+	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
 private:
 	void SetCommonRenderState( FCommandContext& CmdContext, bool UploadLights, bool UploadSceneConsts );
@@ -74,6 +76,8 @@ private:
 	uint32 m_SwapchainFrameIndex;
 	HCameraComponent* m_pRenderingCamera;
 	FViewportContext* m_pOwningViewport;
+
+	FBatchRenderer m_BatchRenderer;
 };
 
 

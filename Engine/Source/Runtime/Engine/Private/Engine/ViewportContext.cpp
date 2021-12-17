@@ -97,23 +97,29 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 
 void FViewportContext::InitializeRenderingResources()
 {
+	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
+	EFormat SwapchainFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	if (GEngine->GetIsEditorPresent())
+		m_SceneRenderTarget.Create( L"Pre-Display Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
+
 	FSceneRendererInitParams InitParams;
 	ZeroMemory( &InitParams, sizeof( InitParams ) );
 	InitParams.RenderingResolution = m_Window.GetDimensions();
 	InitParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
 	m_SceneRenderer.Initialize( InitParams, *this );
-
-	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
-	EFormat SwapchainFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
-	if(GEngine->GetIsEditorPresent())
-		m_SceneRenderTarget.Create( L"Pre-Display Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
-	
 }
 void FViewportContext::ReloadRenderPipelines()
 {
 	m_SceneRenderer.ReloadPipelines();
 }
 
+FColorBuffer& FViewportContext::GetMainSceneRenderTarget()
+{
+	if (GEngine->GetIsEditorPresent())
+		return m_SceneRenderTarget;
+	else
+		return GetWindow().GetRenderSurface();
+}
 
 //
 // Event Processing

@@ -15,7 +15,7 @@
 #include "RendererInitializer.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
-
+#include "BatchRenderer.h"
 
 Logger GEngineLogger;
 HEngine* GEngine = nullptr;
@@ -242,7 +242,7 @@ void HEngine::Update()
 		SecondTimer += DeltaTime;
 		if (SecondTimer > 1.f)
 		{
-			HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
+			//HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
 			FPS = 0.f;
 			SecondTimer = 0.f;
 		}

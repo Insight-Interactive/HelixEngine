@@ -98,7 +98,7 @@ void FDeferredShadingTech::GeometryPass::Initialize( const FVector2& RenderResol
 	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/DefaultGeometryPass.ps.cso" );
 
 
-	FPipelineStateDesc PSODesc = { 0 };
+	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;

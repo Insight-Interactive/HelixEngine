@@ -1012,6 +1012,7 @@
     <ClInclude Include="Public\Input\RawInput.h" />
     <ClInclude Include="Public\Renderer\Common.h" />
     <ClInclude Include="Public\Renderer\ConstantBufferStructures.h" />
+    <ClInclude Include="Public\Renderer\Debug.h" />
     <ClInclude Include="Public\Renderer\GeometryGenerator.h" />
     <ClInclude Include="Public\Renderer\LightManager.h" />
     <ClInclude Include="Public\Renderer\Material.h" />
@@ -1105,6 +1106,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Private\Renderer\Common.cpp" />
+    <ClCompile Include="Private\Renderer\Debug.cpp" />
     <ClCompile Include="Private\Renderer\LightManager.cpp" />
     <ClCompile Include="Private\Renderer\Material.cpp" />
     <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />

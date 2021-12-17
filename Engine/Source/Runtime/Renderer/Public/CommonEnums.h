@@ -171,7 +171,7 @@ enum EPipelineStateFlags
 enum EInputClassification
 {
 	IC_PerVertexData	= 0,
-	IC_PerInstanceData	= 0,
+	IC_PerInstanceData	= 1,
 };
 
 enum EBlendOp

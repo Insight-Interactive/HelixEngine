@@ -13,6 +13,7 @@ class HCameraComponent;
 class APlayerCharacter;
 class FCommandContext;
 class FViewportContext;
+struct FDebugLineRenderInfo;
 
 /*
 	The "World" is a high-level construct that contains all entities in the playable space.
@@ -46,6 +47,8 @@ public:
 	HLevel* GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
+
+	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
 protected:
 	/*

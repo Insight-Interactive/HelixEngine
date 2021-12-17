@@ -46,5 +46,12 @@ public:
 	}
 
 	float R, G, B, A;
+
+public: // statics
+	static FColor BlackOpaque;
+	static FColor WhiteOpaque;
+	static FColor RedOpaque;
+	static FColor GreenOpaque;
+	static FColor BlueOpaque;
 };
 
