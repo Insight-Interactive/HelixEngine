@@ -77,6 +77,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Private\Debug\DebugCommon.hlsli">
+      <Filter>Private\Debug</Filter>
+    </None>
     <None Include="Public\Core\Common.hlsli">
       <Filter>Public\Core</Filter>
     </None>
@@ -96,6 +99,5 @@
       <Filter>Public\ForwardShading</Filter>
     </None>
     <None Include="Shaders.module.lua" />
-    <None Include="Private\Debug\DebugCommon.hlsli" />
   </ItemGroup>
 </Project>

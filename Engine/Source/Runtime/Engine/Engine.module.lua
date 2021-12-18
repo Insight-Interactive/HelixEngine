@@ -113,6 +113,8 @@ project ("Engine")
 			"Private/Windows/Desktop/**.h",
 			"Private/Windows/Desktop/**.cpp",
 			"Private/Windows/Desktop/**.inl",
+			"Private/Windows/Desktop/**.ico",
+			"Private/Windows/Desktop/**.rc",
 			-- Shared
 			"Private/Windows/*.h",
 			"Private/Windows/*.cpp",

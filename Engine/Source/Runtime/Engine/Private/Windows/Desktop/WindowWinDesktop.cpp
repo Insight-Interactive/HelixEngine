@@ -12,6 +12,8 @@
 #include "Input/MouseEvent.h"
 #include "Engine/Event/EngineEvent.h"
 
+#include "Resource/resource.h"
+
 
 uint32 FWindow::SWindowInstanceCount = 0;
 CriticalSection FWindow::SWindowInstanceCounterGuard;
@@ -67,15 +69,17 @@ void FWindow::Create( const FWindow::Description& Desc )
 	HE_LOG( Log, TEXT( "Registering Windows Desktop window with title:  %s  (Class: %s)" ), Desc.Title ? Desc.Title : TEXT( "Unnamed window" ), m_WindowClassName );
 
 	// Resources
-	LPWSTR Cursor = IDC_ARROW;
+	LPWSTR Cursor	= IDC_ARROW;
+	LPWSTR Icon		= MAKEINTRESOURCE( IDI_HELIX );
 
-	WNDCLASSEX wc = {};
-	wc.cbSize			= sizeof( WNDCLASSEX );
-	wc.lpfnWndProc		= WindowProceedure;
-	wc.hInstance		= WindowsAppInstance;
-	wc.lpszClassName	= m_WindowClassName;
-	wc.hCursor			= LoadCursor( NULL, Cursor );
-	::RegisterClassEx( &wc );
+	WNDCLASSEX WinClass = {};
+	WinClass.cbSize			= sizeof( WinClass );
+	WinClass.lpfnWndProc	= WindowProceedure;
+	WinClass.hInstance		= WindowsAppInstance;
+	WinClass.lpszClassName	= m_WindowClassName;
+	WinClass.hIcon			= LoadIcon( WindowsAppInstance, Icon );
+	WinClass.hCursor		= LoadCursor( NULL, Cursor );
+	::RegisterClassEx( &WinClass );
 	DWORD Err = GetLastError();
 	if (Err == 0)
 	{

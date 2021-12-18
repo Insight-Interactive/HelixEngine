@@ -69,16 +69,6 @@ void FSceneRenderer::Initialize( const FSceneRendererInitParams& InitParams, FVi
 	m_pScreenQuadRef = GeometryGenerator::GenerateScreenAlignedQuadMesh();
 
 	m_BatchRenderer.Initialize( m_pOwningViewport->GetMainSceneRenderTarget(), m_DepthBuffer );
-
-	FDebugLineRenderInfo Info = {};
-	Info.Start = FVector3::Zero;
-	Info.End = FVector3::One * 200.f;
-	Info.Color = FColor::RedOpaque;
-	Info.Lifetime = 10.f;
-	m_BatchRenderer.SubmitLineRenderRequest( Info );
-	Info.End = -FVector3::One * 200.f;
-	Info.Color = FColor::GreenOpaque;
-	m_BatchRenderer.SubmitLineRenderRequest( Info );
 }
 
 void FSceneRenderer::Uninitialize()

@@ -46,6 +46,9 @@
     <Filter Include="Private\Windows\Desktop">
       <UniqueIdentifier>{034EB910-6F85-01A8-788F-65CBE44528A1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Windows\Desktop\Resource">
+      <UniqueIdentifier>{7AA335B8-66F4-20FA-8F58-0FBC7B08B463}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Windows\Universal">
       <UniqueIdentifier>{6286AD45-CE48-E1CF-17F9-6F5C83FAB9AD}</UniqueIdentifier>
     </Filter>
@@ -98,6 +101,9 @@
   <ItemGroup>
     <ClInclude Include="Private\PCH\EnginePCH.h">
       <Filter>Private\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Private\Windows\Desktop\Resource\resource.h">
+      <Filter>Private\Windows\Desktop\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Public\App\App.h">
       <Filter>Public\App</Filter>
@@ -509,6 +515,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />
+    <None Include="Private\Windows\Desktop\Resource\HelixEngine.ico">
+      <Filter>Private\Windows\Desktop\Resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Private\Windows\Desktop\Resource\Resource.rc">
+      <Filter>Private\Windows\Desktop\Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Private\Windows\Universal\Resource\Package.appxmanifest">
