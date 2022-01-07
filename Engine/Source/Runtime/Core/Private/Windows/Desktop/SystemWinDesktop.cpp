@@ -33,7 +33,7 @@ namespace System
 
 	bool UninitializePlatform()
 	{
-		// Uninit the COM library.
+		// UnInit the COM library.
 		CoUninitialize();
 		
 		return true;

@@ -3,7 +3,6 @@
 
 #include "World/World.h"
 
-#include "World/Level.h"
 #include "Engine/Engine.h"
 #include "Engine/ViewportContext.h"
 #include "Renderer/LightManager.h"
@@ -11,12 +10,12 @@
 
 
 HWorld::HWorld()
-	: m_CameraManager(this)
-	, m_pLevel(NULL)
-	, m_Scene(this)
-	, m_pPlayerCharacter(NULL)
-	, m_RenderingCamera(NULL)
-	, m_pRenderingViewport(NULL)
+	: m_CameraManager( this )
+	, m_Scene( this )
+	, m_Level( this )
+	, m_pPlayerCharacter( NULL )
+	, m_RenderingCamera( NULL )
+	, m_pRenderingViewport( NULL )
 {
 }
 
@@ -25,10 +24,9 @@ HWorld::~HWorld()
 	Flush();
 }
 
-void HWorld::Initialize(const Char* LevelURL )
+void HWorld::Initialize( const Char* LevelURL )
 {
 	m_Filepath = LevelURL;
-
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
@@ -39,8 +37,8 @@ void HWorld::Initialize(const Char* LevelURL )
 		const rapidjson::Value& World = WorldJsonDoc["World"];
 		enum
 		{
-			kSettings = 0,
-			kActors = 1,
+			kSettings	= 0,
+			kActors		= 1,
 		};
 		// Load the world's settings
 		const rapidjson::Value& WorldSettings = World[kSettings];
@@ -48,9 +46,20 @@ void HWorld::Initialize(const Char* LevelURL )
 
 		// Load the worlds actors.
 		const rapidjson::Value& WorldActors = World[kActors];
-		m_pLevel = new HLevel( this );
-		m_pLevel->Deserialize( WorldActors );
+		m_Level.Deserialize( WorldActors );
 	}
+	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
+
+	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+}
+
+void HWorld::Initialize()
+{
+	m_Filepath = "Default (Non-Load)";
+	SetObjectName( TEXT( "Default World" ) );
+
+	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
+
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
 
@@ -72,46 +81,48 @@ void HWorld::BeginPlay()
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
 	AddPlayerCharacterRef( m_pPlayerCharacter );
 
-	m_pLevel->BeginPlay();
+	m_Level.BeginPlay();
 	m_pPlayerCharacter->BeginPlay();
 }
 
-void HWorld::Tick(float DeltaTime)
+void HWorld::Tick( float DeltaTime )
 {
 	m_CameraManager.Tick( DeltaTime );
 
 	if (GEngine->IsPlayingInEditor())
 	{
 		m_pPlayerCharacter->Tick( DeltaTime );
-		m_pLevel->Tick( DeltaTime );
+		m_Level.Tick( DeltaTime );
 	}
 }
 
 void HWorld::Flush()
 {
-	HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
-	GCommandManager.IdleGpu();
-	if (m_pLevel != NULL)
+	if (m_Level.IsValid())
 	{
-		m_pLevel->Flush();
-		HE_SAFE_DELETE_PTR( m_pLevel );
+		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
+		GCommandManager.IdleGpu();
+		GLightManager.FlushLightCache();
+		m_Scene.WaitForRenderingFinished();
+		GEngine->GetRenderingSubsystem().RemoveSceneFromRendering( m_Scene );
+
+		m_Level.Flush();
+		m_PlayerCharacterRefs.clear();
+		HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 	}
-	m_PlayerCharacterRefs.clear();
-	HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 }
 
-void HWorld::Render(FCommandContext& CmdContext)
+void HWorld::Render( FCommandContext& CmdContext )
 {
-	if(m_pPlayerCharacter != NULL)
+	if (m_pPlayerCharacter != NULL)
 		m_pPlayerCharacter->Render( CmdContext );
 
-	m_pLevel->Render(CmdContext);
+	m_Level.Render( CmdContext );
 }
 
 void HWorld::Reload()
 {
 	Flush();
-	GLightManager.FlushLightCache();
 	Initialize( m_Filepath.c_str() );
 }
 
@@ -143,7 +154,7 @@ void HWorld::Serialize( const Char* Filename )
 			// Serialize the level.
 			Writer.StartObject();
 			{
-				m_pLevel->Serialize( Writer );
+				m_Level.Serialize( Writer );
 			}
 			Writer.EndObject();
 
@@ -173,7 +184,7 @@ void HWorld::Serialize( WriteContext& Output )
 	Output.Double( 1.0 );
 }
 
-void HWorld::Deserialize( const ReadContext& Value ) 
+void HWorld::Deserialize( const ReadContext& Value )
 {
 	float TickInterval = 0.f;
 	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );

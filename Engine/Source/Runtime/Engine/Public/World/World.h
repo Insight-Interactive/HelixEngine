@@ -6,6 +6,7 @@
 #include "World/CameraManager.h"
 #include "AssetRegistry/SerializeableInterface.h"
 #include "World/Scene.h"
+#include "World/Level.h"
 
 
 class HLevel;
@@ -17,7 +18,7 @@ struct FDebugLineRenderInfo;
 
 /*
 	The "World" is a high-level construct that contains all entities in the playable space.
-	The world contains a level which contains all actors. The name level is used interchangably 
+	The world contains a level which contains all actors. The name level is used interchangably
 	for ease of use to the user.
 */
 class HWorld : public HObject, public FSerializeableInterface
@@ -30,23 +31,28 @@ public:
 	virtual ~HWorld();
 
 	void Initialize( const Char* LevelURL );
+	void Initialize();
 	void Flush();
 	float GetDeltaTime() const;
 
 	void BeginPlay();
-	void Tick(float DeltaTime);
-	void Render(FCommandContext& CmdContext);
+	void Tick( float DeltaTime );
+	void Render( FCommandContext& CmdContext );
 
 	HCameraManager* GetCameraManager();
 	FViewportContext* GetOwningViewport();
 	HCameraComponent* GetCurrentSceneRenderCamera();
-	void SetCurrentSceneRenderCamera(HCameraComponent* pCamera);
+	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
-	HScene* GetScene();
-	HLevel* GetCurrentLevel();
+	HScene& GetScene();
+	HLevel& GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
 	APlayerCharacter* GetPlayerCharacter( uint32 Index );
+
+	AActor* CreateEmptyActorInstance( const HName& Name );
+	template <typename ActorType>
+	ActorType* CreateDynamicActorinstance( const HName& Name );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
@@ -66,8 +72,9 @@ protected:
 	virtual void Deserialize( const ReadContext& Value ) override;
 
 protected:
-	HLevel* m_pLevel;
+	HLevel m_Level;
 	HScene m_Scene;
+
 	APlayerCharacter* m_pPlayerCharacter;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
 	String m_Filepath;
@@ -83,9 +90,9 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE HScene* HWorld::GetScene()
+FORCEINLINE HScene& HWorld::GetScene()
 {
-	return &m_Scene;
+	return m_Scene;
 }
 
 FORCEINLINE HCameraManager* HWorld::GetCameraManager()
@@ -98,7 +105,7 @@ FORCEINLINE HCameraComponent* HWorld::GetCurrentSceneRenderCamera()
 	return m_RenderingCamera;
 }
 
-FORCEINLINE void HWorld::SetCurrentSceneRenderCamera(HCameraComponent* pCamera)
+FORCEINLINE void HWorld::SetCurrentSceneRenderCamera( HCameraComponent* pCamera )
 {
 	m_RenderingCamera = pCamera;
 }
@@ -108,9 +115,9 @@ FORCEINLINE FViewportContext* HWorld::GetOwningViewport()
 	return m_pRenderingViewport;
 }
 
-FORCEINLINE HLevel* HWorld::GetCurrentLevel()
+FORCEINLINE HLevel& HWorld::GetCurrentLevel()
 {
-	return m_pLevel;
+	return m_Level;
 }
 
 FORCEINLINE void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
@@ -122,4 +129,15 @@ FORCEINLINE APlayerCharacter* HWorld::GetPlayerCharacter( uint32 Index )
 {
 	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
 	return m_PlayerCharacterRefs[Index];
+}
+
+FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const HName& Name )
+{
+	return m_Level.CreateActor<AActor>( Name );
+}
+
+template <typename ActorType>
+FORCEINLINE ActorType* HWorld::CreateDynamicActorinstance( const HName& Name )
+{
+	return m_Level.CreateActor<ActorType>( Name );
 }

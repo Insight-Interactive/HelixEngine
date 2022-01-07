@@ -99,7 +99,7 @@ struct ImGui_ImplDX12_FrameContext
 // Secondary viewports created by this backend will use all the fields (including FWindow fields),
 struct ImGui_ImplDX12_ViewportData
 {
-	// FWindow
+	// Window
 	ID3D12CommandQueue*             CommandQueue;
 	ID3D12GraphicsCommandList*      CommandList;
 	ID3D12DescriptorHeap*           RtvDescHeap;

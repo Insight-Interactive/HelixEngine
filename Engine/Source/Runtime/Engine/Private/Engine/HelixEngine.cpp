@@ -15,20 +15,27 @@
 class HEngineLaunchBootstraper
 {
 public:
-	static void Execute( HEngine** pEngine, WChar* Commandline )
+	static void Execute( HEngine** pEngine, WChar* CommandLine )
 	{
 		FCommandLine Args;
-		Args.Process( Commandline );
+		Args.Process( CommandLine );
 
 #if HE_WITH_EDITOR
-		if (Args[L"-launchcfg"] == L"LaunchEditor")
+		if (Args.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ))
 		{
 			(*pEngine) = new HEditorEngine( Args );
 		}
-		else if (Args[L"-launchcfg"] == L"LaunchGame")
+		else if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
 #endif // HE_WITH_EDITOR
 		{
 			(*pEngine) = new HEngine( Args );
+		}
+		else
+		{
+			WChar ErrMsg[1024];
+			ZeroMemory( ErrMsg, sizeof( ErrMsg ) );
+			swprintf_s( ErrMsg, L"Unable to determine launch configuration!\nIncomplete or corrupt command line arguments given.\nCommand line: \"%s\"", CommandLine );
+			System::CreateMessageBox( ErrMsg, L"Launch Failed", System::MessageDialogInput::MDI_Ok, System::MessageDialogIcon::MDIcon_Critical );
 		}
 
 		HE_ASSERT( (*pEngine) != NULL );
@@ -38,7 +45,7 @@ public:
 	}
 };
 
-void GuardedMain(WChar* CmdLine)
+void GuardedMain( WChar* CmdLine )
 {
 #if HE_USE_EXCEPTIONS
 	__try

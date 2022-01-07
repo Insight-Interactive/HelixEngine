@@ -203,7 +203,7 @@ typedef std::wstring_view WStringView;
 //
 //
 #if _UNICODE
-// A character that could be ascii or unicode depending on
+// A character that could be ASCII or Unicode depending on
 // if unicode is supported in the build configuration.
 typedef WChar TChar;
 // A client facing string composed of TChar.

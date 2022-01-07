@@ -174,25 +174,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -204,25 +204,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -234,25 +234,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -264,25 +264,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -356,99 +356,99 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win64\Win64\DebugEditor\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Win64\Win64\DebugEditor\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win32\Win32\DebugEditor\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Win32\Win32\DebugEditor\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Durango\Durango\DebugEditor\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Durango\Durango\DebugEditor\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Scorpio\Scorpio\DebugEditor\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Scorpio\Scorpio\DebugEditor\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\..\..\Build-clang\DebugEditor-Prospero\</OutDir>
     <IntDir>..\..\..\..\Build-clang\Intermediates\DebugEditor-Prospero\Prospero\DebugEditor\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win64\Win64\Development\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Win64\Win64\Development\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win32\Win32\Development\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Win32\Win32\Development\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Durango\Durango\Development\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Durango\Durango\Development\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Scorpio\Scorpio\Development\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Scorpio\Scorpio\Development\Engine\</IntDir>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\..\..\Build-clang\Development-Prospero\</OutDir>
     <IntDir>..\..\..\..\Build-clang\Intermediates\Development-Prospero\Prospero\Development\Engine\</IntDir>
-    <TargetName>Engine</TargetName>
+    <TargetName>HelixEditor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win64\Win64\DebugGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Win64\Win64\DebugGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win32\Win32\DebugGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Win32\Win32\DebugGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Durango\Durango\DebugGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Durango\Durango\DebugGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Scorpio\Scorpio\DebugGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Scorpio\Scorpio\DebugGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
@@ -461,29 +461,29 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win64\Win64\ShippingGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Win64\Win64\ShippingGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win32\Win32\ShippingGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Win32\Win32\ShippingGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Durango\Durango\ShippingGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Durango\Durango\ShippingGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Scorpio\Scorpio\ShippingGame\Engine\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Scorpio\Scorpio\ShippingGame\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
@@ -746,7 +746,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -774,7 +774,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -797,7 +797,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -820,7 +820,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\DebugGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -876,7 +876,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -909,7 +909,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -937,7 +937,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -965,7 +965,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Renderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

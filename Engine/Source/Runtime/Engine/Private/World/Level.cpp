@@ -18,6 +18,8 @@ HLevel::HLevel( HWorld* pOwner )
 
 HLevel::~HLevel()
 {
+	m_pOwningWorld = nullptr;
+	Flush();
 }
 
 void HLevel::BeginPlay()
@@ -38,10 +40,15 @@ void HLevel::Tick( float DeltaTime )
 
 void HLevel::Flush()
 {
-	for (size_t i = 0; i < m_Actors.size(); ++i)
+	if (IsValid())
 	{
-		m_Actors[i]->RemoveAllComponents();
-		delete m_Actors[i];
+		for (size_t i = 0; i < m_Actors.size(); ++i)
+		{
+			m_Actors[i]->RemoveAllComponents();
+			delete m_Actors[i];
+		}
+
+		m_Actors.clear();
 	}
 }
 
@@ -98,61 +105,8 @@ void HLevel::Serialize( WriteContext& Output )
 	}
 }
 
-class ARotatingActor : public AActor
-{
-public:
-	HE_GENERATED_BODY( ARotatingActor )
-
-	virtual void BeginPlay() override;
-	virtual void Tick( float DeltaTime ) override;
-
-private:
-	HStaticMeshComponent* pMesh;
-	HPointLightComponent* pLight;
-
-};
-
-ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
-	: AActor( InitArgs )
-{
-	m_pRoot = AddComponent<HSceneComponent>( TEXT( "Root" ) );
-
-	m_pRoot->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
-	m_pRoot->SetScale( FVector3( 10.f, 10.f, 10.f ) );
-
-	pMesh = AddComponent<HStaticMeshComponent>( TEXT( "CubeMesh" ) );
-	pMesh->SetMesh( FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) ) );
-	pMesh->SetMaterial( FAssetDatabase::GetMaterial( FGUID::CreateFromString( "0d68e992-aa25-4aa4-9f81-0eb775320c1e" ) ) );
-
-	pLight = AddComponent<HPointLightComponent>( TEXT( "PointLight" ) );
-	pLight->SetBrightness( 800.f );
-	pLight->SetColor( FColor( 0.f, 255.f, 0.f ) );
-	pLight->SetPosition( 8.f, 12.f, 0.f );
-
-	pLight->AttachTo( m_pRoot );
-	pMesh->AttachTo( m_pRoot );
-}
-
-ARotatingActor::~ARotatingActor()
-{
-
-}
-
-void ARotatingActor::Tick( float DeltaTime )
-{
-	pMesh->Rotate( 0.f, 0.005f, 0.f );
-
-}
-
-void ARotatingActor::BeginPlay()
-{
-
-}
-
 void HLevel::Deserialize( const ReadContext& Value )
 {
-	//CreateActor<ARotatingActor>( TEXT( "Rotating Actor Inst" ) );
-
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{
 		FGUID ActorGuid = FGUID::CreateFromString( Iter->name.GetString() );

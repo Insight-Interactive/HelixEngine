@@ -205,7 +205,7 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 		TConstantBuffer<SceneConstantsCBData>& Buffer = GetSceneConstBufferForCurrentFrame();
 		SceneConstantsCBData& pCBData = *Buffer.GetBufferPointer();
 		{
-			if (m_pRenderingCamera)
+			if (m_pRenderingCamera != nullptr)
 			{
 				m_pRenderingCamera->GetViewMatrix().Transpose( pCBData.kViewMat );
 				m_pRenderingCamera->GetProjectionMatrix().Transpose( pCBData.kProjMat );

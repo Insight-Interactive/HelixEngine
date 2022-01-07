@@ -26,7 +26,13 @@ public:
 	virtual void Destroy() = 0;
 	virtual void UploadBuffer() = 0;
 
+	/*
+		Returns true if the buffer is ready to be used too, false if not.
+	*/
 	bool IsValid() const;
+	/*
+		Indicate whether the buffer is dirty and needs to be re-uploaded to the Gpu.
+	*/
 	void SetDirty( bool IsDirty );
 	bool GetIsDirty() const;
 	uint32 GetBufferSize() const;

@@ -35,7 +35,7 @@ public:
 	/*
 		Request the application to terminate. Shutting down the engine and its subsystmes.
 	*/
-	void RequestShutdown();
+	void Terminate();
 
 //protected:
 //	static FApp* CreateApplication();
@@ -107,7 +107,7 @@ inline bool FApp::IsRunning() const
 	return m_IsRunning;
 }
 
-inline void FApp::RequestShutdown()
+inline void FApp::Terminate()
 {
 	m_IsRunning = false;
 }

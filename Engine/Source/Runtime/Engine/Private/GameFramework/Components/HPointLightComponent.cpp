@@ -49,14 +49,14 @@ void HPointLightComponent::OnCreate()
 {
 	Super::OnCreate();
 
-	GetWorld()->GetScene()->AddPointLight( this );
+	GetWorld()->GetScene().AddPointLight( this );
 }
 
 void HPointLightComponent::OnDestroy()
 {
 	Super::OnDestroy();
 
-	GetWorld()->GetScene()->RemovePointLight( this );
+	GetWorld()->GetScene().RemovePointLight( this );
 }
 
 void HPointLightComponent::Render( FCommandContext& GfxContext )
@@ -78,14 +78,14 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 
 		// Shrink/grow the card based on the distance to the camera.
 		const float kBillboardMaxScale = 5.f;
-		HCameraComponent& Camera = *GetWorld()->GetCurrentSceneRenderCamera();
+		HCameraComponent* Camera = GetWorld()->GetCurrentSceneRenderCamera();
 		const float CameraDistance =
-			(Camera.GetAbsoluteWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a squre root is inevitable.
+			(Camera->GetAbsoluteWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a square root is inevitable.
 		const float ScaleFactor = HE_MIN( CameraDistance, kBillboardMaxScale );
 		m_BillboardTransform.SetScale( FVector3( ScaleFactor ) );
 
 		m_BillboardTransform.SetPosition( GetAbsoluteWorldPosition() );
-		m_BillboardTransform.LookAt( Camera.GetAbsoluteWorldPosition() );
+		m_BillboardTransform.LookAt( Camera->GetAbsoluteWorldPosition() );
 
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();

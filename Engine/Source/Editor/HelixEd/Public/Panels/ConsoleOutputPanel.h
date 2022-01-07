@@ -11,7 +11,6 @@ public:
 	ConsoleOutputPanel();
 	virtual ~ConsoleOutputPanel();
 
-	virtual void Initialize();
 	virtual void UnInitialize();
 
 	virtual void Tick( float DeltaTime );

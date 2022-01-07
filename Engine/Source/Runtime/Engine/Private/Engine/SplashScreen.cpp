@@ -26,13 +26,13 @@ FSplashScreen::FSplashScreen( const String& SplashTexturePath/* = "" */)
 	m_ViewPort.TopLeftY = 0.f;
 	m_ViewPort.MinDepth = 0.f;
 	m_ViewPort.MaxDepth = 1.f;
-	m_ViewPort.Width = (float)GetWidth();
-	m_ViewPort.Height = (float)GetHeight();
+	m_ViewPort.Width	= (float)GetWidth();
+	m_ViewPort.Height	= (float)GetHeight();
 
-	m_ScissorRect.Left = 0;
-	m_ScissorRect.Top = 0;
-	m_ScissorRect.Right = GetWidth();
-	m_ScissorRect.Bottom = GetHeight();
+	m_ScissorRect.Left		= 0;
+	m_ScissorRect.Top		= 0;
+	m_ScissorRect.Right		= GetWidth();
+	m_ScissorRect.Bottom	= GetHeight();
 
 	GetSwapChain()->SetClearColor( FColor( 0.f, 0.f, 0.f ) );
 
@@ -85,9 +85,7 @@ void FSplashScreen::Render( FCommandContext& CmdContext )
 	CmdContext.RSSetViewPorts( 1, &GetViewport() );
 	CmdContext.RSSetScissorRects( 1, &GetScissorRect() );
 
-	const FColorBuffer* RTs[] = {
-		&CurrentBackBuffer
-	};
+	const FColorBuffer* RTs[] = { &CurrentBackBuffer };
 	CmdContext.OMSetRenderTargets( 1, RTs, NULL );
 	CmdContext.SetGraphicsRootSignature( m_RootSig );
 	CmdContext.SetPipelineState( m_Pipeline );

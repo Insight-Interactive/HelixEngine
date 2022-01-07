@@ -11,7 +11,6 @@ public:
 	DetailsPanel();
 	virtual ~DetailsPanel();
 
-	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;

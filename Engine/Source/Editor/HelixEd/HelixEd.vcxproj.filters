@@ -13,6 +13,9 @@
     <Filter Include="Private\Editor">
       <UniqueIdentifier>{367CE6C5-224A-DACB-0BDE-4AF2F74AB630}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Editor\Tabs">
+      <UniqueIdentifier>{2FC7CC26-9B28-AA34-2496-F0E690F6E0F3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\PCH">
       <UniqueIdentifier>{0AC21F53-7677-9848-FF6B-921F6B208F4C}</UniqueIdentifier>
     </Filter>
@@ -21,6 +24,9 @@
     </Filter>
     <Filter Include="Private\Tools">
       <UniqueIdentifier>{80A3799A-EC63-F5D0-B59E-3E4E211E3AAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\UI">
+      <UniqueIdentifier>{2D926DA5-194A-AFF2-8251-884E6E284AE3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
@@ -31,11 +37,20 @@
     <Filter Include="Public\Editor">
       <UniqueIdentifier>{3A818C4A-A641-0881-6F7C-51FEDBFB4C5D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\Editor\Event">
+      <UniqueIdentifier>{0B86A0FF-77E7-7D0D-0055-C4BF6CB5B4CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Editor\Tabs">
+      <UniqueIdentifier>{B38E5236-9F72-138C-08D3-0DDFF4D5FD0D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public\Panels">
       <UniqueIdentifier>{56740164-C234-7D9A-8B6F-C617F7EEC176}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Tools">
       <UniqueIdentifier>{04183168-F07A-C00C-9900-F9C285428C8F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\UI">
+      <UniqueIdentifier>{31B571CE-9D1F-2645-E65D-D7EA5207049A}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,11 +66,23 @@
     <ClInclude Include="Public\Developer\ConsoleWindow.h">
       <Filter>Public\Developer</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Editor\AssetEditorInterface.h">
+      <Filter>Public\Editor</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Editor\EditorEngine.h">
       <Filter>Public\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Editor\PreferencesViewport.h">
-      <Filter>Public\Editor</Filter>
+    <ClInclude Include="Public\Editor\Event\EditorEvent.h">
+      <Filter>Public\Editor\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\Tabs\ActorEditorTab.h">
+      <Filter>Public\Editor\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\Tabs\HelixEdHomeUI.h">
+      <Filter>Public\Editor\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\Tabs\PreferencesTab.h">
+      <Filter>Public\Editor\Tabs</Filter>
     </ClInclude>
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h">
       <Filter>Public\Panels</Filter>
@@ -87,6 +114,10 @@
     <ClInclude Include="Public\Tools\PackageMaker.h">
       <Filter>Public\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Public\UI\EditorUI.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor\Tabs\ContentEditorInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
@@ -101,8 +132,14 @@
     <ClCompile Include="Private\Editor\EditorEngine.cpp">
       <Filter>Private\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Editor\PreferencesViewport.cpp">
-      <Filter>Private\Editor</Filter>
+    <ClCompile Include="Private\Editor\Tabs\ActorEditorTab.cpp">
+      <Filter>Private\Editor\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\HelixEdHomeUI.cpp">
+      <Filter>Private\Editor\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\PreferencesTab.cpp">
+      <Filter>Private\Editor\Tabs</Filter>
     </ClCompile>
     <ClCompile Include="Private\PCH\HelixEdPCH.cpp">
       <Filter>Private\PCH</Filter>
@@ -117,6 +154,9 @@
       <Filter>Private\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Private\Panels\MenuBarPanel.cpp">
+      <Filter>Private\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Panels\Panel.cpp">
       <Filter>Private\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Private\Panels\SceneViewportPanel.cpp">
@@ -137,6 +177,10 @@
     <ClCompile Include="Private\Tools\PackageMaker.cpp">
       <Filter>Private\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Private\UI\EditorUI.cpp">
+      <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\ContentEditorInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

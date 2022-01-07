@@ -37,7 +37,7 @@ public:
 
 	virtual void Initialize( const FWindow::Description& WindowDesc );
 	virtual void Uninitialize();
-	virtual void Update( float DeltaTime );
+	virtual void Tick( float DeltaTime );
 	virtual void Render();
 
 	bool IsValid();
@@ -108,7 +108,7 @@ protected:
 protected:
 	FWindow m_Window;
 	FInputDispatcher m_InputDispatcher;
-	HWorld* m_WorldInView;
+	HWorld* m_pWorldInView;
 
 	// Rendering Resources
 	//
@@ -134,7 +134,7 @@ FORCEINLINE bool FViewportContext::IsValid()
 
 FORCEINLINE HWorld& FViewportContext::GetWorld()
 {
-	return *m_WorldInView;
+	return *m_pWorldInView;
 }
 
 FORCEINLINE FSceneRenderer& FViewportContext::GetSceneRenderer()

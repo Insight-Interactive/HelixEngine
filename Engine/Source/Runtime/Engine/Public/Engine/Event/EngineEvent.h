@@ -11,6 +11,13 @@
 class WindowClosedEvent : public Event
 {
 public:
+	WindowClosedEvent()
+	{
+	}
+	virtual ~WindowClosedEvent()
+	{
+	}
+
 	EVENT_CLASS_TYPE( ET_WindowClose )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
@@ -24,7 +31,7 @@ public:
 		, m_Height(Height)
 	{
 	}
-	~WindowResizeEvent()
+	virtual ~WindowResizeEvent()
 	{
 	}
 
@@ -51,6 +58,13 @@ private:
 class WindowMaximizedEvent : public Event
 {
 public:
+	WindowMaximizedEvent()
+	{
+	}
+	virtual ~WindowMaximizedEvent()
+	{
+	}
+
 	EVENT_CLASS_TYPE( ET_WindowMaximized )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
@@ -59,6 +73,13 @@ public:
 class WindowMinimizedEvent : public Event
 {
 public:
+	WindowMinimizedEvent()
+	{
+	}
+	virtual ~WindowMinimizedEvent()
+	{
+	}
+
 	EVENT_CLASS_TYPE( ET_WindowMinimized )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
@@ -67,6 +88,13 @@ public:
 class WindowFocusEvent : public Event
 {
 public:
+	WindowFocusEvent()
+	{
+	}
+	virtual ~WindowFocusEvent()
+	{
+	}
+
 	EVENT_CLASS_TYPE( ET_WindowFocus )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
@@ -75,6 +103,13 @@ public:
 class WindowLostFocusEvent : public Event
 {
 public:
+	WindowLostFocusEvent()
+	{
+	}
+	virtual ~WindowLostFocusEvent()
+	{
+	}
+
 	EVENT_CLASS_TYPE( ET_WindowLostFocus )
 		EVENT_CLASS_CATEGORY( EC_Window )
 };
@@ -105,6 +140,39 @@ protected:
 // -----------------
 //	Engine Events
 // -----------------
+
+class EngineEvent : public Event
+{
+public:
+	EngineEvent()
+	{
+	}
+	virtual ~EngineEvent()
+	{
+	}
+
+};
+
+class EnginePreStartupEvent : public EngineEvent
+{
+
+	EVENT_CLASS_TYPE( ET_EnginePreStartup )
+		EVENT_CLASS_CATEGORY( EC_Engine )
+};
+
+class EngineStartupEvent : public EngineEvent
+{
+
+	EVENT_CLASS_TYPE( ET_EngineStartup )
+		EVENT_CLASS_CATEGORY( EC_Engine )
+};
+
+class EnginePostStartupEvent : public EngineEvent
+{
+
+	EVENT_CLASS_TYPE( ET_EnginePostStartup )
+		EVENT_CLASS_CATEGORY( EC_Engine )
+};
 
 class HObject;
 class ObjectSelectedEvent : public Event

@@ -46,6 +46,7 @@ public:
 		const uint32* pSrcDescriptorRangeSizes,
 		EResourceHeapType DescriptorHeapsType
 	);
+	uint32 GetDescriptorHandleIncrementSize( EResourceHeapType Type );
 
 protected:
 	void Initialize(const DeviceInitParams& InitParams, DeviceQueryResult& OutDeviceQueryResult, void** ppFactoryContext);
@@ -65,6 +66,7 @@ private:
 
 
 	ID3D12Device* m_pD3DDevice;
+	uint32 m_DescriptorHandleIncrementSizeCache[RHT_HeapType_Count];
 
 #endif // R_WITH_D3D12
 
@@ -80,4 +82,18 @@ FORCEINLINE void* FRenderDevice::GetNativeDevice() const
 #if R_WITH_D3D12
 	return (void*)m_pD3DDevice;
 #endif
+}
+
+FORCEINLINE uint32 FRenderDevice::GetDescriptorHandleIncrementSize(EResourceHeapType Type)
+{
+	static bool SizesCached = false;
+	if (!SizesCached)
+	{
+		for (uint32 i = 0; i < RHT_HeapType_Count; i++)
+		{
+			m_DescriptorHandleIncrementSizeCache[i] = m_pD3DDevice->GetDescriptorHandleIncrementSize( (D3D12_DESCRIPTOR_HEAP_TYPE)i );
+		}
+		SizesCached = true;
+	}
+	return m_DescriptorHandleIncrementSizeCache[Type];
 }

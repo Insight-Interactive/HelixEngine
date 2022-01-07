@@ -32,13 +32,13 @@ FWindow::FWindow()
 FWindow::FWindow( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, FWindow* pParent )
 	: FWindow()
 {
-	Description Desc;
-	Desc.Title = Title;
-	Desc.Resolution.Width = Width;
-	Desc.Resolution.Height = Height;
-	Desc.bHasTitleBar = bHasTitleBar;
-	Desc.bShowImmediate = bShowImmediate;
-	Desc.pParent = pParent;
+	FWindow::Description Desc;
+	Desc.Title				= Title;
+	Desc.Resolution.Width	= Width;
+	Desc.Resolution.Height	= Height;
+	Desc.bHasTitleBar		= bHasTitleBar;
+	Desc.bShowImmediate		= bShowImmediate;
+	Desc.pParent			= pParent;
 
 	Create( Desc );
 }
@@ -65,7 +65,7 @@ void FWindow::Create( const FWindow::Description& Desc )
 
 	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), SWindowInstanceCount );
 
-	CopyMemory( m_DebugName, Desc.Title, lstrlen( Desc.Title ) * sizeof( TChar ) );
+	TCharStrCpy( m_DebugName, Desc.Title );
 	HE_LOG( Log, TEXT( "Registering Windows Desktop window with title:  %s  (Class: %s)" ), Desc.Title ? Desc.Title : TEXT( "Unnamed window" ), m_WindowClassName );
 
 	// Resources
@@ -214,12 +214,11 @@ bool FWindow::SetTitle( const TChar* NewTitle )
 {
 	if (!m_Desc.bHasTitleBar)
 	{
-		HE_LOG( Warning, TEXT( "Trying to set a title for a window that has no title bar. Attempting to override..." ) );
+		HE_LOG( Warning, TEXT( "Trying to set a title (%s) for a window (%s) that has no title bar!" ), NewTitle, m_DebugName );
 		return false;
 	}
 
-	TCharStrCpy( m_WindowTitle, NewTitle );
-	return ::SetWindowText( m_hWindowHandle, m_WindowTitle );
+	return ::SetWindowText( m_hWindowHandle, NewTitle );
 }
 
 void FWindow::GetTitle( TChar* OutTitleBuffer, uint32 BufferLength ) const
@@ -273,10 +272,10 @@ void FWindow::MakeMoueWindowAssociation()
 {
 	RAWINPUTDEVICE RID = {};
 	RID.usUsagePage = HID_USAGE_PAGE_GENERIC;
-	RID.usUsage = HID_USAGE_GENERIC_MOUSE;
-	RID.dwFlags = 0;
-	RID.hwndTarget = NULL;
-	if (!RegisterRawInputDevices( &RID, 1, sizeof( RAWINPUTDEVICE ) ))
+	RID.usUsage		= HID_USAGE_GENERIC_MOUSE;
+	RID.dwFlags		= 0;
+	RID.hwndTarget	= NULL;
+	if (!RegisterRawInputDevices( &RID, 1, sizeof( RID ) ))
 	{
 		HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
 	}

@@ -12,7 +12,6 @@ public:
 	WorldOutlinePanel();
 	virtual ~WorldOutlinePanel();
 
-	virtual void Initialize() override;
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;

@@ -18,11 +18,24 @@
 #include "CommandContext.h"
 #include "TextureManager.h"
 #include "CommandManager.h"
+#include "Editor/Event/EditorEvent.h"
+
+
+HEditorEngine* GEditorEngine = nullptr;
+
+
+static void RunActorEditor( void* pData );
 
 
 HEditorEngine::HEditorEngine( FCommandLine& CmdLine )
 	: Super( CmdLine )
+	, m_HomeUI( m_MainViewPort )
+	, m_UIContext( m_MainViewPort )
 {
+	if (GEditorEngine == nullptr)
+		GEditorEngine = this;
+	else
+		HE_ASSERT( false ); // Only one editor engine can be present at any given time!
 }
 
 HEditorEngine::~HEditorEngine()
@@ -34,41 +47,26 @@ void HEditorEngine::PreStartup()
 	Super::PreStartup();
 }
 
+void HEditorEngine::PostStartup()
+{
+	Super::PostStartup();
+}
+
 void HEditorEngine::Startup()
 {
 	Super::Startup();
+	HE_LOG( Log, TEXT( "Starting up editor engine." ) );
 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-
-	ImGuiIO& IO = ImGui::GetIO();
-	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-	//IO.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;		// Enable Gamepad Controls
-	IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;			// Enable FWindow Independence
-	IO.ConfigWindowsMoveFromTitleBarOnly = true;
-	IO.ConfigDockingAlwaysTabBar = true;
-	IO.Fonts->AddFontFromFileTTF( "../../Engine/Content/Fonts/Cousine-Regular.ttf", 15.0f );
-	IO.IniFilename = NULL;
+	m_UIContext.Setup();
 
 	String ImGuiIniPath = FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini";
 	ImGui::LoadIniSettingsFromDisk( ImGuiIniPath.c_str() );
 	LoadEditorPreferences();
 
-	EnableDarkMode( m_UserPreferences.EnableDarkMode );
-	
-	ImGuiStyle& Style = ImGui::GetStyle();
-	Style.WindowRounding = 0.0f;
-	Style.Colors[ImGuiCol_WindowBg].w = 1.f;
-
-	void* hwnd = *(HWND*)GetClientViewport().GetWindow().GetNativeWindow();
-	bool ImGuiImplWin32Succeeded = ImGui_ImplWin32_Init( hwnd );
-	HE_ASSERT( ImGuiImplWin32Succeeded );
-	SetupImGuiRenderBackend();
-
-	SetupEditorPanels();
+	m_HomeUI.SetupPanels();
 
 	RegisterEditorOnlyAssets();
+	HE_LOG( Log, TEXT( "Editor engine startup complete." ) );
 }
 
 void HEditorEngine::LoadEditorPreferences()
@@ -129,7 +127,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraPos = m_SceneViewport.GetDebugPawn()->GetRootComponent()->GetPosition();
+				FVector3 DebugCameraPos = m_HomeUI.GetDebugPawn()->GetRootComponent()->GetPosition();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraPos.x );
 				Writer.Key( "Y" );
@@ -146,7 +144,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraRot = m_SceneViewport.GetDebugPawn()->GetRootComponent()->GetRotation();
+				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetRootComponent()->GetRotation();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraRot.x );
 				Writer.Key( "Y" );
@@ -159,10 +157,10 @@ void HEditorEngine::SaveEditorPreferences()
 		Writer.EndArray();
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraPitchSpeed ) );
-		Writer.Double( m_SceneViewport.GetDebugPawn()->GetVerticalLookSpeed() );
+		Writer.Double( m_HomeUI.GetDebugPawn()->GetVerticalLookSpeed() );
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraYawSpeed ) );
-		Writer.Double( m_SceneViewport.GetDebugPawn()->GetHorizontalLookSpeed() );
+		Writer.Double( m_HomeUI.GetDebugPawn()->GetHorizontalLookSpeed() );
 	}
 	Writer.EndObject();
 
@@ -179,45 +177,21 @@ void HEditorEngine::SaveEditorPreferences()
 	}
 
 	// Save the editor layout.
-	ImGui::SaveIniSettingsToDisk((FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini").c_str());
-}
-
-void HEditorEngine::SetupImGuiRenderBackend()
-{
-	FSwapChain* pClientSwapChain = GetClientViewport().GetWindow().GetSwapChain();
-	DXGI_FORMAT SwapChainFmt = (DXGI_FORMAT)pClientSwapChain->GetBackBufferFormat();
-	int NumBackBuffers = pClientSwapChain->GetNumBackBuffers();
-	
-#if HE_WINDOWS
-	ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
-	bool ImGuiD3D12Succeeded = ImGui_ImplDX12_Init( pD3D12Device, NumBackBuffers, SwapChainFmt );
-	HE_ASSERT( ImGuiD3D12Succeeded );
-
-#endif
-}
-
-void StandaloneGameLaunch( void* )
-{
-	TChar Path[HE_MAX_PATH];
-	System::GetWorkingDirectory( sizeof( Path ), Path );
-	String ExePath = StringHelper::UTF16ToUTF8( Path );
-	ExePath += "Engine.exe";
-	ExePath += " -launchcfg LaunchGame";
-
-	system( ExePath.c_str() );
+	ImGui::SaveIniSettingsToDisk( (FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini").c_str() );
 }
 
 void HEditorEngine::RenderClientViewport( float DeltaTime )
 {
-	ImGui_ImplDX12_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	ImGui::DockSpaceOverViewport( nullptr, ImGuiDockNodeFlags_PassthruCentralNode );
+	m_UIContext.BeginNewFrame();
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.FramePadding = ImVec2( 15, 6 );
 
 	// Update the client world and viewport.
-	GetClientViewport().Render();
+	m_MainViewPort.Render();
+
 	// Wait for the current frame to finish rendering, we'll need it for the editor panels.
-	//m_GameWorld.GetScene()->WaitForRenderingFinished();
+	m_GameWorld.GetScene().WaitForRenderingFinished();
 
 	/*if (m_PreferencesViewport.IsValid())
 	{
@@ -250,64 +224,48 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	//	}*/
 	//}
 	//ImGui::End();
+	m_HomeUI.Tick( DeltaTime );
+	//m_PreferencesTab.Tick( DeltaTime );
 
-	ImGui::Begin( "Set Window Mode" );
-	{
-		if (ImGui::Button( "Windowed" ))
-		{
-			GetClientViewport().SetWindowMode( WM_Windowed );
-		}
-		if (ImGui::Button( "Borderless" ))
-		{
-			GetClientViewport().SetWindowMode( WM_Borderless );
-		}
-		if (ImGui::Button( "Fullscreen" ))
-		{
-			GetClientViewport().SetWindowMode( WM_FullScreen );
-		}
-	}
-	ImGui::End();
-
-
-	FColorBuffer& SwapChainSurface = GetClientViewport().GetWindow().GetRenderSurface();
+	FColorBuffer& SwapChainSurface = m_MainViewPort.GetWindow().GetRenderSurface();
 	FCommandContext& UIContext = FCommandContext::Begin( TEXT( "Draw Editor" ) );
 	{
-		UIContext.BeginDebugMarker( TEXT( "Draw Panels" ) );
+		UIContext.BeginDebugMarker( TEXT( "Draw Editor Panels" ) );
 		{
-			for (size_t i = 0; i < m_EditorPanels.size(); ++i)
+			m_HomeUI.Render( UIContext );
+			//m_PreferencesTab.Render( UIContext );
+			// Render/Tick Actor Editors
+			/*for (uint32 i = 0; i < m_ActorEditors.size(); i++)
 			{
-				m_EditorPanels[i]->Tick( DeltaTime );
-				m_EditorPanels[i]->Render( UIContext );
-			}
+				m_ActorEditors[i]->Tick( DeltaTime );
+				m_ActorEditors[i]->Render( UIContext );
+			}*/
 		}
 		UIContext.EndDebugMarker();
 
-		ImGui::Render();
-
 		UIContext.TransitionResource( SwapChainSurface, RS_RenderTarget );
-		UIContext.ClearColorBuffer( SwapChainSurface, GetClientViewport().GetClientRect() );
+		UIContext.ClearColorBuffer( SwapChainSurface, m_MainViewPort.GetClientRect() );
 
 		UIContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap() );
-		const FColorBuffer* pRTs[] = {
-			&SwapChainSurface
-		};
+		const FColorBuffer* pRTs[] = { &SwapChainSurface };
 		UIContext.OMSetRenderTargets( 1, pRTs, NULL );
 
-		ID3D12CommandList* pCommandList = RCast<ID3D12CommandList*>( UIContext.GetNativeContext() );
-
-		ImGui_ImplDX12_RenderDrawData( ImGui::GetDrawData(), (ID3D12GraphicsCommandList*)pCommandList );
+		m_UIContext.EndFrame( UIContext );
 
 		ImGuiIO& io = ImGui::GetIO();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault( NULL, (void*)pCommandList );
+			ImGui::RenderPlatformWindowsDefault( NULL, (void*)UIContext.GetNativeContext() );
 		}
+
 		UIContext.TransitionResource( SwapChainSurface, RS_Present );
 	}
 	UIContext.End();
 
-	GetClientViewport().PresentOneFrame();
+
+
+	m_MainViewPort.PresentOneFrame();
 }
 
 void HEditorEngine::Shutdown()
@@ -325,14 +283,14 @@ void HEditorEngine::EnableDarkMode( bool Enabled )
 	if (Enabled)
 	{
 		ImGui::StyleColorsDark();
-		Style.Colors[ImGuiCol_WindowBg] = ImVec4( .15f, .15f, .15f, 1.f );
-		Style.Colors[ImGuiCol_TitleBgActive] = ImVec4( .3f, .3f, .3f, 1.f );
-		Style.Colors[ImGuiCol_TitleBg] = ImVec4( .3f, .3f, .3f, 1.f );
+		Style.Colors[ImGuiCol_WindowBg] = ImVec4( 0.15f, 0.15f, 0.15f, 1.f );
+		Style.Colors[ImGuiCol_TitleBgActive] = ImVec4( 0.3f, 0.3f, 0.3f, 1.f );
+		Style.Colors[ImGuiCol_TitleBg] = ImVec4( 0.3f, 0.3f, 0.3f, 1.f );
 
-		Style.Colors[ImGuiCol_Tab] = ImVec4( .45f, .45f, .45f, 1.f );
-		Style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4( .45f, .45f, .45f, 1.f );
-		Style.Colors[ImGuiCol_TabActive] = ImVec4( .5f, .5f, .35f, 1.f );
-		Style.Colors[ImGuiCol_Header] = ImVec4( .3f, .3f, .3f, 1.f );
+		Style.Colors[ImGuiCol_Tab] = ImVec4( 0.45f, 0.45f, 0.45f, 1.f );
+		Style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4( 0.45f, 0.45f, 0.45f, 1.f );
+		Style.Colors[ImGuiCol_TabActive] = ImVec4( 0.5f, 0.5f, 0.35f, 1.f );
+		Style.Colors[ImGuiCol_Header] = ImVec4( 0.3f, 0.3f, 0.3f, 1.f );
 	}
 	else
 	{
@@ -341,37 +299,6 @@ void HEditorEngine::EnableDarkMode( bool Enabled )
 	}
 }
 
-void HEditorEngine::SetupEditorPanels()
-{
-	m_EditorPanels.push_back( &m_MenuBar );
-	m_EditorPanels.push_back( &m_ToolbarPanel );
-	m_EditorPanels.push_back( &m_SceneViewport );
-	m_EditorPanels.push_back( &m_ConsoleOutputPanel );
-	m_EditorPanels.push_back( &m_ContentBrowserPanel );
-	m_EditorPanels.push_back( &m_WorldOutline );
-	m_EditorPanels.push_back( &m_DetailsPanel );
-
-	for (size_t i = 0; i < m_EditorPanels.size(); ++i)
-	{
-		m_EditorPanels[i]->SetOwningViewport( &GetClientViewport() );
-		m_EditorPanels[i]->Initialize();
-	}
-
-	m_MenuBar.AddMenuItem( "File", "Exit", this, &HEditorEngine::OnExitMenuItem );
-	m_MenuBar.AddMenuItem( "File", "Save", this, &HEditorEngine::OnSaveMenuItem );
-	m_MenuBar.AddMenuItem( "File", "Package Game", this, &HEditorEngine::PackageGame );
-	//m_MenuBar.AddMenuItem( "Edit", "Preferences", this, &HEditorEngine::OnEditorPreferencesMenuItem );
-	m_MenuBar.AddMenuItem( "Developer", "Reload Pipeline Shaders", this, &HEditorEngine::OnReloadPipelineShaders );
-
-	m_ToolbarPanel.AddListener( this, &HEditorEngine::OnEvent );
-	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
-	pDebugPawn->GetRootComponent()->SetPosition( m_UserPreferences.DebugCameraPosition );
-	pDebugPawn->GetRootComponent()->SetRotation( m_UserPreferences.DebugCameraRotation );
-	pDebugPawn->SetVerticalLookSpeed( m_UserPreferences.DebugCameraPitchSpeed );
-	pDebugPawn->SetHorizontalLookSpeed( m_UserPreferences.DebugCameraYawSpeed );
-	m_WorldOutline.AddListener( this, &HEditorEngine::OnEvent );
-	m_WorldOutline.SetWorld( &m_GameWorld );
-}
 
 //
 // Event Processing
@@ -403,6 +330,21 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
 	Dispatcher.Dispatch<AppEndPlayEvent>( this, &HEditorEngine::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HEditorEngine::OnObjectSelected );
+
+	// Editor
+	Dispatcher.Dispatch<ContentItemDoubleClicked>( this, &HEditorEngine::OnContentItemClicked );
+
+	if (m_MainViewPort.HasFocus())
+		m_HomeUI.OnEvent( e );
+
+	//if (m_PreferencesTab.HasFocus())
+	//	m_PreferencesTab.OnEvent( e );
+
+	for (uint32 i = 0; i < m_ActorEditors.size(); i++)
+	{
+		if (m_ActorEditors[i]->HasFocus())
+			m_ActorEditors[i]->OnEvent( e );
+	}
 }
 
 bool HEditorEngine::OnKeyPressed( KeyPressedEvent& e )
@@ -476,7 +418,7 @@ int32 HEditorEngine::TranslateMouseButton( DigitalInput MouseKeycode )
 
 void HEditorEngine::PackageGame()
 {
-	FileExplorerWindow::Description Desc = { 0 };
+	FileExplorerWindow::Description Desc = {};
 	Desc.FilterFoldersOnly = true;
 	Desc.Title = L"Select a location to build the game to.";
 	FileExplorerWindow Win;
@@ -487,7 +429,7 @@ void HEditorEngine::PackageGame()
 	HE_ASSERT( SelectedFolder != NULL );
 	String GameTargetBuildDir = StringHelper::UTF16ToUTF8( SelectedFolder );
 
-	
+
 	const String& ProjLocation = FGameProject::GetInstance()->GetProjectRoot();
 	const HName TGameName = FApp::GetInstance()->GetName();
 	const String GameName = TCharToChar( TGameName );
@@ -503,7 +445,7 @@ void HEditorEngine::RegisterEditorOnlyAssets()
 
 	// Materials
 	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
-	
+
 	// Prevent editor only assets from dirtying the databases.
 	FAssetDatabase::GetTextureDatabase().SetDirty( false );
 	FAssetDatabase::GetMaterialDatabase().SetDirty( false );
@@ -541,11 +483,9 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 {
 	// Reset editor state if necessary.
 	SetIsPlayingInEditor( true );
-	m_DetailsPanel.SetSelectedObject( nullptr );
-	m_SceneViewport.DeactivateDebugCamera();
 
 	// Start simulating the game.
-	GetClientViewport().GetInputDispatcher()->SetCanDispatchListeners( true );
+	m_MainViewPort.GetInputDispatcher()->SetCanDispatchListeners( true );
 	GGameInstance->OnGameSetFocus();
 	// TODO Check if the world is dirty, ask to save if it first before playing.
 	m_GameWorld.ReloadAndBeginPlay();
@@ -555,24 +495,31 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 
 bool HEditorEngine::OnAppEndPlay( AppEndPlayEvent& e )
 {
-	// Reset editor state if necissary
-	m_DetailsPanel.SetSelectedObject( nullptr );
-
+	// Reset editor state if necissary.
 	SetIsPlayingInEditor( false );
 	m_GameWorld.Reload();
-	m_SceneViewport.ActivateDebugCamera();
 
 	// Reset the input state.
-	GetClientViewport().GetInputDispatcher()->SetCanDispatchListeners( false );
-	GetClientViewport().GetInputDispatcher()->FlushCallbacks();
-	GetClientViewport().GetWindow().MakeMoueWindowAssociation();
+	m_MainViewPort.GetInputDispatcher()->SetCanDispatchListeners( false );
+	m_MainViewPort.GetInputDispatcher()->FlushCallbacks();
+	m_MainViewPort.GetWindow().MakeMoueWindowAssociation();
 
 	return false;
 }
 
 bool HEditorEngine::OnObjectSelected( ObjectSelectedEvent& e )
 {
-	m_DetailsPanel.SetSelectedObject( e.GetSelectedObject() );
+
+	return false;
+}
+
+bool HEditorEngine::OnContentItemClicked( ContentItemDoubleClicked& e )
+{
+	String Title = StringHelper::GetFilenameFromDirectoryNoExtension( TCharToChar( e.GetClickedFilename() ) );
+	ActorEditorTab* pNewEditor = new ActorEditorTab( CharToTChar( Title ), *this );
+	pNewEditor->Activate();
+	GThreadPool->Kick( RunActorEditor, pNewEditor );
+	m_ActorEditors.push_back( pNewEditor );
 
 	return false;
 }
@@ -585,7 +532,7 @@ void HEditorEngine::OnExitMenuItem()
 void HEditorEngine::OnSaveMenuItem()
 {
 	using namespace System;
-	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, MDIcon_Question);
+	MessageDialogResult Result = CreateMessageBox( L"Are you sure you want to save the project?", L"Save Project?", MDI_OkCancel, MDIcon_Question );
 	if (Result == MDR_Ok)
 	{
 		FAssetDatabase::SaveAssetDatabases();
@@ -596,31 +543,53 @@ void HEditorEngine::OnSaveMenuItem()
 
 void HEditorEngine::OnEditorPreferencesMenuItem()
 {
-	if (m_PreferencesViewport.IsValid())
-	{
-		// If already open, bring it to focus.
-		m_PreferencesViewport.BringToFocus();
-		return;
-	}
-
-	FWindow::Description Desc = { };
-	Desc.bHasTitleBar = true;
-	Desc.bShowImmediate = true;
-	Desc.Resolution.Width = 1920;
-	Desc.Resolution.Height = 1080;
-	Desc.Title = TEXT( "Editor Preferences" );
-	m_PreferencesViewport.Initialize( Desc );
+	//m_PreferencesTab.Activate();
 }
 
 void HEditorEngine::OnEditorPreferencesViewportClosed()
 {
-	m_PreferencesViewport.Uninitialize();
+	//m_PreferencesTab.Deactivate();
 }
 
 void HEditorEngine::OnReloadPipelineShaders()
 {
 	HE_LOG( Log, TEXT( "Starting shader pipeline reload." ) );
 	GCommandManager.IdleGpu();
-	GetClientViewport().ReloadRenderPipelines();
+	m_MainViewPort.ReloadRenderPipelines();
 	HE_LOG( Log, TEXT( "Shader pipeline reload completed." ) );
+}
+
+
+// Static function implementations
+//
+
+void HEditorEngine::OnLaunchStandalone()
+{
+	TChar Path[HE_MAX_PATH];
+	System::GetWorkingDirectory( sizeof( Path ), Path );
+	String ExePath = StringHelper::UTF16ToUTF8( Path );
+	ExePath += "HelixEditor.exe";
+	ExePath += " -launchcfg LaunchGame";
+
+	system( ExePath.c_str() );
+}
+
+void RunActorEditor( void* pData )
+{
+	ImGuiContext* pImGuiCtx = ImGui::CreateContext();
+
+	ActorEditorTab& Editor = *(ActorEditorTab*)pData;
+	FFrameTimer Timer;
+	Timer.Initialize();
+	while (Editor.GetWindow().IsValid())
+	{
+		Timer.Tick();
+
+		Editor.Tick( (float)Timer.GetTimeMiliSeconds() );
+		FCommandContext& CmdCtx = FCommandContext::Begin( TEXT( "Render Actor Editor" ) );
+		{
+			Editor.Render( CmdCtx );
+		}
+		CmdCtx.End();
+	}
 }

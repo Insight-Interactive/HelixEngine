@@ -227,7 +227,7 @@ FORCEINLINE void FInputDispatcher::FlushCallbacks()
 
 FORCEINLINE void FInputDispatcher::AddActionMapping( ActionMapping& Mapping )
 {
-	AddActionMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeyCode
+	AddActionMappingInternal( StringHash( Mapping.Hint ), Mapping.MappedKeyCode
 #if HE_WITH_EDITOR
 		, Mapping.Hint 
 #endif
@@ -236,12 +236,12 @@ FORCEINLINE void FInputDispatcher::AddActionMapping( ActionMapping& Mapping )
 
 FORCEINLINE void FInputDispatcher::AddAxisMapping( AxisMapping& Mapping )
 {
-	AddAxisMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeycode, Mapping.Scale, Mapping.Hint );
+	AddAxisMappingInternal( StringHash( Mapping.Hint ), Mapping.MappedKeycode, Mapping.Scale, Mapping.Hint );
 }
 
 FORCEINLINE void FInputDispatcher::AddActionMapping( const char* Hint, DigitalInput MappedKey )
 {
-	AddActionMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey
+	AddActionMappingInternal( StringHash( Hint ), MappedKey
 #if HE_WITH_EDITOR
 		, Hint
 #endif
@@ -250,7 +250,7 @@ FORCEINLINE void FInputDispatcher::AddActionMapping( const char* Hint, DigitalIn
 
 FORCEINLINE void FInputDispatcher::AddAxisMapping( const char* Hint, DigitalInput MappedKey, float Scale )
 {
-	AddAxisMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey, Scale
+	AddAxisMappingInternal( StringHash( Hint ), MappedKey, Scale
 #if HE_WITH_EDITOR
 		, Hint 
 #endif
@@ -277,12 +277,12 @@ FORCEINLINE void FInputDispatcher::AddAxisMappingInternal(StringHashValue HintHa
 
 FORCEINLINE void FInputDispatcher::RegisterAxisCallback( const char* MappedHint, AxisCallback Callback )
 {
-	m_AxisCallbacks[StringHash( MappedHint, strlen( MappedHint ) )].push_back( Callback );
+	m_AxisCallbacks[StringHash( MappedHint )].push_back( Callback );
 }
 
 FORCEINLINE void FInputDispatcher::RegisterActionCallback( const char* MappedHint, EInputEvent EventType, ActionCallback Callback )
 {
-	m_ActionCallbacks[{StringHash( MappedHint, strlen( MappedHint ) ), EventType}].push_back( Callback );
+	m_ActionCallbacks[{StringHash( MappedHint ), EventType}].push_back( Callback );
 }
 
 template <typename EventType, typename ... EventInitArgs>

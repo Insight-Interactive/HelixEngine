@@ -14,10 +14,6 @@ ToolbarPanel::~ToolbarPanel()
 {
 }
 
-void ToolbarPanel::Initialize()
-{
-}
-
 void ToolbarPanel::UnInitialize()
 {
 }

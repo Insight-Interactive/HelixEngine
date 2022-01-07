@@ -5,6 +5,7 @@
 #include "StringHelper.h"
 #include "System.h"
 #include "Engine/GameProject.h"
+#include "Editor/Event/EditorEvent.h"
 
 
 ContentBrowserPanel::ContentBrowserPanel()
@@ -17,8 +18,10 @@ ContentBrowserPanel::~ContentBrowserPanel()
 
 }
 
-void ContentBrowserPanel::Initialize()
+void ContentBrowserPanel::Initialize( FViewportContext* pOwningTab )
 {
+	Super::Initialize( pOwningTab );
+
 	const String & GameProjectRoot = FGameProject::GetInstance()->GetContentFolder();
 	m_ProjectContentRoot = CharToTChar( GameProjectRoot );
 	m_ProjectContentRoot.append(TEXT("\\*"));
@@ -85,9 +88,18 @@ void ContentBrowserPanel::TraverseFolder( const TChar* Folder )
 				const ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_Leaf;
 
 				if (ImGui::TreeNodeEx( FileName.c_str(), NodeFlags ))
+				{
+					if (ImGui::IsItemHovered( ) && ImGui::IsMouseDoubleClicked( ImGuiMouseButton_Left ))
+					{
+						ContentItemDoubleClicked e( File.cFileName );
+						EmitEvent( e );
+					}
+
 					ImGui::TreePop();
+				}
 
 			}
+
 		} while (FindNextFile( hSearch, &File ));
 
 		FindClose( hSearch );

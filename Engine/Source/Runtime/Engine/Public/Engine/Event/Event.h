@@ -15,7 +15,7 @@ enum class EEventType
 	// Application
 	ET_AppBeginPlay, ET_AppEndPlay, ET_AppTick, ET_AppRender, ET_AppSuspending, ET_AppResuming,
 	// Engine
-	ET_ObjectSelected,
+	ET_ObjectSelected, ET_EnginePreStartup, ET_EngineStartup, ET_EnginePostStartup,
 	// Input
 	ET_InputAction, ET_InputAxis,
 	// Key
@@ -24,6 +24,8 @@ enum class EEventType
 	ET_MouseButtonPressed, ET_MouseButtonReleased, ET_MouseMoved, ET_RawMouseMoved, ET_MouseScrolled,
 	// Gamepad
 	ET_GamepadThumbstickMoved,
+	// Editor
+	ET_ContentItemDoubleClicked, ET_EditorTabOpened, ET_EditorTabClosed,
 
 	ET_EventCount,
 };
@@ -44,6 +46,7 @@ enum EEventCategory
 	EC_Window		= 0x0400,
 	EC_Renderer		= 0x0800,
 	EC_Engine		= 0x1000,
+	EC_Editor		= 0x2000,
 };
 
 #define EVENT_CLASS_TYPE( Type )	static EEventType GetStaticType()	{ return EEventType::##Type; }				\
@@ -121,6 +124,9 @@ public:
 		: InputEvent( KeyMapCode, Status )
 	{
 	}
+	virtual ~ActionEvent()
+	{
+	}
 
 	EVENT_CLASS_TYPE( ET_InputAction )
 		EVENT_CLASS_CATEGORY( EC_Input )
@@ -134,6 +140,9 @@ public:
 	AxisEvent( DigitalInput KeyMapCode, float Delta )
 		: InputEvent( KeyMapCode, IE_Moved )
 		, m_Delta( Delta )
+	{
+	}
+	virtual ~AxisEvent()
 	{
 	}
 
@@ -156,6 +165,9 @@ class EventDispatcher
 public:
 	EventDispatcher( Event& event )
 		: m_Event( event ) 
+	{
+	}
+	~EventDispatcher()
 	{
 	}
 

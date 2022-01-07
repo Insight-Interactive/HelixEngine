@@ -10,28 +10,35 @@ class FViewportContext;
 class Panel : public EventEmitter<void, Event&>
 {
 	friend class HEditorEngine;
-	friend class TabbedEditorViewport;
+	friend class ContentEditorInterface;
+	friend class HelixEdHomeUI;
 public:
-	virtual void Initialize() {}
+	virtual void Initialize( FViewportContext* pOwningViewport );
 	virtual void UnInitialize() {}
 	
 	virtual void Tick( float DeltaTime ) {}
 	virtual void Render( FCommandContext& CmdCtx ) {}
 
-	FViewportContext* GetOwningViewport();
+	virtual void OnEvent( Event& e ) {}
+
+	bool GetIsActive() const;
+	bool SetIsActive( bool IsActive );
+	FViewportContext& GetOwningViewport();
 
 protected:
 	Panel() 
+		: m_IsActive( true )
 	{
 	}
 	virtual ~Panel()
 	{
 	}
 
-	void SetOwningViewport( FViewportContext* pOwningViewport );
+	void SetOwner( FViewportContext* pOwningTab );
 
 protected:
-	FViewportContext* m_OwningViewport;
+	FViewportContext* m_pOwner;
+	bool m_IsActive;
 
 };
 
@@ -39,12 +46,22 @@ protected:
 // Inline function implementations
 //
 
-inline FViewportContext* Panel::GetOwningViewport()
-{
-	return m_OwningViewport;
+inline void Panel::Initialize( FViewportContext* pOwningViewport )
+{ 
+	SetOwner( pOwningViewport );
 }
 
-inline void Panel::SetOwningViewport( FViewportContext* pOwningViewport )
+inline bool Panel::GetIsActive() const
 {
-	m_OwningViewport = pOwningViewport;
+	return m_IsActive;
+}
+
+inline bool Panel::SetIsActive( bool IsActive )
+{
+	m_IsActive = IsActive;
+}
+
+inline void Panel::SetOwner( FViewportContext* pOwningTab )
+{
+	m_pOwner = pOwningTab;
 }

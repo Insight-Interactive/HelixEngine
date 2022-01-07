@@ -16,6 +16,12 @@ public:
 	const String& GetConfigFolder() const;
 	const String& GetContentFolder() const;
 
+	/*
+		Returns the full path for a piece of content located in the project's content directory.
+	*/
+	String GetContentFullPath( const String& ContentSubDirectory );
+	String GetConfigFileFullPath( const String& ConfigFileSubDirectory );
+
 	const HName& GetGameName() const;
 	const HName& GetProjectName() const;
 
@@ -49,6 +55,16 @@ FORCEINLINE const String& FGameProject::GetConfigFolder() const
 FORCEINLINE const String& FGameProject::GetContentFolder() const
 {
 	return m_ContentDirectory;
+}
+
+FORCEINLINE String FGameProject::GetContentFullPath( const String& ContentSubDirectory )
+{
+	return GetContentFolder() + "/" + ContentSubDirectory;
+}
+
+FORCEINLINE String FGameProject::GetConfigFileFullPath( const String& ConfigFileSubDirectory )
+{
+	return GetConfigFolder() + "/" + ConfigFileSubDirectory;
 }
 
 FORCEINLINE const HName& FGameProject::GetGameName() const

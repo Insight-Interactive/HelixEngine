@@ -174,25 +174,25 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -204,25 +204,25 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -234,25 +234,25 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -264,25 +264,25 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -355,26 +355,26 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win64\Win64\DebugEditor\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Win64\Win64\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Win32\Win32\DebugEditor\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Win32\Win32\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Durango\Durango\DebugEditor\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Durango\Durango\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugEditor-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugEditor-Scorpio\Scorpio\DebugEditor\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugEditor-Scorpio\Scorpio\DebugEditor\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -385,26 +385,26 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win64\Win64\Development\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Win64\Win64\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Win32\Win32\Development\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Win32\Win32\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Durango\Durango\Development\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Durango\Durango\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\Development-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\Development-Scorpio\Scorpio\Development\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\Development-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Development-Scorpio\Scorpio\Development\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -415,26 +415,26 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win64\Win64\DebugGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Win64\Win64\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Win32\Win32\DebugGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Win32\Win32\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Durango\Durango\DebugGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Durango\Durango\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\DebugGame-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\DebugGame-Scorpio\Scorpio\DebugGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\DebugGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\DebugGame-Scorpio\Scorpio\DebugGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -445,26 +445,26 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win64\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win64\Win64\ShippingGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Win64\Win64\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Win32\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Win32\Win32\ShippingGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Win32\Win32\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Durango\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Durango\Durango\ShippingGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Durango\Durango\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
-    <OutDir>..\..\..\..\Build-msc-v142\ShippingGame-Scorpio\</OutDir>
-    <IntDir>..\..\..\..\Build-msc-v142\Intermediates\ShippingGame-Scorpio\Scorpio\ShippingGame\HelixEd\</IntDir>
+    <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\ShippingGame-Scorpio\Scorpio\ShippingGame\HelixEd\</IntDir>
     <TargetName>Helix-HelixEd</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -859,8 +859,13 @@
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
     <ClInclude Include="Public\Developer\ADebugPawn.h" />
     <ClInclude Include="Public\Developer\ConsoleWindow.h" />
+    <ClInclude Include="Public\Editor\AssetEditorInterface.h" />
     <ClInclude Include="Public\Editor\EditorEngine.h" />
-    <ClInclude Include="Public\Editor\PreferencesViewport.h" />
+    <ClInclude Include="Public\Editor\Event\EditorEvent.h" />
+    <ClInclude Include="Public\Editor\Tabs\ActorEditorTab.h" />
+    <ClInclude Include="Public\Editor\Tabs\ContentEditorInterface.h" />
+    <ClInclude Include="Public\Editor\Tabs\HelixEdHomeUI.h" />
+    <ClInclude Include="Public\Editor\Tabs\PreferencesTab.h" />
     <ClInclude Include="Public\Panels\ConsoleOutputPanel.h" />
     <ClInclude Include="Public\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="Public\Panels\DetailsPanel.h" />
@@ -871,6 +876,7 @@
     <ClInclude Include="Public\Panels\WorldOutlinePanel.h" />
     <ClInclude Include="Public\Tools\AssetImporter.h" />
     <ClInclude Include="Public\Tools\PackageMaker.h" />
+    <ClInclude Include="Public\UI\EditorUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
@@ -921,7 +927,43 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Private\Editor\PreferencesViewport.cpp">
+    <ClCompile Include="Private\Editor\Tabs\ActorEditorTab.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\ContentEditorInterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\HelixEdHomeUI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\PreferencesTab.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
@@ -1003,6 +1045,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Private\Panels\Panel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Private\Panels\SceneViewportPanel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
@@ -1064,6 +1118,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Private\Tools\PackageMaker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Private\UI\EditorUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>

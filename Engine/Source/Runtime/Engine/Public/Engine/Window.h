@@ -47,11 +47,18 @@ public:
 	*/
 	struct Description
 	{
+		// The title of the window. Does nothing if bHasTitleBar is false.
 		const TChar* Title;
+		// The initial width and height of the window.
 		FResolution Resolution;
+		// Does the window have a title bar?
 		bool bHasTitleBar;
+		// Will the window show immediatly after it is regitered with the OS?
 		bool bShowImmediate;
+		// Does the window allow files to be dropped onto it?
 		bool bAllowDropFiles;
+		// The parent to thie window. Refer the the OS window parenting magement 
+		// for window ordering when this is not null.
 		FWindow* pParent;
 
 		Description()
@@ -119,7 +126,6 @@ protected:
 	Description m_Desc;
 	EWindowMode m_WindowMode;
 	TChar m_WindowClassName[kMaxClassNameSize];
-	TChar m_WindowTitle[kMaxWindowTitleLength];
 	TDynamicArray<OutVoidInEWindowModeFn*> m_OnWindowModeChangedCallbacks;
 	FSwapChain m_SwapChain;
 

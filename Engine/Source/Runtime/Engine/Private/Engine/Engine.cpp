@@ -12,10 +12,9 @@
 #include "GpuResource.h"
 #include "CommandContext.h"
 #include "CommandManager.h"
-#include "RendererInitializer.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
-#include "BatchRenderer.h"
+
 
 Logger GEngineLogger;
 HEngine* GEngine = nullptr;
@@ -32,7 +31,7 @@ static void SplashMain( void* pUserData );
 
 HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
-	, m_IsEditorPresent( CmdLine[L"-launchcfg"] == L"LaunchEditor" )
+	, m_IsEditorPresent( CmdLine.ArgumentEquals(L"-launchcfg", L"LaunchEditor") )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds( 0.0 )
 {
@@ -54,8 +53,8 @@ void HEngine::EngineMain()
 	Startup();
 	PostStartup();
 
-	// Update
-	Update();
+	// Update the engine
+	Tick();
 
 	// Shutdown
 	PreShutdown();
@@ -67,6 +66,8 @@ void HEngine::PreStartup()
 {
 	CreateLogger( GEngineLogger, "Helix Engine" );
 	HE_LOG( Log, TEXT( "Beginning engine pre-startup." ) );
+
+	EmitEvent( EnginePreStartupEvent() );
 
 	System::InitializePlatform();
 
@@ -82,9 +83,6 @@ void HEngine::PreStartup()
 	HE_LOG( Log, TEXT( "FileSystem initialized with working directory: %s" ), Path );
 #endif
 
-	// Initialize the renderer.
-	FRendererInitializer::InitializeContext( m_RenderContext );
-
 	// Initialize Subsystems
 	m_ReneringSubsystem.Initialize();
 	m_PhysicsSubsystem.Initialize();
@@ -98,6 +96,8 @@ void HEngine::PreStartup()
 void HEngine::Startup()
 {
 	HE_LOG( Log, TEXT( "Starting up engine." ) );
+
+	EmitEvent( EngineStartupEvent() );
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
@@ -121,7 +121,7 @@ void HEngine::Startup()
 	FWindow::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar		= true;
 	ClientDesc.bShowImmediate	= false;
-	ClientDesc.Resolution		= GCommonResolutions[k1080p];
+	ClientDesc.Resolution		= GCommonResolutions[k1080p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
 #if HE_WITH_EDITOR
 	HName EngineTitle			=  TEXT( "Helix Editor" ) ;
 	EngineTitle					+= TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
@@ -139,12 +139,11 @@ void HEngine::Startup()
 
 
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
-	// Create the splash screen to serve as a loading indicator.
+	// Create the splash screen to serve as a loading indicator to the user.
 	GThreadPool->Kick( SplashMain, NULL );
-	//std::this_thread::sleep_for(std::chrono::seconds(2)); // Uncomment to delay app and debug the splash screen.
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
-	m_GameWorld.SetViewport( &GetClientViewport() );
+	m_GameWorld.SetViewport( &m_MainViewPort );
 
 	HE_LOG( Log, TEXT( "Engine startup complete." ) );
 }
@@ -153,21 +152,22 @@ void HEngine::PostStartup()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-startup." ) );
 
+	EmitEvent( EnginePostStartupEvent() );
+
 	// TODO Get this from the DefaultEngine.ini
-	String StartingWorldPath = FGameProject::GetInstance()->GetContentFolder() + "/Levels/TestLevel.hlevel";
+	String StartingWorldPath = FGameProject::GetInstance()->GetContentFullPath("Levels/TestLevel.hlevel");
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultInput.ini";
-	GetClientViewport().GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath("DefaultInput.ini");
+	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
-	GetClientViewport().Show();
-	GetClientViewport().BringToFocus();
+	m_MainViewPort.Show();
+	m_MainViewPort.BringToFocus();
 	if (IsPlayingInEditor())
 	{
 		m_GameWorld.BeginPlay();
 		GGameInstance->OnGameSetFocus();
 	}
-	m_ReneringSubsystem.PushSceneForRendering( *m_GameWorld.GetScene() );
 
 	m_IsInitialized = true;
 	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
@@ -186,7 +186,7 @@ void HEngine::Shutdown()
 	HE_LOG( Log, TEXT( "Shutting down engine." ) );
 
 	FApp::GetInstance()->Shutdown();
-	GetClientViewport().Uninitialize();
+	m_MainViewPort.Uninitialize();
 	m_GameWorld.Flush();
 
 	FAssetDatabase::Uninitialize();
@@ -199,7 +199,6 @@ void HEngine::PostShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
 	
-	FRendererInitializer::UnInitializeContext( m_RenderContext );
 	HE_SAFE_DELETE_PTR( GThreadPool );
 
 	System::UninitializePlatform();
@@ -211,7 +210,7 @@ void HEngine::PostShutdown()
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
 
-void HEngine::Update()
+void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 
@@ -222,12 +221,12 @@ void HEngine::Update()
 		TickTimers();
 		float DeltaTime = (float)GetDeltaTime();
 
-		GetClientViewport().Update( DeltaTime );
+		m_MainViewPort.Tick( DeltaTime );
 
 		// Check if the main viewport has focus. There will 
 		// only be one window in shipping builds.
 #if HE_STANDALONE
-		if (!GetClientViewport().HasFocus())
+		if (!m_MainViewPort.HasFocus())
 		{
 			BackgroundUpdate( DeltaTime );
 			continue;
@@ -255,7 +254,7 @@ void HEngine::Update()
 
 void HEngine::RenderClientViewport( float DeltaTime )
 {
-	GetClientViewport().Render();
+	m_MainViewPort.Render();
 }
 
 void HEngine::BackgroundUpdate( float DeltaTime )
@@ -283,7 +282,7 @@ bool HEngine::OnClientWindowClosed( WindowClosedEvent& e )
 void HEngine::RequestShutdown()
 {
 	HE_LOG( Log, TEXT( "Engine shutdown requested." ) );
-	m_Application.RequestShutdown();
+	m_Application.Terminate();
 }
 
 

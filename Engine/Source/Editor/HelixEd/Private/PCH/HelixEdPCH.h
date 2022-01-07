@@ -32,6 +32,7 @@
 #include "MathCore.h"
 #include "Engine/EngineMacros.h"
 #include "Engine/EngineDefines.h"
+#include "StringHelper.h"
 
 
 // System

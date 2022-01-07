@@ -4,7 +4,10 @@
 #include "CoreFwd.h"
 
 #include "CommonEnums.h"
+#include "CommandManager.h"
 
+
+extern FCommandManager GCommandManager;
 
 class RENDER_API FGpuResource
 {
@@ -93,6 +96,7 @@ FORCEINLINE FGpuResource::FGpuResource( EResourceState CurrentState, EResourceSt
 
 FORCEINLINE void FGpuResource::Destroy()
 {
+	GCommandManager.IdleGpu();
 #if R_WITH_D3D12
 	m_pID3D12Resource	= nullptr;
 	m_GpuVirtualAddress = HE_D3D12_GPU_VIRTUAL_ADDRESS_NULL;

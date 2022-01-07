@@ -13,10 +13,6 @@ ConsoleOutputPanel::~ConsoleOutputPanel()
 {
 }
 
-void ConsoleOutputPanel::Initialize()
-{
-}
-
 void ConsoleOutputPanel::UnInitialize()
 {
 }

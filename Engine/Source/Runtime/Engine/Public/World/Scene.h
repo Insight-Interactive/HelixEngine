@@ -68,6 +68,7 @@ private:
 
 	std::vector<HPointLightComponent*> m_PointLights;
 	HWorld* m_pOwner;
+
 };
 
 
@@ -90,7 +91,7 @@ FORCEINLINE void HScene::WaitForRenderingFinished()
 {
 	while (m_IsRendering)
 	{
-		// Wait for the render thread to finish render this scene.
+		// Wait for the render thread to finish rendering this scene.
 	}
 }
 

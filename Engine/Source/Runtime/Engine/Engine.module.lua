@@ -145,6 +145,7 @@ project ("Engine")
 		{
 			"PackageCooker",
 		}
+		targetname ("HelixEditor")
 
 	filter ("configurations:DebugGame or ShippingGame")
 		debugargs

@@ -13,11 +13,6 @@ MenuBarPanel::~MenuBarPanel()
 
 }
 
-void MenuBarPanel::Initialize()
-{
-
-}
-
 void MenuBarPanel::UnInitialize()
 {
 

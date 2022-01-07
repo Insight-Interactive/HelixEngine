@@ -32,7 +32,7 @@ private:
 
 
 /*
-	Valid log categories for Logging instance.
+	Valid log categories for logging instance.
 */
 enum class ELogSeverity
 {
@@ -90,7 +90,7 @@ public:
 	FORCEINLINE const TChar* GetLoggerName();
 
 	// Logger that will log output to the console window. Recommended that you dont call directly. 
-	// Instead, use IE_LOG so logs will be stripped from release builds.
+	// Instead, use macro to wrap this so logs will be stripped from release builds.
 	void LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* File, const TChar* Function, int Line, ...);
 
 private:

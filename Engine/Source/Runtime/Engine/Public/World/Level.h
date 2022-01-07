@@ -3,6 +3,7 @@
 #include "CriticalSection.h"
 #include "GameFramework/HObject.h"
 #include "AssetRegistry/SerializeableInterface.h"
+#include "GameFramework/Actor/AActor.h"
 
 
 class AActor;
@@ -19,6 +20,7 @@ public:
 	~HLevel();
 
 	void Flush();
+	bool IsValid() const;
 
 	template <typename ActorType>
 	ActorType* CreateActor(const HName& Name = TEXT("<Unnamed Actor>"));
@@ -70,4 +72,9 @@ inline void HLevel::GuardedAddActor(AActor* pActor)
 inline HWorld* HLevel::GetWorld()
 {
 	return m_pOwningWorld;
+}
+
+inline bool HLevel::IsValid() const
+{
+	return m_pOwningWorld && m_Actors.size() > 0;
 }

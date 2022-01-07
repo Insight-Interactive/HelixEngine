@@ -18,10 +18,6 @@ WorldOutlinePanel::~WorldOutlinePanel()
 {
 }
 
-void WorldOutlinePanel::Initialize()
-{
-}
-
 void WorldOutlinePanel::UnInitialize()
 {
 }
@@ -36,10 +32,10 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 	{
 		if (m_pWorld)
 		{
-			HLevel* pLevel = m_pWorld->GetCurrentLevel();
-			for (uint32 j = 0; j < pLevel->m_Actors.size(); j++)
+			HLevel& Level = m_pWorld->GetCurrentLevel();
+			for (uint32 j = 0; j < Level.m_Actors.size(); j++)
 			{
-				AActor* pCurrentActor = pLevel->m_Actors[j];
+				AActor* pCurrentActor = Level.m_Actors[j];
 
 				const HName& ActorName = pCurrentActor->GetObjectName();
 				if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))

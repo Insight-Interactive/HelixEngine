@@ -6,11 +6,12 @@
 
 class ContentBrowserPanel : public Panel
 {
+	using Super = Panel;
 public:
 	ContentBrowserPanel();
 	virtual ~ContentBrowserPanel();
 
-	virtual void Initialize() override;
+	virtual void Initialize( FViewportContext* pOwningTab ) override;
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;

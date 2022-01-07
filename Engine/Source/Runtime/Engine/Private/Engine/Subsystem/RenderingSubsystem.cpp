@@ -9,12 +9,12 @@
 #include "Engine/Window.h"
 #include "SwapChain.h"
 #include "CommandContext.h"
+#include "RendererInitializer.h"
 
 
 FRenderingSubsystem::FRenderingSubsystem()
 	: FSubsystemInterface( "Rendering Subsystem" )
 {
-
 }
 
 FRenderingSubsystem::~FRenderingSubsystem()
@@ -24,11 +24,16 @@ FRenderingSubsystem::~FRenderingSubsystem()
 
 void FRenderingSubsystem::Initialize()
 {
+	m_Scenes.reserve( 4 );
+	// Initialize the renderer.
+	FRendererInitializer::InitializeContext( m_RenderContext );
 }
 
 void FRenderingSubsystem::UnInitialize()
 {
 	TerminateAsyncProcess();
+
+	FRendererInitializer::UnInitializeContext( m_RenderContext );
 }
 
 void FRenderingSubsystem::RunAsync_Implementation()

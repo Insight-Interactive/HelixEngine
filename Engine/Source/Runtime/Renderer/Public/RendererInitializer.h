@@ -3,14 +3,13 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-#include "RenderContext.h"
 
-
-class HEngine;
+class FRenderContext;
+class FSwapChain;
 
 class RENDER_API FRendererInitializer
 {
-	friend HEngine;
+	friend class FRenderingSubsystem;
 public:
 	static void InitializeSwapChain( FSwapChain& OutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height );
 

@@ -14,10 +14,6 @@ DetailsPanel::~DetailsPanel()
 {
 }
 
-void DetailsPanel::Initialize()
-{
-}
-
 void DetailsPanel::UnInitialize()
 {
 }

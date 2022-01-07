@@ -2,16 +2,12 @@
 
 #include "Engine/Engine.h"
 
-#include "Panels/MenuBarPanel.h"
-#include "Panels/ToolbarPanel.h"
-#include "Panels/SceneViewportPanel.h"
-#include "Panels/ConsoleOutputPanel.h"
-#include "Panels/ContentBrowserPanel.h"
-#include "Panels/WorldOutlinePanel.h"
-#include "Panels/DetailsPanel.h"
+#include "UI/EditorUI.h"
+#include "Editor/Tabs/ActorEditorTab.h"
+#include "Editor/Tabs/HelixEdHomeUI.h"
+#include "Editor/Tabs/PreferencesTab.h"
 #include "Tools/AssetImporter.h"
 #include "Developer/ConsoleWindow.h"
-#include "Editor/PreferencesViewport.h"
 
 
 class ADebugPawn;
@@ -28,6 +24,7 @@ class WindowFileDropEvent;
 class AppBeginPlayEvent;
 class AppEndPlayEvent;
 class ObjectSelectedEvent;
+class ContentItemDoubleClicked;
 
 
 struct EditorPreferences
@@ -46,15 +43,20 @@ class HEditorEngine : public HEngine
 {
 	HE_DECL_NON_COPYABLE( HEditorEngine );
 	using Super = HEngine;
+	friend class HelixEdHomeUI;
 public:
 	HEditorEngine( FCommandLine& CmdLine );
 	virtual ~HEditorEngine();
 
 	virtual void PreStartup() override;
+	virtual void PostStartup() override;
 	virtual void Startup() override;
 	virtual void Shutdown() override;
 
 	void EnableDarkMode( bool Enabled );
+
+	void PackageGame();
+	EditorPreferences& GetPreferences();
 
 protected:
 	virtual void RenderClientViewport( float DeltaTime ) override;
@@ -76,36 +78,45 @@ protected:
 	bool OnAppBeginPlay( AppBeginPlayEvent& e );
 	bool OnAppEndPlay( AppEndPlayEvent& e );
 	bool OnObjectSelected( ObjectSelectedEvent& e );
+	bool OnContentItemClicked( ContentItemDoubleClicked& e );
 
 	void OnExitMenuItem();
 	void OnSaveMenuItem();
 	void OnEditorPreferencesMenuItem();
 	void OnEditorPreferencesViewportClosed();
 	void OnReloadPipelineShaders();
+	void OnLaunchStandalone();
 
 protected:
 	void LoadEditorPreferences();
 	void SaveEditorPreferences();
-	void SetupImGuiRenderBackend();
-	void SetupEditorPanels();
 	int32 TranslateMouseButton( DigitalInput MouseKeycode );
-	void PackageGame();
 	void RegisterEditorOnlyAssets();
 
 protected:
-	PreferencesViewport m_PreferencesViewport;
-	EditorPreferences m_UserPreferences;
-	std::vector<Panel*> m_EditorPanels;
+	std::vector<ActorEditorTab*> m_ActorEditors;
+	EditorUIContext m_UIContext;
 
-	MenuBarPanel m_MenuBar;
-	ToolbarPanel m_ToolbarPanel;
-	ContentBrowserPanel m_ContentBrowserPanel;
-	ConsoleOutputPanel m_ConsoleOutputPanel;
-	SceneViewportPanel m_SceneViewport;
-	WorldOutlinePanel m_WorldOutline;
-	DetailsPanel m_DetailsPanel;
+	HelixEdHomeUI m_HomeUI;
+	//PreferencesTab m_PreferencesTab;
+
+	EditorPreferences m_UserPreferences;
+	std::vector<ContentEditorInterface*> m_EditorTabs;
+
 
 	AssetImporter m_AssetImporter;
 	ConsoleWindow m_ConsoleWindow;
 
 };
+
+// Global editor engine reference. Can only be accessed in editor build configurations.
+extern HEditorEngine* GEditorEngine;
+
+//
+// Inline function implementations
+//
+
+FORCEINLINE EditorPreferences& HEditorEngine::GetPreferences() 
+{
+	return m_UserPreferences;
+}

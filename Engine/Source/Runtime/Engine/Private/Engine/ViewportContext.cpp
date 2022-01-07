@@ -11,7 +11,7 @@
 
 
 FViewportContext::FViewportContext()
-	: m_WorldInView( NULL )
+	: m_pWorldInView( nullptr )
 	, m_DepthBuffer( 1, 0 )
 {
 }
@@ -50,7 +50,7 @@ void FViewportContext::Uninitialize()
 	m_Window.Destroy();
 }
 
-void FViewportContext::Update( float DeltaTime )
+void FViewportContext::Tick( float DeltaTime )
 {
 	// Update the world inputs.
 	m_InputDispatcher.UpdateInputs( DeltaTime );
@@ -59,7 +59,7 @@ void FViewportContext::Update( float DeltaTime )
 void FViewportContext::Render()
 {
 	// Wait for the previous frame to finish rendering.
-	HScene& Scene = *m_WorldInView->GetScene();
+	HScene& Scene = m_pWorldInView->GetScene();
 	Scene.WaitForRenderingFinished();
 
 	if (GEngine->GetIsEditorPresent())
@@ -76,12 +76,12 @@ void FViewportContext::Render()
 
 void FViewportContext::SetWorld( HWorld* pWorldToView )
 {
-	m_WorldInView = pWorldToView;
+	m_pWorldInView = pWorldToView;
 }
 
 void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 {
-	if (m_WorldInView == NULL) 
+	if (m_pWorldInView == nullptr) 
 		return;
 
 	FSceneRenderParams RenderParams = {};
@@ -91,8 +91,8 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	RenderParams.pView					= &GetClientViewport();
 	RenderParams.pScissor				= &GetClientRect();
 	RenderParams.pRenderingViewport		= this;
-	RenderParams.pRenderingCamera		= m_WorldInView->GetCurrentSceneRenderCamera();
-	m_WorldInView->GetScene()->RequestRender( RenderParams );
+	RenderParams.pRenderingCamera		= m_pWorldInView->GetCurrentSceneRenderCamera();
+	m_pWorldInView->GetScene().RequestRender( RenderParams );
 }
 
 void FViewportContext::InitializeRenderingResources()

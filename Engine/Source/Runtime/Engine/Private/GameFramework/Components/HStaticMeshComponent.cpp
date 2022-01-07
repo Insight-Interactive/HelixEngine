@@ -19,12 +19,6 @@ HStaticMeshComponent::HStaticMeshComponent(FComponentInitArgs& InitArgs)
 	: HSceneComponent(InitArgs)
 {
 	m_MeshWorldCB.Create( L"[Static Mesh Component] World CB" );
-
-	FDebugLineRenderInfo LineInfo = {};
-	LineInfo.Start = GetOwner()->GetRootComponent()->GetAbsoluteWorldPosition();
-	LineInfo.End = GetAbsoluteWorldPosition();
-	LineInfo.Lifetime = 20.f;
-	GetWorld()->DrawDebugLine( LineInfo );
 }
 
 HStaticMeshComponent::~HStaticMeshComponent()
@@ -67,14 +61,14 @@ void HStaticMeshComponent::OnCreate()
 {
 	Super::OnCreate();
 
-	GetWorld()->GetScene()->AddStaticMesh( this );
+	GetWorld()->GetScene().AddStaticMesh( this );
 }
 
 void HStaticMeshComponent::OnDestroy()
 {
 	Super::OnDestroy();
 
-	GetWorld()->GetScene()->RemoveStaticMesh( this );
+	GetWorld()->GetScene().RemoveStaticMesh( this );
 }
 
 void HStaticMeshComponent::OnAttach()

@@ -11,16 +11,19 @@
 #include "AssetRegistry/AssetDatabase.h"
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "Engine/Subsystem/RenderingSubsystem.h"
+#include "Engine/Event/EventEmitter.h"
 
 
 class WindowClosedEvent;
 class CommandLine;
 class HWorld;
 class ThreadPool;
+class EngineEvent;
 
-class HEngine
+class HEngine : public EventEmitter<void, EngineEvent&>
 {
 	friend class HEngineLaunchBootstraper;
+	friend class HWorld;
 public:
 	/*
 		Requests a global shutdown from the engine. Cleaning up and shutting down everything.
@@ -57,12 +60,12 @@ public:
 		Returns true if the editor is present, false if not. Editor is present if "-launchcfg LaunchEditor" is 
 		passed in the command line or in standalone game builds.
 	*/
-	bool GetIsEditorPresent();
+	bool GetIsEditorPresent() const;
 
 	/*
 		True if the the engine is running a game simulation in the editor (or at all), false if not.
 	*/
-	bool IsPlayingInEditor();
+	bool IsPlayingInEditor() const;
 
 
 protected:
@@ -79,8 +82,10 @@ protected:
 	virtual void Startup();
 	virtual void PostStartup();
 
-	void Update();
+	// Ticks the engine
+	void Tick();
 	void BackgroundUpdate( float DeltaTime );
+	// Ticks the main engine timers.
 	void TickTimers();
 
 	virtual void RenderClientViewport( float DeltaTime );
@@ -101,6 +106,9 @@ protected:
 	virtual void OnEvent( Event& e );
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 
+	FRenderingSubsystem& GetRenderingSubsystem();
+	FPhysicsSubsystem& GetPhysicsSubsystem();
+
 protected:
 	bool					m_IsInitialized;
 	bool					m_IsEditorPresent;
@@ -108,17 +116,20 @@ protected:
 	FFrameTimer				m_FrameTimer;
 	double					m_AppSeconds;
 	FViewportContext		m_MainViewPort;
-	FRenderContext			m_RenderContext;
+	HWorld					m_GameWorld;
+
+	// App/Project
 	FApp					m_Application;
 	FGameProject			m_GameProject;
 	FAssetDatabase			m_AssetDatabase;
-	HWorld					m_GameWorld;
 
 	// Subsystems
 	FPhysicsSubsystem		m_PhysicsSubsystem;
 	FRenderingSubsystem		m_ReneringSubsystem;
+
 };
 
+// Global engine reference. Accessible in all engine builds configurtions.
 extern HEngine* GEngine;
 extern ThreadPool* GThreadPool;
 
@@ -158,7 +169,7 @@ FORCEINLINE void HEngine::TickTimers()
 	m_AppSeconds += m_FrameTimer.GetTimeMiliSeconds();
 }
 
-FORCEINLINE bool HEngine::GetIsEditorPresent()
+FORCEINLINE bool HEngine::GetIsEditorPresent() const
 {
 #if HE_STANDALONE
 	return false;
@@ -167,7 +178,7 @@ FORCEINLINE bool HEngine::GetIsEditorPresent()
 #endif
 }
 
-FORCEINLINE bool HEngine::IsPlayingInEditor()
+FORCEINLINE bool HEngine::IsPlayingInEditor() const
 {
 #if HE_STANDALONE
 	return true;
@@ -192,4 +203,14 @@ FORCEINLINE void HEngine::SetIsPlayingInEditor( bool IsPlaying )
 	{
 		HE_LOG( Log, TEXT( "Ending Play In Editor session." ) );
 	}
+}
+
+FORCEINLINE FRenderingSubsystem& HEngine::GetRenderingSubsystem()
+{
+	return m_ReneringSubsystem;
+}
+
+FORCEINLINE FPhysicsSubsystem& HEngine::GetPhysicsSubsystem()
+{
+	return m_PhysicsSubsystem;
 }

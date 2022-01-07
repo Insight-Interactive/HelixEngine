@@ -6,14 +6,17 @@
 
 
 class ADebugPawn;
+class AppBeginPlayEvent;
+class AppEndPlayEvent;
 
 class SceneViewportPanel : public Panel
 {
+	using Super = Panel;
 public:
 	SceneViewportPanel();
 	virtual ~SceneViewportPanel();
 
-	virtual void Initialize() override;
+	virtual void Initialize( FViewportContext* pOwningViewport ) override;
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;
@@ -36,13 +39,18 @@ protected:
 	void FreezeDebugCamera();
 	void UnFreezeDebugCamera();
 
+	virtual void OnEvent( Event& e ) override;
+
+	bool OnAppBeginPlay( AppBeginPlayEvent& e );
+	bool OnAppEndPlay( AppEndPlayEvent& e );
+
 private:
 	FDescriptorHandle m_DescriptorHandle;
-	uint32 m_HandleSize;
 
 	ADebugPawn* m_pDebugPawn;
 
 	bool m_IsCameraRotating;
+	bool m_ShouldIgnoreInput;
 };
 
 //
