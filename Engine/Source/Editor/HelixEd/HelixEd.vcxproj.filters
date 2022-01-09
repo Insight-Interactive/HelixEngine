@@ -78,6 +78,9 @@
     <ClInclude Include="Public\Editor\Tabs\ActorEditorTab.h">
       <Filter>Public\Editor\Tabs</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Editor\Tabs\ContentEditorInterface.h">
+      <Filter>Public\Editor\Tabs</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Editor\Tabs\HelixEdHomeUI.h">
       <Filter>Public\Editor\Tabs</Filter>
     </ClInclude>
@@ -117,7 +120,6 @@
     <ClInclude Include="Public\UI\EditorUI.h">
       <Filter>Public\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Editor\Tabs\ContentEditorInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\Developer\ADebugPawn.cpp">
@@ -133,6 +135,9 @@
       <Filter>Private\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Private\Editor\Tabs\ActorEditorTab.cpp">
+      <Filter>Private\Editor\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor\Tabs\ContentEditorInterface.cpp">
       <Filter>Private\Editor\Tabs</Filter>
     </ClCompile>
     <ClCompile Include="Private\Editor\Tabs\HelixEdHomeUI.cpp">
@@ -180,7 +185,6 @@
     <ClCompile Include="Private\UI\EditorUI.cpp">
       <Filter>Private\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Editor\Tabs\ContentEditorInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HelixEd.module.lua" />

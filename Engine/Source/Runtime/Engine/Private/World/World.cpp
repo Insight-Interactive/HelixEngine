@@ -7,6 +7,8 @@
 #include "Engine/ViewportContext.h"
 #include "Renderer/LightManager.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
+#include "Engine/Subsystem/PhysicsSubsystem.h"
+#include "GameFramework/Components/HPlaneColliderComponent.h"
 
 
 HWorld::HWorld()
@@ -48,7 +50,7 @@ void HWorld::Initialize( const Char* LevelURL )
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
 	}
-	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
+	RegisterScenes();
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
@@ -57,8 +59,7 @@ void HWorld::Initialize()
 {
 	m_Filepath = "Default (Non-Load)";
 	SetObjectName( TEXT( "Default World" ) );
-
-	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
+	RegisterScenes();
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
@@ -72,6 +73,13 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 {
 	m_pRenderingViewport = pViewport;
 	m_pRenderingViewport->SetWorld( this );
+}
+
+void HWorld::RegisterScenes()
+{
+	m_PhysicsScene.Setup( GEngine->GetPhysicsSubsystem().GetPhysicsContext() );
+	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
+	GEngine->GetPhysicsSubsystem().AddSceneForSimulation( m_PhysicsScene );
 }
 
 void HWorld::BeginPlay()
@@ -100,12 +108,18 @@ void HWorld::Flush()
 {
 	if (m_Level.IsValid())
 	{
+		// Cleanup the physics scene.
+		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
+		m_PhysicsScene.Teardown();
+
+		// CLeanup the rendering resources.
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
 		m_Scene.WaitForRenderingFinished();
 		GEngine->GetRenderingSubsystem().RemoveSceneFromRendering( m_Scene );
 
+		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();
 		m_PlayerCharacterRefs.clear();
 		HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
@@ -197,4 +211,9 @@ void HWorld::Deserialize( const ReadContext& Value )
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
 {
 	GetOwningViewport()->GetSceneRenderer().DrawDebugLine( LineInfo );
+}
+
+void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane )
+{
+	m_PhysicsScene.CreatePlane( GEngine->GetPhysicsSubsystem().GetPhysicsContext(), pPlane->IsStatic(), pPlane->GetRigidBody());
 }

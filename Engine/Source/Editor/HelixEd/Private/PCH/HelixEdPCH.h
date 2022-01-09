@@ -74,6 +74,7 @@
 // Files that rely on the system API.
 //
 #include "CoreFwd.h"
+#include "PhysicsFwd.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
 #include "MathCore.h"

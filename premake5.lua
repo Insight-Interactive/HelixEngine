@@ -130,6 +130,7 @@ group ("Modules")
 	include ( "Engine/Source/Runtime/Core/Core.module.lua" );
 	include ( "Engine/Source/Runtime/Math/Math.module.lua" );
 	include ( "Engine/Source/Runtime/Renderer/Renderer.module.lua" );
+	include ( "Engine/Source/Runtime/Physics/Physics.module.lua" );
 group ("")
 
 group ("Editor")

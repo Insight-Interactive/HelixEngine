@@ -25,6 +25,7 @@
 		@param __VA_ARGS__ - Optional arguments to supply when printing.
 	*/
 #	define HE_LOG(Severity, Fmt, ...) GEngineLogger.LogHelper(ELogSeverity::Severity, Fmt, HE_FILE, HE_FUNCTION, __LINE__, __VA_ARGS__)
+#	define HE_LOG_EXPLICIT_SEVERITY(Severity, Fmt, ...) GEngineLogger.LogHelper(Severity, Fmt, HE_FILE, HE_FUNCTION, __LINE__, __VA_ARGS__)
 
 #else
 #	define HE_LOG(Severity, Fmt, ...)

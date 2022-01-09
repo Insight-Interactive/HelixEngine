@@ -198,13 +198,22 @@
     <ClInclude Include="Public\GameFramework\Components\HBillboardComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HBoxColliderComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HColliderComponentInterface.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h">
@@ -392,13 +401,22 @@
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HBoxColliderComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HColliderComponentInterface.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp">

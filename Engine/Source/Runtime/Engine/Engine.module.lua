@@ -9,7 +9,7 @@ project ("Engine")
 	kind ("WindowedApp")
 	language ("C++")
 	cppdialect ("C++17")
-	staticruntime ("Off")
+	staticruntime ("On")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en")
@@ -66,18 +66,19 @@ project ("Engine")
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
+		heGetModulePublicDir( "Physics" ),
 
 		-- Third Party
-		heGetThirdPartyModule( "rapidxml-1.13" ) .. "Include/",
-		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
+		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
+		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 	}
 
 	links   
 	{
 		"Core",
-		--"Game",
 		"Math",
 		"Renderer",
+		"Physics",
 		"Shaders",
 	}
 
@@ -136,7 +137,7 @@ project ("Engine")
 			"Private/Windows/*.inl",
 		}
 
-	filter ("configurations:DebugEditor or Development")
+	filter { "configurations:DebugEditor or Development" }
 		debugargs
 		{
 			"-launchcfg LaunchEditor",
@@ -146,27 +147,62 @@ project ("Engine")
 			"PackageCooker",
 		}
 		targetname ("HelixEditor")
+		libdirs
+		{
 
-	filter ("configurations:DebugGame or ShippingGame")
+		}
+
+	filter { "configurations:DebugGame or ShippingGame" }
 		debugargs
 		{
 			"-launchcfg LaunchGame",
 		}
 
-	filter ("configurations:DebugEditor or Development", "platforms:Win64 or Win32")
+	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32" }
 		links
 		{
 			"%{libraries.PIXWinDesktop}",
-			"HelixEd"
+			"HelixEd",
 		}
 		libdirs
 		{
-			"%{libraryDirectories.PIXx64}"
+			"%{libraryDirectories.PIXx64}",
 		}
 		includedirs
 		{	
 			-- Only include the editor for the ability to launch the editor library in editor builds.
 			heGetEditorModulePublicDir ( "HelixEd" ),
+		}
+
+	-- Third Party links
+	
+	-- PhysX
+	filter { "configurations:DebugEditor", "platforms:Win32" }
+		links
+		{
+			"%{libraries.PhysXCommon32}",
+			"%{libraries.PhysX32}",
+			"%{libraries.PhysXFoundation32}",
+			"%{libraries.PhysXCooking32}",
+		}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx86_debug}",
+		}
+
+	filter { "configurations:DebugEditor", "platforms:Win64" }
+		links
+		{
+			"%{libraries.PhysXCommon64}",
+			"%{libraries.PhysX64}",
+			"%{libraries.PhysXFoundation64}",
+			"%{libraries.PhysXCooking64}",
+			"%{libraries.PhysXExtentions64}",
+			"%{libraries.PhysXPVD64}",
+		}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx64_debug}",
 		}
 
 

@@ -14,6 +14,7 @@ protected:
 	virtual void Initialize() = 0;
 	virtual void UnInitialize() = 0;
 
+	const Char* GetDebugName() const;
 	void RunAsync();
 	void TerminateAsyncProcess();
 
@@ -36,4 +37,9 @@ protected:
 FORCEINLINE void FSubsystemInterface::TerminateAsyncProcess()
 {
 	m_IsRunning = false;
+}
+
+FORCEINLINE const Char* FSubsystemInterface::GetDebugName() const
+{
+	return m_DebugName;
 }

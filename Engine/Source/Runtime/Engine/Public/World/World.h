@@ -7,13 +7,15 @@
 #include "AssetRegistry/SerializeableInterface.h"
 #include "World/Scene.h"
 #include "World/Level.h"
+#include "PhysicsScene.h"
 
 
 class HLevel;
+class FCommandContext;
 class HCameraComponent;
 class APlayerCharacter;
-class FCommandContext;
 class FViewportContext;
+class HPlaneColliderComponent;
 struct FDebugLineRenderInfo;
 
 /*
@@ -45,6 +47,7 @@ public:
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
+	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane );
 	HScene& GetScene();
 	HLevel& GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
@@ -71,9 +74,14 @@ protected:
 	virtual void Serialize( WriteContext& Value ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
+	PhysicsScene& GetPhysicsScene();
+	void RegisterScenes();
+
+
 protected:
 	HLevel m_Level;
 	HScene m_Scene;
+	PhysicsScene m_PhysicsScene;
 
 	APlayerCharacter* m_pPlayerCharacter;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
@@ -89,6 +97,11 @@ protected:
 //
 // Inline function implementations
 //
+
+FORCEINLINE PhysicsScene& HWorld::GetPhysicsScene()
+{
+	return m_PhysicsScene;
+}
 
 FORCEINLINE HScene& HWorld::GetScene()
 {

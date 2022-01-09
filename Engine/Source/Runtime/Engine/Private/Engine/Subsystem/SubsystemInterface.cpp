@@ -35,6 +35,7 @@ class FSubsystemAsyncRunHelper
 public:
 	FSubsystemAsyncRunHelper( FSubsystemInterface* pSubsystem )
 	{
+		HE_ASSERT( pSubsystem != nullptr );
 		pSubsystem->RunAsync_Implementation();
 	}
 };

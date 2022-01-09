@@ -8,7 +8,7 @@ project ("HelixEd")
 	kind ("StaticLib")
 	language ("C++")
 	cppdialect ("C++17")
-	staticruntime ("Off")
+	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en-US")
@@ -41,6 +41,7 @@ project ("HelixEd")
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
+		heGetModulePublicDir( "Physics" ),
 
 		-- Generaly grabbing the engine runtime should never be done.
 		-- However, the editor needs it.
@@ -49,8 +50,10 @@ project ("HelixEd")
 
 		-- Third Party 
 		heGetThirdPartyModule( "ImGui" ),
-		heGetThirdPartyModule( "OpenFBX" ) .. "src/",
-		heGetThirdPartyModule( "Rapidjson" ) .. "include/",
+		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
+		heGetThirdPartyModule( "Rapidjson" )	.. "include/",
+		heGetThirdPartyModule( "PhysX-4.1" )	.. "physx/include/",
+		heGetThirdPartyModule( "PhysX-4.1" )	.. "pxshared/include/",
 	}
 
 	defines
