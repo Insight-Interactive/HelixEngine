@@ -10,8 +10,6 @@ public:
 	FTimer();
 	~FTimer();
 
-	void Initialize();
-
 	void Record();
 	void Stop();
 
@@ -24,7 +22,6 @@ private:
 	double m_Ticks;
 	int64 m_CurrentTick;
 	int64 m_FrameStartTick;
-	bool m_IsInitilized;
 
 	static double SCpuTickDelta;
 };
@@ -70,16 +67,6 @@ public:
 
 // FTimer
 //
-
-FORCEINLINE void FTimer::Initialize()
-{
-	if (!m_IsInitilized)
-	{
-		m_IsInitilized = true;
-		Record();
-		Stop();
-	}
-}
 
 FORCEINLINE double FTimer::GetTimeMicroSeconds() const
 {

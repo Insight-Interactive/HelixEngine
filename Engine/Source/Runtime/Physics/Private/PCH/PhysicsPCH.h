@@ -19,6 +19,8 @@
 
 #endif // HE_WINDOWS
 
+#include "MathCore.h"
+
 // PhysX
 #include "PxPhysicsAPI.h"
 #include "extensions/PxSimpleFactory.h"

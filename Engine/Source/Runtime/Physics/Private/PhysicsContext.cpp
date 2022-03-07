@@ -2,8 +2,6 @@
 
 #include "PhysicsContext.h"
 
-#include "PhysicsScene.h"
-
 
 static physx::PxDefaultErrorCallback SDefaultErrorCallback;
 static physx::PxDefaultAllocator SDefaultAllocatorCallback;
@@ -30,7 +28,6 @@ void PhysicsContext::Initialize()
 {
 	HE_ASSERT( !IsReady() ); // Physics context has already been initialized!
 
-	m_Scenes.reserve( 4 );
 
 	CreateLogger( GPhysicsLogger, "Physics Engine" );
 
@@ -46,9 +43,9 @@ void PhysicsContext::Initialize()
 		m_pVisualDebugger->connect( *transport, physx::PxPvdInstrumentationFlag::eALL );
 #	endif // HE_DEBUG_PHYSICS
 #else
-//#	pragma message ("Compileing in non-64-bit configuration. PhysX Visual Debugger will not be available.") 
+//#	pragma message ("Compiling in non-64-bit configuration. PhysX Visual Debugger will not be available.") 
 #endif // HE_WIN64
-
+	
 	physx::PxTolerancesScale Tolerance = {};
 	m_pPhysics = PxCreatePhysics( PX_PHYSICS_VERSION, *m_pFoundation, Tolerance, bool(P_TRACK_MEMORY_ALLOCATIONS), m_pVisualDebugger );
 	HE_ASSERT( m_pPhysics != nullptr );
@@ -70,39 +67,20 @@ void PhysicsContext::Initialize()
 
 void PhysicsContext::UnInitialize()
 {
-	PX_SAVE_RELEASE( m_pCooker );
-	PX_SAVE_RELEASE( m_pPhysics );
+	PX_SAFE_RELEASE( m_pCooker );
+	PX_SAFE_RELEASE( m_pPhysics );
 #if HE_WIN64
 #	if HE_DEBUG_PHYSICS
 	if (m_pVisualDebugger)
 	{
 		physx::PxPvdTransport* pTransport = m_pVisualDebugger->getTransport();
-		PX_SAVE_RELEASE( pTransport );
+		//PX_SAFE_RELEASE( pTransport );
 		m_pVisualDebugger->release();
 	}
 #	endif // HE_DEBUG_PHYSICS
 #endif // HE_WIN64
 
-	PX_SAVE_RELEASE( m_pFoundation );
-}
-
-void PhysicsContext::Tick( float StepRate )
-{
-	for (PhysicsScene* pScene : m_Scenes)
-	{
-		if (pScene->IsReady())
-		{
-			pScene->Tick( StepRate );
-		}
-	}
-}
-
-void PhysicsContext::QueryResults()
-{
-	for (PhysicsScene* pScene : m_Scenes)
-	{
-		pScene->QuerySimulationResults();
-	}
+	PX_SAFE_RELEASE( m_pFoundation );
 }
 
 // physx::PxDefaultErrorCallback Implementation

@@ -15,7 +15,9 @@ class FCommandContext;
 class HCameraComponent;
 class APlayerCharacter;
 class FViewportContext;
+class HColliderComponentInterface;
 class HPlaneColliderComponent;
+class HSphereColliderComponent;
 struct FDebugLineRenderInfo;
 
 /*
@@ -47,17 +49,23 @@ public:
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
+	void AddSphereColliderComponent( HSphereColliderComponent* pSphere );
 	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane );
+	void RemoveColliderComponent( HColliderComponentInterface* pSphere );
 	HScene& GetScene();
+	PhysicsScene& GetPhysicsScene();
 	HLevel& GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
-	APlayerCharacter* GetPlayerCharacter( uint32 Index );
+	APlayerCharacter* GetPlayerCharacter( uint32 Index = 0 );
 
 	AActor* CreateEmptyActorInstance( const HName& Name );
 	template <typename ActorType>
 	ActorType* CreateDynamicActorinstance( const HName& Name );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
+
+	void PausePhysics();
+	void UnPausePhysics();
 
 protected:
 	/*
@@ -74,7 +82,6 @@ protected:
 	virtual void Serialize( WriteContext& Value ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
-	PhysicsScene& GetPhysicsScene();
 	void RegisterScenes();
 
 

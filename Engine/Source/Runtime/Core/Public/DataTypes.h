@@ -96,6 +96,7 @@
 #define HE_HeapFree(HeapPtr)			::free(HeapPtr)
 #define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)
 #define HE_UNUSED_PARAM(Value)			(void)Value;
+#define HE_TERNARY(Expression, IfTrue, IfFalse) (Expression) ? (IfTrue) : (IfFalse)
 
 //-----------------------------------
 //		Container Debug Levels

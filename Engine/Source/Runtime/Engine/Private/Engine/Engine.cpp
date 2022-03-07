@@ -31,7 +31,7 @@ static void SplashMain( void* pUserData );
 
 HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
-	, m_IsEditorPresent( CmdLine.ArgumentEquals(L"-launchcfg", L"LaunchEditor") )
+	, m_IsEditorPresent( CmdLine.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ) )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds( 0.0 )
 {
@@ -48,15 +48,15 @@ void HEngine::EngineMain()
 		HE_LOG( Warning, TEXT( "Trying to call Engine::EngineMain() on an engine instance that is already initialized!" ) );
 		HE_DEBUG_BREAK();
 	}
-	// Startup
+	// Startup.
 	PreStartup();
 	Startup();
 	PostStartup();
 
-	// Update the engine
+	// Update the engine.
 	Tick();
 
-	// Shutdown
+	// Shutdown.
 	PreShutdown();
 	Shutdown();
 	PostShutdown();
@@ -119,21 +119,21 @@ void HEngine::Startup()
 
 	// Create and initialize the main client window.
 	FWindow::Description ClientDesc = {};
-	ClientDesc.bHasTitleBar		= true;
-	ClientDesc.bShowImmediate	= false;
-	ClientDesc.Resolution		= GCommonResolutions[k1080p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
+	ClientDesc.bHasTitleBar = true;
+	ClientDesc.bShowImmediate = false;
+	ClientDesc.Resolution = GCommonResolutions[k720p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
 #if HE_WITH_EDITOR
-	HName EngineTitle			=  TEXT( "Helix Editor" ) ;
-	EngineTitle					+= TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
-	EngineTitle					+= TEXT( " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]" );
+	HName EngineTitle = TEXT( "Helix Editor" );
+	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
+	EngineTitle += TEXT( " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]" );
 	if (!GetIsEditorPresent())
 		EngineTitle += TEXT( " (Standalone)" );
 
-	ClientDesc.Title			=  EngineTitle.c_str();
+	ClientDesc.Title = EngineTitle.c_str();
 #else
-	ClientDesc.Title			= FApp::GetInstance()->GetName();
+	ClientDesc.Title = FApp::GetInstance()->GetName();
 #endif
-	ClientDesc.bAllowDropFiles	= GetIsEditorPresent();
+	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
@@ -154,11 +154,14 @@ void HEngine::PostStartup()
 
 	EmitEvent( EnginePostStartupEvent() );
 
+	m_GameWorld.PausePhysics();
+
+
 	// TODO Get this from the DefaultEngine.ini
-	String StartingWorldPath = FGameProject::GetInstance()->GetContentFullPath("Levels/TestLevel.hlevel");
+	String StartingWorldPath = FGameProject::GetInstance()->GetContentFullPath( "Levels/TestLevel.hlevel" );
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath("DefaultInput.ini");
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "DefaultInput.ini" );
 	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
 	m_MainViewPort.Show();
@@ -170,6 +173,7 @@ void HEngine::PostStartup()
 	}
 
 	m_IsInitialized = true;
+
 	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
 }
 
@@ -198,7 +202,7 @@ void HEngine::Shutdown()
 void HEngine::PostShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
-	
+
 	HE_SAFE_DELETE_PTR( GThreadPool );
 
 	System::UninitializePlatform();
@@ -214,34 +218,26 @@ void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 
-	m_FrameTimer.Initialize();
-	while (FApp::GetInstance()->IsRunning())
+	m_GameWorld.UnPausePhysics();
+
+	// Main loop.
+	while (m_Application.IsRunning())
 	{
 		System::ProcessMessages();
 		TickTimers();
 		float DeltaTime = (float)GetDeltaTime();
 
 		m_MainViewPort.Tick( DeltaTime );
-
-		// Check if the main viewport has focus. There will 
-		// only be one window in shipping builds.
-#if HE_STANDALONE
-		if (!m_MainViewPort.HasFocus())
-		{
-			BackgroundUpdate( DeltaTime );
-			continue;
-		}
-#endif
 		m_GameWorld.Tick( DeltaTime );
 
 		RenderClientViewport( DeltaTime );
-		
+
 		static float SecondTimer = 0.f;
 		static float FPS = 0.f;
 		SecondTimer += DeltaTime;
 		if (SecondTimer > 1.f)
 		{
-			//HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
+			HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
 			FPS = 0.f;
 			SecondTimer = 0.f;
 		}
@@ -293,12 +289,12 @@ void HEngine::RequestShutdown()
 /* static */ void SplashMain( void* pUserData )
 {
 	HE_UNUSED_PARAM( pUserData );
-	
+
 	String SplashTextureDir =
 #if HE_WITH_EDITOR
 		FGameProject::GetInstance()->GetContentFolder() + "/Engine/Textures/Splash/HelixEd-Splash.dds";
 #else
-		"";
+		""; // TODO: Custom game splash image.
 #endif
 	FSplashScreen AppSplash( SplashTextureDir );
 

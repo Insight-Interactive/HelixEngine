@@ -580,7 +580,6 @@ void RunActorEditor( void* pData )
 
 	ActorEditorTab& Editor = *(ActorEditorTab*)pData;
 	FFrameTimer Timer;
-	Timer.Initialize();
 	while (Editor.GetWindow().IsValid())
 	{
 		Timer.Tick();

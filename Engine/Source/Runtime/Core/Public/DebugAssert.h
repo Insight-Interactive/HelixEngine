@@ -18,9 +18,12 @@
 
 #if HE_ENABLE_ASSERTS
 #	define HE_ASSERT(Expr) if( (Expr) != true) { HE_DEBUG_BREAK(); }
+#	define HE_PANIC_BREAK() HE_ASSERT( false )
 
 #else
 #	define HE_ASSERT(Expr)
+#	define HE_PANIC_BREAK()
 
 #endif
+
 

@@ -58,10 +58,6 @@ void FViewportContext::Tick( float DeltaTime )
 
 void FViewportContext::Render()
 {
-	// Wait for the previous frame to finish rendering.
-	HScene& Scene = m_pWorldInView->GetScene();
-	Scene.WaitForRenderingFinished();
-
 	if (GEngine->GetIsEditorPresent())
 	{
 		// Render to a intermediate texture for the editor to display.
@@ -69,8 +65,15 @@ void FViewportContext::Render()
 	}
 	else
 	{
-		// Render directly to the swapchain.
-		RenderWorld( m_Window.GetRenderSurface() );
+		if (m_pWorldInView != nullptr)
+		{
+			// Wait for the previous frame to finish rendering.
+			HScene& Scene = m_pWorldInView->GetScene();
+			Scene.WaitForRenderingFinished();
+
+			// Render directly to the swapchain.
+			RenderWorld( m_Window.GetRenderSurface() );
+		}
 	}
 }
 
@@ -81,8 +84,12 @@ void FViewportContext::SetWorld( HWorld* pWorldToView )
 
 void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 {
-	if (m_pWorldInView == nullptr) 
+	if (m_pWorldInView == nullptr) // This viewport is not viewing a world just return.
 		return;
+
+	// Wait for the previous frame to finish rendering.
+	HScene& Scene = m_pWorldInView->GetScene();
+	Scene.WaitForRenderingFinished();
 
 	FSceneRenderParams RenderParams = {};
 	RenderParams.pRenderer				= &m_SceneRenderer;
@@ -92,7 +99,7 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	RenderParams.pScissor				= &GetClientRect();
 	RenderParams.pRenderingViewport		= this;
 	RenderParams.pRenderingCamera		= m_pWorldInView->GetCurrentSceneRenderCamera();
-	m_pWorldInView->GetScene().RequestRender( RenderParams );
+	Scene.RequestRender( RenderParams );
 }
 
 void FViewportContext::InitializeRenderingResources()

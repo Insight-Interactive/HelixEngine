@@ -9,6 +9,7 @@
 #include "GameFramework/Actor/APlayerCharacter.h"
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
+#include "GameFramework/Components/HSphereColliderComponent.h"
 
 
 HWorld::HWorld()
@@ -30,6 +31,8 @@ void HWorld::Initialize( const Char* LevelURL )
 {
 	m_Filepath = LevelURL;
 
+	RegisterScenes();
+
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
 	HE_ASSERT( WorldJsonSource->IsOpen() );
@@ -39,8 +42,8 @@ void HWorld::Initialize( const Char* LevelURL )
 		const rapidjson::Value& World = WorldJsonDoc["World"];
 		enum
 		{
-			kSettings	= 0,
-			kActors		= 1,
+			kSettings = 0,
+			kActors = 1,
 		};
 		// Load the world's settings
 		const rapidjson::Value& WorldSettings = World[kSettings];
@@ -50,7 +53,6 @@ void HWorld::Initialize( const Char* LevelURL )
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
 	}
-	RegisterScenes();
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
@@ -78,6 +80,7 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 void HWorld::RegisterScenes()
 {
 	m_PhysicsScene.Setup( GEngine->GetPhysicsSubsystem().GetPhysicsContext() );
+
 	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
 	GEngine->GetPhysicsSubsystem().AddSceneForSimulation( m_PhysicsScene );
 }
@@ -95,6 +98,11 @@ void HWorld::BeginPlay()
 
 void HWorld::Tick( float DeltaTime )
 {
+	m_PhysicsScene.WaitForSimulationFinished();
+
+	m_PhysicsScene.RequestPauseSimulation();
+	m_PhysicsScene.WaitTillSimulationPaused();
+
 	m_CameraManager.Tick( DeltaTime );
 
 	if (GEngine->IsPlayingInEditor())
@@ -102,15 +110,18 @@ void HWorld::Tick( float DeltaTime )
 		m_pPlayerCharacter->Tick( DeltaTime );
 		m_Level.Tick( DeltaTime );
 	}
+
+	m_PhysicsScene.RequestUnPauseSimulation();
 }
 
 void HWorld::Flush()
 {
 	if (m_Level.IsValid())
 	{
-		// Cleanup the physics scene.
+		// Unregister the physics scene to stop simulation, but dont destroy 
+		// it yet components need it to be able to realease resources.
+		m_PhysicsScene.WaitForSimulationFinished();
 		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
-		m_PhysicsScene.Teardown();
 
 		// CLeanup the rendering resources.
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
@@ -123,6 +134,9 @@ void HWorld::Flush()
 		m_Level.Flush();
 		m_PlayerCharacterRefs.clear();
 		HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
+
+		// Cleanup the physics scene.
+		m_PhysicsScene.Teardown();
 	}
 }
 
@@ -213,7 +227,43 @@ void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
 	GetOwningViewport()->GetSceneRenderer().DrawDebugLine( LineInfo );
 }
 
+void HWorld::PausePhysics()
+{
+	m_PhysicsScene.RequestPauseSimulation();
+}
+
+void HWorld::UnPausePhysics()
+{
+	m_PhysicsScene.RequestUnPauseSimulation();
+}
+
+void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere )
+{
+	HColliderComponentInterface* pCollider = (HColliderComponentInterface*)pSphere;
+
+	PhysicsScene::SphereActorAddDesc InitDesc
+	{
+		GEngine->GetPhysicsSubsystem().GetPhysicsContext(),
+		pCollider->GetPosition(),
+		(SphereRigidBody&)pSphere->GetRigidBody()
+	};
+	m_PhysicsScene.RequestSphereActorAdd( InitDesc );
+}
+
 void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane )
 {
-	m_PhysicsScene.CreatePlane( GEngine->GetPhysicsSubsystem().GetPhysicsContext(), pPlane->IsStatic(), pPlane->GetRigidBody());
+	HColliderComponentInterface* pCollider = (HColliderComponentInterface*)pPlane;
+
+	PhysicsScene::PlaneActorAddDesc InitDesc
+	{
+		GEngine->GetPhysicsSubsystem().GetPhysicsContext(),
+		pCollider->GetPosition(),
+		(PlaneRigidBody&)pPlane->GetRigidBody()
+	};
+	m_PhysicsScene.RequestPlaneActorAdd( InitDesc );
+}
+
+void HWorld::RemoveColliderComponent( HColliderComponentInterface* pCollider )
+{
+	m_PhysicsScene.RequestActorRemove( pCollider->GetRigidBody() );
 }

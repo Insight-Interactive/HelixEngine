@@ -31,6 +31,7 @@ public:
 	HScene( HWorld* pOwner );
 	virtual ~HScene();
 
+	// Marks the scene as dirty and gets rendered on the render thread.
 	void RequestRender( FSceneRenderParams& RenderParams );
 	bool IsRendering() const;
 	void WaitForRenderingFinished();
@@ -53,11 +54,7 @@ public:
 
 protected:
 	HWorld* GetWorld();
-	void OnRenderingFinished()
-	{
-		m_IsRendering = false;
-	}
-
+	void OnRenderingFinished();
 
 private:
 	bool m_IsRendering;
@@ -93,6 +90,11 @@ FORCEINLINE void HScene::WaitForRenderingFinished()
 	{
 		// Wait for the render thread to finish rendering this scene.
 	}
+}
+
+FORCEINLINE void HScene::OnRenderingFinished()
+{
+	m_IsRendering = false;
 }
 
 FORCEINLINE FSceneRenderParams& HScene::GetRenderParams()

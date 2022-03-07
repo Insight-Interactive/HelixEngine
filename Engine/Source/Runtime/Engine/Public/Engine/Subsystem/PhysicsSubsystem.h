@@ -13,8 +13,8 @@ class FPhysicsSubsystem : public FSubsystemInterface
 	friend class HEngine;
 public:
 	PhysicsContext& GetPhysicsContext();
-	void AddSceneForSimulation( PhysicsScene& Scene );
-	void RemoveSceneFromSimulation( PhysicsScene& Scene );
+	bool AddSceneForSimulation( PhysicsScene& Scene );
+	bool RemoveSceneFromSimulation( PhysicsScene& Scene );
 
 protected:
 	FPhysicsSubsystem();
@@ -28,6 +28,9 @@ private:
 
 private:
 	PhysicsContext m_PhysicsContext;
+	
+	std::vector<PhysicsScene*> m_Scenes;
+	CriticalSection m_SceneSimulationQueueGuard;
 
 };
 
@@ -40,20 +43,34 @@ FORCEINLINE PhysicsContext& FPhysicsSubsystem::GetPhysicsContext()
 	return m_PhysicsContext;
 }
 
-FORCEINLINE	void FPhysicsSubsystem::AddSceneForSimulation( PhysicsScene& Scene )
+FORCEINLINE bool FPhysicsSubsystem::AddSceneForSimulation( PhysicsScene& Scene )
 {
-	if (!m_PhysicsContext.AddSceneForSimulation( Scene ))
+	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
+
+	auto Iter = std::find( m_Scenes.begin(), m_Scenes.end(), &Scene );
+	if (Iter == m_Scenes.end())
 	{
-		HE_LOG( Warning, TEXT( "Trying to add a scene from simulation queue that was already added! Was this intended?" ) );
-		HE_ASSERT( false );
+		m_Scenes.push_back( &Scene );
+		return true;
 	}
+	HE_LOG( Warning, TEXT( "Trying to add a scene from simulation queue that was already added! Was this intended?" ) );
+	HE_ASSERT( false );
+	return false;
 }
 
-FORCEINLINE void FPhysicsSubsystem::RemoveSceneFromSimulation( PhysicsScene& Scene )
+FORCEINLINE	bool FPhysicsSubsystem::RemoveSceneFromSimulation( PhysicsScene& Scene )
 {
-	if (!m_PhysicsContext.RemoveSceneFromSimulation( Scene ))
+	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
+
+	auto Iter = std::find( m_Scenes.begin(), m_Scenes.end(), &Scene );
+	if (Iter != m_Scenes.end())
 	{
-		HE_LOG( Warning, TEXT( "Trying to remove a scene from simulation queue that was not registered!" ) );
-		HE_ASSERT( false );
+		m_Scenes.erase( Iter );
+		return true;
 	}
+
+	HE_LOG( Warning, TEXT( "Trying to remove a scene from simulation queue that was not registered!" ) );
+	HE_ASSERT( false );
+
+	return false;
 }

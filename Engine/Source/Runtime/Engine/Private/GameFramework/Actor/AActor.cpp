@@ -7,6 +7,7 @@
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
+#include "GameFramework/Components/HSphereColliderComponent.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
@@ -89,6 +90,7 @@ void AActor::Deserialize( const ReadContext& Value )
 	const Char* PointLightKey = HE_STRINGIFY( HPointLightComponent );
 	const Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
 	const Char* PlaneColliderKey = HE_STRINGIFY( HPlaneColliderComponent );
+	const Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -113,6 +115,11 @@ void AActor::Deserialize( const ReadContext& Value )
 		{
 			AddComponent<HPlaneColliderComponent>( TEXT( "<Unnamed Plane Collider Component>" ) )
 				->Deserialize( CurrentComponent[PlaneColliderKey] );
+		}
+		else if (CurrentComponent.HasMember( SphereColliderKey ))
+		{
+			AddComponent<HSphereColliderComponent>( TEXT( "<Unnamed Sphere Collider Component>" ) )
+				->Deserialize( CurrentComponent[SphereColliderKey] );
 		}
 		else
 		{

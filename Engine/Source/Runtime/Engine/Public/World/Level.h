@@ -50,7 +50,7 @@ protected:
 //
 
 template <typename ActorType>
-inline ActorType* HLevel::CreateActor(const HName& Name)
+FORCEINLINE ActorType* HLevel::CreateActor(const HName& Name)
 {
 	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world!
 
@@ -63,18 +63,18 @@ inline ActorType* HLevel::CreateActor(const HName& Name)
 	return SCast<ActorType*>(pNewActor);
 }
 
-inline void HLevel::GuardedAddActor(AActor* pActor)
+FORCEINLINE void HLevel::GuardedAddActor(AActor* pActor)
 {
 	ScopedCriticalSection Guard( m_ActorListGuard );
 	m_Actors.push_back(pActor);
 }
 
-inline HWorld* HLevel::GetWorld()
+FORCEINLINE HWorld* HLevel::GetWorld()
 {
 	return m_pOwningWorld;
 }
 
-inline bool HLevel::IsValid() const
+FORCEINLINE bool HLevel::IsValid() const
 {
 	return m_pOwningWorld && m_Actors.size() > 0;
 }

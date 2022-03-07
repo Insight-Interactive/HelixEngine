@@ -37,49 +37,11 @@ public:
 	*/
 	void Terminate();
 
-//protected:
-//	static FApp* CreateApplication();
-//
-//	void PumpMessageQueue();
-//
-//private:
-//	static FApp* PlatformCreateApp();
-//
-//	/*
-//		Setup any platform dependent resources.
-//	*/
-//	bool PlatformSetup();
-//	
-//	/*
-//		Shutdown any platform dependent resources.
-//	*/
-//	bool PlatformShutdown();
-//
-//	/*
-//	
-//	*/
-//	void PlatformPumpMessages();
 
 protected:
 	TChar m_Name[kMaxAppNameLength];
 	bool m_IsRunning;
 
-//	// Platform 
-//
-//#if HE_WINDOWS_UNIVERSAL
-//public:
-//	// winrt::IFrameworkView interface implementations
-//	//
-//	void Initialize( CoreApplicationView const& ApplicationView );
-//	void Uninitialize() noexcept;
-//	void Run();
-//	void Load( const winrt::hstring& ) noexcept;
-//	void OnActivated( const CoreApplicationView& ApplicationView, const IActivatedEventArgs& Args );
-//	void SetWindow( CoreWindow const& Window );
-//	IFrameworkView CreateView();
-//
-//
-//#endif
 };
 
 

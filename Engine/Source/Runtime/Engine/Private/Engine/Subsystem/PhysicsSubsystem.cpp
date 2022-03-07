@@ -3,6 +3,7 @@
 
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 
+#include "PhysicsScene.h"
 
 
 FPhysicsSubsystem::FPhysicsSubsystem()
@@ -16,6 +17,7 @@ FPhysicsSubsystem::~FPhysicsSubsystem()
 
 void FPhysicsSubsystem::Initialize()
 {
+	m_Scenes.reserve( 4 );
 	m_PhysicsContext.Initialize();
 }
 
@@ -29,9 +31,11 @@ void FPhysicsSubsystem::RunAsync_Implementation()
 {
 	while (m_IsRunning)
 	{
-		const float StepRate = 1.f / 60.f;
-		m_PhysicsContext.Tick( StepRate );
-		m_PhysicsContext.QueryResults();
+		for (PhysicsScene* pScene : m_Scenes)
+		{
+			pScene->ProcessEventQueue();
+			pScene->Tick();
+		}
 	}
 
 	HE_LOG( Log, TEXT( "Exiting physics subsystem async run loop." ) );

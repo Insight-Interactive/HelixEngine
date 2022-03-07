@@ -1,13 +1,10 @@
 #pragma once
 
-
 #if PHYSICS_MODULE
 #	define PHYSICS_API
 #else
 #	define PHYSICS_API
 #endif
-
-#define PX_SAVE_RELEASE( PXObject ) if( (PXObject) != nullptr ) { (PXObject)->release(); (PXObject) = nullptr; } 
 
 #if HE_ENABLE_LOGS
 extern class Logger GPhysicsLogger;
@@ -23,3 +20,5 @@ extern class Logger GPhysicsLogger;
 #else
 #	define P_LOG(Severity, Fmt, ...)
 #endif
+
+#include "CommonMacros.h"

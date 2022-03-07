@@ -78,11 +78,16 @@ protected:
 	*/
 	void EngineMain();
 
+	// Initializes all core components of the engine's runtime 
+	// needed to load and play the game world.
 	virtual void PreStartup();
+	// Loads the game world and all actors and assets needed inside it.
 	virtual void Startup();
+	// Shows the main window and performs any last minute initialization before the presentation 
+	// of the first rendered frame.
 	virtual void PostStartup();
 
-	// Ticks the engine
+	// Ticks the engine and all subsystems associated with it.
 	void Tick();
 	void BackgroundUpdate( float DeltaTime );
 	// Ticks the main engine timers.
@@ -129,7 +134,7 @@ protected:
 
 };
 
-// Global engine reference. Accessible in all engine builds configurtions.
+// Global engine reference. Accessible in all engine build configurtions.
 extern HEngine* GEngine;
 extern ThreadPool* GThreadPool;
 

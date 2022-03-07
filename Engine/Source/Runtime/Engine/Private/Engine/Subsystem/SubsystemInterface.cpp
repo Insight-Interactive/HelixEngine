@@ -33,7 +33,7 @@ void FSubsystemInterface::RunAsync()
 class FSubsystemAsyncRunHelper
 {
 public:
-	FSubsystemAsyncRunHelper( FSubsystemInterface* pSubsystem )
+	FORCEINLINE FSubsystemAsyncRunHelper( FSubsystemInterface* pSubsystem )
 	{
 		HE_ASSERT( pSubsystem != nullptr );
 		pSubsystem->RunAsync_Implementation();

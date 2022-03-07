@@ -5,10 +5,10 @@
 
 namespace physx
 {
-	class PxFoundation;
+	class PxPvd;
 	class PxPhysics;
 	class PxCooking;
-	class PxPvd;
+	class PxFoundation;
 	class PxDefaultAllocator;
 	class PxDefaultCpuDispatcher;
 }
@@ -25,19 +25,10 @@ public:
 	void Initialize();
 	void UnInitialize();
 
-	void Tick( float StepRate );
-	void QueryResults();
-
-	bool AddSceneForSimulation( PhysicsScene& Scene );
-	bool RemoveSceneFromSimulation( PhysicsScene& Scene );
-
 	physx::PxPhysics& GetPhysics();
 	physx::PxDefaultCpuDispatcher& GetCpuDispatcher();
 
 protected:
-	std::vector<PhysicsScene*> m_Scenes;
-	CriticalSection m_SceneSimulationQueueGuard;
-
 	physx::PxFoundation* m_pFoundation;
 	physx::PxPhysics* m_pPhysics;
 	physx::PxDefaultCpuDispatcher* m_pDispatcher;
@@ -56,33 +47,6 @@ FORCEINLINE bool PhysicsContext::IsReady() const
 {
 	return	m_pFoundation != nullptr &&
 			m_pPhysics != nullptr;
-}
-
-FORCEINLINE bool PhysicsContext::AddSceneForSimulation( PhysicsScene& Scene )
-{
-	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
-
-	auto Iter = std::find( m_Scenes.begin(), m_Scenes.end(), &Scene );
-	if (Iter == m_Scenes.end())
-	{
-		m_Scenes.push_back( &Scene );
-		return true;
-	}
-	return false;
-}
-
-FORCEINLINE	bool PhysicsContext::RemoveSceneFromSimulation( PhysicsScene& Scene )
-{
-	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
-
-	auto Iter = std::find( m_Scenes.begin(), m_Scenes.end(), &Scene );
-	if (Iter != m_Scenes.end())
-	{
-		m_Scenes.erase( Iter );
-		return true;
-	}
-
-	return false;
 }
 
 FORCEINLINE physx::PxPhysics& PhysicsContext::GetPhysics()

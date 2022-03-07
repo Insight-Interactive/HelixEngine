@@ -1053,6 +1053,7 @@
     <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HSphereColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h" />
     <ClInclude Include="Public\GameFramework\Game.h" />
     <ClInclude Include="Public\GameFramework\GameInstance.h" />
@@ -1122,6 +1123,7 @@
     <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HSphereColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Game.cpp" />
     <ClCompile Include="Private\GameFramework\GameInstance.cpp" />
