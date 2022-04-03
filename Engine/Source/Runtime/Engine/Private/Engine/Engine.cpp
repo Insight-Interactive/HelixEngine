@@ -121,7 +121,7 @@ void HEngine::Startup()
 	FWindow::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar = true;
 	ClientDesc.bShowImmediate = false;
-	ClientDesc.Resolution = GCommonResolutions[k720p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
+	ClientDesc.Resolution = GCommonResolutions[k1080p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
 #if HE_WITH_EDITOR
 	HName EngineTitle = TEXT( "Helix Editor" );
 	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
@@ -153,9 +153,6 @@ void HEngine::PostStartup()
 	HE_LOG( Log, TEXT( "Beginning engine post-startup." ) );
 
 	EmitEvent( EnginePostStartupEvent() );
-
-	m_GameWorld.PausePhysics();
-
 
 	// TODO Get this from the DefaultEngine.ini
 	String StartingWorldPath = FGameProject::GetInstance()->GetContentFullPath( "Levels/TestLevel.hlevel" );
@@ -217,8 +214,6 @@ void HEngine::PostShutdown()
 void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
-
-	m_GameWorld.UnPausePhysics();
 
 	// Main loop.
 	while (m_Application.IsRunning())

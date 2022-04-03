@@ -28,7 +28,6 @@ void PhysicsContext::Initialize()
 {
 	HE_ASSERT( !IsReady() ); // Physics context has already been initialized!
 
-
 	CreateLogger( GPhysicsLogger, "Physics Engine" );
 
 	m_pFoundation = PxCreateFoundation( PX_PHYSICS_VERSION, SDefaultAllocatorCallback, SDefaultErrorCallback );
@@ -53,7 +52,7 @@ void PhysicsContext::Initialize()
 	m_pCooker = PxCreateCooking( PX_PHYSICS_VERSION, *m_pFoundation, physx::PxCookingParams( Tolerance ) );
 	HE_ASSERT( m_pCooker != nullptr );
 	
-	m_pDispatcher = physx::PxDefaultCpuDispatcherCreate( 2 );
+	m_pDispatcher = physx::PxDefaultCpuDispatcherCreate( 1 );
 	HE_ASSERT( m_pDispatcher != nullptr );
 
 #if HE_WIN64
@@ -74,7 +73,7 @@ void PhysicsContext::UnInitialize()
 	if (m_pVisualDebugger)
 	{
 		physx::PxPvdTransport* pTransport = m_pVisualDebugger->getTransport();
-		//PX_SAFE_RELEASE( pTransport );
+		//PX_SAFE_RELEASE( pTransport ); // TODO: Causing error, why?
 		m_pVisualDebugger->release();
 	}
 #	endif // HE_DEBUG_PHYSICS

@@ -891,6 +891,8 @@
     <ClInclude Include="Public\DebugAssert.h" />
     <ClInclude Include="Public\EnumHelper.h" />
     <ClInclude Include="Public\FileSystem.h" />
+    <ClInclude Include="Public\FixedLoop.h" />
+    <ClInclude Include="Public\Flag.h" />
     <ClInclude Include="Public\FrameTimer.h" />
     <ClInclude Include="Public\GUID.h" />
     <ClInclude Include="Public\Handle.h" />

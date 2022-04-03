@@ -84,7 +84,8 @@ void HSceneComponent::Deserialize( const ReadContext& Value )
 	const rapidjson::Value& LocalTransform = SceneComponent[HE_STRINGIFY( m_Transform )][0];
 
 	// FTransform
-	FVector3 Position, Rotation, Scale;
+	FVector3 Position, Scale;
+	FQuat Rotation;
 	// Position
 	JsonUtility::GetFloat( LocalTransform, "PositionX", Position.x );
 	JsonUtility::GetFloat( LocalTransform, "PositionY", Position.y );

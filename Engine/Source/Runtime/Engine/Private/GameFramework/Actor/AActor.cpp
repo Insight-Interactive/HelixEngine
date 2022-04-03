@@ -8,6 +8,7 @@
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
+#include "GameFramework/Components/HCubeColliderComponent.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
@@ -91,6 +92,7 @@ void AActor::Deserialize( const ReadContext& Value )
 	const Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
 	const Char* PlaneColliderKey = HE_STRINGIFY( HPlaneColliderComponent );
 	const Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
+	const Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -120,6 +122,11 @@ void AActor::Deserialize( const ReadContext& Value )
 		{
 			AddComponent<HSphereColliderComponent>( TEXT( "<Unnamed Sphere Collider Component>" ) )
 				->Deserialize( CurrentComponent[SphereColliderKey] );
+		}
+		else if (CurrentComponent.HasMember( CubeColliderKey ))
+		{
+			AddComponent<HCubeColliderComponent>( TEXT( "<Unnamed Cube Collider Component>" ) )
+				->Deserialize( CurrentComponent[CubeColliderKey] );
 		}
 		else
 		{

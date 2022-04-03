@@ -582,6 +582,8 @@ struct MATH_API FQuat : public XMFLOAT4
 
     float Dot(const FQuat& Q) const noexcept;
 
+    FVector3 ToEulerAngles() const noexcept;
+
     // Static functions
     static FQuat CreateFromAxisAngle(const FVector3& axis, float angle) noexcept;
     static FQuat CreateFromYawPitchRoll(float yaw, float pitch, float roll) noexcept;

@@ -17,6 +17,7 @@ class APlayerCharacter;
 class FViewportContext;
 class HColliderComponentInterface;
 class HPlaneColliderComponent;
+class HCubeColliderComponent;
 class HSphereColliderComponent;
 struct FDebugLineRenderInfo;
 
@@ -49,8 +50,9 @@ public:
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
-	void AddSphereColliderComponent( HSphereColliderComponent* pSphere );
-	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane );
+	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled = false );
+	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled = false );
+	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled = false );
 	void RemoveColliderComponent( HColliderComponentInterface* pSphere );
 	HScene& GetScene();
 	PhysicsScene& GetPhysicsScene();

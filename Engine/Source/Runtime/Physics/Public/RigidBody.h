@@ -15,13 +15,17 @@ class PHYSICS_API RigidBody
 	friend class PhysicsScene;
 public:
 	FVector3 GetSimulatedPosition() const;
+	FQuat GetSimulatedRotation() const;
 	bool GetIsStatic() const;
 	void SetIsStatic( bool IsStatic );
 	float GetDensity() const;
 	void SetDensity( const float& NewDensity );
-
+	void EnableSimulation();
+	void DisableSimulation();
+	
 	physx::PxRigidActor& GetRigidActor();
 	physx::PxMaterial& GetPhysicsMaterial();
+
 
 protected:
 	RigidBody();
@@ -69,6 +73,27 @@ public:
 private:
 	float m_Radius;
 
+};
+
+class PHYSICS_API CubeRigidBody : public RigidBody
+{
+public:
+	CubeRigidBody();
+	virtual ~CubeRigidBody();
+
+	float GetWidth() const;
+	float GetHeight() const;
+	float GetDepth() const;
+
+	void SetWidth( const float& NewWidth );
+	void SetHeight( const float& NewHeight );
+	void SetDepth( const float& NewDepth );
+
+
+private:
+	float m_Width;
+	float m_Height;
+	float m_Depth;
 };
 
 //
@@ -132,4 +157,37 @@ FORCEINLINE float SphereRigidBody::GetRadius() const
 FORCEINLINE void SphereRigidBody::SetRadius( const float& NewRadius )
 {
 	m_Radius = NewRadius;
+}
+
+// Cube
+//
+
+FORCEINLINE float CubeRigidBody::GetWidth() const
+{
+	return m_Width;
+}
+
+FORCEINLINE float CubeRigidBody::GetHeight() const
+{
+	return m_Height;
+}
+
+FORCEINLINE float CubeRigidBody::GetDepth() const
+{
+	return m_Depth;
+}
+
+FORCEINLINE void CubeRigidBody::SetWidth( const float& NewWidth )
+{
+	m_Width = NewWidth;
+}
+
+FORCEINLINE void CubeRigidBody::SetHeight( const float& NewHeight )
+{
+	m_Height = NewHeight;
+}
+
+FORCEINLINE void CubeRigidBody::SetDepth( const float& NewDepth )
+{
+	m_Depth = NewDepth;
 }

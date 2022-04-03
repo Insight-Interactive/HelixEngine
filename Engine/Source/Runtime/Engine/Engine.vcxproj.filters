@@ -222,6 +222,9 @@
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HSphereColliderComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HStaticMeshComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
@@ -321,7 +324,7 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Components\HSphereColliderComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -424,6 +427,9 @@
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HSphereColliderComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HStaticMeshComponent.cpp">
@@ -531,7 +537,7 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HSphereColliderComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TSingleton.h"
+
 #include "CriticalSection.h"
 
 
@@ -14,7 +16,7 @@ namespace physx
 }
 class PhysicsScene;
 
-class PHYSICS_API PhysicsContext
+class PHYSICS_API PhysicsContext : TSingleton<PhysicsContext>
 {
 public:
 	PhysicsContext();

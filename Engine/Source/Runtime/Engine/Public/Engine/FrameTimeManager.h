@@ -17,6 +17,7 @@ public:
 	double GetTimeMiliSeconds() const;
 	double GetTimeSeconds() const;
 
+	static double GetCpuTickDelta();
 
 private:
 	double m_Ticks;
@@ -81,6 +82,11 @@ FORCEINLINE double FTimer::GetTimeMiliSeconds() const
 FORCEINLINE double FTimer::GetTimeSeconds() const
 {
 	return m_Ticks / SCpuTickDelta;
+}
+
+/*static*/ FORCEINLINE double FTimer::GetCpuTickDelta()
+{
+	return SCpuTickDelta;
 }
 
 

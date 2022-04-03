@@ -16,12 +16,18 @@ HColliderComponentInterface::~HColliderComponentInterface()
 
 }
 
+void HColliderComponentInterface::BeginPlay() 
+{
+	Super::BeginPlay();
+}
+
 void HColliderComponentInterface::Tick( float DeltaTime ) 
 {
 	Super::Tick( DeltaTime );
 	
 	// Fetch the results of the simulation.
 	SetPosition( GetRigidBody().GetSimulatedPosition() );
+	SetRotation( GetRigidBody().GetSimulatedRotation() );
 }
 
 void HColliderComponentInterface::Serialize( WriteContext& Output )

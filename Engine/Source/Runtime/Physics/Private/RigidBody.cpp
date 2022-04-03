@@ -6,7 +6,7 @@
 
 RigidBody::RigidBody()
 	: m_IsStatic( false )
-	, m_Density( 1.f )
+	, m_Density( 10.f )
 	, m_pRigidActor( nullptr )
 	, m_pPhysicsMaterial( nullptr )
 	, m_pOwningSceneRef( nullptr )
@@ -39,9 +39,23 @@ FVector3 RigidBody::GetSimulatedPosition() const
 	physx::PxU32 NumShapes = m_pRigidActor->getNbShapes();
 	m_pRigidActor->getShapes( pShapes, NumShapes );
 	HE_ASSERT( pShapes[0] != nullptr);
-
+	
 	const physx::PxTransform Transform = physx::PxShapeExt::getGlobalPose( *pShapes[0], *m_pRigidActor );
 	return FVector3( Transform.p.x, Transform.p.y, Transform.p.z );
+}
+
+FQuat RigidBody::GetSimulatedRotation() const
+{
+	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
+	HE_ASSERT( m_pOwningSceneRef != nullptr ); // Rigid body does not belong to a scene!
+
+	physx::PxShape* pShapes[P_MAX_NUM_ACTOR_SHAPES];
+	physx::PxU32 NumShapes = m_pRigidActor->getNbShapes();
+	m_pRigidActor->getShapes( pShapes, NumShapes );
+	HE_ASSERT( pShapes[0] != nullptr );
+	
+	const physx::PxTransform Transform = physx::PxShapeExt::getGlobalPose( *pShapes[0], *m_pRigidActor );
+	return FQuat( Transform.q.x, Transform.q.y, Transform.q.z, Transform.q.w );
 }
 
 float RigidBody::GetDensity() const
@@ -52,6 +66,18 @@ float RigidBody::GetDensity() const
 void RigidBody::SetDensity( const float& NewDensity )
 {
 	m_Density = NewDensity;
+}
+
+void RigidBody::EnableSimulation()
+{
+	if (!m_IsStatic)
+		m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, false );
+}
+
+void RigidBody::DisableSimulation()
+{
+	if (!m_IsStatic)
+		m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, true );
 }
 
 PlaneRigidBody::PlaneRigidBody()
@@ -70,5 +96,16 @@ SphereRigidBody::SphereRigidBody()
 }
 
 SphereRigidBody::~SphereRigidBody()
+{
+}
+
+CubeRigidBody::CubeRigidBody()
+	: m_Width( 1.f )
+	, m_Height( 1.f )
+	, m_Depth( 1.f )
+{
+}
+
+CubeRigidBody::~CubeRigidBody()
 {
 }

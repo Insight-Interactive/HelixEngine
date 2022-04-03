@@ -4,7 +4,7 @@
 #include <memory>
 //using Ref = std::shared_ptr<T>;
 template <typename T>
-class Ref
+class CORE_API Ref
 {
 public:
 	template <typename ... Args>
@@ -12,7 +12,6 @@ public:
 	{
 		m_Ptr = std::make_shared<T>( args... );
 	}
-
 
 	inline void Reset(T* pOther)
 	{

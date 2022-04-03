@@ -73,12 +73,12 @@ void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetWidth( Width );
 	m_RigidBody.SetHeight( Height );
 
-	RegisterCollider();
+	RegisterCollider( false );
 }
 
-void HPlaneColliderComponent::RegisterCollider()
+void HPlaneColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddPlaneColliderComponent( this );
+	GetWorld()->AddPlaneColliderComponent( this, StartDisabled );
 }
 
 void HPlaneColliderComponent::UnRegisterCollider()

@@ -1049,6 +1049,7 @@
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HColliderComponentInterface.h" />
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
@@ -1119,6 +1120,7 @@
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HColliderComponentInterface.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />

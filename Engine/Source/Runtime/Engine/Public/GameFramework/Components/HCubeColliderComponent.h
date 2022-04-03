@@ -2,15 +2,14 @@
 
 #include "GameFramework/Components/HColliderComponentInterface.h"
 
-
 HCOMPONENT()
-class HPlaneColliderComponent : public HColliderComponentInterface
+class HCubeColliderComponent : public HColliderComponentInterface
 {
 	friend class AActor;
 	friend class HWorld;
 	using Super = HColliderComponentInterface;
 public:
-	HE_COMPONENT_GENERATED_BODY( HPlaneColliderComponent );
+	HE_COMPONENT_GENERATED_BODY( HCubeColliderComponent );
 
 	virtual bool IsStatic() const override;
 
@@ -28,21 +27,20 @@ private:
 	void UnRegisterCollider();
 
 private:
-	PlaneRigidBody m_RigidBody;
+	CubeRigidBody m_RigidBody;
 
 };
-
 
 //
 // Inline function implementations
 //
 
-FORCEINLINE bool HPlaneColliderComponent::IsStatic() const
+FORCEINLINE bool HCubeColliderComponent::IsStatic() const
 {
 	return m_RigidBody.GetIsStatic();
 }
 
-FORCEINLINE	RigidBody& HPlaneColliderComponent::GetRigidBody()
+FORCEINLINE	RigidBody& HCubeColliderComponent::GetRigidBody()
 {
 	return m_RigidBody;
 }

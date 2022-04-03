@@ -17,6 +17,7 @@ public:
 protected:
 	HE_COMPONENT_GENERATED_BODY( HColliderComponentInterface );
 
+	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaTime ) override;
 
 	virtual void OnEnter( HColliderComponentInterface* Other ) { }

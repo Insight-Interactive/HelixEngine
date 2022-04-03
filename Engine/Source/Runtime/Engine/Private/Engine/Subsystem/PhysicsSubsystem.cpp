@@ -4,6 +4,7 @@
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 
 #include "PhysicsScene.h"
+#include "Engine/FrameTimeManager.h"
 
 
 FPhysicsSubsystem::FPhysicsSubsystem()
@@ -34,7 +35,6 @@ void FPhysicsSubsystem::RunAsync_Implementation()
 		for (PhysicsScene* pScene : m_Scenes)
 		{
 			pScene->ProcessEventQueue();
-			pScene->Tick();
 		}
 	}
 

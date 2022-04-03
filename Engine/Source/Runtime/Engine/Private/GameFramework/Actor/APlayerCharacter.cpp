@@ -37,8 +37,8 @@ void APlayerCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		float DeltaTime = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->Rotate( Value * m_CameraPitchSpeedMultiplier * DeltaTime, 0.0f, 0.0f );
+		const float Rotation = Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime();
+		m_pCameraComponent->Rotate( Rotation, 0.0f, 0.0f );
 		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
 	}
 }
@@ -47,8 +47,8 @@ void APlayerCharacter::LookRight( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		float DeltaTime = GetWorld()->GetDeltaTime();
-		m_pCameraComponent->Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * DeltaTime, 0.0f );
+		const float Rotation = Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime();
+		m_pCameraComponent->Rotate( 0.0f, Rotation, 0.0f );
 		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
 	}
 }

@@ -7,9 +7,9 @@
 
 
 PhysicsScene::PhysicsScene()
-	: m_pScene( nullptr )
-	, m_SimulationStepRate( 1.f / 200.f )
-	, m_IsSimulationPaused( false )
+	: m_pOwningContextRef( nullptr )
+	, m_pScene( nullptr )
+	, m_SimulationStepRate( 1.f / 60.f )
 {
 
 }
@@ -24,10 +24,11 @@ void PhysicsScene::Setup( PhysicsContext& PhysicsContext )
 	HE_ASSERT( PhysicsContext.IsReady() ); // Trying to create a physics scene with PhysicsContext that has not been setup yet!
 	HE_ASSERT( m_pScene == nullptr ); // Trying to initialize a scene that has already been initalized.
 
-	physx::PxPhysics& Physics = PhysicsContext.GetPhysics();
+	m_pOwningContextRef = &PhysicsContext;
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
 	physx::PxSceneDesc SceneDesc( Physics.getTolerancesScale() );
-	SceneDesc.gravity = physx::PxVec3( 0.f, -9.8f, 0.f );
+	SceneDesc.gravity = physx::PxVec3( 0.f, -9.81f, 0.f );
 	SceneDesc.cpuDispatcher = &PhysicsContext.GetCpuDispatcher();
 	SceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	m_pScene = Physics.createScene( SceneDesc );
@@ -40,6 +41,84 @@ void PhysicsScene::Setup( PhysicsContext& PhysicsContext )
 		pPvd->setScenePvdFlag( physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true );
 		pPvd->setScenePvdFlag( physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true );
 	}
+
+	m_pScene->addActor( *physx::PxCreatePlane( Physics, physx::PxPlane( 0, 1, 0, 0 ), *Physics.createMaterial( 0.5f, 0.5f, 0.6f ) ) );
+}
+
+bool PhysicsScene::IsValid() const
+{
+	return
+		m_pOwningContextRef != nullptr &&
+		m_pScene != nullptr &&
+		m_pOwningContextRef->IsReady();
+}
+
+void PhysicsScene::ProcessEventQueue()
+{
+	while (m_EventQueue.GetQueue().size() > 0)
+	{
+		PhysicsEventPacket Event = m_EventQueue.PopFront();
+		switch (Event.EventType)
+		{
+		case PE_PauseSimulation:
+			m_IsSimulationPaused.Set();
+			break;
+		case PE_UnPauseSimulation:
+			m_IsSimulationPaused.Clear();
+			break;
+		case PE_SetSimulationStepRate:
+			m_SimulationStepRate = *(float*)Event.pUserData;
+			break;
+		case PE_AddSphereActor:
+		{
+			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
+			SphereActorAddDesc& Desc = *(SphereActorAddDesc*)Event.pUserData;
+			CreateSphereInternal( Desc.StartPosition, Desc.outSphereRB );
+			if (Desc.StartDisabled)
+				Desc.outSphereRB.DisableSimulation();
+
+			delete Event.pUserData;
+			break;
+		}
+		case PE_AddPlaneActor:
+		{
+			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
+			PlaneActorAddDesc& Desc = *(PlaneActorAddDesc*)Event.pUserData;
+			CreatePlaneInternal( Desc.StartPosition, Desc.outPlaneRB );
+			if (Desc.StartDisabled)
+				Desc.outPlaneRB.DisableSimulation();
+
+			delete Event.pUserData;
+			break;
+		}
+		case PE_AddCubeActor:
+		{
+			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
+			CubeActorAddDesc& Desc = *(CubeActorAddDesc*)Event.pUserData;
+			CreateCubeInternal( Desc.StartPosition, Desc.outCubeRB );
+			if (Desc.StartDisabled)
+				Desc.outCubeRB.DisableSimulation();
+
+			delete Event.pUserData;
+			break;
+		}
+		case PE_RemoveActor:
+		{
+			RigidBody& RB = *(RigidBody*)Event.pUserData;
+			RemoveActorInternal( RB );
+			break;
+		}
+		case PE_FlushScene:
+			FlushInternal();
+			break;
+		case PE_TickScene:
+			Tick();
+			break;
+		default:
+			HE_ASSERT( false );
+			break;
+		}
+	}
 }
 
 void PhysicsScene::Teardown()
@@ -47,21 +126,18 @@ void PhysicsScene::Teardown()
 	PX_SAFE_RELEASE( m_pScene );
 }
 
-void PhysicsScene::Flush()
+void PhysicsScene::FlushInternal()
 {
-	WaitForSimulationFinished();
 	m_pScene->flushSimulation();
 }
 
-void PhysicsScene::CreatePlane( PhysicsContext& PhysicsContext, const FVector3& StartPos, PlaneRigidBody& outPlane )
+void PhysicsScene::CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane )
 {
-	HE_ASSERT( PhysicsContext.IsReady() ); // Trying to initialize phyics scene actors with physics context that has not been initialized!
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
-	physx::PxPhysics& Physics = PhysicsContext.GetPhysics();
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
 	outPlane.SetOwningScene( *m_pScene );
-
 
 	physx::PxTransform InitialTransform = PxTransformFromPlaneEquation( physx::PxPlane( 0, 1, 0, 0 ) );
 	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
@@ -79,23 +155,15 @@ void PhysicsScene::CreatePlane( PhysicsContext& PhysicsContext, const FVector3& 
 
 	HE_ASSERT( outPlane.m_pRigidActor != nullptr ); // Failed to create physics actor!
 
-	static bool b = false;
-	if (!b)
-	{
-		b = true;
-		m_pScene->addActor( *physx::PxCreatePlane( Physics, physx::PxPlane( 0, 1, 0, 0 ), *outPlane.m_pPhysicsMaterial ) );
-	}
-
 	m_pScene->addActor( *outPlane.m_pRigidActor );
 	outPlane.OnCreate();
 }
 
-void PhysicsScene::CreateSphere( PhysicsContext& PhysicsContext, const FVector3& StartPos, SphereRigidBody& outSphere )
+void PhysicsScene::CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere )
 {
-	HE_ASSERT( PhysicsContext.IsReady() ); // Trying to initialize phyics scene actors with physics context that has not been initialized!
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
-	physx::PxPhysics& Physics = PhysicsContext.GetPhysics();
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
 	outSphere.SetOwningScene( *m_pScene );
 
@@ -120,7 +188,35 @@ void PhysicsScene::CreateSphere( PhysicsContext& PhysicsContext, const FVector3&
 	outSphere.OnCreate();
 }
 
-void PhysicsScene::RemoveActor( RigidBody& Collider )
+void PhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube )
+{
+	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
+
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
+
+	outCube.SetOwningScene( *m_pScene );
+	physx::PxBoxGeometry CubeGeo( outCube.GetWidth(), outCube.GetHeight(), outCube.GetDepth() );
+	physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+	outCube.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
+	if (outCube.GetIsStatic())
+	{
+		outCube.m_pRigidActor = physx::PxCreateStatic( Physics, InitialTransform, CubeGeo, *outCube.m_pPhysicsMaterial );
+	}
+	else
+	{
+		outCube.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, CubeGeo, *outCube.m_pPhysicsMaterial, outCube.GetDensity() );
+
+		DynamicColliderInitParams InitParams = {};
+		InitParams.StartPos = StartPos;
+		InitDynamicBody( InitParams, outCube );
+	}
+	HE_ASSERT( outCube.m_pRigidActor != nullptr ); // Failed to create physics actor!
+
+	m_pScene->addActor( *outCube.m_pRigidActor );
+	outCube.OnCreate();
+}
+
+void PhysicsScene::RemoveActorInternal( RigidBody& Collider )
 {
 	if (Collider.m_pRigidActor != nullptr)
 	{
@@ -140,15 +236,24 @@ void PhysicsScene::InitDynamicBody( const DynamicColliderInitParams& InitParams,
 
 	physx::PxTransform Transform( physx::PxVec3( InitParams.StartPos.x, InitParams.StartPos.y, InitParams.StartPos.z ) );
 	pDynamic->setGlobalPose( Transform );
-	pDynamic->setAngularDamping( 0.5f );
-	//pDynamic->setLinearVelocity( physx::PxVec3( 0, 50, 10 ) );
+	//pDynamic->setAngularDamping( 0.5f );
+	physx::PxRigidBodyExt::updateMassAndInertia( *pDynamic, RigidBody.GetDensity() );
+	pDynamic->setLinearVelocity( physx::PxVec3( 0, 50, 10 ) );
 }
 
 void PhysicsScene::Tick()
 {
-	if (m_IsSimulationPaused)
+	if (m_IsSimulationPaused.IsSet())
 		return;
 
+	m_IsSimulating.Set();
+	TickInternal();
+	//m_UpdateLoop.Do( m_SimulationStepRate, this, &PhysicsScene::TickInternal );
+	m_IsSimulating.Clear();
+}
+
+void PhysicsScene::TickInternal()
+{
 	if (IsValid())
 	{
 		m_pScene->simulate( m_SimulationStepRate );
@@ -163,7 +268,10 @@ void PhysicsScene::Tick()
 
 void PhysicsScene::WaitForSimulationFinished() const
 {
-	m_pScene->checkResults( true );
+	if (!m_IsSimulating.IsSet())
+	{
+		std::this_thread::yield();
+	}
 }
 
 bool PhysicsScene::IsSimulationFinished() const

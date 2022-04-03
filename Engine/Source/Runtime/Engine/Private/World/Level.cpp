@@ -160,6 +160,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 		else
 		{
 			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorFilePath ) );
+			HE_ASSERT( false );
 		}
 	}
 }

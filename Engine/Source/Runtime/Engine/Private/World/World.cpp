@@ -10,6 +10,7 @@
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
+#include "GameFramework/Components/HCubeColliderComponent.h"
 
 
 HWorld::HWorld()
@@ -99,10 +100,7 @@ void HWorld::BeginPlay()
 void HWorld::Tick( float DeltaTime )
 {
 	m_PhysicsScene.WaitForSimulationFinished();
-
-	m_PhysicsScene.RequestPauseSimulation();
-	m_PhysicsScene.WaitTillSimulationPaused();
-
+	
 	m_CameraManager.Tick( DeltaTime );
 
 	if (GEngine->IsPlayingInEditor())
@@ -111,7 +109,7 @@ void HWorld::Tick( float DeltaTime )
 		m_Level.Tick( DeltaTime );
 	}
 
-	m_PhysicsScene.RequestUnPauseSimulation();
+	m_PhysicsScene.RequestTick();
 }
 
 void HWorld::Flush()
@@ -121,9 +119,11 @@ void HWorld::Flush()
 		// Unregister the physics scene to stop simulation, but dont destroy 
 		// it yet components need it to be able to realease resources.
 		m_PhysicsScene.WaitForSimulationFinished();
+		m_PhysicsScene.RequestSceneFlush();
+
 		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
 
-		// CLeanup the rendering resources.
+		// Cleanup the rendering resources.
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
@@ -237,30 +237,43 @@ void HWorld::UnPausePhysics()
 	m_PhysicsScene.RequestUnPauseSimulation();
 }
 
-void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere )
+void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled )
 {
 	HColliderComponentInterface* pCollider = (HColliderComponentInterface*)pSphere;
 
 	PhysicsScene::SphereActorAddDesc InitDesc
 	{
-		GEngine->GetPhysicsSubsystem().GetPhysicsContext(),
 		pCollider->GetPosition(),
-		(SphereRigidBody&)pSphere->GetRigidBody()
+		(SphereRigidBody&)pSphere->GetRigidBody(),
+		StartDisabled
 	};
 	m_PhysicsScene.RequestSphereActorAdd( InitDesc );
 }
 
-void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane )
+void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled )
 {
 	HColliderComponentInterface* pCollider = (HColliderComponentInterface*)pPlane;
 
 	PhysicsScene::PlaneActorAddDesc InitDesc
 	{
-		GEngine->GetPhysicsSubsystem().GetPhysicsContext(),
 		pCollider->GetPosition(),
-		(PlaneRigidBody&)pPlane->GetRigidBody()
+		(PlaneRigidBody&)pPlane->GetRigidBody(),
+		StartDisabled
 	};
 	m_PhysicsScene.RequestPlaneActorAdd( InitDesc );
+}
+
+void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled )
+{
+	HColliderComponentInterface* pCollider = (HColliderComponentInterface*)pCube;
+
+	PhysicsScene::CubeActorAddDesc InitDesc
+	{
+		pCollider->GetPosition(),
+		(CubeRigidBody&)pCube->GetRigidBody(),
+		StartDisabled
+	};
+	m_PhysicsScene.RequestCubeActorAdd( InitDesc );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponentInterface* pCollider )

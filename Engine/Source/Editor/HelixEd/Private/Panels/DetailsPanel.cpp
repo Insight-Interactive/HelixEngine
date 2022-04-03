@@ -54,7 +54,7 @@ void DetailsPanel::PreviewActor(AActor* pActor)
 		ImGui::DragFloat("Position Z: ", &Position.z);
 		pActor->GetRootComponent()->SetPosition(Position);
 
-		FVector3 Rotation = pActor->GetRootComponent()->GetRotation();
+		FQuat Rotation = pActor->GetRootComponent()->GetRotation();
 		ImGui::DragFloat("Rotation X: ", &Rotation.x);
 		ImGui::DragFloat("Rotation Y: ", &Rotation.y);
 		ImGui::DragFloat("Rotation Z: ", &Rotation.z);

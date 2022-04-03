@@ -25,7 +25,7 @@ protected:
 
 
 private:
-	void RegisterCollider();
+	void RegisterCollider( bool StartDisabled );
 	void UnRegisterCollider();
 
 private:

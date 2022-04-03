@@ -68,16 +68,15 @@ void HSphereColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
 	m_RigidBody.SetRadius( Radius );
 
-	RegisterCollider();
+	RegisterCollider( false );
 }
 
-void HSphereColliderComponent::RegisterCollider()
+void HSphereColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddSphereColliderComponent( this );
+	GetWorld()->AddSphereColliderComponent( this, StartDisabled );
 }
 
 void HSphereColliderComponent::UnRegisterCollider()
 {
 	GetWorld()->RemoveColliderComponent( this );
 }
-

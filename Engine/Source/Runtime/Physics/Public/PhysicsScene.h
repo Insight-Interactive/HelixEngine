@@ -1,20 +1,36 @@
 #pragma once
 
+#include "Flag.h"
 #include "CriticalSection.h"
+#include "FixedLoop.h"
 
 
 enum EPhysicsEvent
 {
+	// Invalid event.
 	PE_Invalid,
-	PE_PauseSimulation,
-	PE_UnPauseSimulation,
-	PE_SetSimulationStepRate,
+	// Pause the entire simulation.
+	PE_PauseSimulation, 
+	// Unpause the entire simulation.
+	PE_UnPauseSimulation, 
+	// Set the interval at which the scene is steped through time.
+	PE_SetSimulationStepRate, 
+	// Add a sphere physics actor to the scene.
 	PE_AddSphereActor,
+	// Add a plane physics actor to the scene.
 	PE_AddPlaneActor,
-	PE_RemoveActor,
+	// Add a cube physics actor to the scene.
+	PE_AddCubeActor,
+	// Remove a physics actor from the scene.
+	PE_RemoveActor, 
+	// Flsuh all actors from the scene.
+	PE_FlushScene,
+
+	// Request the scene to begin simulating.
+	PE_TickScene,
 };
 
-struct PhysicsEventPacket
+struct PHYSICS_API PhysicsEventPacket
 {
 	PhysicsEventPacket()
 		: EventType( PE_Invalid )
@@ -23,25 +39,25 @@ struct PhysicsEventPacket
 	void* pUserData;
 };
 
-class PhysicsEventQueue
+class PHYSICS_API PhysicsEventQueue
 {
 public:
 	PhysicsEventQueue() {}
 	~PhysicsEventQueue() {}
 
-	void PushEvent( PhysicsEventPacket& Event )
+	FORCEINLINE void PushEvent( PhysicsEventPacket& Event )
 	{
 		m_Queue.push( Event );
 	}
 
-	PhysicsEventPacket PopFront()
+	FORCEINLINE PhysicsEventPacket PopFront()
 	{
 		PhysicsEventPacket Front = m_Queue.front();
 		m_Queue.pop();
 		return Front;
 	}
 
-	std::queue<PhysicsEventPacket>& GetQueue()
+	FORCEINLINE std::queue<PhysicsEventPacket>& GetQueue()
 	{
 		return m_Queue;
 	}
@@ -59,6 +75,7 @@ namespace physx
 class RigidBody;
 class PlaneRigidBody;
 class SphereRigidBody;
+class CubeRigidBody;
 class PhysicsContext;
 
 class PHYSICS_API PhysicsScene
@@ -71,15 +88,21 @@ private:
 public:
 	struct SphereActorAddDesc
 	{
-		PhysicsContext& InitContext;
 		FVector3 StartPosition;
 		SphereRigidBody& outSphereRB;
+		bool StartDisabled;
 	};
 	struct PlaneActorAddDesc
 	{
-		PhysicsContext& InitContext;
 		FVector3 StartPosition;
 		PlaneRigidBody& outPlaneRB;
+		bool StartDisabled;
+	};
+	struct CubeActorAddDesc
+	{
+		FVector3 StartPosition;
+		CubeRigidBody& outCubeRB;
+		bool StartDisabled;
 	};
 public:
 	PhysicsScene();
@@ -88,12 +111,11 @@ public:
 	bool IsValid() const;
 
 	void Setup( PhysicsContext& PhysicsContext );
-	void Flush();
 	void Teardown();
+	void Tick();
 
 	void ProcessEventQueue();
 	// Steps the physics simulation through time.
-	void Tick();
 	bool IsSimulationFinished() const;
 	bool IsSimulationPaused() const;
 
@@ -102,7 +124,10 @@ public:
 	void RequestSetStepRate( float NewStepRate );
 	void RequestSphereActorAdd( SphereActorAddDesc& SphereInitInfo );
 	void RequestPlaneActorAdd( PlaneActorAddDesc& PlaneInitInfo );
+	void RequestCubeActorAdd( CubeActorAddDesc& CubeInitInfo );
 	void RequestActorRemove( RigidBody& RigidBody );
+	void RequestSceneFlush();
+	void RequestTick();
 
 	// Blocks the thread and waits for the simulation to finish before proceeding.
 	void WaitForSimulationFinished() const;
@@ -111,28 +136,31 @@ public:
 
 
 private:
-	void CreatePlane( PhysicsContext& PhysicsContext, const FVector3& StartPos, PlaneRigidBody& outPlane );
-	void CreateSphere( PhysicsContext& PhysicsContext, const FVector3& StartPos, SphereRigidBody& outSphere );
-	void RemoveActor( RigidBody& Collider );
+	void CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane );
+	void CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere );
+	void CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube );
+	void RemoveActorInternal( RigidBody& Collider );
 	void InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody );
+	void FlushInternal();
+	void TickInternal();
 
 protected:
+	PhysicsContext* m_pOwningContextRef;
+
 	physx::PxScene* m_pScene;
 	float m_SimulationStepRate;
-	bool m_IsSimulationPaused;
+	FFlag m_IsSimulationPaused;
+	FFlag m_IsSimulating;
 
 	PhysicsEventQueue m_EventQueue;
+	FFixedLoop m_UpdateLoop;
+
 };
 
 // 
 // Inline function implementations
 //
 
-
-FORCEINLINE bool PhysicsScene::IsValid() const
-{
-	return m_pScene != nullptr;
-}
 
 FORCEINLINE void PhysicsScene::RequestPauseSimulation()
 {
@@ -160,7 +188,7 @@ FORCEINLINE	void PhysicsScene::RequestSphereActorAdd( SphereActorAddDesc& Sphere
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddSphereActor;
-	Packet.pUserData = new SphereActorAddDesc{SphereInitInfo.InitContext, SphereInitInfo.StartPosition, SphereInitInfo.outSphereRB};
+	Packet.pUserData = new SphereActorAddDesc{SphereInitInfo.StartPosition, SphereInitInfo.outSphereRB, SphereInitInfo.StartDisabled};
 	m_EventQueue.PushEvent( Packet );
 }
 
@@ -168,7 +196,15 @@ FORCEINLINE void PhysicsScene::RequestPlaneActorAdd( PlaneActorAddDesc& PlaneIni
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddPlaneActor;
-	Packet.pUserData = new PlaneActorAddDesc{PlaneInitInfo.InitContext, PlaneInitInfo.StartPosition, PlaneInitInfo.outPlaneRB};
+	Packet.pUserData = new PlaneActorAddDesc{PlaneInitInfo.StartPosition, PlaneInitInfo.outPlaneRB, PlaneInitInfo.StartDisabled};
+	m_EventQueue.PushEvent( Packet );
+}
+
+FORCEINLINE void PhysicsScene::RequestCubeActorAdd( CubeActorAddDesc& CubeInitInfo )
+{
+	PhysicsEventPacket Packet;
+	Packet.EventType = PE_AddCubeActor;
+	Packet.pUserData = new CubeActorAddDesc{ CubeInitInfo.StartPosition, CubeInitInfo.outCubeRB, CubeInitInfo.StartDisabled };
 	m_EventQueue.PushEvent( Packet );
 }
 
@@ -180,61 +216,29 @@ FORCEINLINE void PhysicsScene::RequestActorRemove( RigidBody& RigidBody )
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE void PhysicsScene::ProcessEventQueue()
+FORCEINLINE void PhysicsScene::RequestSceneFlush()
 {
-	while (m_EventQueue.GetQueue().size() > 0)
-	{
-		PhysicsEventPacket Event = m_EventQueue.PopFront();
-		switch (Event.EventType)
-		{
-		case PE_PauseSimulation:
-			m_IsSimulationPaused = true;
-			break;
-		case PE_UnPauseSimulation:
-			m_IsSimulationPaused = false;
-			break;
-		case PE_SetSimulationStepRate:
-			m_SimulationStepRate = *(float*)Event.pUserData;
-			break;
-		case PE_AddSphereActor:
-		{
-			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
-			SphereActorAddDesc& Desc = *(SphereActorAddDesc*)Event.pUserData;
-			CreateSphere( Desc.InitContext, Desc.StartPosition, Desc.outSphereRB );
-			delete Event.pUserData;
-			break;
-		}
-		case PE_AddPlaneActor:
-		{
-			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
-			PlaneActorAddDesc& Desc = *(PlaneActorAddDesc*)Event.pUserData;
-			CreatePlane( Desc.InitContext, Desc.StartPosition, Desc.outPlaneRB );
-			delete Event.pUserData;
-			break;
-		}
-		case PE_RemoveActor:
-		{
-			RigidBody& RB = *(RigidBody*)Event.pUserData;
-			RemoveActor( RB );
-			break;
-		}
-		default:
-			HE_ASSERT( false );
-			break;
-		}
-	}
+	PhysicsEventPacket Packet;
+	Packet.EventType = PE_FlushScene;
+	m_EventQueue.PushEvent( Packet );
+}
+
+FORCEINLINE void PhysicsScene::RequestTick()
+{
+	PhysicsEventPacket Packet;
+	Packet.EventType = PE_TickScene;
+	m_EventQueue.PushEvent( Packet );
 }
 
 FORCEINLINE bool PhysicsScene::IsSimulationPaused() const
 {
-	return m_IsSimulationPaused;
+	return m_IsSimulationPaused.IsSet();
 }
 
 FORCEINLINE void PhysicsScene::WaitTillSimulationPaused() const
 {
-	while (!m_IsSimulationPaused)
+	while (!m_IsSimulationPaused.IsSet())
 	{
 		std::this_thread::yield();
 	}
 }
-

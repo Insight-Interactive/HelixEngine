@@ -33,7 +33,7 @@ struct EditorPreferences
 	float VerticalScrollSpeed;
 	float HorizontalScrollSpeed;
 	FVector3 DebugCameraPosition;
-	FVector3 DebugCameraRotation;
+	FQuat DebugCameraRotation;
 	float DebugCameraPitchSpeed;
 	float DebugCameraYawSpeed;
 };
