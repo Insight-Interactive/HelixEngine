@@ -136,6 +136,14 @@ void AActor::Deserialize( const ReadContext& Value )
 	}
 }
 
+void AActor::OnDeserializeComplete()
+{
+	for (size_t i = 0; i < m_Components.size(); ++i)
+	{
+		m_Components[i]->OnOwnerDeserializeComplete();
+	}
+}
+
 void AActor::RemoveAllComponents()
 {
 	for (size_t i = 0; i < m_Components.size(); ++i)

@@ -57,6 +57,7 @@ protected:
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void OnDeserializeComplete();
 
 #if HE_WITH_EDITOR
 	virtual void OnEditorSelected();

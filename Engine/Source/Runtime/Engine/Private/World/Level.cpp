@@ -140,6 +140,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 						pRoot->SetRotation( Transform.GetRotation() );
 						pRoot->SetScale( Transform.GetScale() );
 					}
+					pNewActor->OnDeserializeComplete();
 				}
 				else if (ObjectType == kPlayerCharacterType)
 				{
@@ -154,6 +155,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 						pRoot->SetRotation( Transform.GetRotation() );
 						pRoot->SetScale( Transform.GetScale() );
 					}
+					pPlayer->OnDeserializeComplete();
 				}
 			}
 		}

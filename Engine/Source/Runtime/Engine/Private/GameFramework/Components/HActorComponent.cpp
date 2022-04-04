@@ -47,3 +47,8 @@ void HActorComponent::Deserialize( const ReadContext& Value )
 	FGUID ObjectGuid = FGUID::CreateFromString(GuidStr);
 	SetGuid(ObjectGuid);
 }
+
+void HActorComponent::OnOwnerDeserializeComplete()
+{
+
+}

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "GameFramework/Components/HColliderComponentInterface.h"
+#include "GameFramework/Components/HColliderComponent.h"
 
 
 HCOMPONENT()
-class HSphereColliderComponent : public HColliderComponentInterface
+class HSphereColliderComponent : public HColliderComponent
 {
 	friend class AActor;
 	friend class HWorld;
-	using Super = HColliderComponentInterface;
+	using Super = HColliderComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HSphereColliderComponent );
 
@@ -22,6 +22,7 @@ protected:
 	virtual void Deserialize( const ReadContext& Value ) override;
 
 	virtual RigidBody& GetRigidBody() override;
+	virtual const RigidBody& GetRigidBody() const override;
 
 
 private:
@@ -47,3 +48,7 @@ FORCEINLINE	RigidBody& HSphereColliderComponent::GetRigidBody()
 	return m_RigidBody;
 }
 
+FORCEINLINE	const RigidBody& HSphereColliderComponent::GetRigidBody() const
+{
+	return m_RigidBody;
+}

@@ -7,7 +7,7 @@
 
 
 HSphereColliderComponent::HSphereColliderComponent( FComponentInitArgs& InitArgs )
-	: HColliderComponentInterface( InitArgs )
+	: HColliderComponent( InitArgs )
 {
 
 }
@@ -58,7 +58,7 @@ void HSphereColliderComponent::Serialize( WriteContext& Output )
 
 void HSphereColliderComponent::Deserialize( const ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponentInterface )] );
+	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
 	const ReadContext& This = Value[1];
 	bool IsStatic;

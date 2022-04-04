@@ -204,7 +204,7 @@
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Components\HColliderComponentInterface.h">
+    <ClInclude Include="Public\GameFramework\Components\HColliderComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h">
@@ -411,7 +411,7 @@
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HColliderComponentInterface.cpp">
+    <ClCompile Include="Private\GameFramework\Components\HColliderComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp">

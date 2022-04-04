@@ -16,7 +16,8 @@ PhysicsScene::PhysicsScene()
 
 PhysicsScene::~PhysicsScene()
 {
-
+	Teardown();
+	m_pOwningContextRef = nullptr;
 }
 
 void PhysicsScene::Setup( PhysicsContext& PhysicsContext )
@@ -41,8 +42,6 @@ void PhysicsScene::Setup( PhysicsContext& PhysicsContext )
 		pPvd->setScenePvdFlag( physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true );
 		pPvd->setScenePvdFlag( physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true );
 	}
-
-	m_pScene->addActor( *physx::PxCreatePlane( Physics, physx::PxPlane( 0, 1, 0, 0 ), *Physics.createMaterial( 0.5f, 0.5f, 0.6f ) ) );
 }
 
 bool PhysicsScene::IsValid() const
@@ -123,6 +122,8 @@ void PhysicsScene::ProcessEventQueue()
 
 void PhysicsScene::Teardown()
 {
+	WaittillSimulationFinished();
+
 	PX_SAFE_RELEASE( m_pScene );
 }
 
@@ -131,32 +132,32 @@ void PhysicsScene::FlushInternal()
 	m_pScene->flushSimulation();
 }
 
-void PhysicsScene::CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane )
+void PhysicsScene::CreateInfinitePlaneInternal( InfinitePlaneRigidBody& outPlane )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
-	outPlane.SetOwningScene( *m_pScene );
-
-	physx::PxTransform InitialTransform = PxTransformFromPlaneEquation( physx::PxPlane( 0, 1, 0, 0 ) );
 	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
-	if (outPlane.GetIsStatic())
-	{
-		outPlane.m_pRigidActor = physx::PxCreateStatic( Physics, InitialTransform, physx::PxPlaneGeometry(), *outPlane.m_pPhysicsMaterial );
-	}
-	else
-	{
-		outPlane.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, physx::PxPlaneGeometry(), *outPlane.m_pPhysicsMaterial, 10.f );
-		DynamicColliderInitParams InitParams = {};
-		InitParams.StartPos = StartPos;
-		InitDynamicBody( InitParams, outPlane );
-	}
 
-	HE_ASSERT( outPlane.m_pRigidActor != nullptr ); // Failed to create physics actor!
+	FVector3 Normal = outPlane.GetDirection();
+	m_pScene->addActor( *physx::PxCreatePlane( Physics, physx::PxPlane( Normal.x, Normal.y, Normal.z, outPlane.GetDistance() ), *Physics.createMaterial( 0.5f, 0.5f, 0.6f ) ) );
 
 	m_pScene->addActor( *outPlane.m_pRigidActor );
-	outPlane.OnCreate();
+}
+
+void PhysicsScene::CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane )
+{
+	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
+
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
+	
+	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
+
+	physx::PxBoxGeometry PlaneGeo( outPlane.GetWidth() / 2, PlaneRigidBody::kPlaneHeight, outPlane.GetHeight() / 2 );
+	InitCollider( outPlane, PlaneGeo, StartPos );
+	
+	m_pScene->addActor( *outPlane.m_pRigidActor );
 }
 
 void PhysicsScene::CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere )
@@ -165,27 +166,11 @@ void PhysicsScene::CreateSphereInternal( const FVector3& StartPos, SphereRigidBo
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
-	outSphere.SetOwningScene( *m_pScene );
-
-	physx::PxSphereGeometry SphereGeo( outSphere.GetRadius() );
-	physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
 	outSphere.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
-	if (outSphere.GetIsStatic())
-	{
-		outSphere.m_pRigidActor = physx::PxCreateStatic( Physics, InitialTransform, SphereGeo, *outSphere.m_pPhysicsMaterial );
-	}
-	else
-	{
-		outSphere.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, SphereGeo, *outSphere.m_pPhysicsMaterial, outSphere.GetDensity() );
 
-		DynamicColliderInitParams InitParams = {};
-		InitParams.StartPos = StartPos;
-		InitDynamicBody( InitParams, outSphere );
-	}
-	HE_ASSERT( outSphere.m_pRigidActor != nullptr ); // Failed to create physics actor!
+	InitCollider( outSphere, physx::PxSphereGeometry( outSphere.GetRadius() ), StartPos );
 
 	m_pScene->addActor( *outSphere.m_pRigidActor );
-	outSphere.OnCreate();
 }
 
 void PhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube )
@@ -194,26 +179,12 @@ void PhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& 
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
-	outCube.SetOwningScene( *m_pScene );
-	physx::PxBoxGeometry CubeGeo( outCube.GetWidth(), outCube.GetHeight(), outCube.GetDepth() );
-	physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
 	outCube.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
-	if (outCube.GetIsStatic())
-	{
-		outCube.m_pRigidActor = physx::PxCreateStatic( Physics, InitialTransform, CubeGeo, *outCube.m_pPhysicsMaterial );
-	}
-	else
-	{
-		outCube.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, CubeGeo, *outCube.m_pPhysicsMaterial, outCube.GetDensity() );
 
-		DynamicColliderInitParams InitParams = {};
-		InitParams.StartPos = StartPos;
-		InitDynamicBody( InitParams, outCube );
-	}
-	HE_ASSERT( outCube.m_pRigidActor != nullptr ); // Failed to create physics actor!
+	physx::PxBoxGeometry CubeGeo( outCube.GetWidth() / 2, outCube.GetHeight() / 2, outCube.GetDepth() / 2 );
+	InitCollider( outCube, CubeGeo, StartPos );
 
 	m_pScene->addActor( *outCube.m_pRigidActor );
-	outCube.OnCreate();
 }
 
 void PhysicsScene::RemoveActorInternal( RigidBody& Collider )
@@ -229,6 +200,28 @@ void PhysicsScene::RemoveActorInternal( RigidBody& Collider )
 	}
 }
 
+void PhysicsScene::InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos )
+{
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
+
+	physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+	if (Collider.GetIsStatic())
+	{
+		Collider.m_pRigidActor = physx::PxCreateStatic( Physics, InitialTransform, Geo, *Collider.m_pPhysicsMaterial );
+	}
+	else
+	{
+		Collider.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, Geo, *Collider.m_pPhysicsMaterial, Collider.GetDensity() );
+
+		DynamicColliderInitParams InitParams = {};
+		InitParams.StartPos = StartPos;
+		InitDynamicBody( InitParams, Collider );
+	}
+	HE_ASSERT( Collider.m_pRigidActor != nullptr ); // Failed to create physics actor!
+	
+	FinalizeRigidBody( Collider );
+}
+
 void PhysicsScene::InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody )
 {
 	physx::PxRigidDynamic* pDynamic = SCast<physx::PxRigidDynamic*>( RigidBody.m_pRigidActor );
@@ -236,9 +229,12 @@ void PhysicsScene::InitDynamicBody( const DynamicColliderInitParams& InitParams,
 
 	physx::PxTransform Transform( physx::PxVec3( InitParams.StartPos.x, InitParams.StartPos.y, InitParams.StartPos.z ) );
 	pDynamic->setGlobalPose( Transform );
-	//pDynamic->setAngularDamping( 0.5f );
 	physx::PxRigidBodyExt::updateMassAndInertia( *pDynamic, RigidBody.GetDensity() );
-	pDynamic->setLinearVelocity( physx::PxVec3( 0, 50, 10 ) );
+}
+
+void PhysicsScene::FinalizeRigidBody( RigidBody& outRB )
+{
+	//outRB.m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, outRB.GetIsStatic() );
 }
 
 void PhysicsScene::Tick()
@@ -248,7 +244,6 @@ void PhysicsScene::Tick()
 
 	m_IsSimulating.Set();
 	TickInternal();
-	//m_UpdateLoop.Do( m_SimulationStepRate, this, &PhysicsScene::TickInternal );
 	m_IsSimulating.Clear();
 }
 
@@ -266,12 +261,10 @@ void PhysicsScene::TickInternal()
 	}
 }
 
-void PhysicsScene::WaitForSimulationFinished() const
+void PhysicsScene::WaittillSimulationFinished() const
 {
-	if (!m_IsSimulating.IsSet())
-	{
+	while (m_IsSimulating.IsSet())
 		std::this_thread::yield();
-	}
 }
 
 bool PhysicsScene::IsSimulationFinished() const

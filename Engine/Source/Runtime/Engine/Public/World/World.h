@@ -15,7 +15,7 @@ class FCommandContext;
 class HCameraComponent;
 class APlayerCharacter;
 class FViewportContext;
-class HColliderComponentInterface;
+class HColliderComponent;
 class HPlaneColliderComponent;
 class HCubeColliderComponent;
 class HSphereColliderComponent;
@@ -53,7 +53,7 @@ public:
 	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled = false );
 	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled = false );
 	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled = false );
-	void RemoveColliderComponent( HColliderComponentInterface* pSphere );
+	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
 	PhysicsScene& GetPhysicsScene();
 	HLevel& GetCurrentLevel();

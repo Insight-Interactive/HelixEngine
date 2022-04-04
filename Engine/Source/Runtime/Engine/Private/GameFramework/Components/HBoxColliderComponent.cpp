@@ -4,7 +4,7 @@
 
 
 HBoxColliderComponent::HBoxColliderComponent( FComponentInitArgs& InitArgs )
-	: HColliderComponentInterface( InitArgs )
+	: HColliderComponent( InitArgs )
 {
 
 }

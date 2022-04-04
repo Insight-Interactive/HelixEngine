@@ -1,27 +1,27 @@
 #include "EnginePCH.h"
 
-#include "GameFramework/Components/HColliderComponentInterface.h"
+#include "GameFramework/Components/HColliderComponent.h"
 
 #include "World/World.h"
 #include "PhysicsScene.h"
 
 
-HColliderComponentInterface::HColliderComponentInterface( FComponentInitArgs& InitArgs )
+HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
 {
 }
 
-HColliderComponentInterface::~HColliderComponentInterface()
+HColliderComponent::~HColliderComponent()
 {
 
 }
 
-void HColliderComponentInterface::BeginPlay() 
+void HColliderComponent::BeginPlay() 
 {
 	Super::BeginPlay();
 }
 
-void HColliderComponentInterface::Tick( float DeltaTime ) 
+void HColliderComponent::Tick( float DeltaTime ) 
 {
 	Super::Tick( DeltaTime );
 	
@@ -30,9 +30,9 @@ void HColliderComponentInterface::Tick( float DeltaTime )
 	SetRotation( GetRigidBody().GetSimulatedRotation() );
 }
 
-void HColliderComponentInterface::Serialize( WriteContext& Output )
+void HColliderComponent::Serialize( WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HColliderComponentInterface ) );
+	Output.Key( HE_STRINGIFY( HColliderComponent ) );
 	Output.StartArray();
 	{
 		// Outer properties.
@@ -51,13 +51,18 @@ void HColliderComponentInterface::Serialize( WriteContext& Output )
 	Output.EndArray();
 }
 
-void HColliderComponentInterface::Deserialize( const ReadContext& Value )
+void HColliderComponent::Deserialize( const ReadContext& Value )
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY( HSceneComponent )] );
 
 }
 
-void HColliderComponentInterface::OnCreate()
+void HColliderComponent::OnOwnerDeserializeComplete()
+{
+	GetRigidBody().SetGlobalPositionOrientation( GetAbsoluteWorldPosition(), GetRotation() );
+}
+
+void HColliderComponent::OnCreate()
 {
 	Super::OnCreate(); 
 }

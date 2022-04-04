@@ -53,14 +53,17 @@ protected:
 	virtual void OnCreate() {}
 	// Called when the component is attached to its owning actor.
 	virtual void OnAttach() {}
-	// Clled when the component is detached from its owning actor.
+	// Called when the component is detached from its owning actor.
 	virtual void OnDetach() {}
-	// Clled when the component is destroyed and released from memory.
+	// Called when the component is destroyed and released from memory.
 	virtual void OnDestroy() {}
 	virtual void Render( FCommandContext& GfxContext ) {}
+	// Called when the owning actor has completly finished deserializing all other components it owns.
+	virtual void OnOwnerDeserializeComplete();
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
+
 
 protected:
 	AActor* m_pOwner;

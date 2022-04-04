@@ -1,13 +1,14 @@
 #pragma once
 
-#include "GameFramework/Components/HColliderComponentInterface.h"
+#include "GameFramework/Components/HColliderComponent.h"
+
 
 HCOMPONENT()
-class HCubeColliderComponent : public HColliderComponentInterface
+class HCubeColliderComponent : public HColliderComponent
 {
 	friend class AActor;
 	friend class HWorld;
-	using Super = HColliderComponentInterface;
+	using Super = HColliderComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HCubeColliderComponent );
 
@@ -21,6 +22,7 @@ protected:
 	virtual void Deserialize( const ReadContext& Value ) override;
 
 	virtual RigidBody& GetRigidBody() override;
+	virtual const RigidBody& GetRigidBody() const override;
 
 private:
 	void RegisterCollider( bool StartDisabled );
@@ -41,6 +43,11 @@ FORCEINLINE bool HCubeColliderComponent::IsStatic() const
 }
 
 FORCEINLINE	RigidBody& HCubeColliderComponent::GetRigidBody()
+{
+	return m_RigidBody;
+}
+
+FORCEINLINE	const RigidBody& HCubeColliderComponent::GetRigidBody() const
 {
 	return m_RigidBody;
 }

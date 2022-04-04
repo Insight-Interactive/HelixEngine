@@ -2,7 +2,6 @@
 
 #include "Flag.h"
 #include "CriticalSection.h"
-#include "FixedLoop.h"
 
 
 enum EPhysicsEvent
@@ -70,9 +69,11 @@ private:
 namespace physx
 {
 	class PxScene;
+	class PxGeometry;
 }
 
 class RigidBody;
+class InfinitePlaneRigidBody;
 class PlaneRigidBody;
 class SphereRigidBody;
 class CubeRigidBody;
@@ -130,17 +131,20 @@ public:
 	void RequestTick();
 
 	// Blocks the thread and waits for the simulation to finish before proceeding.
-	void WaitForSimulationFinished() const;
+	void WaittillSimulationFinished() const;
 	// Blocks the thread and waits until the simulation is paused next.
-	void WaitTillSimulationPaused() const;
+	void WaittillSimulationPaused() const;
 
 
 private:
+	void CreateInfinitePlaneInternal( InfinitePlaneRigidBody& outPlane );
 	void CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane );
 	void CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere );
 	void CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube );
 	void RemoveActorInternal( RigidBody& Collider );
+	void InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos );
 	void InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody );
+	void FinalizeRigidBody( RigidBody& outRB );
 	void FlushInternal();
 	void TickInternal();
 
@@ -153,7 +157,6 @@ protected:
 	FFlag m_IsSimulating;
 
 	PhysicsEventQueue m_EventQueue;
-	FFixedLoop m_UpdateLoop;
 
 };
 
@@ -235,10 +238,8 @@ FORCEINLINE bool PhysicsScene::IsSimulationPaused() const
 	return m_IsSimulationPaused.IsSet();
 }
 
-FORCEINLINE void PhysicsScene::WaitTillSimulationPaused() const
+FORCEINLINE void PhysicsScene::WaittillSimulationPaused() const
 {
 	while (!m_IsSimulationPaused.IsSet())
-	{
 		std::this_thread::yield();
-	}
 }
