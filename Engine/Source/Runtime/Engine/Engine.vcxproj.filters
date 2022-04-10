@@ -325,6 +325,7 @@
       <Filter>Public\World</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HCapsuleColliderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -538,6 +539,7 @@
       <Filter>Public\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HCapsuleColliderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

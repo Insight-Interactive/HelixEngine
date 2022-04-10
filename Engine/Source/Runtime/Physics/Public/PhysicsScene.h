@@ -9,19 +9,21 @@ enum EPhysicsEvent
 	// Invalid event.
 	PE_Invalid,
 	// Pause the entire simulation.
-	PE_PauseSimulation, 
+	PE_PauseSimulation,
 	// Unpause the entire simulation.
-	PE_UnPauseSimulation, 
+	PE_UnPauseSimulation,
 	// Set the interval at which the scene is steped through time.
-	PE_SetSimulationStepRate, 
+	PE_SetSimulationStepRate,
 	// Add a sphere physics actor to the scene.
 	PE_AddSphereActor,
 	// Add a plane physics actor to the scene.
 	PE_AddPlaneActor,
 	// Add a cube physics actor to the scene.
 	PE_AddCubeActor,
+	// Add a capsule physics actor to the scene.
+	PE_AddCapsuleActor,
 	// Remove a physics actor from the scene.
-	PE_RemoveActor, 
+	PE_RemoveActor,
 	// Flsuh all actors from the scene.
 	PE_FlushScene,
 
@@ -62,8 +64,8 @@ public:
 	}
 
 private:
-
 	std::queue<PhysicsEventPacket> m_Queue;
+
 };
 
 namespace physx
@@ -77,7 +79,10 @@ class InfinitePlaneRigidBody;
 class PlaneRigidBody;
 class SphereRigidBody;
 class CubeRigidBody;
+class CapsuleRigidBody;
 class PhysicsContext;
+class PhysicsCallbackHandler;
+
 
 class PHYSICS_API PhysicsScene
 {
@@ -89,22 +94,33 @@ private:
 public:
 	struct SphereActorAddDesc
 	{
+		PhysicsCallbackHandler* pCallbackHandler;
 		FVector3 StartPosition;
 		SphereRigidBody& outSphereRB;
 		bool StartDisabled;
 	};
 	struct PlaneActorAddDesc
 	{
+		PhysicsCallbackHandler* pCallbackHandler;
 		FVector3 StartPosition;
 		PlaneRigidBody& outPlaneRB;
 		bool StartDisabled;
 	};
 	struct CubeActorAddDesc
 	{
+		PhysicsCallbackHandler* pCallbackHandler;
 		FVector3 StartPosition;
 		CubeRigidBody& outCubeRB;
 		bool StartDisabled;
 	};
+	struct CapsuleActorAddDesc
+	{
+		PhysicsCallbackHandler* pCallbackHandler;
+		FVector3 StartPosition;
+		CapsuleRigidBody& outCapsuleRB;
+		bool StartDisabled;
+	};
+
 public:
 	PhysicsScene();
 	~PhysicsScene();
@@ -126,6 +142,7 @@ public:
 	void RequestSphereActorAdd( SphereActorAddDesc& SphereInitInfo );
 	void RequestPlaneActorAdd( PlaneActorAddDesc& PlaneInitInfo );
 	void RequestCubeActorAdd( CubeActorAddDesc& CubeInitInfo );
+	void RequestCapsuleActorAdd( CapsuleActorAddDesc& CapsuleInitInfo );
 	void RequestActorRemove( RigidBody& RigidBody );
 	void RequestSceneFlush();
 	void RequestTick();
@@ -141,10 +158,13 @@ private:
 	void CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane );
 	void CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere );
 	void CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube );
+	void CreateCapsuleInternal( const FVector3& StartPos, CapsuleRigidBody& outCube );
 	void RemoveActorInternal( RigidBody& Collider );
+
 	void InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos );
 	void InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody );
 	void FinalizeRigidBody( RigidBody& outRB );
+
 	void FlushInternal();
 	void TickInternal();
 
@@ -191,7 +211,8 @@ FORCEINLINE	void PhysicsScene::RequestSphereActorAdd( SphereActorAddDesc& Sphere
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddSphereActor;
-	Packet.pUserData = new SphereActorAddDesc{SphereInitInfo.StartPosition, SphereInitInfo.outSphereRB, SphereInitInfo.StartDisabled};
+	Packet.pUserData = HE_HeapAlloc( sizeof( SphereActorAddDesc ) );
+	CopyMemory( Packet.pUserData, &SphereInitInfo, sizeof( SphereActorAddDesc ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
@@ -199,7 +220,8 @@ FORCEINLINE void PhysicsScene::RequestPlaneActorAdd( PlaneActorAddDesc& PlaneIni
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddPlaneActor;
-	Packet.pUserData = new PlaneActorAddDesc{PlaneInitInfo.StartPosition, PlaneInitInfo.outPlaneRB, PlaneInitInfo.StartDisabled};
+	Packet.pUserData = HE_HeapAlloc( sizeof( PlaneActorAddDesc ) );
+	CopyMemory( Packet.pUserData, &PlaneInitInfo, sizeof( PlaneActorAddDesc ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
@@ -207,7 +229,17 @@ FORCEINLINE void PhysicsScene::RequestCubeActorAdd( CubeActorAddDesc& CubeInitIn
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddCubeActor;
-	Packet.pUserData = new CubeActorAddDesc{ CubeInitInfo.StartPosition, CubeInitInfo.outCubeRB, CubeInitInfo.StartDisabled };
+	Packet.pUserData = HE_HeapAlloc( sizeof( CubeActorAddDesc ) );
+	CopyMemory( Packet.pUserData, &CubeInitInfo, sizeof( CubeActorAddDesc ) );
+	m_EventQueue.PushEvent( Packet );
+}
+
+FORCEINLINE void PhysicsScene::RequestCapsuleActorAdd( CapsuleActorAddDesc& CapsuleInitInfo )
+{
+	PhysicsEventPacket Packet;
+	Packet.EventType = PE_AddCapsuleActor;
+	Packet.pUserData = HE_HeapAlloc( sizeof( CapsuleActorAddDesc ) );
+	CopyMemory( Packet.pUserData, &CapsuleInitInfo, sizeof( CapsuleActorAddDesc ) );
 	m_EventQueue.PushEvent( Packet );
 }
 

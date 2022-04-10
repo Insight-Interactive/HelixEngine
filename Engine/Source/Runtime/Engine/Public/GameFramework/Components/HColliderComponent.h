@@ -1,12 +1,13 @@
 #pragma once
 
 #include "GameFramework/Components/HSceneComponent.h"
+#include "CollisionHandler.h"
 
 #include "RigidBody.h"
 
 
 HCOMPONENT()
-class HColliderComponent : public HSceneComponent
+class HColliderComponent : public HSceneComponent, public PhysicsCallbackHandler
 {
 	friend class AActor;
 	friend class HWorld;
@@ -49,12 +50,36 @@ protected:
 	virtual RigidBody& GetRigidBody() = 0;
 	virtual const RigidBody& GetRigidBody() const = 0;
 
+	virtual void CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider ) override;
+
+
+private:
+	bool m_IsTrigger;
+
 };
 
 //
 // Inline function implementations
 //
 
+FORCEINLINE void HColliderComponent::CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider )
+{
+	switch (Type)
+	{
+	case CT_Enter:
+		OnEnter( DCast<HColliderComponent*>( pCollider ) );
+		break;
+	case CT_Stay:
+		OnStay( DCast<HColliderComponent*>( pCollider ) );
+		break;
+	case CT_Exit:
+		OnExit( DCast<HColliderComponent*>( pCollider ) );
+		break;
+	default:
+		HE_ASSERT( false );
+		break;
+	}
+}
 
 FORCEINLINE float HColliderComponent::GetAngularDamping() const
 {

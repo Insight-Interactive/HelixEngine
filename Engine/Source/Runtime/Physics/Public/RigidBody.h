@@ -123,6 +123,23 @@ private:
 
 };
 
+class PHYSICS_API CapsuleRigidBody : public RigidBody
+{
+public:
+	CapsuleRigidBody();
+	virtual ~CapsuleRigidBody();
+
+	float GetRadius() const;
+	float GetLength() const;
+
+	void SetRadius( const float& NewRadius );
+	void SetLength( const float& NewLength );
+
+private:
+	float m_Radius;
+	float m_Length;
+};
+
 
 //
 // Inline function implementations
@@ -238,4 +255,26 @@ FORCEINLINE void CubeRigidBody::SetHeight( const float& NewHeight )
 FORCEINLINE void CubeRigidBody::SetDepth( const float& NewDepth )
 {
 	m_Depth = NewDepth;
+}
+
+// Capsule
+//
+
+FORCEINLINE	float CapsuleRigidBody::GetRadius() const
+{
+	return m_Radius;
+}
+FORCEINLINE	float CapsuleRigidBody::GetLength() const
+{
+	return m_Length;
+}
+
+FORCEINLINE void CapsuleRigidBody::SetRadius( const float& NewRadius )
+{
+	m_Radius = NewRadius;
+}
+
+FORCEINLINE void CapsuleRigidBody::SetLength( const float& NewLength )
+{
+	m_Length = NewLength;
 }

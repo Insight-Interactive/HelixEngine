@@ -256,3 +256,13 @@ CubeRigidBody::CubeRigidBody()
 CubeRigidBody::~CubeRigidBody()
 {
 }
+
+
+CapsuleRigidBody::CapsuleRigidBody()
+{
+}
+
+CapsuleRigidBody::~CapsuleRigidBody()
+{
+
+}

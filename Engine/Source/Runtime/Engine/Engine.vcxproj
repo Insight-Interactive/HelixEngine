@@ -1047,6 +1047,7 @@
     <ClInclude Include="Public\GameFramework\Components\HBillboardComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HBoxColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HCapsuleColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
@@ -1118,6 +1119,7 @@
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HBoxColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HCapsuleColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />

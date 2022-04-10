@@ -4,7 +4,72 @@
 
 #include "PhysicsContext.h"
 #include "RigidBody.h"
+#include "CollisionHandler.h"
 
+#include "PxSimulationEventCallback.h"
+
+
+class SimulationEventCallback : public physx::PxSimulationEventCallback
+{
+public:
+	virtual void onConstraintBreak( physx::PxConstraintInfo* constraints, physx::PxU32 count ) {}
+	virtual void onWake( physx::PxActor** actors, physx::PxU32 count ) {}
+	virtual void onSleep( physx::PxActor** actors, physx::PxU32 count ) {}
+	virtual void onContact( const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs );
+	virtual void onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count ) {}
+	virtual void onAdvance( const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count ) {}
+
+};
+
+void SimulationEventCallback::onContact( const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs )
+{
+	for (physx::PxU32 i = 0; i < nbPairs; i++)
+	{
+		const physx::PxContactPair& cp = pairs[i];
+
+		PhysicsCallbackHandler* Col1 = SCast<PhysicsCallbackHandler*>( pairHeader.actors[0]->userData );
+		PhysicsCallbackHandler* Col2 = SCast<PhysicsCallbackHandler*>( pairHeader.actors[1]->userData );
+		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col1 );
+		}
+		else if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col1 );
+		}
+		else if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col1 );
+		}
+	}
+}
+
+static SimulationEventCallback GSimulationEventCallback;
+
+static physx::PxFilterFlags DefaultFilterShader(
+	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize )
+{
+	// let triggers through
+	if (physx::PxFilterObjectIsTrigger( attributes0 ) || physx::PxFilterObjectIsTrigger( attributes1 ))
+	{
+		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+		return physx::PxFilterFlag::eDEFAULT;
+	}
+	// generate contacts for all that were not filtered above
+	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+
+	// trigger the contact callback for pairs (A,B) where 
+	// the filtermask of A contains the ID of B and vice versa.
+	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+
+	return physx::PxFilterFlag::eDEFAULT;
+}
 
 PhysicsScene::PhysicsScene()
 	: m_pOwningContextRef( nullptr )
@@ -31,7 +96,8 @@ void PhysicsScene::Setup( PhysicsContext& PhysicsContext )
 	physx::PxSceneDesc SceneDesc( Physics.getTolerancesScale() );
 	SceneDesc.gravity = physx::PxVec3( 0.f, -9.81f, 0.f );
 	SceneDesc.cpuDispatcher = &PhysicsContext.GetCpuDispatcher();
-	SceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	SceneDesc.filterShader = DefaultFilterShader;
+	SceneDesc.simulationEventCallback = &GSimulationEventCallback;
 	m_pScene = Physics.createScene( SceneDesc );
 	HE_ASSERT( m_pScene != nullptr );
 
@@ -76,29 +142,40 @@ void PhysicsScene::ProcessEventQueue()
 			if (Desc.StartDisabled)
 				Desc.outSphereRB.DisableSimulation();
 
-			delete Event.pUserData;
+			Desc.outSphereRB.m_pRigidActor->userData = Desc.pCallbackHandler;
 			break;
 		}
 		case PE_AddPlaneActor:
 		{
-			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
+			HE_ASSERT( Event.pUserData != nullptr ); // Plane init info was not filled out correctly!
 			PlaneActorAddDesc& Desc = *(PlaneActorAddDesc*)Event.pUserData;
 			CreatePlaneInternal( Desc.StartPosition, Desc.outPlaneRB );
 			if (Desc.StartDisabled)
 				Desc.outPlaneRB.DisableSimulation();
 
-			delete Event.pUserData;
+			Desc.outPlaneRB.m_pRigidActor->userData = Desc.pCallbackHandler;
 			break;
 		}
 		case PE_AddCubeActor:
 		{
-			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
+			HE_ASSERT( Event.pUserData != nullptr ); // Cube init info was not filled out correctly!
 			CubeActorAddDesc& Desc = *(CubeActorAddDesc*)Event.pUserData;
 			CreateCubeInternal( Desc.StartPosition, Desc.outCubeRB );
 			if (Desc.StartDisabled)
 				Desc.outCubeRB.DisableSimulation();
 
-			delete Event.pUserData;
+			Desc.outCubeRB.m_pRigidActor->userData = Desc.pCallbackHandler;
+			break;
+		}
+		case PE_AddCapsuleActor:
+		{
+			HE_ASSERT( Event.pUserData != nullptr ); // Capsule init info was not filled out correctly!
+			CapsuleActorAddDesc& Desc = *(CapsuleActorAddDesc*)Event.pUserData;
+			CreateCapsuleInternal( Desc.StartPosition, Desc.outCapsuleRB );
+			if (Desc.StartDisabled)
+				Desc.outCapsuleRB.DisableSimulation();
+
+			Desc.outCapsuleRB.m_pRigidActor->userData = Desc.pCallbackHandler;
 			break;
 		}
 		case PE_RemoveActor:
@@ -117,6 +194,9 @@ void PhysicsScene::ProcessEventQueue()
 			HE_ASSERT( false );
 			break;
 		}
+
+		if( Event.pUserData )
+			HE_HeapFree( Event.pUserData );
 	}
 }
 
@@ -187,6 +267,20 @@ void PhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& 
 	m_pScene->addActor( *outCube.m_pRigidActor );
 }
 
+void PhysicsScene::CreateCapsuleInternal( const FVector3& StartPos, CapsuleRigidBody& outCapsule )
+{
+	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
+
+	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
+
+	outCapsule.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
+	
+	physx::PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetLength() / 2 );
+	InitCollider( outCapsule, CapsuleGeo, StartPos );
+
+	m_pScene->addActor( *outCapsule.m_pRigidActor );
+}
+
 void PhysicsScene::RemoveActorInternal( RigidBody& Collider )
 {
 	if (Collider.m_pRigidActor != nullptr)
@@ -198,6 +292,22 @@ void PhysicsScene::RemoveActorInternal( RigidBody& Collider )
 		P_LOG( Warning, TEXT( "Trying to remove a rigid body from a scene that has not been initialized!" ) );
 		HE_ASSERT( false );
 	}
+}
+
+void SetupFiltering( physx::PxRigidActor * actor, physx::PxU32 filterGroup, physx::PxU32 filterMask)
+{
+	physx::PxFilterData filterData;
+	filterData.word0 = filterGroup; // word0 = own ID
+	filterData.word1 = filterMask;	// word1 = ID mask to filter pairs that trigger a contact callback;
+	const physx::PxU32 numShapes = actor->getNbShapes();
+	physx::PxShape** shapes = (physx::PxShape**)HE_HeapAlloc( sizeof( physx::PxShape* ) * numShapes );
+	actor->getShapes( shapes, numShapes );
+	for (physx::PxU32 i = 0; i < numShapes; i++)
+	{
+		physx::PxShape* shape = shapes[i];
+		shape->setSimulationFilterData( filterData );
+	}
+	HE_HeapFree( shapes );
 }
 
 void PhysicsScene::InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos )
@@ -219,6 +329,8 @@ void PhysicsScene::InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, co
 	}
 	HE_ASSERT( Collider.m_pRigidActor != nullptr ); // Failed to create physics actor!
 	
+	SetupFiltering( Collider.m_pRigidActor, 1, 1 );
+
 	FinalizeRigidBody( Collider );
 }
 

@@ -11,6 +11,7 @@
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
+#include "GameFramework/Components/HCapsuleColliderComponent.h"
 
 
 HWorld::HWorld()
@@ -243,6 +244,7 @@ void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool
 
 	PhysicsScene::SphereActorAddDesc InitDesc
 	{
+		pSphere,
 		pCollider->GetAbsoluteWorldPosition(),
 		(SphereRigidBody&)pSphere->GetRigidBody(),
 		StartDisabled
@@ -256,6 +258,7 @@ void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool St
 
 	PhysicsScene::PlaneActorAddDesc InitDesc
 	{
+		pPlane,
 		pCollider->GetAbsoluteWorldPosition(),
 		(PlaneRigidBody&)pPlane->GetRigidBody(),
 		StartDisabled
@@ -269,11 +272,26 @@ void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool Start
 
 	PhysicsScene::CubeActorAddDesc InitDesc
 	{
+		pCube,
 		pCollider->GetPosition(),
 		(CubeRigidBody&)pCube->GetRigidBody(),
 		StartDisabled
 	};
 	m_PhysicsScene.RequestCubeActorAdd( InitDesc );
+}
+
+void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled )
+{
+	HColliderComponent* pCollider = (HColliderComponent*)pCapsule;
+
+	PhysicsScene::CapsuleActorAddDesc InitDesc
+	{
+		pCapsule,
+		pCollider->GetPosition(),
+		(CapsuleRigidBody&)pCapsule->GetRigidBody(),
+		StartDisabled
+	};
+	m_PhysicsScene.RequestCapsuleActorAdd( InitDesc );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )
