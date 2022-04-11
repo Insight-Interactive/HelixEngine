@@ -32,7 +32,7 @@ void FPhysicsSubsystem::RunAsync_Implementation()
 {
 	while (m_IsRunning)
 	{
-		for (PhysicsScene* pScene : m_Scenes)
+		for (HPhysicsScene* pScene : m_Scenes)
 		{
 			pScene->ProcessEventQueue();
 		}

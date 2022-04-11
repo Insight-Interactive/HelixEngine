@@ -9,9 +9,12 @@ namespace physx
 	class PxShape;
 }
 
+/*
+	Base rigid body class in which all rigid body types derived from.
+*/
 class PHYSICS_API RigidBody
 {
-	friend class PhysicsScene;
+	friend class HPhysicsScene;
 public:
 	void SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation );
 	void SetSimulatedPosition( const FVector3& NewPosition );
@@ -51,7 +54,9 @@ private:
 
 };
 
-
+/*
+	A plane with infinite width and height that points in a single direction.
+*/
 class PHYSICS_API InfinitePlaneRigidBody : public RigidBody
 {
 public:
@@ -69,6 +74,9 @@ private:
 
 };
 
+/*
+	A plane with a defined width and height.	
+*/
 class PHYSICS_API PlaneRigidBody : public RigidBody
 {
 public:
@@ -87,6 +95,9 @@ private:
 	float m_Height;
 };
 
+/*
+	A sphere with a radius.
+*/
 class PHYSICS_API SphereRigidBody : public RigidBody
 {
 public:
@@ -101,6 +112,9 @@ private:
 
 };
 
+/*
+	A cube with width, height, and depth.
+*/
 class PHYSICS_API CubeRigidBody : public RigidBody
 {
 public:
@@ -123,6 +137,9 @@ private:
 
 };
 
+/*
+	A capsule with a radius and length;
+*/
 class PHYSICS_API CapsuleRigidBody : public RigidBody
 {
 public:

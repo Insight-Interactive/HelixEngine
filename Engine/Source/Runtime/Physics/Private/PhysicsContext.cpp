@@ -6,10 +6,10 @@
 static physx::PxDefaultErrorCallback SDefaultErrorCallback;
 static physx::PxDefaultAllocator SDefaultAllocatorCallback;
 
-// PhysicsContext
+// HPhysicsContext
 //
 
-PhysicsContext::PhysicsContext()
+HPhysicsContext::HPhysicsContext()
 	: m_pFoundation( nullptr )
 	, m_pPhysics( nullptr )
 	, m_pDispatcher( nullptr )
@@ -19,12 +19,12 @@ PhysicsContext::PhysicsContext()
 
 }
 
-PhysicsContext::~PhysicsContext()
+HPhysicsContext::~HPhysicsContext()
 {
 
 }
 
-void PhysicsContext::Initialize()
+void HPhysicsContext::Initialize()
 {
 	HE_ASSERT( !IsReady() ); // Physics context has already been initialized!
 
@@ -64,7 +64,7 @@ void PhysicsContext::Initialize()
 
 }
 
-void PhysicsContext::UnInitialize()
+void HPhysicsContext::UnInitialize()
 {
 	PX_SAFE_RELEASE( m_pCooker );
 	PX_SAFE_RELEASE( m_pPhysics );

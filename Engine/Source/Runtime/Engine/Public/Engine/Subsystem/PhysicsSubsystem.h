@@ -12,9 +12,9 @@ class FPhysicsSubsystem : public FSubsystemInterface
 {
 	friend class HEngine;
 public:
-	PhysicsContext& GetPhysicsContext();
-	bool AddSceneForSimulation( PhysicsScene& Scene );
-	bool RemoveSceneFromSimulation( PhysicsScene& Scene );
+	HPhysicsContext& GetPhysicsContext();
+	bool AddSceneForSimulation( HPhysicsScene& Scene );
+	bool RemoveSceneFromSimulation( HPhysicsScene& Scene );
 
 protected:
 	FPhysicsSubsystem();
@@ -27,9 +27,9 @@ private:
 	virtual void RunAsync_Implementation() override;
 
 private:
-	PhysicsContext m_PhysicsContext;
+	HPhysicsContext m_PhysicsContext;
 	
-	std::vector<PhysicsScene*> m_Scenes;
+	std::vector<HPhysicsScene*> m_Scenes;
 	CriticalSection m_SceneSimulationQueueGuard;
 
 };
@@ -38,12 +38,12 @@ private:
 // Inline function implementations
 //
 
-FORCEINLINE PhysicsContext& FPhysicsSubsystem::GetPhysicsContext()
+FORCEINLINE HPhysicsContext& FPhysicsSubsystem::GetPhysicsContext()
 {
 	return m_PhysicsContext;
 }
 
-FORCEINLINE bool FPhysicsSubsystem::AddSceneForSimulation( PhysicsScene& Scene )
+FORCEINLINE bool FPhysicsSubsystem::AddSceneForSimulation( HPhysicsScene& Scene )
 {
 	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
 
@@ -58,7 +58,7 @@ FORCEINLINE bool FPhysicsSubsystem::AddSceneForSimulation( PhysicsScene& Scene )
 	return false;
 }
 
-FORCEINLINE	bool FPhysicsSubsystem::RemoveSceneFromSimulation( PhysicsScene& Scene )
+FORCEINLINE	bool FPhysicsSubsystem::RemoveSceneFromSimulation( HPhysicsScene& Scene )
 {
 	ScopedCriticalSection Guard( m_SceneSimulationQueueGuard );
 

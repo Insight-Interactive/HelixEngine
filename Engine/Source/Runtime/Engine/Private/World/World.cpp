@@ -242,7 +242,7 @@ void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pSphere;
 
-	PhysicsScene::SphereActorAddDesc InitDesc
+	HPhysicsScene::RigidActorAddDesc<SphereRigidBody> InitDesc
 	{
 		pSphere,
 		pCollider->GetAbsoluteWorldPosition(),
@@ -256,7 +256,7 @@ void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool St
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pPlane;
 
-	PhysicsScene::PlaneActorAddDesc InitDesc
+	HPhysicsScene::RigidActorAddDesc<PlaneRigidBody> InitDesc
 	{
 		pPlane,
 		pCollider->GetAbsoluteWorldPosition(),
@@ -270,7 +270,7 @@ void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool Start
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pCube;
 
-	PhysicsScene::CubeActorAddDesc InitDesc
+	HPhysicsScene::RigidActorAddDesc<CubeRigidBody> InitDesc
 	{
 		pCube,
 		pCollider->GetPosition(),
@@ -284,7 +284,7 @@ void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, b
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pCapsule;
 
-	PhysicsScene::CapsuleActorAddDesc InitDesc
+	HPhysicsScene::RigidActorAddDesc<CapsuleRigidBody> InitDesc
 	{
 		pCapsule,
 		pCollider->GetPosition(),

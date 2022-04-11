@@ -57,7 +57,7 @@ public:
 	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled = false );
 	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
-	PhysicsScene& GetPhysicsScene();
+	HPhysicsScene& GetPhysicsScene();
 	HLevel& GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
 	APlayerCharacter* GetPlayerCharacter( uint32 Index = 0 );
@@ -92,7 +92,7 @@ protected:
 protected:
 	HLevel m_Level;
 	HScene m_Scene;
-	PhysicsScene m_PhysicsScene;
+	HPhysicsScene m_PhysicsScene;
 
 	APlayerCharacter* m_pPlayerCharacter;
 	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
@@ -109,7 +109,7 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE PhysicsScene& HWorld::GetPhysicsScene()
+FORCEINLINE HPhysicsScene& HWorld::GetPhysicsScene()
 {
 	return m_PhysicsScene;
 }

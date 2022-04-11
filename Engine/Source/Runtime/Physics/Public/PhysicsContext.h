@@ -14,13 +14,13 @@ namespace physx
 	class PxDefaultAllocator;
 	class PxDefaultCpuDispatcher;
 }
-class PhysicsScene;
+class HPhysicsScene;
 
-class PHYSICS_API PhysicsContext : TSingleton<PhysicsContext>
+class PHYSICS_API HPhysicsContext : TSingleton<HPhysicsContext>
 {
 public:
-	PhysicsContext();
-	~PhysicsContext();
+	HPhysicsContext();
+	~HPhysicsContext();
 	
 	bool IsReady() const;
 
@@ -45,18 +45,18 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE bool PhysicsContext::IsReady() const
+FORCEINLINE bool HPhysicsContext::IsReady() const
 {
 	return	m_pFoundation != nullptr &&
 			m_pPhysics != nullptr;
 }
 
-FORCEINLINE physx::PxPhysics& PhysicsContext::GetPhysics()
+FORCEINLINE physx::PxPhysics& HPhysicsContext::GetPhysics()
 {
 	return *m_pPhysics;
 }
 
-FORCEINLINE physx::PxDefaultCpuDispatcher& PhysicsContext::GetCpuDispatcher()
+FORCEINLINE physx::PxDefaultCpuDispatcher& HPhysicsContext::GetCpuDispatcher()
 {
 	return *m_pDispatcher;
 }

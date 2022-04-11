@@ -35,21 +35,25 @@ protected:
 
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaTime ) override;
+	virtual void Serialize( WriteContext& Output ) override;
+	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void OnOwnerDeserializeComplete() override;
 
+	/*
+		Called when another collider enters this collider's bounds.
+		@param Other - The other collider.
+	*/
 	virtual void OnEnter( HColliderComponent* Other ) { }
 	virtual void OnExit( HColliderComponent* Other ) { }
 	virtual void OnStay( HColliderComponent* Other ) { }
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
-
-	virtual void OnOwnerDeserializeComplete() override;
-
 protected:
 	virtual void OnCreate();
+	// Each collier type overrides this to return their rigid body subclass.
 	virtual RigidBody& GetRigidBody() = 0;
 	virtual const RigidBody& GetRigidBody() const = 0;
 
+	// PhysicsCallbackHandler overrides
 	virtual void CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider ) override;
 
 
