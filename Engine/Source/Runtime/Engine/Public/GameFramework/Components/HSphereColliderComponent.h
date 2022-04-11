@@ -21,15 +21,16 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
-	virtual RigidBody& GetRigidBody() override;
-	virtual const RigidBody& GetRigidBody() const override;
+	virtual HRigidBody& GetRigidBody() override;
+	virtual const HRigidBody& GetRigidBody() const override;
+
 
 private:
 	void RegisterCollider( bool StartDisabled );
 	void UnRegisterCollider();
 
 private:
-	SphereRigidBody m_RigidBody;
+	HSphereRigidBody m_RigidBody;
 
 };
 
@@ -42,12 +43,12 @@ FORCEINLINE bool HSphereColliderComponent::IsStatic() const
 	return m_RigidBody.GetIsStatic();
 }
 
-FORCEINLINE	RigidBody& HSphereColliderComponent::GetRigidBody()
+FORCEINLINE	HRigidBody& HSphereColliderComponent::GetRigidBody()
 {
 	return m_RigidBody;
 }
 
-FORCEINLINE	const RigidBody& HSphereColliderComponent::GetRigidBody() const
+FORCEINLINE	const HRigidBody& HSphereColliderComponent::GetRigidBody() const
 {
 	return m_RigidBody;
 }

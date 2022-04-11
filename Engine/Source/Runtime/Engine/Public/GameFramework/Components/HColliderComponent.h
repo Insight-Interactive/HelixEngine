@@ -15,6 +15,8 @@ class HColliderComponent : public HSceneComponent, public PhysicsCallbackHandler
 public:
 	virtual bool IsStatic() const = 0;
 
+	bool GetIsTrigger() const;
+
 	float GetAngularDamping() const;
 	FVector3 GetLinearVelocity() const;
 	void SetAngularDamping( const float& Damping );
@@ -41,23 +43,33 @@ protected:
 
 	/*
 		Called when another collider enters this collider's bounds.
-		@param Other - The other collider.
+		@param Other - The collider entering this collider's bounds.
 	*/
 	virtual void OnEnter( HColliderComponent* Other ) { }
+	/*
+		Called when another collider exits this collider's bounds.
+		@param Other - The collider exiting this collider's bounds.
+	*/
 	virtual void OnExit( HColliderComponent* Other ) { }
+	/*
+		Called when another collider enters and stays in this collider's bounds.
+		@param Other - The collider staying in this collider's bounds.
+	*/
 	virtual void OnStay( HColliderComponent* Other ) { }
 
 protected:
 	virtual void OnCreate();
 	// Each collier type overrides this to return their rigid body subclass.
-	virtual RigidBody& GetRigidBody() = 0;
-	virtual const RigidBody& GetRigidBody() const = 0;
+	virtual HRigidBody& GetRigidBody() = 0;
+	virtual const HRigidBody& GetRigidBody() const = 0;
 
 	// PhysicsCallbackHandler overrides
 	virtual void CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider ) override;
 
-
 private:
+	/*
+		Whether this collider is a trigger or not. If true no physics are applied to this collider.
+	*/
 	bool m_IsTrigger;
 
 };
@@ -83,6 +95,11 @@ FORCEINLINE void HColliderComponent::CollisionEvent( ECollisionType Type, Physic
 		HE_ASSERT( false );
 		break;
 	}
+}
+
+FORCEINLINE bool HColliderComponent::GetIsTrigger() const
+{
+	return m_IsTrigger;
 }
 
 FORCEINLINE float HColliderComponent::GetAngularDamping() const

@@ -51,10 +51,10 @@ public:
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
-	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled = false );
-	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled = false );
-	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled = false );
-	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled = false );
+	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled = false, bool IsTrigger = false );
+	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled = false, bool IsTrigger = false );
+	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled = false, bool IsTrigger = false );
+	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled = false, bool IsTrigger = false );
 	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
 	HPhysicsScene& GetPhysicsScene();

@@ -73,7 +73,7 @@ void HSphereColliderComponent::Deserialize( const ReadContext& Value )
 
 void HSphereColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddSphereColliderComponent( this, StartDisabled );
+	GetWorld()->AddSphereColliderComponent( this, StartDisabled, GetIsTrigger() );
 }
 
 void HSphereColliderComponent::UnRegisterCollider()

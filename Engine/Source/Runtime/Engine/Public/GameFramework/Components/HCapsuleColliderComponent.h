@@ -21,8 +21,8 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
-	virtual RigidBody& GetRigidBody() override;
-	virtual const RigidBody& GetRigidBody() const override;
+	virtual HRigidBody& GetRigidBody() override;
+	virtual const HRigidBody& GetRigidBody() const override;
 
 
 private:
@@ -30,7 +30,7 @@ private:
 	void UnRegisterCollider();
 
 private:
-	CapsuleRigidBody m_RigidBody;
+	HCapsuleRigidBody m_RigidBody;
 
 };
 
@@ -43,12 +43,12 @@ FORCEINLINE bool HCapsuleColliderComponent::IsStatic() const
 	return m_RigidBody.GetIsStatic();
 }
 
-FORCEINLINE	RigidBody& HCapsuleColliderComponent::GetRigidBody()
+FORCEINLINE	HRigidBody& HCapsuleColliderComponent::GetRigidBody()
 {
 	return m_RigidBody;
 }
 
-FORCEINLINE	const RigidBody& HCapsuleColliderComponent::GetRigidBody() const
+FORCEINLINE	const HRigidBody& HCapsuleColliderComponent::GetRigidBody() const
 {
 	return m_RigidBody;
 }

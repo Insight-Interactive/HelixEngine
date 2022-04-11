@@ -1117,7 +1117,6 @@
     <ClCompile Include="Private\GameFramework\Actor\APlayerCharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp" />
-    <ClCompile Include="Private\GameFramework\Components\HBoxColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCapsuleColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HColliderComponent.cpp" />

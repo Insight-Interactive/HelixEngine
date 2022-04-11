@@ -238,58 +238,62 @@ void HWorld::UnPausePhysics()
 	m_PhysicsScene.RequestUnPauseSimulation();
 }
 
-void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled )
+void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pSphere;
 
-	HPhysicsScene::RigidActorAddDesc<SphereRigidBody> InitDesc
+	HPhysicsScene::RigidActorAddDesc<HSphereRigidBody> InitDesc
 	{
 		pSphere,
 		pCollider->GetAbsoluteWorldPosition(),
-		(SphereRigidBody&)pSphere->GetRigidBody(),
-		StartDisabled
+		(HSphereRigidBody&)pSphere->GetRigidBody(),
+		StartDisabled,
+		IsTrigger,
 	};
 	m_PhysicsScene.RequestSphereActorAdd( InitDesc );
 }
 
-void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled )
+void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pPlane;
 
-	HPhysicsScene::RigidActorAddDesc<PlaneRigidBody> InitDesc
+	HPhysicsScene::RigidActorAddDesc<HPlaneRigidBody> InitDesc
 	{
 		pPlane,
 		pCollider->GetAbsoluteWorldPosition(),
-		(PlaneRigidBody&)pPlane->GetRigidBody(),
-		StartDisabled
+		(HPlaneRigidBody&)pPlane->GetRigidBody(),
+		StartDisabled,
+		IsTrigger,
 	};
 	m_PhysicsScene.RequestPlaneActorAdd( InitDesc );
 }
 
-void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled )
+void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pCube;
 
-	HPhysicsScene::RigidActorAddDesc<CubeRigidBody> InitDesc
+	HPhysicsScene::RigidActorAddDesc<HCubeRigidBody> InitDesc
 	{
 		pCube,
 		pCollider->GetPosition(),
-		(CubeRigidBody&)pCube->GetRigidBody(),
-		StartDisabled
+		(HCubeRigidBody&)pCube->GetRigidBody(),
+		StartDisabled,
+		IsTrigger,
 	};
 	m_PhysicsScene.RequestCubeActorAdd( InitDesc );
 }
 
-void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled )
+void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
 	HColliderComponent* pCollider = (HColliderComponent*)pCapsule;
 
-	HPhysicsScene::RigidActorAddDesc<CapsuleRigidBody> InitDesc
+	HPhysicsScene::RigidActorAddDesc<HCapsuleRigidBody> InitDesc
 	{
 		pCapsule,
 		pCollider->GetPosition(),
-		(CapsuleRigidBody&)pCapsule->GetRigidBody(),
-		StartDisabled
+		(HCapsuleRigidBody&)pCapsule->GetRigidBody(),
+		StartDisabled,
+		IsTrigger,
 	};
 	m_PhysicsScene.RequestCapsuleActorAdd( InitDesc );
 }

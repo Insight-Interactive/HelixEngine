@@ -8,6 +8,7 @@
 
 HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
+	, m_IsTrigger( false )
 {
 }
 
@@ -45,6 +46,8 @@ void HColliderComponent::Serialize( WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
+			Output.Key( HE_STRINGIFY( m_IsTrigger ) );
+			Output.Bool( m_IsTrigger );
 		}
 		Output.EndObject();
 	}
@@ -55,6 +58,8 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY( HSceneComponent )] );
 
+	const ReadContext& This = Value[1];
+	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_IsTrigger ), m_IsTrigger );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()

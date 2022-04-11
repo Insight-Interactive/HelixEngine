@@ -406,9 +406,6 @@
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HBoxColliderComponent.cpp">
-      <Filter>Private\GameFramework\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>

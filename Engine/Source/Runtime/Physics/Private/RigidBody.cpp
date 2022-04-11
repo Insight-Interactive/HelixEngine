@@ -4,7 +4,7 @@
 #include "RigidBody.h"
 
 
-RigidBody::RigidBody()
+HRigidBody::HRigidBody()
 	: m_IsStatic( false )
 	, m_Density( 10.f )
 	, m_pRigidActor( nullptr )
@@ -12,11 +12,11 @@ RigidBody::RigidBody()
 {
 }
 
-RigidBody::~RigidBody()
+HRigidBody::~HRigidBody()
 {
 }
 
-void RigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation )
+void HRigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -28,21 +28,21 @@ void RigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, const
 	pDynamic->setGlobalPose( Transform );
 }
 
-void RigidBody::SetSimulatedPosition( const FVector3& NewPosition )
+void HRigidBody::SetSimulatedPosition( const FVector3& NewPosition )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
 	SetGlobalPositionOrientation( NewPosition, GetSimulatedRotation() );
 }
 
-void RigidBody::SetSimulatedRotation( const FQuat& NewRotation )
+void HRigidBody::SetSimulatedRotation( const FQuat& NewRotation )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
 	SetGlobalPositionOrientation( GetSimulatedPosition(), NewRotation );
 }
 
-void RigidBody::SetIsStatic( bool IsStatic )
+void HRigidBody::SetIsStatic( bool IsStatic )
 {
 	m_IsStatic = IsStatic;
 
@@ -50,7 +50,7 @@ void RigidBody::SetIsStatic( bool IsStatic )
 		m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, IsStatic );
 }
 
-FVector3 RigidBody::GetSimulatedPosition() const
+FVector3 HRigidBody::GetSimulatedPosition() const
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -63,7 +63,7 @@ FVector3 RigidBody::GetSimulatedPosition() const
 	return FVector3( Transform.p.x, Transform.p.y, Transform.p.z );
 }
 
-FQuat RigidBody::GetSimulatedRotation() const
+FQuat HRigidBody::GetSimulatedRotation() const
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -76,17 +76,17 @@ FQuat RigidBody::GetSimulatedRotation() const
 	return FQuat( Transform.q.x, Transform.q.y, Transform.q.z, Transform.q.w );
 }
 
-float RigidBody::GetDensity() const
+float HRigidBody::GetDensity() const
 {
 	return m_Density;
 }
 
-void RigidBody::SetDensity( const float& NewDensity )
+void HRigidBody::SetDensity( const float& NewDensity )
 {
 	m_Density = NewDensity;
 }
 
-void RigidBody::EnableSimulation()
+void HRigidBody::EnableSimulation()
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -94,7 +94,7 @@ void RigidBody::EnableSimulation()
 		m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, false );
 }
 
-void RigidBody::DisableSimulation()
+void HRigidBody::DisableSimulation()
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -102,7 +102,7 @@ void RigidBody::DisableSimulation()
 		m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, true );
 }
 
-FVector3 RigidBody::GetLinearVelocity() const
+FVector3 HRigidBody::GetLinearVelocity() const
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -117,7 +117,7 @@ FVector3 RigidBody::GetLinearVelocity() const
 	return Velocity;
 }
 
-float RigidBody::GetAngularDamping() const
+float HRigidBody::GetAngularDamping() const
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -130,7 +130,7 @@ float RigidBody::GetAngularDamping() const
 	return 0.f;
 }
 
-void RigidBody::SetAngularDamping( const float& Damping )
+void HRigidBody::SetAngularDamping( const float& Damping )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -141,7 +141,7 @@ void RigidBody::SetAngularDamping( const float& Damping )
 	}
 }
 
-void RigidBody::SetLinearVelocity( const FVector3& Velocity )
+void HRigidBody::SetLinearVelocity( const FVector3& Velocity )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -152,7 +152,7 @@ void RigidBody::SetLinearVelocity( const FVector3& Velocity )
 	}
 }
 
-void RigidBody::AddAcceleration( const FVector3& Acceleration )
+void HRigidBody::AddAcceleration( const FVector3& Acceleration )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -163,7 +163,7 @@ void RigidBody::AddAcceleration( const FVector3& Acceleration )
 	}
 }
 
-void RigidBody::AddForce( const FVector3& Force )
+void HRigidBody::AddForce( const FVector3& Force )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -174,7 +174,7 @@ void RigidBody::AddForce( const FVector3& Force )
 	}
 }
 
-void RigidBody::AddImpulse( const FVector3& Impulse )
+void HRigidBody::AddImpulse( const FVector3& Impulse )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -185,7 +185,7 @@ void RigidBody::AddImpulse( const FVector3& Impulse )
 	}
 }
 
-float RigidBody::GetMass() const
+float HRigidBody::GetMass() const
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -198,7 +198,7 @@ float RigidBody::GetMass() const
 	return 0.f;
 }
 
-void RigidBody::SetMass( const float& NewMass )
+void HRigidBody::SetMass( const float& NewMass )
 {
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
@@ -210,59 +210,59 @@ void RigidBody::SetMass( const float& NewMass )
 }
 
 
-InfinitePlaneRigidBody::InfinitePlaneRigidBody()
+HInfinitePlaneRigidBody::HInfinitePlaneRigidBody()
 	: m_Direction( FVector3::Up )
 	, m_Distance( 0 )
 {
 
 }
 
-InfinitePlaneRigidBody::~InfinitePlaneRigidBody()
+HInfinitePlaneRigidBody::~HInfinitePlaneRigidBody()
 {
 
 }
 
 
-/*static*/ const float PlaneRigidBody::kPlaneHeight = 0.01f;
+/*static*/ const float HPlaneRigidBody::kPlaneHeight = 0.01f;
 
-PlaneRigidBody::PlaneRigidBody()
+HPlaneRigidBody::HPlaneRigidBody()
 	: m_Width( 1.f )
 	, m_Height( 1.f )
 {
 }
 
-PlaneRigidBody::~PlaneRigidBody()
+HPlaneRigidBody::~HPlaneRigidBody()
 {
 }
 
 
-SphereRigidBody::SphereRigidBody()
+HSphereRigidBody::HSphereRigidBody()
 	: m_Radius( 1.f )
 {
 }
 
-SphereRigidBody::~SphereRigidBody()
+HSphereRigidBody::~HSphereRigidBody()
 {
 }
 
 
-CubeRigidBody::CubeRigidBody()
+HCubeRigidBody::HCubeRigidBody()
 	: m_Width( 1.f )
 	, m_Height( 1.f )
 	, m_Depth( 1.f )
 {
 }
 
-CubeRigidBody::~CubeRigidBody()
+HCubeRigidBody::~HCubeRigidBody()
 {
 }
 
 
-CapsuleRigidBody::CapsuleRigidBody()
+HCapsuleRigidBody::HCapsuleRigidBody()
 {
 }
 
-CapsuleRigidBody::~CapsuleRigidBody()
+HCapsuleRigidBody::~HCapsuleRigidBody()
 {
 
 }

@@ -21,15 +21,15 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
-	virtual RigidBody& GetRigidBody() override;
-	virtual const RigidBody& GetRigidBody() const override;
+	virtual HRigidBody& GetRigidBody() override;
+	virtual const HRigidBody& GetRigidBody() const override;
 
 private:
 	void RegisterCollider( bool StartDisabled );
 	void UnRegisterCollider();
 
 private:
-	CubeRigidBody m_RigidBody;
+	HCubeRigidBody m_RigidBody;
 
 };
 
@@ -42,12 +42,12 @@ FORCEINLINE bool HCubeColliderComponent::IsStatic() const
 	return m_RigidBody.GetIsStatic();
 }
 
-FORCEINLINE	RigidBody& HCubeColliderComponent::GetRigidBody()
+FORCEINLINE	HRigidBody& HCubeColliderComponent::GetRigidBody()
 {
 	return m_RigidBody;
 }
 
-FORCEINLINE	const RigidBody& HCubeColliderComponent::GetRigidBody() const
+FORCEINLINE	const HRigidBody& HCubeColliderComponent::GetRigidBody() const
 {
 	return m_RigidBody;
 }

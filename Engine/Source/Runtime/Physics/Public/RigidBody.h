@@ -12,7 +12,7 @@ namespace physx
 /*
 	Base rigid body class in which all rigid body types derived from.
 */
-class PHYSICS_API RigidBody
+class PHYSICS_API HRigidBody
 {
 	friend class HPhysicsScene;
 public:
@@ -43,8 +43,8 @@ public:
 
 
 protected:
-	RigidBody();
-	virtual ~RigidBody();
+	HRigidBody();
+	virtual ~HRigidBody();
 
 private:
 	bool m_IsStatic;
@@ -57,11 +57,11 @@ private:
 /*
 	A plane with infinite width and height that points in a single direction.
 */
-class PHYSICS_API InfinitePlaneRigidBody : public RigidBody
+class PHYSICS_API HInfinitePlaneRigidBody : public HRigidBody
 {
 public:
-	InfinitePlaneRigidBody();
-	virtual ~InfinitePlaneRigidBody();
+	HInfinitePlaneRigidBody();
+	virtual ~HInfinitePlaneRigidBody();
 
 	float GetDistance() const;
 	void SetDistance( const float& NewDistance);
@@ -77,13 +77,13 @@ private:
 /*
 	A plane with a defined width and height.	
 */
-class PHYSICS_API PlaneRigidBody : public RigidBody
+class PHYSICS_API HPlaneRigidBody : public HRigidBody
 {
 public:
 	static const float kPlaneHeight;
 public:
-	PlaneRigidBody();
-	virtual ~PlaneRigidBody();
+	HPlaneRigidBody();
+	virtual ~HPlaneRigidBody();
 
 	float GetWidth() const;
 	float GetHeight() const;
@@ -98,11 +98,11 @@ private:
 /*
 	A sphere with a radius.
 */
-class PHYSICS_API SphereRigidBody : public RigidBody
+class PHYSICS_API HSphereRigidBody : public HRigidBody
 {
 public:
-	SphereRigidBody();
-	virtual ~SphereRigidBody();
+	HSphereRigidBody();
+	virtual ~HSphereRigidBody();
 
 	float GetRadius() const;
 	void SetRadius( const float& NewRadius );
@@ -115,11 +115,11 @@ private:
 /*
 	A cube with width, height, and depth.
 */
-class PHYSICS_API CubeRigidBody : public RigidBody
+class PHYSICS_API HCubeRigidBody : public HRigidBody
 {
 public:
-	CubeRigidBody();
-	virtual ~CubeRigidBody();
+	HCubeRigidBody();
+	virtual ~HCubeRigidBody();
 
 	float GetWidth() const;
 	float GetHeight() const;
@@ -128,7 +128,6 @@ public:
 	void SetWidth( const float& NewWidth );
 	void SetHeight( const float& NewHeight );
 	void SetDepth( const float& NewDepth );
-
 
 private:
 	float m_Width;
@@ -140,11 +139,11 @@ private:
 /*
 	A capsule with a radius and length;
 */
-class PHYSICS_API CapsuleRigidBody : public RigidBody
+class PHYSICS_API HCapsuleRigidBody : public HRigidBody
 {
 public:
-	CapsuleRigidBody();
-	virtual ~CapsuleRigidBody();
+	HCapsuleRigidBody();
+	virtual ~HCapsuleRigidBody();
 
 	float GetRadius() const;
 	float GetLength() const;
@@ -165,18 +164,20 @@ private:
 // RigidBody
 //
 
-FORCEINLINE bool RigidBody::GetIsStatic() const
+FORCEINLINE bool HRigidBody::GetIsStatic() const
 {
 	return m_IsStatic;
 }
 
-FORCEINLINE	physx::PxRigidActor& RigidBody::GetRigidActor()
+FORCEINLINE	physx::PxRigidActor& HRigidBody::GetRigidActor()
 {
+	HE_ASSERT( m_pRigidActor != nullptr );
 	return *m_pRigidActor;
 }
 
-FORCEINLINE physx::PxMaterial& RigidBody::GetPhysicsMaterial()
+FORCEINLINE physx::PxMaterial& HRigidBody::GetPhysicsMaterial()
 {
+	HE_ASSERT( m_pPhysicsMaterial != nullptr );
 	return *m_pPhysicsMaterial;
 }
 
@@ -184,22 +185,22 @@ FORCEINLINE physx::PxMaterial& RigidBody::GetPhysicsMaterial()
 // Infinite Plane
 //
 
-FORCEINLINE float InfinitePlaneRigidBody::GetDistance() const
+FORCEINLINE float HInfinitePlaneRigidBody::GetDistance() const
 {
 	return m_Distance;
 }
 
-FORCEINLINE void InfinitePlaneRigidBody::SetDistance( const float& NewDistance )
+FORCEINLINE void HInfinitePlaneRigidBody::SetDistance( const float& NewDistance )
 {
 	m_Distance = NewDistance;
 }
 
-FORCEINLINE FVector3 InfinitePlaneRigidBody::GetDirection() const
+FORCEINLINE FVector3 HInfinitePlaneRigidBody::GetDirection() const
 {
 	return m_Direction;
 }
 
-FORCEINLINE void InfinitePlaneRigidBody::SetDirection( const FVector3& NewDirection )
+FORCEINLINE void HInfinitePlaneRigidBody::SetDirection( const FVector3& NewDirection )
 {
 	m_Direction = NewDirection;
 }
@@ -208,22 +209,22 @@ FORCEINLINE void InfinitePlaneRigidBody::SetDirection( const FVector3& NewDirect
 // Plane
 //
 
-FORCEINLINE float PlaneRigidBody::GetWidth() const
+FORCEINLINE float HPlaneRigidBody::GetWidth() const
 {
 	return m_Width;
 }
 
-FORCEINLINE float PlaneRigidBody::GetHeight() const
+FORCEINLINE float HPlaneRigidBody::GetHeight() const
 {
 	return m_Height;
 }
 
-FORCEINLINE void PlaneRigidBody::SetWidth( const float& NewWidth )
+FORCEINLINE void HPlaneRigidBody::SetWidth( const float& NewWidth )
 {
 	m_Width = NewWidth;
 }
 
-FORCEINLINE void PlaneRigidBody::SetHeight( const float& NewHeight )
+FORCEINLINE void HPlaneRigidBody::SetHeight( const float& NewHeight )
 {
 	m_Height = NewHeight;
 }
@@ -231,12 +232,12 @@ FORCEINLINE void PlaneRigidBody::SetHeight( const float& NewHeight )
 // Sphere
 //
 
-FORCEINLINE float SphereRigidBody::GetRadius() const
+FORCEINLINE float HSphereRigidBody::GetRadius() const
 {
 	return m_Radius;
 }
 
-FORCEINLINE void SphereRigidBody::SetRadius( const float& NewRadius )
+FORCEINLINE void HSphereRigidBody::SetRadius( const float& NewRadius )
 {
 	m_Radius = NewRadius;
 }
@@ -244,32 +245,32 @@ FORCEINLINE void SphereRigidBody::SetRadius( const float& NewRadius )
 // Cube
 //
 
-FORCEINLINE float CubeRigidBody::GetWidth() const
+FORCEINLINE float HCubeRigidBody::GetWidth() const
 {
 	return m_Width;
 }
 
-FORCEINLINE float CubeRigidBody::GetHeight() const
+FORCEINLINE float HCubeRigidBody::GetHeight() const
 {
 	return m_Height;
 }
 
-FORCEINLINE float CubeRigidBody::GetDepth() const
+FORCEINLINE float HCubeRigidBody::GetDepth() const
 {
 	return m_Depth;
 }
 
-FORCEINLINE void CubeRigidBody::SetWidth( const float& NewWidth )
+FORCEINLINE void HCubeRigidBody::SetWidth( const float& NewWidth )
 {
 	m_Width = NewWidth;
 }
 
-FORCEINLINE void CubeRigidBody::SetHeight( const float& NewHeight )
+FORCEINLINE void HCubeRigidBody::SetHeight( const float& NewHeight )
 {
 	m_Height = NewHeight;
 }
 
-FORCEINLINE void CubeRigidBody::SetDepth( const float& NewDepth )
+FORCEINLINE void HCubeRigidBody::SetDepth( const float& NewDepth )
 {
 	m_Depth = NewDepth;
 }
@@ -277,21 +278,21 @@ FORCEINLINE void CubeRigidBody::SetDepth( const float& NewDepth )
 // Capsule
 //
 
-FORCEINLINE	float CapsuleRigidBody::GetRadius() const
+FORCEINLINE	float HCapsuleRigidBody::GetRadius() const
 {
 	return m_Radius;
 }
-FORCEINLINE	float CapsuleRigidBody::GetLength() const
+FORCEINLINE	float HCapsuleRigidBody::GetLength() const
 {
 	return m_Length;
 }
 
-FORCEINLINE void CapsuleRigidBody::SetRadius( const float& NewRadius )
+FORCEINLINE void HCapsuleRigidBody::SetRadius( const float& NewRadius )
 {
 	m_Radius = NewRadius;
 }
 
-FORCEINLINE void CapsuleRigidBody::SetLength( const float& NewLength )
+FORCEINLINE void HCapsuleRigidBody::SetLength( const float& NewLength )
 {
 	m_Length = NewLength;
 }

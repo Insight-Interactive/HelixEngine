@@ -83,7 +83,7 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 
 void HCubeColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddCubeColliderComponent( this, StartDisabled );
+	GetWorld()->AddCubeColliderComponent( this, StartDisabled, GetIsTrigger() );
 }
 
 void HCubeColliderComponent::UnRegisterCollider()

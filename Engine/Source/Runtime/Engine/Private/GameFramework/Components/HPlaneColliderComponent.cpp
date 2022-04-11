@@ -78,7 +78,7 @@ void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
 
 void HPlaneColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddPlaneColliderComponent( this, StartDisabled );
+	GetWorld()->AddPlaneColliderComponent( this, StartDisabled, GetIsTrigger() );
 }
 
 void HPlaneColliderComponent::UnRegisterCollider()

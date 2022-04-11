@@ -83,7 +83,7 @@ void HCapsuleColliderComponent::Deserialize( const ReadContext& Value )
 
 void HCapsuleColliderComponent::RegisterCollider( bool StartDisabled )
 {
-	GetWorld()->AddCapsuleColliderComponent( this, StartDisabled );
+	GetWorld()->AddCapsuleColliderComponent( this, StartDisabled, GetIsTrigger() );
 }
 
 void HCapsuleColliderComponent::UnRegisterCollider()

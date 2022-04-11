@@ -19,7 +19,7 @@ public:
 	virtual void onWake( physx::PxActor** actors, physx::PxU32 count ) {}
 	virtual void onSleep( physx::PxActor** actors, physx::PxU32 count ) {}
 	virtual void onContact( const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs );
-	virtual void onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count ) {}
+	virtual void onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count );
 	virtual void onAdvance( const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count ) {}
 
 };
@@ -43,6 +43,32 @@ void SimulationEventCallback::onContact( const physx::PxContactPairHeader& pairH
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col1 );
 		}
 		else if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col1 );
+		}
+	}
+}
+
+void SimulationEventCallback::onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count )
+{
+	while (count--)
+	{
+		const physx::PxTriggerPair& cp = *pairs++;
+
+		PhysicsCallbackHandler* Col1 = SCast<PhysicsCallbackHandler*>( cp.triggerActor->userData );
+		PhysicsCallbackHandler* Col2 = SCast<PhysicsCallbackHandler*>( cp.otherActor->userData );
+		if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col1 );
+		}
+		else if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+		{
+			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col2 );
+			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col1 );
+		}
+		else if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col1 );
@@ -144,8 +170,8 @@ void HPhysicsScene::ProcessEventQueue()
 		case PE_AddSphereActor:
 		{
 			HE_ASSERT( Event.pUserData != nullptr ); // Sphere init info was not filled out correctly!
-			RigidActorAddDesc<SphereRigidBody>& Desc = *(RigidActorAddDesc<SphereRigidBody>*)Event.pUserData;
-			CreateSphereInternal( Desc.StartPosition, Desc.outRB );
+			RigidActorAddDesc<HSphereRigidBody>& Desc = *(RigidActorAddDesc<HSphereRigidBody>*)Event.pUserData;
+			CreateSphereInternal( Desc.StartPosition, Desc.outRB, Desc.IsTrigger );
 			if (Desc.StartDisabled)
 				Desc.outRB.DisableSimulation();
 
@@ -155,8 +181,8 @@ void HPhysicsScene::ProcessEventQueue()
 		case PE_AddPlaneActor:
 		{
 			HE_ASSERT( Event.pUserData != nullptr ); // Plane init info was not filled out correctly!
-			RigidActorAddDesc<PlaneRigidBody>& Desc = *(RigidActorAddDesc<PlaneRigidBody>*)Event.pUserData;
-			CreatePlaneInternal( Desc.StartPosition, Desc.outRB );
+			RigidActorAddDesc<HPlaneRigidBody>& Desc = *(RigidActorAddDesc<HPlaneRigidBody>*)Event.pUserData;
+			CreatePlaneInternal( Desc.StartPosition, Desc.outRB, Desc.IsTrigger );
 			if (Desc.StartDisabled)
 				Desc.outRB.DisableSimulation();
 
@@ -166,8 +192,8 @@ void HPhysicsScene::ProcessEventQueue()
 		case PE_AddCubeActor:
 		{
 			HE_ASSERT( Event.pUserData != nullptr ); // Cube init info was not filled out correctly!
-			RigidActorAddDesc<CubeRigidBody>& Desc = *(RigidActorAddDesc<CubeRigidBody>*)Event.pUserData;
-			CreateCubeInternal( Desc.StartPosition, Desc.outRB );
+			RigidActorAddDesc<HCubeRigidBody>& Desc = *(RigidActorAddDesc<HCubeRigidBody>*)Event.pUserData;
+			CreateCubeInternal( Desc.StartPosition, Desc.outRB, Desc.IsTrigger );
 			if (Desc.StartDisabled)
 				Desc.outRB.DisableSimulation();
 
@@ -177,8 +203,8 @@ void HPhysicsScene::ProcessEventQueue()
 		case PE_AddCapsuleActor:
 		{
 			HE_ASSERT( Event.pUserData != nullptr ); // Capsule init info was not filled out correctly!
-			RigidActorAddDesc<CapsuleRigidBody>& Desc = *(RigidActorAddDesc<CapsuleRigidBody>*)Event.pUserData;
-			CreateCapsuleInternal( Desc.StartPosition, Desc.outRB );
+			RigidActorAddDesc<HCapsuleRigidBody>& Desc = *(RigidActorAddDesc<HCapsuleRigidBody>*)Event.pUserData;
+			CreateCapsuleInternal( Desc.StartPosition, Desc.outRB, Desc.IsTrigger );
 			if (Desc.StartDisabled)
 				Desc.outRB.DisableSimulation();
 
@@ -187,7 +213,7 @@ void HPhysicsScene::ProcessEventQueue()
 		}
 		case PE_RemoveActor:
 		{
-			RigidBody& RB = *(RigidBody*)Event.pUserData;
+			HRigidBody& RB = *(HRigidBody*)Event.pUserData;
 			RemoveActorInternal( RB );
 			break;
 		}
@@ -202,7 +228,7 @@ void HPhysicsScene::ProcessEventQueue()
 			break;
 		}
 
-		if( Event.pUserData )
+		if (Event.pUserData)
 			HE_HeapFree( Event.pUserData );
 	}
 }
@@ -219,7 +245,7 @@ void HPhysicsScene::FlushInternal()
 	m_pScene->flushSimulation();
 }
 
-void HPhysicsScene::CreateInfinitePlaneInternal( InfinitePlaneRigidBody& outPlane )
+void HPhysicsScene::CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPlane, bool IsTrigger )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
@@ -228,39 +254,67 @@ void HPhysicsScene::CreateInfinitePlaneInternal( InfinitePlaneRigidBody& outPlan
 	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
 
 	FVector3 Normal = outPlane.GetDirection();
-	m_pScene->addActor( *physx::PxCreatePlane( Physics, physx::PxPlane( Normal.x, Normal.y, Normal.z, outPlane.GetDistance() ), *Physics.createMaterial( 0.5f, 0.5f, 0.6f ) ) );
-
+	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
+	outPlane.m_pRigidActor = physx::PxCreatePlane( Physics, physx::PxPlane( Normal.x, Normal.y, Normal.z, outPlane.GetDistance()), *outPlane.m_pPhysicsMaterial );
 	m_pScene->addActor( *outPlane.m_pRigidActor );
 }
 
-void HPhysicsScene::CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane )
+void HPhysicsScene::CreatePlaneInternal( const FVector3& StartPos, HPlaneRigidBody& outPlane, bool IsTrigger )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
-	
+
 	outPlane.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
 
-	physx::PxBoxGeometry PlaneGeo( outPlane.GetWidth() / 2, PlaneRigidBody::kPlaneHeight, outPlane.GetHeight() / 2 );
-	InitCollider( outPlane, PlaneGeo, StartPos );
-	
-	m_pScene->addActor( *outPlane.m_pRigidActor );
+	physx::PxBoxGeometry PlaneGeo( outPlane.GetWidth() / 2, HPlaneRigidBody::kPlaneHeight, outPlane.GetHeight() / 2 );
+	if (IsTrigger)
+	{
+		physx::PxShape* pShape = Physics.createShape( PlaneGeo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, physx::PxShapeFlag::eVISUALIZATION | physx::PxShapeFlag::eTRIGGER_SHAPE );
+		HE_ASSERT( pShape != nullptr );
+
+		physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+		outPlane.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
+		outPlane.m_pRigidActor->attachShape( *pShape );
+
+		m_pScene->addActor( *outPlane.m_pRigidActor );
+		pShape->release();
+	}
+	else
+	{
+		InitCollider( outPlane, PlaneGeo, StartPos );
+		m_pScene->addActor( *outPlane.m_pRigidActor );
+	}
 }
 
-void HPhysicsScene::CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere )
+void HPhysicsScene::CreateSphereInternal( const FVector3& StartPos, HSphereRigidBody& outSphere, bool IsTrigger )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
 	outSphere.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
+	physx::PxSphereGeometry SphereGeo( outSphere.GetRadius() );
+	if (IsTrigger)
+	{
+		physx::PxShape* pShape = Physics.createShape( SphereGeo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, physx::PxShapeFlag::eVISUALIZATION | physx::PxShapeFlag::eTRIGGER_SHAPE );
+		HE_ASSERT( pShape != nullptr );
 
-	InitCollider( outSphere, physx::PxSphereGeometry( outSphere.GetRadius() ), StartPos );
+		physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+		outSphere.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
+		outSphere.m_pRigidActor->attachShape( *pShape );
 
-	m_pScene->addActor( *outSphere.m_pRigidActor );
+		m_pScene->addActor( *outSphere.m_pRigidActor );
+		pShape->release();
+	}
+	else
+	{
+		InitCollider( outSphere, SphereGeo, StartPos );
+		m_pScene->addActor( *outSphere.m_pRigidActor );
+	}
 }
 
-void HPhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube )
+void HPhysicsScene::CreateCubeInternal( const FVector3& StartPos, HCubeRigidBody& outCube, bool IsTrigger )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
@@ -269,26 +323,54 @@ void HPhysicsScene::CreateCubeInternal( const FVector3& StartPos, CubeRigidBody&
 	outCube.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
 
 	physx::PxBoxGeometry CubeGeo( outCube.GetWidth() / 2, outCube.GetHeight() / 2, outCube.GetDepth() / 2 );
-	InitCollider( outCube, CubeGeo, StartPos );
+	if (IsTrigger)
+	{
+		physx::PxShape* pShape = Physics.createShape( CubeGeo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, physx::PxShapeFlag::eVISUALIZATION | physx::PxShapeFlag::eTRIGGER_SHAPE );
+		HE_ASSERT( pShape != nullptr );
 
-	m_pScene->addActor( *outCube.m_pRigidActor );
+		physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+		outCube.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
+		outCube.m_pRigidActor->attachShape( *pShape );
+
+		m_pScene->addActor( *outCube.m_pRigidActor );
+		pShape->release();
+	}
+	else
+	{
+		InitCollider( outCube, CubeGeo, StartPos );
+		m_pScene->addActor( *outCube.m_pRigidActor );
+	}
 }
 
-void HPhysicsScene::CreateCapsuleInternal( const FVector3& StartPos, CapsuleRigidBody& outCapsule )
+void HPhysicsScene::CreateCapsuleInternal( const FVector3& StartPos, HCapsuleRigidBody& outCapsule, bool IsTrigger )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
 	outCapsule.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
-	
-	physx::PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetLength() / 2 );
-	InitCollider( outCapsule, CapsuleGeo, StartPos );
 
-	m_pScene->addActor( *outCapsule.m_pRigidActor );
+	physx::PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetLength() / 2 );
+	if (IsTrigger)
+	{
+		physx::PxShape* pShape = Physics.createShape( CapsuleGeo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, physx::PxShapeFlag::eVISUALIZATION | physx::PxShapeFlag::eTRIGGER_SHAPE );
+		HE_ASSERT( pShape != nullptr );
+
+		physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
+		outCapsule.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
+		outCapsule.m_pRigidActor->attachShape( *pShape );
+
+		m_pScene->addActor( *outCapsule.m_pRigidActor );
+		pShape->release();
+	}
+	else
+	{
+		InitCollider( outCapsule, CapsuleGeo, StartPos );
+		m_pScene->addActor( *outCapsule.m_pRigidActor );
+	}
 }
 
-void HPhysicsScene::RemoveActorInternal( RigidBody& Collider )
+void HPhysicsScene::RemoveActorInternal( HRigidBody& Collider )
 {
 	if (Collider.m_pRigidActor != nullptr)
 	{
@@ -301,7 +383,7 @@ void HPhysicsScene::RemoveActorInternal( RigidBody& Collider )
 	}
 }
 
-void SetupFiltering( physx::PxRigidActor * actor, physx::PxU32 filterGroup, physx::PxU32 filterMask)
+void SetupFiltering( physx::PxRigidActor* actor, physx::PxU32 filterGroup, physx::PxU32 filterMask )
 {
 	physx::PxFilterData filterData;
 	filterData.word0 = filterGroup; // word0 = own ID
@@ -317,7 +399,7 @@ void SetupFiltering( physx::PxRigidActor * actor, physx::PxU32 filterGroup, phys
 	HE_HeapFree( shapes );
 }
 
-void HPhysicsScene::InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos )
+void HPhysicsScene::InitCollider( HRigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos )
 {
 	physx::PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
 
@@ -329,29 +411,29 @@ void HPhysicsScene::InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, c
 	else
 	{
 		Collider.m_pRigidActor = physx::PxCreateDynamic( Physics, InitialTransform, Geo, *Collider.m_pPhysicsMaterial, Collider.GetDensity() );
-		
+
 		DynamicColliderInitParams InitParams = {};
 		InitParams.StartPos = StartPos;
 		InitDynamicBody( InitParams, Collider );
 	}
 	HE_ASSERT( Collider.m_pRigidActor != nullptr ); // Failed to create physics actor!
-	
+
 	SetupFiltering( Collider.m_pRigidActor, 1, 1 );
 
 	FinalizeRigidBody( Collider );
 }
 
-void HPhysicsScene::InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody )
+void HPhysicsScene::InitDynamicBody( const DynamicColliderInitParams& InitParams, HRigidBody& HRigidBody )
 {
-	physx::PxRigidDynamic* pDynamic = SCast<physx::PxRigidDynamic*>( RigidBody.m_pRigidActor );
+	physx::PxRigidDynamic* pDynamic = SCast<physx::PxRigidDynamic*>( HRigidBody.m_pRigidActor );
 	HE_ASSERT( pDynamic != nullptr );
 
 	physx::PxTransform Transform( physx::PxVec3( InitParams.StartPos.x, InitParams.StartPos.y, InitParams.StartPos.z ) );
 	pDynamic->setGlobalPose( Transform );
-	physx::PxRigidBodyExt::updateMassAndInertia( *pDynamic, RigidBody.GetDensity() );
+	physx::PxRigidBodyExt::updateMassAndInertia( *pDynamic, HRigidBody.GetDensity() );
 }
 
-void HPhysicsScene::FinalizeRigidBody( RigidBody& outRB )
+void HPhysicsScene::FinalizeRigidBody( HRigidBody& outRB )
 {
 	//outRB.m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_SIMULATION, outRB.GetIsStatic() );
 }

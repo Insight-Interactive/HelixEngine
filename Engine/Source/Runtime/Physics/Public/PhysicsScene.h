@@ -14,6 +14,9 @@ enum EPhysicsEvent
 	PE_UnPauseSimulation,
 	// Set the interval at which the scene is steped through time.
 	PE_SetSimulationStepRate,
+	// Request the scene to begin simulating.
+	PE_TickScene,
+	
 	// Add a sphere physics actor to the scene.
 	PE_AddSphereActor,
 	// Add a plane physics actor to the scene.
@@ -26,9 +29,6 @@ enum EPhysicsEvent
 	PE_RemoveActor,
 	// Flsuh all actors from the scene.
 	PE_FlushScene,
-
-	// Request the scene to begin simulating.
-	PE_TickScene,
 };
 
 struct PHYSICS_API PhysicsEventPacket
@@ -43,8 +43,12 @@ struct PHYSICS_API PhysicsEventPacket
 class PHYSICS_API PhysicsEventQueue
 {
 public:
-	PhysicsEventQueue() {}
-	~PhysicsEventQueue() {}
+	PhysicsEventQueue() 
+	{
+	}
+	~PhysicsEventQueue() 
+	{
+	}
 
 	FORCEINLINE void PushEvent( PhysicsEventPacket& Event )
 	{
@@ -74,12 +78,14 @@ namespace physx
 	class PxGeometry;
 }
 
-class RigidBody;
-class InfinitePlaneRigidBody;
-class PlaneRigidBody;
-class SphereRigidBody;
-class CubeRigidBody;
-class CapsuleRigidBody;
+class HRigidBody;
+class HInfinitePlaneRigidBody;
+class HPlaneRigidBody;
+class HSphereRigidBody;
+class HCubeRigidBody;
+class HCapsuleRigidBody;
+class HTrigger;
+class HBoxTrigger;
 class HPhysicsContext;
 class PhysicsCallbackHandler;
 
@@ -103,6 +109,8 @@ public:
 		RigidBodyType& outRB;
 		// Start disabled in the world?
 		bool StartDisabled;
+		// Is this actor a trigger?
+		bool IsTrigger;
 	};
 
 public:
@@ -123,11 +131,11 @@ public:
 	void RequestPauseSimulation();
 	void RequestUnPauseSimulation();
 	void RequestSetStepRate( float NewStepRate );
-	void RequestSphereActorAdd( RigidActorAddDesc<SphereRigidBody>& SphereInitInfo );
-	void RequestPlaneActorAdd( RigidActorAddDesc<PlaneRigidBody>& PlaneInitInfo );
-	void RequestCubeActorAdd( RigidActorAddDesc<CubeRigidBody>& CubeInitInfo );
-	void RequestCapsuleActorAdd( RigidActorAddDesc<CapsuleRigidBody>& CapsuleInitInfo );
-	void RequestActorRemove( RigidBody& RigidBody );
+	void RequestSphereActorAdd( RigidActorAddDesc<HSphereRigidBody>& SphereInitInfo );
+	void RequestPlaneActorAdd( RigidActorAddDesc<HPlaneRigidBody>& PlaneInitInfo );
+	void RequestCubeActorAdd( RigidActorAddDesc<HCubeRigidBody>& CubeInitInfo );
+	void RequestCapsuleActorAdd( RigidActorAddDesc<HCapsuleRigidBody>& CapsuleInitInfo );
+	void RequestActorRemove( HRigidBody& RigidBody );
 	void RequestSceneFlush();
 	void RequestTick();
 
@@ -138,16 +146,16 @@ public:
 
 
 private:
-	void CreateInfinitePlaneInternal( InfinitePlaneRigidBody& outPlane );
-	void CreatePlaneInternal( const FVector3& StartPos, PlaneRigidBody& outPlane );
-	void CreateSphereInternal( const FVector3& StartPos, SphereRigidBody& outSphere );
-	void CreateCubeInternal( const FVector3& StartPos, CubeRigidBody& outCube );
-	void CreateCapsuleInternal( const FVector3& StartPos, CapsuleRigidBody& outCube );
-	void RemoveActorInternal( RigidBody& Collider );
+	void CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPlane, bool IsTrigger );
+	void CreatePlaneInternal( const FVector3& StartPos, HPlaneRigidBody& outPlane, bool IsTrigger );
+	void CreateSphereInternal( const FVector3& StartPos, HSphereRigidBody& outSphere, bool IsTrigger );
+	void CreateCubeInternal( const FVector3& StartPos, HCubeRigidBody& outCube, bool IsTrigger );
+	void CreateCapsuleInternal( const FVector3& StartPos, HCapsuleRigidBody& outCube, bool IsTrigger );
+	void RemoveActorInternal( HRigidBody& Collider );
 
-	void InitCollider( RigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos );
-	void InitDynamicBody( const DynamicColliderInitParams& InitParams, RigidBody& RigidBody );
-	void FinalizeRigidBody( RigidBody& outRB );
+	void InitCollider( HRigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos );
+	void InitDynamicBody( const DynamicColliderInitParams& InitParams, HRigidBody& RigidBody );
+	void FinalizeRigidBody( HRigidBody& outRB );
 
 	void FlushInternal();
 	void TickInternal();
@@ -191,43 +199,43 @@ FORCEINLINE void HPhysicsScene::RequestSetStepRate( float NewStepRate )
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE	void HPhysicsScene::RequestSphereActorAdd( RigidActorAddDesc<SphereRigidBody>& SphereInitInfo )
+FORCEINLINE	void HPhysicsScene::RequestSphereActorAdd( RigidActorAddDesc<HSphereRigidBody>& SphereInitInfo )
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddSphereActor;
-	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<SphereRigidBody> ) );
-	CopyMemory( Packet.pUserData, &SphereInitInfo, sizeof( RigidActorAddDesc<SphereRigidBody> ) );
+	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<HSphereRigidBody> ) );
+	CopyMemory( Packet.pUserData, &SphereInitInfo, sizeof( RigidActorAddDesc<HSphereRigidBody> ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE void HPhysicsScene::RequestPlaneActorAdd( RigidActorAddDesc<PlaneRigidBody>& PlaneInitInfo )
+FORCEINLINE void HPhysicsScene::RequestPlaneActorAdd( RigidActorAddDesc<HPlaneRigidBody>& PlaneInitInfo )
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddPlaneActor;
-	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<PlaneRigidBody> ) );
-	CopyMemory( Packet.pUserData, &PlaneInitInfo, sizeof( RigidActorAddDesc<PlaneRigidBody> ) );
+	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<HPlaneRigidBody> ) );
+	CopyMemory( Packet.pUserData, &PlaneInitInfo, sizeof( RigidActorAddDesc<HPlaneRigidBody> ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE void HPhysicsScene::RequestCubeActorAdd( RigidActorAddDesc<CubeRigidBody>& CubeInitInfo )
+FORCEINLINE void HPhysicsScene::RequestCubeActorAdd( RigidActorAddDesc<HCubeRigidBody>& CubeInitInfo )
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddCubeActor;
-	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<CubeRigidBody> ) );
-	CopyMemory( Packet.pUserData, &CubeInitInfo, sizeof( RigidActorAddDesc<CubeRigidBody> ) );
+	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<HCubeRigidBody> ) );
+	CopyMemory( Packet.pUserData, &CubeInitInfo, sizeof( RigidActorAddDesc<HCubeRigidBody> ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE void HPhysicsScene::RequestCapsuleActorAdd( RigidActorAddDesc<CapsuleRigidBody>& CapsuleInitInfo )
+FORCEINLINE void HPhysicsScene::RequestCapsuleActorAdd( RigidActorAddDesc<HCapsuleRigidBody>& CapsuleInitInfo )
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_AddCapsuleActor;
-	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<CapsuleRigidBody> ) );
-	CopyMemory( Packet.pUserData, &CapsuleInitInfo, sizeof( RigidActorAddDesc<CapsuleRigidBody> ) );
+	Packet.pUserData = HE_HeapAlloc( sizeof( RigidActorAddDesc<HCapsuleRigidBody> ) );
+	CopyMemory( Packet.pUserData, &CapsuleInitInfo, sizeof( RigidActorAddDesc<HCapsuleRigidBody> ) );
 	m_EventQueue.PushEvent( Packet );
 }
 
-FORCEINLINE void HPhysicsScene::RequestActorRemove( RigidBody& RigidBody )
+FORCEINLINE void HPhysicsScene::RequestActorRemove( HRigidBody& RigidBody )
 {
 	PhysicsEventPacket Packet;
 	Packet.EventType = PE_RemoveActor;
