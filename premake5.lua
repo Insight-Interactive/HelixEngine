@@ -131,6 +131,7 @@ group ("Modules")
 	include ( "Engine/Source/Runtime/Math/Math.module.lua" );
 	include ( "Engine/Source/Runtime/Renderer/Renderer.module.lua" );
 	include ( "Engine/Source/Runtime/Physics/Physics.module.lua" );
+	include ( "Engine/Source/Runtime/Scripting/Scripting.module.lua" );
 group ("")
 
 group ("Editor")
@@ -140,3 +141,6 @@ group ("")
 group ("Programs")
 	include ( "Engine/Source/Editor/PackageCooker/PackageCooker.program.lua" );
 group ("")
+
+--Third Party
+dofile ("Engine/ThirdParty/lua-5.4.4/LuaLib.library.lua")

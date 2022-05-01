@@ -15,7 +15,7 @@
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
 
-
+#include "SourceContext.h"
 Logger GEngineLogger;
 HEngine* GEngine = nullptr;
 ThreadPool* GThreadPool = nullptr;
@@ -35,6 +35,8 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds( 0.0 )
 {
+	SourceContext src;
+	src.Setup();
 }
 
 HEngine::~HEngine()

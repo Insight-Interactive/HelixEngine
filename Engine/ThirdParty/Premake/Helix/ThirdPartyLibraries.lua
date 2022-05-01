@@ -18,6 +18,8 @@ libraryDirectories["PhysXx86_debug"]    = heGetThirdPartyModule( "PhysX-4.1" ) .
 libraryDirectories["PhysXx86_checked"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/checked/"
 libraryDirectories["PhysXx86_profile"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/profile/"
 libraryDirectories["PhysXx86_release"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/"
+-- Lua 
+libraryDirectories["LuaCore"]		= heGetThirdPartyModule( "lua-5.4.4" )	.. "Build/"
 
 libraries = {}
 -- PIX
@@ -35,4 +37,8 @@ libraries["PhysXCommon32"]      = "PhysXCommon_32.lib"
 libraries["PhysX32"]            = "PhysX_32.lib"
 libraries["PhysXFoundation32"]  = "PhysXFoundation_32.lib"
 libraries["PhysXCooking32"]     = "PhysXCooking_32.lib"
-
+-- Lua
+libraries["Lua64_Debug"]     = "LuaCore-Debug-x64.lib"
+libraries["Lua64_Release"]   = "LuaCore-Release-x64.lib"
+libraries["Lua32_Debug"]     = "LuaCore-Debug-Win32.lib"
+libraries["Lua32_Release"]   = "LuaCore-Release-Win32.lib"

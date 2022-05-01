@@ -204,10 +204,16 @@
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HCapsuleColliderComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HColliderComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h">
@@ -324,8 +330,6 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
-    <ClInclude Include="Public\GameFramework\Components\HCapsuleColliderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -409,10 +413,16 @@
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HCapsuleColliderComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HColliderComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp">
@@ -535,8 +545,6 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
-    <ClCompile Include="Private\GameFramework\Components\HCapsuleColliderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

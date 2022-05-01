@@ -67,6 +67,7 @@ project ("Engine")
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
 		heGetModulePublicDir( "Physics" ),
+		heGetModulePublicDir( "Scripting" ),
 
 		-- Third Party
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
@@ -80,6 +81,12 @@ project ("Engine")
 		"Renderer",
 		"Physics",
 		"Shaders",
+		"Scripting",
+	}
+
+	libdirs
+	{
+		"%{libraryDirectories.LuaCore}",
 	}
 
 	defines
@@ -103,7 +110,6 @@ project ("Engine")
 	}
 
 	dofile ("Helix/CommonEngineMacros.lua")
-
 
 
 	filter ("platforms:Win64 or Win32")
@@ -203,6 +209,31 @@ project ("Engine")
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx64_debug}",
+		}
+
+	-- Lua
+	filter { "configurations:not ShippingGame", "platforms:Win64" }
+		links
+		{
+			"%{libraries.Lua64_Debug}",
+		}
+	
+	filter { "configurations:ShippingGame", "platforms:Win64" }
+		links
+		{
+			"%{libraries.Lua64_Release}",
+		}
+
+	filter { "configurations:not ShippingGame", "platforms:Win32" }
+		links
+		{
+			"%{libraries.Lua32_Debug}",
+		}
+	
+	filter { "configurations:ShippingGame", "platforms:Win32" }
+		links
+		{
+			"%{libraries.Lua32_Debug}",
 		}
 
 

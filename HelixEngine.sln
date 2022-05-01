@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Physics", "Engine\Source\Ru
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderer", "Engine\Source\Runtime\Renderer\Renderer.vcxproj", "{7CCE658F-689B-C09A-91B4-AE427DE0F528}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scripting", "Engine\Source\Runtime\Scripting\Scripting.vcxproj", "{985A7358-04C5-27CF-4D03-D974B9AC0524}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Programs", "Programs", "{B70DBBB7-A3DB-AEBD-8C6F-1FE478DC8A22}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PackageCooker", "Engine\Source\Editor\PackageCooker\PackageCooker.vcxproj", "{F4D4E73E-6095-6375-29D0-ACF2954FA851}"
@@ -289,6 +291,46 @@ Global
 		{7CCE658F-689B-C09A-91B4-AE427DE0F528}.ShippingGame|Win32.Build.0 = ShippingGame Win32|x64
 		{7CCE658F-689B-C09A-91B4-AE427DE0F528}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
 		{7CCE658F-689B-C09A-91B4-AE427DE0F528}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Durango.ActiveCfg = DebugEditor Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Durango.Build.0 = DebugEditor Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Prospero.Build.0 = DebugEditor Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Scorpio.ActiveCfg = DebugEditor Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Scorpio.Build.0 = DebugEditor Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Win32.ActiveCfg = DebugEditor Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Win32.Build.0 = DebugEditor Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Win64.ActiveCfg = DebugEditor Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugEditor|Win64.Build.0 = DebugEditor Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Durango.ActiveCfg = DebugGame Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Durango.Build.0 = DebugGame Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Prospero.ActiveCfg = DebugGame Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Prospero.Build.0 = DebugGame Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Scorpio.ActiveCfg = DebugGame Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Scorpio.Build.0 = DebugGame Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Win32.ActiveCfg = DebugGame Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Win32.Build.0 = DebugGame Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Win64.ActiveCfg = DebugGame Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.DebugGame|Win64.Build.0 = DebugGame Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Durango.ActiveCfg = Development Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Durango.Build.0 = Development Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Prospero.ActiveCfg = Development Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Prospero.Build.0 = Development Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Scorpio.ActiveCfg = Development Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Scorpio.Build.0 = Development Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Win32.ActiveCfg = Development Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Win32.Build.0 = Development Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Win64.ActiveCfg = Development Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.Development|Win64.Build.0 = Development Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Durango.ActiveCfg = ShippingGame Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Durango.Build.0 = ShippingGame Durango|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Prospero.ActiveCfg = ShippingGame Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Prospero.Build.0 = ShippingGame Prospero|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Scorpio.ActiveCfg = ShippingGame Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Scorpio.Build.0 = ShippingGame Scorpio|Win32
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win32.ActiveCfg = ShippingGame Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win32.Build.0 = ShippingGame Win32|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
+		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
 		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Durango.ActiveCfg = DebugEditor Durango|Win32
 		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Durango.Build.0 = DebugEditor Durango|Win32
 		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
@@ -419,6 +461,7 @@ Global
 		{AFF4887C-9B2B-8A0D-4418-7010302E060F} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
 		{888B590D-F46A-D8A8-FD82-637F69E13E0A} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
 		{7CCE658F-689B-C09A-91B4-AE427DE0F528} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
+		{985A7358-04C5-27CF-4D03-D974B9AC0524} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
 		{F4D4E73E-6095-6375-29D0-ACF2954FA851} = {B70DBBB7-A3DB-AEBD-8C6F-1FE478DC8A22}
 	EndGlobalSection
 EndGlobal
