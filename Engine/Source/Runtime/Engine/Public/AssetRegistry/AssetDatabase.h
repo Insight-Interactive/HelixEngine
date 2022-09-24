@@ -7,11 +7,14 @@
 #include "AssetRegistry/ShaderDatabase.h"
 #include "AssetRegistry/TextureDatabase.h"
 #include "AssetRegistry/MaterialDatabase.h"
+#include "AssetRegistry/ScriptDatabase.h"
 
 #include "ModelManager.h"
 #include "TextureManager.h"
 #include "Engine/GameProject.h"
 #include "Renderer/MaterialManager.h"
+#include "LuaScript.h"
+#include "Engine/ScriptManager.h"
 
 
 static const char* kAssetManifestFilename = "AssetManifest.json";
@@ -34,6 +37,7 @@ public:
 	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
 	static MaterialRef GetMaterial( const FGUID& Guid );
 	static String LookupShaderPath( const FGUID& Guid );
+	static LuaScriptRef GetScript( const FGUID& Guid );
 
 protected:
 	FAssetDatabase();
@@ -54,17 +58,20 @@ protected:
 	static void RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath );
 	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
+	static void RegisterScript( const FGUID& ScriptGuid, const Char* Filepath );
 
 	static const String LookupMesh( const FGUID& Guid );
 	static const String LookupTexture( const FGUID& Guid );
 	static const String LookupMaterial( const FGUID& Guid );
 	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
+	static const String LookupScript( const FGUID& Guid );
 
 	static FMeshDatabase& GetMeshDatabase();
 	static FTextureDatabase& GetTextureDatabase();
 	static FMaterialDatabase& GetMaterialDatabase();
 	static FActorDatabase& GetActorDatabase();
+	static FScriptDatabase& GetScriptDatabase();
 
 protected:
 	FMeshDatabase		m_MeshDatabase;
@@ -72,6 +79,7 @@ protected:
 	FShaderDatabase		m_ShaderDatabase;
 	FTextureDatabase	m_TextureDatabase;
 	FMaterialDatabase	m_MaterialDatabase;
+	FScriptDatabase		m_ScriptDatabase;
 
 private:
 	static FAssetDatabase* SInstance;
@@ -103,6 +111,12 @@ private:
 	return SInstance->LookupShader( Guid );
 }
 
+/*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const FGUID& Guid )
+{
+	return GScriptManager.FindOrLoadScript( SInstance->LookupScript( Guid ) );
+
+}
+
 /*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
 {
 	return SInstance->m_MeshDatabase;
@@ -123,34 +137,39 @@ private:
 	return SInstance->m_ActorDatabase;
 }
 
+/*static*/ FORCEINLINE FScriptDatabase& FAssetDatabase::GetScriptDatabase()
+{
+	return SInstance->m_ScriptDatabase;
+}
+
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 {
 	rapidjson::StringBuffer StrBuffer;
 	WriteContext Writer( StrBuffer );
-	
+
 	Writer.StartObject();
 	{
 		Writer.Key( HE_STRINGIFY( FAssetDatabase ) );
 		Writer.StartArray();
-			Writer.StartObject();
-				SInstance->m_MeshDatabase.Serialize(Writer);
-			Writer.EndObject();
+		Writer.StartObject();
+		SInstance->m_MeshDatabase.Serialize( Writer );
+		Writer.EndObject();
 
-			Writer.StartObject();
-				SInstance->m_TextureDatabase.Serialize(Writer);
-			Writer.EndObject();
-			
-			Writer.StartObject();
-				SInstance->m_MaterialDatabase.Serialize(Writer);
-			Writer.EndObject();
-			
-			Writer.StartObject();
-				SInstance->m_ActorDatabase.Serialize( Writer );
-			Writer.EndObject();
+		Writer.StartObject();
+		SInstance->m_TextureDatabase.Serialize( Writer );
+		Writer.EndObject();
 
-			Writer.StartObject();
-				SInstance->m_ShaderDatabase.Serialize(Writer);
-			Writer.EndObject();
+		Writer.StartObject();
+		SInstance->m_MaterialDatabase.Serialize( Writer );
+		Writer.EndObject();
+
+		Writer.StartObject();
+		SInstance->m_ActorDatabase.Serialize( Writer );
+		Writer.EndObject();
+
+		Writer.StartObject();
+		SInstance->m_ShaderDatabase.Serialize( Writer );
+		Writer.EndObject();
 		Writer.EndArray();
 	}
 	Writer.EndObject();
@@ -191,6 +210,11 @@ private:
 	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterScript( const FGUID& ScriptGuid, const Char* Filepath )
+{
+	SInstance->m_ScriptDatabase.RegisterAsset( ScriptGuid, Filepath );
+}
+
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid )
 {
 	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MeshDatabase.GetValueByKey( Guid );
@@ -214,4 +238,9 @@ private:
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
 	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
+}
+
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupScript( const FGUID& Guid )
+{
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ScriptDatabase.GetValueByKey( Guid );
 }

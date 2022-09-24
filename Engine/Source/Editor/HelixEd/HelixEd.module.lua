@@ -42,6 +42,7 @@ project ("HelixEd")
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
 		heGetModulePublicDir( "Physics" ),
+		heGetModulePublicDir( "Scripting" ),
 
 		-- Generaly grabbing the engine runtime should never be done.
 		-- However, the editor needs it.

@@ -39,6 +39,12 @@ public:
 		m_FlagValue = false;
 	}
 
+	FORCEINLINE void Wait()
+	{
+		while (m_FlagValue)
+			std::this_thread::yield();
+	}
+
 private:
 	bool m_FlagValue;
 

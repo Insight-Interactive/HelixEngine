@@ -9,8 +9,8 @@ template <typename ClassType, bool bShouldHeapAllocate = false>
 class TSingleton
 {
 public:
-	static FORCEINLINE ClassType* GetInstance();
-	static FORCEINLINE bool IsValid();
+	static ClassType* GetInstance();
+	static bool IsValid();
 
 private:
 	static void InValidate();
@@ -18,8 +18,8 @@ private:
 	static ClassType* SInstance;
 
 protected:
-	FORCEINLINE TSingleton();
-	FORCEINLINE virtual ~TSingleton();
+	TSingleton();
+	virtual ~TSingleton();
 };
 
 //
@@ -68,5 +68,12 @@ template <typename ClassType, bool bShouldHeapAllocate>
 template <typename ClassType, bool bShouldHeapAllocate>
 /*static*/ FORCEINLINE void TSingleton<ClassType, bShouldHeapAllocate>::InValidate()
 {
+	if constexpr (bShouldHeapAllocate)
+	{
+		if (SInstance != NULL)
+		{
+			delete SInstance;
+		}
+	}
 	SInstance = NULL;
 }

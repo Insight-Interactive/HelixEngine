@@ -20,6 +20,7 @@
 #endif // HE_WINDOWS
 
 #include "MathCore.h"
+#include "FileSystem.h"
 
 // Lua
 #include "lua.hpp"

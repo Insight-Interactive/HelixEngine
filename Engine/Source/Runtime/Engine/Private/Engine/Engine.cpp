@@ -14,8 +14,9 @@
 #include "CommandManager.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
+#include "../Script/ScriptCallbacks.h"
 
-#include "SourceContext.h"
+
 Logger GEngineLogger;
 HEngine* GEngine = nullptr;
 ThreadPool* GThreadPool = nullptr;
@@ -35,8 +36,6 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds( 0.0 )
 {
-	SourceContext src;
-	src.Setup();
 }
 
 HEngine::~HEngine()
@@ -88,6 +87,9 @@ void HEngine::PreStartup()
 	// Initialize Subsystems
 	m_ReneringSubsystem.Initialize();
 	m_PhysicsSubsystem.Initialize();
+	m_ScriptEngine.Setup();
+	m_ScriptEngine.BindLuaFunction( Scr_GetDeltaTime, "GetDeltaTime" );
+	m_ScriptEngine.BindLuaFunction( Scr_GetAppSeconds, "GetAppSeconds" );
 
 	m_ReneringSubsystem.RunAsync();
 	m_PhysicsSubsystem.RunAsync();
@@ -216,7 +218,7 @@ void HEngine::PostShutdown()
 void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
-
+	
 	// Main loop.
 	while (m_Application.IsRunning())
 	{

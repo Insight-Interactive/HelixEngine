@@ -25,17 +25,18 @@ public:
 		{
 			(*pEngine) = new HEditorEngine( Args );
 		}
-		else if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
+		else 
 #endif // HE_WITH_EDITOR
+			if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
 		{
 			(*pEngine) = new HEngine( Args );
 		}
 		else
 		{
-			WChar ErrMsg[1024];
+			HE_CREATE_BUFFER( WChar, ErrMsg, 1024 );
 			ZeroMemory( ErrMsg, sizeof( ErrMsg ) );
 			swprintf_s( ErrMsg, L"Unable to determine launch configuration!\nIncomplete or corrupt command line arguments given.\nCommand line: \"%s\"", CommandLine );
-			System::CreateMessageBox( ErrMsg, L"Launch Failed", System::MessageDialogInput::MDI_Ok, System::MessageDialogIcon::MDIcon_Critical );
+			HE_ASSERTEX( false, ErrMsg );
 		}
 
 		HE_ASSERT( (*pEngine) != NULL );

@@ -72,6 +72,7 @@ project ("Engine")
 		-- Third Party
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
+		heGetThirdPartyModule( "lua-5.4.4" )		.. "src/",
 	}
 
 	links   

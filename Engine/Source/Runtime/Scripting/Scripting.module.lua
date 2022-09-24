@@ -31,10 +31,6 @@ project ("Scripting")
 		"Private/**.c",
 
 		-- Third Party 
-		--heGetThirdPartyModule( "lua-5.4.4" ) .. "src/*.h",
-		--heGetThirdPartyModule( "lua-5.4.4" ) .. "src/*.hpp",
-		--heGetThirdPartyModule( "lua-5.4.4" ) .. "src/*.c",
-		--heGetThirdPartyModule( "lua-5.4.4" ) .. "src/*.cpp",
 	}
 
 	includedirs
@@ -46,11 +42,12 @@ project ("Scripting")
 		heGetModulePublicDir( "Math" ),
 
 		-- Third Party
-		heGetThirdPartyModule( "lua-5.4.4" ) .. "src",
+		heGetThirdPartyModule( "lua-5.4.4" ) .. "src/",
 	}
 
 	defines
 	{
+		"SCRIPTING_MODULE=1"
 	}
 
 	flags

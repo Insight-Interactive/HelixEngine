@@ -500,7 +500,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -510,7 +510,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -526,7 +526,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -536,7 +536,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -552,7 +552,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -576,7 +576,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -600,7 +600,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -624,7 +624,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -634,7 +634,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -650,7 +650,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -660,7 +660,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -676,7 +676,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -700,7 +700,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -724,7 +724,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -748,7 +748,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -758,7 +758,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -777,7 +777,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -787,7 +787,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -806,7 +806,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -830,7 +830,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -854,7 +854,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -878,7 +878,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -891,7 +891,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -912,7 +912,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -925,7 +925,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
@@ -946,7 +946,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -975,7 +975,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1004,7 +1004,7 @@
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1037,6 +1037,7 @@
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h" />
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h" />
+    <ClInclude Include="Public\AssetRegistry\ScriptDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h" />
     <ClInclude Include="Public\AssetRegistry\ShaderDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\TextureDatabase.h" />
@@ -1050,9 +1051,11 @@
     <ClInclude Include="Public\Engine\FrameTimeManager.h" />
     <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
+    <ClInclude Include="Public\Engine\ScriptManager.h" />
     <ClInclude Include="Public\Engine\SplashScreen.h" />
     <ClInclude Include="Public\Engine\Subsystem\PhysicsSubsystem.h" />
     <ClInclude Include="Public\Engine\Subsystem\RenderingSubsystem.h" />
+    <ClInclude Include="Public\Engine\Subsystem\ScriptSubsystem.h" />
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
     <ClInclude Include="Public\Engine\ViewportContext.h" />
     <ClInclude Include="Public\Engine\Window.h" />
@@ -1068,6 +1071,7 @@
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HLuaScriptComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h" />
@@ -1114,6 +1118,7 @@
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp" />
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp" />
+    <ClCompile Include="Private\AssetRegistry\ScriptDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp" />
     <ClCompile Include="Private\Engine\BuildConfigValidation.cpp" />
@@ -1123,6 +1128,7 @@
     <ClCompile Include="Private\Engine\FrameTimeManager.cpp" />
     <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
+    <ClCompile Include="Private\Engine\ScriptManager.cpp" />
     <ClCompile Include="Private\Engine\SplashScreen.cpp" />
     <ClCompile Include="Private\Engine\Subsystem\PhysicsSubsystem.cpp" />
     <ClCompile Include="Private\Engine\Subsystem\RenderingSubsystem.cpp" />
@@ -1139,6 +1145,7 @@
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HLuaScriptComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp" />

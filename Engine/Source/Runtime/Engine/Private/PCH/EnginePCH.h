@@ -90,6 +90,7 @@
 #include "CoreFwd.h"
 #include "MathCore.h"
 #include "PhysicsFwd.h"
+#include "ScriptingFwd.h"
 #include "System.h"
 #include "FileSystem.h"
 #include "JsonUtility.h"

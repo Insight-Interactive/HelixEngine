@@ -12,6 +12,7 @@
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "Engine/Subsystem/RenderingSubsystem.h"
 #include "Engine/Event/EventEmitter.h"
+#include "SourceContext.h"
 
 
 class WindowClosedEvent;
@@ -131,6 +132,7 @@ protected:
 	// Subsystems
 	FPhysicsSubsystem		m_PhysicsSubsystem;
 	FRenderingSubsystem		m_ReneringSubsystem;
+	SourceContext			m_ScriptEngine;
 
 };
 
@@ -171,7 +173,7 @@ FORCEINLINE double HEngine::GetAppSeconds() const
 FORCEINLINE void HEngine::TickTimers()
 {
 	m_FrameTimer.Tick();
-	m_AppSeconds += m_FrameTimer.GetTimeMiliSeconds();
+	m_AppSeconds += m_FrameTimer.GetTimeSeconds();
 }
 
 FORCEINLINE bool HEngine::GetIsEditorPresent() const

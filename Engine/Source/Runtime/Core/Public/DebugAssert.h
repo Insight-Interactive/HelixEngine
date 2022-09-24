@@ -16,6 +16,13 @@
 
 #endif
 
+#define HE_ASSERTEX(Expr, Message)																									\
+if ( (Expr) != true )																												\
+{																																	\
+	System::CreateMessageBox( Message, L"Error", System::MessageDialogInput::MDI_Ok, System::MessageDialogIcon::MDIcon_Critical );	\
+	HE_DEBUG_BREAK();																												\
+}
+
 #if HE_ENABLE_ASSERTS
 #	define HE_ASSERT(Expr) if( (Expr) != true) { HE_DEBUG_BREAK(); }
 #	define HE_PANIC_BREAK() HE_ASSERT( false )

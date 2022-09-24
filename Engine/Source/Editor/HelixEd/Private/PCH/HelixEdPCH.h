@@ -75,6 +75,7 @@
 //
 #include "CoreFwd.h"
 #include "PhysicsFwd.h"
+#include "ScriptingFwd.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
 #include "MathCore.h"

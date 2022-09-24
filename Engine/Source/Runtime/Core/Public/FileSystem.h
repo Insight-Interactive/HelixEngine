@@ -33,6 +33,11 @@ public:
 enum EContentMode
 {
 	/*
+		File has not been initialized!
+	*/
+	CM_Unset = -1,
+	
+	/*
 		Use the file's contents as binary.
 	*/
 	CM_Binary = 0,
@@ -45,6 +50,11 @@ enum EContentMode
 
 enum EFileUsageMode
 {
+	/*
+		File has not been initialized!
+	*/
+	FUM_Invalid = -1,
+
 	/*
 		Open the file for reading only.
 	*/
@@ -66,7 +76,18 @@ class File
 public:
 	File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
 	File( const String& FilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
+	File();
 	~File();
+
+	/*
+		Manually load the file. If the file is already loaded it will be unloaded.
+	*/
+	void Load( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
+
+	/*
+		Unloads the file from memory.
+	*/
+	void Unload();
 
 	/*
 		Returns the file size in bytes.
@@ -92,6 +113,11 @@ public:
 	void* Data();
 
 	/*
+		Returns a const pointer to the data in the file.
+	*/
+	const void* Data() const;
+
+	/*
 		Returns true if the file is open, false if not.
 	*/
 	bool IsOpen();
@@ -101,10 +127,12 @@ public:
 	*/
 	const Char* GetFilepath() const;
 
+
 protected:
 	FILE* GetCFile();
 	const Char* GetCFileUsageMode( const EFileUsageMode& Mode );
 	const Char* GetCFileContentUsageMode( const EContentMode& ContentUsageMode );
+
 
 private:
 	FILE* m_pFile;
@@ -129,26 +157,7 @@ FORCEINLINE File::File( const Char* pFilePath, EFileUsageMode UsageMode, EConten
 	, m_UsageMode( UsageMode )
 	, m_ContentUsageMode( ContentUsageMode )
 {
-	strcpy_s( m_Filepath, pFilePath );
-
-	Char FileOpMode[4] = {};
-	const Char* CUsageMode = GetCFileUsageMode( UsageMode );
-	const Char* CContentUsageMode = GetCFileContentUsageMode( ContentUsageMode );
-	strcat_s( FileOpMode, CUsageMode );
-	strcat_s( FileOpMode, CContentUsageMode );
-	
-	fopen_s( &m_pFile, pFilePath, FileOpMode );
-	HE_ASSERT( m_pFile != null );
-
-	switch (UsageMode)
-	{
-	case FUM_Read:
-		ReadData();
-		break;
-	default:
-		break;
-	}
-
+	Load( pFilePath, UsageMode, ContentUsageMode );
 }
 
 FORCEINLINE File::File( const String& Filepath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
@@ -156,15 +165,17 @@ FORCEINLINE File::File( const String& Filepath, EFileUsageMode UsageMode, EConte
 {
 }
 
+FORCEINLINE File::File()
+	: m_pFile( null )
+	, m_pContents( null )
+	, m_UsageMode( FUM_Invalid )
+	, m_ContentUsageMode( CM_Unset )
+{
+}
+
 FORCEINLINE File::~File()
 {
-	HE_ASSERT( m_pFile != null );
-	fclose( m_pFile );
-	if (m_pContents != NULL)
-	{
-		HE_HeapFree( m_pContents );
-		m_pContents = NULL;
-	}
+	Unload();
 }
 
 FORCEINLINE const Char* File::GetCFileUsageMode( const EFileUsageMode& Mode )
@@ -200,6 +211,47 @@ FORCEINLINE const Char* File::GetCFileContentUsageMode( const EContentMode& Cont
 	return "";
 }
 
+FORCEINLINE void File::Load( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
+{
+	if (m_pContents != nullptr)
+		Unload();
+
+	m_UsageMode = UsageMode;
+	m_ContentUsageMode = ContentUsageMode;
+	strcpy_s( m_Filepath, pFilePath );
+
+	Char FileOpMode[4] = {};
+	const Char* CUsageMode = GetCFileUsageMode( UsageMode );
+	const Char* CContentUsageMode = GetCFileContentUsageMode( ContentUsageMode );
+	strcat_s( FileOpMode, CUsageMode );
+	strcat_s( FileOpMode, CContentUsageMode );
+
+	fopen_s( &m_pFile, m_Filepath, FileOpMode );
+	HE_ASSERT( m_pFile != null );
+
+	switch (UsageMode)
+	{
+	case FUM_Read:
+		ReadData();
+		break;
+	default:
+		break;
+	}
+}
+
+FORCEINLINE void File::Unload()
+{
+	HE_ASSERT( m_pFile != null );
+	fclose( m_pFile );
+	if (m_pContents != NULL)
+	{
+		HE_HeapFree( m_pContents );
+		m_pContents = NULL;
+	}
+	m_ContentUsageMode = CM_Unset;
+	m_UsageMode = FUM_Invalid;
+}
+
 FORCEINLINE FILE* File::GetCFile()
 {
 	return m_pFile;
@@ -208,6 +260,11 @@ FORCEINLINE FILE* File::GetCFile()
 FORCEINLINE void* File::Data()
 {
 	return m_pContents;
+}
+
+FORCEINLINE const void* File::Data() const
+{
+	return (const void*)m_pContents;
 }
 
 FORCEINLINE bool File::IsOpen()
