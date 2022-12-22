@@ -56,17 +56,17 @@ void ThreadPool::SpawnWorkers()
 	}
 }
 
-void ThreadPool::Kick(JobEntryPointFn pEntryPoint, void* pUserData)
+const FFlag& ThreadPool::Kick(JobEntryPointFn pEntryPoint, void* pUserData)
 {
 	Job NewJob;
 	NewJob.Flags = JobFuntionPointer;
 	NewJob.JobMain = pEntryPoint;
 	NewJob.pUserData = pUserData;
 
-	KickInternal(NewJob);
+	return KickInternal(NewJob);
 }
 
-void ThreadPool::KickInternal(const Job NewJob)
+const FFlag& ThreadPool::KickInternal(const Job NewJob)
 {
 	m_JobQueue.Guard.Enter();
 	{
@@ -80,6 +80,8 @@ void ThreadPool::KickInternal(const Job NewJob)
 	}
 	m_JobQueue.Guard.Exit();
 	m_JobQueue.Counter.Release();
+
+	return m_JobQueue[m_JobQueue.m_AddIndex].OnCompletedFlag;
 }
 
 void ThreadPool::WorkerThreadEntryPoint(void* pUserData)
@@ -125,6 +127,7 @@ void ThreadPool::WorkerThread()
 		{
 			//HE_ASSERT(Flags & JobFuntionPointer); // Invalid flag given when kicking job.
 			FnPtr(pUserData);
+			KickedJob.OnCompletedFlag.Set();
 		}
 	}
 }

@@ -33,7 +33,7 @@ public:
 
 	// Marks the scene as dirty and gets rendered on the render thread.
 	void RequestRender( FSceneRenderParams& RenderParams );
-	bool IsRendering() const;
+	bool IsDirty() const;
 	void WaitForRenderingFinished();
 	FSceneRenderParams& GetRenderParams();
 
@@ -57,7 +57,7 @@ protected:
 	void OnRenderingFinished();
 
 private:
-	bool m_IsRendering;
+	bool m_IsDirty;
 	FSceneRenderParams m_RenderParams;
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
@@ -76,25 +76,23 @@ private:
 FORCEINLINE void HScene::RequestRender( FSceneRenderParams& RenderParams )
 {
 	m_RenderParams = RenderParams;
-	m_IsRendering = true;
+	m_IsDirty = true;
 }
 
-FORCEINLINE bool HScene::IsRendering() const 
+FORCEINLINE bool HScene::IsDirty() const 
 { 
-	return m_IsRendering; 
+	return m_IsDirty;
 }
 
 FORCEINLINE void HScene::WaitForRenderingFinished()
 {
-	while (m_IsRendering)
-	{
-		// Wait for the render thread to finish rendering this scene.
-	}
+	while (IsDirty())
+		std::this_thread::yield();
 }
 
 FORCEINLINE void HScene::OnRenderingFinished()
 {
-	m_IsRendering = false;
+	m_IsDirty = false;
 }
 
 FORCEINLINE FSceneRenderParams& HScene::GetRenderParams()

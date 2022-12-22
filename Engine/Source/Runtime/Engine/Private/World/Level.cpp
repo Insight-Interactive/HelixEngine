@@ -107,6 +107,7 @@ void HLevel::Serialize( WriteContext& Output )
 
 void HLevel::Deserialize( const ReadContext& Value )
 {
+	m_IsLoading.Set();
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{
 		FGUID ActorGuid = FGUID::CreateFromString( Iter->name.GetString() );
@@ -165,4 +166,5 @@ void HLevel::Deserialize( const ReadContext& Value )
 			HE_ASSERT( false );
 		}
 	}
+	m_IsLoading.Clear();
 }

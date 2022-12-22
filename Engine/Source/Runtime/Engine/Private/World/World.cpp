@@ -300,5 +300,5 @@ void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, b
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )
 {
-	m_PhysicsScene.RequestActorRemove( pCollider->GetRigidBody() );
+	m_PhysicsScene.RemoveActor( pCollider->GetRigidBody() );
 }

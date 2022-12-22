@@ -40,10 +40,10 @@ void FRenderingSubsystem::RunAsync_Implementation()
 {
 	while (m_IsRunning)
 	{
-		for (size_t i = 0; i < m_Scenes.size(); i++)
+		for (HScene* pScene : m_Scenes)
 		{
-			HScene& Scene = *m_Scenes[i];
-			if (Scene.IsRendering())
+			HScene& Scene = *pScene;
+			if (Scene.IsDirty())
 			{
 				// Render.
 				FSceneRenderParams& SceneRenderParams = Scene.GetRenderParams();
@@ -64,7 +64,7 @@ void FRenderingSubsystem::RunAsync_Implementation()
 					{
 						CmdContext.TransitionResource( RenderTarget, RS_Present );
 					}
-					CmdContext.End();
+					CmdContext.End(true);
 
 					SceneRenderParams.pRenderingViewport->PresentOneFrame();
 				}
@@ -74,5 +74,5 @@ void FRenderingSubsystem::RunAsync_Implementation()
 		}
 	}
 
-	HE_LOG( Log, TEXT( "Exiting physics rendering async run loop." ) );
+	HE_LOG( Log, TEXT( "Exiting rendering async run loop." ) );
 }

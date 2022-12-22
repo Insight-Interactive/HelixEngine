@@ -184,7 +184,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		*/
 	}
 
-	CmdContext.End();
+	CmdContext.End(true);
 }
 
 void FSceneRenderer::ResizeBuffers( uint32 Width, uint32 Height )

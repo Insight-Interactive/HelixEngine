@@ -10,7 +10,7 @@
 
 HScene::HScene( HWorld* pOwner )
 	: Super( TEXT( "Scene" ) )
-	, m_IsRendering( false )
+	, m_IsDirty( false )
 	, m_RenderParams( )
 	, m_pOwner( pOwner )
 {

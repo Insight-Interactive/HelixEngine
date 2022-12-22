@@ -58,6 +58,7 @@ public:
 	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
 	HPhysicsScene& GetPhysicsScene();
+	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
 	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
 	APlayerCharacter* GetPlayerCharacter( uint32 Index = 0 );
@@ -137,6 +138,11 @@ FORCEINLINE void HWorld::SetCurrentSceneRenderCamera( HCameraComponent* pCamera 
 FORCEINLINE FViewportContext* HWorld::GetOwningViewport()
 {
 	return m_pRenderingViewport;
+}
+
+FORCEINLINE bool HWorld::IsLevelLoaded() const
+{
+	return m_Level.IsLoading();
 }
 
 FORCEINLINE HLevel& HWorld::GetCurrentLevel()

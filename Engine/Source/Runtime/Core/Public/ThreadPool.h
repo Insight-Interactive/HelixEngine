@@ -2,10 +2,12 @@
 
 #include "System.h"
 
+#include <thread>
+
 #include "CriticalSection.h"
 #include "Semaphore.h"
 #include "Callbacks.h"
-
+#include "Flag.h"
 
 class ThreadPool
 {
@@ -15,7 +17,7 @@ public:
 
 	void SpawnWorkers();
 
-	void Kick(JobEntryPointFn pEntryPoint, void* pUserData);
+	const FFlag& Kick(JobEntryPointFn pEntryPoint, void* pUserData);
 
 protected:
 	static void WorkerThreadEntryPoint(void* pUserData);
@@ -33,9 +35,10 @@ protected:
 			, JobMain(NULL)
 		{
 		}
-		uint64					Flags;
+		uint64 Flags;
 		void* pUserData;
 		JobEntryPointFn	JobMain;
+		FFlag OnCompletedFlag;
 	};
 	struct JobQueue
 	{
@@ -78,7 +81,7 @@ protected:
 		JobRef,
 		JobQuitRequest,
 	};
-	void KickInternal(const Job NewJob);
+	const FFlag& KickInternal(const Job NewJob);
 
 
 	uint32	m_NumWorkerThreads;

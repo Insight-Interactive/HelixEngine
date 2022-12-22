@@ -214,7 +214,7 @@ void HPhysicsScene::ProcessEventQueue()
 		case PE_RemoveActor:
 		{
 			HRigidBody& RB = *(HRigidBody*)Event.pUserData;
-			RemoveActorInternal( RB );
+			RemoveActor( RB );
 			break;
 		}
 		case PE_FlushScene:
@@ -370,7 +370,7 @@ void HPhysicsScene::CreateCapsuleInternal( const FVector3& StartPos, HCapsuleRig
 	}
 }
 
-void HPhysicsScene::RemoveActorInternal( HRigidBody& Collider )
+void HPhysicsScene::RemoveActor( HRigidBody& Collider )
 {
 	if (Collider.m_pRigidActor != nullptr)
 	{

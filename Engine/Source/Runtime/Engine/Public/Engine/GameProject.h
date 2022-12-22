@@ -3,7 +3,7 @@
 #include "TSingleton.h"
 
 #include "App/App.h"
-
+#include "FileSystem.h"
 
 /*
 	Represents a game project that the engine is currently editing and/or playing.
@@ -15,6 +15,7 @@ public:
 	const String& GetProjectRoot() const;
 	const String& GetConfigFolder() const;
 	const String& GetContentFolder() const;
+	const String GetDefaultLevelPath() const;
 
 	/*
 		Returns the full path for a piece of content located in the project's content directory.
@@ -37,6 +38,8 @@ protected:
 
 private:
 	HName m_ProjectName;
+
+	FileRef m_HProject;
 
 	String m_ProjectRoot;
 	String m_ConfigDirectory;

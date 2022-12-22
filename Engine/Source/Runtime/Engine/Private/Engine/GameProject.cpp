@@ -19,10 +19,10 @@ FGameProject::~FGameProject()
 void FGameProject::Startup( const Char* HProjectFilpath )
 {
 	rapidjson::Document WorldJsonDoc;
-	FileRef WorldJsonSource( HProjectFilpath, FUM_Read );
-	if (WorldJsonSource->IsOpen())
+	m_HProject->Load( HProjectFilpath, FUM_Read, CM_Text );
+	if (m_HProject->IsOpen())
 	{
-		JsonUtility::LoadDocument( WorldJsonSource, WorldJsonDoc );
+		JsonUtility::LoadDocument( m_HProject, WorldJsonDoc );
 		if (WorldJsonDoc.IsObject())
 		{
 			Char NameBuffer[32];
@@ -45,4 +45,20 @@ void FGameProject::Startup( const Char* HProjectFilpath )
 	{
 		System::CreateMessageBox( L"No game project/content found is specified directory!", L"Error", System::MessageDialogInput::MDI_Ok, System::MessageDialogIcon::MDIcon_Critical);
 	}
+}
+
+const String FGameProject::GetDefaultLevelPath() const
+{
+	rapidjson::Document WorldJsonDoc;
+
+	JsonUtility::LoadDocument( m_HProject, WorldJsonDoc );
+	if (WorldJsonDoc.IsObject())
+	{
+		Char LevelPath[HE_MAX_PATH];
+		JsonUtility::GetString( WorldJsonDoc, "DefaultLevel", LevelPath, sizeof( LevelPath ) );
+
+		return GetContentFolder() + "/" + String(LevelPath);
+	}
+
+	return String( "" );
 }

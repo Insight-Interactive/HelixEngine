@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Flag.h"
 #include "CriticalSection.h"
 #include "GameFramework/HObject.h"
 #include "AssetRegistry/SerializeableInterface.h"
 #include "GameFramework/Actor/AActor.h"
-
 
 class AActor;
 class HWorld;
@@ -21,6 +21,7 @@ public:
 
 	void Flush();
 	bool IsValid() const;
+	bool IsLoading() const;
 
 	template <typename ActorType>
 	ActorType* CreateActor(const HName& Name = TEXT("<Unnamed Actor>"));
@@ -41,7 +42,9 @@ protected:
 	std::vector<AActor*> m_Actors;
 	CriticalSection m_ActorListGuard;
 	HWorld* m_pOwningWorld;
-	
+
+	FFlag m_IsLoading;
+
 };
 
 
@@ -77,4 +80,9 @@ FORCEINLINE HWorld* HLevel::GetWorld()
 FORCEINLINE bool HLevel::IsValid() const
 {
 	return m_pOwningWorld && m_Actors.size() > 0;
+}
+
+FORCEINLINE bool HLevel::IsLoading() const
+{
+	return m_IsLoading.IsSet();
 }

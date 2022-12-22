@@ -158,8 +158,7 @@ void HEngine::PostStartup()
 
 	EmitEvent( EnginePostStartupEvent() );
 
-	// TODO Get this from the DefaultEngine.ini
-	String StartingWorldPath = FGameProject::GetInstance()->GetContentFullPath( "Levels/TestLevel.hlevel" );
+	const String& StartingWorldPath = FGameProject::GetInstance()->GetDefaultLevelPath();
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
 	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "DefaultInput.ini" );
@@ -231,7 +230,7 @@ void HEngine::Tick()
 
 		RenderClientViewport( DeltaTime );
 
-		static float SecondTimer = 0.f;
+		/*static float SecondTimer = 0.f;
 		static float FPS = 0.f;
 		SecondTimer += DeltaTime;
 		if (SecondTimer > 1.f)
@@ -241,7 +240,7 @@ void HEngine::Tick()
 			SecondTimer = 0.f;
 		}
 		else
-			FPS++;
+			FPS++;*/
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );

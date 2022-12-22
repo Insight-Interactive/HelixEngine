@@ -143,6 +143,7 @@ public:
 	void WaittillSimulationFinished() const;
 	// Blocks the thread and waits until the simulation is paused next.
 	void WaittillSimulationPaused() const;
+	void RemoveActor( HRigidBody& Collider );
 
 
 private:
@@ -151,7 +152,6 @@ private:
 	void CreateSphereInternal( const FVector3& StartPos, HSphereRigidBody& outSphere, bool IsTrigger );
 	void CreateCubeInternal( const FVector3& StartPos, HCubeRigidBody& outCube, bool IsTrigger );
 	void CreateCapsuleInternal( const FVector3& StartPos, HCapsuleRigidBody& outCube, bool IsTrigger );
-	void RemoveActorInternal( HRigidBody& Collider );
 
 	void InitCollider( HRigidBody& Collider, physx::PxGeometry& Geo, const FVector3& StartPos );
 	void InitDynamicBody( const DynamicColliderInitParams& InitParams, HRigidBody& RigidBody );

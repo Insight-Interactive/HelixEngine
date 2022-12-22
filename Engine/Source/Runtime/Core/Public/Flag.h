@@ -28,6 +28,7 @@ public:
 	*/
 	FORCEINLINE void Set()
 	{
+		// TODO This is not thread safe at all!
 		m_FlagValue = true;
 	}
 
@@ -36,6 +37,7 @@ public:
 	*/
 	FORCEINLINE void Clear()
 	{
+		// TODO This is not thread safe at all!
 		m_FlagValue = false;
 	}
 
