@@ -12,7 +12,7 @@
 #include "TextureManager.h"
 #include "Texture.h"
 
-class HTexture3D : public HTextureRef
+class HTexture3D : public FTexture
 {
 public:
 	HTexture3D()
@@ -34,15 +34,15 @@ public:
 
 FORCEINLINE uint32 HTexture3D::GetWidth() const
 {
-	return Get()->GetWidth();
+	return GetAsset().GetWidth();
 }
 
 FORCEINLINE uint32 HTexture3D::GetHeight() const
 {
-	return Get()->GetHeight();
+	return GetAsset().GetHeight();
 }
 
 FORCEINLINE uint32 HTexture3D::GetDepth() const
 {
-	return Get()->GetDepth();
+	return GetAsset().GetDepth();
 }

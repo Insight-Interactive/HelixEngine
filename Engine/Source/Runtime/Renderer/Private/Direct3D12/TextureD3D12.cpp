@@ -10,7 +10,7 @@
 #include "RenderDevice.h"
 
 
-void HTexture::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData)
+void FTexture::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData)
 {
 	Destroy();
 
@@ -73,7 +73,7 @@ void HTexture::Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EForm
 	AssociateWithShaderVisibleHeap();
 }
 
-void HTexture::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitialData)
+void FTexture::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitialData)
 {
 	Destroy();
 
@@ -144,23 +144,23 @@ void HTexture::CreateCube(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFo
 	pD3D12Device->CreateShaderResourceView(m_pID3D12Resource.Get(), &srvDesc, m_hCpuDescriptorHandle);
 }
 
-void HTexture::Destroy()
+void FTexture::Destroy()
 {
 	FGpuResource::Destroy();
 	m_hCpuDescriptorHandle.ptr = HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN;
 }
 
-void HTexture::AssociateWithShaderVisibleHeap()
+void FTexture::AssociateWithShaderVisibleHeap()
 {
 	static const int s_NumTextures = 1;
 	m_DescriptorHandle = GTextureHeap.Alloc(s_NumTextures);
 
 	// TODO: In order to get a linear disciptor table this might have to move to the material class
 	// So a descriptor range array in a single root parameter could fit all the descriptors inside 'SourceTextures' array
-	// Command context would have to change to have a 'FDescriptorHandle' instead of a 'HTextureRef' though.
+	// Command context would have to change to have a 'FDescriptorHandle' instead of a 'FTextureRef' though.
 	uint32 DestCount = s_NumTextures;
 	uint32 SourceCounts[s_NumTextures] = { 1 };
-	const HTexture* SourceTextures[s_NumTextures] =
+	const FTexture* SourceTextures[s_NumTextures] =
 	{
 		this
 	};

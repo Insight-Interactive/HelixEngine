@@ -40,7 +40,7 @@ protected:
 	FRootSignature m_RootSig;
 	FPipelineState m_Pipeline;
 	StaticMeshGeometryRef m_ScreenQuadRef;
-	HTextureRef m_SplashTexture;
+	HTexture m_SplashTexture;
 };
 
 

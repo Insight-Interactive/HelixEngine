@@ -5,16 +5,18 @@
 #include "RendererCore.h"
 
 #include "GpuResource.h"
+#include "ManagedAsset.h"
 
 #include "DescriptorHeap.h"
 
 
 enum EFormat;
 
-class RENDER_API HTexture : public FGpuResource
+class RENDER_API FTexture : public FGpuResource, public ManagedAsset<FTexture>
 {
+	friend class FTextureManager;
 public:
-	HTexture()
+	FTexture()
 		: m_Width(0)
 		, m_Height(0)
 		, m_Depth(0)
@@ -23,7 +25,7 @@ public:
 		m_hCpuDescriptorHandle.ptr = HE_INVALID_GPU_ADDRESS;
 #endif
 	}
-	virtual ~HTexture() 
+	virtual ~FTexture()
 	{
 	}
 	void Create2D(uint64 RowPitchBytes, uint64 Width, uint64 Height, EFormat Format, const void* InitData);

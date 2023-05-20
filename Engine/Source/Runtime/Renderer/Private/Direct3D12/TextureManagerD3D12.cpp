@@ -38,14 +38,14 @@ void FTextureManager::UnInitialize()
     m_TextureCache.clear();
 }
 
-HTextureRef FTextureManager::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+HTexture FTextureManager::LoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
     return FindOrLoadTexture(FileName, Fallback, forceSRGB);
 }
 
-HManagedTexture* FTextureManager::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
+ManagedTexture* FTextureManager::FindOrLoadTexture(const String& FileName, EDefaultTexture Fallback, bool forceSRGB)
 {
-    HManagedTexture* pTexture = NULL;
+    ManagedTexture* pTexture = NULL;
 
     {
         ScopedCriticalSection Guard( m_Mutex );
@@ -67,14 +67,15 @@ HManagedTexture* FTextureManager::FindOrLoadTexture(const String& FileName, EDef
         else
         {
             // If it's not found, create a new managed texture and start loading it.
-            pTexture = new HManagedTexture(key);
+            pTexture = new FTexture();
+            pTexture->SetName( key );
             m_TextureCache[key].reset(pTexture);
         }
     }
 
     // TODO Filesystem readfilesync
     DataBlob Data = FileSystem::ReadRawData(FileName.c_str());
-    pTexture->CreateFromMemory(Data, Fallback, forceSRGB);
+    GTextureManager.CreateTextureFromMemory( &pTexture, Data, Fallback, forceSRGB );
 
     // This was the first time it was requested, so indicate that the caller must read the file.
     return pTexture;
@@ -91,42 +92,43 @@ void FTextureManager::DestroyTexture(const String& Key)
     m_Mutex.Exit();
 }
 
-void HManagedTexture::CreateFromMemory(DataBlob memory, EDefaultTexture fallback, bool bForceSRGB)
+void FTextureManager::CreateTextureFromMemory( ManagedTexture** pOutTexture, DataBlob& Memory, EDefaultTexture DefaultTexture, bool ForceSRGB )
 {
     ID3D12Device* pD3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
-    HTexture& pD3D12FallbackTexture = GetDefaultTexture(fallback);
-    
+    FTexture& pD3D12FallbackTexture = GetDefaultTexture( DefaultTexture );
+    FTexture& TextureAsset = (*pOutTexture)->GetAsset();
+
     D3D12_CPU_DESCRIPTOR_HANDLE FallbackSRVHandle = pD3D12FallbackTexture.GetSRV();
 
-    if (!memory.IsValid())
+    if (!Memory.IsValid())
     {
-        m_hCpuDescriptorHandle = FallbackSRVHandle;
+        TextureAsset.m_hCpuDescriptorHandle = FallbackSRVHandle;
     }
     else
     {
         // We probably have a texture to load, so let's allocate a new descriptor
-        m_hCpuDescriptorHandle = AllocateDescriptor(pD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+        TextureAsset.m_hCpuDescriptorHandle = AllocateDescriptor( pD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
-        HRESULT hr = CreateDDSTextureFromMemory(pD3D12Device, (const uint8_t*)memory.GetBufferPointer(), memory.GetDataSize(),
-            0, bForceSRGB, (ID3D12Resource**)GetAddressOf(), m_hCpuDescriptorHandle);
-        if (SUCCEEDED(hr))
+        HRESULT hr = CreateDDSTextureFromMemory( pD3D12Device, (const uint8_t*)Memory.GetBufferPointer(), Memory.GetDataSize(),
+            0, ForceSRGB, (ID3D12Resource**)(*pOutTexture)->GetAsset().GetAddressOf(), TextureAsset.m_hCpuDescriptorHandle );
+        if (SUCCEEDED( hr ))
         {
-            D3D12_RESOURCE_DESC Desc = ((ID3D12Resource*)GetResource())->GetDesc();
-            m_Width = (uint32_t)Desc.Width;
-            m_Height = Desc.Height;
-            m_Depth = Desc.DepthOrArraySize;
+            D3D12_RESOURCE_DESC Desc = ((ID3D12Resource*)TextureAsset.GetResource())->GetDesc();
+            TextureAsset.m_Width = (uint32_t)Desc.Width;
+            TextureAsset.m_Height = Desc.Height;
+            TextureAsset.m_Depth = Desc.DepthOrArraySize;
 
-            m_IsValid = true;
+            TextureAsset.m_IsValid = true;
         }
         else
         {
-            R_LOG(Warning, TEXT("Failed to create dds texture from memory. Falling back to default texture: %i"), fallback)
-                pD3D12Device->CopyDescriptorsSimple(1, m_hCpuDescriptorHandle, FallbackSRVHandle,
-                    D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+            R_LOG( Warning, TEXT( "Failed to create dds texture from memory. Falling back to default texture: %i" ), DefaultTexture )
+                pD3D12Device->CopyDescriptorsSimple( 1, TextureAsset.m_hCpuDescriptorHandle, FallbackSRVHandle,
+                    D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
         }
     }
-    AssociateWithShaderVisibleHeap();
-    m_IsLoading = false;
+    TextureAsset.AssociateWithShaderVisibleHeap();
+    TextureAsset.m_IsLoading = false;
 }
 
 #endif // R_WITH_D3D12

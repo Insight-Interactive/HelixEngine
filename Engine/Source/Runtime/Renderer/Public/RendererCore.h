@@ -40,8 +40,7 @@ class FRenderDevice;
 class FSwapChain;
 class FColorBuffer;
 class FDepthBuffer;
-class HTexture;
-class HTextureRef;
+class FTexture;
 class FGpuResource;
 class FPipelineState;
 class FRootSignature;
@@ -75,7 +74,7 @@ extern FGeometryBufferManager GGeometryManager;
 // Texture overlord.
 extern FTextureManager GTextureManager;
 // Default texture container.
-extern HTexture GDefaultTextures[];
+extern FTexture GDefaultTextures[];
 // Heap holding all shader visible textures.
 extern FDescriptorHeap GTextureHeap;
 // Manager of all static mesh geometry in the world.
@@ -106,7 +105,7 @@ typedef uint32 ConstantBufferUID;
 /*
 	Returns a default texture given an enum value.
 */
-HTexture& GetDefaultTexture(EDefaultTexture TexID);
+FTexture& GetDefaultTexture(EDefaultTexture TexID);
 
 #if R_WITH_D3D12
 extern FDescriptorAllocator GDescriptorAllocator[];

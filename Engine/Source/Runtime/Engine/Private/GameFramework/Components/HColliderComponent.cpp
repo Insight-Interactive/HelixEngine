@@ -13,6 +13,7 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
 	, m_IsTrigger( false )
 	, m_CollisionBoundsDrawEnabled( true )
+	, m_MaterialAsset( nullptr )
 {
 	m_MeshWorldCB.Create( L"[Collider Component] World CB" );
 }
@@ -20,6 +21,7 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 HColliderComponent::~HColliderComponent()
 {
 	m_MeshWorldCB.Destroy();
+	delete m_MaterialAsset;
 }
 
 void HColliderComponent::BeginPlay() 
@@ -43,7 +45,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (!GetIsDrawEnabled())
 		return;
 
-	if (m_MaterialAsset.IsValid())
+	if (m_MaterialAsset)
 	{
 		FColor Color = FColor::RedOpaque;
 		if (GetIsTrigger())

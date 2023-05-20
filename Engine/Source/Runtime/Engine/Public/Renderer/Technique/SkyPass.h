@@ -33,7 +33,7 @@ private:
 
 private:
 	StaticMeshGeometryRef m_SkyGeometry;
-	HTextureRef m_SkyDiffuse;
+	HTexture m_SkyDiffuse;
 
 	FRootSignature m_RS;
 	FPipelineState m_PSO;

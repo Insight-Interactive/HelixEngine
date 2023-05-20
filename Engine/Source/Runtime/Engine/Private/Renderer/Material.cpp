@@ -59,9 +59,9 @@ void FMaterial::Bind( FCommandContext& GfxContext )
 	for (auto& Iter : m_TextureMappings)
 	{
 		uint32& RootIndex = Iter.second.first;
-		HTextureRef Texture = Iter.second.second;
+		HTexture Texture = Iter.second.second;
 
-		if (Texture.Get())
+		if (Texture.IsValid())
 			GfxContext.SetTexture( RootIndex, Texture );
 		//else
 		//	HE_ASSERT( false );
@@ -137,60 +137,13 @@ void FMaterial::LoadFromFile( const String& Filepath )
 		// Load the material's resources.
 
 		// Set textures.
-		const rapidjson::Value& Resources = MaterialRoot[kTextureResources];
-		for (auto itr = Resources.MemberBegin(); itr != Resources.MemberEnd(); ++itr)
-		{
-			const Char* ResourceName = itr->name.GetString();
-			const Char* GuidStr = itr->value.GetString();
-			FGUID TextureGuid = FGUID::CreateFromString( GuidStr );
-
-			SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureGuid ) );
-		}
+		const rapidjson::Value& TextureResources = MaterialRoot[kTextureResources];
+		DeserializeTextureReflection( TextureResources );
 
 		// Set constant variables.
 		const rapidjson::Value& ShaderConstVariables = MaterialRoot[kShaderConstVariables];
-		for (auto itr = ShaderConstVariables.MemberBegin(); itr != ShaderConstVariables.MemberEnd(); ++itr)
-		{
-			const Char* VarName = itr->name.GetString();
-			
-			if (itr->value.IsFloat())
-			{
-				float VarValue = itr->value.GetFloat();
-				SetFloat( VarName, VarValue );
-			}
-			else if (itr->value.IsArray())
-			{
-				auto& Array = itr->value.GetArray();
-				auto& Vector = Array[0];
+		DeserializeBufferReflection( ShaderConstVariables );
 
-				if (Vector.FindMember( "a" ) != Vector.MemberEnd())
-				{
-					FVector4 Result;
-					JsonUtility::GetFloat( Vector, "r", Result.x );
-					JsonUtility::GetFloat( Vector, "g", Result.y );
-					JsonUtility::GetFloat( Vector, "b", Result.z );
-					JsonUtility::GetFloat( Vector, "a", Result.w );
-				}
-				else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
-				{
-					FVector3 Result;
-					JsonUtility::GetFloat( Vector, "r", Result.x );
-					JsonUtility::GetFloat( Vector, "g", Result.y );
-					JsonUtility::GetFloat( Vector, "b", Result.z );
-					SetVector3( VarName, Result );
-				}
-				else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
-				{
-					FVector2 Result;
-					JsonUtility::GetFloat( Vector, "r", Result.x );
-					JsonUtility::GetFloat( Vector, "g", Result.y );
-				}
-				else
-				{
-					HE_ASSERT( false ); // Too many values for shader float array!
-				}
-			}
-		}
 	}
 	else
 	{
@@ -288,6 +241,65 @@ void FMaterial::BuildPipelineState()
 void FMaterial::BuildRootSignature()
 {
 
+}
+
+void FMaterial::DeserializeTextureReflection( const ReadContext& TextureReflection )
+{
+	for (auto itr = TextureReflection.MemberBegin(); itr != TextureReflection.MemberEnd(); ++itr)
+	{
+		const Char* ResourceName = itr->name.GetString();
+		const Char* GuidStr = itr->value.GetString();
+		FGUID TextureGuid = FGUID::CreateFromString( GuidStr );
+
+		SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureGuid ) );
+	}
+}
+
+void FMaterial::DeserializeBufferReflection( const ReadContext& BufferJson )
+{
+
+	for (auto itr = BufferJson.MemberBegin(); itr != BufferJson.MemberEnd(); ++itr)
+	{
+		const Char* VarName = itr->name.GetString();
+
+		if (itr->value.IsFloat())
+		{
+			float VarValue = itr->value.GetFloat();
+			SetFloat( VarName, VarValue );
+		}
+		else if (itr->value.IsArray())
+		{
+			auto& Array = itr->value.GetArray();
+			auto& Vector = Array[0];
+
+			if (Vector.FindMember( "a" ) != Vector.MemberEnd())
+			{
+				FVector4 Result;
+				JsonUtility::GetFloat( Vector, "r", Result.x );
+				JsonUtility::GetFloat( Vector, "g", Result.y );
+				JsonUtility::GetFloat( Vector, "b", Result.z );
+				JsonUtility::GetFloat( Vector, "a", Result.w );
+			}
+			else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
+			{
+				FVector3 Result;
+				JsonUtility::GetFloat( Vector, "r", Result.x );
+				JsonUtility::GetFloat( Vector, "g", Result.y );
+				JsonUtility::GetFloat( Vector, "b", Result.z );
+				SetVector3( VarName, Result );
+			}
+			else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
+			{
+				FVector2 Result;
+				JsonUtility::GetFloat( Vector, "r", Result.x );
+				JsonUtility::GetFloat( Vector, "g", Result.y );
+			}
+			else
+			{
+				HE_ASSERT( false ); // Too many values for shader float array!
+			}
+		}
+	}
 }
 
 void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility ShaderType, const FShaderReflection& Reflector )
@@ -448,28 +460,22 @@ void FMaterialInstance::LoadFromFile( const Char* Filepath)
 		const rapidjson::Value& MaterialInstRoot = JsonDoc[HE_STRINGIFY( FMaterialInstance )];
 
 		const rapidjson::Value& CommonParams = MaterialInstRoot[kCommonParams];
+		
+		// Lookup and load the base material this instance derives from.
 		Char GuidStr[64];
-		JsonUtility::GetString( CommonParams, HE_STRINGIFY( m_GUID ), GuidStr, sizeof( GuidStr ) );
-		m_GUID = FGUID::CreateFromString( GuidStr );
-
 		JsonUtility::GetString( CommonParams, "ParentGUID", GuidStr, sizeof(GuidStr));
-		m_Parent = FAssetDatabase::GetMaterial( FGUID::CreateFromString( GuidStr ) ).Get();
+		CreateFromParent( FGUID::CreateFromString( GuidStr ) );
 
-
+		// Override the parent's parameters.
 		const rapidjson::Value& Textures = MaterialInstRoot[kTextures];
-		for (auto itr = Textures.MemberBegin(); itr != Textures.MemberEnd(); ++itr)
-		{
-			const Char* GuidStr			= itr->value.GetString();
-			const Char* ResourceName	= itr->name.GetString();
-			FGUID TextureGuid			= FGUID::CreateFromString( GuidStr );
-			StringHashValue VarHash		= StringHash( ResourceName );
-
-			m_TextureMappings[VarHash]			= m_Parent->m_TextureMappings[VarHash];
-			m_TextureMappings[VarHash].second	= FAssetDatabase::GetTexture( TextureGuid );
-		}
+		DeserializeTextureReflection( Textures );
 
 		const rapidjson::Value& ConstantVariables = MaterialInstRoot[kConstantVariables];
-
-
+		DeserializeBufferReflection( ConstantVariables );
 	}
+}
+
+void FMaterialInstance::CreateFromParent( const FGUID& ParentGuid )
+{
+	Super::LoadFromFile( FAssetDatabase::LookupMaterial( ParentGuid ) );
 }

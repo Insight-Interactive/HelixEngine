@@ -9,7 +9,7 @@ class FRootSignature;
 class FPipelineState;
 class FDescriptorHeap;
 class FColorBuffer;
-class HTexture;
+class FTexture;
 
 struct DeviceInitParams
 {
@@ -42,7 +42,7 @@ public:
 		const FCpuDescriptorHandle* pDestDescriptorRangeStarts,
 		const uint32* pDestDescriptorRangeSizes,
 		uint32 NumSrcDescriptorRanges,
-		const HTexture** pSrcDescriptorRangeStarts,
+		const FTexture** pSrcDescriptorRangeStarts,
 		const uint32* pSrcDescriptorRangeSizes,
 		EResourceHeapType DescriptorHeapsType
 	);

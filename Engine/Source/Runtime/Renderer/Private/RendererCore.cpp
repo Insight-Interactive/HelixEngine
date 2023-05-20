@@ -20,7 +20,7 @@ FContextManager GContextManager;
 FRenderDevice GGraphicsDevice;
 FGeometryBufferManager GGeometryManager;
 FTextureManager GTextureManager;
-HTexture GDefaultTextures[DT_NumDefaultTextures];
+FTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;
 FStaticGeometryManager GStaticGeometryManager;
 const FResolution GCommonResolutions[9] =
@@ -41,7 +41,7 @@ const FResolution GCommonResolutions[9] =
 //	Function Definitions
 // -----------------------------
 //
-HTexture& GetDefaultTexture(EDefaultTexture TexID)
+FTexture& GetDefaultTexture(EDefaultTexture TexID)
 {
 	HE_ASSERT(TexID < DT_NumDefaultTextures && TexID > -1);
 	return GDefaultTextures[TexID];

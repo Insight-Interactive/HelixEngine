@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ManagedAsset.h"
+
 #include "GUID.h"
 #include "StringHelper.h"
 #include "RootSignature.h"
@@ -7,6 +9,7 @@
 #include "TextureManager.h"
 #include "ConstantBuffer.h"
 #include "Renderer/Common.h"
+#include "AssetRegistry/SerializeableInterface.h"
 
 
 class FCommandContext;
@@ -37,9 +40,9 @@ typedef std::unordered_map< StringHashValue, std::vector< std::pair<FConstantBuf
 // < ConstBufferHashName, <RootParmIndex, CBDataForEachFrame> >
 typedef std::unordered_map< StringHashValue, std::pair< uint32, std::vector< FConstantBufferInterface* > > >	ConstantBufferMap;
 // < HashName, <RootParamIndex, Texture> > 
-typedef std::unordered_map< int32, std::pair< uint32, HTextureRef > >											TextureMap;
+typedef std::unordered_map< int32, std::pair< uint32, HTexture > >											TextureMap;
 
-class FMaterial
+class FMaterial : public ManagedAsset<FMaterial>
 {
 	friend class MaterialManager;
 	friend class FMaterialInstance;
@@ -48,7 +51,7 @@ public:
 	virtual ~FMaterial();
 
 	void Bind( FCommandContext& GfxContext );
-	void LoadFromFile( const String& Filepath );
+	virtual void LoadFromFile( const String& Filepath );
 	void Compile();
 	bool IsValid();
 
@@ -79,7 +82,7 @@ public:
 		@param TextureName - The name of the texture declared inside the shader.
 		@param Texture - The texture resource to bind to the shader.
 	*/
-	bool SetTexture( const Char* TextureName, HTextureRef Texture );
+	bool SetTexture( const Char* TextureName, HTexture Texture );
 
 	/*
 		Set a float value in the shader.
@@ -120,16 +123,14 @@ protected:
 
 	template <typename T>
 	bool SetShaderFloatVar( const Char* VariableName, const T& Value );
-
-private:
-
-private:
-	FGUID m_GUID;
+	void DeserializeTextureReflection( const ReadContext& TextureJson );
+	void DeserializeBufferReflection( const ReadContext& BufferJson );
 
 protected:
 #if HE_DEBUG
 	String m_DebugName;
 #endif
+	FGUID m_GUID;
 
 	FGUID		m_PixelShaderGuid;
 	FGUID		m_VertexShaderGuid;
@@ -158,28 +159,19 @@ protected:
 };
 
 
-class FMaterialInstance
+class FMaterialInstance : public FMaterial
 {
 	using Super = FMaterial;
 public:
 	FMaterialInstance();
 	virtual ~FMaterialInstance();
 
-	void LoadFromFile( const Char* Filepath );
+	virtual void LoadFromFile( const Char* Filepath );
+	void CreateFromParent( const FGUID& ParentGuid );
 
-	bool SetTexture( const Char* TextureName, HTextureRef Texture );
-	bool SetFloat( const Char* VariableName, const float& Value );
 
 protected:
-	FGUID m_GUID;
-	FMaterial* m_Parent;
-
-	// Constant buffer mappings for each shader.
-	ConstantBufferMap			m_ConstBuffersMappings;
-	// Texture mappings for each shader.
-	TextureMap					m_TextureMappings;
-	// Variable mappings for const buffers.
-	ConstantBufferVariableMap	m_ConstBufferVarMappings;
+	FGUID m_InstanceGUID;
 
 };
 
@@ -288,7 +280,7 @@ FORCEINLINE void FMaterial::SetDebugName( const String& Name )
 #endif
 }
 
-FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTextureRef Texture )
+FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTexture Texture )
 {
 	StringHashValue NameHash = StringHash( TextureName );
 	auto Iter = m_TextureMappings.find( NameHash );
@@ -348,7 +340,7 @@ FORCEINLINE bool FMaterial::SetVector4( const Char* VariableName, const FVector4
 //
 
 FORCEINLINE FMaterialInstance::FMaterialInstance()
-	: m_GUID( FGUID::Invalid )
+	: m_InstanceGUID( FGUID::Invalid )
 {
 
 }

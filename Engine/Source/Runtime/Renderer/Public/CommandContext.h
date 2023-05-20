@@ -8,6 +8,7 @@
 #include "RendererCore.h"
 #include "LinearAllocator.h"
 #include "DynamicDescriptorHeap.h"
+#include "TextureManager.h"
 
 
 static const int kContextPoolSize = 4;
@@ -81,7 +82,7 @@ public:
 	void BindVertexBuffer(uint32 Slot, FVertexBuffer& Vertexbuffer);
 	void BindIndexBuffer(FIndexBuffer& IndexBuffer);
 	void SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBufferInterface& ConstantBuffer);
-	void SetTexture(uint32 Slot, HTextureRef& pTexture);
+	void SetTexture(uint32 Slot, HTexture& Texture);
 
 	void SetPipelineState(FPipelineState& Pipeline);
 	void SetGraphicsRootSignature(FRootSignature& Signature);

@@ -20,7 +20,7 @@ public:
 
 
 	void SetMesh( StaticMeshGeometryRef Mesh );
-	void SetMaterial( MaterialRef Material );
+	void SetMaterial( HMaterial Material );
 
 	HMaterial& GetMaterial();
 	bool GetIsDrawEnabled() const;
@@ -54,7 +54,7 @@ FORCEINLINE void HStaticMeshComponent::SetMesh( StaticMeshGeometryRef Mesh )
 	m_MeshAsset = Mesh;
 }
 
-FORCEINLINE void HStaticMeshComponent::SetMaterial( MaterialRef Material ) 
+FORCEINLINE void HStaticMeshComponent::SetMaterial( HMaterial Material )
 { 
 	m_MaterialAsset = Material;
 }

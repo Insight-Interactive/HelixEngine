@@ -59,7 +59,7 @@ void FRenderDevice::Initialize(const DeviceInitParams& InitParams, DeviceQueryRe
 	}
 }
 
-void FRenderDevice::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const HTexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
+void FRenderDevice::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDescriptorHandle* pDestDescriptorRangeStarts, const uint32* pDestDescriptorRangeSizes, uint32 NumSrcDescriptorRanges, const FTexture** pSrcDescriptorRangeStarts, const uint32* pSrcDescriptorRangeSizes, EResourceHeapType DescriptorHeapsType)
 {
 	constexpr uint32 kMaxHandles = 12;
 	D3D12_CPU_DESCRIPTOR_HANDLE SourceStarts[kMaxHandles];
@@ -69,7 +69,7 @@ void FRenderDevice::CopyDescriptors(uint32 NumDestDescriptorRanges, const FCpuDe
 	D3D12_CPU_DESCRIPTOR_HANDLE CpuHandle{ pDestDescriptorRangeStarts->Ptr };
 	for (uint32 i = 0; i < NumSrcDescriptorRanges; i++)
 	{
-		const HTexture* Tex = DCast<const HTexture*>(pSrcDescriptorRangeStarts[i]);
+		const FTexture* Tex = DCast<const FTexture*>(pSrcDescriptorRangeStarts[i]);
 		SourceStarts[i] = Tex->GetSRV();
 	}
 	m_pD3DDevice->CopyDescriptors(NumDestDescriptorRanges, &CpuHandle, (const UINT*)pDestDescriptorRangeSizes, NumSrcDescriptorRanges, SourceStarts, (const UINT*)pSrcDescriptorRangeSizes, (D3D12_DESCRIPTOR_HEAP_TYPE)DescriptorHeapsType);

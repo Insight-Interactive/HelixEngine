@@ -928,6 +928,7 @@
     <ClInclude Include="Public\GpuResource.h" />
     <ClInclude Include="Public\IndexBuffer.h" />
     <ClInclude Include="Public\LinearAllocator.h" />
+    <ClInclude Include="Public\ManagedAsset.h" />
     <ClInclude Include="Public\ModelManager.h" />
     <ClInclude Include="Public\PipelineState.h" />
     <ClInclude Include="Public\PixelBuffer.h" />

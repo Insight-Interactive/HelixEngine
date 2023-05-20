@@ -75,7 +75,8 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetDepth( Dimensions.z );
 
 	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
-	m_MaterialAsset = FAssetDatabase::CreateOneOffMaterial( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
+	m_MaterialAsset = new FMaterialInstance();
+	m_MaterialAsset->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 
 	RegisterCollider( false );
 }

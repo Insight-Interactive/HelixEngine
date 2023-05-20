@@ -33,12 +33,13 @@ class FAssetDatabase
 	friend class HLevel;
 public:
 
-	static HTextureRef GetTexture( const FGUID& Guid );
+	static HTexture GetTexture( const FGUID& Guid );
 	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
-	static MaterialRef GetMaterial( const FGUID& Guid );
-	static MaterialRef CreateOneOffMaterial( const FGUID& ParentGuid );
+	static HMaterial GetMaterial( const FGUID& Guid );
+	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
 	static LuaScriptRef GetScript( const FGUID& Guid );
+	static const String LookupMaterial( const FGUID& Guid );
 
 protected:
 	FAssetDatabase();
@@ -63,7 +64,6 @@ protected:
 
 	static const String LookupMesh( const FGUID& Guid );
 	static const String LookupTexture( const FGUID& Guid );
-	static const String LookupMaterial( const FGUID& Guid );
 	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
 	static const String LookupScript( const FGUID& Guid );
@@ -92,7 +92,7 @@ private:
 //
 
 
-/*static*/ FORCEINLINE HTextureRef FAssetDatabase::GetTexture( const FGUID& Guid )
+/*static*/ FORCEINLINE HTexture FAssetDatabase::GetTexture( const FGUID& Guid )
 {
 	return GTextureManager.LoadTexture( SInstance->LookupTexture( Guid ), DT_Magenta2D, false );
 }
@@ -102,12 +102,12 @@ private:
 	return GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
 }
 
-/*static*/ FORCEINLINE MaterialRef FAssetDatabase::GetMaterial( const FGUID& Guid )
+/*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const FGUID& Guid )
 {
 	return GMaterialManager.FindOrLoadMaterialFromFile( SInstance->LookupMaterial( Guid ) );
 }
 
-/*static*/ FORCEINLINE MaterialRef FAssetDatabase::CreateOneOffMaterial( const FGUID& ParentGuid )
+/*static*/ FORCEINLINE HMaterial FAssetDatabase::CreateOneOffMaterial( const FGUID& ParentGuid )
 {
 	return GMaterialManager.CreateOneOffMaterial( SInstance->LookupMaterial( ParentGuid ) );
 }

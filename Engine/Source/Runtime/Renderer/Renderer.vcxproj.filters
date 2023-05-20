@@ -150,6 +150,7 @@
     <ClInclude Include="Public\VertexLayouts.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\ManagedAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\APIBridge\CommonFunctions.cpp">

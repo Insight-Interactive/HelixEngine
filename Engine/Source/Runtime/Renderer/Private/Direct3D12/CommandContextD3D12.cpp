@@ -303,19 +303,19 @@ void FCommandContext::SetGraphicsConstantBuffer(uint32 RootParameterIndex, FCons
 	m_pID3D12CommandList->SetGraphicsRootConstantBufferView(RootParameterIndex, Address);
 }
 
-void FCommandContext::SetTexture(uint32 RootParameterIndex, HTextureRef& pTexture)
+void FCommandContext::SetTexture(uint32 RootParameterIndex, HTexture& Texture)
 {
-	const HTexture* pD3D12Tex = pTexture.Get();
+	FTexture& D3D12Tex = Texture.GetAsset();
 	D3D12_GPU_DESCRIPTOR_HANDLE GpuHandle;
 
-	if (pD3D12Tex == NULL || !pTexture.IsValid())
+	if (!Texture.IsValid())
 	{
 		// If the texture is invalid or incomplete: bind a default texture instead.
 		GpuHandle.ptr = GDefaultTextures[DT_BlackOpaque2D].GetShaderVisibleDescriptorHandle().GetGpuPtr();
 	}
 	else
 	{
-		GpuHandle.ptr = pD3D12Tex->GetShaderVisibleDescriptorHandle().GetGpuPtr();
+		GpuHandle.ptr = D3D12Tex.GetShaderVisibleDescriptorHandle().GetGpuPtr();
 	}
 
 	m_pID3D12CommandList->SetGraphicsRootDescriptorTable(RootParameterIndex, GpuHandle);
