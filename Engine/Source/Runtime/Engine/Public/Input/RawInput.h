@@ -150,11 +150,11 @@ public:
 
 	void ShowMouse();
 	void HideMouse();
+	void KbmZeroInputs();
 
 private:
 #if HE_INPUT_USE_KEYBOARD_MOUSE
 	void KbmInitialize();
-	void KbmZeroInputs();
 	void KbmShutdown();
 	void KbmUpdate();
 	void SetMouseMoveDelta( float XValue, float YValue );

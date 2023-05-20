@@ -14,7 +14,7 @@
 #include "CommandManager.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
-#include "../Script/ScriptCallbacks.h"
+//#include "../Script/ScriptCallbacks.h"
 
 
 Logger GEngineLogger;
@@ -87,9 +87,9 @@ void HEngine::PreStartup()
 	// Initialize Subsystems
 	m_ReneringSubsystem.Initialize();
 	m_PhysicsSubsystem.Initialize();
-	m_ScriptEngine.Setup();
-	m_ScriptEngine.BindLuaFunction( Scr_GetDeltaTime, "GetDeltaTime" );
-	m_ScriptEngine.BindLuaFunction( Scr_GetAppSeconds, "GetAppSeconds" );
+	m_ScriptSubsystem.Setup();
+	m_ScriptSubsystem.BindLuaFunction( "GetDeltaTime", *this, &HEngine::GetDeltaTime );
+	m_ScriptSubsystem.BindLuaFunction( "GetAppSeconds", *this, &HEngine::GetAppSeconds );
 
 	m_ReneringSubsystem.RunAsync();
 	m_PhysicsSubsystem.RunAsync();
@@ -217,7 +217,8 @@ void HEngine::PostShutdown()
 void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
-	
+	m_MainViewPort.GetInputDispatcher()->GetInputSureyor().KbmZeroInputs();
+
 	// Main loop.
 	while (m_Application.IsRunning())
 	{

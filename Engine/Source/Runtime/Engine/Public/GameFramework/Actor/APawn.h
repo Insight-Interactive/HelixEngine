@@ -8,9 +8,9 @@
 class HControllerComponent;
 
 static const float kDefaultMovementSpeed = 32.f;
-static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 2.f;
-static const float kDefaultCameraPitchSpeedMultiplier = 25.f;
-static const float kDefaultCameraYawSpeedMultiplier = 25.f;
+static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 3.f;
+static const float kDefaultCameraPitchSpeedMultiplier = 50.f;
+static const float kDefaultCameraYawSpeedMultiplier = 50.f;
 
 HCLASS()
 class APawn : public AActor
@@ -19,7 +19,7 @@ class APawn : public AActor
 public:
 	HE_GENERATED_BODY( APawn )
 
-
+		 
 	virtual void BeginPlay() override
 	{
 		Super::BeginPlay();
@@ -59,9 +59,6 @@ protected:
 	bool m_bIsSprinting;
 	HControllerComponent* m_pController;
 	HSceneComponent* m_pRootComponent;
-
-private:
-	float m_CurrentModementSpeed;
 
 };
 

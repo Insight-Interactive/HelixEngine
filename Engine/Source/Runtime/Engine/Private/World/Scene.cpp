@@ -13,6 +13,7 @@ HScene::HScene( HWorld* pOwner )
 	, m_IsDirty( false )
 	, m_RenderParams( )
 	, m_pOwner( pOwner )
+	, m_DrawColliders( true )
 {
 
 }
@@ -35,6 +36,23 @@ void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)
 	}
 	CmdContext.EndDebugMarker();
 }
+
+void HScene::RenderDebugMeshes( FCommandContext& CmdContext )
+{
+	CmdContext.BeginDebugMarker( L"Render Debug Meshes" );
+	{
+		if (m_DrawColliders)
+		{
+			for (auto Iter = m_DebugColliderMeshs.begin(); Iter != m_DebugColliderMeshs.end(); ++Iter)
+			{
+				HColliderComponent& Collider = (**Iter);
+				Collider.Render( CmdContext );
+			}
+		}
+	}
+	CmdContext.EndDebugMarker();
+}
+
 
 void HScene::RenderStaticTranslucentAndUnlitObjects(FCommandContext& CmdContext)
 {

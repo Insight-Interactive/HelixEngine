@@ -17,7 +17,6 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_bIsSprinting(false)
 	, m_pController(NULL)
 	, m_pRootComponent()
-	, m_CurrentModementSpeed(0.f)
 {
 	m_pController = AddComponent<HControllerComponent>(TEXT("Player Controller"));
 	m_pRootComponent = AddComponent<HSceneComponent>(TEXT("Root Component"));
@@ -56,10 +55,10 @@ void APawn::Sprint()
 	m_bIsSprinting = !m_bIsSprinting;
 	if (m_bIsSprinting)
 	{
-		m_CurrentModementSpeed = m_MovementSpeed;
+		m_MovementSpeed = m_SprintSpeed;
 	}
 	else
 	{
-		m_CurrentModementSpeed = m_SprintSpeed;
+		m_MovementSpeed = kDefaultMovementSpeed;
 	}
 }

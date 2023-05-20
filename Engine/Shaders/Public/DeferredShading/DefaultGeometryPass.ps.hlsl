@@ -1,5 +1,5 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
-#include "../Core/Core.hlsli"
+#include "../Core/PBRCommon.hlsli"
 #include "DeferredShadingCommon.hlsli"
 
 

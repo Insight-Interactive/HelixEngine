@@ -19,8 +19,10 @@ public:
 
 	FVector3 GetPosition() const;
 	FQuat GetRotation() const;
+	FVector3 GetEulerRotation() const;
 	FVector3 GetScale() const;
 
+	FMatrix GetLocalMatrix() const;
 	FMatrix GetWorldMatrix() const;
 	FMatrix GetTranslationMatrix() const;
 	FMatrix GetRotationMatrix() const;
@@ -91,9 +93,19 @@ FORCEINLINE FQuat HSceneComponent::GetRotation() const
 	return m_Transform.GetRotation();
 }
 
+FORCEINLINE FVector3 HSceneComponent::GetEulerRotation() const
+{
+	return m_Transform.GetEulerRotation();
+}
+
 FORCEINLINE FVector3 HSceneComponent::GetScale() const
 {
 	return m_Transform.GetScale();
+}
+
+FORCEINLINE FMatrix HSceneComponent::GetLocalMatrix() const
+{
+	return m_Transform.GetLocalMatrix();
 }
 
 FORCEINLINE FMatrix HSceneComponent::GetWorldMatrix() const

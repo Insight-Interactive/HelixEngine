@@ -82,6 +82,14 @@ const FMaterial* MaterialRef::operator->() const
 // Material Manager Implementation
 //
 
+MaterialManager::MaterialManager()
+{
+}
+
+MaterialManager::~MaterialManager()
+{
+}
+
 MaterialRef MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 {
 	ManagedMaterial* pMaterial = NULL;
@@ -108,6 +116,19 @@ MaterialRef MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 
 	}
 	return GetMaterialByName( Name );
+}
+
+MaterialRef MaterialManager::CreateOneOffMaterial( const String& Path )
+{
+	ManagedMaterial* pMaterial = NULL;
+
+	String Name = StringHelper::GetFilenameFromDirectoryNoExtension( Path );
+	pMaterial = new ManagedMaterial( Name );
+	pMaterial->LoadFromFile( Path );
+	pMaterial->SetDebugName( Name );
+	pMaterial->SetLoadCompleted( true );
+
+	return pMaterial;
 }
 
 void MaterialManager::DestroyMaterial(const String& Key)

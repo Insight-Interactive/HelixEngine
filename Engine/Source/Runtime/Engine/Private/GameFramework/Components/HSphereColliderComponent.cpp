@@ -4,6 +4,7 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
+#include "Renderer/GeometryGenerator.h"
 
 
 HSphereColliderComponent::HSphereColliderComponent( FComponentInitArgs& InitArgs )
@@ -17,17 +18,11 @@ HSphereColliderComponent::~HSphereColliderComponent()
 
 }
 
-void HSphereColliderComponent::OnCreate()
+void HSphereColliderComponent::Tick( float DeltaTime )
 {
-	Super::OnCreate();
+	Super::Tick( DeltaTime );
 
-}
-
-void HSphereColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnRegisterCollider();
+	SetScale( m_RigidBody.GetRadius() * 2, m_RigidBody.GetRadius() * 2, m_RigidBody.GetRadius() * 2 );
 }
 
 void HSphereColliderComponent::Serialize( WriteContext& Output )
@@ -68,15 +63,13 @@ void HSphereColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
 	m_RigidBody.SetRadius( Radius );
 
+	m_MeshAsset = GeometryGenerator::GenerateSphere(1, 10, 10);
+	m_MaterialAsset = FAssetDatabase::CreateOneOffMaterial( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
+
 	RegisterCollider( false );
 }
 
 void HSphereColliderComponent::RegisterCollider( bool StartDisabled )
 {
 	GetWorld()->AddSphereColliderComponent( this, StartDisabled, GetIsTrigger() );
-}
-
-void HSphereColliderComponent::UnRegisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
 }

@@ -322,7 +322,7 @@ void HPhysicsScene::CreateCubeInternal( const FVector3& StartPos, HCubeRigidBody
 
 	outCube.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
 
-	physx::PxBoxGeometry CubeGeo( outCube.GetWidth() / 2, outCube.GetHeight() / 2, outCube.GetDepth() / 2 );
+	physx::PxBoxGeometry CubeGeo( outCube.GetWidth() * 0.5f, outCube.GetHeight() * 0.5f, outCube.GetDepth() * 0.5f );
 	if (IsTrigger)
 	{
 		physx::PxShape* pShape = Physics.createShape( CubeGeo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, physx::PxShapeFlag::eVISUALIZATION | physx::PxShapeFlag::eTRIGGER_SHAPE );

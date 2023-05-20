@@ -4,7 +4,8 @@
 #include "GameFramework/Components/HSceneComponent.h"
 
 #include "GameFramework/Actor/AActor.h"
-
+#include "Engine/Engine.h"
+#include "SourceContext.h"
 
 HSceneComponent::HSceneComponent( FComponentInitArgs& InitArgs )
 	: HActorComponent( InitArgs )
@@ -16,6 +17,11 @@ HSceneComponent::HSceneComponent( FComponentInitArgs& InitArgs )
 		pOwner->SetRootComponent( this );
 	else
 		AttachTo( pOwner->GetRootComponent() );
+
+	/*SourceContext& LuaEngine = GEngine->GetScriptSubsystem();
+	LuaEngine.BindLuaFunction( "Translate", *this, &HSceneComponent::Translate );
+	LuaEngine.BindLuaFunction( "Rotate", *this, &HSceneComponent::Rotate );
+	LuaEngine.BindLuaFunction( "Scale", *this, &HSceneComponent::Scale );*/
 }
 
 HSceneComponent::~HSceneComponent()

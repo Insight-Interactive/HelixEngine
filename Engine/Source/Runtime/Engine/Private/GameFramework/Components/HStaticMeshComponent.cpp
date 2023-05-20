@@ -53,8 +53,6 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 		GfxContext.BindIndexBuffer(m_MeshAsset->GetIndexBuffer());
 		GfxContext.DrawIndexedInstanced(m_MeshAsset->GetNumIndices(), 1, 0, 0, 0);
 	}
-
-
 }
 
 void HStaticMeshComponent::OnCreate() 

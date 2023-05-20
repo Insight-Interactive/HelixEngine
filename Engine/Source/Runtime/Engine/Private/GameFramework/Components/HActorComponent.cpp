@@ -41,6 +41,7 @@ void HActorComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetString( Value, "ObjectName", ObjectNameBuffer, sizeof( ObjectNameBuffer ) );
 	SetObjectName( CharToTChar( ObjectNameBuffer ) );
 
+	// Object GUID
 	Char GuidStr[64];
 	ZeroMemory(GuidStr, sizeof(GuidStr));
 	JsonUtility::GetString(Value, "ObjectGUID", GuidStr, sizeof(GuidStr));

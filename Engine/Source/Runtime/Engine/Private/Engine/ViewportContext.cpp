@@ -154,12 +154,22 @@ void FViewportContext::OnEvent( Event& e )
 
 bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )
 {
+	if (!GEngine->GetIsEditorPresent())
+	{
+		ShowMouse();
+		UnlockMouseFromScreenCenter();
+	}
 
 	return false;
 }
 
 bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
 {
+	if (!GEngine->GetIsEditorPresent())
+	{
+		HideMouse();
+		LockMouseToScreenCenter();
+	}
 
 	return false;
 }

@@ -2,6 +2,11 @@
 
 #include "GameFramework/Components/HColliderComponent.h"
 
+#include "ModelManager.h"
+#include "ConstantBuffer.h"
+#include "Renderer/MaterialManager.h"
+#include "Renderer/ConstantBufferStructures.h"
+
 
 HCOMPONENT()
 class HCubeColliderComponent : public HColliderComponent
@@ -15,18 +20,15 @@ public:
 	virtual bool IsStatic() const override;
 
 protected:
-	virtual void OnCreate() override;
-	virtual void OnDestroy() override;
-
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Tick( float DeltaTime ) override;
 
 	virtual HRigidBody& GetRigidBody() override;
 	virtual const HRigidBody& GetRigidBody() const override;
 
 private:
 	void RegisterCollider( bool StartDisabled );
-	void UnRegisterCollider();
 
 private:
 	HCubeRigidBody m_RigidBody;

@@ -38,5 +38,4 @@ void HLuaScriptComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetString( ScriptComponent, HE_STRINGIFY( m_ScriptAsset ), ScriptGuidBuffer, sizeof( ScriptGuidBuffer ) );
 	FGUID ScriptGuid = FGUID::CreateFromString( ScriptGuidBuffer );
 	m_ScriptAsset = FAssetDatabase::GetScript( ScriptGuid );
-
 }

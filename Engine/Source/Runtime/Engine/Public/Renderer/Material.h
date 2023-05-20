@@ -14,9 +14,9 @@ class FShaderReflection;
 
 enum EShadingModel
 {
-	SM_DefaultLit = 0,	// Is lit by lights inside the world. Material will be used in Physically-Based lighting.
-	SM_Unlit = 1,		// Implement unlit light pass. Is not lit by lights inside the world.
-	SM_Foliage = 2,		// Tree leaves and grass.
+	SM_DefaultLit	= 0, // Is lit by lights inside the world. Material will be used in Physically-Based lighting.
+	SM_Unlit		= 1, // Implement unlit light pass. Is not lit by lights inside the world.
+	SM_Foliage		= 2, // Tree leaves and grass.
 };
 
 enum EMaterialDomain
@@ -61,10 +61,13 @@ public:
 	EMaterialBlendMode GetBlendMode() const;
 	EMaterialDomain GetDomain() const;
 	EShadingModel GetShadingModel() const;
+	EFillMode GetFillMode() const;
 	bool GetIsTwoSided() const;
+	bool GetIsWireframe() const;
 	void SetBlendMode( EMaterialBlendMode Type );
 	void SetDomain( EMaterialDomain Domain );
 	void SetShadingModel( EShadingModel Model );
+	void SetFillMode( EFillMode FillMode );
 	void SetIsTwoSided( bool IsTwoSided );
 
 	//
@@ -85,6 +88,26 @@ public:
 	*/
 	bool SetFloat( const Char* VariableName, const float& Value );
 
+	/*
+		Set a float2 value in the shader.
+		@param VariableName - The name of the variable inside the declared constant buffer.
+		@param Value - The value to set in the shader.
+	*/
+	bool SetVector2( const Char* VariableName, const FVector2& Value );
+
+	/*
+		Set a float3 value in the shader.
+		@param VariableName - The name of the variable inside the declared constant buffer.
+		@param Value - The value to set in the shader.
+	*/
+	bool SetVector3( const Char* VariableName, const FVector3& Value );
+
+	/*
+		Set a float4 value in the shader.
+		@param VariableName - The name of the variable inside the declared constant buffer.
+		@param Value - The value to set in the shader.
+	*/
+	bool SetVector4( const Char* VariableName, const FVector4& Value );
 
 protected:
 	void Destroy();
@@ -94,6 +117,11 @@ protected:
 	void ReflectShader( FRootSignature& outSignature, EShaderVisibility ShaderType, const FShaderReflection& Reflector );
 
 	void BuildRootSignature();
+
+	template <typename T>
+	bool SetShaderFloatVar( const Char* VariableName, const T& Value );
+
+private:
 
 private:
 	FGUID m_GUID;
@@ -107,6 +135,7 @@ protected:
 	FGUID		m_VertexShaderGuid;
 
 	EMaterialBlendMode	m_BlendMode;
+	EFillMode			m_FillMode;
 	EMaterialDomain		m_Domain;
 	EShadingModel		m_ShadingModel;
 	bool				m_IsTwoSided;
@@ -188,9 +217,19 @@ FORCEINLINE EShadingModel FMaterial::GetShadingModel() const
 	return m_ShadingModel;
 }
 
+FORCEINLINE EFillMode FMaterial::GetFillMode() const
+{
+	return m_FillMode;
+}
+
 FORCEINLINE bool FMaterial::GetIsTwoSided() const
 {
 	return m_IsTwoSided;
+}
+
+FORCEINLINE bool FMaterial::GetIsWireframe() const
+{
+	return GetFillMode() == FM_WireFrame;
 }
 
 FORCEINLINE const String& FMaterial::GetDebugName() const
@@ -225,6 +264,12 @@ FORCEINLINE void FMaterial::SetShadingModel( EShadingModel Model )
 	BuildPipelineState();
 }
 
+FORCEINLINE	void FMaterial::SetFillMode( EFillMode FillMode )
+{
+	m_FillMode = FillMode;
+	BuildPipelineState();
+}
+
 FORCEINLINE void FMaterial::SetIsTwoSided( bool IsTwoSided )
 {
 	m_IsTwoSided = IsTwoSided;
@@ -252,11 +297,12 @@ FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTextureRef Tex
 		(*Iter).second.second = Texture;
 		return true;
 	}
-	HE_LOG( Warning, TEXT( "Trying to set texture with in material \"%s\" with invalid semantic name: %s" ), CharToTChar( m_DebugName ), CharToTChar( TextureName ) );
+	HE_LOG( Warning, TEXT( "Trying to set texture with in material \"%s\" with invalid semantic name: %s. Is the Semantic being optimized out?" ), CharToTChar( m_DebugName ), CharToTChar( TextureName ) );
 	return false;
 }
 
-FORCEINLINE bool FMaterial::SetFloat( const Char* VariableName, const float& Value )
+template <typename T>
+FORCEINLINE bool FMaterial::SetShaderFloatVar( const Char* VariableName, const T& Value )
 {
 	StringHashValue NameHash = StringHash( VariableName );
 	auto& Iter = m_ConstBufferVarMappings.find( NameHash );
@@ -265,7 +311,7 @@ FORCEINLINE bool FMaterial::SetFloat( const Char* VariableName, const float& Val
 		for (uint32 i = 0; i < HE_MAX_SWAPCHAIN_BACK_BUFFERS; ++i)
 		{
 			// Copy the data to each frame buffer inside m_ConstBufferMappings.
-			memcpy( Iter->second[i].second, &Value, sizeof( float ) );
+			memcpy( Iter->second[i].second, &Value, sizeof( T ) );
 
 			// Mark the buffer dirty to indicate a re-upload to the Gpu.
 			Iter->second[i].first->SetDirty( true );
@@ -274,6 +320,27 @@ FORCEINLINE bool FMaterial::SetFloat( const Char* VariableName, const float& Val
 	}
 	HE_LOG( Warning, TEXT( "Trying to set buffer constant in material \"%s\" with invalid semantic name: %s" ), CharToTChar( m_DebugName ), CharToTChar( VariableName ) );
 	return false;
+}
+
+FORCEINLINE bool FMaterial::SetFloat( const Char* VariableName, const float& Value )
+{
+	return SetShaderFloatVar<float>( VariableName, Value );
+
+}
+
+FORCEINLINE bool FMaterial::SetVector2( const Char* VariableName, const FVector2& Value )
+{
+	return SetShaderFloatVar<FVector2>( VariableName, Value );
+}
+
+FORCEINLINE bool FMaterial::SetVector3( const Char* VariableName, const FVector3& Value )
+{
+	return SetShaderFloatVar<FVector3>( VariableName, Value );
+}
+
+FORCEINLINE bool FMaterial::SetVector4( const Char* VariableName, const FVector4& Value )
+{
+	return SetShaderFloatVar<FVector4>( VariableName, Value );
 }
 
 

@@ -15,8 +15,8 @@ project ("Scripting")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 	
-	pchheader("ScriptingPCH.h")
-	pchsource("Private/PCH/ScriptingPCH.cpp")
+--	pchheader("ScriptingPCH.h")
+--	pchsource("Private/PCH/ScriptingPCH.cpp")
 
 	files
 	{
@@ -31,6 +31,9 @@ project ("Scripting")
 		"Private/**.c",
 
 		-- Third Party 
+		heGetThirdPartyModule( "LuaPlus" ) .. "LuaPlus/**.h",
+		heGetThirdPartyModule( "LuaPlus" ) .. "LuaPlus/**.c",
+		heGetThirdPartyModule( "LuaPlus" ) .. "LuaPlus/**.cpp",
 	}
 
 	includedirs
@@ -42,7 +45,9 @@ project ("Scripting")
 		heGetModulePublicDir( "Math" ),
 
 		-- Third Party
-		heGetThirdPartyModule( "lua-5.4.4" ) .. "src/",
+		heGetThirdPartyModule( "LuaPlus" ) .. "LuaPlus/",
+		heGetThirdPartyModule( "LuaPlus" ) .. "tilde/",
+		heGetThirdPartyModule( "LuaPlus" ),
 	}
 
 	defines

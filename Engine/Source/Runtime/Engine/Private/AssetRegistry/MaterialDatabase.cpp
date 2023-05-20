@@ -16,8 +16,7 @@ FMaterialDatabase::~FMaterialDatabase()
 
 void FMaterialDatabase::Deserialize( const ReadContext& Value )
 {
-	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
-		itr != Value.MemberEnd(); ++itr)
+	for (auto itr = Value.MemberBegin(); itr != Value.MemberEnd(); ++itr)
 	{
 		const Char* MaterialGuidStr = itr->name.GetString();
 		FGUID MaterialGUID = FGUID::CreateFromString( MaterialGuidStr );

@@ -40,6 +40,59 @@ namespace GeometryGenerator
 		);
 	}
 
+	StaticMeshGeometryRef Generate1x1x1CubeMesh()
+	{
+		String GeometryName = "GenericCube";
+		if (GStaticGeometryManager.MeshExists( GeometryName ))
+		{
+			return GStaticGeometryManager.GetStaticMeshByName( GeometryName );
+		}
+
+		FSimpleVertex3D Verts[] =
+		{
+			{ { -1.0f, 1.0f, -1.0f } },    // Back Top Left
+			{ { 1.0f, 1.0f, -1.0f } },    // Back Top Right
+			{ { 1.0f, 1.0f, 1.0f } },    // Front Top Right
+			{ { -1.0f, 1.0f, 1.0f } },    // Front Top Left
+
+			{ { -1.0f, -1.0f, -1.0f } },    // Back Bottom Left
+			{ { 1.0f, -1.0f, -1.0f } },    // Back Bottom Right
+			{ { 1.0f, -1.0f, 1.0f } },    // Front Bottom Right
+			{ { -1.0f, -1.0f, 1.0f } },    // Front Bottom Left
+		};
+		const uint32 NumVerts = HE_ARRAYSIZE( Verts );
+		const uint32 VertexBufferSize = NumVerts * sizeof( FSimpleVertex3D );
+
+		uint32 Indices[] =
+		{
+			0, 1, 3,
+			1, 2, 3,
+
+			3, 2, 7,
+			6, 7, 2,
+
+			2, 1, 6,
+			5, 6, 1,
+
+			1, 0, 5,
+			4, 5, 0,
+
+			0, 3, 4,
+			7, 4, 3,
+
+			7, 6, 4,
+			5, 4, 6,
+		};
+		const uint32 NumIndices = HE_ARRAYSIZE( Indices );
+		const uint32 IndexBufferSize = NumIndices * sizeof( uint32 );
+
+		return GStaticGeometryManager.RegisterGeometry(
+			GeometryName,
+			Verts, NumVerts, sizeof( FSimpleVertex3D ),
+			Indices, IndexBufferSize, NumIndices
+		);
+	}
+
 	StaticMeshGeometryRef GenerateSphere(uint32 Radius, uint32 Slices, uint32 Segments)
 	{
 		Char GeometryInfo[32];

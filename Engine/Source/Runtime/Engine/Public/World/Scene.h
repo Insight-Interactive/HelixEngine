@@ -5,6 +5,7 @@
 
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
+#include "GameFramework/Components/HColliderComponent.h"
 
 
 struct FSceneRenderParams
@@ -45,12 +46,18 @@ public:
 	bool DoesContainAnyTranslucentObjects();
 
 	void RenderStaticLitOpaqueObjects( FCommandContext& CmdContext );
+	void RenderDebugMeshes( FCommandContext& CmdContext );
 	void RenderStaticTranslucentAndUnlitObjects( FCommandContext& CmdContext );
 
 	void AddStaticMesh( HStaticMeshComponent* pStaticMesh );
 	bool RemoveStaticMesh( HStaticMeshComponent* pStaticMesh );
+	void AddDebugCollider( HColliderComponent* pCollider );
+	bool RemoveDebugCollider( HColliderComponent* pCollider );
 	void AddPointLight(HPointLightComponent* pPointLight);
 	bool RemovePointLight(HPointLightComponent* pPointLight);
+
+	bool GetDrawColliders() const;
+	void SetDrawColliders( const bool& DrawColliders );
 
 protected:
 	HWorld* GetWorld();
@@ -58,9 +65,11 @@ protected:
 
 private:
 	bool m_IsDirty;
+	bool m_DrawColliders;
 	FSceneRenderParams m_RenderParams;
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
+	std::vector<HColliderComponent*> m_DebugColliderMeshs;
 	std::vector<HStaticMeshComponent*>::iterator m_FirstTranslucentOrUnlit;
 
 	std::vector<HPointLightComponent*> m_PointLights;
@@ -102,15 +111,39 @@ FORCEINLINE FSceneRenderParams& HScene::GetRenderParams()
 
 FORCEINLINE void HScene::AddStaticMesh( HStaticMeshComponent* pStaticMesh )
 {
+	HE_ASSERT( pStaticMesh != nullptr );
+
 	m_StaticMeshs.push_back( pStaticMesh );
 }
 
 FORCEINLINE bool HScene::RemoveStaticMesh( HStaticMeshComponent* pStaticMesh )
 {
+	HE_ASSERT( pStaticMesh != nullptr );
+	
 	auto Iter = std::find( m_StaticMeshs.begin(), m_StaticMeshs.end(), pStaticMesh );
 	if (Iter != m_StaticMeshs.end())
 	{
 		m_StaticMeshs.erase( Iter );
+		return true;
+	}
+	return false;
+}
+
+FORCEINLINE void HScene::AddDebugCollider( HColliderComponent* pCollider )
+{
+	HE_ASSERT( pCollider != nullptr );
+	
+	m_DebugColliderMeshs.push_back( pCollider );
+}
+
+FORCEINLINE bool HScene::RemoveDebugCollider( HColliderComponent* pCollider )
+{
+	HE_ASSERT( pCollider != nullptr );
+
+	auto Iter = std::find( m_DebugColliderMeshs.begin(), m_DebugColliderMeshs.end(), pCollider );
+	if (Iter != m_DebugColliderMeshs.end())
+	{
+		m_DebugColliderMeshs.erase( Iter );
 		return true;
 	}
 	return false;
@@ -159,4 +192,14 @@ FORCEINLINE void HScene::SortStaticTransparentObjects()
 FORCEINLINE bool HScene::DoesContainAnyTranslucentObjects()
 {
 	return m_FirstTranslucentOrUnlit != m_StaticMeshs.end();
+}
+
+FORCEINLINE bool HScene::GetDrawColliders() const
+{
+	return m_DrawColliders;
+}
+
+FORCEINLINE void HScene::SetDrawColliders( const bool& DrawColliders )
+{
+	m_DrawColliders = DrawColliders;
 }

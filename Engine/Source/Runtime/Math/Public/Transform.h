@@ -81,8 +81,8 @@ public:
 	FMatrix GetRotationMatrix() const;
 	FMatrix GetScaleMatrix() const;
 
-protected:
 	static void RotateVector( FVector3& outResult, const FVector3& inTarget, const FMatrix& inRotationMatrix );
+protected:
 
 protected:
 	FVector3 m_Position;

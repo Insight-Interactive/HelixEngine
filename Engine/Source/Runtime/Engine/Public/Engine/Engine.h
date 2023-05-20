@@ -25,6 +25,7 @@ class HEngine : public EventEmitter<void, EngineEvent&>
 {
 	friend class HEngineLaunchBootstraper;
 	friend class HWorld;
+	friend class HSceneComponent;
 public:
 	/*
 		Requests a global shutdown from the engine. Cleaning up and shutting down everything.
@@ -67,7 +68,6 @@ public:
 		True if the the engine is running a game simulation in the editor (or at all), false if not.
 	*/
 	bool IsPlayingInEditor() const;
-
 
 protected:
 	HEngine( FCommandLine& CmdLine );
@@ -132,8 +132,7 @@ protected:
 	// Subsystems
 	FPhysicsSubsystem		m_PhysicsSubsystem;
 	FRenderingSubsystem		m_ReneringSubsystem;
-	SourceContext			m_ScriptEngine;
-
+	SourceContext			m_ScriptSubsystem;
 };
 
 // Global engine reference. Accessible in all engine build configurtions.
@@ -221,3 +220,4 @@ FORCEINLINE FPhysicsSubsystem& HEngine::GetPhysicsSubsystem()
 {
 	return m_PhysicsSubsystem;
 }
+

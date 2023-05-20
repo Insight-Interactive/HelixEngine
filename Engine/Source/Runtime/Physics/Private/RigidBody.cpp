@@ -18,6 +18,9 @@ HRigidBody::~HRigidBody()
 
 void HRigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation )
 {
+	while (!m_pRigidActor)
+		std::this_thread::yield(); // Wait for the physics thread to initialize this actor.
+
 	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
 	physx::PxRigidDynamic* pDynamic = SCast<physx::PxRigidDynamic*>( m_pRigidActor );

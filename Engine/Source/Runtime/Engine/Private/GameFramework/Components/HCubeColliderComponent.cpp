@@ -4,30 +4,26 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
+#include "CommandContext.h"
+#include "Renderer/ConstantBufferStructures.h"
+#include "Renderer/ShaderRegisters.h"
+#include "Renderer/GeometryGenerator.h"
 
 
 HCubeColliderComponent::HCubeColliderComponent( FComponentInitArgs& InitArgs )
 	: HColliderComponent( InitArgs )
 {
-
 }
 
 HCubeColliderComponent::~HCubeColliderComponent()
 {
-
 }
 
-void HCubeColliderComponent::OnCreate()
+void HCubeColliderComponent::Tick( float DeltaTime )
 {
-	Super::OnCreate();
+	Super::Tick( DeltaTime );
 
-}
-
-void HCubeColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnRegisterCollider();
+	SetScale( m_RigidBody.GetWidth() * 2, m_RigidBody.GetHeight() * 2, m_RigidBody.GetDepth() * 2 );
 }
 
 void HCubeColliderComponent::Serialize( WriteContext& Output )
@@ -78,6 +74,9 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetHeight( Dimensions.y );
 	m_RigidBody.SetDepth( Dimensions.z );
 
+	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
+	m_MaterialAsset = FAssetDatabase::CreateOneOffMaterial( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
+
 	RegisterCollider( false );
 }
 
@@ -85,9 +84,3 @@ void HCubeColliderComponent::RegisterCollider( bool StartDisabled )
 {
 	GetWorld()->AddCubeColliderComponent( this, StartDisabled, GetIsTrigger() );
 }
-
-void HCubeColliderComponent::UnRegisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
-}
-

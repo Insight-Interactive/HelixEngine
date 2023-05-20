@@ -5,6 +5,7 @@
 #include "GameFramework/HObject.h"
 #include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
+#include "SourceContext.h"
 
 #define HE_GENERATED_BODY( Class )				\
 			Class( FActorInitArgs& InitArgs );	\
@@ -50,6 +51,9 @@ public:
 	void SetRootComponent(HSceneComponent* pRoot);
 	HSceneComponent* GetRootComponent();
 
+	SourceContext& GetScript();
+
+
 protected:
 	void Render( FCommandContext& GfxContext );
 	HWorld* GetWorld();
@@ -67,6 +71,9 @@ protected:
 	std::vector<HActorComponent*> m_Components;
 	HSceneComponent* m_pRoot;
 	HWorld* m_pOwningWorld;
+
+	SourceContext m_Script;
+
 
 	bool m_IsDynamicInstance;
 };
@@ -118,4 +125,9 @@ FORCEINLINE void AActor::SetRootComponent(HSceneComponent* pRoot)
 FORCEINLINE HSceneComponent* AActor::GetRootComponent()
 {
 	return m_pRoot;
+}
+
+FORCEINLINE SourceContext& AActor::GetScript()
+{
+	return m_Script;
 }

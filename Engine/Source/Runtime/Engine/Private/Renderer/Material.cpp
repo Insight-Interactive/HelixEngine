@@ -25,6 +25,7 @@ FMaterial::FMaterial()
 	, m_Domain( MD_Surface )
 	, m_ShadingModel( SM_DefaultLit )
 	, m_IsTwoSided( false )
+	, m_FillMode ( FM_Solid )
 {
 }
 
@@ -62,8 +63,8 @@ void FMaterial::Bind( FCommandContext& GfxContext )
 
 		if (Texture.Get())
 			GfxContext.SetTexture( RootIndex, Texture );
-		else
-			HE_ASSERT( false );
+		//else
+		//	HE_ASSERT( false );
 	}
 }
 
@@ -116,6 +117,7 @@ void FMaterial::LoadFromFile( const String& Filepath )
 		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EMaterialBlendMode ), (int32&)m_BlendMode );
 		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EMaterialDomain ), (int32&)m_Domain );
 		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EShadingModel ), (int32&)m_ShadingModel );
+		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EFillMode ), (int32&)m_FillMode );
 		JsonUtility::GetBoolean( Parameters, HE_STRINGIFY( IsTwoSided ), m_IsTwoSided );
 
 		// Load the material's shaders.
@@ -150,10 +152,45 @@ void FMaterial::LoadFromFile( const String& Filepath )
 		for (auto itr = ShaderConstVariables.MemberBegin(); itr != ShaderConstVariables.MemberEnd(); ++itr)
 		{
 			const Char* VarName = itr->name.GetString();
-			float VarValue = itr->value.GetFloat();
-			SetFloat( VarName, VarValue );
-		}
+			
+			if (itr->value.IsFloat())
+			{
+				float VarValue = itr->value.GetFloat();
+				SetFloat( VarName, VarValue );
+			}
+			else if (itr->value.IsArray())
+			{
+				auto& Array = itr->value.GetArray();
+				auto& Vector = Array[0];
 
+				if (Vector.FindMember( "a" ) != Vector.MemberEnd())
+				{
+					FVector4 Result;
+					JsonUtility::GetFloat( Vector, "r", Result.x );
+					JsonUtility::GetFloat( Vector, "g", Result.y );
+					JsonUtility::GetFloat( Vector, "b", Result.z );
+					JsonUtility::GetFloat( Vector, "a", Result.w );
+				}
+				else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
+				{
+					FVector3 Result;
+					JsonUtility::GetFloat( Vector, "r", Result.x );
+					JsonUtility::GetFloat( Vector, "g", Result.y );
+					JsonUtility::GetFloat( Vector, "b", Result.z );
+					SetVector3( VarName, Result );
+				}
+				else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
+				{
+					FVector2 Result;
+					JsonUtility::GetFloat( Vector, "r", Result.x );
+					JsonUtility::GetFloat( Vector, "g", Result.y );
+				}
+				else
+				{
+					HE_ASSERT( false ); // Too many values for shader float array!
+				}
+			}
+		}
 	}
 	else
 	{
@@ -170,6 +207,7 @@ void FMaterial::BuildPipelineState()
 	RootSigName += L"Material RootSignature - ";
 	RootSigName += StringHelper::UTF8ToUTF16( GetDebugName() );
 #endif
+	const WChar* name = RootSigName.c_str();
 
 	// Create the pipeline state.
 	//
@@ -179,7 +217,7 @@ void FMaterial::BuildPipelineState()
 	FShaderReflection VertexReflection( VSShader.GetBufferPointer(), VSShader.GetDataSize() );
 	FShaderReflection PixelReflection( PSShader.GetBufferPointer(), PSShader.GetDataSize() );
 
-	const uint32 kNumStaticSamplers = 1;
+	const uint32 kNumStaticSamplers = (PixelReflection.GetNumTextureNormalInstructions() > 0) ? 1 : 0; // TODO: "1" should be the number of static samplers used in the shader
 	const uint32 NumResources = (PixelReflection.GetNumBoundResources() + VertexReflection.GetNumBoundResources()) - kNumStaticSamplers;
 	m_RootSig.Reset( NumResources, kNumStaticSamplers );
 
@@ -211,7 +249,7 @@ void FMaterial::BuildPipelineState()
 	case SM_Unlit:
 	case SM_Foliage:
 	{
-		// Only unlit and transparent are rendered in the forward pass.
+		// Only unlit, transparent, and debug meshes are rendered in the forward pass.
 
 		BlendDesc.RenderTarget[0].BlendEnable				= true;
 		BlendDesc.RenderTarget[0].SourceBlend				= B_SourceAlpha;
@@ -233,8 +271,11 @@ void FMaterial::BuildPipelineState()
 	PSODesc.BlendState			= BlendDesc;
 	FRasterizerDesc RasterDesc	= CRasterizerDesc();
 	if (GetIsTwoSided())
-	{
 		RasterDesc.CullMode = CM_None;
+	if (GetIsWireframe())
+	{
+		PSODesc.DepthStencilState.DepthEnable	= false;
+		RasterDesc.FillMode						= FM_WireFrame;
 	}
 	PSODesc.RasterizerDesc			= RasterDesc;
 	PSODesc.SampleMask				= UINT_MAX;
@@ -339,7 +380,8 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 								FShaderVariableDescription& Variable = ConstBuffer.Variables[k];
 
 								StringHashValue VarHash = StringHash( Variable.Name );
-
+								// TODO: Make a non hash entry in m_ConstBufferVarMappings[n] for easier debugging
+								
 								// If the vector wasn't initialized, initialize it.
 								if (m_ConstBufferVarMappings[VarHash].size() == 0)
 								{
@@ -352,6 +394,8 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 
 								// Move to the next variable in the shader's constant buffer.
 								pBufferPtr += Variable.SizeInBytes;
+
+								// Note: the user will fill this buffer with their own data. We don't know what c++ variables this will contain.
 							}
 						}
 					}

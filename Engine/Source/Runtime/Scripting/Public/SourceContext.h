@@ -2,13 +2,11 @@
 
 #include "TSingleton.h"
 
+#include "LuaPlus/LuaPlus.h"
 
-struct lua_State;
 
 class LuaScript;
 class SourceContext;
-
-typedef int (ClientLuaFn)( lua_State* );
 
 /*
 	The global context in which all lua source code executes.
@@ -23,15 +21,19 @@ public:
 	void Teardown();
 
 	bool IsReady() const;
-	lua_State* GetLuaState();
+	LuaPlus::LuaState* GetLuaState();
 
 	// Run a lua script.
 	bool RunScript( LuaScript& Script );
 	// Bind a C function to able to call it from script.
-	bool BindLuaFunction( ClientLuaFn Callback, const char* ScriptSytaxName );
+	template <typename ClassType, typename CallbackType>
+	bool BindLuaFunction( const char* ScriptSytaxName, ClassType& CallbackContext, CallbackType Callback);
+	
+private:
+	void Scr_DebugLog( const Char* Msg );
 
 private:
-	lua_State* m_pLuaSrcContext;
+	LuaPlus::LuaState* m_pLuaSrcContext;
 
 };
 
@@ -44,8 +46,16 @@ FORCEINLINE bool SourceContext::IsReady() const
 	return m_pLuaSrcContext != nullptr;
 }
 
-FORCEINLINE lua_State * SourceContext::GetLuaState()
+FORCEINLINE LuaPlus::LuaState* SourceContext::GetLuaState()
 {
 	HE_ASSERT( IsReady() );
 	return m_pLuaSrcContext;
+}
+
+template <typename ClassType, typename CallbackType>
+FORCEINLINE bool SourceContext::BindLuaFunction( const char* ScriptSytaxName, ClassType& CallbackContext, CallbackType Callback )
+{
+	m_pLuaSrcContext->GetGlobals().RegisterDirect( ScriptSytaxName, CallbackContext, Callback );
+
+	return true;
 }

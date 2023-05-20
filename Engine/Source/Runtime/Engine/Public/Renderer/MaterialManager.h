@@ -77,27 +77,28 @@ typedef MaterialRef HMaterial;
 
 class MaterialManager
 {
+	friend class HEngine;
 public:
-	MaterialManager() 
-	{
-	}
-	~MaterialManager() 
-	{
-	}
+	MaterialManager();
+	~MaterialManager();
 
 	MaterialRef FindOrLoadMaterialFromFile(const String& Path);
-
+	MaterialRef CreateOneOffMaterial( const String& Path );
 	void DestroyMaterial(const String& Key);
-
-	MaterialRef GetMaterialByName(const String& Id)
-	{
-		return m_MaterialCache.at(Id).get();
-	}
-
+	MaterialRef GetMaterialByName( const String& Id );
 	void FlushMaterialCache();
 
 private:
 	std::unordered_map< String, std::unique_ptr<ManagedMaterial> > m_MaterialCache;
-
 	CriticalSection m_MapMutex;
+
 };
+
+
+// Inline function implementations
+//
+
+FORCEINLINE MaterialRef MaterialManager::GetMaterialByName( const String& Id )
+{
+	return m_MaterialCache.at( Id ).get();
+}

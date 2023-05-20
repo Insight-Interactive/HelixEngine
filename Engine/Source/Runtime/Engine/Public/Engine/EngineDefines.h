@@ -50,7 +50,7 @@
 #define HE_MAX_DIRECTIONAL_LIGHTS	4
 // Shader constant buffer registers
 // These register indicies are reserved and constant across all shaders and must NOT be changed!
-// New constant buffers should reside in indicies immediatly following the last index to insude no buffer registers are duplicated.
+// New constant buffers should reside in indicies immediatly following the last index to insure no buffer registers are duplicated.
 #define kSceneConstantsReg  0
 #define kMeshWorldReg       1
 #define kLightsReg          2

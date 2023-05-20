@@ -36,6 +36,7 @@ public:
 	static HTextureRef GetTexture( const FGUID& Guid );
 	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
 	static MaterialRef GetMaterial( const FGUID& Guid );
+	static MaterialRef CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
 	static LuaScriptRef GetScript( const FGUID& Guid );
 
@@ -106,6 +107,11 @@ private:
 	return GMaterialManager.FindOrLoadMaterialFromFile( SInstance->LookupMaterial( Guid ) );
 }
 
+/*static*/ FORCEINLINE MaterialRef FAssetDatabase::CreateOneOffMaterial( const FGUID& ParentGuid )
+{
+	return GMaterialManager.CreateOneOffMaterial( SInstance->LookupMaterial( ParentGuid ) );
+}
+
 /*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
 	return SInstance->LookupShader( Guid );
@@ -114,7 +120,6 @@ private:
 /*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const FGUID& Guid )
 {
 	return GScriptManager.FindOrLoadScript( SInstance->LookupScript( Guid ) );
-
 }
 
 /*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()

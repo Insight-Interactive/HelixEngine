@@ -34,6 +34,11 @@ typedef void (OutVoidInVoidFn)(void);
 typedef void (OutVoidInFloatFn)(float);
 
 /*
+	void SomeFunction(const Char*)
+*/
+typedef void (OutVoidInStrFn)( const Char* );
+
+/*
 	void SomeFunction(EWindowMode Mode);
 */
 typedef void (OutVoidInEWindowModeFn)(EWindowMode);

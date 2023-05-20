@@ -55,6 +55,8 @@ project ("HelixEd")
 		heGetThirdPartyModule( "Rapidjson" )	.. "include/",
 		heGetThirdPartyModule( "PhysX-4.1" )	.. "physx/include/",
 		heGetThirdPartyModule( "PhysX-4.1" )	.. "pxshared/include/",
+		heGetThirdPartyModule( "LuaPlus" ),
+		heGetThirdPartyModule( "Lua535" ),
 	}
 
 	defines

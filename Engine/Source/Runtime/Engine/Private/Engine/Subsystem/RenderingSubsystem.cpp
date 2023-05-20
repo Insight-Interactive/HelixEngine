@@ -24,7 +24,7 @@ FRenderingSubsystem::~FRenderingSubsystem()
 
 void FRenderingSubsystem::Initialize()
 {
-	m_Scenes.reserve( 4 );
+	m_Scenes.reserve( 1 );
 	// Initialize the renderer.
 	FRendererInitializer::InitializeContext( m_RenderContext );
 }

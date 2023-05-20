@@ -88,6 +88,8 @@ bool HelixEdHomeUI::OnAppBeginPlay( AppBeginPlayEvent& e )
 {
 	OnAppBeginPlay();
 	GEditorEngine->OnAppBeginPlay( e );
+	m_DetailsPanel.SetSelectedObject( nullptr );
+
 	return false;
 }
 
@@ -95,6 +97,7 @@ bool HelixEdHomeUI::OnAppEndPlay( AppEndPlayEvent& e )
 {
 	OnAppEndPlay();
 	GEditorEngine->OnAppEndPlay( e );
+	m_DetailsPanel.SetSelectedObject( nullptr );
 	return false;
 }
 

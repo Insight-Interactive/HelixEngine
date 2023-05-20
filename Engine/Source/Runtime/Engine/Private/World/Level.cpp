@@ -9,6 +9,7 @@
 #include "GameFramework/Actor/AActor.h"
 #include "GameFramework/Actor/APlayerCharacter.h"
 #include "AssetRegistry/AssetDatabase.h"
+#include "ThreadPool.h"
 
 
 HLevel::HLevel( HWorld* pOwner )
@@ -105,6 +106,11 @@ void HLevel::Serialize( WriteContext& Output )
 	}
 }
 
+void LoadActorAsyncMain( void* pData )
+{
+
+}
+
 void HLevel::Deserialize( const ReadContext& Value )
 {
 	m_IsLoading.Set();
@@ -137,9 +143,12 @@ void HLevel::Deserialize( const ReadContext& Value )
 					{
 						FTransform Transform;
 						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
-						pRoot->SetPosition( Transform.GetPosition() );
-						pRoot->SetRotation( Transform.GetRotation() );
-						pRoot->SetScale( Transform.GetScale() );
+						FVector3 Pos = Transform.GetPosition();
+						pRoot->Translate( Pos.x, Pos.y, Pos.z );
+						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
+						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+						FVector3 Sca = Transform.GetScale();
+						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}
 					pNewActor->OnDeserializeComplete();
 				}
@@ -152,9 +161,12 @@ void HLevel::Deserialize( const ReadContext& Value )
 					{
 						FTransform Transform;
 						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
-						pRoot->SetPosition( Transform.GetPosition() );
-						pRoot->SetRotation( Transform.GetRotation() );
-						pRoot->SetScale( Transform.GetScale() );
+						FVector3 Pos = Transform.GetPosition();
+						pRoot->Translate( Pos.x, Pos.y, Pos.z );
+						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
+						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+						FVector3 Sca = Transform.GetScale();
+						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}
 					pPlayer->OnDeserializeComplete();
 				}

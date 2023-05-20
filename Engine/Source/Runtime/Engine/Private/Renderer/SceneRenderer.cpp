@@ -162,7 +162,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		CmdContext.SetDescriptorHeap(RHT_CBV_SRV_UAV, GTextureHeap.GetNativeHeap());
 
 		Scene.RenderStaticTranslucentAndUnlitObjects(CmdContext);
-	
+
 		m_ForwardRenderPass.UnBind( CmdContext );
 	}
 
@@ -173,6 +173,11 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		SetCommonRenderState( CmdContext, false, true );
 		m_BatchRenderer.Tick( (float)GEngine->GetDeltaTime() );
 		m_BatchRenderer.Render( CmdContext );
+	}
+
+	{
+		CmdContext.OMSetRenderTargets( 1, pRTs, &m_DepthBuffer );
+		Scene.RenderDebugMeshes( CmdContext );
 	}
 
 	// Post-Process Pass

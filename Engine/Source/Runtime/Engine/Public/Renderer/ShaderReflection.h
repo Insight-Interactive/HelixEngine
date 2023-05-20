@@ -1,6 +1,7 @@
 #pragma once
 
 const int32 kInvalidShaderResourceCount = -1;
+const int32 kInvalidTextureNormalCount = -1;
 
 enum EShaderResourceType
 {
@@ -26,7 +27,7 @@ struct FShaderResourceDescription
 struct FShaderVariableDescription
 {
 	const Char* Name;
-	uint32 SizeInBytes;
+	uint32		SizeInBytes;
 };
 
 /*
@@ -34,8 +35,8 @@ struct FShaderVariableDescription
 */
 struct FConstantBufferReflection
 {
-	const Char* Name;
-	uint32 SizeInBytes;
+	const Char*								Name;
+	uint32									SizeInBytes;
 	std::vector<FShaderVariableDescription> Variables;
 };
 
@@ -53,6 +54,11 @@ public:
 		Returns the number of resources bound to the specified shader.
 	*/
 	uint32 GetNumBoundResources() const;
+	
+	/*
+		Returns the number of texture use instructions in the specified shader.
+	*/
+	uint32 GetNumTextureNormalInstructions() const;
 
 	/*
 		Retrieves more information about a resource bound to the specified shader.
@@ -89,5 +95,14 @@ FORCEINLINE uint32 FShaderReflection::GetNumBoundResources() const
 	return m_ShaderDesc.BoundResources;
 #else
 	return kInvalidShaderResourceCount;
+#endif
+}
+
+FORCEINLINE uint32 FShaderReflection::GetNumTextureNormalInstructions() const
+{
+#if R_WITH_D3D12
+	return m_ShaderDesc.TextureNormalInstructions;
+#else
+	return kInvalidTextureNormalCount;
 #endif
 }

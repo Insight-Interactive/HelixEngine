@@ -10,5 +10,5 @@ namespace GeometryGenerator
 	*/
 	StaticMeshGeometryRef GenerateScreenAlignedQuadMesh();
 	StaticMeshGeometryRef GenerateSphere(uint32 Radius, uint32 Slices, uint32 Segments);
-	//StaticMeshGeometryRef Generate1x1x1CubeMesh();
+	StaticMeshGeometryRef Generate1x1x1CubeMesh();
 }

@@ -15,8 +15,8 @@ public:
 	virtual bool IsStatic() const override;
 
 protected:
-	virtual void OnCreate() override;
-	virtual void OnDestroy() override;
+	
+	virtual void Tick( float DeltaTime ) override;
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
@@ -27,7 +27,6 @@ protected:
 
 private:
 	void RegisterCollider( bool StartDisabled );
-	void UnRegisterCollider();
 
 private:
 	HSphereRigidBody m_RigidBody;

@@ -37,9 +37,21 @@ void APlayerCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		const float Rotation = Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime();
-		m_pCameraComponent->Rotate( Rotation, 0.0f, 0.0f );
+		const float AppliedRotation = Value * m_CameraPitchSpeedMultiplier* GetWorld()->GetDeltaTime();
+		m_pCameraComponent->Rotate( AppliedRotation, 0.0f, 0.0f );
 		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
+
+		// Rotation Clamp
+		const float kXRotationClamp = 1.5f;
+		FVector3 Rotation = m_pCameraComponent->GetEulerRotation();
+		if (Rotation.x < -1.501f)
+		{
+			m_pCameraComponent->SetRotation( -kXRotationClamp, Rotation.y, Rotation.z );
+		}
+		else if (Rotation.x > 1.501f)
+		{
+			m_pCameraComponent->SetRotation( kXRotationClamp, Rotation.y, Rotation.z );
+		}
 	}
 }
 

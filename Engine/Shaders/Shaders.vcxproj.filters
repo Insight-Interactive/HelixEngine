@@ -75,6 +75,9 @@
     <FxCompile Include="Public\ForwardShading\DefaultUnlit.vs.hlsl">
       <Filter>Public\ForwardShading</Filter>
     </FxCompile>
+    <FxCompile Include="Public\ForwardShading\Wireframe.ps.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Private\Debug\DebugCommon.hlsli">

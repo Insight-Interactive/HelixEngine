@@ -4,6 +4,10 @@
 #include "CollisionHandler.h"
 
 #include "RigidBody.h"
+#include "ModelManager.h"
+#include "ConstantBuffer.h"
+#include "Renderer/MaterialManager.h"
+#include "Renderer/ConstantBufferStructures.h"
 
 
 HCOMPONENT()
@@ -11,6 +15,7 @@ class HColliderComponent : public HSceneComponent, public PhysicsCallbackHandler
 {
 	friend class AActor;
 	friend class HWorld;
+	friend class HScene;
 	using Super = HSceneComponent;
 public:
 	virtual bool IsStatic() const = 0;
@@ -22,6 +27,8 @@ public:
 	void SetAngularDamping( const float& Damping );
 	void SetLinearVelocity( const FVector3& Velocity );
 
+	bool GetIsDrawEnabled() const;
+	void SetDrawEnabled( const bool& DrawEnabled );
 	float GetMass() const;
 	void SetMass( const float& NewMass );
 	float GetDensity() const;
@@ -31,7 +38,6 @@ public:
 	void AddForce( const FVector3& Force );
 	void AddImpulse( const FVector3& Impulse );
 
-
 protected:
 	HE_COMPONENT_GENERATED_BODY( HColliderComponent );
 
@@ -40,6 +46,7 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 	virtual void OnOwnerDeserializeComplete() override;
+	virtual void Render( FCommandContext& GfxContext ) override;
 
 	/*
 		Called when another collider enters this collider's bounds.
@@ -59,12 +66,20 @@ protected:
 
 protected:
 	virtual void OnCreate();
+	virtual void OnDestroy();
 	// Each collier type overrides this to return their rigid body subclass.
 	virtual HRigidBody& GetRigidBody() = 0;
 	virtual const HRigidBody& GetRigidBody() const = 0;
 
 	// PhysicsCallbackHandler overrides
 	virtual void CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider ) override;
+
+protected:
+	// Debug Mesh
+	bool									m_CollisionBoundsDrawEnabled;
+	HStaticMesh								m_MeshAsset;
+	TConstantBuffer<MeshWorldCBData>		m_MeshWorldCB;
+	HMaterial								m_MaterialAsset;
 
 private:
 	/*
@@ -120,6 +135,16 @@ FORCEINLINE void HColliderComponent::SetAngularDamping( const float& Damping )
 FORCEINLINE void HColliderComponent::SetLinearVelocity( const FVector3& Velocity )
 {
 	GetRigidBody().SetLinearVelocity( Velocity );
+}
+
+FORCEINLINE bool HColliderComponent::GetIsDrawEnabled() const
+{
+	return m_CollisionBoundsDrawEnabled;
+}
+
+FORCEINLINE void HColliderComponent::SetDrawEnabled( const bool& DrawEnabled )
+{
+	m_CollisionBoundsDrawEnabled = DrawEnabled;
 }
 
 FORCEINLINE float HColliderComponent::GetMass() const

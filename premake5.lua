@@ -143,4 +143,3 @@ group ("Programs")
 group ("")
 
 --Third Party
-dofile ("Engine/ThirdParty/lua-5.4.4/LuaLib.library.lua")

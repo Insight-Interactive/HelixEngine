@@ -5,6 +5,7 @@
       "EMaterialBlendMode": 0,
       "EMaterialDomain": 0,
       "EShadingModel": 2,
+      "EFillMode": 3,
       "IsTwoSided": false
     },
     {

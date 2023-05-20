@@ -499,6 +499,10 @@
       <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Public\ForwardShading\Wireframe.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Private\Debug\DebugCommon.hlsli" />

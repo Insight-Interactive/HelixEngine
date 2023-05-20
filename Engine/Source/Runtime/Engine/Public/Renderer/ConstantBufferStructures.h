@@ -41,6 +41,12 @@ HE_ALIGN( 16 ) struct MaterialConstantsCBData
 	FVector4 kColor;
 };
 
+HE_ALIGN( 16 ) struct WireframeParamsCBData
+{
+	FVector3 kColor;
+	float kOpacity;
+};
+
 // Light Structures
 // Keep these in sync with "Shaders/Public/Core/LightsFwd.hlsli"
 //

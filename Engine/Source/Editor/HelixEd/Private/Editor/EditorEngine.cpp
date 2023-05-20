@@ -489,7 +489,7 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 	GGameInstance->OnGameSetFocus();
 	// TODO Check if the world is dirty, ask to save if it first before playing.
 	m_GameWorld.ReloadAndBeginPlay();
-
+	
 	return false;
 }
 

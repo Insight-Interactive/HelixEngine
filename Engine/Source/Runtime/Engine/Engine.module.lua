@@ -72,7 +72,7 @@ project ("Engine")
 		-- Third Party
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
-		heGetThirdPartyModule( "lua-5.4.4" )		.. "src/",
+		heGetThirdPartyModule( "LuaPlus" ),
 	}
 
 	links   
@@ -87,7 +87,7 @@ project ("Engine")
 
 	libdirs
 	{
-		"%{libraryDirectories.LuaCore}",
+
 	}
 
 	defines
@@ -210,31 +210,6 @@ project ("Engine")
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx64_debug}",
-		}
-
-	-- Lua
-	filter { "configurations:not ShippingGame", "platforms:Win64" }
-		links
-		{
-			"%{libraries.Lua64_Debug}",
-		}
-	
-	filter { "configurations:ShippingGame", "platforms:Win64" }
-		links
-		{
-			"%{libraries.Lua64_Release}",
-		}
-
-	filter { "configurations:not ShippingGame", "platforms:Win32" }
-		links
-		{
-			"%{libraries.Lua32_Debug}",
-		}
-	
-	filter { "configurations:ShippingGame", "platforms:Win32" }
-		links
-		{
-			"%{libraries.Lua32_Debug}",
 		}
 
 
