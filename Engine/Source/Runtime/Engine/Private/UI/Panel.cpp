@@ -7,7 +7,6 @@
 
 
 FUIPanel::FUIPanel()
-	: m_IsDirty( false )
 {
 }
 

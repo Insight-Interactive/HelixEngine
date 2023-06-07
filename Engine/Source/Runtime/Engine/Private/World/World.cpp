@@ -149,7 +149,6 @@ void HWorld::Flush()
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
-		m_Scene.WaitForRenderingFinished();
 		GEngine->GetRenderingSubsystem().RemoveSceneFromRendering( m_Scene );
 
 		// Cleanup the level and destroy all actors and components.

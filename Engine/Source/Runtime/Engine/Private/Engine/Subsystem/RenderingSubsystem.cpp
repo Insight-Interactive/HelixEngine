@@ -39,84 +39,9 @@ void FRenderingSubsystem::UnInitialize()
 
 void FRenderingSubsystem::RunAsync_Implementation()
 {
+	return;
 	while (m_IsRunning)
 	{
-		for (HScene* pScene : m_Scenes)
-		{
-			HScene& Scene = *pScene;
-			if (Scene.IsDirty())
-			{
-				// Render.
-				FSceneRenderParams& SceneRenderParams = Scene.GetRenderParams();
-				FColorBuffer& RenderTarget = *SceneRenderParams.pRenderTarget;
-
-				SceneRenderParams.pSceneRenderer->RenderScene(
-					Scene,
-					RenderTarget, *SceneRenderParams.pView, *SceneRenderParams.pScissor,
-					SceneRenderParams.pRenderingViewport->GetWindow().GetSwapChain()->GetCurrentFrameIndex(),
-					SceneRenderParams.pRenderingCamera );
-			}
-		}
-
-		for (FUIPanel* pPanel : m_UIPanels)
-		{
-			FUIPanel& Panel = *pPanel;
-			if (Panel.IsDirty())
-			{
-				FUIRenderParams& UIRenderParams = Panel.GetRenderParams();
-				FColorBuffer& RenderTarget = *UIRenderParams.pRenderTarget;
-				FDepthBuffer& DepthBuffer = *UIRenderParams.pDepthBuffer;
-
-				UIRenderParams.pUIRenderer->RenderPanel(
-					Panel, RenderTarget, DepthBuffer, *UIRenderParams.pView, *UIRenderParams.pScissor,
-					UIRenderParams.pRenderingViewport->GetWindow().GetSwapChain()->GetCurrentFrameIndex() );
-
-			}
-		}
-
-		for (HScene* pScene : m_Scenes)
-		{
-			HScene& Scene = *pScene;
-			if (Scene.IsDirty())
-			{
-				// Render.
-				FSceneRenderParams& SceneRenderParams = Scene.GetRenderParams();
-				FColorBuffer& RenderTarget = *SceneRenderParams.pRenderTarget;
-				// Present.
-				if (SceneRenderParams.FlipSwapChainBuffers)
-				{
-					// Transition.
-					FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
-					{
-						CmdContext.TransitionResource( RenderTarget, RS_Present );
-					}
-					CmdContext.End( true );
-
-					SceneRenderParams.pRenderingViewport->PresentOneFrame();
-				}
-				//Scene.OnRenderingFinished();
-
-			}
-		}
-
-
-		for (HScene* pScene : m_Scenes)
-		{
-			HScene& Scene = *pScene;
-			if (Scene.IsDirty())
-			{
-				Scene.OnRenderingFinished();
-			}
-		}
-
-		for (FUIPanel* pPanel : m_UIPanels)
-		{
-			FUIPanel& Panel = *pPanel;
-			if (Panel.IsDirty())
-			{
-				Panel.OnRenderingFinished();
-			}
-		}
 
 	}
 

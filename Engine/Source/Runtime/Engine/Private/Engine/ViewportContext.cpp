@@ -9,6 +9,7 @@
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "UI/Panel.h"
+#include "CommandContext.h"
 
 
 FViewportContext::FViewportContext()
@@ -68,16 +69,16 @@ void FViewportContext::Render()
 	{
 		if (m_pWorldInView != nullptr)
 		{
-			// Wait for the previous frame to finish rendering.
-			HScene& Scene = m_pWorldInView->GetScene();
-			Scene.WaitForRenderingFinished();
-
-			FUIPanel& DebugUI = m_pWorldInView->GetDebugUIPanel();
-			DebugUI.WaitForRenderingFinished();
-
 			// Render directly to the swapchain.
 			RenderWorld( m_Window.GetRenderSurface() );
 			RenderUI( m_Window.GetRenderSurface() );
+
+			// Transition.
+			FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
+			CmdContext.TransitionResource( m_Window.GetRenderSurface(), RS_Present );
+			CmdContext.End( true );
+
+			PresentOneFrame();
 		}
 	}
 }
@@ -94,32 +95,23 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 
 	// Wait for the previous frame to finish rendering.
 	HScene& Scene = m_pWorldInView->GetScene();
-	Scene.WaitForRenderingFinished();
 
-	FSceneRenderParams RenderParams = {};
-	RenderParams.pSceneRenderer			= &m_SceneRenderer;
-	RenderParams.FlipSwapChainBuffers	= !GEngine->GetIsEditorPresent();
-	RenderParams.pRenderTarget			= &RenderTarget;
-	RenderParams.pView					= &GetClientViewport();
-	RenderParams.pScissor				= &GetClientRect();
-	RenderParams.pRenderingViewport		= this;
-	RenderParams.pRenderingCamera		= m_pWorldInView->GetCurrentSceneRenderCamera();
-	Scene.RequestRender( RenderParams );
+	m_SceneRenderer.RenderScene(
+		Scene, RenderTarget, 
+		GetClientViewport(), GetClientRect(),
+		GetWindow().GetSwapChain()->GetCurrentFrameIndex(),
+		m_pWorldInView->GetCurrentSceneRenderCamera() );
 }
 
 void FViewportContext::RenderUI( FColorBuffer& RenderTarget )
 {
 	FUIPanel& DebugUI = m_pWorldInView->GetDebugUIPanel();
-	DebugUI.WaitForRenderingFinished();
 
-	FUIRenderParams RenderParams = {};
-	RenderParams.pUIRenderer = &m_UIRenderer;
-	RenderParams.pRenderTarget = &RenderTarget;
-	RenderParams.pDepthBuffer = &m_SceneRenderer.GetDepthBuffer();
-	RenderParams.pView = &GetClientViewport();
-	RenderParams.pScissor = &GetClientRect();
-	RenderParams.pRenderingViewport = this;
-	DebugUI.RequestRender( RenderParams );
+	m_UIRenderer.RenderPanel(
+		DebugUI, RenderTarget,
+		m_SceneRenderer.GetDepthBuffer(), 
+		GetClientViewport(), GetClientRect(),
+		GetWindow().GetSwapChain()->GetCurrentFrameIndex() );
 }
 
 void FViewportContext::InitializeRenderingResources()

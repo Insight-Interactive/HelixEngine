@@ -48,12 +48,14 @@ private:
 
 FORCEINLINE void FRenderingSubsystem::PushSceneForRendering( HScene& Scene )
 {
+	return;
 	ScopedCriticalSection Guard( m_SceneRenderMutex );
 	m_Scenes.push_back( &Scene );
 }
 
 FORCEINLINE bool FRenderingSubsystem::RemoveSceneFromRendering( HScene& Scene )
 {
+	return true;
 	ScopedCriticalSection Guard( m_SceneRenderMutex );
 	auto Iter = std::find( m_Scenes.begin(), m_Scenes.end(), &Scene );
 	if (Iter != m_Scenes.end())
@@ -67,12 +69,14 @@ FORCEINLINE bool FRenderingSubsystem::RemoveSceneFromRendering( HScene& Scene )
 
 FORCEINLINE void FRenderingSubsystem::PushUIPanelForRendering( FUIPanel& Panel )
 {
+	return;
 	ScopedCriticalSection Guard( m_PanelRenderMutex );
 	m_UIPanels.push_back( &Panel );
 }
 
 FORCEINLINE bool FRenderingSubsystem::RemoveUIPanelFromRendering( FUIPanel& Panel )
 {
+	return true;
 	ScopedCriticalSection Guard( m_PanelRenderMutex );
 	auto Iter = std::find( m_UIPanels.begin(), m_UIPanels.end(), &Panel );
 	if (Iter != m_UIPanels.end())

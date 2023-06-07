@@ -8,18 +8,6 @@
 #include "GameFramework/Components/HColliderComponent.h"
 
 
-struct FSceneRenderParams
-{
-	class FSceneRenderer* pSceneRenderer;
-	bool FlipSwapChainBuffers;
-
-	class FColorBuffer* pRenderTarget;
-	FViewPort* pView;
-	FRect* pScissor;
-	class FViewportContext* pRenderingViewport;
-	class HCameraComponent* pRenderingCamera;
-};
-
 class FCommandContext;
 class FSceneRenderer;
 class HWorld;
@@ -31,12 +19,6 @@ class HScene : public HObject
 public:
 	HScene( HWorld* pOwner );
 	virtual ~HScene();
-
-	// Marks the scene as dirty and gets rendered on the render thread.
-	void RequestRender( FSceneRenderParams& RenderParams );
-	bool IsDirty() const;
-	void WaitForRenderingFinished();
-	FSceneRenderParams& GetRenderParams();
 
 	/*
 		Sorts the scene opaque objects first transparent last.
@@ -61,12 +43,9 @@ public:
 
 protected:
 	HWorld* GetWorld();
-	void OnRenderingFinished();
 
 private:
-	bool m_IsDirty;
 	bool m_DrawColliders;
-	FSceneRenderParams m_RenderParams;
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
 	std::vector<HColliderComponent*> m_DebugColliderMeshs;
@@ -81,33 +60,6 @@ private:
 //
 // Inline function implementations
 //
-
-FORCEINLINE void HScene::RequestRender( FSceneRenderParams& RenderParams )
-{
-	m_RenderParams = RenderParams;
-	m_IsDirty = true;
-}
-
-FORCEINLINE bool HScene::IsDirty() const 
-{ 
-	return m_IsDirty;
-}
-
-FORCEINLINE void HScene::WaitForRenderingFinished()
-{
-	while (IsDirty())
-		std::this_thread::yield();
-}
-
-FORCEINLINE void HScene::OnRenderingFinished()
-{
-	m_IsDirty = false;
-}
-
-FORCEINLINE FSceneRenderParams& HScene::GetRenderParams()
-{ 
-	return m_RenderParams; 
-}
 
 FORCEINLINE void HScene::AddStaticMesh( HStaticMeshComponent* pStaticMesh )
 {

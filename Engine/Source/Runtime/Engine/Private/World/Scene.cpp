@@ -10,8 +10,6 @@
 
 HScene::HScene( HWorld* pOwner )
 	: Super( TEXT( "Scene" ) )
-	, m_IsDirty( false )
-	, m_RenderParams( )
 	, m_pOwner( pOwner )
 	, m_DrawColliders( true )
 {
