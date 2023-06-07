@@ -12,7 +12,7 @@
 // SimulationEventCallback
 //
 
-class SimulationEventCallback : public physx::PxSimulationEventCallback
+class FSimulationEventCallback : public physx::PxSimulationEventCallback
 {
 public:
 	virtual void onConstraintBreak( physx::PxConstraintInfo* constraints, physx::PxU32 count ) {}
@@ -24,7 +24,7 @@ public:
 
 };
 
-void SimulationEventCallback::onContact( const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs )
+void FSimulationEventCallback::onContact( const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs )
 {
 	for (physx::PxU32 i = 0; i < nbPairs; i++)
 	{
@@ -37,12 +37,12 @@ void SimulationEventCallback::onContact( const physx::PxContactPairHeader& pairH
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col1 );
 		}
-		else if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 		{
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col1 );
 		}
-		else if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col1 );
@@ -50,7 +50,7 @@ void SimulationEventCallback::onContact( const physx::PxContactPairHeader& pairH
 	}
 }
 
-void SimulationEventCallback::onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count )
+void FSimulationEventCallback::onTrigger( physx::PxTriggerPair* pairs, physx::PxU32 count )
 {
 	while (count--)
 	{
@@ -63,12 +63,12 @@ void SimulationEventCallback::onTrigger( physx::PxTriggerPair* pairs, physx::PxU
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Enter, Col1 );
 		}
-		else if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+		if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 		{
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Stay, Col1 );
 		}
-		else if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		if (cp.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			Col1->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col2 );
 			Col2->CollisionEvent( PhysicsCallbackHandler::CT_Exit, Col1 );
@@ -76,7 +76,7 @@ void SimulationEventCallback::onTrigger( physx::PxTriggerPair* pairs, physx::PxU
 	}
 }
 
-static SimulationEventCallback GSimulationEventCallback;
+static FSimulationEventCallback GSimulationEventCallback;
 
 static physx::PxFilterFlags DefaultFilterShader(
 	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
@@ -129,7 +129,7 @@ void HPhysicsScene::Setup( HPhysicsContext& PhysicsContext )
 	physx::PxSceneDesc SceneDesc( Physics.getTolerancesScale() );
 	SceneDesc.gravity = physx::PxVec3( 0.f, -9.81f, 0.f );
 	SceneDesc.cpuDispatcher = &PhysicsContext.GetCpuDispatcher();
-	SceneDesc.filterShader = DefaultFilterShader;
+	SceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;//DefaultFilterShader;
 	SceneDesc.simulationEventCallback = &GSimulationEventCallback;
 	m_pScene = Physics.createScene( SceneDesc );
 	HE_ASSERT( m_pScene != nullptr );
@@ -330,8 +330,8 @@ void HPhysicsScene::CreateCubeInternal( const FVector3& StartPos, HCubeRigidBody
 
 		physx::PxTransform InitialTransform = physx::PxTransform( physx::PxVec3( StartPos.x, StartPos.y, StartPos.z ) );
 		outCube.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
-		outCube.m_pRigidActor->attachShape( *pShape );
 
+		outCube.m_pRigidActor->attachShape( *pShape );
 		m_pScene->addActor( *outCube.m_pRigidActor );
 		pShape->release();
 	}
@@ -464,7 +464,10 @@ void HPhysicsScene::TickInternal()
 
 void HPhysicsScene::WaittillSimulationFinished() const
 {
-	while (m_IsSimulating.IsSet())
+	while (m_EventQueue.GetNumEvents())
+		std::this_thread::yield();
+
+	while(m_IsSimulating.IsSet())
 		std::this_thread::yield();
 }
 

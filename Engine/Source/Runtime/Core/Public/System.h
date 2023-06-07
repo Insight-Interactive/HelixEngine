@@ -177,6 +177,12 @@ namespace System
 	void SetWorkingDirectory(TChar* Path);
 
 	/*
+		Returns true if a file exists, false if not.
+		@param Path - The full path to the file in question.
+	*/
+	bool FileExists( const TChar* Path );
+
+	/*
 		Returns the number of CPU cores the current thread posseses.
 	*/
 	uint32 GetProcessorCount();

@@ -17,6 +17,7 @@
 #	include <process.h>
 #	include <strsafe.h>
 #	include <rpc.h>
+#	include <shlwapi.h>
 
 #	if HE_WINDOWS_UNIVERSAL
 #		include <winrt/Windows.UI.Popups.h>

@@ -54,6 +54,10 @@ void HWorld::Initialize( const Char* LevelURL )
 		// Load the worlds actors.
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
+
+		// TEMP
+		m_DebugUI.AddWidget( m_FPSCounter );
+		m_FPSCounter.SetText( L"FPS: " );
 	}
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
@@ -64,6 +68,7 @@ void HWorld::Initialize()
 	m_Filepath = "Default (Non-Load)";
 	SetObjectName( TEXT( "Default World" ) );
 	RegisterScenes();
+
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
@@ -83,6 +88,7 @@ void HWorld::RegisterScenes()
 {
 	m_PhysicsScene.Setup( GEngine->GetPhysicsSubsystem().GetPhysicsContext() );
 
+	GEngine->GetRenderingSubsystem().PushUIPanelForRendering( m_DebugUI );
 	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
 	GEngine->GetPhysicsSubsystem().AddSceneForSimulation( m_PhysicsScene );
 }
@@ -102,6 +108,21 @@ void HWorld::Tick( float DeltaTime )
 {
 	m_PhysicsScene.WaittillSimulationFinished(); // Sync the physics thread.
 	
+	static float SecondTimer = 0.f;
+	static float FPS = 0.f;
+	SecondTimer += DeltaTime;
+	if (SecondTimer > 1.f)
+	{
+		WString Label = L"FPS: " + std::to_wstring( (int)FPS );
+		Label += L" (" + std::to_wstring( DeltaTime );
+		Label += +L" ms)";
+		m_FPSCounter.SetText( Label );
+		FPS = 0.f;
+		SecondTimer = 0.f;
+	}
+	else
+		FPS++;
+
 	m_CameraManager.Tick( DeltaTime );
 
 	if (GEngine->IsPlayingInEditor())

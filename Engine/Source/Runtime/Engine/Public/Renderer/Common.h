@@ -16,5 +16,8 @@ extern const uint32 kNumSceneMeshCommonInputElements;
 extern FInputElementDesc GScreenSpaceInputElements[];
 extern const uint32 kNumScreenSpaceInputElements;
 
+extern FInputElementDesc GUITextInputElements[];
+extern const uint32 kUITextInputInputElements;
+
 // Sampler Descriptions.
 extern FSamplerDesc GLinearWrapSamplerDesc;

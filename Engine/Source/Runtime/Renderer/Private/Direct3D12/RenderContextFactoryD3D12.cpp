@@ -38,6 +38,7 @@ void FRenderContextFactory::CreateContext(FRenderContext& OutContext)
 	CreateGeometryManager(GGeometryManager);
 	CreateTextureManager(GTextureManager);
 
+
 	R_LOG(Log, TEXT("Render backend initialization complete."));
 }
 
@@ -115,4 +116,5 @@ void FRenderContextFactory::CreateTextureManager(FTextureManager& OutTexManager)
 {
 	OutTexManager.Initialize();
 }
+
 #endif // R_WITH_D3D12

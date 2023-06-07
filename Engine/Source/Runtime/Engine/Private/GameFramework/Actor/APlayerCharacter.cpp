@@ -26,6 +26,8 @@ APlayerCharacter::~APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	GetRootComponent()->SetPosition( { -4.8f, 4.2f, -106.4f} );
+
 }
 
 void APlayerCharacter::Tick( float DeltaMs )

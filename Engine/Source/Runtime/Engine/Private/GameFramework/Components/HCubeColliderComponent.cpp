@@ -26,6 +26,21 @@ void HCubeColliderComponent::Tick( float DeltaTime )
 	SetScale( m_RigidBody.GetWidth() * 2, m_RigidBody.GetHeight() * 2, m_RigidBody.GetDepth() * 2 );
 }
 
+void HCubeColliderComponent::OnEnter( HColliderComponent* Other )
+{
+	HE_LOG( Log, TEXT(  "%s Exited %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+}
+
+void HCubeColliderComponent::OnExit( HColliderComponent* Other )
+{
+	HE_LOG( Log, TEXT( "%s Exit %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+}
+
+void HCubeColliderComponent::OnStay( HColliderComponent* Other )
+{
+	HE_LOG( Log, TEXT( "%s Stay %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+}
+
 void HCubeColliderComponent::Serialize( WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( HCubeColliderComponent ) );
@@ -75,8 +90,6 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetDepth( Dimensions.z );
 
 	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
-	m_MaterialAsset = new FMaterialInstance();
-	m_MaterialAsset->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 
 	RegisterCollider( false );
 }

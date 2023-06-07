@@ -15,6 +15,9 @@
 #include "Engine/Event/EngineEvent.h"
 
 
+extern HGameInstance* GGameInstance;
+
+
 SceneViewportPanel::SceneViewportPanel()
 	: m_DescriptorHandle()
 	, m_IsCameraRotating( false )

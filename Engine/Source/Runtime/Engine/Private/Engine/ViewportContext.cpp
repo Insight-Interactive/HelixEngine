@@ -8,6 +8,7 @@
 #include "Engine/Event/EngineEvent.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
+#include "UI/Panel.h"
 
 
 FViewportContext::FViewportContext()
@@ -71,8 +72,12 @@ void FViewportContext::Render()
 			HScene& Scene = m_pWorldInView->GetScene();
 			Scene.WaitForRenderingFinished();
 
+			FUIPanel& DebugUI = m_pWorldInView->GetDebugUIPanel();
+			DebugUI.WaitForRenderingFinished();
+
 			// Render directly to the swapchain.
 			RenderWorld( m_Window.GetRenderSurface() );
+			RenderUI( m_Window.GetRenderSurface() );
 		}
 	}
 }
@@ -92,7 +97,7 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	Scene.WaitForRenderingFinished();
 
 	FSceneRenderParams RenderParams = {};
-	RenderParams.pRenderer				= &m_SceneRenderer;
+	RenderParams.pSceneRenderer			= &m_SceneRenderer;
 	RenderParams.FlipSwapChainBuffers	= !GEngine->GetIsEditorPresent();
 	RenderParams.pRenderTarget			= &RenderTarget;
 	RenderParams.pView					= &GetClientViewport();
@@ -102,6 +107,21 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	Scene.RequestRender( RenderParams );
 }
 
+void FViewportContext::RenderUI( FColorBuffer& RenderTarget )
+{
+	FUIPanel& DebugUI = m_pWorldInView->GetDebugUIPanel();
+	DebugUI.WaitForRenderingFinished();
+
+	FUIRenderParams RenderParams = {};
+	RenderParams.pUIRenderer = &m_UIRenderer;
+	RenderParams.pRenderTarget = &RenderTarget;
+	RenderParams.pDepthBuffer = &m_SceneRenderer.GetDepthBuffer();
+	RenderParams.pView = &GetClientViewport();
+	RenderParams.pScissor = &GetClientRect();
+	RenderParams.pRenderingViewport = this;
+	DebugUI.RequestRender( RenderParams );
+}
+
 void FViewportContext::InitializeRenderingResources()
 {
 	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
@@ -109,11 +129,17 @@ void FViewportContext::InitializeRenderingResources()
 	if (GEngine->GetIsEditorPresent())
 		m_SceneRenderTarget.Create( L"Pre-Display Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
 
-	FSceneRendererInitParams InitParams;
-	ZeroMemory( &InitParams, sizeof( InitParams ) );
-	InitParams.RenderingResolution = m_Window.GetDimensions();
-	InitParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
-	m_SceneRenderer.Initialize( InitParams, *this );
+	FSceneRendererInitParams SceneParams;
+	ZeroMemory( &SceneParams, sizeof( SceneParams ) );
+	SceneParams.RenderingResolution = m_Window.GetDimensions();
+	SceneParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	m_SceneRenderer.Initialize( SceneParams, *this );
+
+	FUIRendererInitParams UIParams;
+	ZeroMemory( &UIParams, sizeof( UIParams ) );
+	UIParams.RenderingResolution = m_Window.GetDimensions();
+	UIParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	m_UIRenderer.Initialize( UIParams, *this );
 }
 void FViewportContext::ReloadRenderPipelines()
 {
@@ -156,8 +182,8 @@ bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )
 {
 	if (!GEngine->GetIsEditorPresent())
 	{
-		ShowMouse();
-		UnlockMouseFromScreenCenter();
+		//ShowMouse();
+		//UnlockMouseFromScreenCenter();
 	}
 
 	return false;
@@ -167,8 +193,8 @@ bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
 {
 	if (!GEngine->GetIsEditorPresent())
 	{
-		HideMouse();
-		LockMouseToScreenCenter();
+		//HideMouse();
+		//LockMouseToScreenCenter();
 	}
 
 	return false;

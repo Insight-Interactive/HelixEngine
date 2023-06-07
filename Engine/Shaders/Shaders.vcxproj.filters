@@ -25,6 +25,9 @@
     <Filter Include="Public\ForwardShading">
       <UniqueIdentifier>{A67D9A1C-12EA-5517-DBDD-ED744709787F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\UI">
+      <UniqueIdentifier>{31B571CE-9D1F-2645-E65D-D7EA5207049A}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Private\Debug\DebugLine.ps.hlsl">
@@ -78,6 +81,12 @@
     <FxCompile Include="Public\ForwardShading\Wireframe.ps.hlsl">
       <Filter>Public\ForwardShading</Filter>
     </FxCompile>
+    <FxCompile Include="Public\UI\Text.ps.hlsl">
+      <Filter>Public\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\UI\Text.vs.hlsl">
+      <Filter>Public\UI</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Private\Debug\DebugCommon.hlsli">
@@ -100,6 +109,9 @@
     </None>
     <None Include="Public\ForwardShading\ForwardShadingCommon.hlsli">
       <Filter>Public\ForwardShading</Filter>
+    </None>
+    <None Include="Public\UI\UIShadingCommon.hlsli">
+      <Filter>Public\UI</Filter>
     </None>
     <None Include="Shaders.module.lua" />
   </ItemGroup>

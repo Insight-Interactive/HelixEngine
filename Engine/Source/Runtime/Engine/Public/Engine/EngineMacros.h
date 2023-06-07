@@ -41,6 +41,8 @@
 #	define HE_CONFIG_STRING "Development"
 #elif HE_DEBUG_GAME
 #	define HE_CONFIG_STRING "Debug Game"
+#elif HE_DEMO_GAME
+#	define HE_CONFIG_STRING "Demo Game"
 #elif HE_SHIPPING
 #	define HE_CONFIG_STRING "Shipping Game"
 #endif

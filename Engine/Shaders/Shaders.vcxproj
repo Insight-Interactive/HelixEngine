@@ -121,6 +121,46 @@
       <Configuration>DebugGame Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win64|x64">
+      <Configuration>Demo Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win64|Win32">
+      <Configuration>Demo Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win32|x64">
+      <Configuration>Demo Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win32|Win32">
+      <Configuration>Demo Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Durango|x64">
+      <Configuration>Demo Durango</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Durango|Win32">
+      <Configuration>Demo Durango</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Scorpio|x64">
+      <Configuration>Demo Scorpio</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Scorpio|Win32">
+      <Configuration>Demo Scorpio</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Prospero|x64">
+      <Configuration>Demo Prospero</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Prospero|Win32">
+      <Configuration>Demo Prospero</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ShippingGame Win64|x64">
       <Configuration>ShippingGame Win64</Configuration>
       <Platform>x64</Platform>
@@ -230,6 +270,26 @@
     <ConfigurationType>Utility</ConfigurationType>
     <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
@@ -296,6 +356,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -374,6 +449,26 @@
     <OutDir>..\..\Build-clang\DebugGame-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\DebugGame-Prospero\Shaders\Core\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <OutDir>..\..\Build-msc-v143\Demo-Win64\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Win64\Shaders\Core\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+    <OutDir>..\..\Build-msc-v143\Demo-Win32\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Win32\Shaders\Core\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+    <OutDir>..\..\Build-msc-v143\Demo-Durango\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Durango\Shaders\Core\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+    <OutDir>..\..\Build-msc-v143\Demo-Scorpio\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Scorpio\Shaders\Core\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
+    <OutDir>..\..\Build-clang\Demo-Prospero\Shaders\Core\</OutDir>
+    <IntDir>..\..\Build-clang\Intermediates\Demo-Prospero\Shaders\Core\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <OutDir>..\..\Build-msc-v143\ShippingGame-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\ShippingGame-Win64\Shaders\Core\</IntDir>
@@ -423,6 +518,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
   </ItemDefinitionGroup>
@@ -503,6 +608,14 @@
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Public\UI\Text.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\UI\Text.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Private\Debug\DebugCommon.hlsli" />
@@ -512,6 +625,7 @@
     <None Include="Public\Core\PBRCommon.hlsli" />
     <None Include="Public\DeferredShading\DeferredShadingCommon.hlsli" />
     <None Include="Public\ForwardShading\ForwardShadingCommon.hlsli" />
+    <None Include="Public\UI\UIShadingCommon.hlsli" />
     <None Include="Shaders.module.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

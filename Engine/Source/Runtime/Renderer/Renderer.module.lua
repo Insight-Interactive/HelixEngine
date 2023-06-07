@@ -65,7 +65,7 @@ project ("Renderer")
 	}
 	
 
-	filter { "configurations:DebugEditor or Development" }
+	filter { "configurations:DebugEditor or Development or Demo" }
 		defines
 		{
 			"R_TRACK_RENDER_EVENTS=1",
@@ -73,7 +73,7 @@ project ("Renderer")
 			"R_DEBUG=1",
 		}
 	
-	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32 or Durango or Scorpio" }
+	filter { "configurations:DebugEditor or Development or Demo", "platforms:Win64 or Win32 or Durango or Scorpio" }
 		postbuildcommands
 		{
 			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua

@@ -5,33 +5,45 @@
 
 #include "Engine/Engine.h"
 
-#if GAME_MODULE
-#	define GAME_API __declspec( dllexport )
-#else
-#	define GAME_API __declspec( dllimport )
-#endif
 
 class APlayerCharacter;
+class EngineBeginPlayEvent;
 
-class /*GAME_API*/ HGameInstance : public TSingleton<HGameInstance>
+class HGameInstance : public TSingleton<HGameInstance>
 {
+	friend class HEngine;
 public:
-	HGameInstance() {}
-	virtual ~HGameInstance() {}
+	HGameInstance();
+	virtual ~HGameInstance();
 
-	virtual void OnGameSetFocus() 
-	{
-		GEngine->GetClientViewport().LockMouseToScreenCenter();
-	}
-	virtual void OnGameLostFocus() 
-	{
-		GEngine->GetClientViewport().UnlockMouseFromScreenCenter();
-	}
+	virtual void OnGameSetFocus();
+	virtual void OnGameLostFocus();
+
+	HWorld* GetWorld();
 
 protected:
+	void SetWorld( HWorld* pWorld );
+	
+	void OnEvent( EngineEvent& e );
+	bool OnEnginePostStartup( EngineBeginPlayEvent& e );
+
+	void ToggleMenu();
+
+protected:
+	HWorld* m_pWorld;
 
 };
 
-/*static*/ extern HGameInstance* GGameInstance;
 
-GAME_API HGameInstance* MakeGameInstance();
+// Inline function imlpementations
+//
+
+FORCEINLINE void HGameInstance::SetWorld( HWorld* pWorld )
+{
+	m_pWorld = pWorld;
+}
+
+FORCEINLINE HWorld* HGameInstance::GetWorld()
+{
+	return m_pWorld;
+}

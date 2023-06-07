@@ -12,6 +12,7 @@ class ManagedAsset
 	friend class AssetRef<AssetType>;
 	friend class MaterialManager;
 	friend class FTextureManager;
+	friend class FFontManager;
 public:
 	ManagedAsset()
 		: m_MapKey( "<Unnamed ManagedAsset>" )

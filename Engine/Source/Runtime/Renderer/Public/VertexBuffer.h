@@ -11,7 +11,7 @@
 class FCommandContext;
 
 /*
-	Vertex buffer whos verticies are copies once to the Gpu and never change.
+	Vertex buffer whos verticies are copie once to the Gpu and never change.
 */
 class RENDER_API FVertexBuffer : public FGpuResource
 {

@@ -1,0 +1,23 @@
+{
+  "FMaterial": [
+    {
+      "m_GUID": "d7d2911a-0461-4a69-b28d-259389c45f87",
+      "EMaterialBlendMode": 0,
+      "EMaterialDomain": 0,
+      "EShadingModel": 2,
+      "EFillMode": 3,
+      "IsTwoSided": false
+    },
+    {
+      "MaterialAlbedo": "149ac663-a662-4d51-a57b-8253b53f80bc",
+      "MaterialNormal": "22f34b3e-b377-4ec5-9e47-dd2aa1225216"
+    },
+    {
+      "kOpacity": 0.7
+    },
+    {
+      "VertexShader": "ada4a5fc-7395-4db6-81bc-863c0add8066",
+      "PixelShader": "c7cd8297-1098-446c-8d01-7d175f81564c"
+    }
+  ]
+}

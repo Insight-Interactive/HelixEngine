@@ -288,7 +288,7 @@ FORCEINLINE bool File::WriteData(void* pData, uint64 ElementSize, uint64 Element
 {
 	HE_ASSERT( m_UsageMode == FUM_Write || m_UsageMode == FUM_Append );
 	
-	return fwrite( pData, ElementSize, ElementCount, GetCFile() ) == ElementCount;
+	return fwrite( pData, (size_t)ElementSize, (size_t)ElementCount, GetCFile() ) == ElementCount;
 }
 
 FORCEINLINE void* File::ReadData()
@@ -296,11 +296,11 @@ FORCEINLINE void* File::ReadData()
 	HE_ASSERT( m_UsageMode == FUM_Read ); // Trying to read contents of a file with no read privlages.
 	
 	uint64 FileSizeInBytes = GetSizeInBytes();
-	m_pContents = HE_HeapAlloc( FileSizeInBytes );
+	m_pContents = HE_HeapAlloc( (size_t)FileSizeInBytes );
 	HE_ASSERT( m_pContents != null ); // Failed to allocate memory.
-	ZeroMemory( m_pContents, FileSizeInBytes );
+	ZeroMemory( m_pContents, (size_t)FileSizeInBytes );
 
-	fread( m_pContents, 1, FileSizeInBytes, m_pFile );
+	fread( m_pContents, 1, (size_t)FileSizeInBytes, m_pFile );
 	HE_ASSERT( m_pContents != null ); // Failed to read the file contents into the buffer.
 
 	return m_pContents;

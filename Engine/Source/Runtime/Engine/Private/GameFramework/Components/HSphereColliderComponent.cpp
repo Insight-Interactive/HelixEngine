@@ -64,8 +64,6 @@ void HSphereColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetRadius( Radius );
 
 	m_MeshAsset = GeometryGenerator::GenerateSphere(1, 10, 10);
-	m_MaterialAsset = new FMaterialInstance();
-	m_MaterialAsset->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 
 	RegisterCollider( false );
 }

@@ -2,7 +2,6 @@
 
 #include "CoreFwd.h"
 
-
 class CORE_API FFlag
 {
 public:

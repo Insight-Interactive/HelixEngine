@@ -8,6 +8,7 @@
 
 #include "Input/InputDispatcher.h"
 #include "Renderer/SceneRenderer.h"
+#include "Renderer/UIRenderer.h"
 
 
 class HWorld;
@@ -91,6 +92,7 @@ protected:
 	// Rendering
 	//
 	void RenderWorld(FColorBuffer& RenderTarget );
+	void RenderUI( FColorBuffer& RenderTarget );
 
 	// Event Processing
 	//
@@ -113,6 +115,7 @@ protected:
 	// Rendering Resources
 	//
 	FSceneRenderer m_SceneRenderer;
+	FUIRenderer m_UIRenderer;
 	// FWindow
 	FViewPort	m_ViewPort;
 	FRect		m_ScissorRect;

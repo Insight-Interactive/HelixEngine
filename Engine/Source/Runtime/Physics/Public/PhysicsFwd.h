@@ -19,6 +19,7 @@ extern class Logger GPhysicsLogger;
 
 #else
 #	define P_LOG(Severity, Fmt, ...)
+#	define P_LOG_EXPLICIT_SEVERITY(Severity, Fmt, ...) 
 #endif
 
 #include "CommonMacros.h"

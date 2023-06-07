@@ -14,6 +14,7 @@ class FContextManager;
 class FGeometryBufferManager;
 class FConstantBufferManager;
 class FTextureManager;
+class FFontManager;
 
 class RENDER_API FRenderContextFactory
 {

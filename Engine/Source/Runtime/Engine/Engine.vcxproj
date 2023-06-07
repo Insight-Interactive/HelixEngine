@@ -121,6 +121,46 @@
       <Configuration>DebugGame Prospero</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win64|x64">
+      <Configuration>Demo Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win64|Win32">
+      <Configuration>Demo Win64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win32|x64">
+      <Configuration>Demo Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Win32|Win32">
+      <Configuration>Demo Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Durango|x64">
+      <Configuration>Demo Durango</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Durango|Win32">
+      <Configuration>Demo Durango</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Scorpio|x64">
+      <Configuration>Demo Scorpio</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Scorpio|Win32">
+      <Configuration>Demo Scorpio</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Prospero|x64">
+      <Configuration>Demo Prospero</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demo Prospero|Win32">
+      <Configuration>Demo Prospero</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ShippingGame Win64|x64">
       <Configuration>ShippingGame Win64</Configuration>
       <Platform>x64</Platform>
@@ -260,6 +300,36 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -336,6 +406,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
@@ -459,6 +544,41 @@
     <TargetName>Engine</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\Build-msc-v143\Demo-Win64\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Demo-Win64\Win64\Demo\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\Build-msc-v143\Demo-Win32\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Demo-Win32\Win32\Demo\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\Build-msc-v143\Demo-Durango\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Demo-Durango\Durango\Demo\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\Build-msc-v143\Demo-Scorpio\</OutDir>
+    <IntDir>..\..\..\..\Build-msc-v143\Intermediates\Demo-Scorpio\Scorpio\Demo\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\Build-clang\Demo-Prospero\</OutDir>
+    <IntDir>..\..\..\..\Build-clang\Intermediates\Demo-Prospero\Prospero\Demo\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\..\..\Build-msc-v143\ShippingGame-Win64\</OutDir>
@@ -563,7 +683,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugEditor-Durango\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -586,7 +706,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugEditor-Scorpio\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -609,7 +729,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Helix-Scripting.lib;..\..\..\..\Build-clang\DebugEditor-Prospero\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -620,7 +740,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -630,15 +750,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WinPixEventRuntime.lib;PhysXCommon_64.lib;PhysX_64.lib;PhysXFoundation_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXPvdSDK_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_64.vc142.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
@@ -646,7 +766,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -656,14 +776,14 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>WinPixEventRuntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WinPixEventRuntime.lib;PhysXCommon_32.lib;PhysX_32.lib;PhysXFoundation_32.lib;PhysXCooking_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -672,7 +792,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -684,7 +804,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Development-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Development-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Development-Durango\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Development-Durango\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -695,7 +815,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -707,7 +827,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Development-Scorpio\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -718,7 +838,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -730,7 +850,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-clang\Development-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\Development-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\Development-Prospero\Helix-Scripting.lib;..\..\..\..\Build-clang\Development-Prospero\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -741,7 +861,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -751,14 +871,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugGame-Win64\Game-Core.lib;PhysXCommon_64.lib;PhysX_64.lib;PhysXFoundation_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXPvdSDK_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_64.vc142.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -769,7 +890,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -779,14 +900,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugGame-Win32\Game-Core.lib;PhysXCommon_32.lib;PhysX_32.lib;PhysXFoundation_32.lib;PhysXCooking_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_32.vc142.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -797,7 +919,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -809,7 +931,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugGame-Durango\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -820,7 +942,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -832,7 +954,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\DebugGame-Scorpio\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -843,7 +965,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEVELOPMENT=1;HE_DEBUG=1;HE_DEBUG_GAME;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -855,7 +977,134 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Helix-Scripting.lib;..\..\..\..\Build-clang\DebugGame-Prospero\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Demo-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\Demo-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\Demo-Win64\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Demo-Win64\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Demo-Win64\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Demo-Win64\Game-Core.lib;WinPixEventRuntime.lib;PhysXCommon_64.lib;PhysX_64.lib;PhysXFoundation_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXPvdSDK_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_64.vc142.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Demo-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\Demo-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\Demo-Win32\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Demo-Win32\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Demo-Win32\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Demo-Win32\Game-Core.lib;WinPixEventRuntime.lib;PhysXCommon_32.lib;PhysX_32.lib;PhysXFoundation_32.lib;PhysXCooking_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\WinPixEventRuntime\bin\x64;..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_32.vc142.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Demo-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\Demo-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\Demo-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Demo-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Demo-Durango\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Demo-Durango\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\Demo-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\Demo-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\Demo-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\Demo-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\Demo-Scorpio\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\Demo-Scorpio\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\..\..\Build-clang\Demo-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\Demo-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\Demo-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\Demo-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\Demo-Prospero\Helix-Scripting.lib;..\..\..\..\Build-clang\Demo-Prospero\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -888,7 +1137,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win64\Game-Core.lib;PhysXCommon_64.lib;PhysX_64.lib;PhysXFoundation_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXPvdSDK_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_64.vc142.mt\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -921,7 +1171,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\ShippingGame-Win32\Game-Core.lib;PhysXCommon_32.lib;PhysX_32.lib;PhysXFoundation_32.lib;PhysXCooking_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\ThirdParty\PhysX-4.1\physx\bin\win.x86_32.vc142.mt\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -949,7 +1200,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\ShippingGame-Durango\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -977,7 +1228,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Core.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Math.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Renderer.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Physics.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Helix-Scripting.lib;..\..\..\..\Build-msc-v143\ShippingGame-Scorpio\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -1005,7 +1256,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Scripting.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Core.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Math.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Renderer.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Physics.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Helix-Scripting.lib;..\..\..\..\Build-clang\ShippingGame-Prospero\Game-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -1076,6 +1327,8 @@
     <ClInclude Include="Public\Renderer\Common.h" />
     <ClInclude Include="Public\Renderer\ConstantBufferStructures.h" />
     <ClInclude Include="Public\Renderer\Debug.h" />
+    <ClInclude Include="Public\Renderer\Font.h" />
+    <ClInclude Include="Public\Renderer\FontManager.h" />
     <ClInclude Include="Public\Renderer\GeometryGenerator.h" />
     <ClInclude Include="Public\Renderer\LightManager.h" />
     <ClInclude Include="Public\Renderer\Material.h" />
@@ -1089,6 +1342,10 @@
     <ClInclude Include="Public\Renderer\Technique\ForwardRenderPass.h" />
     <ClInclude Include="Public\Renderer\Technique\PostProcessUber.h" />
     <ClInclude Include="Public\Renderer\Technique\SkyPass.h" />
+    <ClInclude Include="Public\Renderer\UIRenderer.h" />
+    <ClInclude Include="Public\UI\Label.h" />
+    <ClInclude Include="Public\UI\Panel.h" />
+    <ClInclude Include="Public\UI\Widget.h" />
     <ClInclude Include="Public\World\CameraManager.h" />
     <ClInclude Include="Public\World\Level.h" />
     <ClInclude Include="Public\World\Scene.h" />
@@ -1155,6 +1412,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1169,6 +1429,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1178,6 +1441,8 @@
     </ClCompile>
     <ClCompile Include="Private\Renderer\Common.cpp" />
     <ClCompile Include="Private\Renderer\Debug.cpp" />
+    <ClCompile Include="Private\Renderer\Font.cpp" />
+    <ClCompile Include="Private\Renderer\FontManager.cpp" />
     <ClCompile Include="Private\Renderer\LightManager.cpp" />
     <ClCompile Include="Private\Renderer\Material.cpp" />
     <ClCompile Include="Private\Renderer\MaterialInstance.cpp" />
@@ -1189,6 +1454,9 @@
     <ClCompile Include="Private\Renderer\Technique\ForwardRenderPass.cpp" />
     <ClCompile Include="Private\Renderer\Technique\PostProcessUber.cpp" />
     <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp" />
+    <ClCompile Include="Private\Renderer\UIRenderer.cpp" />
+    <ClCompile Include="Private\UI\Label.cpp" />
+    <ClCompile Include="Private\UI\Panel.cpp" />
     <ClCompile Include="Private\Windows\Desktop\FileExplorerWinDesktop.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">true</ExcludedFromBuild>
@@ -1199,6 +1467,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1213,6 +1484,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1227,6 +1501,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1252,6 +1529,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
@@ -1280,6 +1560,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Scripting\Scripting.vcxproj">
       <Project>{985A7358-04C5-27CF-4D03-D974B9AC0524}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Game\Source\Game-Core.vcxproj">
+      <Project>{35640B7B-A1CE-BFF1-EA0C-719756B69D46}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Editor\PackageCooker\PackageCooker.vcxproj">
       <Project>{F4D4E73E-6095-6375-29D0-ACF2954FA851}</Project>

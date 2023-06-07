@@ -8,7 +8,8 @@
 #include "World/Scene.h"
 #include "World/Level.h"
 #include "PhysicsScene.h"
-
+#include "UI/Panel.h"
+#include "UI/Label.h"
 
 class HLevel;
 class FCommandContext;
@@ -57,6 +58,7 @@ public:
 	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled = false, bool IsTrigger = false );
 	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
+	FUIPanel& GetDebugUIPanel();
 	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
@@ -91,6 +93,10 @@ protected:
 
 
 protected:
+	// UI
+	FUIPanel m_DebugUI;
+	FLabel m_FPSCounter;
+
 	HLevel m_Level;
 	HScene m_Scene;
 	HPhysicsScene m_PhysicsScene;
@@ -118,6 +124,11 @@ FORCEINLINE HPhysicsScene& HWorld::GetPhysicsScene()
 FORCEINLINE HScene& HWorld::GetScene()
 {
 	return m_Scene;
+}
+
+FORCEINLINE FUIPanel& HWorld::GetDebugUIPanel()
+{
+	return m_DebugUI;
 }
 
 FORCEINLINE HCameraManager* HWorld::GetCameraManager()

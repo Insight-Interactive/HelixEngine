@@ -79,7 +79,7 @@ protected:
 	bool									m_CollisionBoundsDrawEnabled;
 	HStaticMesh								m_MeshAsset;
 	TConstantBuffer<MeshWorldCBData>		m_MeshWorldCB;
-	FMaterialInstance*								m_MaterialAsset;
+	FMaterialInstance*						m_Material;
 
 private:
 	/*

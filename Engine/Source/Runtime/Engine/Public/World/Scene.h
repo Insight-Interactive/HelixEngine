@@ -10,7 +10,7 @@
 
 struct FSceneRenderParams
 {
-	class FSceneRenderer* pRenderer;
+	class FSceneRenderer* pSceneRenderer;
 	bool FlipSwapChainBuffers;
 
 	class FColorBuffer* pRenderTarget;

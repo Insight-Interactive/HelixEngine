@@ -1,0 +1,48 @@
+{
+    "FAssetDatabase": [
+        {
+            "4539421c-d8b4-4936-bb0c-8dde1e24f9b9": "Content/Models/SM_Cube.hasset",
+            "a5b1d8a5-f186-4298-b36e-9bd840e14c6b": "Content/Models/SM_Sphere.hasset",
+            "76c3094a-f60f-4049-8a7b-698e5327bbcb": "Content/Models/SM_Plane.hasset"
+        },
+        {
+            "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
+            "22f34b3e-b377-4ec5-9e47-dd2aa1225216": "Content/Textures/Hardwood/Hardwood_Normal.dds",
+            "e6b8d84b-066a-47de-9cf4-2eb2feafa939": "Content/Textures/RustedIron/RustedIron_Normal.dds",
+            "149ac663-a662-4d51-a57b-8253b53f80bc": "Content/Textures/Hardwood/Hardwood_Albedo.dds",
+            "24b331bc-e24e-48d8-bc1b-60eef6100bef": "Content/Textures/RustedIron/RustedIron_Roughness.dds",
+            "cc738bba-7088-4f1b-9121-444e28f7f6e8": "Content/Textures/RustedIron/RustedIron_Metallic.dds",
+            "6878e921-457d-47f8-8307-2ce37456e019": "Content/Fonts/Ariel.dds"
+        },
+        {
+            "0d68e992-aa25-4aa4-9f81-0eb775320c1e": "Content/Materials/M_RustedMetal.hmat",
+            "d7d2911a-0461-4a69-b28d-259389c45f87": "Content/Materials/M_Wood.hmat",
+            "2a4a5a3f-a6f6-4704-bc75-db3bf68dbbc5": "Content/Materials/M_DefaultUnlit.hmat",
+            "141d7fa2-8208-4ba2-ba33-3fa72163c4d8": "Content/Materials/M_Wireframe.hmat"
+        },
+        {
+            "76b2b57a-e199-4032-89f5-cc498feec3cc": "Content/Actors/MyCoolActor.hactor",
+            "54640ee4-194b-4bbf-9d78-d9aa5196ae26": "Content/Actors/SphereActor.hactor",
+            "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d": "Content/Actors/GroundFloor.hactor",
+            "b2f8e8de-14fb-4979-b849-1a1236b0d8fa": "Content/Actors/RotatingActor.hactor",
+            "3d4d64b8-5938-461d-88fe-5b864d17a84e": "Content/Actors/MagicGate.hactor"
+        },
+        {
+            "724546e1-911f-4cd2-9b14-97c212be3e9a": "Shaders/Core/DefaultGeometryPass.vs.cso",
+            "78eca66c-043c-4b28-87d3-763ecaff7a4a": "Shaders/Core/CustomGeometryPass.vs.cso",
+            "9fd732ad-0a78-453d-8585-3028ecabede1": "Shaders/Core/DefaultGeometryPass.ps.cso",
+            "ada4a5fc-7395-4db6-81bc-863c0add8066": "Shaders/Core/DefaultForwardPass.vs.cso",
+            "c6acb4ba-dbd7-4abe-9671-280744331ce2": "Shaders/Core/CustomGeometryPass.ps.cso",
+            "6600b67b-1b5d-429f-b196-658de3bd680c": "Shaders/Core/DefaultUnlit.ps.cso",
+            "143452be-2706-4f6b-847c-def75dd0aec1": "Shaders/Core/DefaultUnlit.vs.cso",
+            "c7cd8297-1098-446c-8d01-7d175f81564c": "Shaders/Core/DefaultForwardPass.ps.cso",
+            "3c5f2a9f-ff5b-4eac-a311-b78d1f0aeca4": "Shaders/Core/Wireframe.ps.cso",
+            "41c75002-f4b1-4030-adec-7a5088a4e65b": "Shaders/Core/Text.vs.cso",
+            "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso"
+
+        },
+        {
+            "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb": "Content/Scripts/RotationScript.lua"
+        }
+    ]
+}

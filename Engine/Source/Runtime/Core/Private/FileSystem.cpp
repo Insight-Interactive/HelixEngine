@@ -10,7 +10,7 @@
 	TChar Path[HE_MAX_PATH];
 	System::GetWorkingDirectory( HE_MAX_PATH, Path );
 	System::SetWorkingDirectory( Path );
-	
+
 	return true;
 }
 

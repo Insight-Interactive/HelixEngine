@@ -11,6 +11,7 @@
 #include "Renderer/ShaderRegisters.h"
 #include "Renderer/GeometryGenerator.h"
 #include "GameFramework/Components/HCameraComponent.h"
+#include "Renderer/FontManager.h"
 
 
 FSceneRenderer::FSceneRenderer()
@@ -179,6 +180,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		CmdContext.OMSetRenderTargets( 1, pRTs, &m_DepthBuffer );
 		Scene.RenderDebugMeshes( CmdContext );
 	}
+
 
 	// Post-Process Pass
 	{

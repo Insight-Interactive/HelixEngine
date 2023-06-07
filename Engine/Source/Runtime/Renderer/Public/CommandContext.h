@@ -15,6 +15,7 @@ static const int kContextPoolSize = 4;
 static const int kAvailableContextPoolSize = kContextPoolSize;
 
 class FCommandContext;
+class FColor;
 
 /*
 	Manages command context lifetime and creation.
@@ -58,7 +59,6 @@ public:
 	void BeginDebugMarker(const WChar* Message);
 	void EndDebugMarker();
 	void ClearState(FPipelineState* pNewPipelineState);
-
 
 	void OMSetRenderTargets(uint32 NumRTVs, const FColorBuffer* Targets[], FDepthBuffer* pDepthBuffer);
 

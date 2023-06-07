@@ -76,7 +76,7 @@ FORCEINLINE double FTimer::GetTimeMicroSeconds() const
 
 FORCEINLINE double FTimer::GetTimeMiliSeconds() const
 {
-	return m_Ticks * 1 / SCpuTickDelta;
+	return m_Ticks * (1 / SCpuTickDelta);
 }
 
 FORCEINLINE double FTimer::GetTimeSeconds() const

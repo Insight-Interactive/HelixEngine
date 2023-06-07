@@ -28,6 +28,13 @@ FInputElementDesc GScreenSpaceInputElements[2] =
 };
 const uint32 kNumScreenSpaceInputElements = HE_ARRAYSIZE(GScreenSpaceInputElements);
 
+FInputElementDesc GUITextInputElements[3] =
+{
+	{ "POSITION", 0, F_R32G32B32A32_Float, 0, HE_APPEND_ALIGNED_ELEMENT, IC_PerInstanceData, 1 },
+	{ "TEXCOORD",	0, F_R32G32B32A32_Float, 0, HE_APPEND_ALIGNED_ELEMENT, IC_PerInstanceData, 1 },
+	{ "COLOR",		0, F_R32G32B32A32_Float, 0, HE_APPEND_ALIGNED_ELEMENT, IC_PerInstanceData, 1 }
+};
+const uint32 kUITextInputInputElements = HE_ARRAYSIZE( GUITextInputElements );
 
 const float kMinTexLOD = 0.0f;
 const float kMaxTexLOD = 9.0f;

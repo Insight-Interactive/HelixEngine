@@ -43,6 +43,7 @@ public:
 	void ResizeBuffers( uint32 Width, uint32 Height );
 	void ReloadPipelines();
 
+	FDepthBuffer& GetDepthBuffer();
 	static EFormat GetSceneDepthBufferForamt();
 	static EFormat GetGBufferFormatForBuffer( FDeferredShadingTech::EGBuffers BufferIndex );
 	static uint32 GetNumGBuffers();
@@ -89,6 +90,11 @@ private:
 FORCEINLINE /*static*/ EFormat FSceneRenderer::GetSceneDepthBufferForamt()
 {
 	return kSceneDepthFormat;
+}
+
+FORCEINLINE FDepthBuffer& FSceneRenderer::GetDepthBuffer()
+{
+	return m_DepthBuffer;
 }
 
 FORCEINLINE /*static*/ EFormat FSceneRenderer::GetGBufferFormatForBuffer( FDeferredShadingTech::EGBuffers BufferIndex )

@@ -40,6 +40,9 @@
     <Filter Include="Private\Renderer\Technique">
       <UniqueIdentifier>{BB0B0297-A71B-AE67-10D5-1286FC039D00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\UI">
+      <UniqueIdentifier>{2D926DA5-194A-AFF2-8251-884E6E284AE3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
     </Filter>
@@ -93,6 +96,9 @@
     </Filter>
     <Filter Include="Public\Renderer\Technique">
       <UniqueIdentifier>{BFB6535D-2B79-87E7-7429-1674E02A60C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\UI">
+      <UniqueIdentifier>{31B571CE-9D1F-2645-E65D-D7EA5207049A}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\World">
       <UniqueIdentifier>{3B6E6768-27D1-F60C-D056-2FC3BC98C28F}</UniqueIdentifier>
@@ -291,6 +297,12 @@
     <ClInclude Include="Public\Renderer\Debug.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Renderer\Font.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Renderer\FontManager.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Renderer\GeometryGenerator.h">
       <Filter>Public\Renderer</Filter>
     </ClInclude>
@@ -329,6 +341,18 @@
     </ClInclude>
     <ClInclude Include="Public\Renderer\Technique\SkyPass.h">
       <Filter>Public\Renderer\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Renderer\UIRenderer.h">
+      <Filter>Public\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\UI\Label.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\UI\Panel.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\UI\Widget.h">
+      <Filter>Public\UI</Filter>
     </ClInclude>
     <ClInclude Include="Public\World\CameraManager.h">
       <Filter>Public\World</Filter>
@@ -509,6 +533,12 @@
     <ClCompile Include="Private\Renderer\Debug.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Renderer\Font.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Renderer\FontManager.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Renderer\LightManager.cpp">
       <Filter>Private\Renderer</Filter>
     </ClCompile>
@@ -541,6 +571,15 @@
     </ClCompile>
     <ClCompile Include="Private\Renderer\Technique\SkyPass.cpp">
       <Filter>Private\Renderer\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Renderer\UIRenderer.cpp">
+      <Filter>Private\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\UI\Label.cpp">
+      <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\UI\Panel.cpp">
+      <Filter>Private\UI</Filter>
     </ClCompile>
     <ClCompile Include="Private\Windows\Desktop\FileExplorerWinDesktop.cpp">
       <Filter>Private\Windows\Desktop</Filter>

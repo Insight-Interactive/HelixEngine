@@ -83,7 +83,7 @@ FORCEINLINE const HName& FGameProject::GetProjectName() const
 FORCEINLINE void FGameProject::SetProjectRootDirectory( const Char* ProjectRoot )
 {
 	m_ProjectRoot = 
-#if HE_STANDALONE
+#if HE_STANDALONE && !HE_DEMO_GAME
 	"Data\\";
 #else	
 	ProjectRoot;

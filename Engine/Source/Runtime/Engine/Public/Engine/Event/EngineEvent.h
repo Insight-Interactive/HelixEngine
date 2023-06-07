@@ -155,6 +155,9 @@ public:
 
 class EnginePreStartupEvent : public EngineEvent
 {
+public:
+	EnginePreStartupEvent() {}
+	virtual ~EnginePreStartupEvent() {}
 
 	EVENT_CLASS_TYPE( ET_EnginePreStartup )
 		EVENT_CLASS_CATEGORY( EC_Engine )
@@ -162,6 +165,9 @@ class EnginePreStartupEvent : public EngineEvent
 
 class EngineStartupEvent : public EngineEvent
 {
+public:
+	EngineStartupEvent() {}
+	virtual ~EngineStartupEvent() {}
 
 	EVENT_CLASS_TYPE( ET_EngineStartup )
 		EVENT_CLASS_CATEGORY( EC_Engine )
@@ -169,9 +175,68 @@ class EngineStartupEvent : public EngineEvent
 
 class EnginePostStartupEvent : public EngineEvent
 {
+public:
+	EnginePostStartupEvent() {}
+	virtual ~EnginePostStartupEvent() {}
 
 	EVENT_CLASS_TYPE( ET_EnginePostStartup )
 		EVENT_CLASS_CATEGORY( EC_Engine )
+};
+
+class EngineBeginPlayEvent : public EngineEvent
+{
+public:
+	EngineBeginPlayEvent()
+	{
+	}
+	virtual ~EngineBeginPlayEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_EngineBeginPlay )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
+class EngineEndPlayEvent : public EngineEvent
+{
+public:
+	EngineEndPlayEvent()
+	{
+	}
+	virtual ~EngineEndPlayEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_EngineEndPlay )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
+class EngineTickEvent : public EngineEvent
+{
+public:
+	EngineTickEvent()
+	{
+	}
+	virtual ~EngineTickEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_EngineTick )
+		EVENT_CLASS_CATEGORY( EC_Application )
+};
+
+class EngineRenderEvent : public EngineEvent
+{
+public:
+	EngineRenderEvent()
+	{
+	}
+	virtual ~EngineRenderEvent()
+	{
+	}
+
+	EVENT_CLASS_TYPE( ET_EngineRender )
+		EVENT_CLASS_CATEGORY( EC_Application )
 };
 
 class HObject;
@@ -201,58 +266,14 @@ protected:
 //	Application Events
 // -----------------
 
-class AppBeginPlayEvent : public Event
+class AppEvent : public Event
 {
 public:
-	AppBeginPlayEvent()
+	AppEvent() 
 	{
 	}
-	virtual ~AppBeginPlayEvent()
-	{
-	}
-
-	EVENT_CLASS_TYPE( ET_AppBeginPlay )
-		EVENT_CLASS_CATEGORY( EC_Application )
-};
-
-class AppEndPlayEvent : public Event
-{
-public:
-	AppEndPlayEvent()
-	{
-	}
-	virtual ~AppEndPlayEvent()
+	virtual ~AppEvent() 
 	{
 	}
 
-	EVENT_CLASS_TYPE( ET_AppEndPlay )
-		EVENT_CLASS_CATEGORY( EC_Application )
-};
-
-class AppTickEvent : public Event
-{
-public:
-	AppTickEvent()
-	{
-	}
-	virtual ~AppTickEvent()
-	{
-	}
-
-	EVENT_CLASS_TYPE( ET_AppTick )
-		EVENT_CLASS_CATEGORY( EC_Application )
-};
-
-class AppRenderEvent : public Event
-{
-public:
-	AppRenderEvent()
-	{
-	}
-	virtual ~AppRenderEvent()
-	{
-	}
-
-	EVENT_CLASS_TYPE( ET_AppRender )
-		EVENT_CLASS_CATEGORY( EC_Application )
 };

@@ -15,12 +15,16 @@
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
 //#include "../Script/ScriptCallbacks.h"
+#include "Renderer/FontManager.h"
 
 
 Logger GEngineLogger;
 HEngine* GEngine = nullptr;
 ThreadPool* GThreadPool = nullptr;
 HGameInstance* GGameInstance = nullptr;
+
+extern HGameInstance* MakeGameInstance();
+
 
 // Static function declarations
 //
@@ -105,10 +109,10 @@ void HEngine::Startup()
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
-#if HE_STANDALONE
+#if HE_STANDALONE && !HE_DEMO_GAME
 		"Data\\Game.hproject";
 #else
-		"C:\\Dev\\InsightInteractive\\HelixProjects\\Game\\Game.hproject";
+		"C:\\Dev\\InsightInteractive\\HelixEngine\\Game\\Game.hproject";
 #endif
 	FGameProject::GetInstance()->Startup( GameProjectDirectory );
 
@@ -116,16 +120,19 @@ void HEngine::Startup()
 	FApp::GetInstance()->Startup();
 
 	// Initialize the game.
-	//GGameInstance = MakeGameInstance();
-	GGameInstance = new HGameInstance();
+	GGameInstance = MakeGameInstance();
+	GGameInstance->SetWorld( &GetGameWorld() );
+	AddListener( GGameInstance, &HGameInstance::OnEvent );
+	//GGameInstance = new HGameInstance();
 
 	FAssetDatabase::Initialize();
 
 	// Create and initialize the main client window.
 	FWindow::Description ClientDesc = {};
-	ClientDesc.bHasTitleBar = true;
-	ClientDesc.bShowImmediate = false;
-	ClientDesc.Resolution = GCommonResolutions[k1080p]; ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
+	ClientDesc.bHasTitleBar		= true;
+	ClientDesc.bShowImmediate	= false;
+	ClientDesc.Resolution		= GCommonResolutions[k720p]; 
+	ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
 #if HE_WITH_EDITOR
 	HName EngineTitle = TEXT( "Helix Editor" );
 	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
@@ -140,6 +147,9 @@ void HEngine::Startup()
 	ClientDesc.bAllowDropFiles = GetIsEditorPresent();
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
+
+	GFontManager.Initialize();
+	GFontManager.LoadFont( FGameProject::GetInstance()->GetContentFullPath( "Fonts/Ariel.fnt" ) );
 
 
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
@@ -168,8 +178,8 @@ void HEngine::PostStartup()
 	m_MainViewPort.BringToFocus();
 	if (IsPlayingInEditor())
 	{
+		EmitEvent( EngineBeginPlayEvent() );
 		m_GameWorld.BeginPlay();
-		GGameInstance->OnGameSetFocus();
 	}
 
 	m_IsInitialized = true;
@@ -218,11 +228,12 @@ void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 	m_MainViewPort.GetInputDispatcher()->GetInputSureyor().KbmZeroInputs();
-
+	
 	// Main loop.
 	while (m_Application.IsRunning())
 	{
 		System::ProcessMessages();
+		EmitEvent( EngineTickEvent() );
 		TickTimers();
 		float DeltaTime = (float)GetDeltaTime();
 
@@ -230,18 +241,6 @@ void HEngine::Tick()
 		m_GameWorld.Tick( DeltaTime );
 
 		RenderClientViewport( DeltaTime );
-
-		/*static float SecondTimer = 0.f;
-		static float FPS = 0.f;
-		SecondTimer += DeltaTime;
-		if (SecondTimer > 1.f)
-		{
-			HE_LOG( Log, TEXT( "FPS: %f" ), FPS );
-			FPS = 0.f;
-			SecondTimer = 0.f;
-		}
-		else
-			FPS++;*/
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );
@@ -266,11 +265,27 @@ void HEngine::OnEvent( Event& e )
 
 	// Window
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEngine::OnClientWindowClosed );
+	Dispatcher.Dispatch< WindowFocusEvent>( this, &HEngine::OnWindowFocus );
+	Dispatcher.Dispatch< WindowLostFocusEvent>( this, &HEngine::OnWindowLostFocus );
 }
 
 bool HEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
+	return false;
+}
+
+bool HEngine::OnWindowFocus( WindowFocusEvent& e )
+{
+	GGameInstance->OnGameSetFocus();
+
+	return false;
+}
+
+bool HEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
+{
+	GGameInstance->OnGameLostFocus();
+
 	return false;
 }
 
@@ -290,7 +305,7 @@ void HEngine::RequestShutdown()
 	HE_UNUSED_PARAM( pUserData );
 
 	String SplashTextureDir =
-#if HE_WITH_EDITOR
+#if HE_WITH_EDITOR || HE_DEMO_GAME
 		FGameProject::GetInstance()->GetContentFolder() + "/Engine/Textures/Splash/HelixEd-Splash.dds";
 #else
 		""; // TODO: Custom game splash image.

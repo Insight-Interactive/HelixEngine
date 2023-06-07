@@ -27,6 +27,10 @@ protected:
 	virtual HRigidBody& GetRigidBody() override;
 	virtual const HRigidBody& GetRigidBody() const override;
 
+	virtual void OnEnter( HColliderComponent* Other ) override;
+	virtual void OnExit( HColliderComponent* Other ) override;
+	virtual void OnStay( HColliderComponent* Other ) override;
+
 private:
 	void RegisterCollider( bool StartDisabled );
 

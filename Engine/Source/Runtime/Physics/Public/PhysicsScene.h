@@ -67,6 +67,11 @@ public:
 		return m_Queue;
 	}
 
+	FORCEINLINE size_t GetNumEvents() const
+	{
+		return m_Queue.size();
+	}
+
 private:
 	std::queue<PhysicsEventPacket> m_Queue;
 

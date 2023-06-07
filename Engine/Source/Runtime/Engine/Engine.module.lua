@@ -54,6 +54,9 @@ project ("Engine")
 		"Private/AssetRegistry/**.h",
 		"Private/AssetRegistry/**.cpp",
 		"Private/AssetRegistry/**.inl",
+		"Private/UI/**.h",
+		"Private/UI/**.cpp",
+		"Private/UI/**.inl",
 		"Private/PCH/**.h",
 		"Private/PCH/**.cpp",
 		"Private/PCH/**.inl",
@@ -83,6 +86,8 @@ project ("Engine")
 		"Physics",
 		"Shaders",
 		"Scripting",
+
+		"Game-Core",
 	}
 
 	libdirs
@@ -159,7 +164,7 @@ project ("Engine")
 
 		}
 
-	filter { "configurations:DebugGame or ShippingGame" }
+	filter { "configurations:DebugGame or Demo or ShippingGame" }
 		debugargs
 		{
 			"-launchcfg LaunchGame",
@@ -168,12 +173,7 @@ project ("Engine")
 	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32" }
 		links
 		{
-			"%{libraries.PIXWinDesktop}",
 			"HelixEd",
-		}
-		libdirs
-		{
-			"%{libraryDirectories.PIXx64}",
 		}
 		includedirs
 		{	
@@ -181,10 +181,22 @@ project ("Engine")
 			heGetEditorModulePublicDir ( "HelixEd" ),
 		}
 
+	filter { "configurations:DebugEditor or Development or Demo", "platforms:Win64 or Win32" }
+		links
+		{
+			"%{libraries.PIXWinDesktop}",
+		}
+		libdirs
+		{
+			"%{libraryDirectories.PIXx64}",
+		}
+
 	-- Third Party links
 	
 	-- PhysX
-	filter { "configurations:DebugEditor", "platforms:Win32" }
+
+	-- PhysX Win32
+	filter { "platforms:Win32" }
 		links
 		{
 			"%{libraries.PhysXCommon32}",
@@ -192,12 +204,28 @@ project ("Engine")
 			"%{libraries.PhysXFoundation32}",
 			"%{libraries.PhysXCooking32}",
 		}
+
+	filter {"configurations:DebugEditor", "platforms:Win32"}
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx86_debug}",
 		}
 
-	filter { "configurations:DebugEditor", "platforms:Win64" }
+	filter {"configurations:DebugGame or Demo", "platforms:Win32"}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx86_debug}",
+		}
+	
+	filter {"configurations:ShippingGame", "platforms:Win32"}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx86_release}",
+		}
+
+	-- PhysX Win64
+
+	filter { "platforms:Win64" }
 		links
 		{
 			"%{libraries.PhysXCommon64}",
@@ -207,10 +235,24 @@ project ("Engine")
 			"%{libraries.PhysXExtentions64}",
 			"%{libraries.PhysXPVD64}",
 		}
+
+	filter {"configurations:DebugEditor or Development", "platforms:Win64"}
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx64_debug}",
 		}
 
+	filter {"configurations:DebugGame or Demo", "platforms:Win64"}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx64_debug}",
+		}				
+	
+	filter {"configurations:ShippingGame", "platforms:Win64"}
+		libdirs
+		{
+			"%{libraryDirectories.PhysXx64_release}",
+		}
+	-- End PysX
 
 --include ("Helix/DeploymentPrep.lua")

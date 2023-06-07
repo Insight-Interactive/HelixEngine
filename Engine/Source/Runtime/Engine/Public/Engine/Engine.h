@@ -111,6 +111,8 @@ protected:
 	//
 	virtual void OnEvent( Event& e );
 	bool OnClientWindowClosed( WindowClosedEvent& e );
+	bool OnWindowFocus( WindowFocusEvent& e );
+	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 
 	FRenderingSubsystem& GetRenderingSubsystem();
 	FPhysicsSubsystem& GetPhysicsSubsystem();

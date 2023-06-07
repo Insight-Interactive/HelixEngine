@@ -56,7 +56,7 @@ filter ("platforms:Prospero")
 -- Common
 --
 
-filter ("configurations:DebugEditor or Development or DebugGame")
+filter ("configurations:DebugEditor or Development or DebugGame or Demo")
 	defines
 	{
 		"HE_ENABLE_LOGS",
@@ -70,7 +70,7 @@ filter ("configurations:DebugEditor")
 		"HE_DEBUG_FILESYSTEM",
 	}
 
-filter ("configurations:DebugGame or ShippingGame")
+filter ("configurations:DebugGame or Demo or ShippingGame")
 	defines
 	{
 		"HE_STANDALONE",

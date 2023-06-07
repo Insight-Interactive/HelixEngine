@@ -22,6 +22,7 @@
 
 
 HEditorEngine* GEditorEngine = nullptr;
+extern HGameInstance* GGameInstance;
 
 
 static void RunActorEditor( void* pData );

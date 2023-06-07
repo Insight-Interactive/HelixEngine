@@ -19,7 +19,7 @@ libraryDirectories["PhysXx86_checked"]  = heGetThirdPartyModule( "PhysX-4.1" ) .
 libraryDirectories["PhysXx86_profile"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/profile/"
 libraryDirectories["PhysXx86_release"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/"
 -- Lua 
-libraryDirectories["LuaCore"]		= heGetThirdPartyModule( "lua-5.4.4" )	.. "Build/"
+libraryDirectories["LuaCore"]		    = heGetThirdPartyModule( "lua-5.4.4" ) .. "Build/"
 
 libraries = {}
 -- PIX

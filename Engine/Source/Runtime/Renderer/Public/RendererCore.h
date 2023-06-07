@@ -53,6 +53,7 @@ class FCommandContext;
 class FConstantBufferManager;
 class FGeometryBufferManager;
 class FTextureManager;
+class FFontManager;
 class FConstantBufferInterface;
 class FDescriptorHandle;
 class FBatchRenderer;
@@ -73,6 +74,8 @@ extern FRenderDevice GGraphicsDevice;
 extern FGeometryBufferManager GGeometryManager;
 // Texture overlord.
 extern FTextureManager GTextureManager;
+// Font overlord.
+extern FFontManager GFontManager;
 // Default texture container.
 extern FTexture GDefaultTextures[];
 // Heap holding all shader visible textures.

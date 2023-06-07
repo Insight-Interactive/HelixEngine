@@ -59,13 +59,19 @@ project ("Physics")
 		"MultiProcessorCompile",
 	}
 
-	filter {"configurations:DebugEditor"}
+	filter {"configurations:DebugEditor or Development"}
 		defines
 		{
 			"HE_DEBUG_PHYSICS=1",
 			"P_TRACK_MEMORY_ALLOCATIONS=1",
 		}
 
+	filter { "configurations:DebugGame or Demo or ShippingGame" }
+		defines
+		{
+			"HE_DEBUG_PHYSICS=0",
+			"P_TRACK_MEMORY_ALLOCATIONS=0",
+		}
 
 	-- Dll Copy commands for each configuration
 
@@ -107,6 +113,26 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXFoundationx86_checked}",
 			"%{dllCopyCommands.PhysXCookingx86_checked}",
 			"%{dllCopyCommands.PhysXGpux86_checked}",
+		}
+
+	filter {"configurations:DebugGame or Demo", "platforms:Win64"}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PhysXx64_debug}",
+			"%{dllCopyCommands.PhysXCommonx64_debug}",
+			"%{dllCopyCommands.PhysXFoundationx64_debug}",
+			"%{dllCopyCommands.PhysXCookingx64_debug}",
+			"%{dllCopyCommands.PhysXGpux64_debug}",
+		}
+
+	filter {"configurations:DebugGame or Demo", "platforms:Win32"}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PhysXx86_debug}",
+			"%{dllCopyCommands.PhysXCommonx86_debug}",
+			"%{dllCopyCommands.PhysXFoundationx86_debug}",
+			"%{dllCopyCommands.PhysXCookingx86_debug}",
+			"%{dllCopyCommands.PhysXGpux86_debug}",
 		}
 
 	filter {"configurations:ShippingGame", "platforms:Win64"}

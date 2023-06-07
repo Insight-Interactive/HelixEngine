@@ -7,13 +7,14 @@
 #include "CommandContext.h"
 #include "Renderer/ConstantBufferStructures.h"
 #include "Renderer/ShaderRegisters.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 
 HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
 	, m_IsTrigger( false )
 	, m_CollisionBoundsDrawEnabled( true )
-	, m_MaterialAsset( nullptr )
+	, m_Material( nullptr )
 {
 	m_MeshWorldCB.Create( L"[Collider Component] World CB" );
 }
@@ -21,7 +22,7 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 HColliderComponent::~HColliderComponent()
 {
 	m_MeshWorldCB.Destroy();
-	delete m_MaterialAsset;
+	delete m_Material;
 }
 
 void HColliderComponent::BeginPlay() 
@@ -45,16 +46,24 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (!GetIsDrawEnabled())
 		return;
 
-	if (m_MaterialAsset)
+	HCameraComponent* pCamera = GetWorld()->GetCurrentSceneRenderCamera();
+	if (pCamera)
+	{
+		float DistSquared = FVector3::DistanceSquared( pCamera->GetAbsoluteWorldPosition(), GetAbsoluteWorldPosition() );
+		if (DistSquared > (300.f * 300.f))
+			return;
+	}
+
+	if (m_Material)
 	{
 		FColor Color = FColor::RedOpaque;
 		if (GetIsTrigger())
 			Color = FColor::WhiteOpaque;
 
-		m_MaterialAsset->SetVector3( "kColor", Color.ToVector3() );
+		m_Material->SetVector3( "kColor", Color.ToVector3() );
 		
 		// Set the material information.
-		m_MaterialAsset->Bind( GfxContext );
+		m_Material->Bind( GfxContext );
 	}
 
 	if (m_MeshAsset.get() && m_MeshAsset->IsValid())
@@ -103,6 +112,9 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 
 	const ReadContext& This = Value[1];
 	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_IsTrigger ), m_IsTrigger );
+
+	m_Material = new FMaterialInstance();
+	m_Material->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()
