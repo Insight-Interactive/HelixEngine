@@ -32,6 +32,7 @@ class HWorld : public HObject, public FSerializeableInterface
 {
 	friend class WorldOutlinePanel;
 	friend class HEditorEngine;
+	friend class FViewportContext;
 	using Super = HObject;
 public:
 	HWorld();
@@ -52,6 +53,8 @@ public:
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
 
+	void AddPanel( FUIPanel* pPanel );
+	void RemovePanel( FUIPanel* pPanel );
 	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled = false, bool IsTrigger = false );
 	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled = false, bool IsTrigger = false );
 	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled = false, bool IsTrigger = false );
@@ -74,6 +77,8 @@ public:
 	void PausePhysics();
 	void UnPausePhysics();
 
+	bool AdvancePhysics( float DeltaTime );
+
 protected:
 	/*
 		Reload the world.
@@ -91,8 +96,11 @@ protected:
 
 	void RegisterScenes();
 
+	std::vector<FUIPanel*>& GetUIPanels();
+
 
 protected:
+	std::vector<FUIPanel*> m_UIPanels;
 	// UI
 	FUIPanel m_DebugUI;
 	FLabel m_FPSCounter;
@@ -161,6 +169,34 @@ FORCEINLINE HLevel& HWorld::GetCurrentLevel()
 	return m_Level;
 }
 
+FORCEINLINE void HWorld::AddPanel( FUIPanel* pPanel )
+{
+	auto iter = std::find( m_UIPanels.begin(), m_UIPanels.end(), pPanel );
+	if (iter == m_UIPanels.end())
+	{
+		m_UIPanels.push_back(pPanel);
+		return;
+	}
+	else
+	{
+		HE_LOG( Warning, TEXT( "Trying to add a UI panel to the world but it was already added!" ) );
+	}
+}
+
+FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
+{
+	auto iter = std::find( m_UIPanels.begin(), m_UIPanels.end(), pPanel );
+	if (iter != m_UIPanels.end())
+	{
+		m_UIPanels.erase( iter );
+		return;
+	}
+	else
+	{
+		HE_LOG( Warning, TEXT( "Trying to remove UI panel when it does not exist in the world! Was it added?" ) );
+	}
+}
+
 FORCEINLINE void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
 {
 	m_PlayerCharacterRefs.push_back( pCharacter );
@@ -181,4 +217,9 @@ template <typename ActorType>
 FORCEINLINE ActorType* HWorld::CreateDynamicActorinstance( const HName& Name )
 {
 	return m_Level.CreateActor<ActorType>( Name );
+}
+
+FORCEINLINE std::vector<FUIPanel*>& HWorld::GetUIPanels()
+{
+	return m_UIPanels;
 }

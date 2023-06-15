@@ -192,7 +192,6 @@ void HEditorEngine::RenderClientViewport( float DeltaTime )
 	m_MainViewPort.Render();
 
 	// Wait for the current frame to finish rendering, we'll need it for the editor panels.
-	m_GameWorld.GetScene().WaitForRenderingFinished();
 
 	/*if (m_PreferencesViewport.IsValid())
 	{
@@ -328,8 +327,8 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<WindowFileDropEvent>( this, &HEditorEngine::OnClientWindowDropFile );
 
 	// Application/Engine
-	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
-	Dispatcher.Dispatch<AppEndPlayEvent>( this, &HEditorEngine::OnAppEndPlay );
+	Dispatcher.Dispatch<EngineBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
+	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &HEditorEngine::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HEditorEngine::OnObjectSelected );
 
 	// Editor
@@ -480,7 +479,7 @@ bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
 	return true;
 }
 
-bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
+bool HEditorEngine::OnAppBeginPlay( EngineBeginPlayEvent& e )
 {
 	// Reset editor state if necessary.
 	SetIsPlayingInEditor( true );
@@ -494,7 +493,7 @@ bool HEditorEngine::OnAppBeginPlay( AppBeginPlayEvent& e )
 	return false;
 }
 
-bool HEditorEngine::OnAppEndPlay( AppEndPlayEvent& e )
+bool HEditorEngine::OnAppEndPlay( EngineEndPlayEvent& e )
 {
 	// Reset editor state if necissary.
 	SetIsPlayingInEditor( false );

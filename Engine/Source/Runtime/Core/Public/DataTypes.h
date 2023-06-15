@@ -27,6 +27,7 @@
 //-----------------------------------
 //
 // 
+// 
 // Safely checks a pointer and deletes it if it is non-null.
 #define HE_SAFE_DELETE_PTR( Ptr )			if( (Ptr) != NULL ) { delete	(Ptr); (Ptr) = NULL; }
 #define HE_SAFE_DELETE_PTR_ARRAY( Ptr )		if( (Ptr) != NULL ) { delete[]	(Ptr); }
@@ -75,8 +76,6 @@
 #define HE_MEGABYTES(Value)				( Value * HE_KILOBYTES(1024) )
 // Returns the required memory size in bytes for a given gigabyte value.
 #define HE_GIGABYTES(Value)				( Value * HE_MEGABYTES(1024) )
-#define HE_PI							( 3.14159265359 )
-#define HE_2PI							( 2.0 * HE_PI )
 // Declare a class to be non-copyable and non-movable.
 #define HE_DECL_NON_COPYABLE( Class )					\
 		Class(const Class&)					= delete;	\

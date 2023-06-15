@@ -40,6 +40,28 @@ namespace GeometryGenerator
 		);
 	}
 
+	/*StaticMeshGeometryRef GenerateCapsule()
+	{
+		String GeometryName = "Capsule";
+		if (GStaticGeometryManager.MeshExists( GeometryName ))
+		{
+			return GStaticGeometryManager.GetStaticMeshByName( GeometryName );
+		}
+
+		FSimpleVertex3D Verts[] =
+		{
+
+		};
+		const uint32 NumVerts = HE_ARRAYSIZE( Verts );
+		const uint32 VertexBufferSize = NumVerts * sizeof( FVertex2D );
+
+		return GStaticGeometryManager.RegisterGeometry(
+			GeometryName,
+			Verts.data(), TriCount, sizeof( FSimpleVertex3D ),
+			Triangles.data(), IndicesCount * sizeof( int ), IndicesCount
+		);
+	}*/
+
 	StaticMeshGeometryRef Generate1x1x1CubeMesh()
 	{
 		String GeometryName = "GenericCube";

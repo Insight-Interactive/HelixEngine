@@ -58,6 +58,8 @@ void HWorld::Initialize( const Char* LevelURL )
 		// TEMP
 		m_DebugUI.AddWidget( m_FPSCounter );
 		m_FPSCounter.SetText( L"FPS: " );
+
+		AddPanel( &m_DebugUI );
 	}
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
@@ -104,10 +106,27 @@ void HWorld::BeginPlay()
 	m_pPlayerCharacter->BeginPlay();
 }
 
+float Accumulator = 0.f;
+float StepSize = 1.f / 60.f;
+
+bool HWorld::AdvancePhysics(float DeltaTime)
+{
+	Accumulator += DeltaTime;
+	if (Accumulator < StepSize)
+		return false;
+
+	Accumulator -= StepSize;
+	m_PhysicsScene.Tick();
+
+	return true;
+}
+
 void HWorld::Tick( float DeltaTime )
 {
-	m_PhysicsScene.WaittillSimulationFinished(); // Sync the physics thread.
+	//m_PhysicsScene.WaittillSimulationFinished(); // Sync the physics thread.
 	
+	AdvancePhysics( DeltaTime );
+
 	static float SecondTimer = 0.f;
 	static float FPS = 0.f;
 	SecondTimer += DeltaTime;
@@ -131,7 +150,7 @@ void HWorld::Tick( float DeltaTime )
 		m_Level.Tick( DeltaTime );
 	}
 
-	m_PhysicsScene.RequestTick();
+	//m_PhysicsScene.RequestTick();
 }
 
 void HWorld::Flush()
@@ -140,8 +159,8 @@ void HWorld::Flush()
 	{
 		// Unregister the physics scene to stop simulation, but dont destroy 
 		// it yet components need it to be able to realease resources.
-		m_PhysicsScene.WaittillSimulationFinished();
-		m_PhysicsScene.RequestSceneFlush();
+		/*m_PhysicsScene.WaittillSimulationFinished();
+		m_PhysicsScene.RequestSceneFlush();*/
 
 		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
 
@@ -260,62 +279,46 @@ void HWorld::UnPausePhysics()
 
 void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
-	HColliderComponent* pCollider = (HColliderComponent*)pSphere;
-
-	HPhysicsScene::RigidActorAddDesc<HSphereRigidBody> InitDesc
-	{
-		pSphere,
-		pCollider->GetAbsoluteWorldPosition(),
-		(HSphereRigidBody&)pSphere->GetRigidBody(),
-		StartDisabled,
-		IsTrigger,
-	};
-	m_PhysicsScene.RequestSphereActorAdd( InitDesc );
+	m_PhysicsScene.CreateSphere( 
+		pSphere->GetAbsoluteWorldPosition(), 
+		pSphere->GetRotation(), 
+		(HSphereRigidBody&)pSphere->GetRigidBody(), 
+		IsTrigger, 
+		(PhysicsCallbackHandler*)pSphere,
+		false );
 }
 
 void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
-	HColliderComponent* pCollider = (HColliderComponent*)pPlane;
-
-	HPhysicsScene::RigidActorAddDesc<HPlaneRigidBody> InitDesc
-	{
-		pPlane,
-		pCollider->GetAbsoluteWorldPosition(),
-		(HPlaneRigidBody&)pPlane->GetRigidBody(),
-		StartDisabled,
-		IsTrigger,
-	};
-	m_PhysicsScene.RequestPlaneActorAdd( InitDesc );
+	m_PhysicsScene.CreatePlane( 
+		pPlane->GetAbsoluteWorldPosition(), 
+		pPlane->GetRotation(), (HPlaneRigidBody&)
+		pPlane->GetRigidBody(), 
+		IsTrigger, 
+		(PhysicsCallbackHandler*)pPlane,
+		false );
 }
 
 void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
-	HColliderComponent* pCollider = (HColliderComponent*)pCube;
-
-	HPhysicsScene::RigidActorAddDesc<HCubeRigidBody> InitDesc
-	{
-		pCube,
-		pCollider->GetPosition(),
-		(HCubeRigidBody&)pCube->GetRigidBody(),
-		StartDisabled,
-		IsTrigger,
-	};
-	m_PhysicsScene.RequestCubeActorAdd( InitDesc );
+	m_PhysicsScene.CreateCube( 
+		pCube->GetAbsoluteWorldPosition(), 
+		pCube->GetRotation(), 
+		(HCubeRigidBody&)pCube->GetRigidBody(), 
+		IsTrigger, 
+		(PhysicsCallbackHandler*)pCube,
+		false );
 }
 
 void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled, bool IsTrigger /*= false*/ )
 {
-	HColliderComponent* pCollider = (HColliderComponent*)pCapsule;
-
-	HPhysicsScene::RigidActorAddDesc<HCapsuleRigidBody> InitDesc
-	{
-		pCapsule,
-		pCollider->GetPosition(),
-		(HCapsuleRigidBody&)pCapsule->GetRigidBody(),
-		StartDisabled,
-		IsTrigger,
-	};
-	m_PhysicsScene.RequestCapsuleActorAdd( InitDesc );
+	m_PhysicsScene.CreateCapsule( 
+		pCapsule->GetAbsoluteWorldPosition(), 
+		pCapsule->GetRotation(),
+		(HCapsuleRigidBody&)pCapsule->GetRigidBody(), 
+		IsTrigger, 
+		(PhysicsCallbackHandler*)pCapsule,
+		false );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )

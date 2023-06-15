@@ -12,8 +12,8 @@
 
 
 class Event;
-class AppBeginPlayEvent;
-class AppEndPlayEvent;
+class EngineBeginPlayEvent;
+class EngineEndPlayEvent;
 class ObjectSelectedEvent;
 
 class HelixEdHomeUI 
@@ -37,8 +37,8 @@ public:
 	ADebugPawn* GetDebugPawn();
 
 private:
-	bool OnAppBeginPlay( AppBeginPlayEvent& e );
-	bool OnAppEndPlay( AppEndPlayEvent& e );
+	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
+	bool OnAppEndPlay( EngineEndPlayEvent& e );
 	bool OnObjectSelected( ObjectSelectedEvent& e );
 
 	void OnExitMenuItem();

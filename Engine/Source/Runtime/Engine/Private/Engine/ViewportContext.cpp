@@ -64,18 +64,20 @@ void FViewportContext::Render()
 	{
 		// Render to a intermediate texture for the editor to display.
 		RenderWorld( m_SceneRenderTarget );
+		RenderUI( m_SceneRenderTarget );
 	}
 	else
 	{
 		if (m_pWorldInView != nullptr)
 		{
 			// Render directly to the swapchain.
-			RenderWorld( m_Window.GetRenderSurface() );
-			RenderUI( m_Window.GetRenderSurface() );
+			FColorBuffer& RenterTarget = m_Window.GetRenderSurface();
+			RenderWorld( RenterTarget );
+			RenderUI( RenterTarget );
 
 			// Transition.
 			FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
-			CmdContext.TransitionResource( m_Window.GetRenderSurface(), RS_Present );
+			CmdContext.TransitionResource( RenterTarget, RS_Present );
 			CmdContext.End( true );
 
 			PresentOneFrame();
@@ -93,7 +95,6 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 	if (m_pWorldInView == nullptr) // This viewport is not viewing a world just return.
 		return;
 
-	// Wait for the previous frame to finish rendering.
 	HScene& Scene = m_pWorldInView->GetScene();
 
 	m_SceneRenderer.RenderScene(
@@ -105,13 +106,24 @@ void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
 
 void FViewportContext::RenderUI( FColorBuffer& RenderTarget )
 {
-	FUIPanel& DebugUI = m_pWorldInView->GetDebugUIPanel();
+	if (m_pWorldInView == nullptr) // This viewport is not viewing a world just return.
+		return;
 
-	m_UIRenderer.RenderPanel(
-		DebugUI, RenderTarget,
-		m_SceneRenderer.GetDepthBuffer(), 
-		GetClientViewport(), GetClientRect(),
-		GetWindow().GetSwapChain()->GetCurrentFrameIndex() );
+	std::vector<FUIPanel*>& Panels = m_pWorldInView->GetUIPanels();
+
+	for (FUIPanel* pPanel : Panels)
+	{
+		HE_ASSERT( pPanel != nullptr );
+
+		if (pPanel->IsHidden())
+			continue;
+
+		m_UIRenderer.RenderPanel(
+			*pPanel, RenderTarget,
+			m_SceneRenderer.GetDepthBuffer(),
+			GetClientViewport(), GetClientRect(),
+			GetWindow().GetSwapChain()->GetCurrentFrameIndex() );
+	}
 }
 
 void FViewportContext::InitializeRenderingResources()

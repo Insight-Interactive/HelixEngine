@@ -595,7 +595,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -617,7 +617,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -639,7 +639,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -661,7 +661,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -683,7 +683,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -702,7 +702,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -724,7 +724,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -746,7 +746,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -768,7 +768,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -790,7 +790,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -809,7 +809,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -828,7 +828,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -847,7 +847,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -866,7 +866,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -885,7 +885,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -904,7 +904,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -926,7 +926,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -948,7 +948,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -970,7 +970,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -992,7 +992,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -1011,7 +1011,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1035,7 +1035,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1059,7 +1059,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1083,7 +1083,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1107,7 +1107,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

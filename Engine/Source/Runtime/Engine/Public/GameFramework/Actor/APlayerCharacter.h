@@ -4,6 +4,7 @@
 #include "GameFramework/Actor/APawn.h"
 
 class HCameraComponent;
+class HCapsuleColliderComponent;
 
 HCLASS()
 class APlayerCharacter : public APawn
@@ -24,8 +25,16 @@ public:
 	void LookRight(float Value);
 	void TogglePitchYawRotation();
 
+private:
+	void ThirdPersonMoveForward( float Delta );
+	void ThirdPersonMoveRight( float Delta );
+
+
 protected:
 	HCameraComponent* m_pCameraComponent;
+	FVector2 m_Rotation;
+	FQuat m_RotX;
+	FQuat m_RotY;
 
 private:
 	bool m_CanRotateCamera;

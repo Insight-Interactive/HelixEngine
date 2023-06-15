@@ -24,6 +24,16 @@ void HGameInstance::OnGameLostFocus()
 
 }
 
+void HGameInstance::BeginPlay()
+{
+
+}
+
+void HGameInstance::Tick( float DeltaTime )
+{
+
+}
+
 void HGameInstance::OnEvent( EngineEvent& e )
 {
 	EventDispatcher Dispatcher( e );

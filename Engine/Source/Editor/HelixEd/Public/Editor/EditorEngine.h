@@ -21,8 +21,8 @@ class WindowResizeEvent;
 class WindowLostFocusEvent;
 class WindowFocusEvent;
 class WindowFileDropEvent;
-class AppBeginPlayEvent;
-class AppEndPlayEvent;
+class EngineBeginPlayEvent;
+class EngineEndPlayEvent;
 class ObjectSelectedEvent;
 class ContentItemDoubleClicked;
 
@@ -75,8 +75,8 @@ protected:
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 	bool OnClientWindowClosed( WindowClosedEvent& e );
 	bool OnClientWindowDropFile( WindowFileDropEvent& e );
-	bool OnAppBeginPlay( AppBeginPlayEvent& e );
-	bool OnAppEndPlay( AppEndPlayEvent& e );
+	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
+	bool OnAppEndPlay( EngineEndPlayEvent& e );
 	bool OnObjectSelected( ObjectSelectedEvent& e );
 	bool OnContentItemClicked( ContentItemDoubleClicked& e );
 

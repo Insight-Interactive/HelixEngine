@@ -40,9 +40,9 @@
             },
             {
               "m_RigidBody.m_IsStatic": false,
-              "m_RigidBody.m_Width": 10.0,
-              "m_RigidBody.m_Height": 10.0,
-              "m_RigidBody.m_Depth": 10.0
+              "m_RigidBody.m_HalfWidth": 10.0,
+              "m_RigidBody.m_HalfHeight": 10.0,
+              "m_RigidBody.m_HalfDepth": 10.0
             }
           ]
         },

@@ -18,10 +18,8 @@ HRigidBody::~HRigidBody()
 
 void HRigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation )
 {
-	while (!m_pRigidActor)
-		std::this_thread::yield(); // Wait for the physics thread to initialize this actor.
-
-	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
+	if (!m_pRigidActor)
+		return;
 
 	physx::PxRigidDynamic* pDynamic = SCast<physx::PxRigidDynamic*>( m_pRigidActor );
 	physx::PxTransform Transform(
@@ -33,14 +31,14 @@ void HRigidBody::SetGlobalPositionOrientation( const FVector3& NewPosition, cons
 
 void HRigidBody::SetSimulatedPosition( const FVector3& NewPosition )
 {
-	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
+	//HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
 	SetGlobalPositionOrientation( NewPosition, GetSimulatedRotation() );
 }
 
 void HRigidBody::SetSimulatedRotation( const FQuat& NewRotation )
 {
-	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
+	//HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
 
 	SetGlobalPositionOrientation( GetSimulatedPosition(), NewRotation );
 }
@@ -55,28 +53,32 @@ void HRigidBody::SetIsStatic( bool IsStatic )
 
 FVector3 HRigidBody::GetSimulatedPosition() const
 {
-	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
+	if( !m_pRigidActor) 
+		return FVector3::Zero;
 
-	physx::PxShape* pShapes[P_MAX_NUM_ACTOR_SHAPES];
-	physx::PxU32 NumShapes = m_pRigidActor->getNbShapes();
-	m_pRigidActor->getShapes( pShapes, NumShapes );
-	HE_ASSERT( pShapes[0] != nullptr );
-
-	const physx::PxTransform Transform = physx::PxShapeExt::getGlobalPose( *pShapes[0], *m_pRigidActor );
+	const physx::PxTransform Transform = m_pRigidActor->getGlobalPose();
 	return FVector3( Transform.p.x, Transform.p.y, Transform.p.z );
 }
 
 FQuat HRigidBody::GetSimulatedRotation() const
 {
-	HE_ASSERT( m_pRigidActor != nullptr ); // Rigid body has not been initialized!
-
-	physx::PxShape* pShapes[P_MAX_NUM_ACTOR_SHAPES];
-	physx::PxU32 NumShapes = m_pRigidActor->getNbShapes();
-	m_pRigidActor->getShapes( pShapes, NumShapes );
-	HE_ASSERT( pShapes[0] != nullptr );
-
-	const physx::PxTransform Transform = physx::PxShapeExt::getGlobalPose( *pShapes[0], *m_pRigidActor );
+	if (!m_pRigidActor)
+		return FQuat::Identity;
+	
+	const physx::PxTransform Transform = m_pRigidActor->getGlobalPose();
 	return FQuat( Transform.q.x, Transform.q.y, Transform.q.z, Transform.q.w );
+}
+
+FTransform HRigidBody::GetSimulationWorldTransform()
+{
+	if (!m_pRigidActor)
+		return FTransform();
+	const physx::PxTransform Transform = m_pRigidActor->getGlobalPose();
+	
+	FTransform Return;
+	Return.SetPosition( Transform.p.x, Transform.p.y, Transform.p.z );
+	Return.SetRotation( FQuat( Transform.q.x, Transform.q.y,Transform.q.z, Transform.q.w ) );
+	return Return;
 }
 
 float HRigidBody::GetDensity() const
@@ -212,6 +214,61 @@ void HRigidBody::SetMass( const float& NewMass )
 	}
 }
 
+bool HRigidBody::GetIsKinematic() const
+{
+	if (physx::PxRigidDynamic* pDynamic = m_pRigidActor->is<physx::PxRigidDynamic>())
+	{
+		const physx::PxRigidBodyFlags Flags = pDynamic->getRigidBodyFlags();
+		return Flags.isSet( physx::PxRigidBodyFlag::eKINEMATIC );
+	}
+
+	return false;
+}
+
+void HRigidBody::SetIsKinematic( bool IsKinematic )
+{
+	if (physx::PxRigidDynamic* pDynamic = m_pRigidActor->is<physx::PxRigidDynamic>())
+		pDynamic->setRigidBodyFlag( physx::PxRigidBodyFlag::eKINEMATIC, IsKinematic );
+}
+
+bool HRigidBody::IsSleeping() const
+{
+	if (physx::PxRigidDynamic* pDynamic = m_pRigidActor->is<physx::PxRigidDynamic>())
+		pDynamic->isSleeping();
+
+	return false;
+}
+
+void HRigidBody::SetGravityEnabled( bool Enabled )
+{
+	m_pRigidActor->setActorFlag( physx::PxActorFlag::eDISABLE_GRAVITY, Enabled );
+}
+
+bool HRigidBody::GetIsGravityEnabled() const
+{
+	physx::PxActorFlags Flags = m_pRigidActor->getActorFlags();
+	return !Flags.isSet( physx::PxActorFlag::eDISABLE_GRAVITY );
+}
+
+void HRigidBody::ToggleConstrainAxis( EMovementAxis Axis, bool Locked )
+{
+	if (physx::PxRigidDynamic* pDynamic = m_pRigidActor->is<physx::PxRigidDynamic>())
+	{
+		switch (Axis)
+		{
+		case EMovementAxis::MA_X:
+			pDynamic->setRigidDynamicLockFlag( physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, Locked );
+			break;
+		case EMovementAxis::MA_Y:
+			pDynamic->setRigidDynamicLockFlag( physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, Locked );
+			break;
+		case EMovementAxis::MA_Z:
+			pDynamic->setRigidDynamicLockFlag( physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, Locked );
+			break;
+		}
+	}
+}
+
 
 HInfinitePlaneRigidBody::HInfinitePlaneRigidBody()
 	: m_Direction( FVector3::Up )
@@ -226,11 +283,11 @@ HInfinitePlaneRigidBody::~HInfinitePlaneRigidBody()
 }
 
 
-/*static*/ const float HPlaneRigidBody::kPlaneHeight = 0.01f;
+/*static*/ const float HPlaneRigidBody::kPlaneDepth = 0.01f;
 
 HPlaneRigidBody::HPlaneRigidBody()
-	: m_Width( 1.f )
-	, m_Height( 1.f )
+	: m_HalfWidth( 1.f )
+	, m_HalfHeight( 1.f )
 {
 }
 
@@ -250,9 +307,9 @@ HSphereRigidBody::~HSphereRigidBody()
 
 
 HCubeRigidBody::HCubeRigidBody()
-	: m_Width( 1.f )
-	, m_Height( 1.f )
-	, m_Depth( 1.f )
+	: m_HalfWidth( 1.f )
+	, m_HalfHeight( 1.f )
+	, m_HalfDepth( 1.f )
 {
 }
 
@@ -262,6 +319,8 @@ HCubeRigidBody::~HCubeRigidBody()
 
 
 HCapsuleRigidBody::HCapsuleRigidBody()
+	: m_Radius( 1.f )
+	, m_HalfHeight( 2.f )
 {
 }
 

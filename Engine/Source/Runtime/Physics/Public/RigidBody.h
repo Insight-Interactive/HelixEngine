@@ -1,6 +1,8 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
+#include "Transform.h"
+
 
 namespace physx
 {
@@ -16,6 +18,13 @@ class PHYSICS_API HRigidBody
 {
 	friend class HPhysicsScene;
 public:
+	enum EMovementAxis
+	{
+		MA_X,
+		MA_Y,
+		MA_Z,
+	};
+public:
 	void SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation );
 	void SetSimulatedPosition( const FVector3& NewPosition );
 	void SetSimulatedRotation( const FQuat& NewRotation );
@@ -29,6 +38,16 @@ public:
 	void DisableSimulation();
 	float GetMass() const;
 	void SetMass( const float& NewMass );
+	bool GetIsKinematic() const;
+	void SetIsKinematic( bool IsKinematic );
+
+	bool IsSleeping() const;
+	void SetGravityEnabled( bool Enabled );
+	bool GetIsGravityEnabled() const;
+
+	void ToggleConstrainAxis( EMovementAxis Axis, bool Locked );
+
+	FTransform GetSimulationWorldTransform();
 
 	FVector3 GetLinearVelocity() const;
 	float GetAngularDamping() const;
@@ -80,19 +99,20 @@ private:
 class PHYSICS_API HPlaneRigidBody : public HRigidBody
 {
 public:
-	static const float kPlaneHeight;
+	static const float kPlaneDepth;
 public:
 	HPlaneRigidBody();
 	virtual ~HPlaneRigidBody();
 
-	float GetWidth() const;
-	float GetHeight() const;
-	void SetWidth( const float& NewWidth );
-	void SetHeight( const float& NewHeight );
+	static float GetConstantDepth();
+	float GetHalfWidth() const;
+	float GetHalfHeight() const;
+	void SetHalfWidth( const float& NewHalfWidth );
+	void SetHalfHeight( const float& NewHalfHeight );
 
 private:
-	float m_Width;
-	float m_Height;
+	float m_HalfWidth;
+	float m_HalfHeight;
 };
 
 /*
@@ -121,18 +141,18 @@ public:
 	HCubeRigidBody();
 	virtual ~HCubeRigidBody();
 
-	float GetWidth() const;
-	float GetHeight() const;
-	float GetDepth() const;
+	float GetHalfWidth() const;
+	float GetHalfHeight() const;
+	float GetHalfDepth() const;
 
-	void SetWidth( const float& NewWidth );
-	void SetHeight( const float& NewHeight );
-	void SetDepth( const float& NewDepth );
+	void SetHalfWidth( const float& NewHalfWidth );
+	void SetHalfHeight( const float& NewHalfHeight );
+	void SetHalfDepth( const float& NewHalfDepth );
 
 private:
-	float m_Width;
-	float m_Height;
-	float m_Depth;
+	float m_HalfWidth;
+	float m_HalfHeight;
+	float m_HalfDepth;
 
 };
 
@@ -146,14 +166,14 @@ public:
 	virtual ~HCapsuleRigidBody();
 
 	float GetRadius() const;
-	float GetLength() const;
+	float GetHalfHeight() const;
 
 	void SetRadius( const float& NewRadius );
-	void SetLength( const float& NewLength );
+	void SetHalfHeight( const float& NewHalfHeight );
 
 private:
 	float m_Radius;
-	float m_Length;
+	float m_HalfHeight;
 };
 
 
@@ -209,24 +229,29 @@ FORCEINLINE void HInfinitePlaneRigidBody::SetDirection( const FVector3& NewDirec
 // Plane
 //
 
-FORCEINLINE float HPlaneRigidBody::GetWidth() const
+/*static*/ FORCEINLINE float HPlaneRigidBody::GetConstantDepth()
 {
-	return m_Width;
+	return kPlaneDepth;
 }
 
-FORCEINLINE float HPlaneRigidBody::GetHeight() const
+FORCEINLINE float HPlaneRigidBody::GetHalfWidth() const
 {
-	return m_Height;
+	return m_HalfWidth;
 }
 
-FORCEINLINE void HPlaneRigidBody::SetWidth( const float& NewWidth )
+FORCEINLINE float HPlaneRigidBody::GetHalfHeight() const
 {
-	m_Width = NewWidth;
+	return m_HalfHeight;
 }
 
-FORCEINLINE void HPlaneRigidBody::SetHeight( const float& NewHeight )
+FORCEINLINE void HPlaneRigidBody::SetHalfWidth( const float& NewHalfWidth )
 {
-	m_Height = NewHeight;
+	m_HalfWidth = NewHalfWidth;
+}
+
+FORCEINLINE void HPlaneRigidBody::SetHalfHeight( const float& NewHalfHeight )
+{
+	m_HalfHeight = NewHalfHeight;
 }
 
 // Sphere
@@ -245,34 +270,34 @@ FORCEINLINE void HSphereRigidBody::SetRadius( const float& NewRadius )
 // Cube
 //
 
-FORCEINLINE float HCubeRigidBody::GetWidth() const
+FORCEINLINE float HCubeRigidBody::GetHalfWidth() const
 {
-	return m_Width;
+	return m_HalfWidth;
 }
 
-FORCEINLINE float HCubeRigidBody::GetHeight() const
+FORCEINLINE float HCubeRigidBody::GetHalfHeight() const
 {
-	return m_Height;
+	return m_HalfHeight;
 }
 
-FORCEINLINE float HCubeRigidBody::GetDepth() const
+FORCEINLINE float HCubeRigidBody::GetHalfDepth() const
 {
-	return m_Depth;
+	return m_HalfDepth;
 }
 
-FORCEINLINE void HCubeRigidBody::SetWidth( const float& NewWidth )
+FORCEINLINE void HCubeRigidBody::SetHalfWidth( const float& NewHalfWidth )
 {
-	m_Width = NewWidth;
+	m_HalfWidth = NewHalfWidth;
 }
 
-FORCEINLINE void HCubeRigidBody::SetHeight( const float& NewHeight )
+FORCEINLINE void HCubeRigidBody::SetHalfHeight( const float& NewHalfHeight )
 {
-	m_Height = NewHeight;
+	m_HalfHeight = NewHalfHeight;
 }
 
-FORCEINLINE void HCubeRigidBody::SetDepth( const float& NewDepth )
+FORCEINLINE void HCubeRigidBody::SetHalfDepth( const float& NewHalfDepth )
 {
-	m_Depth = NewDepth;
+	m_HalfDepth = NewHalfDepth;
 }
 
 // Capsule
@@ -282,9 +307,9 @@ FORCEINLINE	float HCapsuleRigidBody::GetRadius() const
 {
 	return m_Radius;
 }
-FORCEINLINE	float HCapsuleRigidBody::GetLength() const
+FORCEINLINE	float HCapsuleRigidBody::GetHalfHeight() const
 {
-	return m_Length;
+	return m_HalfHeight;
 }
 
 FORCEINLINE void HCapsuleRigidBody::SetRadius( const float& NewRadius )
@@ -292,7 +317,7 @@ FORCEINLINE void HCapsuleRigidBody::SetRadius( const float& NewRadius )
 	m_Radius = NewRadius;
 }
 
-FORCEINLINE void HCapsuleRigidBody::SetLength( const float& NewLength )
+FORCEINLINE void HCapsuleRigidBody::SetHalfHeight( const float& NewHalfHeight )
 {
-	m_Length = NewLength;
+	m_HalfHeight = NewHalfHeight;
 }

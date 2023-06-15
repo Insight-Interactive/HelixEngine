@@ -69,12 +69,11 @@ protected:
 
 protected:
 	std::vector<HActorComponent*> m_Components;
-	HSceneComponent* m_pRoot;
+	HSceneComponent* m_pRootComponent;
+
 	HWorld* m_pOwningWorld;
 
 	SourceContext m_Script;
-
-
 	bool m_IsDynamicInstance;
 };
 
@@ -119,12 +118,12 @@ FORCEINLINE void AActor::SetOwningWorld( HWorld* pWorld )
 
 FORCEINLINE void AActor::SetRootComponent(HSceneComponent* pRoot)
 {
-	m_pRoot = pRoot;
+	m_pRootComponent = pRoot;
 }
 
 FORCEINLINE HSceneComponent* AActor::GetRootComponent()
 {
-	return m_pRoot;
+	return m_pRootComponent;
 }
 
 FORCEINLINE SourceContext& AActor::GetScript()

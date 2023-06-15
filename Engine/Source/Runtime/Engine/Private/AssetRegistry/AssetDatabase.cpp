@@ -34,6 +34,8 @@ FAssetDatabase::~FAssetDatabase()
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
+		GFontManager.Initialize();
+		
 		enum
 		{
 			// AssetManifest.json JSON element indicies
@@ -43,7 +45,8 @@ FAssetDatabase::~FAssetDatabase()
 			kMaterialsDbIndex	= 2,
 			kActorsDbIndex		= 3,
 			kShadersDbIndex		= 4,
-			kScriptDbIndex		= 5
+			kScriptDbIndex		= 5,
+			kFontDBIndex		= 6
 		};
 
 		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
@@ -54,6 +57,7 @@ FAssetDatabase::~FAssetDatabase()
 		SInstance->m_ActorDatabase.Deserialize( AssetDbRoot[kActorsDbIndex] );
 		SInstance->m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
 		SInstance->m_ScriptDatabase.Deserialize( AssetDbRoot[kScriptDbIndex] );
+		SInstance->m_FontDatabase.Deserialize( AssetDbRoot[kFontDBIndex] );
 
 		SInstance->m_MeshDatabase.Initialize();
 		SInstance->m_TextureDatabase.Initialize();
@@ -61,6 +65,7 @@ FAssetDatabase::~FAssetDatabase()
 		SInstance->m_ActorDatabase.Initialize();
 		SInstance->m_ShaderDatabase.Initialize();
 		SInstance->m_ScriptDatabase.Initialize();
+		SInstance->m_FontDatabase.Initialize();
 	}
 	else
 	{
@@ -79,4 +84,6 @@ FAssetDatabase::~FAssetDatabase()
 	SInstance->m_ActorDatabase.UnInitialize();
 	SInstance->m_ShaderDatabase.UnInitialize();
 	SInstance->m_ScriptDatabase.UnInitialize();
+	
+	GFontManager.UnInitialize();
 }

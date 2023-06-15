@@ -18,6 +18,8 @@ protected:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
 
+	virtual void Tick( float DeltaTime );
+
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 

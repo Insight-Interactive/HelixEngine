@@ -35,13 +35,14 @@ public:
 	void SetColor( const FColor& NewColor );
 	void SetBrightness( float NewBrightness );
 
+	virtual void SetPosition( const FVector3& NewPos );
+	virtual void SetPosition( const float& X, const float& Y, const float& Z );
+
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
-
-	virtual void OnPositionChanged() override;
 
 	bool GetCanDrawDebugBillboard() const;
 
@@ -83,15 +84,6 @@ inline float HPointLightComponent::GetBrightness() const
 	}
 
 	return 0.f;
-}
-
-inline void HPointLightComponent::OnPositionChanged()
-{
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
-	if (pData != nullptr)
-	{
-		pData->Position = GetAbsoluteWorldPosition();
-	}
 }
 
 inline void HPointLightComponent::SetColor( const FColor& NewColor )

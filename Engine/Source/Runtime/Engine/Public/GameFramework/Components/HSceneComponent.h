@@ -37,16 +37,18 @@ public:
 
 	bool GetIsStatic() const;
 
-	void SetPosition( const FVector3& NewPos );
-	void SetRotation( const FQuat& NewRotation );
-	void SetScale( const FVector3& NewScale );
-	void SetPosition( const float& X, const float& Y, const float& Z );
-	void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
-	void SetScale( const float& X, const float& Y, const float& Z );
+	void LookAt( const FVector3& Pos );
 
-	void Translate( const float& X, const float& Y, const float& Z );
-	void Rotate( const float& Pitch, const float& Yaw, const float& Roll );
-	void Scale( const float& X, const float& Y, const float& Z );
+	virtual void SetPosition( const FVector3& NewPos );
+	virtual void SetRotation( const FQuat& NewRotation );
+	virtual void SetScale( const FVector3& NewScale );
+	virtual void SetPosition( const float& X, const float& Y, const float& Z );
+	virtual void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
+	virtual void SetScale( const float& X, const float& Y, const float& Z );
+
+	virtual void Translate( const float& X, const float& Y, const float& Z );
+	virtual void Rotate( const float& Pitch, const float& Yaw, const float& Roll );
+	virtual void Scale( const float& X, const float& Y, const float& Z );
 
 	void SetIsStatic( bool IsStatic );
 
@@ -58,10 +60,6 @@ protected:
 
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
-
-	virtual void OnPositionChanged() {}
-	virtual void OnRotationChanged() {}
-	virtual void OnScaleChanged() {}
 
 private:
 	HSceneComponent*	m_pParent;
@@ -166,56 +164,54 @@ FORCEINLINE bool HSceneComponent::GetIsStatic() const
 	return m_IsStatic;
 }
 
+FORCEINLINE void HSceneComponent::LookAt( const FVector3& Pos )
+{
+	m_Transform.LookAt( Pos );
+}
+
 FORCEINLINE void HSceneComponent::SetPosition( const FVector3& NewPos )
 {
-	SetPosition( NewPos.x, NewPos.y, NewPos.z );
+	m_Transform.SetPosition( NewPos.x, NewPos.y, NewPos.z );
 }
 
 FORCEINLINE void HSceneComponent::SetRotation( const FQuat& NewRotation )
 {
-	FVector3 Eulers = NewRotation.ToEulerAngles();
-	SetRotation( Eulers.x, Eulers.y, Eulers.z );
+	m_Transform.SetRotation( NewRotation );
 }
 
 FORCEINLINE void HSceneComponent::SetScale( const FVector3& NewScale )
 {
-	SetScale( NewScale.x, NewScale.y, NewScale.z );
+	m_Transform.SetScale( NewScale.x, NewScale.y, NewScale.z );
 }
 
 FORCEINLINE void HSceneComponent::SetPosition( const float& X, const float& Y, const float& Z )
 {
 	m_Transform.SetPosition( X, Y, Z );
-	OnPositionChanged();
 }
 
 FORCEINLINE void HSceneComponent::SetRotation( const float& Pitch, const float& Yaw, const float& Roll )
 {
 	m_Transform.SetRotation( Pitch, Yaw, Roll );
-	OnRotationChanged();
 }
 
 FORCEINLINE void HSceneComponent::SetScale( const float& X, const float& Y, const float& Z )
 {
 	m_Transform.SetScale( X, Y, Z );
-	OnScaleChanged();
 }
 
 FORCEINLINE void HSceneComponent::Translate( const float& X, const float& Y, const float& Z )
 {
 	m_Transform.Translate( X, Y, Z );
-	OnPositionChanged();
 }
 
 FORCEINLINE void HSceneComponent::Rotate( const float& Pitch, const float& Yaw, const float& Roll )
 {
 	m_Transform.Rotate( Pitch, Yaw, Roll );
-	OnRotationChanged();
 }
 
 FORCEINLINE void HSceneComponent::Scale( const float& X, const float& Y, const float& Z )
 {
 	m_Transform.Scale( X, Y, Z );
-	OnScaleChanged();
 }
 
 FORCEINLINE void HSceneComponent::SetIsStatic( bool IsStatic )

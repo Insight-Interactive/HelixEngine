@@ -22,16 +22,34 @@ public:
 	void AddWidget( FUIWidget& Widget );
 	bool RemoveWidget( FUIWidget& Widget );
 
-private:
-	void OnRenderingFinished();
+	bool IsHidden();
+	void Show();
+	void Hide();
 
+private:
 	void RenderWidgets( FCommandContext& CmdContext );
 
 
 private:
+	bool m_IsHidden;
 	std::vector<FUIWidget*> m_Widgets;
 
 };
 
 // Inline function implementations
 //
+
+FORCEINLINE	bool FUIPanel::IsHidden()
+{
+	return m_IsHidden;
+}
+
+FORCEINLINE void FUIPanel::Show()
+{
+	m_IsHidden = false;
+}
+
+FORCEINLINE void FUIPanel::Hide()
+{
+	m_IsHidden = true;
+}

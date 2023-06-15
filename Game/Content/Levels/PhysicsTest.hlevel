@@ -8,8 +8,8 @@
             "76b2b57a-e199-4032-89f5-cc498feec3cc": [
                 {
                     "PositionX": 0.0,
-                    "PositionY": 50.0,
-                    "PositionZ": 0.0,
+                    "PositionY": 40.0,
+                    "PositionZ": 100.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -35,7 +35,7 @@
                 {
                     "PositionX": 0.0,
                     "PositionY": 0.0,
-                    "PositionZ": 0.0,
+                    "PositionZ": 50.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,

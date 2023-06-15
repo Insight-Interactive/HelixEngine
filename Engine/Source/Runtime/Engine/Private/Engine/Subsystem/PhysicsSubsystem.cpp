@@ -30,6 +30,7 @@ void FPhysicsSubsystem::UnInitialize()
 
 void FPhysicsSubsystem::RunAsync_Implementation()
 {
+	return;
 	while (m_IsRunning)
 	{
 		for (HPhysicsScene* pScene : m_Scenes)

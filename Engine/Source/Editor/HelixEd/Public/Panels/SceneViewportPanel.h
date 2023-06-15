@@ -6,8 +6,8 @@
 
 
 class ADebugPawn;
-class AppBeginPlayEvent;
-class AppEndPlayEvent;
+class EngineBeginPlayEvent;
+class EngineEndPlayEvent;
 
 class SceneViewportPanel : public Panel
 {
@@ -41,8 +41,8 @@ protected:
 
 	virtual void OnEvent( Event& e ) override;
 
-	bool OnAppBeginPlay( AppBeginPlayEvent& e );
-	bool OnAppEndPlay( AppEndPlayEvent& e );
+	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
+	bool OnAppEndPlay( EngineEndPlayEvent& e );
 
 private:
 	FDescriptorHandle m_DescriptorHandle;

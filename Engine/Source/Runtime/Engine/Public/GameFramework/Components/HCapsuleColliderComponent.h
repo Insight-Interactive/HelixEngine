@@ -14,6 +14,9 @@ public:
 
 	virtual bool IsStatic() const override;
 
+	virtual void Tick( float Delta ) override;
+
+	virtual HRigidBody& GetRigidBody() override;
 protected:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
@@ -21,12 +24,11 @@ protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
 
-	virtual HRigidBody& GetRigidBody() override;
 	virtual const HRigidBody& GetRigidBody() const override;
 
 
 private:
-	void RegisterCollider( bool StartDisabled );
+	void RegisterCollider( bool StartDisabled = false );
 	void UnRegisterCollider();
 
 private:

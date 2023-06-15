@@ -33,6 +33,28 @@ HPointLightComponent::~HPointLightComponent()
 	m_MeshWorldCB.Destroy();
 }
 
+void HPointLightComponent::SetPosition( const FVector3& NewPos )
+{
+	Super::SetPosition( NewPos );
+	
+	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	if (pData != nullptr)
+	{
+		pData->Position = GetAbsoluteWorldPosition();
+	}
+}
+
+void HPointLightComponent::SetPosition( const float& X, const float& Y, const float& Z )
+{
+	Super::SetPosition( X, Y, Z );
+
+	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	if (pData != nullptr)
+	{
+		pData->Position = GetAbsoluteWorldPosition();
+	}
+}
+
 void HPointLightComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -41,8 +63,6 @@ void HPointLightComponent::BeginPlay()
 void HPointLightComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-
-	OnPositionChanged();
 }
 
 void HPointLightComponent::OnCreate()
@@ -63,9 +83,6 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 {
 	Super::Render( GfxContext );
 	// TODO Draw sphere showing light influence.
-
-	OnPositionChanged();
-
 
 	// Draw billboard.
 	if (m_LightDebugMesh && m_LightDebugMesh->IsValid() && GetCanDrawDebugBillboard())

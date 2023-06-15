@@ -23,22 +23,29 @@ void HCubeColliderComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	SetScale( m_RigidBody.GetWidth() * 2, m_RigidBody.GetHeight() * 2, m_RigidBody.GetDepth() * 2 );
+	SetScale( m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth() );
+}
+
+void HCubeColliderComponent::OnCreate()
+{
+	Super::OnCreate();
+	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
+
 }
 
 void HCubeColliderComponent::OnEnter( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT(  "%s Exited %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT(  "------ %s Entered %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
 }
 
 void HCubeColliderComponent::OnExit( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "%s Exit %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "------ %s Exit %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
 }
 
 void HCubeColliderComponent::OnStay( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "%s Stay %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "------ %s Stay %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
 }
 
 void HCubeColliderComponent::Serialize( WriteContext& Output )
@@ -60,13 +67,13 @@ void HCubeColliderComponent::Serialize( WriteContext& Output )
 			Output.Bool( m_RigidBody.GetIsStatic() );
 
 			Output.Key( HE_STRINGIFY( m_RigidBody.m_Width ) );
-			Output.Double( m_RigidBody.GetWidth() );
+			Output.Double( m_RigidBody.GetHalfWidth() );
 
 			Output.Key( HE_STRINGIFY( m_RigidBody.m_Height ) );
-			Output.Double( m_RigidBody.GetHeight() );
+			Output.Double( m_RigidBody.GetHalfHeight() );
 
 			Output.Key( HE_STRINGIFY( m_RigidBody.m_Length ) );
-			Output.Double( m_RigidBody.GetDepth() );
+			Output.Double( m_RigidBody.GetHalfDepth() );
 		}
 		Output.EndObject();
 	}
@@ -82,14 +89,12 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_RigidBody.m_IsStatic ), IsStatic );
 	m_RigidBody.SetIsStatic( IsStatic );
 	FVector3 Dimensions;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Width ), Dimensions.x );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Height ), Dimensions.y );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Depth ), Dimensions.z );
-	m_RigidBody.SetWidth( Dimensions.x );
-	m_RigidBody.SetHeight( Dimensions.y );
-	m_RigidBody.SetDepth( Dimensions.z );
-
-	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Dimensions.x );
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Dimensions.y );
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfDepth ), Dimensions.z );
+	m_RigidBody.SetHalfWidth( Dimensions.x );
+	m_RigidBody.SetHalfHeight( Dimensions.y );
+	m_RigidBody.SetHalfDepth( Dimensions.z );
 
 	RegisterCollider( false );
 }

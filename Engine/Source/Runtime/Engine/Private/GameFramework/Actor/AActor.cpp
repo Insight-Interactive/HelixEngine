@@ -14,7 +14,7 @@
 
 AActor::AActor( FActorInitArgs& InitArgs )
 	: HObject( InitArgs.Name )
-	, m_pRoot( nullptr )
+	, m_pRootComponent( nullptr )
 	, m_pOwningWorld( CCast<HWorld*>( InitArgs.pWorld ) )
 	, m_IsDynamicInstance( InitArgs.bIsDynamicInstance )
 {

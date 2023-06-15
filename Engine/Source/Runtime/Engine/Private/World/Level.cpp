@@ -146,7 +146,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 						FVector3 Pos = Transform.GetPosition();
 						pRoot->Translate( Pos.x, Pos.y, Pos.z );
 						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+						pRoot->SetRotation( Rot.x, Rot.y, Rot.z );
 						FVector3 Sca = Transform.GetScale();
 						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}
@@ -164,7 +164,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 						FVector3 Pos = Transform.GetPosition();
 						pRoot->Translate( Pos.x, Pos.y, Pos.z );
 						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+						pRoot->SetRotation( Rot.x, Rot.y, Rot.z );
 						FVector3 Sca = Transform.GetScale();
 						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}

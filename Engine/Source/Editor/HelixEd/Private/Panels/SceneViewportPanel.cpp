@@ -95,7 +95,6 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 			}
 		}
 
-		GetOwningViewport().GetWorld().GetScene().WaitForRenderingFinished();
 
 		// Get the render target image and present it into the viewport.
 		//
@@ -143,11 +142,11 @@ void SceneViewportPanel::OnEvent( Event& e )
 	EventDispatcher Dispatcher( e );
 
 	// Editor
-	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &SceneViewportPanel::OnAppBeginPlay );
-	Dispatcher.Dispatch<AppEndPlayEvent>( this, &SceneViewportPanel::OnAppEndPlay );
+	Dispatcher.Dispatch<EngineBeginPlayEvent>( this, &SceneViewportPanel::OnAppBeginPlay );
+	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &SceneViewportPanel::OnAppEndPlay );
 }
 
-bool SceneViewportPanel::OnAppBeginPlay( AppBeginPlayEvent& e )
+bool SceneViewportPanel::OnAppBeginPlay( EngineBeginPlayEvent& e )
 {
 	// If the app is simulating let the simulation take full advantage of the input.
 	m_ShouldIgnoreInput = true;
@@ -155,7 +154,7 @@ bool SceneViewportPanel::OnAppBeginPlay( AppBeginPlayEvent& e )
 	return false;
 }
 
-bool SceneViewportPanel::OnAppEndPlay( AppEndPlayEvent& e )
+bool SceneViewportPanel::OnAppEndPlay( EngineEndPlayEvent& e )
 {
 	m_ShouldIgnoreInput = false;
 	

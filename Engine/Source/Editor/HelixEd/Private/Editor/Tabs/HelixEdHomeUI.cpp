@@ -78,13 +78,13 @@ void HelixEdHomeUI::OnEvent( Event& e )
 	EventDispatcher Dispatcher( e );
 
 	// Application/Engine
-	Dispatcher.Dispatch<AppBeginPlayEvent>( this, &HelixEdHomeUI::OnAppBeginPlay );
-	Dispatcher.Dispatch<AppEndPlayEvent>( this, &HelixEdHomeUI::OnAppEndPlay );
+	Dispatcher.Dispatch<EngineBeginPlayEvent>( this, &HelixEdHomeUI::OnAppBeginPlay );
+	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &HelixEdHomeUI::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HelixEdHomeUI::OnObjectSelected );
 	Dispatcher.Dispatch<ContentItemDoubleClicked>( GEditorEngine, &HEditorEngine::OnContentItemClicked );
 }
 
-bool HelixEdHomeUI::OnAppBeginPlay( AppBeginPlayEvent& e )
+bool HelixEdHomeUI::OnAppBeginPlay( EngineBeginPlayEvent& e )
 {
 	OnAppBeginPlay();
 	GEditorEngine->OnAppBeginPlay( e );
@@ -93,7 +93,7 @@ bool HelixEdHomeUI::OnAppBeginPlay( AppBeginPlayEvent& e )
 	return false;
 }
 
-bool HelixEdHomeUI::OnAppEndPlay( AppEndPlayEvent& e )
+bool HelixEdHomeUI::OnAppEndPlay( EngineEndPlayEvent& e )
 {
 	OnAppEndPlay();
 	GEditorEngine->OnAppEndPlay( e );

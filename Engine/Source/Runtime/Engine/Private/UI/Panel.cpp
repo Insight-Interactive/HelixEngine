@@ -7,6 +7,7 @@
 
 
 FUIPanel::FUIPanel()
+	: m_IsHidden(false)
 {
 }
 

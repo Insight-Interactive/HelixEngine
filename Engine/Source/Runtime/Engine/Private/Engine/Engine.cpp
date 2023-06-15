@@ -39,6 +39,7 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	, m_IsEditorPresent( CmdLine.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ) )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppSeconds( 0.0 )
+	, m_FrameTimeScale( 1.f )
 {
 }
 
@@ -148,10 +149,6 @@ void HEngine::Startup()
 	m_MainViewPort.Initialize( ClientDesc );
 	m_MainViewPort.GetWindow().AddListener( this, &HEngine::OnEvent );
 
-	GFontManager.Initialize();
-	GFontManager.LoadFont( FGameProject::GetInstance()->GetContentFullPath( "Fonts/Ariel.fnt" ) );
-
-
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 	// Create the splash screen to serve as a loading indicator to the user.
 	GThreadPool->Kick( SplashMain, NULL );
@@ -180,6 +177,7 @@ void HEngine::PostStartup()
 	{
 		EmitEvent( EngineBeginPlayEvent() );
 		m_GameWorld.BeginPlay();
+		GGameInstance->BeginPlay();
 	}
 
 	m_IsInitialized = true;
@@ -230,16 +228,20 @@ void HEngine::Tick()
 	m_MainViewPort.GetInputDispatcher()->GetInputSureyor().KbmZeroInputs();
 	
 	// Main loop.
-	while (m_Application.IsRunning())
+	while ( m_Application.IsRunning() )
 	{
 		System::ProcessMessages();
-		EmitEvent( EngineTickEvent() );
+		
 		TickTimers();
 		float DeltaTime = (float)GetDeltaTime();
+		EmitEvent( EngineTickEvent( DeltaTime ) );
 
 		m_MainViewPort.Tick( DeltaTime );
+
+		GGameInstance->Tick(DeltaTime );
 		m_GameWorld.Tick( DeltaTime );
 
+		EmitEvent( EngineRenderEvent() );
 		RenderClientViewport( DeltaTime );
 	}
 
@@ -265,8 +267,8 @@ void HEngine::OnEvent( Event& e )
 
 	// Window
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEngine::OnClientWindowClosed );
-	Dispatcher.Dispatch< WindowFocusEvent>( this, &HEngine::OnWindowFocus );
-	Dispatcher.Dispatch< WindowLostFocusEvent>( this, &HEngine::OnWindowLostFocus );
+	Dispatcher.Dispatch<WindowFocusEvent>( this, &HEngine::OnWindowFocus );
+	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &HEngine::OnWindowLostFocus );
 }
 
 bool HEngine::OnClientWindowClosed( WindowClosedEvent& e )

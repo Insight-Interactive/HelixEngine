@@ -126,6 +126,9 @@
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\FontDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
@@ -381,6 +384,9 @@
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\FontDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">

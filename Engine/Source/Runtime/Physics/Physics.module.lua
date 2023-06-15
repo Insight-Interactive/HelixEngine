@@ -59,14 +59,14 @@ project ("Physics")
 		"MultiProcessorCompile",
 	}
 
-	filter {"configurations:DebugEditor or Development"}
+	filter {"configurations:DebugEditor or Demo or Development"}
 		defines
 		{
 			"HE_DEBUG_PHYSICS=1",
 			"P_TRACK_MEMORY_ALLOCATIONS=1",
 		}
 
-	filter { "configurations:DebugGame or Demo or ShippingGame" }
+	filter { "configurations:DebugGame or ShippingGame" }
 		defines
 		{
 			"HE_DEBUG_PHYSICS=0",

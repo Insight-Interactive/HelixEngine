@@ -4,6 +4,7 @@
 
 #include "VertexLayouts.h"
 #include "CommandContext.h"
+#include "AssetRegistry/AssetDatabase.h"
 
 
 FLabel::FLabel()
@@ -26,7 +27,7 @@ void FLabel::Initialize()
 
 	// TODO: make this resize based on the current sentence size so gpu memory isn't wasted
 	m_VertexBuffer.Create( L"Font Verticies", kMaxTextCharacters * sizeof( FTextVertex2D ), sizeof( FTextVertex2D ), nullptr );
-	m_Font = GFontManager.GetFont( "Ariel" );
+	m_Font = FAssetDatabase::GetFont( "f3de7104-86de-4f96-83ae-6eaa8f38f46d" );
 }
 
 void FLabel::UnInitialize()
@@ -49,7 +50,7 @@ void FLabel::Render( FCommandContext& UIContext )
 	UIContext.SetTexture( 0, m_Font->GetFontTexture() );
 
 	DrawLabel();
-	UIContext.DrawInstanced( 4, m_Text.size(), 0, 0);
+	UIContext.DrawInstanced( 4, (uint32)m_Text.size(), 0, 0);
 }
 
 void FLabel::DrawLabel()

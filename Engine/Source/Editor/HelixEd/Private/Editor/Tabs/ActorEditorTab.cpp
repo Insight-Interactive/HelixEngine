@@ -36,10 +36,10 @@ private:
 ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
 {
-	m_pRoot = AddComponent<HSceneComponent>( TEXT( "Root" ) );
+	m_pRootComponent = AddComponent<HSceneComponent>( TEXT( "Root" ) );
 
-	m_pRoot->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
-	m_pRoot->SetScale( FVector3( 10.f, 10.f, 10.f ) );
+	m_pRootComponent->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
+	m_pRootComponent->SetScale( FVector3( 10.f, 10.f, 10.f ) );
 
 	Mesh = AddComponent<HStaticMeshComponent>( TEXT( "CubeMesh" ) );
 	Mesh->SetMesh( FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) ) );
@@ -50,8 +50,8 @@ ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 	Light->SetColor( FColor( 0.f, 255.f, 0.f ) );
 	Light->SetPosition( 8.f, 12.f, 0.f );
 
-	Light->AttachTo( m_pRoot );
-	Mesh->AttachTo( m_pRoot );
+	Light->AttachTo( m_pRootComponent );
+	Mesh->AttachTo( m_pRootComponent );
 }
 ARotatingActor::~ARotatingActor()
 {

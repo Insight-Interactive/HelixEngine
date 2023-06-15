@@ -25,7 +25,57 @@ HColliderComponent::~HColliderComponent()
 	delete m_Material;
 }
 
-void HColliderComponent::BeginPlay() 
+void HColliderComponent::SetPosition( const FVector3& NewPos )
+{
+	Super::SetPosition( NewPos );
+	GetRigidBody().SetSimulatedPosition( NewPos );
+}
+
+void HColliderComponent::SetRotation( const FQuat& NewRotation )
+{
+	Super::SetRotation( NewRotation );
+	GetRigidBody().SetSimulatedRotation( NewRotation );
+}
+
+void HColliderComponent::SetScale( const FVector3& NewScale )
+{
+	Super::SetScale( NewScale );
+	// TODO GetRigidBody().SetColliderScale(); 
+}
+
+void HColliderComponent::SetPosition( const float& X, const float& Y, const float& Z )
+{
+	Super::SetPosition( X, Y, Z );
+	GetRigidBody().SetSimulatedPosition( { X, Y, Z } );
+}
+
+void HColliderComponent::SetRotation( const float& Pitch, const float& Yaw, const float& Roll )
+{
+	Super::SetRotation( Pitch, Yaw, Roll );
+	FQuat DeltaPitch = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
+	FQuat DeltaYaw = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
+	FQuat DeltaRoll = FQuat::CreateFromAxisAngle( FVector3::Forward, Roll );
+	//FQuat Rotation = FQuat::CreateFromYawPitchRoll( Yaw, Pitch, Roll );
+	GetRigidBody().SetSimulatedRotation( DeltaPitch * DeltaYaw * DeltaRoll );
+}
+
+void HColliderComponent::SetScale( const float& X, const float& Y, const float& Z )
+{
+	Super::SetScale( X, Y, Z );
+}
+
+void HColliderComponent::Translate( const float& X, const float& Y, const float& Z )
+{
+	Super::Translate( X, Y, Z );
+	GetRigidBody().SetSimulatedPosition( { X, Y, Z } );
+}
+
+void HColliderComponent::Scale( const float& X, const float& Y, const float& Z )
+{
+	Super::Scale( X, Y, Z );
+}
+
+void HColliderComponent::BeginPlay()
 {
 	Super::BeginPlay();
 }
@@ -34,9 +84,14 @@ void HColliderComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	
-	// Fetch the results of the simulation.
-	SetPosition( GetRigidBody().GetSimulatedPosition() );
-	SetRotation( GetRigidBody().GetSimulatedRotation() );
+	HRigidBody& rb = GetRigidBody();
+	//if (!rb.IsSleeping())
+	{
+		// Fetch the results of the simulation.
+		FTransform SimTransform = GetRigidBody().GetSimulationWorldTransform();
+		Super::SetPosition( SimTransform.GetPosition() );
+		Super::SetRotation( SimTransform.GetRotation() );
+	}
 }
 
 void HColliderComponent::Render( FCommandContext& GfxContext )
@@ -46,13 +101,13 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (!GetIsDrawEnabled())
 		return;
 
-	HCameraComponent* pCamera = GetWorld()->GetCurrentSceneRenderCamera();
+	/*HCameraComponent* pCamera = GetWorld()->GetCurrentSceneRenderCamera();
 	if (pCamera)
 	{
 		float DistSquared = FVector3::DistanceSquared( pCamera->GetAbsoluteWorldPosition(), GetAbsoluteWorldPosition() );
 		if (DistSquared > (300.f * 300.f))
 			return;
-	}
+	}*/
 
 	if (m_Material)
 	{
@@ -71,6 +126,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
 		pWorld->kWorldMat = GetWorldMatrix().Transpose();
+
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
@@ -112,9 +168,6 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 
 	const ReadContext& This = Value[1];
 	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_IsTrigger ), m_IsTrigger );
-
-	m_Material = new FMaterialInstance();
-	m_Material->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()
@@ -125,6 +178,9 @@ void HColliderComponent::OnOwnerDeserializeComplete()
 void HColliderComponent::OnCreate()
 {
 	Super::OnCreate(); 
+
+	m_Material = new FMaterialInstance();
+	m_Material->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
 
 	GetWorld()->GetScene().AddDebugCollider( this );
 }

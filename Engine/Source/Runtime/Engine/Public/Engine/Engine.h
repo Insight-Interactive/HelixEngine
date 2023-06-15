@@ -49,9 +49,19 @@ public:
 	HWorld& GetGameWorld();
 	
 	/*
+		Pauses and unpauses the game logic. Note: Takes one frame for physics simulation to pause.
+	*/
+	void TogglePauseGame( bool GameIsPaused );
+
+	/*
 		Returns the time between frame buffer flips in miliseconds.
 	*/
 	double GetDeltaTime() const;
+
+	/*
+		Scales the delta time value used for the game
+	*/
+	void SetDeltaTimeScale( float Scale );
 
 	/*
 		Returns the time in seconds since app launch.
@@ -122,6 +132,7 @@ protected:
 	bool					m_IsEditorPresent;
 	bool					m_IsPlayingInEditor;
 	FFrameTimer				m_FrameTimer;
+	float					m_FrameTimeScale;
 	double					m_AppSeconds;
 	FViewportContext		m_MainViewPort;
 	HWorld					m_GameWorld;
@@ -161,9 +172,28 @@ FORCEINLINE HWorld& HEngine::GetGameWorld()
 	return m_GameWorld;
 }
 
+FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )
+{
+	if (GameIsPaused)
+	{
+		SetDeltaTimeScale( 0.f );
+		m_GameWorld.GetPhysicsScene().RequestPauseSimulation();
+	}
+	else
+	{
+		SetDeltaTimeScale( 1.f );
+		m_GameWorld.GetPhysicsScene().RequestUnPauseSimulation();
+	}
+}
+
 FORCEINLINE double HEngine::GetDeltaTime() const
 {
-	return m_FrameTimer.GetTimeMiliSeconds();
+	return m_FrameTimer.GetTimeMiliSeconds() * m_FrameTimeScale;
+}
+
+FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
+{
+	m_FrameTimeScale = Scale;
 }
 
 FORCEINLINE double HEngine::GetAppSeconds() const

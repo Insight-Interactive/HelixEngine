@@ -13,6 +13,7 @@ class FFontManager
 {
 	friend class FRenderingSubsystem;
 	friend class FRenderContext;
+	friend class FAssetDatabase;
 	friend class HEngine;
 public:
 	FFontManager()
@@ -25,10 +26,6 @@ public:
 	HFont LoadFont( const String& Filename );
 	void DestroyFont( const String& Key );
 
-	HFont GetFont( const String& Key )
-	{
-		return FindOrLoadFont( Key );
-	}
 private:
 	ManagedFont* FindOrLoadFont( const String& Filename );
 

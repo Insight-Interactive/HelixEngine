@@ -19,8 +19,8 @@ public:
 	FTransform& operator = ( const FTransform& Other );
 
 	FVector3 GetPosition()		const { return m_Position; }
-	FQuat GetRotation()			const { return FQuat::CreateFromYawPitchRoll(m_RotationEuler.y, m_RotationEuler.x, m_RotationEuler.z ); }
-	FVector3 GetEulerRotation() const { return m_RotationEuler; }
+	FQuat GetRotation()			const {	return m_Rotation; }
+	FVector3 GetEulerRotation() const { return m_Rotation.ToEulerAngles(); }
 	FVector3 GetScale()			const { return m_Scale; }
 
 	void SetPosition( const float& X, const float& Y, const float& Z );
@@ -86,7 +86,7 @@ protected:
 
 protected:
 	FVector3 m_Position;
-	FVector3 m_RotationEuler;
+	FQuat m_Rotation;
 	FVector3 m_Scale;
 
 };

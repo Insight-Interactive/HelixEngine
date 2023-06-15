@@ -4,6 +4,8 @@
 #include "GameFramework/Actor/APawn.h"
 #include "World/World.h"
 #include "GameFramework/Components/HControllerComponent.h"
+#include "GameFramework/Components/HCapsuleColliderComponent.h"
+#include "GameFramework/Components/HCubeColliderComponent.h"
 #include "Engine/Engine.h"
 
 
@@ -16,11 +18,14 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_Velocity(0.f)
 	, m_bIsSprinting(false)
 	, m_pController(NULL)
-	, m_pRootComponent()
 {
 	m_pController = AddComponent<HControllerComponent>(TEXT("Player Controller"));
-	m_pRootComponent = AddComponent<HSceneComponent>(TEXT("Root Component"));
+	m_pRootComponent = AddComponent<HCapsuleColliderComponent>( TEXT( "Character Bounds" ) );
 	SetRootComponent(m_pRootComponent);
+
+	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
+	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
+	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
 }
 
 APawn::~APawn()

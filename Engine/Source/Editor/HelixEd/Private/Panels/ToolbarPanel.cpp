@@ -41,11 +41,11 @@ void ToolbarPanel::Render( FCommandContext& CmdCtx )
 		{
 			if (GEngine->IsPlayingInEditor())
 			{
-				EmitEvent( AppEndPlayEvent() );
+				EmitEvent( EngineEndPlayEvent() );
 			}
 			else
 			{
-				EmitEvent( AppBeginPlayEvent() );
+				EmitEvent( EngineBeginPlayEvent() );
 			}
 		}
 	}

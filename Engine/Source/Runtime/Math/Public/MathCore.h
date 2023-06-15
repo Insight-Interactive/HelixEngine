@@ -15,6 +15,35 @@ struct FQuat;
 struct Plane;
 
 
+constexpr float HE_PI = 3.141592654f;
+constexpr float HE_2PI = 6.283185307f;
+constexpr float HE_1DIVPI = 0.318309886f;
+constexpr float HE_1DIV2PI = 0.159154943f;
+constexpr float HE_PIDIV2 = 1.570796327f;
+constexpr float HE_PIDIV4 = 0.785398163f;
+
+namespace Math
+{
+    template <typename T>
+    inline T Clamp( const T& Value, const T& Min, const T& Max )
+    {
+        const T Val = Value < Min ? Min : Value;
+        return Val > Max ? Max : Val;
+    }
+
+    template <typename T>
+    inline T DegreesToRadians( const T& Degrees )
+    {
+        return Degrees * (HE_PI / 180.0f);
+    }
+
+    template <typename T>
+    inline T RadiansToDegrees( const T& Radians )
+    {
+        return Radians * (180.0f / HE_PI);
+    }
+}
+
 //------------------------------------------------------------------------------
 // 2D vector
 struct MATH_API FVector2 : public XMFLOAT2

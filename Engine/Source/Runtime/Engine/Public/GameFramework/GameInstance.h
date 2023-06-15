@@ -18,6 +18,8 @@ public:
 
 	virtual void OnGameSetFocus();
 	virtual void OnGameLostFocus();
+	virtual void BeginPlay();
+	virtual void Tick( float DeltaTime );
 
 	HWorld* GetWorld();
 

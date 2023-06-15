@@ -214,15 +214,22 @@ public:
 class EngineTickEvent : public EngineEvent
 {
 public:
-	EngineTickEvent()
+	EngineTickEvent( float DeltaTime )
+		: m_DeltaTime (DeltaTime)
 	{
 	}
 	virtual ~EngineTickEvent()
 	{
 	}
 
+	inline float GetDeltaTime() { return m_DeltaTime; }
+
 	EVENT_CLASS_TYPE( ET_EngineTick )
 		EVENT_CLASS_CATEGORY( EC_Application )
+
+private:
+	float m_DeltaTime;
+
 };
 
 class EngineRenderEvent : public EngineEvent

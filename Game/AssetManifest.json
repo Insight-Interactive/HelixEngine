@@ -1,9 +1,10 @@
 {
     "FAssetDatabase": [
         {
-            "4539421c-d8b4-4936-bb0c-8dde1e24f9b9": "Content/Models/SM_Cube.hasset",
-            "a5b1d8a5-f186-4298-b36e-9bd840e14c6b": "Content/Models/SM_Sphere.hasset",
-            "76c3094a-f60f-4049-8a7b-698e5327bbcb": "Content/Models/SM_Plane.hasset"
+          "4539421c-d8b4-4936-bb0c-8dde1e24f9b9": "Content/Models/Cube.fbx",
+          "a5b1d8a5-f186-4298-b36e-9bd840e14c6b": "Content/Models/Sphere.fbx",
+          "76c3094a-f60f-4049-8a7b-698e5327bbcb": "Content/Models/Plane.fbx",
+          "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule.fbx"
         },
         {
             "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
@@ -39,10 +40,12 @@
             "3c5f2a9f-ff5b-4eac-a311-b78d1f0aeca4": "Shaders/Core/Wireframe.ps.cso",
             "41c75002-f4b1-4030-adec-7a5088a4e65b": "Shaders/Core/Text.vs.cso",
             "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso"
-
         },
         {
-            "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb": "Content/Scripts/RotationScript.lua"
+          "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb": "Content/Scripts/RotationScript.lua"
+        },
+        {
+          "f3de7104-86de-4f96-83ae-6eaa8f38f46d": "Content/Fonts/Ariel.fnt"
         }
     ]
 }

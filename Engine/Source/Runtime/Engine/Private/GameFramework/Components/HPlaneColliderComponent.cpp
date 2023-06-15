@@ -4,6 +4,7 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
+#include "Renderer/GeometryGenerator.h"
 
 
 HPlaneColliderComponent::HPlaneColliderComponent( FComponentInitArgs& InitArgs )
@@ -20,6 +21,7 @@ HPlaneColliderComponent::~HPlaneColliderComponent()
 void HPlaneColliderComponent::OnCreate()
 {
 	Super::OnCreate();
+	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
 
 }
 
@@ -28,6 +30,13 @@ void HPlaneColliderComponent::OnDestroy()
 	Super::OnDestroy();
 
 	UnRegisterCollider();
+}
+
+void HPlaneColliderComponent::Tick( float DeltaTime )
+{
+	Super::Tick(DeltaTime);
+
+	SetScale( m_RigidBody.GetHalfWidth(), HPlaneRigidBody::GetConstantDepth(), m_RigidBody.GetHalfHeight() );
 }
 
 void HPlaneColliderComponent::Serialize( WriteContext& Output )
@@ -49,10 +58,10 @@ void HPlaneColliderComponent::Serialize( WriteContext& Output )
 			Output.Bool( m_RigidBody.GetIsStatic() );
 
 			Output.Key( HE_STRINGIFY( m_Width ) );
-			Output.Double( m_RigidBody.GetWidth() );
+			Output.Double( m_RigidBody.GetHalfWidth() );
 
 			Output.Key( HE_STRINGIFY( m_Height ) );
-			Output.Double( m_RigidBody.GetHeight() );
+			Output.Double( m_RigidBody.GetHalfHeight() );
 		}
 		Output.EndObject();
 	}
@@ -68,10 +77,10 @@ void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_RigidBody.m_IsStatic ), IsStatic );
 	m_RigidBody.SetIsStatic( IsStatic );
 	float Width, Height;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Width ), Width );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Height ), Height );
-	m_RigidBody.SetWidth( Width );
-	m_RigidBody.SetHeight( Height );
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Width );
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Height );
+	m_RigidBody.SetHalfWidth( Width );
+	m_RigidBody.SetHalfHeight( Height );
 
 	RegisterCollider( false );
 }

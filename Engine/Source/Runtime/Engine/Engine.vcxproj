@@ -1270,6 +1270,7 @@
     <ClInclude Include="Public\AssetRegistry\Asset.h" />
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h" />
+    <ClInclude Include="Public\AssetRegistry\FontDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\MeshDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\ScriptDatabase.h" />
@@ -1357,6 +1358,7 @@
     <ClCompile Include="Private\AssetRegistry\Asset.cpp" />
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp" />
+    <ClCompile Include="Private\AssetRegistry\FontDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\ScriptDatabase.cpp" />

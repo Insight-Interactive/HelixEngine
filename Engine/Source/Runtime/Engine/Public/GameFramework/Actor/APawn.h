@@ -57,8 +57,8 @@ protected:
 	float m_SprintSpeed;
 	float m_Velocity;
 	bool m_bIsSprinting;
+
 	HControllerComponent* m_pController;
-	HSceneComponent* m_pRootComponent;
 
 };
 

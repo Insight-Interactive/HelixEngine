@@ -38,6 +38,16 @@ public:
 	void AddForce( const FVector3& Force );
 	void AddImpulse( const FVector3& Impulse );
 
+	virtual void SetPosition( const FVector3& NewPos ) override;
+	virtual void SetRotation( const FQuat& NewRotation ) override;
+	virtual void SetScale( const FVector3& NewScale ) override;
+	virtual void SetPosition( const float& X, const float& Y, const float& Z ) override;
+	virtual void SetRotation( const float& Pitch, const float& Yaw, const float& Roll ) override;
+	virtual void SetScale( const float& X, const float& Y, const float& Z ) override;
+
+	virtual void Translate( const float& X, const float& Y, const float& Z );
+	virtual void Scale( const float& X, const float& Y, const float& Z );
+	
 protected:
 	HE_COMPONENT_GENERATED_BODY( HColliderComponent );
 

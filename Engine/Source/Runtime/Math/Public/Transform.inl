@@ -5,7 +5,7 @@
 
 FORCEINLINE FTransform::FTransform()
 	: m_Position( FVector3::Zero )
-	, m_RotationEuler( FVector3::Zero )
+	, m_Rotation( FQuat::Identity )
 	, m_Scale( FVector3::One )
 {
 }
@@ -18,7 +18,7 @@ FORCEINLINE FTransform::FTransform( FTransform&& Other ) noexcept
 {
 	m_Scale = Other.m_Scale;
 	m_Position = Other.m_Position;
-	m_RotationEuler = Other.m_RotationEuler;
+	m_Rotation = Other.m_Rotation;
 }
 
 FORCEINLINE FTransform::FTransform(const FTransform& FTransform)
@@ -30,7 +30,7 @@ FORCEINLINE FTransform& FTransform::operator = (const FTransform& Other)
 {
 	m_Position = Other.m_Position;
 	m_Scale = Other.m_Scale;
-	m_RotationEuler = Other.m_RotationEuler;
+	m_Rotation = Other.m_Rotation;
 	return *this;
 }
 
@@ -51,7 +51,8 @@ FORCEINLINE void FTransform::Translate(const float& X, const float& Y, const flo
 
 FORCEINLINE void FTransform::Rotate(const FVector3& Euler )
 {
-	m_RotationEuler += Euler;
+	FQuat RotationDelta = FQuat::CreateFromYawPitchRoll( Euler.y, Euler.x, Euler.z );
+	m_Rotation *= RotationDelta;
 }
 
 FORCEINLINE void FTransform::Rotate(const float& Pitch, const float& Yaw, const float& Roll)
@@ -80,7 +81,7 @@ FORCEINLINE void FTransform::SetPosition(const float& X, const float& Y, const f
 
 FORCEINLINE void FTransform::SetRotation(const float& Pitch, const float& Yaw, const float& Roll)
 {
-	m_RotationEuler = FVector3( Pitch, Yaw, Roll );
+	m_Rotation = FQuat::CreateFromYawPitchRoll( Yaw, Pitch, Roll );
 }
 
 FORCEINLINE void FTransform::SetScale(const float& X, const float& Y, const float& Z)
@@ -102,7 +103,7 @@ FORCEINLINE void FTransform::SetRotation(const FVector3& Euler)
 
 FORCEINLINE void FTransform::SetRotation( const FQuat& Rotation )
 {
-	m_RotationEuler = Rotation.ToEulerAngles();
+	m_Rotation = Rotation;
 }
 
 FORCEINLINE void FTransform::SetScale(const FVector3& Scale)
@@ -171,7 +172,11 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 	if (Direction.x != 0.0f)
 		Yaw = atanf( Direction.x / Direction.z );
 	if (Direction.z > 0)
-		Yaw += DirectX::XM_PI;
+		Yaw += HE_PI;
+
+	//FQuat PitchDelta = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
+	//FQuat YawDelta = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
+	//SetRotation( PitchDelta * YawDelta );
 
 	SetRotation(Pitch, Yaw, 0.0f);
 }
@@ -182,7 +187,7 @@ FORCEINLINE FMatrix FTransform::GetLocalMatrix() const
 	FMatrix Rotation = GetRotationMatrix();
 	FMatrix Scale = GetScaleMatrix();
 
-	return Scale * Rotation * Translation;
+	return (Scale * Rotation) * Translation;
 }
 
 FORCEINLINE FMatrix FTransform::GetTranslationMatrix() const 
@@ -192,12 +197,7 @@ FORCEINLINE FMatrix FTransform::GetTranslationMatrix() const
 
 FORCEINLINE FMatrix FTransform::GetRotationMatrix() const 
 { 
-	FQuat DeltaPitch = FQuat::CreateFromAxisAngle( FVector3::Right, m_RotationEuler.x );
-	FQuat DeltaYaw = FQuat::CreateFromAxisAngle( FVector3::Up, m_RotationEuler.y );
-	FQuat DeltaRoll = FQuat::CreateFromAxisAngle( FVector3::Forward, m_RotationEuler.z );
-	return FMatrix::CreateFromQuaternion( DeltaPitch * DeltaYaw * DeltaRoll );
-	//return FMatrix::CreateFromQuaternion( m_Rotation );
-	//return DirectX::XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z); 
+	return FMatrix::CreateFromQuaternion( m_Rotation );
 }
 
 FORCEINLINE FMatrix FTransform::GetScaleMatrix() const 
