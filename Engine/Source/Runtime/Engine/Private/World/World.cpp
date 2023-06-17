@@ -277,7 +277,7 @@ void HWorld::UnPausePhysics()
 	m_PhysicsScene.RequestUnPauseSimulation();
 }
 
-void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool StartDisabled, bool IsTrigger /*= false*/ )
+void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateSphere( 
 		pSphere->GetAbsoluteWorldPosition(), 
@@ -285,10 +285,12 @@ void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool
 		(HSphereRigidBody&)pSphere->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pSphere,
-		false );
+		false,
+		10.f,
+		IsStatic );
 }
 
-void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool StartDisabled, bool IsTrigger /*= false*/ )
+void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreatePlane( 
 		pPlane->GetAbsoluteWorldPosition(), 
@@ -296,10 +298,12 @@ void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool St
 		pPlane->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pPlane,
-		false );
+		false,
+		10.f,
+		IsStatic );
 }
 
-void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool StartDisabled, bool IsTrigger /*= false*/ )
+void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateCube( 
 		pCube->GetAbsoluteWorldPosition(), 
@@ -307,10 +311,12 @@ void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool Start
 		(HCubeRigidBody&)pCube->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pCube,
-		false );
+		false,
+		10.f,
+		IsStatic );
 }
 
-void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool StartDisabled, bool IsTrigger /*= false*/ )
+void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateCapsule( 
 		pCapsule->GetAbsoluteWorldPosition(), 
@@ -318,7 +324,9 @@ void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, b
 		(HCapsuleRigidBody&)pCapsule->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pCapsule,
-		false );
+		false,
+		10.f,
+		IsStatic );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )

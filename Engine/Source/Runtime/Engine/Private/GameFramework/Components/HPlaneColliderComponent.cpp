@@ -54,9 +54,6 @@ void HPlaneColliderComponent::Serialize( WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_IsStatic ) );
-			Output.Bool( m_RigidBody.GetIsStatic() );
-
 			Output.Key( HE_STRINGIFY( m_Width ) );
 			Output.Double( m_RigidBody.GetHalfWidth() );
 
@@ -73,21 +70,18 @@ void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
 	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
 	const ReadContext& This = Value[1];
-	bool IsStatic;
-	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_RigidBody.m_IsStatic ), IsStatic );
-	m_RigidBody.SetIsStatic( IsStatic );
 	float Width, Height;
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Width );
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Height );
 	m_RigidBody.SetHalfWidth( Width );
 	m_RigidBody.SetHalfHeight( Height );
 
-	RegisterCollider( false );
+	RegisterCollider();
 }
 
-void HPlaneColliderComponent::RegisterCollider( bool StartDisabled )
+void HPlaneColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddPlaneColliderComponent( this, StartDisabled, GetIsTrigger() );
+	GetWorld()->AddPlaneColliderComponent( this, m_IsStatic, GetIsTrigger() );
 }
 
 void HPlaneColliderComponent::UnRegisterCollider()

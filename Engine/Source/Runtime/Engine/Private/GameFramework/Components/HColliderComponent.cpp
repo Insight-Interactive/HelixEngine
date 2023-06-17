@@ -15,6 +15,7 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	, m_IsTrigger( false )
 	, m_CollisionBoundsDrawEnabled( true )
 	, m_Material( nullptr )
+	, m_IsStatic ( false )
 {
 	m_MeshWorldCB.Create( L"[Collider Component] World CB" );
 }
@@ -156,6 +157,12 @@ void HColliderComponent::Serialize( WriteContext& Output )
 		{
 			Output.Key( HE_STRINGIFY( m_IsTrigger ) );
 			Output.Bool( m_IsTrigger );
+
+			Output.Key( "Density" );
+			Output.Double( GetRigidBody().GetDensity() );
+
+			Output.Key( "IsStatic" );
+			Output.Bool( GetRigidBody().GetIsStatic() );
 		}
 		Output.EndObject();
 	}
@@ -168,6 +175,12 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 
 	const ReadContext& This = Value[1];
 	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_IsTrigger ), m_IsTrigger );
+	
+	float Density = 0.f;
+	JsonUtility::GetFloat( This, HE_STRINGIFY( Density ), Density );
+	GetRigidBody().SetDensity( Density );
+
+	JsonUtility::GetBoolean( This, "IsStatic", m_IsStatic );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()

@@ -31,6 +31,12 @@ inline bool JsonUtility::WriteDocument( const Char* DestinationFile, rapidjson::
 	return true;
 }
 
+inline bool PropertyExists( const rapidjson::Value& Value, const char* PropertyName )
+{
+	auto Iter = Value.FindMember( PropertyName );
+	return Iter != Value.MemberEnd();
+}
+
 inline bool JsonUtility::GetInteger( const rapidjson::Value& Value, const char* PropertyName, int32& OutInteger )
 {
 	HE_ASSERT( PropertyName != NULL );
@@ -69,6 +75,23 @@ inline bool JsonUtility::GetFloat( const rapidjson::Value& Value, const char* Pr
 	}
 
 	OutFloat = Property.GetFloat();
+
+	return true;
+}
+
+inline bool GetDouble( const rapidjson::Value& Value, const char* PropertyName, double& OutDouble )
+{
+	HE_ASSERT( PropertyName != NULL );
+
+	auto Iter = Value.FindMember( PropertyName );
+	if (Iter == Value.MemberEnd())
+	{
+		return false;
+	}
+
+	auto& Property = Iter->value;
+
+	OutDouble = Property.GetDouble();
 
 	return true;
 }

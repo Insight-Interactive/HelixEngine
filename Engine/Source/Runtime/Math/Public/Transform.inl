@@ -158,7 +158,7 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 	if (Target == m_Position)
 		return;
 
-	FVector3 Direction = Target - m_Position;
+	FVector3 Direction = m_Position - Target;
 
 
 	float Pitch = 0.0f;
@@ -174,11 +174,11 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 	if (Direction.z > 0)
 		Yaw += HE_PI;
 
-	//FQuat PitchDelta = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
-	//FQuat YawDelta = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
-	//SetRotation( PitchDelta * YawDelta );
+	FQuat PitchDelta = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
+	FQuat YawDelta = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
+	SetRotation( PitchDelta * YawDelta );
 
-	SetRotation(Pitch, Yaw, 0.0f);
+	//SetRotation(Pitch, Yaw, 0.0f);
 }
 
 FORCEINLINE FMatrix FTransform::GetLocalMatrix() const

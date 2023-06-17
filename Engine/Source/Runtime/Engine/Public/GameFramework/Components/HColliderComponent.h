@@ -90,7 +90,8 @@ protected:
 	HStaticMesh								m_MeshAsset;
 	TConstantBuffer<MeshWorldCBData>		m_MeshWorldCB;
 	FMaterialInstance*						m_Material;
-
+	// Internal
+	bool m_IsStatic;
 private:
 	/*
 		Whether this collider is a trigger or not. If true no physics are applied to this collider.

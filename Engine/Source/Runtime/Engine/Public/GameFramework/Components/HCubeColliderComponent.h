@@ -19,6 +19,11 @@ public:
 
 	virtual bool IsStatic() const override;
 
+	void SetHalfWidth( float NewHalfWidth );
+	void SetHalfHeight( float NewHalfHeight);
+	void SetHalfDepth( float NewHalfDepth);
+	void SetHalfWidthHeightDepth(float NewHalfWidth, float NewHalfHeight, float NewHalfDepth );
+
 protected:
 	virtual void Serialize( WriteContext& Output ) override;
 	virtual void Deserialize( const ReadContext& Value ) override;
@@ -33,7 +38,7 @@ protected:
 	virtual void OnStay( HColliderComponent* Other ) override;
 
 private:
-	void RegisterCollider( bool StartDisabled );
+	void RegisterCollider();
 
 private:
 	HCubeRigidBody m_RigidBody;

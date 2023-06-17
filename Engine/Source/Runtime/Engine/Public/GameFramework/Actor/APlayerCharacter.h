@@ -32,9 +32,6 @@ private:
 
 protected:
 	HCameraComponent* m_pCameraComponent;
-	FVector2 m_Rotation;
-	FQuat m_RotX;
-	FQuat m_RotY;
 
 private:
 	bool m_CanRotateCamera;

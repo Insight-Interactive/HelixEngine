@@ -14,6 +14,8 @@ public:
 
 	virtual bool IsStatic() const override;
 
+	void SetRadius( float NewRadius );
+
 protected:
 	
 	virtual void Tick( float DeltaTime ) override;
@@ -26,7 +28,7 @@ protected:
 
 
 private:
-	void RegisterCollider( bool StartDisabled );
+	void RegisterCollider();
 
 private:
 	HSphereRigidBody m_RigidBody;

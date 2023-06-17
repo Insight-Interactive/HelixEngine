@@ -54,8 +54,26 @@ void HCapsuleColliderComponent::Tick( float Delta )
 {
 	Super::Tick( Delta );
 
+	// Returned Physx quaternion seems to insist on adding 90 degrees of rotation arround the z axis for some reason. Reverse it here.
 	FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
 	HSceneComponent::SetRotation( Rot * GetRigidBody().GetSimulatedRotation() );
+}
+
+void HCapsuleColliderComponent::SetRadius( float NewRadius )
+{
+	SetRadiusAndHalfHeight( NewRadius, m_RigidBody.GetHalfHeight() );
+}
+
+void HCapsuleColliderComponent::SetHalfHeight( float NewHalfHeight )
+{
+	SetRadiusAndHalfHeight( m_RigidBody.GetRadius(), NewHalfHeight );
+}
+
+void HCapsuleColliderComponent::SetRadiusAndHalfHeight( float NewRadius, float NewHalfHeight )
+{
+	m_RigidBody.SetRadius( NewRadius );
+	m_RigidBody.SetHalfHeight( NewHalfHeight );
+	RegisterCollider();
 }
 
 void HCapsuleColliderComponent::Serialize( WriteContext& Output )
@@ -73,13 +91,10 @@ void HCapsuleColliderComponent::Serialize( WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_IsStatic ) );
-			Output.Bool( m_RigidBody.GetIsStatic() );
-
 			Output.Key( HE_STRINGIFY( m_RigidBody.m_Radius ) );
 			Output.Double( m_RigidBody.GetRadius() );
 
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Length ) );
+			Output.Key( HE_STRINGIFY( m_RigidBody.m_HalfHeight ) );
 			Output.Double( m_RigidBody.GetHalfHeight() );
 		}
 		Output.EndObject();
@@ -92,22 +107,17 @@ void HCapsuleColliderComponent::Deserialize( const ReadContext& Value )
 	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
 	const ReadContext& This = Value[1];
-	bool IsStatic;
-	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_RigidBody.m_IsStatic ), IsStatic );
-	m_RigidBody.SetIsStatic( IsStatic );
-	float Radius = -1.f;
+	float Radius = 0.f;
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
-	m_RigidBody.SetRadius( Radius );
-	float Length = -1.f;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Length ), Length );
-	m_RigidBody.SetHalfHeight( Radius );
+	float HalfHeight = 0.f;
+	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), HalfHeight );
 
-	RegisterCollider( false );
+	SetRadiusAndHalfHeight( Radius, HalfHeight );
 }
 
-void HCapsuleColliderComponent::RegisterCollider( bool StartDisabled /*= false*/ )
+void HCapsuleColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddCapsuleColliderComponent( this, StartDisabled, GetIsTrigger() );
+	GetWorld()->AddCapsuleColliderComponent( this, m_IsStatic, GetIsTrigger() );
 }
 
 void HCapsuleColliderComponent::UnRegisterCollider()

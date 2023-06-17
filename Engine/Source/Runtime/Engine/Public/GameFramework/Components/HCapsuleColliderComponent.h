@@ -17,6 +17,12 @@ public:
 	virtual void Tick( float Delta ) override;
 
 	virtual HRigidBody& GetRigidBody() override;
+
+	void SetRadius( float NewRadius );
+	void SetHalfHeight( float NewHalfHeight );
+	void SetRadiusAndHalfHeight( float NewRadius, float NewHalfHeight );
+
+
 protected:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
@@ -28,7 +34,7 @@ protected:
 
 
 private:
-	void RegisterCollider( bool StartDisabled = false );
+	void RegisterCollider();
 	void UnRegisterCollider();
 
 private:

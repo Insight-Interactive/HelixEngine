@@ -276,46 +276,48 @@ void HPhysicsScene::CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPla
 	m_pScene->addActor( *outPlane.m_pRigidActor );
 }
 
-void HPhysicsScene::CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic )
+void HPhysicsScene::CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxSphereGeometry SphereGeo( outSphere.GetRadius() );
-	InitRigidBody( outSphere, SphereGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic );
+	InitRigidBody( outSphere, SphereGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
 }
 
-void HPhysicsScene::CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic )
+void HPhysicsScene::CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxBoxGeometry PlaneGeo( outPlane.GetHalfWidth(), HPlaneRigidBody::kPlaneDepth, outPlane.GetHalfHeight() );
-	InitRigidBody( outPlane, PlaneGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic );
+	InitRigidBody( outPlane, PlaneGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
 }
 
-void HPhysicsScene::CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic )
+void HPhysicsScene::CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
 {
 	using namespace physx;
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxBoxGeometry CubeGeo( outCube.GetHalfWidth(), outCube.GetHalfHeight(), outCube.GetHalfDepth() );
-	InitRigidBody( outCube, CubeGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic );
+	InitRigidBody( outCube, CubeGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
 
 }
 
-void HPhysicsScene::CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic )
+void HPhysicsScene::CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetHalfHeight() );
-	InitRigidBody( outCapsule, CapsuleGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic );
+	InitRigidBody( outCapsule, CapsuleGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
 }
 
-void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic )
+void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
 {
 	using namespace physx;
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxPhysics& Physics = m_pOwningContextRef->GetPhysics();
+
+	outRB.Reset();
 
 	// TODO: This should be stored per-rigid body.
 	outRB.m_pPhysicsMaterial = Physics.createMaterial( 0.5f, 0.5f, 0.6f );
@@ -331,27 +333,33 @@ void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, con
 	if (IsTrigger)
 	{
 		PxShape* pShape = Physics.createShape( Geo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, Flags );
-		HE_ASSERT( pShape != nullptr );
+		HE_ASSERT( pShape != nullptr ); 
 
 		outRB.m_pRigidActor = Physics.createRigidStatic( InitialTransform );
+		HE_ASSERT( outRB.m_pRigidActor != nullptr );
 		outRB.m_pRigidActor->attachShape( *pShape );
 		pShape->release();
 	}
 	else
 	{
-		if (outRB.GetIsStatic())
+		// TODO: Only static should be evaluated if we are cooking physics geo
+		if (IsStatic)
 		{
 			outRB.m_pRigidActor = PxCreateStatic( Physics, InitialTransform, Geo, *outRB.m_pPhysicsMaterial );
+			HE_ASSERT( outRB.m_pRigidActor != nullptr );
 		}
 		else
 		{
-			outRB.m_pRigidActor = PxCreateDynamic( Physics, InitialTransform, Geo, *outRB.m_pPhysicsMaterial, outRB.GetDensity() );
+			HE_ASSERT( Density > 0.f ); // A dynamic rigid body's density should never be Zero!
+
+			outRB.m_pRigidActor = PxCreateDynamic( Physics, InitialTransform, Geo, *outRB.m_pPhysicsMaterial, Density );
+			HE_ASSERT( outRB.m_pRigidActor != nullptr );
 			PxRigidDynamic* pDynamic = SCast<PxRigidDynamic*>( outRB.m_pRigidActor );
 
 			outRB.SetGlobalPositionOrientation( StartPos, StartRotation );
 			outRB.SetIsKinematic( IsKinematic );
 
-			PxRigidBodyExt::updateMassAndInertia( *pDynamic, outRB.GetDensity() );
+			PxRigidBodyExt::updateMassAndInertia( *pDynamic, Density );
 		}
 	}
 

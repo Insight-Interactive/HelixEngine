@@ -21,7 +21,6 @@ APawn::APawn( FActorInitArgs& InitArgs )
 {
 	m_pController = AddComponent<HControllerComponent>(TEXT("Player Controller"));
 	m_pRootComponent = AddComponent<HCapsuleColliderComponent>( TEXT( "Character Bounds" ) );
-	SetRootComponent(m_pRootComponent);
 
 	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
 	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );

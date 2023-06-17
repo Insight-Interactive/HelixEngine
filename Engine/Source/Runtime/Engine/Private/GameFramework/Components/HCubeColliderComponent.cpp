@@ -48,6 +48,31 @@ void HCubeColliderComponent::OnStay( HColliderComponent* Other )
 	HE_LOG( Log, TEXT( "------ %s Stay %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
 }
 
+
+void HCubeColliderComponent::SetHalfWidth( float NewHalfWidth )
+{
+	SetHalfWidthHeightDepth( NewHalfWidth, m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth() );
+}
+
+void HCubeColliderComponent::SetHalfHeight( float NewHalfHeight )
+{
+	SetHalfWidthHeightDepth( m_RigidBody.GetHalfWidth(), NewHalfHeight, m_RigidBody.GetHalfDepth() );
+}
+
+void HCubeColliderComponent::SetHalfDepth( float NewHalfDepth )
+{
+	SetHalfWidthHeightDepth( m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), NewHalfDepth );
+}
+
+void HCubeColliderComponent::SetHalfWidthHeightDepth( float NewHalfWidth, float NewHalfHeight, float NewHalfDepth )
+{
+	m_RigidBody.SetHalfWidth( NewHalfWidth );
+	m_RigidBody.SetHalfHeight( NewHalfHeight );
+	m_RigidBody.SetHalfDepth( NewHalfDepth );
+
+	RegisterCollider();
+}
+
 void HCubeColliderComponent::Serialize( WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( HCubeColliderComponent ) );
@@ -63,9 +88,6 @@ void HCubeColliderComponent::Serialize( WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_IsStatic ) );
-			Output.Bool( m_RigidBody.GetIsStatic() );
-
 			Output.Key( HE_STRINGIFY( m_RigidBody.m_Width ) );
 			Output.Double( m_RigidBody.GetHalfWidth() );
 
@@ -85,21 +107,15 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
 	const ReadContext& This = Value[1];
-	bool IsStatic;
-	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_RigidBody.m_IsStatic ), IsStatic );
-	m_RigidBody.SetIsStatic( IsStatic );
 	FVector3 Dimensions;
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Dimensions.x );
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Dimensions.y );
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfDepth ), Dimensions.z );
-	m_RigidBody.SetHalfWidth( Dimensions.x );
-	m_RigidBody.SetHalfHeight( Dimensions.y );
-	m_RigidBody.SetHalfDepth( Dimensions.z );
-
-	RegisterCollider( false );
+	
+	SetHalfWidthHeightDepth( Dimensions.x, Dimensions.y, Dimensions.z );
 }
 
-void HCubeColliderComponent::RegisterCollider( bool StartDisabled )
+void HCubeColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddCubeColliderComponent( this, StartDisabled, GetIsTrigger() );
+	GetWorld()->AddCubeColliderComponent( this, m_IsStatic, GetIsTrigger() );
 }

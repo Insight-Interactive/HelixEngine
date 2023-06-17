@@ -34,12 +34,13 @@
                   ]
                 },
                 {
-                  "m_IsTrigger": true
+                  "m_IsTrigger": true,
+                  "Density": 10,
+                  "IsStatic": true
                 }
               ]
             },
             {
-              "m_RigidBody.m_IsStatic": true,
               "m_RigidBody.m_HalfWidth": 20.0,
               "m_RigidBody.m_HalfHeight": 10.0,
               "m_RigidBody.m_HalfDepth": 10.0

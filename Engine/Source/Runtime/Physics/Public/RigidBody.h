@@ -31,7 +31,6 @@ public:
 	FVector3 GetSimulatedPosition() const;
 	FQuat GetSimulatedRotation() const;
 	bool GetIsStatic() const;
-	void SetIsStatic( bool IsStatic );
 	float GetDensity() const;
 	void SetDensity( const float& NewDensity );
 	void EnableSimulation();
@@ -60,14 +59,14 @@ public:
 	physx::PxRigidActor& GetRigidActor();
 	physx::PxMaterial& GetPhysicsMaterial();
 
+	bool IsValid() const;
+	void Reset();
 
 protected:
 	HRigidBody();
 	virtual ~HRigidBody();
 
-private:
-	bool m_IsStatic;
-	float m_Density;
+protected:
 	physx::PxRigidActor* m_pRigidActor;
 	physx::PxMaterial* m_pPhysicsMaterial;
 
@@ -184,11 +183,6 @@ private:
 // RigidBody
 //
 
-FORCEINLINE bool HRigidBody::GetIsStatic() const
-{
-	return m_IsStatic;
-}
-
 FORCEINLINE	physx::PxRigidActor& HRigidBody::GetRigidActor()
 {
 	HE_ASSERT( m_pRigidActor != nullptr );
@@ -199,6 +193,11 @@ FORCEINLINE physx::PxMaterial& HRigidBody::GetPhysicsMaterial()
 {
 	HE_ASSERT( m_pPhysicsMaterial != nullptr );
 	return *m_pPhysicsMaterial;
+}
+
+FORCEINLINE bool HRigidBody::IsValid() const
+{
+	return m_pRigidActor != nullptr && m_pPhysicsMaterial != nullptr;
 }
 
 

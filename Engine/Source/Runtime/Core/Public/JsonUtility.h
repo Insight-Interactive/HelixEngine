@@ -33,6 +33,11 @@ namespace JsonUtility
 	bool WriteDocument( const Char* DestinationFile, rapidjson::StringBuffer& Buffer );
 
 	/*
+		Returns true if a property exists, false if not.
+	*/
+	bool PropertyExists( const rapidjson::Value& Value, const char* PropertyName );
+
+	/*
 		Reads and returns a integer property from a json value. Returns true if succeeded false if not.
 	*/
 	bool GetInteger( const rapidjson::Value& Value, const char* PropertyName, int32& OutInteger );
@@ -41,6 +46,11 @@ namespace JsonUtility
 		Reads and returns a float property from a json value. Returns true if succeeded false if not.
 	*/
 	bool GetFloat( const rapidjson::Value& Value, const char* PropertyName, float& OutFloat );
+
+	/*
+		Reads and returns a double property from a json value. Returns true if succeeded false if not.
+	*/
+	bool GetDouble( const rapidjson::Value& Value, const char* PropertyName, double& OutDouble );
 
 	/*
 		Reads and returns a string property from a json value. It's recomended you use 'GetString( const rapidjson::Value& Value, const char* PropertyName, char* OutStringBuffer, uint32 BufferSize )'

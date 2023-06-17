@@ -27,7 +27,7 @@ protected:
 	virtual const HRigidBody& GetRigidBody() const override;
 
 private:
-	void RegisterCollider( bool StartDisabled );
+	void RegisterCollider();
 	void UnRegisterCollider();
 
 private:
