@@ -4,8 +4,6 @@
 #include "GameFramework/Actor/APawn.h"
 #include "World/World.h"
 #include "GameFramework/Components/HControllerComponent.h"
-#include "GameFramework/Components/HCapsuleColliderComponent.h"
-#include "GameFramework/Components/HCubeColliderComponent.h"
 #include "Engine/Engine.h"
 
 
@@ -19,12 +17,7 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_bIsSprinting(false)
 	, m_pController(NULL)
 {
-	m_pController = AddComponent<HControllerComponent>(TEXT("Player Controller"));
-	m_pRootComponent = AddComponent<HCapsuleColliderComponent>( TEXT( "Character Bounds" ) );
-
-	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
-	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
-	((HCapsuleColliderComponent*)m_pRootComponent)->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
+	m_pController = AddComponent<HControllerComponent>(TEXT("Controller"));
 }
 
 APawn::~APawn()
@@ -33,25 +26,31 @@ APawn::~APawn()
 
 void APawn::Move(const FVector3& Direction, const float Value)
 {
-	m_Velocity = m_MovementSpeed * Value * GetWorld()->GetDeltaTime();
-	FVector3 Pos = m_pRootComponent->GetPosition();
-	Pos += Direction * m_Velocity;
-	m_pRootComponent->SetPosition(Pos);
+	if (m_pRootComponent != nullptr)
+	{
+		m_Velocity = m_MovementSpeed * Value * GEngine->GetDeltaTime();
+		FVector3 Pos = m_pRootComponent->GetPosition();
+		Pos += Direction * m_Velocity;
+		m_pRootComponent->SetPosition(Pos);
+	}
 }
 
 void APawn::MoveForward(float Value)
 {
-	Move(m_pRootComponent->GetLocalForward(), Value);
+	if (m_pRootComponent != nullptr)
+		Move(m_pRootComponent->GetLocalForward(), Value);
 }
 
 void APawn::MoveRight(float Value)
 {
-	Move(m_pRootComponent->GetLocalRight(), Value);
+	if (m_pRootComponent != nullptr)
+		Move(m_pRootComponent->GetLocalRight(), Value);
 }
 
 void APawn::MoveUp(float Value)
 {
-	Move(m_pRootComponent->GetLocalUp(), Value);
+	if (m_pRootComponent != nullptr)
+		Move(m_pRootComponent->GetLocalUp(), Value);
 }
 
 void APawn::Sprint()

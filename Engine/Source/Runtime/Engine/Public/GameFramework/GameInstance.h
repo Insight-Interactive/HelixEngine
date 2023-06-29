@@ -6,7 +6,7 @@
 #include "Engine/Engine.h"
 
 
-class APlayerCharacter;
+class ACharacter;
 class EngineBeginPlayEvent;
 
 class HGameInstance : public TSingleton<HGameInstance>

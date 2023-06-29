@@ -15,7 +15,7 @@ public:
 	HE_COMPONENT_GENERATED_BODY( HSceneComponent )
 
 	// Return the position in world space not relative to its parent.
-	FVector3 GetAbsoluteWorldPosition() const;
+	FVector3 GetWorldPosition() const;
 
 	FVector3 GetPosition() const;
 	FQuat GetRotation() const;
@@ -73,10 +73,10 @@ private:
 // Inline function implementations
 //
 
-FORCEINLINE FVector3 HSceneComponent::GetAbsoluteWorldPosition() const
+FORCEINLINE FVector3 HSceneComponent::GetWorldPosition() const
 {
 	if (m_pParent)
-		return m_pParent->GetAbsoluteWorldPosition() + GetPosition();
+		return m_pParent->GetWorldPosition() + GetPosition();
 	else
 		return GetPosition();
 }

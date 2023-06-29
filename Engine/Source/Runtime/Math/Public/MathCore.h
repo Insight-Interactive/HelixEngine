@@ -44,6 +44,21 @@ namespace Math
     }
 }
 
+struct FAngles
+{
+    FAngles()
+        : pitch( 0.f )
+        , yaw( 0.f )
+        , roll( 0.f )
+    {
+    }
+    
+    float pitch;
+    float yaw;
+    float roll;
+
+};
+
 //------------------------------------------------------------------------------
 // 2D vector
 struct MATH_API FVector2 : public XMFLOAT2
@@ -213,12 +228,13 @@ struct MATH_API FVector3 : public XMFLOAT3
     FVector3 Cross(const FVector3& V) const noexcept;
 
     void Normalize() noexcept;
-    void Normalize(FVector3& result) const noexcept;
 
     void Clamp(const FVector3& vmin, const FVector3& vmax) noexcept;
     void Clamp(const FVector3& vmin, const FVector3& vmax, FVector3& result) const noexcept;
 
     // Static functions
+    static FVector3 Normalize( const FVector3& v1 ) noexcept;
+
     static float Distance(const FVector3& v1, const FVector3& v2) noexcept;
     static float DistanceSquared(const FVector3& v1, const FVector3& v2) noexcept;
 
@@ -626,6 +642,8 @@ struct MATH_API FQuat : public XMFLOAT4
 
     static void Concatenate(const FQuat& q1, const FQuat& q2, FQuat& result) noexcept;
     static FQuat Concatenate(const FQuat& q1, const FQuat& q2) noexcept;
+
+    static FQuat Inverse( const FQuat& Quat );
 
     // Constants
     static const FQuat Identity;

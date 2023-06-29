@@ -833,14 +833,6 @@ inline void FVector3::Normalize() noexcept
     XMStoreFloat3(this, X);
 }
 
-inline void FVector3::Normalize(FVector3& result) const noexcept
-{
-    using namespace DirectX;
-    XMVECTOR v1 = XMLoadFloat3(this);
-    XMVECTOR X = XMVector3Normalize(v1);
-    XMStoreFloat3(&result, X);
-}
-
 inline void FVector3::Clamp(const FVector3& vmin, const FVector3& vmax) noexcept
 {
     using namespace DirectX;
@@ -864,6 +856,13 @@ inline void FVector3::Clamp(const FVector3& vmin, const FVector3& vmax, FVector3
 //------------------------------------------------------------------------------
 // Static functions
 //------------------------------------------------------------------------------
+
+inline FVector3 FVector3::Normalize( const FVector3& v1 ) noexcept
+{
+    FVector3 Result = v1;
+    Result.Normalize();
+    return Result;
+}
 
 inline float FVector3::Distance(const FVector3& v1, const FVector3& v2) noexcept
 {
@@ -3009,6 +3008,12 @@ inline FQuat FQuat::Concatenate(const FQuat& q1, const FQuat& q2) noexcept
     return result;
 }
 
+inline FQuat FQuat::Inverse( const FQuat& Quat )
+{
+    FQuat Result;
+    Quat.Inverse( Result );
+    return Result;
+}
 
 
 // =======================================================================

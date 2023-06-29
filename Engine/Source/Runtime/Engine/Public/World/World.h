@@ -14,7 +14,7 @@
 class HLevel;
 class FCommandContext;
 class HCameraComponent;
-class APlayerCharacter;
+class ACharacter;
 class FViewportContext;
 class HColliderComponent;
 class HPlaneColliderComponent;
@@ -65,8 +65,11 @@ public:
 	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
-	void AddPlayerCharacterRef( APlayerCharacter* pCharacter );
-	APlayerCharacter* GetPlayerCharacter( uint32 Index = 0 );
+	void AddPlayerCharacterRef( ACharacter* pCharacter );
+	ACharacter* GetPlayerCharacter( uint32 Index = 0 );
+
+	float GetMouseMoveDeltaX();
+	float GetMouseMoveDeltaY();
 
 	AActor* CreateEmptyActorInstance( const HName& Name );
 	template <typename ActorType>
@@ -77,9 +80,12 @@ public:
 	void PausePhysics();
 	void UnPausePhysics();
 
-	bool AdvancePhysics( float DeltaTime );
+	bool Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults = nullptr, std::vector<HColliderComponent*>* IgnoreActors = nullptr );
 
 protected:
+
+	bool AdvancePhysics( float DeltaTime );
+	
 	/*
 		Reload the world.
 	*/
@@ -109,8 +115,8 @@ protected:
 	HScene m_Scene;
 	HPhysicsScene m_PhysicsScene;
 
-	APlayerCharacter* m_pPlayerCharacter;
-	std::vector<APlayerCharacter*> m_PlayerCharacterRefs;
+	ACharacter* m_pPlayerCharacter;
+	std::vector<ACharacter*> m_PlayerCharacterRefs;
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
@@ -197,12 +203,12 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 }
 
-FORCEINLINE void HWorld::AddPlayerCharacterRef( APlayerCharacter* pCharacter )
+FORCEINLINE void HWorld::AddPlayerCharacterRef( ACharacter* pCharacter )
 {
 	m_PlayerCharacterRefs.push_back( pCharacter );
 }
 
-FORCEINLINE APlayerCharacter* HWorld::GetPlayerCharacter( uint32 Index )
+FORCEINLINE ACharacter* HWorld::GetPlayerCharacter( uint32 Index )
 {
 	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
 	return m_PlayerCharacterRefs[Index];

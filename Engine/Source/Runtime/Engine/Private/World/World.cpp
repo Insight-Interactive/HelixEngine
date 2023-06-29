@@ -6,13 +6,14 @@
 #include "Engine/Engine.h"
 #include "Engine/ViewportContext.h"
 #include "Renderer/LightManager.h"
-#include "GameFramework/Actor/APlayerCharacter.h"
 #include "Engine/Subsystem/PhysicsSubsystem.h"
+#include "GameFramework/Actor/ACharacter.h"
+#include "GameFramework/Actor/AThirdPersonCharacter.h"
+#include "GameFramework/Actor/AFirstPersonCharacter.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
-
 
 HWorld::HWorld()
 	: m_CameraManager( this )
@@ -98,7 +99,8 @@ void HWorld::RegisterScenes()
 void HWorld::BeginPlay()
 {
 	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ), true };
-	m_pPlayerCharacter = new APlayerCharacter( InitArgs );
+	m_pPlayerCharacter = new AThirdPersonCharacter( InitArgs );
+	//m_pPlayerCharacter = new AFirstPersonCharacter( InitArgs );
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
 	AddPlayerCharacterRef( m_pPlayerCharacter );
 
@@ -280,56 +282,101 @@ void HWorld::UnPausePhysics()
 void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateSphere( 
-		pSphere->GetAbsoluteWorldPosition(), 
+		pSphere->GetWorldPosition(), 
 		pSphere->GetRotation(), 
 		(HSphereRigidBody&)pSphere->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pSphere,
 		false,
 		10.f,
-		IsStatic );
+		IsStatic, FG_WorldGeometry );
 }
 
 void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreatePlane( 
-		pPlane->GetAbsoluteWorldPosition(), 
+		pPlane->GetWorldPosition(), 
 		pPlane->GetRotation(), (HPlaneRigidBody&)
 		pPlane->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pPlane,
 		false,
 		10.f,
-		IsStatic );
+		IsStatic, FG_WorldGeometry );
 }
 
 void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateCube( 
-		pCube->GetAbsoluteWorldPosition(), 
+		pCube->GetWorldPosition(), 
 		pCube->GetRotation(), 
 		(HCubeRigidBody&)pCube->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pCube,
 		false,
 		10.f,
-		IsStatic );
+		IsStatic, FG_WorldGeometry );
 }
 
 void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic, bool IsTrigger /*= false*/ )
 {
 	m_PhysicsScene.CreateCapsule( 
-		pCapsule->GetAbsoluteWorldPosition(), 
+		pCapsule->GetWorldPosition(), 
 		pCapsule->GetRotation(),
 		(HCapsuleRigidBody&)pCapsule->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pCapsule,
 		false,
 		10.f,
-		IsStatic );
+		IsStatic, FG_Player, FG_WorldGeometry );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )
 {
 	m_PhysicsScene.RemoveActor( pCollider->GetRigidBody() );
+}
+
+bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults /*= nullptr*/, std::vector<HColliderComponent*>* IgnoreActors/* = nullptr*/ )
+{
+
+	/*FDebugLineRenderInfo LineInfo = {};
+	LineInfo.Start = Origin;
+	LineInfo.End = Origin + UnitDirection * Distance;
+	LineInfo.Color = FColor::BlueOpaque;
+	LineInfo.Lifetime = 20.f;
+	DrawDebugLine( LineInfo );*/
+	std::vector<HRigidBody*> IgnoreRBs;
+	if (IgnoreActors)
+	{
+		for (size_t i = 0; i < IgnoreActors->size(); i++)
+		{
+			HColliderComponent* pCollider = (*IgnoreActors)[i];
+			if (pCollider)
+			{
+				IgnoreRBs.push_back( &pCollider->GetRigidBody() );
+			}
+		}
+	}
+
+	bool Hit = m_PhysicsScene.RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
+	/*if (Hit)
+	{
+		FDebugLineRenderInfo HitLineInfo = {};
+		HitLineInfo.Start = HitResults.HitPos;
+		HitLineInfo.End = LineInfo.End;
+		HitLineInfo.Color = FColor::RedOpaque;
+		HitLineInfo.Lifetime = LineInfo.Lifetime;
+		DrawDebugLine( HitLineInfo );
+	}*/
+	return Hit;
+}
+
+float HWorld::GetMouseMoveDeltaX()
+{
+	return GetOwningViewport()->GetMouseMoveDeltaX();
+}
+
+float HWorld::GetMouseMoveDeltaY()
+{
+	return GetOwningViewport()->GetMouseMoveDeltaY();
 }

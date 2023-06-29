@@ -10,7 +10,7 @@
 #include "Engine/ViewportContext.h"
 #include "Developer/ADebugPawn.h"
 #include "GameFramework/GameInstance.h"
-#include "GameFramework/Actor/APlayerCharacter.h"
+#include "GameFramework/Actor/ACharacter.h"
 #include "GameFramework/Components/HCameraComponent.h"
 #include "Engine/Event/EngineEvent.h"
 

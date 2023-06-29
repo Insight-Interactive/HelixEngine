@@ -3,38 +3,27 @@
 
 #include "GameFramework/Actor/APawn.h"
 
+
 class HCameraComponent;
 class HCapsuleColliderComponent;
 
 HCLASS()
-class APlayerCharacter : public APawn
+class ACharacter : public APawn
 {
 	using Super = APawn;
 public:
-	HE_GENERATED_BODY( APlayerCharacter );
+	HE_GENERATED_BODY( ACharacter );
 
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaMs) override;
 
-	virtual void SetupController(HControllerComponent& Controller) override;
-
 	inline HCameraComponent* GetCameraComponent();
-
-	void LookUp(float Value);
-	void LookRight(float Value);
-	void TogglePitchYawRotation();
-
-private:
-	void ThirdPersonMoveForward( float Delta );
-	void ThirdPersonMoveRight( float Delta );
-
 
 protected:
 	HCameraComponent* m_pCameraComponent;
+	HCapsuleColliderComponent* m_pCharacterBounds;
 
-private:
-	bool m_CanRotateCamera;
 };
 
 
@@ -42,7 +31,7 @@ private:
 // Inline function implementations
 //
 
-HCameraComponent* APlayerCharacter::GetCameraComponent()
+HCameraComponent* ACharacter::GetCameraComponent()
 {
 	return m_pCameraComponent;
 }

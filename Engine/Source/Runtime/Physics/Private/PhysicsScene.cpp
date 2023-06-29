@@ -101,20 +101,21 @@ static PxFilterFlags DefaultFilterShader(
 	return PxFilterFlag::eDEFAULT;
 }
 
-void SetupFiltering( PxRigidActor* actor, PxU32 filterGroup, PxU32 filterMask )
+void SetupFiltering( PxRigidActor* Actor, PxU32 FilterGroup, PxU32 FilterMask )
 {
-	PxFilterData filterData;
-	filterData.word0 = filterGroup; // word0 = own ID
-	filterData.word1 = filterMask;	// word1 = ID mask to filter pairs that trigger a contact callback;
-	const PxU32 numShapes = actor->getNbShapes();
-	PxShape** shapes = (PxShape**)HE_HeapAlloc( sizeof( PxShape* ) * numShapes );
-	actor->getShapes( shapes, numShapes );
-	for (PxU32 i = 0; i < numShapes; i++)
+	PxFilterData FilterData;
+	FilterData.word0 = FilterGroup; // word0 = own ID
+	FilterData.word1 = FilterMask;	// word1 = ID mask to filter pairs that trigger a contact callback;
+	const PxU32 NumShapes = Actor->getNbShapes();
+	PxShape** Shapes = (PxShape**)HE_HeapAlloc( sizeof( PxShape* ) * NumShapes );
+	Actor->getShapes( Shapes, NumShapes );
+	for (PxU32 i = 0; i < NumShapes; i++)
 	{
-		PxShape* shape = shapes[i];
-		shape->setSimulationFilterData( filterData );
+		PxShape* Shape = Shapes[i];
+		Shape->setSimulationFilterData( FilterData );
+		Shape->setQueryFilterData( FilterData );
 	}
-	HE_HeapFree( shapes );
+	HE_HeapFree( Shapes );
 }
 
 
@@ -276,41 +277,41 @@ void HPhysicsScene::CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPla
 	m_pScene->addActor( *outPlane.m_pRigidActor );
 }
 
-void HPhysicsScene::CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
+void HPhysicsScene::CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxSphereGeometry SphereGeo( outSphere.GetRadius() );
-	InitRigidBody( outSphere, SphereGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
+	InitRigidBody( outSphere, SphereGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
 }
 
-void HPhysicsScene::CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
+void HPhysicsScene::CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxBoxGeometry PlaneGeo( outPlane.GetHalfWidth(), HPlaneRigidBody::kPlaneDepth, outPlane.GetHalfHeight() );
-	InitRigidBody( outPlane, PlaneGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
+	InitRigidBody( outPlane, PlaneGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
 }
 
-void HPhysicsScene::CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
+void HPhysicsScene::CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	using namespace physx;
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxBoxGeometry CubeGeo( outCube.GetHalfWidth(), outCube.GetHalfHeight(), outCube.GetHalfDepth() );
-	InitRigidBody( outCube, CubeGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
+	InitRigidBody( outCube, CubeGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
 
 }
 
-void HPhysicsScene::CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
+void HPhysicsScene::CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 	PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetHalfHeight() );
-	InitRigidBody( outCapsule, CapsuleGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic );
+	InitRigidBody( outCapsule, CapsuleGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
 }
 
-void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic )
+void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	using namespace physx;
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
@@ -364,9 +365,71 @@ void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, con
 	}
 
 	m_pScene->addActor( *outRB.m_pRigidActor );
-	SetupFiltering( outRB.m_pRigidActor, 1, 1 );
+	SetupFiltering( outRB.m_pRigidActor, CollisionGroup, FilterGroup );
 
 	outRB.m_pRigidActor->userData = pUserData;
+}
+
+class FPhysicsQueryFilter : public PxQueryFilterCallback
+{
+public:
+	std::vector<PxRigidActor*> IgnoreActors;
+	std::vector<const PxRigidActor*> HitActors;
+
+	virtual PxQueryHitType::Enum preFilter( const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags )
+	{
+		for (PxRigidActor* pActor : IgnoreActors)
+		{
+			if(pActor == actor)
+				return PxQueryHitType::eNONE;
+		}
+
+		HitActors.push_back( actor );
+
+		return PxQueryHitType::eBLOCK;
+	}
+
+	virtual PxQueryHitType::Enum postFilter( const PxFilterData& filterData, const PxQueryHit& hit )
+	{
+		return PxQueryHitType::eNONE;
+
+	}
+};
+
+bool HPhysicsScene::RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors )
+{
+	PxVec3 Orig( Origin.x, Origin.y, Origin.z );
+	PxVec3 UnitDir( UnitDirection.x, UnitDirection.y, UnitDirection.z );
+	PxRaycastBuffer HitInfo = {};
+	
+	FPhysicsQueryFilter QueryFilter;
+	if (IgnoreActors)
+	{
+		QueryFilter.IgnoreActors.resize( IgnoreActors->size() );
+
+		for (size_t i = 0; i < IgnoreActors->size(); i++)
+		{
+			HRigidBody* pRigidBody = (*IgnoreActors)[i];
+			if(pRigidBody)
+				QueryFilter.IgnoreActors.push_back( &pRigidBody->GetRigidActor() );
+		}
+	}
+
+	const PxHitFlags HitFlags = PxHitFlag::eDEFAULT;
+	const PxQueryFlags QueryFlags( PxQueryFlags( PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC | PxQueryFlag::ePREFILTER ) );
+	const PxQueryFilterData filterData( PxFilterData(), QueryFlags );
+
+	bool Hit = m_pScene->raycast( Orig, UnitDir, Distance, HitInfo, HitFlags, filterData, &QueryFilter);
+
+	if (outHitInfo != nullptr)
+	{
+		outHitInfo->HitPos = FVector3( HitInfo.block.position.x, HitInfo.block.position.y, HitInfo.block.position.z );
+		outHitInfo->HitNormal = FVector3( HitInfo.block.normal.x, HitInfo.block.normal.y, HitInfo.block.normal.z );
+		outHitInfo->Distance = HitInfo.block.distance;
+		outHitInfo->AnyHit = Hit;
+	}
+
+	return Hit;
 }
 
 void HPhysicsScene::RemoveActor( HRigidBody& Collider )

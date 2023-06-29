@@ -114,7 +114,7 @@ inline void HCameraComponent::SetFieldOfView( float Value )
 
 inline void HCameraComponent::BuildViewMatrix()
 {
-	const FVector3 WorldPos = GetAbsoluteWorldPosition();
+	const FVector3 WorldPos = GetWorldPosition();
 	m_ViewProps.ViewMat = XMMatrixLookAtLH(
 		WorldPos, 
 		WorldPos + GetLocalForward(),

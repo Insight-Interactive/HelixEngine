@@ -7,7 +7,7 @@
 #include "RendererCore.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Actor/AActor.h"
-#include "GameFramework/Actor/APlayerCharacter.h"
+#include "GameFramework/Actor/ACharacter.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "ThreadPool.h"
 
@@ -128,7 +128,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 		if (JsonDoc.IsObject())
 		{
 			const Char* kBaseActorType = HE_STRINGIFY( AActor );
-			const Char* kPlayerCharacterType = HE_STRINGIFY( APlayerCharacter );
+			const Char* kPlayerCharacterType = HE_STRINGIFY( ACharacter );
 			for (auto Itr = JsonDoc.MemberBegin(); Itr != JsonDoc.MemberEnd(); ++Itr)
 			{
 				const String ObjectType = Itr->name.GetString();
@@ -154,7 +154,7 @@ void HLevel::Deserialize( const ReadContext& Value )
 				}
 				else if (ObjectType == kPlayerCharacterType)
 				{
-					APlayerCharacter* pPlayer = CreateActor<APlayerCharacter>( TEXT( "<Unnamed Player Character>" ) );
+					ACharacter* pPlayer = CreateActor<ACharacter>( TEXT( "<Unnamed Player Character>" ) );
 					GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
 					GetWorld()->AddPlayerCharacterRef( pPlayer );
 					if (HSceneComponent* pRoot = pPlayer->GetRootComponent())

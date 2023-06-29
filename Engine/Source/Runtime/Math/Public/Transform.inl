@@ -120,7 +120,7 @@ FORCEINLINE FVector3 FTransform::GetLocalUp() const
 
 FORCEINLINE FVector3 FTransform::GetLocalDown() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Down, GetRotationMatrix() );
 	return Result;
 }

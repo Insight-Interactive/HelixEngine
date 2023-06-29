@@ -10,6 +10,7 @@
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
+#include "GameFramework/Components/HCameraBoomComponenet.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
@@ -95,6 +96,7 @@ void AActor::Deserialize( const ReadContext& Value )
 	const Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
 	const Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
 	const Char* LuaScriptKey = HE_STRINGIFY( HLuaScriptComponent );
+	const Char* CameraBoomKey = HE_STRINGIFY( HCameraBoomComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -133,6 +135,11 @@ void AActor::Deserialize( const ReadContext& Value )
 		else if (CurrentComponent.HasMember( LuaScriptKey ))
 		{
 			AddComponent<HLuaScriptComponent>( TEXT( "<Unnamed Lua Script Component>" ) )
+				->Deserialize( CurrentComponent[LuaScriptKey] );
+		}
+		else if (CurrentComponent.HasMember( CameraBoomKey ))
+		{
+			AddComponent<HCameraBoomComponent>( TEXT( "<Unnamed Camera Boom Component>" ) )
 				->Deserialize( CurrentComponent[LuaScriptKey] );
 		}
 		else

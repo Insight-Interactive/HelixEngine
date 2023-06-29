@@ -43,6 +43,8 @@ public:
 	// Add a component to the actor.
 	template <typename ComponentType>
 	ComponentType* AddComponent(const HName& Name);
+	template <typename ComponentType>
+	ComponentType* GetComponent();
 	// Remove all components from the actor.
 	void RemoveAllComponents();
 	// Finds and returns a component by its unique id. nullptr if the component is not found.
@@ -94,6 +96,17 @@ FORCEINLINE ComponentType* AActor::AddComponent( const HName& Name )
 	m_Components.push_back( pNewComponent );
 
 	return SCast<ComponentType*>( pNewComponent );
+}
+
+template <typename ComponentType>
+ComponentType* AActor::GetComponent()
+{
+	for (auto* Iter : m_Components)
+	{
+		if (DCast<ComponentType*>( Iter ) != nullptr)
+			return (ComponentType*)Iter;
+	}
+	return nullptr;
 }
 
 FORCEINLINE HActorComponent* AActor::GetComponentByGuid(const FGUID& Guid)

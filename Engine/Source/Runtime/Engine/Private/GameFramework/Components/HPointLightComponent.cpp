@@ -40,7 +40,7 @@ void HPointLightComponent::SetPosition( const FVector3& NewPos )
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
-		pData->Position = GetAbsoluteWorldPosition();
+		pData->Position = GetWorldPosition();
 	}
 }
 
@@ -51,7 +51,7 @@ void HPointLightComponent::SetPosition( const float& X, const float& Y, const fl
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
-		pData->Position = GetAbsoluteWorldPosition();
+		pData->Position = GetWorldPosition();
 	}
 }
 
@@ -97,12 +97,12 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 		const float kBillboardMaxScale = 5.f;
 		HCameraComponent* Camera = GetWorld()->GetCurrentSceneRenderCamera();
 		const float CameraDistance =
-			(Camera->GetAbsoluteWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a square root is inevitable.
+			(Camera->GetWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a square root is inevitable.
 		const float ScaleFactor = HE_MIN( CameraDistance, kBillboardMaxScale );
 		m_BillboardTransform.SetScale( FVector3( ScaleFactor ) );
 
-		m_BillboardTransform.SetPosition( GetAbsoluteWorldPosition() );
-		m_BillboardTransform.LookAt( Camera->GetAbsoluteWorldPosition() );
+		m_BillboardTransform.SetPosition( GetWorldPosition() );
+		m_BillboardTransform.LookAt( Camera->GetWorldPosition() );
 
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();

@@ -222,7 +222,7 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 				pCBData.kInverseViewMat = pCBData.kInverseViewMat.Transpose();
 				pCBData.kInverseProjMat = pCBData.kInverseProjMat.Transpose();
 
-				pCBData.kCameraPos		= m_pRenderingCamera->GetAbsoluteWorldPosition();
+				pCBData.kCameraPos		= m_pRenderingCamera->GetWorldPosition();
 				pCBData.kCameraFarZ		= m_pRenderingCamera->GetFarZ();
 				pCBData.kCameraNearZ	= m_pRenderingCamera->GetNearZ();
 			}

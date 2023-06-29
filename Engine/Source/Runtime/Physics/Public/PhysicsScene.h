@@ -95,6 +95,23 @@ class HPhysicsContext;
 class PhysicsCallbackHandler;
 
 
+struct FRaycastHitInfo
+{
+	FVector3 HitPos;
+	FVector3 HitNormal;
+	float Distance;
+	bool AnyHit;
+};
+
+enum EFilterGroup
+{
+	FG_Player			= (1 << 0),
+	FG_Character		= (1 << 1),
+	FG_WorldGeometry	= (1 << 2),
+
+	FG_World			= FG_Player | FG_Character | FG_WorldGeometry
+};
+
 class PHYSICS_API HPhysicsScene
 {
 private:
@@ -137,12 +154,13 @@ public:
 	bool IsSimulationFinished() const;
 	bool IsSimulationPaused() const;
 
-	void CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic );
-	void CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic );
-	void CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic );
-	void CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic );
+	void CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
+	void CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
+	void CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
+	void CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 
-
+	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors );
+	 
 	void RequestPauseSimulation();
 	void RequestUnPauseSimulation();
 	void RequestSetStepRate( float NewStepRate );
@@ -160,7 +178,7 @@ public:
 private:
 	void CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPlane, bool IsTrigger );
 
-	void InitRigidBody( HRigidBody& outRB, const physx::PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic );
+	void InitRigidBody( HRigidBody& outRB, const physx::PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup);
 
 	void FlushInternal();
 	void TickInternal();

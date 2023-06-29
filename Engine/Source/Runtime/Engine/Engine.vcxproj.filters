@@ -207,7 +207,7 @@
     <ClInclude Include="Public\GameFramework\Actor\APawn.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\APlayerCharacter.h">
+    <ClInclude Include="Public\GameFramework\Actor\ACharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HActorComponent.h">
@@ -369,6 +369,9 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HCameraBoomComponenet.h" />
+    <ClInclude Include="Public\GameFramework\Actor\AThirdPersonCharacter.h" />
+    <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -449,7 +452,7 @@
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\APlayerCharacter.cpp">
+    <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp">
@@ -611,6 +614,9 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HCameraBoomComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Actor\AThirdPersonCharacter.cpp" />
+    <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

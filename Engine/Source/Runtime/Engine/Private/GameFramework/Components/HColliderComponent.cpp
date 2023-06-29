@@ -105,7 +105,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	/*HCameraComponent* pCamera = GetWorld()->GetCurrentSceneRenderCamera();
 	if (pCamera)
 	{
-		float DistSquared = FVector3::DistanceSquared( pCamera->GetAbsoluteWorldPosition(), GetAbsoluteWorldPosition() );
+		float DistSquared = FVector3::DistanceSquared( pCamera->GetWorldPosition(), GetWorldPosition() );
 		if (DistSquared > (300.f * 300.f))
 			return;
 	}*/
@@ -185,7 +185,7 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 
 void HColliderComponent::OnOwnerDeserializeComplete()
 {
-	GetRigidBody().SetGlobalPositionOrientation( GetAbsoluteWorldPosition(), GetRotation() );
+	GetRigidBody().SetGlobalPositionOrientation( GetWorldPosition(), GetRotation() );
 }
 
 void HColliderComponent::OnCreate()
