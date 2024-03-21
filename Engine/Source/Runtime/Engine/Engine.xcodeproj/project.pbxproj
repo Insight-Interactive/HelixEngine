@@ -1,0 +1,1168 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0473B6235BD929150DE74463 /* HLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F02F02B40FC3ADDBADB766B /* HLevel.cpp */; };
+		05A1892D9DEE6EDFCC356F6D /* HEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 362D33757A7BD8E7BCA311B5 /* HEngine.cpp */; };
+		06502E8539CF6DF751C94CC5 /* GeometryGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ACDBAE2D9272B55F55B7C46D /* GeometryGenerator.cpp */; };
+		0745685DC8FDF9CF7018C69D /* Helix-HelixEd.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2B113A576AD2CD7585F69E5 /* Helix-HelixEd.lib */; };
+		09D94F0D24A5BDBF2876554D /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9203D50ABA12470C4D0215 /* ThreadPool.cpp */; };
+		10540AEB1CDEBD5D97C3892B /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C021C7739F3EE1A57B483DB3 /* CameraManager.cpp */; };
+		125072F0D705C9628B747130 /* WindowUniversal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BE62D88D5DA10AB0895918 /* WindowUniversal.cpp */; };
+		1BAA59B176F5A9E365278FF1 /* HActorComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D3F539958B352B0AF92379 /* HActorComponent.cpp */; };
+		238451875D4F083912AA57C7 /* HControllerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84DB79AF4990D021FDFF77EF /* HControllerComponent.cpp */; };
+		265619FDC0B002EFFCE8683D /* Game.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2133CE45BF14CEF796931485 /* Game.lib */; };
+		26B7CB6D369CF79F231081AD /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDBE455CDC58047C4EC9295 /* Common.cpp */; };
+		2D8BEAA13F432A93B4B118E1 /* GameInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65632DC9D94BA57BFB995409 /* GameInstance.cpp */; };
+		3387CF6FF83D25E1ACABCDAF /* WindowWinDesktop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB619D773400DBA9572C93B7 /* WindowWinDesktop.cpp */; };
+		35E306838D4879753F5694C3 /* HWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 80CBEA8BB2C5353D2CA470CB /* HWorld.cpp */; };
+		38CFE10C1E66E83EE1ABF74C /* SkyPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A7C98B5401CAA246C9119994 /* SkyPass.cpp */; };
+		495A390C8D6E0A3E813F8F4C /* Launch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560D11B4C72FB2A67CF65FF4 /* Launch.cpp */; };
+		62E2B8DBA6F68A0D9AC80F1B /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C17604433298A535E85F5283 /* Events.cpp */; };
+		667CD759451F72CBFA017599 /* InputDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C8010812C22F3B36677A6C1 /* InputDispatcher.cpp */; };
+		8083F451DBE419031E27BA91 /* HCameraComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16E91ED97370234BFC12DD19 /* HCameraComponent.cpp */; };
+		80B29A61F49B121316E8C0A1 /* EngineEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56B8D7691D46CEDB8B48F5A9 /* EngineEvent.cpp */; };
+		8DDDD36FE93DF8212B8199AF /* MaterialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC0437996308A92205C277 /* MaterialManager.cpp */; };
+		90A45401763B5B3339806A41 /* LightManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 017213A95B732A9B22BA21E9 /* LightManager.cpp */; };
+		917453C8E8D9C6BA9AE7E208 /* AActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F427090D13BBB424B1AF6D0 /* AActor.cpp */; };
+		9A01EDA10E5C32938C3FBBE1 /* MouseEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F8CB34991B68FFBC5A77989 /* MouseEvent.cpp */; };
+		9C00DFAAADB81F9C23260DEA /* APlayerCharacter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E68AF1525A7369047CC11792 /* APlayerCharacter.cpp */; };
+		A06DF9E1425795D3397EA821 /* KeyEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E15D891704B13B9E1303C9 /* KeyEvent.cpp */; };
+		A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */; };
+		AC4DD35120364B034283F991 /* HelixEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1089959879690CBF598B799 /* HelixEngine.cpp */; };
+		B0BF579D0AC06E8FD20765DD /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC62C56A98D1776E696905 /* Material.cpp */; };
+		B492B1E9EE5D689BA3B8B829 /* HStaticMeshComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77593AF13C0E9163F07D3931 /* HStaticMeshComponent.cpp */; };
+		BC14BE1B6F0AC7CDC02D245B /* ViewportContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59D794834DD6DDF5D2C1F2C3 /* ViewportContext.cpp */; };
+		C53F21F69C924D2815FFB836 /* PostProcessUber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5170E29E18D59D90A38D70DE /* PostProcessUber.cpp */; };
+		C6B39DC5D8D653B7B1D78C05 /* Helix-Renderer.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 656CCB8D08D3F93F2009B1CD /* Helix-Renderer.lib */; };
+		CDB43FEA1202E55C542A1E2A /* FApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B675CA12D841774414F6A052 /* FApp.cpp */; };
+		E208550BF25538FDF042034B /* Helix-Math.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA025738415C1252CDACBB3 /* Helix-Math.lib */; };
+		EAEDD2E25815E15459A8D122 /* APawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 817A2A0ACEDD203C44FC204A /* APawn.cpp */; };
+		F75C371618F87448116F0D56 /* DeferredShadingTech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85E659BEF907E6B059CD27FE /* DeferredShadingTech.cpp */; };
+		FA78361F9C61D2119388E45F /* RawInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C78460E795A7B4991CB60727 /* RawInput.cpp */; };
+		FA8CB8C70A71E4F9F6E56F07 /* SplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFA016FBCE39D61B40AAFAF /* SplashScreen.cpp */; };
+		FFFA9A58A1E4364A990B4898 /* EnginePCH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7CF364095F289F21D00DC80 /* EnginePCH.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		016EF8BC2795286E8E9C1EFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C38BD949C32EBC7BFD836F89 /* ../../../../Game/Source/Game.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7E7AE48DAD21387F066292CD;
+			remoteInfo = Game.dll;
+		};
+		2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67B1D9F5FD2899276BC4F035 /* ../Core/Core.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0DECC4242087F6143C8304;
+			remoteInfo = "Helix-Core.lib";
+		};
+		4C3E775EA2CBE1D07B44F59E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFFAD224B0F240161CF5C064 /* ../../Editor/HelixEd/HelixEd.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 812E21FE6C1A47F0B400103E;
+			remoteInfo = "Helix-HelixEd.lib";
+		};
+		5083D74CA71141BE7F8A558C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7DF4E70EF24F2C007032B54E /* ../../../Shaders/Shaders.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17F30C33BC45A9E5CE7DF273;
+			remoteInfo = Shaders;
+		};
+		53A96B5579CF9B07E0D69195 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C38BD949C32EBC7BFD836F89 /* ../../../../Game/Source/Game.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4401DED3E8547C85FA8CC513;
+			remoteInfo = Game.dll;
+		};
+		67B65FEC8DDC8F9EF4E3862C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07B8FC989D2FBBCA0BCC12D8 /* ../Math/Math.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC444F7FF5AA50F1E945ADBF;
+			remoteInfo = "Helix-Math.lib";
+		};
+		A09B9979C8D6522BB071DFB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D601EE1FB51F08519128645F /* ../Renderer/Renderer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B34492CA1C1B39E7A3AC76C;
+			remoteInfo = "Helix-Renderer.lib";
+		};
+		A2BE49E5F94BB457D1C4C825 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7DF4E70EF24F2C007032B54E /* ../../../Shaders/Shaders.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 29A0A9B9365D592BAB47C7F9;
+			remoteInfo = Shaders;
+		};
+		B9F0D285E0170237471DF8C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07B8FC989D2FBBCA0BCC12D8 /* ../Math/Math.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C3F0B385DB034EB7CB1F49C5;
+			remoteInfo = "Helix-Math.lib";
+		};
+		DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67B1D9F5FD2899276BC4F035 /* ../Core/Core.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6908B09E626EB210560A0EDE;
+			remoteInfo = "Helix-Core.lib";
+		};
+		F2D60C121B10C4C402AC5252 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D601EE1FB51F08519128645F /* ../Renderer/Renderer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 78C1AB92C1328FC405D161D2;
+			remoteInfo = "Helix-Renderer.lib";
+		};
+		FA0404C550916F37290A8305 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFFAD224B0F240161CF5C064 /* ../../Editor/HelixEd/HelixEd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612F8D18A9A0714AEE3F4358;
+			remoteInfo = "Helix-HelixEd.lib";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		017213A95B732A9B22BA21E9 /* LightManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightManager.cpp; path = Private/StandaloneRenderer/LightManager.cpp; sourceTree = "<group>"; };
+		02703D0F46840E413A55934F /* EngineDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EngineDefines.h; path = Public/Engine/EngineDefines.h; sourceTree = "<group>"; };
+		07B8FC989D2FBBCA0BCC12D8 /* Helix-Math.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Math.xcodeproj"; path = ../Math/Math.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0D7101CCB0D82F7EC80DE80C /* DeferredShadingTech.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeferredShadingTech.h; path = Public/StandaloneRenderer/Technique/DeferredShadingTech.h; sourceTree = "<group>"; };
+		0F02F02B40FC3ADDBADB766B /* HLevel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HLevel.cpp; path = Private/World/HLevel.cpp; sourceTree = "<group>"; };
+		0FF955635D5C4B95D37B4BA3 /* HEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HEngine.h; path = Public/Engine/HEngine.h; sourceTree = "<group>"; };
+		10470C07F48E1439787B4247 /* HelixEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelixEngine.h; path = Public/Engine/HelixEngine.h; sourceTree = "<group>"; };
+		13300C28AB7CF1DAD9C3F268 /* EngineEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EngineEvent.h; path = Public/Engine/Event/EngineEvent.h; sourceTree = "<group>"; };
+		136621996EA7750B4201BFD9 /* HLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HLevel.h; path = Public/World/HLevel.h; sourceTree = "<group>"; };
+		16E91ED97370234BFC12DD19 /* HCameraComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HCameraComponent.cpp; path = Private/Actor/Components/HCameraComponent.cpp; sourceTree = "<group>"; };
+		1907FAFE74494E7047A3993E /* AActor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AActor.h; path = Public/Actor/AActor.h; sourceTree = "<group>"; };
+		1AFA016FBCE39D61B40AAFAF /* SplashScreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SplashScreen.cpp; path = Private/Engine/SplashScreen.cpp; sourceTree = "<group>"; };
+		1BAB203FE30FDB316DC7AE7F /* Package.appxmanifest */ = {isa = PBXFileReference; lastKnownFileType = text; name = Package.appxmanifest; path = Private/Windows/Universal/Resource/Package.appxmanifest; sourceTree = "<group>"; };
+		29F011418155843333639F81 /* CameraManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CameraManager.h; path = Public/World/CameraManager.h; sourceTree = "<group>"; };
+		2A0DD3D523CF90475DCE9215 /* RawInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RawInput.h; path = Public/Input/RawInput.h; sourceTree = "<group>"; };
+		2BDBE455CDC58047C4EC9295 /* Common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Common.cpp; path = Private/StandaloneRenderer/Common.cpp; sourceTree = "<group>"; };
+		2C8010812C22F3B36677A6C1 /* InputDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputDispatcher.cpp; path = Private/Input/InputDispatcher.cpp; sourceTree = "<group>"; };
+		35A24AA0208E7092687438E0 /* FApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FApp.h; path = Public/App/FApp.h; sourceTree = "<group>"; };
+		362D33757A7BD8E7BCA311B5 /* HEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HEngine.cpp; path = Private/Engine/HEngine.cpp; sourceTree = "<group>"; };
+		3CDC0437996308A92205C277 /* MaterialManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MaterialManager.cpp; path = Private/StandaloneRenderer/MaterialManager.cpp; sourceTree = "<group>"; };
+		3EC5A5EFE0AF41E1D7D6542F /* InputDispatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputDispatcher.h; path = Public/Input/InputDispatcher.h; sourceTree = "<group>"; };
+		4020E1CFD86DC78106B4C80F /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Material.h; path = Public/StandaloneRenderer/Material.h; sourceTree = "<group>"; };
+		44BE62D88D5DA10AB0895918 /* WindowUniversal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowUniversal.cpp; path = Private/Windows/Universal/WindowUniversal.cpp; sourceTree = "<group>"; };
+		485F91F9A3A0E56B76FB3039 /* HWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HWorld.h; path = Public/World/HWorld.h; sourceTree = "<group>"; };
+		48E15D891704B13B9E1303C9 /* KeyEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyEvent.cpp; path = Private/Input/KeyEvent.cpp; sourceTree = "<group>"; };
+		4BDE8CCFE60282019628630F /* ShaderRegisters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShaderRegisters.h; path = Public/StandaloneRenderer/ShaderRegisters.h; sourceTree = "<group>"; };
+		4FCC62C56A98D1776E696905 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = Public/StandaloneRenderer/Material.cpp; sourceTree = "<group>"; };
+		5170E29E18D59D90A38D70DE /* PostProcessUber.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PostProcessUber.cpp; path = Private/StandaloneRenderer/Technique/PostProcessUber.cpp; sourceTree = "<group>"; };
+		560D11B4C72FB2A67CF65FF4 /* Launch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Launch.cpp; path = Private/Launch/Launch.cpp; sourceTree = "<group>"; };
+		56B8D7691D46CEDB8B48F5A9 /* EngineEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EngineEvent.cpp; path = Private/Engine/EngineEvent.cpp; sourceTree = "<group>"; };
+		59D794834DD6DDF5D2C1F2C3 /* ViewportContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewportContext.cpp; path = Private/Engine/ViewportContext.cpp; sourceTree = "<group>"; };
+		5F53C23C914D0CEE0B2C487C /* Engine.module.lua */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lua; name = Engine.module.lua; path = Engine.module.lua; sourceTree = "<group>"; };
+		60FCD5514019EF831C234B91 /* ViewportContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewportContext.h; path = Public/Engine/ViewportContext.h; sourceTree = "<group>"; };
+		65632DC9D94BA57BFB995409 /* GameInstance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GameInstance.cpp; path = Private/GameFramework/GameInstance.cpp; sourceTree = "<group>"; };
+		66FBBDBD79259A6FAD1683FD /* EngineMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EngineMacros.h; path = Public/Engine/EngineMacros.h; sourceTree = "<group>"; };
+		67B1D9F5FD2899276BC4F035 /* Helix-Core.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Core.xcodeproj"; path = ../Core/Core.xcodeproj; sourceTree = SOURCE_ROOT; };
+		68F27C42DCDAF3F4FF28A282 /* SkyPass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SkyPass.h; path = Public/StandaloneRenderer/Technique/SkyPass.h; sourceTree = "<group>"; };
+		730319D735C37A4992F85817 /* GameInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameInstance.h; path = Public/GameFramework/GameInstance.h; sourceTree = "<group>"; };
+		73699AE70D8D9019BDB37127 /* HCameraComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HCameraComponent.h; path = Public/Actor/Components/HCameraComponent.h; sourceTree = "<group>"; };
+		77593AF13C0E9163F07D3931 /* HStaticMeshComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HStaticMeshComponent.cpp; path = Private/Actor/Components/HStaticMeshComponent.cpp; sourceTree = "<group>"; };
+		7DF4E70EF24F2C007032B54E /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Shaders.xcodeproj"; path = ../../../Shaders/Shaders.xcodeproj; sourceTree = SOURCE_ROOT; };
+		7E7703D7C7164209EA41FA17 /* GeometryGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GeometryGenerator.h; path = Public/StandaloneRenderer/GeometryGenerator.h; sourceTree = "<group>"; };
+		7F8CB34991B68FFBC5A77989 /* MouseEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MouseEvent.cpp; path = Private/Input/MouseEvent.cpp; sourceTree = "<group>"; };
+		80CBEA8BB2C5353D2CA470CB /* HWorld.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HWorld.cpp; path = Private/World/HWorld.cpp; sourceTree = "<group>"; };
+		817A2A0ACEDD203C44FC204A /* APawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = APawn.cpp; path = Private/Actor/APawn.cpp; sourceTree = "<group>"; };
+		83D3F539958B352B0AF92379 /* HActorComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HActorComponent.cpp; path = Private/Actor/Components/HActorComponent.cpp; sourceTree = "<group>"; };
+		84DB79AF4990D021FDFF77EF /* HControllerComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HControllerComponent.cpp; path = Private/Actor/Components/HControllerComponent.cpp; sourceTree = "<group>"; };
+		85E659BEF907E6B059CD27FE /* DeferredShadingTech.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DeferredShadingTech.cpp; path = Private/StandaloneRenderer/Technique/DeferredShadingTech.cpp; sourceTree = "<group>"; };
+		885A89F8B7EC58EA92F99838 /* APawn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APawn.h; path = Public/Actor/APawn.h; sourceTree = "<group>"; };
+		8E57D0F06D74EB22497E4730 /* EventEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EventEmitter.h; path = Public/Engine/Event/EventEmitter.h; sourceTree = "<group>"; };
+		8FB877A529DC6CD7DA024DE5 /* MaterialManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MaterialManager.h; path = Public/StandaloneRenderer/MaterialManager.h; sourceTree = "<group>"; };
+		90D0D997D51F7F091746B7D7 /* MouseEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MouseEvent.h; path = Public/Input/MouseEvent.h; sourceTree = "<group>"; };
+		9D9203D50ABA12470C4D0215 /* ThreadPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadPool.cpp; path = Private/Jobs/ThreadPool.cpp; sourceTree = "<group>"; };
+		9DED062060AD6692BDE24460 /* APlayerCharacter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APlayerCharacter.h; path = Public/Actor/APlayerCharacter.h; sourceTree = "<group>"; };
+		9F427090D13BBB424B1AF6D0 /* AActor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AActor.cpp; path = Private/Actor/AActor.cpp; sourceTree = "<group>"; };
+		A3EB129D898219CF4CC728DD /* HControllerComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HControllerComponent.h; path = Public/Actor/Components/HControllerComponent.h; sourceTree = "<group>"; };
+		A7C98B5401CAA246C9119994 /* SkyPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SkyPass.cpp; path = Private/StandaloneRenderer/Technique/SkyPass.cpp; sourceTree = "<group>"; };
+		ACDBAE2D9272B55F55B7C46D /* GeometryGenerator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GeometryGenerator.cpp; path = Public/StandaloneRenderer/GeometryGenerator.cpp; sourceTree = "<group>"; };
+		B08B753773F736E9B29ADB77 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Window.h; path = Public/Engine/Window.h; sourceTree = "<group>"; };
+		B3179E2750F89ED92876E467 /* HActorComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HActorComponent.h; path = Public/Actor/Components/HActorComponent.h; sourceTree = "<group>"; };
+		B675CA12D841774414F6A052 /* FApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FApp.cpp; path = Private/App/FApp.cpp; sourceTree = "<group>"; };
+		BFFAD224B0F240161CF5C064 /* Helix-HelixEd.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "HelixEd.xcodeproj"; path = ../../Editor/HelixEd/HelixEd.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C021C7739F3EE1A57B483DB3 /* CameraManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CameraManager.cpp; path = Private/World/CameraManager.cpp; sourceTree = "<group>"; };
+		C1089959879690CBF598B799 /* HelixEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelixEngine.cpp; path = Private/Engine/HelixEngine.cpp; sourceTree = "<group>"; };
+		C17604433298A535E85F5283 /* Events.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Events.cpp; path = Private/Engine/Events.cpp; sourceTree = "<group>"; };
+		C38BD949C32EBC7BFD836F89 /* Game.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Game.xcodeproj"; path = ../../../../Game/Source/Game.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C78460E795A7B4991CB60727 /* RawInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RawInput.cpp; path = Private/Input/RawInput.cpp; sourceTree = "<group>"; };
+		C7CF364095F289F21D00DC80 /* EnginePCH.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnginePCH.cpp; path = Private/PCH/EnginePCH.cpp; sourceTree = "<group>"; };
+		C84FDD97C2119A09FC109BD7 /* KeyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyEvent.h; path = Public/Input/KeyEvent.h; sourceTree = "<group>"; };
+		D601EE1FB51F08519128645F /* Helix-Renderer.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Renderer.xcodeproj"; path = ../Renderer/Renderer.xcodeproj; sourceTree = SOURCE_ROOT; };
+		D6A849EA08A1949C8280D02A /* EnginePCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EnginePCH.h; path = Private/PCH/EnginePCH.h; sourceTree = "<group>"; };
+		D7295C111B7801835D9F3A51 /* InputEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputEnums.h; path = Public/Input/InputEnums.h; sourceTree = "<group>"; };
+		D73EF0FFBCD5F831801B073F /* HStaticMeshComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HStaticMeshComponent.h; path = Public/Actor/Components/HStaticMeshComponent.h; sourceTree = "<group>"; };
+		DAE7B7417E4EE4F395849D81 /* ConstantBufferStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConstantBufferStructures.h; path = Public/StandaloneRenderer/ConstantBufferStructures.h; sourceTree = "<group>"; };
+		E06D1F2F51F837A100F95D6F /* Engine.exe */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Engine.exe; path = Engine.exe; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F8EFD755E16789782F1617 /* LightManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightManager.h; path = Public/StandaloneRenderer/LightManager.h; sourceTree = "<group>"; };
+		E319EA83F543C7352934B0C3 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Common.h; path = Public/StandaloneRenderer/Common.h; sourceTree = "<group>"; };
+		E68AF1525A7369047CC11792 /* APlayerCharacter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = APlayerCharacter.cpp; path = Private/Actor/APlayerCharacter.cpp; sourceTree = "<group>"; };
+		E6CE04BC18C74F6E92A68AFC /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Public/Engine/Event/Event.h; sourceTree = "<group>"; };
+		E731FF637CA8BE95EB4515A3 /* ThreadPool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThreadPool.h; path = Public/Jobs/ThreadPool.h; sourceTree = "<group>"; };
+		EB619D773400DBA9572C93B7 /* WindowWinDesktop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowWinDesktop.cpp; path = Private/Windows/Desktop/WindowWinDesktop.cpp; sourceTree = "<group>"; };
+		F16306EBF105EA1D2B5A9D2B /* FRenderPass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FRenderPass.h; path = Public/StandaloneRenderer/FRenderPass.h; sourceTree = "<group>"; };
+		F365959D058F724F39805BDD /* SplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = Public/Engine/SplashScreen.h; sourceTree = "<group>"; };
+		F5242C2C9C99C7DE455ED26C /* PostProcessUber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PostProcessUber.h; path = Public/StandaloneRenderer/Technique/PostProcessUber.h; sourceTree = "<group>"; };
+		FD7F548954E4C77B06F2E2C9 /* GamepadEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamepadEvents.h; path = Public/Input/GamepadEvents.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		31E8D51F3EA58491B38FF35F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */,
+				265619FDC0B002EFFCE8683D /* Game.lib in Frameworks */,
+				E208550BF25538FDF042034B /* Helix-Math.lib in Frameworks */,
+				C6B39DC5D8D653B7B1D78C05 /* Helix-Renderer.lib in Frameworks */,
+				0745685DC8FDF9CF7018C69D /* Helix-HelixEd.lib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		253DE94B53E43D3DAD25978B /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXGroup section */
+		0131E014A5847DC6B7BCC654 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B675CA12D841774414F6A052 /* FApp.cpp */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		03375AC63530A578AF0FE106 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				83D3F539958B352B0AF92379 /* HActorComponent.cpp */,
+				16E91ED97370234BFC12DD19 /* HCameraComponent.cpp */,
+				84DB79AF4990D021FDFF77EF /* HControllerComponent.cpp */,
+				77593AF13C0E9163F07D3931 /* HStaticMeshComponent.cpp */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		048FF466761B0CD8251C32A6 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				29F011418155843333639F81 /* CameraManager.h */,
+				136621996EA7750B4201BFD9 /* HLevel.h */,
+				485F91F9A3A0E56B76FB3039 /* HWorld.h */,
+			);
+			name = World;
+			sourceTree = "<group>";
+		};
+		08466AE41A7047964E613124 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1BAB203FE30FDB316DC7AE7F /* Package.appxmanifest */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		24397E1830F62D8AA5E09C58 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				35A24AA0208E7092687438E0 /* FApp.h */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		2E713AAA2832F71C6231F8EA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B3179E2750F89ED92876E467 /* HActorComponent.h */,
+				73699AE70D8D9019BDB37127 /* HCameraComponent.h */,
+				A3EB129D898219CF4CC728DD /* HControllerComponent.h */,
+				D73EF0FFBCD5F831801B073F /* HStaticMeshComponent.h */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		30F15B99877EC60B5FF7D9D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				656CCB8D08D3F93F2009B1CD /* Helix-Renderer.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A9F99D2DD8DC0846CB3A012 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				2C8010812C22F3B36677A6C1 /* InputDispatcher.cpp */,
+				48E15D891704B13B9E1303C9 /* KeyEvent.cpp */,
+				7F8CB34991B68FFBC5A77989 /* MouseEvent.cpp */,
+				C78460E795A7B4991CB60727 /* RawInput.cpp */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		3B5B157E6D546030E7339BBE /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				08466AE41A7047964E613124 /* Resource */,
+				44BE62D88D5DA10AB0895918 /* WindowUniversal.cpp */,
+			);
+			name = Universal;
+			sourceTree = "<group>";
+		};
+		3DF9AB4E416A7D80C2D7218E /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				9D9203D50ABA12470C4D0215 /* ThreadPool.cpp */,
+			);
+			name = Jobs;
+			sourceTree = "<group>";
+		};
+		43645E7C3CCA5FEE3065BCBC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2133CE45BF14CEF796931485 /* Game.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		516AA46014D66612537A0AA0 /* Desktop */ = {
+			isa = PBXGroup;
+			children = (
+				EB619D773400DBA9572C93B7 /* WindowWinDesktop.cpp */,
+			);
+			name = Desktop;
+			sourceTree = "<group>";
+		};
+		5A117F2871241A5A61401568 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				560D11B4C72FB2A67CF65FF4 /* Launch.cpp */,
+			);
+			name = Launch;
+			sourceTree = "<group>";
+		};
+		5C981E04FF8644B68EAC2444 /* Actor */ = {
+			isa = PBXGroup;
+			children = (
+				9F427090D13BBB424B1AF6D0 /* AActor.cpp */,
+				817A2A0ACEDD203C44FC204A /* APawn.cpp */,
+				E68AF1525A7369047CC11792 /* APlayerCharacter.cpp */,
+				03375AC63530A578AF0FE106 /* Components */,
+			);
+			name = Actor;
+			sourceTree = "<group>";
+		};
+		5C9B73428E94BDF40873F982 /* GameFramework */ = {
+			isa = PBXGroup;
+			children = (
+				65632DC9D94BA57BFB995409 /* GameInstance.cpp */,
+			);
+			name = GameFramework;
+			sourceTree = "<group>";
+		};
+		5D0FAB0CA5808F3EEA1F614C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C233F5494C27D86B7EE3594 /* Shaders */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5DC39FAC5729A11E4AC4FDEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCA025738415C1252CDACBB3 /* Helix-Math.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5EEE3E56B653B1486861CC96 /* StandaloneRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				E319EA83F543C7352934B0C3 /* Common.h */,
+				DAE7B7417E4EE4F395849D81 /* ConstantBufferStructures.h */,
+				F16306EBF105EA1D2B5A9D2B /* FRenderPass.h */,
+				ACDBAE2D9272B55F55B7C46D /* GeometryGenerator.cpp */,
+				7E7703D7C7164209EA41FA17 /* GeometryGenerator.h */,
+				E1F8EFD755E16789782F1617 /* LightManager.h */,
+				4FCC62C56A98D1776E696905 /* Material.cpp */,
+				4020E1CFD86DC78106B4C80F /* Material.h */,
+				8FB877A529DC6CD7DA024DE5 /* MaterialManager.h */,
+				4BDE8CCFE60282019628630F /* ShaderRegisters.h */,
+				A795C671EBA997A3DF7B1CB1 /* Technique */,
+			);
+			name = StandaloneRenderer;
+			sourceTree = "<group>";
+		};
+		6505B6C608513FF823220D06 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				6AD6AA08DC61C27A8B62E848 /* Actor */,
+				24397E1830F62D8AA5E09C58 /* App */,
+				F2C301C2F375FEB46757D002 /* Engine */,
+				7D7FAD66774169D8B1406BA6 /* GameFramework */,
+				85E076F6F76B8F68A66CB536 /* Input */,
+				D88B90320731E42460733E72 /* Jobs */,
+				5EEE3E56B653B1486861CC96 /* StandaloneRenderer */,
+				048FF466761B0CD8251C32A6 /* World */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		662E053FAE9EE971F33DBB7F /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				13300C28AB7CF1DAD9C3F268 /* EngineEvent.h */,
+				E6CE04BC18C74F6E92A68AFC /* Event.h */,
+				8E57D0F06D74EB22497E4730 /* EventEmitter.h */,
+			);
+			name = Event;
+			sourceTree = "<group>";
+		};
+		6AD6AA08DC61C27A8B62E848 /* Actor */ = {
+			isa = PBXGroup;
+			children = (
+				1907FAFE74494E7047A3993E /* AActor.h */,
+				885A89F8B7EC58EA92F99838 /* APawn.h */,
+				9DED062060AD6692BDE24460 /* APlayerCharacter.h */,
+				2E713AAA2832F71C6231F8EA /* Components */,
+			);
+			name = Actor;
+			sourceTree = "<group>";
+		};
+		6B785668919E861AF8A57CA8 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				516AA46014D66612537A0AA0 /* Desktop */,
+				3B5B157E6D546030E7339BBE /* Universal */,
+			);
+			name = Windows;
+			sourceTree = "<group>";
+		};
+		6C82E0B2B096B1E4A46836F2 /* StandaloneRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				2BDBE455CDC58047C4EC9295 /* Common.cpp */,
+				017213A95B732A9B22BA21E9 /* LightManager.cpp */,
+				3CDC0437996308A92205C277 /* MaterialManager.cpp */,
+				BB6C5C8D81FA53FFEFFC7ACD /* Technique */,
+			);
+			name = StandaloneRenderer;
+			sourceTree = "<group>";
+		};
+		70DA1C0B6A401D7D5DDB7A4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7D7FAD66774169D8B1406BA6 /* GameFramework */ = {
+			isa = PBXGroup;
+			children = (
+				730319D735C37A4992F85817 /* GameInstance.h */,
+			);
+			name = GameFramework;
+			sourceTree = "<group>";
+		};
+		85E076F6F76B8F68A66CB536 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				FD7F548954E4C77B06F2E2C9 /* GamepadEvents.h */,
+				3EC5A5EFE0AF41E1D7D6542F /* InputDispatcher.h */,
+				D7295C111B7801835D9F3A51 /* InputEnums.h */,
+				C84FDD97C2119A09FC109BD7 /* KeyEvent.h */,
+				90D0D997D51F7F091746B7D7 /* MouseEvent.h */,
+				2A0DD3D523CF90475DCE9215 /* RawInput.h */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		9D968EAA920D05DCE0E0A4EA /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				67B1D9F5FD2899276BC4F035 /* Core.xcodeproj */,
+				C38BD949C32EBC7BFD836F89 /* Game.xcodeproj */,
+				07B8FC989D2FBBCA0BCC12D8 /* Math.xcodeproj */,
+				D601EE1FB51F08519128645F /* Renderer.xcodeproj */,
+				7DF4E70EF24F2C007032B54E /* Shaders.xcodeproj */,
+				BFFAD224B0F240161CF5C064 /* HelixEd.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E06D1F2F51F837A100F95D6F /* Engine.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A795C671EBA997A3DF7B1CB1 /* Technique */ = {
+			isa = PBXGroup;
+			children = (
+				0D7101CCB0D82F7EC80DE80C /* DeferredShadingTech.h */,
+				F5242C2C9C99C7DE455ED26C /* PostProcessUber.h */,
+				68F27C42DCDAF3F4FF28A282 /* SkyPass.h */,
+			);
+			name = Technique;
+			sourceTree = "<group>";
+		};
+		AAC08E884F132C3A614B74C8 /* PCH */ = {
+			isa = PBXGroup;
+			children = (
+				C7CF364095F289F21D00DC80 /* EnginePCH.cpp */,
+				D6A849EA08A1949C8280D02A /* EnginePCH.h */,
+			);
+			name = PCH;
+			sourceTree = "<group>";
+		};
+		B2ADEE42559C14F4E4C1F482 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				C021C7739F3EE1A57B483DB3 /* CameraManager.cpp */,
+				0F02F02B40FC3ADDBADB766B /* HLevel.cpp */,
+				80CBEA8BB2C5353D2CA470CB /* HWorld.cpp */,
+			);
+			name = World;
+			sourceTree = "<group>";
+		};
+		BB6C5C8D81FA53FFEFFC7ACD /* Technique */ = {
+			isa = PBXGroup;
+			children = (
+				85E659BEF907E6B059CD27FE /* DeferredShadingTech.cpp */,
+				5170E29E18D59D90A38D70DE /* PostProcessUber.cpp */,
+				A7C98B5401CAA246C9119994 /* SkyPass.cpp */,
+			);
+			name = Technique;
+			sourceTree = "<group>";
+		};
+		D6A2EFDE7AF58D908D2DD61E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				5C981E04FF8644B68EAC2444 /* Actor */,
+				0131E014A5847DC6B7BCC654 /* App */,
+				DAF8ECDEF20B8810E227831E /* Engine */,
+				5C9B73428E94BDF40873F982 /* GameFramework */,
+				3A9F99D2DD8DC0846CB3A012 /* Input */,
+				3DF9AB4E416A7D80C2D7218E /* Jobs */,
+				5A117F2871241A5A61401568 /* Launch */,
+				AAC08E884F132C3A614B74C8 /* PCH */,
+				6C82E0B2B096B1E4A46836F2 /* StandaloneRenderer */,
+				6B785668919E861AF8A57CA8 /* Windows */,
+				B2ADEE42559C14F4E4C1F482 /* World */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		D88B90320731E42460733E72 /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				E731FF637CA8BE95EB4515A3 /* ThreadPool.h */,
+			);
+			name = Jobs;
+			sourceTree = "<group>";
+		};
+		DAF8ECDEF20B8810E227831E /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				56B8D7691D46CEDB8B48F5A9 /* EngineEvent.cpp */,
+				C17604433298A535E85F5283 /* Events.cpp */,
+				362D33757A7BD8E7BCA311B5 /* HEngine.cpp */,
+				C1089959879690CBF598B799 /* HelixEngine.cpp */,
+				1AFA016FBCE39D61B40AAFAF /* SplashScreen.cpp */,
+				59D794834DD6DDF5D2C1F2C3 /* ViewportContext.cpp */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		E6138D652E847197732343A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2B113A576AD2CD7585F69E5 /* Helix-HelixEd.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA9F3B76C84A3E289BEEC1B6 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				5F53C23C914D0CEE0B2C487C /* Engine.module.lua */,
+				D6A2EFDE7AF58D908D2DD61E /* Private */,
+				6505B6C608513FF823220D06 /* Public */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+				9D968EAA920D05DCE0E0A4EA /* Projects */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		F2C301C2F375FEB46757D002 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				02703D0F46840E413A55934F /* EngineDefines.h */,
+				66FBBDBD79259A6FAD1683FD /* EngineMacros.h */,
+				662E053FAE9EE971F33DBB7F /* Event */,
+				0FF955635D5C4B95D37B4BA3 /* HEngine.h */,
+				10470C07F48E1439787B4247 /* HelixEngine.h */,
+				F365959D058F724F39805BDD /* SplashScreen.h */,
+				60FCD5514019EF831C234B91 /* ViewportContext.h */,
+				B08B753773F736E9B29ADB77 /* Window.h */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F9664D35FCD71F677E43C375 /* Engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 20241D7E2CE0CCF0A1CB3BBE /* Build configuration list for PBXNativeTarget "Engine" */;
+			buildPhases = (
+				A1D055BFAE8D0531237773FF /* Resources */,
+				0B7D6F16183A1E888D248D56 /* Sources */,
+				31E8D51F3EA58491B38FF35F /* Frameworks */,
+				253DE94B53E43D3DAD25978B /* Embed Libraries */,
+				9607AE3710C85E8F00CD1376 /* Postbuild */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E92591457F85A864B93B754 /* PBXTargetDependency */,
+				311C9B852A829CF71E1DF9C5 /* PBXTargetDependency */,
+				4B7BDCB544E1DE27387D3AF5 /* PBXTargetDependency */,
+				1EA998A2753703144DB016E2 /* PBXTargetDependency */,
+				4AC7E8159338CC47D7D79E55 /* PBXTargetDependency */,
+				D3CBCA6E1C3CAEA060DB80AE /* PBXTargetDependency */,
+			);
+			name = Engine;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Engine;
+			productReference = E06D1F2F51F837A100F95D6F /* Engine.exe */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "Engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = EA9F3B76C84A3E289BEEC1B6 /* Engine */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 70DA1C0B6A401D7D5DDB7A4B /* Products */;
+					ProjectRef = 67B1D9F5FD2899276BC4F035 /* Core.xcodeproj */;
+				},
+				{
+					ProductGroup = 43645E7C3CCA5FEE3065BCBC /* Products */;
+					ProjectRef = C38BD949C32EBC7BFD836F89 /* Game.xcodeproj */;
+				},
+				{
+					ProductGroup = 5DC39FAC5729A11E4AC4FDEC /* Products */;
+					ProjectRef = 07B8FC989D2FBBCA0BCC12D8 /* Math.xcodeproj */;
+				},
+				{
+					ProductGroup = 30F15B99877EC60B5FF7D9D9 /* Products */;
+					ProjectRef = D601EE1FB51F08519128645F /* Renderer.xcodeproj */;
+				},
+				{
+					ProductGroup = 5D0FAB0CA5808F3EEA1F614C /* Products */;
+					ProjectRef = 7DF4E70EF24F2C007032B54E /* Shaders.xcodeproj */;
+				},
+				{
+					ProductGroup = E6138D652E847197732343A5 /* Products */;
+					ProjectRef = BFFAD224B0F240161CF5C064 /* HelixEd.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F9664D35FCD71F677E43C375 /* Engine.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Core.lib";
+			remoteRef = DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2133CE45BF14CEF796931485 /* Game.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = Game.lib;
+			remoteRef = 016EF8BC2795286E8E9C1EFC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4C233F5494C27D86B7EE3594 /* Shaders */ = {
+			isa = PBXReferenceProxy;
+			fileType = nil;
+			path = Shaders;
+			remoteRef = 5083D74CA71141BE7F8A558C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		656CCB8D08D3F93F2009B1CD /* Helix-Renderer.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Renderer.lib";
+			remoteRef = A09B9979C8D6522BB071DFB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C2B113A576AD2CD7585F69E5 /* Helix-HelixEd.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-HelixEd.lib";
+			remoteRef = FA0404C550916F37290A8305 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCA025738415C1252CDACBB3 /* Helix-Math.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Math.lib";
+			remoteRef = 67B65FEC8DDC8F9EF4E3862C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1D055BFAE8D0531237773FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9607AE3710C85E8F00CD1376 /* Postbuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Postbuild;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"DebugEditor\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi\nif [ \"${CONFIGURATION}\" = \"Development\" ]; then\nIF NOT EXIST $(TargetDir)Content mklink /D $(TargetDir)Content ../../../..Content\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0B7D6F16183A1E888D248D56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				917453C8E8D9C6BA9AE7E208 /* AActor.cpp in Sources */,
+				EAEDD2E25815E15459A8D122 /* APawn.cpp in Sources */,
+				9C00DFAAADB81F9C23260DEA /* APlayerCharacter.cpp in Sources */,
+				1BAA59B176F5A9E365278FF1 /* HActorComponent.cpp in Sources */,
+				8083F451DBE419031E27BA91 /* HCameraComponent.cpp in Sources */,
+				238451875D4F083912AA57C7 /* HControllerComponent.cpp in Sources */,
+				B492B1E9EE5D689BA3B8B829 /* HStaticMeshComponent.cpp in Sources */,
+				CDB43FEA1202E55C542A1E2A /* FApp.cpp in Sources */,
+				80B29A61F49B121316E8C0A1 /* EngineEvent.cpp in Sources */,
+				62E2B8DBA6F68A0D9AC80F1B /* Events.cpp in Sources */,
+				05A1892D9DEE6EDFCC356F6D /* HEngine.cpp in Sources */,
+				AC4DD35120364B034283F991 /* HelixEngine.cpp in Sources */,
+				FA8CB8C70A71E4F9F6E56F07 /* SplashScreen.cpp in Sources */,
+				BC14BE1B6F0AC7CDC02D245B /* ViewportContext.cpp in Sources */,
+				2D8BEAA13F432A93B4B118E1 /* GameInstance.cpp in Sources */,
+				667CD759451F72CBFA017599 /* InputDispatcher.cpp in Sources */,
+				A06DF9E1425795D3397EA821 /* KeyEvent.cpp in Sources */,
+				9A01EDA10E5C32938C3FBBE1 /* MouseEvent.cpp in Sources */,
+				FA78361F9C61D2119388E45F /* RawInput.cpp in Sources */,
+				09D94F0D24A5BDBF2876554D /* ThreadPool.cpp in Sources */,
+				495A390C8D6E0A3E813F8F4C /* Launch.cpp in Sources */,
+				FFFA9A58A1E4364A990B4898 /* EnginePCH.cpp in Sources */,
+				26B7CB6D369CF79F231081AD /* Common.cpp in Sources */,
+				90A45401763B5B3339806A41 /* LightManager.cpp in Sources */,
+				8DDDD36FE93DF8212B8199AF /* MaterialManager.cpp in Sources */,
+				F75C371618F87448116F0D56 /* DeferredShadingTech.cpp in Sources */,
+				C53F21F69C924D2815FFB836 /* PostProcessUber.cpp in Sources */,
+				38CFE10C1E66E83EE1ABF74C /* SkyPass.cpp in Sources */,
+				3387CF6FF83D25E1ACABCDAF /* WindowWinDesktop.cpp in Sources */,
+				125072F0D705C9628B747130 /* WindowUniversal.cpp in Sources */,
+				10540AEB1CDEBD5D97C3892B /* CameraManager.cpp in Sources */,
+				0473B6235BD929150DE74463 /* HLevel.cpp in Sources */,
+				35E306838D4879753F5694C3 /* HWorld.cpp in Sources */,
+				06502E8539CF6DF751C94CC5 /* GeometryGenerator.cpp in Sources */,
+				B0BF579D0AC06E8FD20765DD /* Material.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1EA998A2753703144DB016E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Renderer.lib";
+			targetProxy = F2D60C121B10C4C402AC5252 /* PBXContainerItemProxy */;
+		};
+		311C9B852A829CF71E1DF9C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Game.lib;
+			targetProxy = 53A96B5579CF9B07E0D69195 /* PBXContainerItemProxy */;
+		};
+		4AC7E8159338CC47D7D79E55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Shaders;
+			targetProxy = A2BE49E5F94BB457D1C4C825 /* PBXContainerItemProxy */;
+		};
+		4B7BDCB544E1DE27387D3AF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Math.lib";
+			targetProxy = B9F0D285E0170237471DF8C5 /* PBXContainerItemProxy */;
+		};
+		5E92591457F85A864B93B754 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Core.lib";
+			targetProxy = 2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */;
+		};
+		D3CBCA6E1C3CAEA060DB80AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-HelixEd.lib";
+			targetProxy = 4C3E775EA2CBE1D07B44F59E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0EDE6CD95C41630BD2606319 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/ShippingGame-PlayStation5";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = Engine;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = ShippingGame;
+		};
+		313F2B0B622322FD753B594B /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugEditor-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = Engine;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = DebugEditor;
+		};
+		608433A091682B92A48061E0 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/Development-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = Engine;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Development;
+		};
+		6F4D853ECA8ED8B09DE9237E /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugGame-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = Engine;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = DebugGame;
+		};
+		A51DD3CC16A8EC3EC5AA120C /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnginePCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"HE_DEBUG_EDITOR=1",
+					"ENGINE_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					HE_DEBUG_THREADS,
+					HE_DEBUG_FILESYSTEM,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					../../../ThirdParty/WinPixEventRuntime/bin/x64,
+				);
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugEditor-PlayStation5/PlayStation5/DebugEditor/Engine";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lD3D12.lib",
+					"-lDXGI.lib",
+					"-lWinPixEventRuntime.lib",
+				);
+				SYMROOT = "../../../../Build-clang/DebugEditor-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../Core/Public,
+					../Math/Public,
+					../Renderer/Public,
+					../../Editor/HelixEd/Public,
+				);
+			};
+			name = DebugEditor;
+		};
+		AFE22E21216D4693D06E6C61 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnginePCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"ENGINE_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					../../../ThirdParty/WinPixEventRuntime/bin/x64,
+				);
+				OBJROOT = "../../../../Build-clang/Intermediates/Development-PlayStation5/PlayStation5/Development/Engine";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lD3D12.lib",
+					"-lDXGI.lib",
+					"-lWinPixEventRuntime.lib",
+				);
+				SYMROOT = "../../../../Build-clang/Development-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../Core/Public,
+					../Math/Public,
+					../Renderer/Public,
+					../../Editor/HelixEd/Public,
+				);
+			};
+			name = Development;
+		};
+		EFFADE1A92E904CC220EE45A /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnginePCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_SHIPPING=1",
+					"ENGINE_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/ShippingGame-PlayStation5/PlayStation5/ShippingGame/Engine";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lD3D12.lib",
+					"-lDXGI.lib",
+				);
+				SYMROOT = "../../../../Build-clang/ShippingGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../Core/Public,
+					../Math/Public,
+					../Renderer/Public,
+					../../Editor/HelixEd/Public,
+				);
+			};
+			name = ShippingGame;
+		};
+		F217FE3F20BE523179FFAC7F /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnginePCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					HE_DEBUG_GAME,
+					"ENGINE_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugGame-PlayStation5/PlayStation5/DebugGame/Engine";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lD3D12.lib",
+					"-lDXGI.lib",
+				);
+				SYMROOT = "../../../../Build-clang/DebugGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../Core/Public,
+					../Math/Public,
+					../Renderer/Public,
+					../../Editor/HelixEd/Public,
+				);
+			};
+			name = DebugGame;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "Engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				A51DD3CC16A8EC3EC5AA120C /* DebugEditor */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				AFE22E21216D4693D06E6C61 /* Development */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				F217FE3F20BE523179FFAC7F /* DebugGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+				EFFADE1A92E904CC220EE45A /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+		20241D7E2CE0CCF0A1CB3BBE /* Build configuration list for PBXNativeTarget "Engine.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				313F2B0B622322FD753B594B /* DebugEditor */,
+				608433A091682B92A48061E0 /* Development */,
+				608433A091682B92A48061E0 /* Development */,
+				608433A091682B92A48061E0 /* Development */,
+				608433A091682B92A48061E0 /* Development */,
+				608433A091682B92A48061E0 /* Development */,
+				608433A091682B92A48061E0 /* Development */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				6F4D853ECA8ED8B09DE9237E /* DebugGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+				0EDE6CD95C41630BD2606319 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

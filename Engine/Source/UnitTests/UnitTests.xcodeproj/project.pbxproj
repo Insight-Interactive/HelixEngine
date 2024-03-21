@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		19DD30B80DDC7A2A92C78EF8 /* ContainerTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290874006D1C453260EDCA40 /* ContainerTests.cpp */; };
+		2761A7A0DB5DC0D2BD0FFDE0 /* Helix-Math.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = A40D11083E66F9FA7A9F5F48 /* Helix-Math.lib */; };
+		4DCD585E01C97190E37BAE9E /* Helix-Core.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB106E6370AEFD873435526 /* Helix-Core.lib */; };
+		7350CEC439DEC636A7E0ED04 /* EntryPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F17D334C86F3F27EF590498C /* EntryPoint.cpp */; };
+		91BEF966E9246C589B3287A6 /* MathTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CD6E3CECED02E8048AF6A0E /* MathTests.cpp */; };
+		C335BB2C34585C1EEA1F096C /* PCH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE8D1D487238A866EBF1814 /* PCH.cpp */; };
+		C48413F8666DAFEA5D94C238 /* TestsDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0D1B240AEF505F236035880 /* TestsDetail.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DD6012861E9D25A55BB5768 /* ../Runtime/Core/Core.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0DECC4242087F6143C8304;
+			remoteInfo = "Helix-Core.lib";
+		};
+		67B65FEC8DDC8F9EF4E3862C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FB714CB73CAE5FD679C6B0B /* ../Runtime/Math/Math.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC444F7FF5AA50F1E945ADBF;
+			remoteInfo = "Helix-Math.lib";
+		};
+		B9F0D285E0170237471DF8C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FB714CB73CAE5FD679C6B0B /* ../Runtime/Math/Math.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C3F0B385DB034EB7CB1F49C5;
+			remoteInfo = "Helix-Math.lib";
+		};
+		DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DD6012861E9D25A55BB5768 /* ../Runtime/Core/Core.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6908B09E626EB210560A0EDE;
+			remoteInfo = "Helix-Core.lib";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1DD6012861E9D25A55BB5768 /* Helix-Core.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Core.xcodeproj"; path = ../Runtime/Core/Core.xcodeproj; sourceTree = SOURCE_ROOT; };
+		290874006D1C453260EDCA40 /* ContainerTests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ContainerTests.cpp; path = Private/ContainerTests.cpp; sourceTree = "<group>"; };
+		2FB714CB73CAE5FD679C6B0B /* Helix-Math.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Math.xcodeproj"; path = ../Runtime/Math/Math.xcodeproj; sourceTree = SOURCE_ROOT; };
+		4EEF4E3E75157DF0DC1C747E /* PCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PCH.h; path = Private/PCH/PCH.h; sourceTree = "<group>"; };
+		5EE8D1D487238A866EBF1814 /* PCH.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PCH.cpp; path = Private/PCH/PCH.cpp; sourceTree = "<group>"; };
+		8B106D366F577568F344A376 /* UnitTests.module.lua */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lua; name = UnitTests.module.lua; path = UnitTests.module.lua; sourceTree = "<group>"; };
+		8F595006B124FD38EDDA2646 /* TestsFwd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestsFwd.h; path = Private/TestsFwd.h; sourceTree = "<group>"; };
+		9CD6E3CECED02E8048AF6A0E /* MathTests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MathTests.cpp; path = Private/MathTests.cpp; sourceTree = "<group>"; };
+		CA793D28AEC0455A32AD7368 /* UnitTestMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UnitTestMacros.h; path = Private/UnitTestMacros.h; sourceTree = "<group>"; };
+		E0D1B240AEF505F236035880 /* TestsDetail.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestsDetail.cpp; path = Private/TestsDetail.cpp; sourceTree = "<group>"; };
+		F17D334C86F3F27EF590498C /* EntryPoint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EntryPoint.cpp; path = Private/EntryPoint.cpp; sourceTree = "<group>"; };
+		FF90954C16A3307E06BF2B8C /* UnitTests.exe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = UnitTests.exe; path = UnitTests.exe; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C13C4BC5F8496EEE0F13AFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DCD585E01C97190E37BAE9E /* Helix-Core.lib in Frameworks */,
+				2761A7A0DB5DC0D2BD0FFDE0 /* Helix-Math.lib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		85E3342828D15ADAB7F73A68 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXGroup section */
+		5DC39FAC5729A11E4AC4FDEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A40D11083E66F9FA7A9F5F48 /* Helix-Math.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		70DA1C0B6A401D7D5DDB7A4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CB106E6370AEFD873435526 /* Helix-Core.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D968EAA920D05DCE0E0A4EA /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				1DD6012861E9D25A55BB5768 /* Core.xcodeproj */,
+				2FB714CB73CAE5FD679C6B0B /* Math.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF90954C16A3307E06BF2B8C /* UnitTests.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAC08E884F132C3A614B74C8 /* PCH */ = {
+			isa = PBXGroup;
+			children = (
+				5EE8D1D487238A866EBF1814 /* PCH.cpp */,
+				4EEF4E3E75157DF0DC1C747E /* PCH.h */,
+			);
+			name = PCH;
+			sourceTree = "<group>";
+		};
+		D6A2EFDE7AF58D908D2DD61E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				290874006D1C453260EDCA40 /* ContainerTests.cpp */,
+				F17D334C86F3F27EF590498C /* EntryPoint.cpp */,
+				9CD6E3CECED02E8048AF6A0E /* MathTests.cpp */,
+				AAC08E884F132C3A614B74C8 /* PCH */,
+				E0D1B240AEF505F236035880 /* TestsDetail.cpp */,
+				8F595006B124FD38EDDA2646 /* TestsFwd.h */,
+				CA793D28AEC0455A32AD7368 /* UnitTestMacros.h */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		F8779B337BBCF8A5A5047973 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2EFDE7AF58D908D2DD61E /* Private */,
+				8B106D366F577568F344A376 /* UnitTests.module.lua */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+				9D968EAA920D05DCE0E0A4EA /* Projects */,
+			);
+			name = UnitTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6EB4F3B26F67F0A4E349C1F2 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A4F0D1B4DBFDF4DCF2C835B /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				CBFB455CCF6C178E50D8BB9C /* Resources */,
+				35A85EB3391930E5BA85D4F3 /* Sources */,
+				5C13C4BC5F8496EEE0F13AFC /* Frameworks */,
+				85E3342828D15ADAB7F73A68 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E92591457F85A864B93B754 /* PBXTargetDependency */,
+				4B7BDCB544E1DE27387D3AF5 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productInstallPath = "$(HOME)/bin";
+			productName = UnitTests;
+			productReference = FF90954C16A3307E06BF2B8C /* UnitTests.exe */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "UnitTests" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = F8779B337BBCF8A5A5047973 /* UnitTests */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 70DA1C0B6A401D7D5DDB7A4B /* Products */;
+					ProjectRef = 1DD6012861E9D25A55BB5768 /* Core.xcodeproj */;
+				},
+				{
+					ProductGroup = 5DC39FAC5729A11E4AC4FDEC /* Products */;
+					ProjectRef = 2FB714CB73CAE5FD679C6B0B /* Math.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				6EB4F3B26F67F0A4E349C1F2 /* UnitTests.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9CB106E6370AEFD873435526 /* Helix-Core.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Core.lib";
+			remoteRef = DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A40D11083E66F9FA7A9F5F48 /* Helix-Math.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Math.lib";
+			remoteRef = 67B65FEC8DDC8F9EF4E3862C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CBFB455CCF6C178E50D8BB9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		35A85EB3391930E5BA85D4F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19DD30B80DDC7A2A92C78EF8 /* ContainerTests.cpp in Sources */,
+				7350CEC439DEC636A7E0ED04 /* EntryPoint.cpp in Sources */,
+				91BEF966E9246C589B3287A6 /* MathTests.cpp in Sources */,
+				C335BB2C34585C1EEA1F096C /* PCH.cpp in Sources */,
+				C48413F8666DAFEA5D94C238 /* TestsDetail.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4B7BDCB544E1DE27387D3AF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Math.lib";
+			targetProxy = B9F0D285E0170237471DF8C5 /* PBXContainerItemProxy */;
+		};
+		5E92591457F85A864B93B754 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Core.lib";
+			targetProxy = 2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		27160EDB7479050DEA98051B /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../Build-clang/DebugGame-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = UnitTests.exe;
+			};
+			name = DebugGame;
+		};
+		2C95987D5E8EE32FD86E1EBD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../Build-clang/Development-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = UnitTests.exe;
+			};
+			name = Development;
+		};
+		52BD491CF5AB6FCE84D14F5C /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = PCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					HE_DEBUG_GAME,
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../Build-clang/Intermediates/DebugGame-PlayStation5/PlayStation5/DebugGame/UnitTests";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../Build-clang/DebugGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Runtime/Core/Public,
+					../../../Game/Source/Public,
+					../Runtime/Engine/Public,
+					../Runtime/Math/Public,
+				);
+			};
+			name = DebugGame;
+		};
+		5D1C6D56CE3F0E488405BB96 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../Build-clang/ShippingGame-PlayStation5";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = UnitTests.exe;
+			};
+			name = ShippingGame;
+		};
+		C44149E9DB53E51BCB6FE029 /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = PCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"HE_DEBUG_EDITOR=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					HE_DEBUG_THREADS,
+					HE_DEBUG_FILESYSTEM,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../Build-clang/Intermediates/DebugEditor-PlayStation5/PlayStation5/DebugEditor/UnitTests";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../Build-clang/DebugEditor-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Runtime/Core/Public,
+					../../../Game/Source/Public,
+					../Runtime/Engine/Public,
+					../Runtime/Math/Public,
+				);
+			};
+			name = DebugEditor;
+		};
+		CF05A43EE6183F70D6343A7E /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = PCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../Build-clang/Intermediates/Development-PlayStation5/PlayStation5/Development/UnitTests";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../Build-clang/Development-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Runtime/Core/Public,
+					../../../Game/Source/Public,
+					../Runtime/Engine/Public,
+					../Runtime/Math/Public,
+				);
+			};
+			name = Development;
+		};
+		F38D17D7ECF31949E08E7617 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = PCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_SHIPPING=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../Build-clang/Intermediates/ShippingGame-PlayStation5/PlayStation5/ShippingGame/UnitTests";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../Build-clang/ShippingGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Runtime/Core/Public,
+					../../../Game/Source/Public,
+					../Runtime/Engine/Public,
+					../Runtime/Math/Public,
+				);
+			};
+			name = ShippingGame;
+		};
+		FD508FE82F49DA9AA9291628 /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../Build-clang/DebugEditor-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = UnitTests.exe;
+			};
+			name = DebugEditor;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				C44149E9DB53E51BCB6FE029 /* DebugEditor */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				CF05A43EE6183F70D6343A7E /* Development */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				52BD491CF5AB6FCE84D14F5C /* DebugGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+				F38D17D7ECF31949E08E7617 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+		4A4F0D1B4DBFDF4DCF2C835B /* Build configuration list for PBXNativeTarget "UnitTests.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				FD508FE82F49DA9AA9291628 /* DebugEditor */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				2C95987D5E8EE32FD86E1EBD /* Development */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				27160EDB7479050DEA98051B /* DebugGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+				5D1C6D56CE3F0E488405BB96 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

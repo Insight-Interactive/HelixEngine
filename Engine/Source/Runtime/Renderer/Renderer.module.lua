@@ -11,7 +11,11 @@ project ("Renderer")
 	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
+<<<<<<< Updated upstream
 	defaultlanguage ("en")
+=======
+	--defaultlanguage ("en-US")
+>>>>>>> Stashed changes
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 

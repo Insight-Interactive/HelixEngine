@@ -10,7 +10,7 @@ project ("UnitTests")
     staticruntime ("On")
     targetname ("%{prj.name}")
     systemversion ("latest")
-    defaultlanguage ("en-US")
+    --defaultlanguage ("en-US")
     targetdir( heGetBuildFolder() )
     objdir( heGetBuildIntFolder() )
 

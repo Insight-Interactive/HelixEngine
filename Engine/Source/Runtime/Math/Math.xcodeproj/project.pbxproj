@@ -1,0 +1,492 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		36C47E008E29F0F240380C40 /* MathPCH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 805A4968B253941A2C32CFA8 /* MathPCH.cpp */; };
+		626DAA44D6C7EF3654AB7884 /* FVectorDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 845C83CC9686607ECA774A0C /* FVectorDetail.cpp */; };
+		A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67B1D9F5FD2899276BC4F035 /* ../Core/Core.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0DECC4242087F6143C8304;
+			remoteInfo = "Helix-Core.lib";
+		};
+		DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67B1D9F5FD2899276BC4F035 /* ../Core/Core.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6908B09E626EB210560A0EDE;
+			remoteInfo = "Helix-Core.lib";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2A7F423A85C095AC591AE07A /* Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = Public/Transform.h; sourceTree = "<group>"; };
+		67B1D9F5FD2899276BC4F035 /* Helix-Core.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Core.xcodeproj"; path = ../Core/Core.xcodeproj; sourceTree = SOURCE_ROOT; };
+		805A4968B253941A2C32CFA8 /* MathPCH.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MathPCH.cpp; path = Private/PCH/MathPCH.cpp; sourceTree = "<group>"; };
+		845C83CC9686607ECA774A0C /* FVectorDetail.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FVectorDetail.cpp; path = Private/FVectorDetail.cpp; sourceTree = "<group>"; };
+		86D698D24A425A8488E5FF12 /* MathPCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathPCH.h; path = Private/PCH/MathPCH.h; sourceTree = "<group>"; };
+		9BB69AF095785762CF775930 /* Transform.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = Transform.inl; path = Public/Transform.inl; sourceTree = "<group>"; };
+		C0AA3A48F03C093ACB494888 /* MathCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathCore.h; path = Public/MathCore.h; sourceTree = "<group>"; };
+		D0A2A7982730120AFFA925D8 /* MathFwd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathFwd.h; path = Public/MathFwd.h; sourceTree = "<group>"; };
+		EC73D464AFDF9616EE833AA4 /* Math.module.lua */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lua; name = Math.module.lua; path = Math.module.lua; sourceTree = "<group>"; };
+		EF9738DE207B30D03393671E /* MathCore.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = MathCore.inl; path = Public/MathCore.inl; sourceTree = "<group>"; };
+		FC444F7FF5AA50F1E945ADBF /* Helix-Math.lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Helix-Math.lib"; path = "Helix-Math.lib"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CD945D6F3F1F75E1EE209BAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59ECC59B5A9FC28DCE8193DB /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXGroup section */
+		6505B6C608513FF823220D06 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				C0AA3A48F03C093ACB494888 /* MathCore.h */,
+				EF9738DE207B30D03393671E /* MathCore.inl */,
+				D0A2A7982730120AFFA925D8 /* MathFwd.h */,
+				2A7F423A85C095AC591AE07A /* Transform.h */,
+				9BB69AF095785762CF775930 /* Transform.inl */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		70DA1C0B6A401D7D5DDB7A4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D968EAA920D05DCE0E0A4EA /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				67B1D9F5FD2899276BC4F035 /* Core.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		A3A8998A14EF47BCA2E18FCA /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				EC73D464AFDF9616EE833AA4 /* Math.module.lua */,
+				D6A2EFDE7AF58D908D2DD61E /* Private */,
+				6505B6C608513FF823220D06 /* Public */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+				9D968EAA920D05DCE0E0A4EA /* Projects */,
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC444F7FF5AA50F1E945ADBF /* Helix-Math.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAC08E884F132C3A614B74C8 /* PCH */ = {
+			isa = PBXGroup;
+			children = (
+				805A4968B253941A2C32CFA8 /* MathPCH.cpp */,
+				86D698D24A425A8488E5FF12 /* MathPCH.h */,
+			);
+			name = PCH;
+			sourceTree = "<group>";
+		};
+		D6A2EFDE7AF58D908D2DD61E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				845C83CC9686607ECA774A0C /* FVectorDetail.cpp */,
+				AAC08E884F132C3A614B74C8 /* PCH */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3F0B385DB034EB7CB1F49C5 /* Math */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BBCFA5CE2D5ABE40DC5BE40E /* Build configuration list for PBXNativeTarget "Math" */;
+			buildPhases = (
+				3D7BDE0FAF06F6815E081C4F /* Resources */,
+				A728F76618B40FD8C7B535A6 /* Sources */,
+				CD945D6F3F1F75E1EE209BAF /* Frameworks */,
+				59ECC59B5A9FC28DCE8193DB /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E92591457F85A864B93B754 /* PBXTargetDependency */,
+			);
+			name = Math;
+			productName = Math;
+			productReference = FC444F7FF5AA50F1E945ADBF /* Helix-Math.lib */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "Math" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = A3A8998A14EF47BCA2E18FCA /* Math */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 70DA1C0B6A401D7D5DDB7A4B /* Products */;
+					ProjectRef = 67B1D9F5FD2899276BC4F035 /* Core.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C3F0B385DB034EB7CB1F49C5 /* Helix-Math.lib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Core.lib";
+			remoteRef = DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3D7BDE0FAF06F6815E081C4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A728F76618B40FD8C7B535A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				626DAA44D6C7EF3654AB7884 /* FVectorDetail.cpp in Sources */,
+				36C47E008E29F0F240380C40 /* MathPCH.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5E92591457F85A864B93B754 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Core.lib";
+			targetProxy = 2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0B16676039BCBB5292FE15A0 /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MathPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"HE_DEBUG_EDITOR=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					HE_DEBUG_THREADS,
+					HE_DEBUG_FILESYSTEM,
+					"MATH_MODULE=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugEditor-PlayStation5/PlayStation5/DebugEditor/Math";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../../Build-clang/DebugEditor-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Core/Public,
+				);
+			};
+			name = DebugEditor;
+		};
+		1505E42E1876B66099E35A6E /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MathPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_SHIPPING=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					"MATH_MODULE=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/ShippingGame-PlayStation5/PlayStation5/ShippingGame/Math";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../../Build-clang/ShippingGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Core/Public,
+				);
+			};
+			name = ShippingGame;
+		};
+		15DAC1B5448115A79DC26FF5 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MathPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					"MATH_MODULE=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/Development-PlayStation5/PlayStation5/Development/Math";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../../Build-clang/Development-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Core/Public,
+				);
+			};
+			name = Development;
+		};
+		243CA75B955F484D4B25F59B /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugEditor-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-Math";
+			};
+			name = DebugEditor;
+		};
+		5381AFF0C4A450E27A6AFE30 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/Development-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-Math";
+			};
+			name = Development;
+		};
+		618B7329F702325B659E8969 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/ShippingGame-PlayStation5";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-Math";
+			};
+			name = ShippingGame;
+		};
+		87EE9CD394AB4C450995BB13 /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MathPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					HE_DEBUG_GAME,
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					"MATH_MODULE=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugGame-PlayStation5/PlayStation5/DebugGame/Math";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../../Build-clang/DebugGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private,
+					Private/PCH,
+					../Core/Public,
+				);
+			};
+			name = DebugGame;
+		};
+		A51FAD8E9EE16A00D8E06BCE /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugGame-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-Math";
+			};
+			name = DebugGame;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "Math" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				0B16676039BCBB5292FE15A0 /* DebugEditor */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				15DAC1B5448115A79DC26FF5 /* Development */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				87EE9CD394AB4C450995BB13 /* DebugGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+				1505E42E1876B66099E35A6E /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+		BBCFA5CE2D5ABE40DC5BE40E /* Build configuration list for PBXNativeTarget "Helix-Math.lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				243CA75B955F484D4B25F59B /* DebugEditor */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				5381AFF0C4A450E27A6AFE30 /* Development */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				A51FAD8E9EE16A00D8E06BCE /* DebugGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+				618B7329F702325B659E8969 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

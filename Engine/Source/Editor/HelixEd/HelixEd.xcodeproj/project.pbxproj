@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3AF79792FDB7F8045AECD5D2 /* HelixEdPCH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24DCC9DA0923D20C8D11001A /* HelixEdPCH.cpp */; };
+		822A6CDA67C1740C2B06831A /* SceneViewportPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 766D2E22D06E451497B53C62 /* SceneViewportPanel.cpp */; };
+		A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */; };
+		BD0E66F63168ABE8AF4C3536 /* HEditorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB29A45EBD538110F1446A9E /* HEditorEngine.cpp */; };
+		BEF4708C625B9E3E799156CC /* HelixEdImGuiImplD3D12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08DB1ED4A1530C46CD39FD14 /* HelixEdImGuiImplD3D12.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25AC1393C795AF85BEBCC1D3 /* ../../Runtime/Core/Core.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0DECC4242087F6143C8304;
+			remoteInfo = "Helix-Core.lib";
+		};
+		DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25AC1393C795AF85BEBCC1D3 /* ../../Runtime/Core/Core.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6908B09E626EB210560A0EDE;
+			remoteInfo = "Helix-Core.lib";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08DB1ED4A1530C46CD39FD14 /* HelixEdImGuiImplD3D12.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelixEdImGuiImplD3D12.cpp; path = Private/Direct3D12/HelixEdImGuiImplD3D12.cpp; sourceTree = "<group>"; };
+		101FEE56A596AD8814330496 /* HelixEd.module.lua */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lua; name = HelixEd.module.lua; path = HelixEd.module.lua; sourceTree = "<group>"; };
+		24DCC9DA0923D20C8D11001A /* HelixEdPCH.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelixEdPCH.cpp; path = Private/PCH/HelixEdPCH.cpp; sourceTree = "<group>"; };
+		25AC1393C795AF85BEBCC1D3 /* Helix-Core.lib */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Core.xcodeproj"; path = ../../Runtime/Core/Core.xcodeproj; sourceTree = SOURCE_ROOT; };
+		5732C21EB3B9C6903C5C805E /* HelixEdImGuiImplD3D12.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelixEdImGuiImplD3D12.h; path = Private/Direct3D12/HelixEdImGuiImplD3D12.h; sourceTree = "<group>"; };
+		612F8D18A9A0714AEE3F4358 /* Helix-HelixEd.lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Helix-HelixEd.lib"; path = "Helix-HelixEd.lib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		62E34F42A6F720749AC8A582 /* HEditorEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HEditorEngine.h; path = Public/Editor/HEditorEngine.h; sourceTree = "<group>"; };
+		766D2E22D06E451497B53C62 /* SceneViewportPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SceneViewportPanel.cpp; path = Private/Panels/SceneViewportPanel.cpp; sourceTree = "<group>"; };
+		7B36F530EF1F6CE2116D1B70 /* SceneViewportPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SceneViewportPanel.h; path = Public/Panels/SceneViewportPanel.h; sourceTree = "<group>"; };
+		8E92C8642409879692A5DEA4 /* HelixEdPCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelixEdPCH.h; path = Private/PCH/HelixEdPCH.h; sourceTree = "<group>"; };
+		AB29A45EBD538110F1446A9E /* HEditorEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HEditorEngine.cpp; path = Private/HEditorEngine.cpp; sourceTree = "<group>"; };
+		FE3710542002BD865CB7E694 /* Panel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Panel.h; path = Public/Panels/Panel.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E536B688FC4951BAEC654CC8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6635169B6B0355BB49CFFA9 /* Helix-Core.lib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E389C8F409AFF8A670B6EF34 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXGroup section */
+		12928DFC13458AEE87275C3C /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				FE3710542002BD865CB7E694 /* Panel.h */,
+				7B36F530EF1F6CE2116D1B70 /* SceneViewportPanel.h */,
+			);
+			name = Panels;
+			sourceTree = "<group>";
+		};
+		225EC79C442A74CE80DF9DDC /* Direct3D12 */ = {
+			isa = PBXGroup;
+			children = (
+				08DB1ED4A1530C46CD39FD14 /* HelixEdImGuiImplD3D12.cpp */,
+				5732C21EB3B9C6903C5C805E /* HelixEdImGuiImplD3D12.h */,
+			);
+			name = Direct3D12;
+			sourceTree = "<group>";
+		};
+		6505B6C608513FF823220D06 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				903E704490F16D3604D33E84 /* Editor */,
+				12928DFC13458AEE87275C3C /* Panels */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		70DA1C0B6A401D7D5DDB7A4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		903E704490F16D3604D33E84 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				62E34F42A6F720749AC8A582 /* HEditorEngine.h */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		9D968EAA920D05DCE0E0A4EA /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				25AC1393C795AF85BEBCC1D3 /* Core.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				612F8D18A9A0714AEE3F4358 /* Helix-HelixEd.lib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAC08E884F132C3A614B74C8 /* PCH */ = {
+			isa = PBXGroup;
+			children = (
+				24DCC9DA0923D20C8D11001A /* HelixEdPCH.cpp */,
+				8E92C8642409879692A5DEA4 /* HelixEdPCH.h */,
+			);
+			name = PCH;
+			sourceTree = "<group>";
+		};
+		ABE6BDA33EF2169587270BE3 /* HelixEd */ = {
+			isa = PBXGroup;
+			children = (
+				101FEE56A596AD8814330496 /* HelixEd.module.lua */,
+				D6A2EFDE7AF58D908D2DD61E /* Private */,
+				6505B6C608513FF823220D06 /* Public */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+				9D968EAA920D05DCE0E0A4EA /* Projects */,
+			);
+			name = HelixEd;
+			sourceTree = "<group>";
+		};
+		D6A2EFDE7AF58D908D2DD61E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				225EC79C442A74CE80DF9DDC /* Direct3D12 */,
+				AB29A45EBD538110F1446A9E /* HEditorEngine.cpp */,
+				AAC08E884F132C3A614B74C8 /* PCH */,
+				E98D76B800A011EAF0BC0CF8 /* Panels */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		E98D76B800A011EAF0BC0CF8 /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				766D2E22D06E451497B53C62 /* SceneViewportPanel.cpp */,
+			);
+			name = Panels;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		812E21FE6C1A47F0B400103E /* HelixEd */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D371FEE7EA849A19DAA09527 /* Build configuration list for PBXNativeTarget "HelixEd" */;
+			buildPhases = (
+				551E37286C30D25A5C4CCD68 /* Resources */,
+				BECB507FD5DDEBB1C5F9E6BF /* Sources */,
+				E536B688FC4951BAEC654CC8 /* Frameworks */,
+				E389C8F409AFF8A670B6EF34 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E92591457F85A864B93B754 /* PBXTargetDependency */,
+			);
+			name = HelixEd;
+			productName = HelixEd;
+			productReference = 612F8D18A9A0714AEE3F4358 /* Helix-HelixEd.lib */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "HelixEd" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = ABE6BDA33EF2169587270BE3 /* HelixEd */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 70DA1C0B6A401D7D5DDB7A4B /* Products */;
+					ProjectRef = 25AC1393C795AF85BEBCC1D3 /* Core.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				812E21FE6C1A47F0B400103E /* Helix-HelixEd.lib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0E1AD2F1B5906EA35E557931 /* Helix-Core.lib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "Helix-Core.lib";
+			remoteRef = DD9C682B03C297DD6AC98E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		551E37286C30D25A5C4CCD68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BECB507FD5DDEBB1C5F9E6BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEF4708C625B9E3E799156CC /* HelixEdImGuiImplD3D12.cpp in Sources */,
+				BD0E66F63168ABE8AF4C3536 /* HEditorEngine.cpp in Sources */,
+				3AF79792FDB7F8045AECD5D2 /* HelixEdPCH.cpp in Sources */,
+				822A6CDA67C1740C2B06831A /* SceneViewportPanel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5E92591457F85A864B93B754 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Helix-Core.lib";
+			targetProxy = 2FD6DAC455FD0A76BD040104 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		00E0B3A2936E7D94FC4721E2 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/ShippingGame-PlayStation5";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-HelixEd";
+			};
+			name = ShippingGame;
+		};
+		12844549E0A798FB67B5EB89 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/Development-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-HelixEd";
+			};
+			name = Development;
+		};
+		564CE18C59BDB3BEDB2A57CC /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HelixEdPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					HE_DEBUG_GAME,
+					"HELIXED_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugGame-PlayStation5/PlayStation5/DebugGame/HelixEd";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../../Build-clang/DebugGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../../Runtime/Core/Public,
+					../../Runtime/Math/Public,
+					../../Runtime/Renderer/Public,
+					../../Runtime/Engine/Public,
+					../../Runtime/Renderer/Private,
+					../../../ThirdParty/ImGui,
+				);
+			};
+			name = DebugGame;
+		};
+		D4531A47D506173948E7E887 /* ShippingGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HelixEdPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_SHIPPING=1",
+					"HELIXED_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/ShippingGame-PlayStation5/PlayStation5/ShippingGame/HelixEd";
+				ONLY_ACTIVE_ARCH = NO;
+				SYMROOT = "../../../../Build-clang/ShippingGame-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../../Runtime/Core/Public,
+					../../Runtime/Math/Public,
+					../../Runtime/Renderer/Public,
+					../../Runtime/Engine/Public,
+					../../Runtime/Renderer/Private,
+					../../../ThirdParty/ImGui,
+				);
+			};
+			name = ShippingGame;
+		};
+		D79B18A76D11D7D9DBAE2EE7 /* DebugGame */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugGame-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-HelixEd";
+			};
+			name = DebugGame;
+		};
+		E33F3CB4B16290663870E2F4 /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "../../../../Build-clang/DebugEditor-PlayStation5";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = latest;
+				PRODUCT_NAME = "Helix-HelixEd";
+			};
+			name = DebugEditor;
+		};
+		EA18BE598D06E50B1C2CC499 /* DebugEditor */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HelixEdPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"HE_DEBUG_EDITOR=1",
+					"HELIXED_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+					HE_DEBUG_THREADS,
+					HE_DEBUG_FILESYSTEM,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/DebugEditor-PlayStation5/PlayStation5/DebugEditor/HelixEd";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../../Build-clang/DebugEditor-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../../Runtime/Core/Public,
+					../../Runtime/Math/Public,
+					../../Runtime/Renderer/Public,
+					../../Runtime/Engine/Public,
+					../../Runtime/Renderer/Private,
+					../../../ThirdParty/ImGui,
+				);
+			};
+			name = DebugEditor;
+		};
+		F4DD18AE97CB3F6026F11EEE /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++1z";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HelixEdPCH.h;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HE_DEVELOPMENT=1",
+					"HE_DEBUG=1",
+					"HE_WITH_EDITOR=1",
+					"HELIXED_MODULE=1",
+					HE_PLAYSTATION,
+					HE_PS5,
+					HE_GAME_CONSOLE,
+					HE_ENABLE_LOGS,
+					HE_ENABLE_ASSERTS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "../../../../Build-clang/Intermediates/Development-PlayStation5/PlayStation5/Development/HelixEd";
+				ONLY_ACTIVE_ARCH = YES;
+				SYMROOT = "../../../../Build-clang/Development-PlayStation5";
+				USER_HEADER_SEARCH_PATHS = (
+					Public,
+					Private/PCH,
+					../../Runtime/Core/Public,
+					../../Runtime/Math/Public,
+					../../Runtime/Renderer/Public,
+					../../Runtime/Engine/Public,
+					../../Runtime/Renderer/Private,
+					../../../ThirdParty/ImGui,
+				);
+			};
+			name = Development;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "HelixEd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				EA18BE598D06E50B1C2CC499 /* DebugEditor */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				F4DD18AE97CB3F6026F11EEE /* Development */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				564CE18C59BDB3BEDB2A57CC /* DebugGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+				D4531A47D506173948E7E887 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+		D371FEE7EA849A19DAA09527 /* Build configuration list for PBXNativeTarget "Helix-HelixEd.lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				E33F3CB4B16290663870E2F4 /* DebugEditor */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				12844549E0A798FB67B5EB89 /* Development */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				D79B18A76D11D7D9DBAE2EE7 /* DebugGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+				00E0B3A2936E7D94FC4721E2 /* ShippingGame */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = DebugEditor;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

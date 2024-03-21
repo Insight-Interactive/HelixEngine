@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+	version = "1.0">
+	<FileRef
+		location = "group:Engine/Source/Runtime/Engine/Engine.xcodeproj">
+	</FileRef>
+	<Group
+		location = "container:"
+		name = "Editor">
+		<FileRef
+			location = "group:Engine/Source/Editor/HelixEd/HelixEd.xcodeproj">
+		</FileRef>
+	</Group>
+	<FileRef
+		location = "group:Game/Source/Game.xcodeproj">
+	</FileRef>
+	<Group
+		location = "container:"
+		name = "Modules">
+		<FileRef
+			location = "group:Engine/Source/Runtime/Core/Core.xcodeproj">
+		</FileRef>
+		<FileRef
+			location = "group:Engine/Source/Runtime/Math/Math.xcodeproj">
+		</FileRef>
+		<FileRef
+			location = "group:Engine/Source/Runtime/Renderer/Renderer.xcodeproj">
+		</FileRef>
+	</Group>
+	<FileRef
+		location = "group:Engine/Shaders/Shaders.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:Engine/Source/UnitTests/UnitTests.xcodeproj">
+	</FileRef>
+</Workspace>

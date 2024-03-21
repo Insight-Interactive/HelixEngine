@@ -3,9 +3,9 @@
 -- The main entry point for the project build system. 
 
 -- Add the premake module to enable C++/WinRT project building.
-require ("vstudio");
-dofile  ("Modules/winrt/_preload.lua");
-require ("Modules/winrt");
+--require ("vstudio");
+--dofile ("Modules/winrt/_preload.lua");
+--require ("Modules/winrt");
 
 
 include ("Helix/BuildUtilities.lua");
@@ -42,6 +42,9 @@ workspace ("HelixEngine")
 		
 		-- Windows 32-bit desktop environment.
 		"Win32",
+
+		-- Mac OS
+		"MacOSX",
 		
 		-- Universal Windows environment targeting the Xbox One console.
 		"Durango",
@@ -70,6 +73,11 @@ workspace ("HelixEngine")
 	filter "platforms:Win64"
 		defines "HE_WIN64"
 		system ("Windows")
+		architecture ("x64")
+
+	filter "platforms:MacOSX"
+		defines "HE_MACOSX"
+		system ("macosx")
 		architecture ("x64")
 
 	filter "platforms:Prospero"
