@@ -65,7 +65,7 @@ namespace StringHelper
 	String GetFilenameFromDirectoryNoExtension(const String& filename)
 	{
 		String result = filename;
-
+		
 		// Erase everything up to the beginning of the filename
 		const size_t last_slash_idx = result.find_last_of("\\/");
 		if (String::npos != last_slash_idx)

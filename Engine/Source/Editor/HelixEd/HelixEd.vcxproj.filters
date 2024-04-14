@@ -60,9 +60,6 @@
     <ClInclude Include="Private\PCH\HelixEdPCH.h">
       <Filter>Private\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Developer\ADebugPawn.h">
-      <Filter>Public\Developer</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Developer\ConsoleWindow.h">
       <Filter>Public\Developer</Filter>
     </ClInclude>
@@ -122,9 +119,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\Developer\ADebugPawn.cpp">
-      <Filter>Private\Developer</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
       <Filter>Private\Developer</Filter>
     </ClCompile>

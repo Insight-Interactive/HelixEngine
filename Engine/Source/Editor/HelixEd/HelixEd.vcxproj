@@ -1052,7 +1052,6 @@
   <ItemGroup>
     <ClInclude Include="Private\Direct3D12\HelixEdImGuiImplD3D12.h" />
     <ClInclude Include="Private\PCH\HelixEdPCH.h" />
-    <ClInclude Include="Public\Developer\ADebugPawn.h" />
     <ClInclude Include="Public\Developer\ConsoleWindow.h" />
     <ClInclude Include="Public\Editor\AssetEditorInterface.h" />
     <ClInclude Include="Public\Editor\EditorEngine.h" />
@@ -1074,23 +1073,6 @@
     <ClInclude Include="Public\UI\EditorUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Private\Developer\ADebugPawn.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Private\Developer\ConsoleWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">true</ExcludedFromBuild>

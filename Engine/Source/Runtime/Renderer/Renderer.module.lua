@@ -44,8 +44,9 @@ project ("Renderer")
 		heGetEngineRuntimeModulePublicDir ( "Engine" ), -- To get access to *.hasset headers
 
 		-- Third Party 
-		heGetThirdPartyModule( "WinPixEventRuntime" ) .. "Include/",
-		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
+		heGetThirdPartyModule( "WinPixEventRuntime" )	.. "Include/",
+		heGetThirdPartyModule( "OpenFBX" )				.. "src/",
+		heGetThirdPartyModule( "assimp-5.3.1" )			.. "include/",
 	}
 
 	links
@@ -80,5 +81,22 @@ project ("Renderer")
 			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua
 		}
 
+	-- Third Party 
+
+	-- Assimp
+
+	filter {"configurations:DebugEditor or DebugGame or Demo"}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.Assimpx64_debug}" -- Library linked in Engine.module.lua
+		}
+
+	filter {"configurations:Development or ShippingGame"}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.Assimpx64_release}" -- Library linked in Engine.module.lua
+		}
+
+	-- End Assimp
 
 	dofile ("Helix/CommonEngineMacros.lua")

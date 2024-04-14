@@ -22,7 +22,8 @@ public:
 
 	ConstantBufferUID GetUID() const;
 
-	virtual void Create( const WChar* Name, uint32 Size ) = 0;
+	virtual void Create( const WChar* Name, uint32 Size ) {}
+	virtual void Create( const WChar* Name, uint8* Data, uint32 Size ) {}
 	virtual void Destroy() = 0;
 	virtual void UploadBuffer() = 0;
 
@@ -97,6 +98,29 @@ public:
 private:
 	uint8* m_pData;
 
+};
+
+/*
+	Constant buffer who's cpu data is managed elsewhere.
+*/
+class RENDER_API FUnmanagedConstantBuffer : public FConstantBufferInterface
+{
+public:
+	FUnmanagedConstantBuffer()
+	{
+	}
+	virtual ~FUnmanagedConstantBuffer()
+	{
+	}
+
+	virtual void Create( const WChar* Name, uint8* Data, uint32 Size ) override;
+	virtual void Destroy() override;
+	virtual void UploadBuffer() override;
+
+	uint8* GetBufferPointer();
+
+private:
+	uint8* m_pData;
 };
 
 
@@ -253,6 +277,8 @@ FORCEINLINE void* FConstantBufferInterface::GetGPUWritePointer()
 
 FORCEINLINE void FConstantBuffer::UploadBuffer()
 {
+	HE_ASSERT( IsValid() ); // Trying to upload a buffer that has not been created! Did you forget to call FConstantBufferInterface::Create()?
+
 	if (!GetIsDirty())
 		return;
 
@@ -265,6 +291,8 @@ FORCEINLINE void FConstantBuffer::UploadBuffer()
 
 FORCEINLINE void FConstantBuffer::Create( const WChar* Name, uint32 Size )
 {
+	HE_ASSERT( Size > 0 );
+
 	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
 	{
 		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
@@ -291,6 +319,54 @@ FORCEINLINE void FConstantBuffer::Destroy()
 }
 
 FORCEINLINE uint8* FConstantBuffer::GetBufferPointer()
+{
+	return m_pData;
+}
+
+
+// FUnmanagedConstantBuffer
+//
+
+FORCEINLINE void FUnmanagedConstantBuffer::Create( const WChar* Name, uint8* Data, uint32 Size )
+{
+	HE_ASSERT( Data != nullptr && Size > 0 );
+
+	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
+	{
+		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
+		HE_ASSERT( false );
+		return;
+	}
+	SetUID( AllocBufferUID() );
+
+	m_BufferSize = GetAlignedBufferSize( Size, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT );
+
+	// Allocate the Gpu memory.
+	CreateAPIBuffer( Name );
+
+	m_pData = Data;
+}
+
+FORCEINLINE void FUnmanagedConstantBuffer::Destroy()
+{
+	m_pData = nullptr;
+}
+
+FORCEINLINE void FUnmanagedConstantBuffer::UploadBuffer()
+{
+	HE_ASSERT( IsValid() ); // Trying to upload a buffer that has not been created! Did you forget to call FConstantBufferInterface::Create()?
+
+	if (!GetIsDirty())
+		return;
+
+#if R_WITH_D3D12
+	memcpy( GetGPUWritePointer(), (const void*)m_pData, GetBufferSize() );
+#endif // R_WITH_D3D12
+
+	SetDirty( false );
+}
+
+FORCEINLINE uint8* FUnmanagedConstantBuffer::GetBufferPointer()
 {
 	return m_pData;
 }

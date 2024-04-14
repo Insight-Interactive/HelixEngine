@@ -4,7 +4,7 @@
 
 // Material params
 //
-HE_DECLARE_CONSTANT_BUFFER( WireframeParams, 3 )
+HE_DECLARE_CONSTANT_BUFFER(WireframeParams, 4)
 {
     float3 kColor;
     float kOpacity = 1;

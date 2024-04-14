@@ -73,7 +73,7 @@ public:
 	struct HMeshAssetHeader
 	{
 	private:
-		friend class FStaticGeometryManager;
+		friend class FGeometryManager;
 		const EAssetType Type = AT_Mesh;
 
 	public:

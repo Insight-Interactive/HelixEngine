@@ -21,6 +21,7 @@ class HPlaneColliderComponent;
 class HCubeColliderComponent;
 class HSphereColliderComponent;
 class HCapsuleColliderComponent;
+class ADebugPawn;
 struct FDebugLineRenderInfo;
 
 /*
@@ -117,6 +118,7 @@ protected:
 
 	ACharacter* m_pPlayerCharacter;
 	std::vector<ACharacter*> m_PlayerCharacterRefs;
+	ADebugPawn* m_pDebugPawn;
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;

@@ -35,7 +35,7 @@ void FRenderContextFactory::CreateContext(FRenderContext& OutContext)
 	// Initialize heaps and other resources.
 	GTextureHeap.Create( L"Scene Texture Descriptors", RHT_CBV_SRV_UAV, 4096 );
 
-	CreateGeometryManager(GGeometryManager);
+	CreateGeometryManager( GGeometryBufferManager );
 	CreateTextureManager(GTextureManager);
 
 

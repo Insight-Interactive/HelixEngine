@@ -53,16 +53,16 @@ HE_ALIGN( 16 ) struct WireframeParamsCBData
 HE_ALIGN( 16 ) struct PointLightCBData
 {
 	// The position of the light in world space.
-	FVector3				Position;
+	FVector3				Position = FVector3::Zero;
 
 	// The radial influence of the light.
-	float					Radius;
+	float					Radius = 10.0f;
 
 	// The color of the light. Fourth component is unused.
-	FVector3				Color;
+	FVector3				Color = FVector3::One;
 
 	// The brightness the light will illuminate.
-	float					Brightness;
+	float					Brightness = 1.f;
 
 	// The unique identifier of the light.
 	PointLightDataHandle	Id;
@@ -103,7 +103,7 @@ HE_ALIGN( 16 ) struct PostProcessSettings
 
 // Input layouts.
 extern FInputElementDesc g_SceneMeshInputElements[];
-extern const uint32 kNumSceneMeshCommonInputElements;
+extern const uint32 kNumStaticMeshCommonInputElements;
 
 extern FInputElementDesc g_ScreenSpaceInputElements[];
 extern const uint32 kNumScreenSpaceInputElements;

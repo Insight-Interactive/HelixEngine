@@ -8,7 +8,7 @@ HE_DECLARE_TEXTURE2D( MaterialAlbedo , 0);
 HE_DECLARE_TEXTURE2D( MaterialNormal , 1);
 
 
-HE_DECLARE_CONSTANT_BUFFER(Translucency, 3)
+HE_DECLARE_CONSTANT_BUFFER(Translucency, 4)
 {
     float kOpacity = 1.0f;
 }

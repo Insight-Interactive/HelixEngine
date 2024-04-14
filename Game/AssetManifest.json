@@ -4,7 +4,9 @@
           "4539421c-d8b4-4936-bb0c-8dde1e24f9b9": "Content/Models/Cube.fbx",
           "a5b1d8a5-f186-4298-b36e-9bd840e14c6b": "Content/Models/Sphere.fbx",
           "76c3094a-f60f-4049-8a7b-698e5327bbcb": "Content/Models/Plane.fbx",
-          "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule.fbx"
+          "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule.fbx",
+          "e1e1007c-f54e-4e84-9051-e6b7d0f02ff7": "Content/Models/SkeletalMesh/boblampclean.md5mesh",
+          "6123f7cc-4d94-47fb-ba9c-0455bae42877": "Content/Models/SkeletalMesh/SK_Mannequin.FBX"
         },
         {
             "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
@@ -19,7 +21,9 @@
             "0d68e992-aa25-4aa4-9f81-0eb775320c1e": "Content/Materials/M_RustedMetal.hmat",
             "d7d2911a-0461-4a69-b28d-259389c45f87": "Content/Materials/M_Wood.hmat",
             "2a4a5a3f-a6f6-4704-bc75-db3bf68dbbc5": "Content/Materials/M_DefaultUnlit.hmat",
-            "141d7fa2-8208-4ba2-ba33-3fa72163c4d8": "Content/Materials/M_Wireframe.hmat"
+            "141d7fa2-8208-4ba2-ba33-3fa72163c4d8": "Content/Materials/M_Wireframe.hmat",
+            "1a0f9c51-367c-4f09-9c04-e86bed7d92e7": "Content/Materials/M_Animated.hmat",
+            "e40a0db0-8368-46b2-be14-6aa89eddba81": "Content/Materials/M_SolidColor.hmat"
         },
         {
             "76b2b57a-e199-4032-89f5-cc498feec3cc": "Content/Actors/MyCoolActor.hactor",
@@ -39,13 +43,20 @@
             "c7cd8297-1098-446c-8d01-7d175f81564c": "Shaders/Core/DefaultForwardPass.ps.cso",
             "3c5f2a9f-ff5b-4eac-a311-b78d1f0aeca4": "Shaders/Core/Wireframe.ps.cso",
             "41c75002-f4b1-4030-adec-7a5088a4e65b": "Shaders/Core/Text.vs.cso",
-            "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso"
+            "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso",
+            "cd635ce4-8e10-4f50-8cfe-2f40dfc5f27e": "Shaders/Core/DefaultSkeletalMeshGeometryPass.vs.cso",
+            "d7b84cd6-7942-4247-b55e-a36f1c1660a4": "Shaders/Core/DefaultSkeletalMeshGeometryPass.ps.cso",
+            "e6d7b6e3-a012-424f-a1fe-486aee8b60ca": "Shaders/Core/SolidColor.ps.cso"
         },
         {
           "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb": "Content/Scripts/RotationScript.lua"
         },
         {
           "f3de7104-86de-4f96-83ae-6eaa8f38f46d": "Content/Fonts/Ariel.fnt"
+        },
+        {
+          "34338626-951c-492f-b41f-f852ce5e074c": "Content/Animation/boblampclean.md5anim",
+          "6127cd49-9fee-467b-9d27-164df2fba4f5": "Content/Animation/ThirdPersonWalk.FBX"
         }
     ]
 }

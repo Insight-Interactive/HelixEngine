@@ -8,12 +8,14 @@
 #include "Renderer/LightManager.h"
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "GameFramework/Actor/ACharacter.h"
+#include "GameFramework/Actor/ADebugPawn.h"
 #include "GameFramework/Actor/AThirdPersonCharacter.h"
 #include "GameFramework/Actor/AFirstPersonCharacter.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 HWorld::HWorld()
 	: m_CameraManager( this )
@@ -99,13 +101,16 @@ void HWorld::RegisterScenes()
 void HWorld::BeginPlay()
 {
 	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ), true };
-	m_pPlayerCharacter = new AThirdPersonCharacter( InitArgs );
+	//m_pPlayerCharacter = new AThirdPersonCharacter( InitArgs );
 	//m_pPlayerCharacter = new AFirstPersonCharacter( InitArgs );
-	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
-	AddPlayerCharacterRef( m_pPlayerCharacter );
+	//SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
+	//AddPlayerCharacterRef( m_pPlayerCharacter );
+	m_pDebugPawn = new ADebugPawn( InitArgs );
+	SetCurrentSceneRenderCamera(m_pDebugPawn->GetCameraComponent());
+	m_pDebugPawn->GetCameraComponent()->SetPosition( FVector3( 3, 31, -113 ) );
 
 	m_Level.BeginPlay();
-	m_pPlayerCharacter->BeginPlay();
+	//m_pPlayerCharacter->BeginPlay();
 }
 
 float Accumulator = 0.f;
@@ -148,7 +153,8 @@ void HWorld::Tick( float DeltaTime )
 
 	if (GEngine->IsPlayingInEditor())
 	{
-		m_pPlayerCharacter->Tick( DeltaTime );
+		m_pDebugPawn->Tick( DeltaTime );
+		//m_pPlayerCharacter->Tick( DeltaTime );
 		m_Level.Tick( DeltaTime );
 	}
 
@@ -184,8 +190,8 @@ void HWorld::Flush()
 
 void HWorld::Render( FCommandContext& CmdContext )
 {
-	if (m_pPlayerCharacter != NULL)
-		m_pPlayerCharacter->Render( CmdContext );
+	//if (m_pPlayerCharacter != NULL)
+	//	m_pPlayerCharacter->Render( CmdContext );
 
 	m_Level.Render( CmdContext );
 }

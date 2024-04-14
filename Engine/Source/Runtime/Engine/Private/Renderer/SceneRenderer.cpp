@@ -34,10 +34,10 @@ void FSceneRenderer::Initialize( const FSceneRendererInitParams& InitParams, FVi
 
 	m_DepthBuffer.Create( L"[Geometry Pass] Scene Depth Buffer", (uint32)InitParams.RenderingResolution.x, (uint32)InitParams.RenderingResolution.y, F_D32_Float );
 
-	const StringHashValue SceneConstsStrHash = StringHash(HE_STRINGIFY(SceneConstants_CB));
+	const HHash SceneConstsStrHash = StringHash(HE_STRINGIFY(SceneConstants_CB));
 	m_ReservedConstBuffers[SceneConstsStrHash] = std::vector<FConstantBufferInterface*>{};
 
-	const StringHashValue SceneLightsStrHash = StringHash(HE_STRINGIFY(SceneLights_CB));
+	const HHash SceneLightsStrHash = StringHash(HE_STRINGIFY(SceneLights_CB));
 	m_ReservedConstBuffers[SceneLightsStrHash] = std::vector<FConstantBufferInterface*>{};
 
 	for (uint32 i = 0; i < HE_MAX_SWAPCHAIN_BACK_BUFFERS; ++i)
@@ -111,7 +111,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 	//
 	// Opaque objects get deferred shading. Translucent or unlit objects get forward shading.
 	//
-	
+
 	// Render static opaque objects
 	{
 		// Render the Geometry Pass
@@ -123,6 +123,8 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 
 		// Draw 
 		Scene.RenderStaticLitOpaqueObjects( CmdContext );
+		SetCommonRenderState( CmdContext, false, true );
+		Scene.RenderSkeletalLitOpaqueObjects( CmdContext );
 
 		m_DeferredShader.UnBindGeometryPass( CmdContext );
 	}

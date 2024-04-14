@@ -1,4 +1,7 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
+
+#include "CommonMacros.h"
 
 
 #if RENDERER_MODULE
@@ -19,6 +22,7 @@
 #	define HE_D3D12_GPU_VIRTUAL_ADDRESS_NULL      ((D3D12_GPU_VIRTUAL_ADDRESS)0)
 #	define HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN   ((D3D12_GPU_VIRTUAL_ADDRESS)-1)
 #endif
+
 
 
 #if HE_ENABLE_LOGS

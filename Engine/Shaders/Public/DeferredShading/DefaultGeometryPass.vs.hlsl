@@ -19,8 +19,8 @@ GP_PSInput main(GP_VSInput Input)
     Result.UVs = Input.UVs;
 
     Result.Normal = normalize(mul(float4(Input.Normal, 0), kWorldMat)).xyz;
-    Result.Tangent = mul(float4(Input.Tangent, 1), WorldView).xyz;
-    Result.BiTangent = mul(float4(Input.BiTangent, 1), WorldView).xyz;
+    Result.Tangent = normalize(mul( float4(Input.Tangent, 0), kWorldMat )).xyz;
+    Result.BiTangent = normalize(mul( float4(Input.BiTangent, 0), kWorldMat )).xyz;
 
     return Result;
 }

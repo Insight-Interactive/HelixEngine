@@ -8,7 +8,7 @@
 // ---------------
 
 // Represents a hashed string.
-typedef int32 StringHashValue;
+typedef int32 HHash;
 
 
 // This requires SSE4.2 which is present on Intel Nehalem (Nov. 2008)
@@ -85,7 +85,7 @@ FORCEINLINE size_t HashState(const T* StateDesc, size_t Count = 1, size_t Hash =
 }
 
 template <typename CharType>
-FORCEINLINE StringHashValue StringHash( const CharType* String, uint64 Length)
+FORCEINLINE HHash StringHash( const CharType* String, uint64 Length)
 {
     int32 HashResult = 0;
     while ((*String != NULL) && (Length-- != 0))
@@ -105,9 +105,9 @@ FORCEINLINE StringHashValue StringHash( const CharType* String, uint64 Length)
 
 
 template <typename CharType>
-FORCEINLINE StringHashValue StringHash(const CharType* String)
+FORCEINLINE HHash StringHash(const CharType* String)
 {
-    int32 HashResult = 0;
+    HHash HashResult = 0;
     while (*String != NULL)
     {
         HashResult += *String;
@@ -122,3 +122,4 @@ FORCEINLINE StringHashValue StringHash(const CharType* String)
 
     return HashResult;
 }
+

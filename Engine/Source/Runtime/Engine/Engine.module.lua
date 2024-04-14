@@ -255,4 +255,27 @@ project ("Engine")
 		}
 	-- End PysX
 
+	-- Assimp
+
+	filter {"configurations:DebugEditor or DebugGame or Demo"}
+		libdirs
+		{
+			"%{libraryDirectories.Assimp_debug}",
+		}
+		links
+		{
+			"%{libraries.Assimp_Debug}",
+		}
+
+	filter {"configurations:Development or ShippingGame"}
+		libdirs
+		{
+			"%{libraryDirectories.Assimp_release}",
+		}
+		links
+		{
+			"%{libraries.Assimp_Release}",
+		}
+	-- End Assimp
+
 --include ("Helix/DeploymentPrep.lua")

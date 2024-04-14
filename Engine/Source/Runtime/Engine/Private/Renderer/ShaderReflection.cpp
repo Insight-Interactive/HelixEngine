@@ -28,15 +28,17 @@ void FShaderReflection::ReflectShader_Internal(const uint8* pShaderData, const u
 
 }
 
-void FShaderReflection::GetResourceBindingDescripion(const uint32& Index, FShaderResourceDescription& outDesc) const
+bool FShaderReflection::GetResourceBindingDescripion(const uint32& Index, FShaderResourceDescription& outDesc) const
 {
 	HE_ASSERT(m_pReflector != NULL);
 
 #if R_WITH_D3D12
 	D3D12_SHADER_INPUT_BIND_DESC ResourceDesc = { };
 	HRESULT hr = m_pReflector->GetResourceBindingDesc(Index, &ResourceDesc);
+	if (FAILED( hr ))
+		return false;
 	ThrowIfFailedMsg(hr, "Failed to get shader resource description!");
-
+	
 	outDesc.Name		= ResourceDesc.Name;
 	outDesc.Register	= ResourceDesc.BindPoint;
 	switch (ResourceDesc.Type)
@@ -54,6 +56,23 @@ void FShaderReflection::GetResourceBindingDescripion(const uint32& Index, FShade
 		outDesc.Type = RT_Undefined;
 		break;
 	}
+	return true;
+#endif
+}
+
+bool FShaderReflection::GetInputBindingDescription( const uint32 Index, FShaderInputDescription& outDesc ) const
+{
+	HE_ASSERT( m_pReflector != NULL );
+
+#if R_WITH_D3D12
+	D3D12_SIGNATURE_PARAMETER_DESC Desc = {};
+	HRESULT hr = m_pReflector->GetInputParameterDesc( Index, &Desc );
+	if (FAILED( hr ))
+		return false;
+
+	outDesc.Name = Desc.SemanticName;
+
+	return true;
 #endif
 }
 

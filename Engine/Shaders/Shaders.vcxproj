@@ -588,6 +588,18 @@
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultSkeletalMeshGeometryPass.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultSkeletalMeshGeometryPass.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\SolidColor.ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.1</ShaderModel>

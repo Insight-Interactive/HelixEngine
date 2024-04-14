@@ -9,12 +9,14 @@
 #include "AssetRegistry/MaterialDatabase.h"
 #include "AssetRegistry/ScriptDatabase.h"
 #include "AssetRegistry/FontDatabase.h"
+#include "AssetRegistry/AnimationDatabase.h"
 
 #include "ModelManager.h"
 #include "TextureManager.h"
 #include "Engine/GameProject.h"
 #include "Renderer/MaterialManager.h"
 #include "Renderer/FontManager.h"
+#include "AnimationManager.h"
 #include "LuaScript.h"
 #include "Engine/ScriptManager.h"
 
@@ -37,12 +39,14 @@ public:
 
 	static HTexture GetTexture( const FGUID& Guid );
 	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
+	static SkeletalMeshGeometryRef GetSkeletalMesh( const FGUID& Guid );
 	static HMaterial GetMaterial( const FGUID& Guid );
 	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
 	static LuaScriptRef GetScript( const FGUID& Guid );
 	static const String LookupMaterial( const FGUID& Guid );
 	static HFont GetFont( const FGUID& FontGuid );
+	static HAnimation GetAnimation( const FGUID& Guid );
 
 protected:
 	FAssetDatabase();
@@ -65,6 +69,7 @@ protected:
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
 	static void RegisterScript( const FGUID& ScriptGuid, const Char* Filepath );
 	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
+	static void RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath );
 
 	static const String LookupMesh( const FGUID& Guid );
 	static const String LookupTexture( const FGUID& Guid );
@@ -72,6 +77,7 @@ protected:
 	static const String LookupShader( const FGUID& Guid );
 	static const String LookupScript( const FGUID& Guid );
 	static const String LookupFont( const FGUID& Guid );
+	static const String LookupAnimation( const FGUID& Guid );
 
 	static FMeshDatabase& GetMeshDatabase();
 	static FTextureDatabase& GetTextureDatabase();
@@ -88,6 +94,7 @@ protected:
 	FMaterialDatabase	m_MaterialDatabase;
 	FScriptDatabase		m_ScriptDatabase;
 	FFontDatabase		m_FontDatabase;
+	FAnimationDatabase	m_AnimationDatabase;
 
 private:
 	static FAssetDatabase* SInstance;
@@ -106,7 +113,12 @@ private:
 
 /*static*/ FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
 {
-	return GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+	return GGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+}
+
+/*static*/ FORCEINLINE SkeletalMeshGeometryRef FAssetDatabase::GetSkeletalMesh( const FGUID& Guid )
+{
+	return GGeometryManager.LoadSkeletalMeshFromFile( SInstance->LookupMesh( Guid ) );
 }
 
 /*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const FGUID& Guid )
@@ -132,6 +144,11 @@ private:
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
 {
 	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
+}
+
+/*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const FGUID& Guid )
+{
+	return GAnimationManager.LoadAnimation( SInstance->LookupAnimation( Guid ) );
 }
 
 /*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
@@ -242,6 +259,11 @@ private:
 	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
 }
 
+/*static*/ FORCEINLINE void FAssetDatabase::RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath )
+{
+	SInstance->m_AnimationDatabase.RegisterAsset( AnimGuid, Filepath );
+}
+
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid )
 {
 	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MeshDatabase.GetValueByKey( Guid );
@@ -275,4 +297,9 @@ private:
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupFont( const FGUID& Guid )
 {
 	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_FontDatabase.GetValueByKey( Guid );
+}
+
+/*static*/ FORCEINLINE const String FAssetDatabase::LookupAnimation( const FGUID& Guid )
+{
+	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_AnimationDatabase.GetValueByKey( Guid );
 }

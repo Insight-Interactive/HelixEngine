@@ -42,6 +42,12 @@
     <ClInclude Include="Public\APIBridge\EnumTranslations.h">
       <Filter>Public\APIBridge</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Animation.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\AnimationManager.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\BatchRenderer.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -61,6 +67,9 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\CommonEnums.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\CommonMacros.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\CommonStructHelpers.h">
@@ -99,6 +108,9 @@
     <ClInclude Include="Public\ManagedAsset.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\MeshGeometry.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\ModelManager.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -127,6 +139,9 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\RootSignature.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\SkeletalMeshGeometry.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\StaticMeshGeometry.h">
@@ -160,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Private\APIBridge\EnumTranslations.cpp">
       <Filter>Private\APIBridge</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AnimationManager.cpp">
+      <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\BatchRenderer.cpp">
       <Filter>Private</Filter>
@@ -239,6 +257,9 @@
     <ClCompile Include="Private\GeometryBufferManager.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\MeshGeometry.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\ModelManager.cpp">
       <Filter>Private</Filter>
     </ClCompile>
@@ -258,6 +279,9 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\RootSignature.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\SkeletalMeshGeometry.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\StaticMeshGeometry.cpp">

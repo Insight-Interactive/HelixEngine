@@ -10,7 +10,19 @@ MaterialManager GMaterialManager;
 LightManager GLightManager;
 
 
-FInputElementDesc GSceneMeshInputElements[6] =
+/*
+	This file contains common vertex layouts for mesh rendering.
+
+	WARNING! Making changes to this file including, parameter reorginization and modification could have influences on the fallowing files:
+	Engine/Renderer/Material.cpp
+	Renderer/ModelManager.cpp
+	Various vertex shaders in the Shaders module
+*/
+
+/*
+	Vertex layout for static non-animated meshes.
+*/
+FInputElementDesc GStaticMeshInputElements[6] =
 {
 	{ "POSITION",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "NORMAL",		0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
@@ -19,8 +31,29 @@ FInputElementDesc GSceneMeshInputElements[6] =
 	{ "COLOR",		0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "UVS",		0, F_R32G32_Float,			0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 };
-const uint32 kNumSceneMeshCommonInputElements = HE_ARRAYSIZE(GSceneMeshInputElements);
+const uint32 kNumStaticMeshCommonInputElements = HE_ARRAYSIZE( GStaticMeshInputElements );
 
+
+/*
+	Vertex layout for skinned animated meshes.
+*/
+FInputElementDesc GSkinnedMeshInputElements[8] =
+{
+	{ "POSITION",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "NORMAL",		0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "TANGENT",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "BITANGENT",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "COLOR",		0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "UVS",		0, F_R32G32_Float,			0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+	{ "JOINTIDS",	0, F_R8G8B8A8_UInt,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 }, // See HE_MAX_JOINTS_PER_VERTEX in RendererFwd.h
+	{ "WEIGHTS",	0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
+};
+const uint32 kNumSkinnedMeshCommonInputElements = HE_ARRAYSIZE( GSkinnedMeshInputElements );
+
+
+/*
+	Vertex layout for screenspace verticies.
+*/
 FInputElementDesc GScreenSpaceInputElements[2] =
 {
 	{ "POSITION",	0, F_R32G32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
@@ -28,6 +61,9 @@ FInputElementDesc GScreenSpaceInputElements[2] =
 };
 const uint32 kNumScreenSpaceInputElements = HE_ARRAYSIZE(GScreenSpaceInputElements);
 
+/*
+	Vertex layout for ui element verticies.
+*/
 FInputElementDesc GUITextInputElements[3] =
 {
 	{ "POSITION", 0, F_R32G32B32A32_Float, 0, HE_APPEND_ALIGNED_ELEMENT, IC_PerInstanceData, 1 },

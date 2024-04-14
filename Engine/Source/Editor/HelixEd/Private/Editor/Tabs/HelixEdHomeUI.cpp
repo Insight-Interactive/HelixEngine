@@ -3,7 +3,7 @@
 #include "Editor/Tabs/HelixEdHomeUI.h"
 
 #include "Editor/EditorEngine.h"
-#include "Developer/ADebugPawn.h"
+#include "GameFramework/Actor/ADebugPawn.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Editor/Event/EditorEvent.h"
 

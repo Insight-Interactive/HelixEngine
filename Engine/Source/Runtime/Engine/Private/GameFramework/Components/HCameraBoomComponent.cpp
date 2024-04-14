@@ -9,7 +9,7 @@
 
 HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: Super( InitArgs )
-	, m_UseCameraCollision( true )
+	, m_UseCameraCollision( false )
 	, m_CameraCollisionTraceDistance( 2.f )
 	, m_CameraDistance( -50.f )
 	, m_ViewOffset( 0.f, 0.f, 0.f ) //20.f, 10.f, 0.f

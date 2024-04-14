@@ -9,7 +9,7 @@
 #include "CommandContext.h"
 #include "TextureManager.h"
 #include "GeometryBufferManager.h"
-
+#include "AnimationManager.h"
 
 // -----------------------------
 //	Extern Variable Definitions
@@ -18,11 +18,12 @@
 FCommandManager GCommandManager;
 FContextManager GContextManager;
 FRenderDevice GGraphicsDevice;
-FGeometryBufferManager GGeometryManager;
+FGeometryBufferManager GGeometryBufferManager;
 FTextureManager GTextureManager;
 FTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;
-FStaticGeometryManager GStaticGeometryManager;
+FGeometryManager GGeometryManager;
+FAnimationManager GAnimationManager;
 const FResolution GCommonResolutions[9] =
 {
     { 800,  600  },

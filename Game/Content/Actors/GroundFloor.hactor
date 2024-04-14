@@ -20,7 +20,7 @@
                       "m_Transform": [
                         {
                           "PositionX": 0.0,
-                          "PositionY": 0.0,
+                          "PositionY": 1.0,
                           "PositionZ": 0.0,
                           "RotationX": 0.0,
                           "RotationY": 0.0,
@@ -41,8 +41,8 @@
               ]
             },
             {
-              "m_RigidBody.m_HalfWidth": 1000.0,
-              "m_RigidBody.m_HalfHeight": 1000.0
+              "m_RigidBody.m_HalfWidth": 700.0,
+              "m_RigidBody.m_HalfHeight": 700.0
             }
           ]
         },
@@ -58,14 +58,14 @@
                   "m_Transform": [
                     {
                       "PositionX": 0.0,
-                      "PositionY": -9.0,
+                      "PositionY": 0.0,
                       "PositionZ": 0.0,
                       "RotationX": 0.0,
                       "RotationY": 0.0,
                       "RotationZ": 0.0,
-                      "ScaleX": 100.0,
+                      "ScaleX": 1.0,
                       "ScaleY": 1.0,
-                      "ScaleZ": 100.0
+                      "ScaleZ": 1.0
                     }
                   ]
                 }
@@ -74,7 +74,7 @@
             {
               "m_bIsDrawEnabled": true,
               "m_MeshAsset": "4539421c-d8b4-4936-bb0c-8dde1e24f9b9",
-              "m_MaterialAsset": "0d68e992-aa25-4aa4-9f81-0eb775320c1e"
+              "m_MaterialAsset": "e40a0db0-8368-46b2-be14-6aa89eddba81"
             }
           ]
         }

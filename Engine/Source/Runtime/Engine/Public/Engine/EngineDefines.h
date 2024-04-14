@@ -48,12 +48,14 @@
 #define HE_MAX_POINT_LIGHTS			4
 #define HE_MAX_SPOT_LIGHTS			4
 #define HE_MAX_DIRECTIONAL_LIGHTS	4
+#define HE_MAX_NUM_BONES_PER_VERTEX 4 // Note: Keep this in sync with Renderer::SkeletalMesh.h
 // Shader constant buffer registers
 // These register indicies are reserved and constant across all shaders and must NOT be changed!
 // New constant buffers should reside in indicies immediatly following the last index to insure no buffer registers are duplicated.
 #define kSceneConstantsReg  0
 #define kMeshWorldReg       1
 #define kLightsReg          2
+#define kSkeletonBonesReg	3
 
 // Simple redefines of symbols so they can match in the C++ code and in the shaders.
 // Shaders just get the value of the macro, C++ just stringifies the macro.
@@ -61,6 +63,7 @@
 #define SceneConstants_CB	SceneConstants_CB
 #define MeshWorld_CB		MeshWorld_CB
 #define SceneLights_CB		SceneLights_CB
+#define SkeletonBones_CB	SkeletonBones_CB
 // Samplers
 #define LinearWrapSampler	LinearWrapSampler
 

@@ -6,6 +6,8 @@
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
 #include "GameFramework/Components/HControllerComponent.h"
+#include "GameFramework/Components/HSkeletalMeshComponenet.h"
+#include "AssetRegistry/AssetDatabase.h"
 
 
 AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
@@ -17,6 +19,9 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	m_pCameraComponent->AttachTo( m_pCameraBoom );
 	m_pCameraComponent->SetObjectName( TEXT( "FollowCamera" ) );
 
+	//m_pCharacterMesh = AddComponent<HSkeletalMeshComponent>( TEXT( "CharacterMesh" ) );
+	//FGUID guid = FGUID::CreateFromString( "e1e1007c-f54e-4e84-9051-e6b7d0f02ff7" );
+	//m_pCharacterMesh->SetSkeletalMesh( FAssetDatabase::GetSkeletalMesh( guid ) );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()

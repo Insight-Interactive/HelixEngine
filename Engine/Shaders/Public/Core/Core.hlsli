@@ -1,5 +1,6 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "../../../Source/Runtime/Engine/Public/Engine/EngineDefines.h"
+#include "../../../Source/Runtime/Renderer/Public/CommonMacros.h"
 #include "LightsFwd.hlsli"
 
 
@@ -54,6 +55,10 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 }
 
+HE_DECLARE_CONSTANT_BUFFER( SkeletonBones_CB, kSkeletonBonesReg )
+{
+    float4x4 Joints[HE_MAX_JOINTS_PER_MODEL];
+}
 
 //
 // Samplers

@@ -6,7 +6,7 @@
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Tools/PackageMaker.h"
-#include "Developer/ADebugPawn.h"
+#include "GameFramework/Actor/ADebugPawn.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"

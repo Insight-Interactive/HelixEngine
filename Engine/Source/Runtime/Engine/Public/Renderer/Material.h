@@ -36,9 +36,9 @@ enum EMaterialBlendMode
 
 
 // < VarNameHash, <OwningBuffer, <PtrForPerFrameData in m_ConstBufferMappings(<Buffer Pointer, DataPointer for variable inside the const buffer>) >> >
-typedef std::unordered_map< StringHashValue, std::vector< std::pair<FConstantBufferInterface*, uint8* > > >		ConstantBufferVariableMap;
+typedef std::unordered_map< HHash, std::vector< std::pair<FConstantBufferInterface*, uint8* > > >		ConstantBufferVariableMap;
 // < ConstBufferHashName, <RootParmIndex, CBDataForEachFrame> >
-typedef std::unordered_map< StringHashValue, std::pair< uint32, std::vector< FConstantBufferInterface* > > >	ConstantBufferMap;
+typedef std::unordered_map< HHash, std::pair< uint32, std::vector< FConstantBufferInterface* > > >	ConstantBufferMap;
 // < HashName, <RootParamIndex, Texture> > 
 typedef std::unordered_map< int32, std::pair< uint32, HTexture > >											TextureMap;
 
@@ -282,7 +282,7 @@ FORCEINLINE void FMaterial::SetDebugName( const String& Name )
 
 FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTexture Texture )
 {
-	StringHashValue NameHash = StringHash( TextureName );
+	HHash NameHash = StringHash( TextureName );
 	auto Iter = m_TextureMappings.find( NameHash );
 	if (Iter != m_TextureMappings.end())
 	{
@@ -296,7 +296,7 @@ FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTexture Textur
 template <typename T>
 FORCEINLINE bool FMaterial::SetShaderFloatVar( const Char* VariableName, const T& Value )
 {
-	StringHashValue NameHash = StringHash( VariableName );
+	HHash NameHash = StringHash( VariableName );
 	auto& Iter = m_ConstBufferVarMappings.find( NameHash );
 	if (Iter != m_ConstBufferVarMappings.end())
 	{

@@ -3,7 +3,7 @@
 #include "Editor/Tabs/ActorEditorTab.h"
 
 #include "Engine/GameProject.h"
-#include "Developer/ADebugPawn.h"
+#include "GameFramework/Actor/ADebugPawn.h"
 #include "CommandContext.h"
 #include "Engine/ViewportContext.h"
 #include "AssetRegistry/AssetDatabase.h"

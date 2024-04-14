@@ -1,5 +1,5 @@
 {
   "GameName": "Game",
   "ProjectName":  "Helix Sample Project",
-  "DefaultLevel": "Levels/PhysicsTest.hlevel"
+  "DefaultLevel": "Levels/Blank.hlevel"
 }

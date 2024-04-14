@@ -117,6 +117,9 @@
     <ClInclude Include="Public\AssetRegistry\ActorDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\AnimationDatabase.h">
+      <Filter>Public\AssetRegistry</Filter>
+    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\Asset.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
@@ -204,10 +207,19 @@
     <ClInclude Include="Public\GameFramework\Actor\AActor.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\ACharacter.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\ADebugPawn.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h">
+      <Filter>Public\GameFramework\Actor</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Actor\APawn.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Actor\ACharacter.h">
+    <ClInclude Include="Public\GameFramework\Actor\AThirdPersonCharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HActorComponent.h">
@@ -217,6 +229,9 @@
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HBoxColliderComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HCameraBoomComponenet.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HCameraComponent.h">
@@ -246,7 +261,13 @@
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HRenderableComponentInterface.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HSceneComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HSkeletalMeshComponenet.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HSphereColliderComponent.h">
@@ -369,15 +390,15 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Components\HCameraBoomComponenet.h" />
-    <ClInclude Include="Public\GameFramework\Actor\AThirdPersonCharacter.h" />
-    <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
       <Filter>Private\App</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\ActorDatabase.cpp">
+      <Filter>Private\AssetRegistry</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\AnimationDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\Asset.cpp">
@@ -449,16 +470,28 @@
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\ADebugPawn.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp">
+      <Filter>Private\GameFramework\Actor</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp">
+    <ClCompile Include="Private\GameFramework\Actor\AThirdPersonCharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HCameraBoomComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HCameraComponent.cpp">
@@ -488,7 +521,13 @@
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HRenderableComponentInterface.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HSceneComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HSkeletalMeshComponenet.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HSphereColliderComponent.cpp">
@@ -614,9 +653,6 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HCameraBoomComponent.cpp" />
-    <ClCompile Include="Private\GameFramework\Actor\AThirdPersonCharacter.cpp" />
-    <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

@@ -6,7 +6,7 @@
 
 const float kDefaultFOV = 75.f;
 const float kDefaultNearZ = 0.1f;
-const float kDefaultFarZ = 1000.f;
+const float kDefaultFarZ = 10000.f;
 
 enum EViewType
 {

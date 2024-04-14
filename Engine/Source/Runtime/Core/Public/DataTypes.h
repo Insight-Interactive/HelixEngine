@@ -96,8 +96,9 @@
 #define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)
 #define HE_UNUSED_PARAM(Value)			(void)Value;
 #define HE_TERNARY(Expression, IfTrue, IfFalse) (Expression) ? (IfTrue) : (IfFalse)
+#define HE_ZERO_MEMORY( Data, Size ) ::memset( Data, 0, Size )
 // Creates a buffer and zeros the memory.
-#define HE_CREATE_BUFFER(Type, Name, ArrayElements) Type Name[ArrayElements]; ZeroMemory(Name, sizeof(Name))
+#define HE_CREATE_BUFFER(Type, Name, ArrayElements) Type Name[ArrayElements]; HE_ZERO_MEMORY(Name, sizeof(Name))
 
 //-----------------------------------
 //		Container Debug Levels

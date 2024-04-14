@@ -32,8 +32,10 @@ public:
 
 	FColor GetColor() const;
 	float GetBrightness() const;
+	float GetRadius() const;
 	void SetColor( const FColor& NewColor );
 	void SetBrightness( float NewBrightness );
+	void SetRadius( float NewRadius );
 
 	virtual void SetPosition( const FVector3& NewPos );
 	virtual void SetPosition( const float& X, const float& Y, const float& Z );
@@ -86,6 +88,17 @@ inline float HPointLightComponent::GetBrightness() const
 	return 0.f;
 }
 
+inline float HPointLightComponent::GetRadius() const
+{
+	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	if (pData != nullptr)
+	{
+		return pData->Radius;
+	}
+
+	return 0.f;
+}
+
 inline void HPointLightComponent::SetColor( const FColor& NewColor )
 {
 	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
@@ -101,5 +114,14 @@ inline void HPointLightComponent::SetBrightness( float NewBrightness )
 	if (pData != nullptr)
 	{
 		pData->Brightness = NewBrightness;
+	}
+}
+
+inline void HPointLightComponent::SetRadius( float NewRadius )
+{
+	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	if (pData != nullptr)
+	{
+		pData->Radius = NewRadius;
 	}
 }

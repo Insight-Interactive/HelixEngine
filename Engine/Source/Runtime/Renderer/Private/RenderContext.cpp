@@ -21,7 +21,7 @@ void FRenderContext::UnInitialize()
 {
 	// Wait for all work on the GPU to finish.
 	GCommandManager.IdleGpu();
-	GStaticGeometryManager.FlushCache();
+	GGeometryManager.FlushCache();
 
 	GGraphicsDevice.UnInitialize();
 }

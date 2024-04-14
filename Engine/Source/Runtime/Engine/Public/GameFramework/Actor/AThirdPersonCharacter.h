@@ -5,6 +5,7 @@
 
 
 class HCameraBoomComponent;
+class HSkeletalMeshComponent;
 
 class AThirdPersonCharacter : public ACharacter
 {
@@ -24,5 +25,6 @@ private:
 
 private:
 	HCameraBoomComponent* m_pCameraBoom;
+	HSkeletalMeshComponent* m_pCharacterMesh;
 
 };

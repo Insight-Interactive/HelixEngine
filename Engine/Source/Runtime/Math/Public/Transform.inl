@@ -26,12 +26,28 @@ FORCEINLINE FTransform::FTransform(const FTransform& FTransform)
 	*this = FTransform;
 }
 
+FORCEINLINE FTransform::FTransform( const FVector3& Position, const FVector3& Scale, const FQuat& Rotation )
+{
+	m_Position = Position;
+	m_Rotation = Rotation;
+	m_Scale = Scale;
+}
+
 FORCEINLINE FTransform& FTransform::operator = (const FTransform& Other)
 {
 	m_Position = Other.m_Position;
 	m_Scale = Other.m_Scale;
 	m_Rotation = Other.m_Rotation;
 	return *this;
+}
+
+FORCEINLINE /*static*/ FTransform FTransform::Interpolate(const FTransform& A, const FTransform& B, const float Amount)
+{
+	FVector3 Position = FVector3::Lerp( A.m_Position, B.m_Position, Amount );
+	FVector3 Scale = FVector3::Lerp( A.m_Scale, B.m_Scale, Amount );
+	FQuat Rotation = FQuat::Lerp( A.m_Rotation, B.m_Rotation, Amount );
+
+	return FTransform( Position, Scale, Rotation );
 }
 
 FORCEINLINE /*static*/ void FTransform::RotateVector(FVector3& outResult, const FVector3& inTarget, const FMatrix& inRotationMatrix)
@@ -89,6 +105,27 @@ FORCEINLINE void FTransform::SetScale(const float& X, const float& Y, const floa
 	m_Scale.x = X;
 	m_Scale.y = Y;
 	m_Scale.z = Z;
+}
+
+
+FORCEINLINE void FTransform::SetPosition( const float* pData )
+{
+	SetPosition( pData[0], pData[1], pData[2] );
+}
+
+FORCEINLINE void FTransform::SetRotationE( const float* pEulerData )
+{
+	SetRotation( pEulerData[0], pEulerData[1], pEulerData[2] );
+}
+
+FORCEINLINE void FTransform::SetRotationQ( const float* pQuatData )
+{
+	SetRotation( FQuat( pQuatData[0], pQuatData[1], pQuatData[2], pQuatData[3] ) );
+}
+
+FORCEINLINE void FTransform::SetScale( const float* pData )
+{
+	SetScale( pData[0], pData[1], pData[2] );
 }
 
 FORCEINLINE void FTransform::SetPosition(const FVector3& Position)
@@ -183,11 +220,7 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 
 FORCEINLINE FMatrix FTransform::GetLocalMatrix() const
 {
-	FMatrix Translation = GetTranslationMatrix();
-	FMatrix Rotation = GetRotationMatrix();
-	FMatrix Scale = GetScaleMatrix();
-
-	return (Scale * Rotation) * Translation;
+	return (GetScaleMatrix() * GetRotationMatrix()) * GetTranslationMatrix();
 }
 
 FORCEINLINE FMatrix FTransform::GetTranslationMatrix() const 

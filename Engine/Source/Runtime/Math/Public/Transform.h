@@ -16,6 +16,7 @@ public:
 	~FTransform();
 	FTransform( FTransform&& Other ) noexcept;
 	FTransform( const FTransform& FTransform );
+	FTransform( const FVector3& Position, const FVector3& Scale, const FQuat& Rotation );
 	FTransform& operator = ( const FTransform& Other );
 
 	FVector3 GetPosition()		const { return m_Position; }
@@ -26,6 +27,11 @@ public:
 	void SetPosition( const float& X, const float& Y, const float& Z );
 	void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
 	void SetScale( const float& X, const float& Y, const float& Z );
+
+	void SetPosition( const float* pData );
+	void SetRotationE( const float* pEulerData );
+	void SetRotationQ( const float* pQuatData );
+	void SetScale( const float* pData );
 
 	void SetPosition( const FVector3& Position );
 	void SetRotation( const FVector3& Euler );
@@ -81,6 +87,7 @@ public:
 	FMatrix GetRotationMatrix() const;
 	FMatrix GetScaleMatrix() const;
 
+	static FTransform Interpolate( const FTransform& A, const FTransform& B, const float Amount );
 	static void RotateVector( FVector3& outResult, const FVector3& inTarget, const FMatrix& inRotationMatrix );
 protected:
 

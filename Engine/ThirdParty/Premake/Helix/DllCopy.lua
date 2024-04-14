@@ -4,6 +4,9 @@ include ("Helix/HelixModule.lua")
 
 dllCopyCommands = {}
 -- Third Party dlls
+-- Assimp
+dllCopyCommands["Assimpx64_debug"]              = "{COPY} " .. heGetThirdPartyModule( "assimp-5.2.5" ) .. "bin/Debug/assimp-vc143-mtd.dll %{cfg.targetdir}"
+dllCopyCommands["Assimpx64_release"]            = "{COPY} " .. heGetThirdPartyModule( "assimp-5.2.5" ) .. "bin/Release/assimp-vc143-mt.dll %{cfg.targetdir}"
 -- PIX
 dllCopyCommands["PIXWinDesktopx64"]             = "{COPY} " .. heGetThirdPartyModule( "WinPixEventRuntime" ) .. "bin/x64/WinPixEventRuntime.dll %{cfg.targetdir}"
 dllCopyCommands["PIXWinUniversalx64"]           = "{COPY} " .. heGetThirdPartyModule( "WinPixEventRuntime" ) .. "bin/x64/WinPixEventRuntime_UAP.dll %{cfg.targetdir}"

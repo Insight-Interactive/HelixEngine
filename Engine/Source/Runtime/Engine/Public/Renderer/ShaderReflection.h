@@ -21,6 +21,11 @@ struct FShaderResourceDescription
 	EShaderResourceType Type;
 };
 
+struct FShaderInputDescription
+{
+	const Char* Name;
+};
+
 /*
 	Represents a shader variable bound to a shader stage.
 */
@@ -61,9 +66,14 @@ public:
 	uint32 GetNumTextureNormalInstructions() const;
 
 	/*
-		Retrieves more information about a resource bound to the specified shader.
+		Retrieves more information about a resource bound to the specified shader. Returns true if succeeded, false if not.
 	*/
-	void GetResourceBindingDescripion(const uint32& Index, FShaderResourceDescription& outDesc) const;
+	bool GetResourceBindingDescripion(const uint32& Index, FShaderResourceDescription& outDesc) const;
+
+	/*
+		Returns true if succeeded, false if not.
+	*/
+	bool GetInputBindingDescription( const uint32 Index, FShaderInputDescription& outDesc ) const;
 
 	/*
 		Retreives more information about a constant buffer bound to the specified shader.

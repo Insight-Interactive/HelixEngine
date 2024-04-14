@@ -15,7 +15,7 @@ static const EFormat kSceneDepthFormat = F_D32_Float;
 static const EFormat kGBufferFormats[] =
 {
 	F_R8G8B8A8_UNorm,		// Albedo
-	F_R16G16B16A16_UNorm,	// Normal
+	F_R16G16B16A16_Float,	// Normal
 	F_R8_UNorm,				// Roughness
 	F_R8_UNorm,				// Metallic
 	F_R8_UNorm,				// Specular
@@ -49,8 +49,8 @@ public:
 	static uint32 GetNumGBuffers();
 
 	bool ReservedBufferExistsByHashName( int32 NameHash );
-	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame( StringHashValue NameHash );
-	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex );
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForCurrentFrame( HHash NameHash );
+	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame( HHash NameHash, uint32 FrameIndex );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
@@ -70,7 +70,7 @@ private:
 	StaticMeshGeometryRef m_pScreenQuadRef;
 	// Constant buffers
 	// Contains hashed names and lookups for the reserved constant buffers in shaders.
-	std::unordered_map<StringHashValue, std::vector<FConstantBufferInterface*>> m_ReservedConstBuffers;
+	std::unordered_map<HHash, std::vector<FConstantBufferInterface*>> m_ReservedConstBuffers;
 	EFormat m_DepthBufferFormat;
 	FDepthBuffer m_DepthBuffer;
 
@@ -115,7 +115,7 @@ FORCEINLINE void FSceneRenderer::ReloadPipelines()
 
 FORCEINLINE TConstantBuffer<SceneConstantsCBData>& FSceneRenderer::GetSceneConstBufferForCurrentFrame()
 {
-	const StringHashValue StrHash = StringHash(HE_STRINGIFY(SceneConstants_CB));
+	const HHash StrHash = StringHash(HE_STRINGIFY(SceneConstants_CB));
 	TConstantBuffer<SceneConstantsCBData>* pConstBuffer = RCast< TConstantBuffer<SceneConstantsCBData>* >(m_ReservedConstBuffers[StrHash][m_SwapchainFrameIndex]);
 	HE_ASSERT(pConstBuffer != NULL);
 	return *pConstBuffer;
@@ -123,7 +123,7 @@ FORCEINLINE TConstantBuffer<SceneConstantsCBData>& FSceneRenderer::GetSceneConst
 
 FORCEINLINE TConstantBuffer<SceneLightsCBData>& FSceneRenderer::GetLightConstBufferForCurrentFrame()
 {
-	const StringHashValue StrHash = StringHash(HE_STRINGIFY(SceneLights_CB));
+	const HHash StrHash = StringHash(HE_STRINGIFY(SceneLights_CB));
 	TConstantBuffer<SceneLightsCBData>* pConstBuffer = RCast< TConstantBuffer<SceneLightsCBData>* >(m_ReservedConstBuffers[StrHash][m_SwapchainFrameIndex]);
 	HE_ASSERT(pConstBuffer != NULL);
 	return *pConstBuffer;
@@ -134,12 +134,12 @@ FORCEINLINE bool FSceneRenderer::ReservedBufferExistsByHashName( int32 NameHash 
 	return GetReservedConstantBufferByHashNameForCurrentFrame( NameHash ) != nullptr;
 }
 
-FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForCurrentFrame( StringHashValue NameHash )
+FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForCurrentFrame( HHash NameHash )
 {
 	return GetReservedConstantBufferByHashNameForFrame( NameHash, m_SwapchainFrameIndex );
 }
 
-FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex )
+FORCEINLINE FConstantBufferInterface* FSceneRenderer::GetReservedConstantBufferByHashNameForFrame( HHash NameHash, uint32 FrameIndex )
 {
 	HE_ASSERT( FrameIndex <= HE_MAX_SWAPCHAIN_BACK_BUFFERS );
 

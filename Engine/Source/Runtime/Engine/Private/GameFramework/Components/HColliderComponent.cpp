@@ -13,7 +13,7 @@
 HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
 	, m_IsTrigger( false )
-	, m_CollisionBoundsDrawEnabled( true )
+	, m_CollisionBoundsDrawEnabled( false )
 	, m_Material( nullptr )
 	, m_IsStatic ( false )
 {

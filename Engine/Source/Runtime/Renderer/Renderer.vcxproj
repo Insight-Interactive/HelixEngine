@@ -595,7 +595,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -608,7 +608,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
@@ -617,7 +618,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -630,7 +631,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Win32 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
@@ -639,7 +641,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -652,7 +654,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Durango &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
@@ -661,7 +664,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -674,7 +677,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugEditor-Scorpio &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
@@ -683,26 +687,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -715,7 +700,30 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\DebugEditor-Prospero &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\DebugEditor-Prospero &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Win64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
@@ -724,7 +732,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -737,7 +745,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Win32 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
@@ -746,7 +755,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -759,7 +768,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Durango &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
@@ -768,7 +778,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -781,7 +791,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\Development-Scorpio &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
@@ -790,121 +801,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -917,7 +814,140 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-clang\Development-Prospero &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-clang\Development-Prospero &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Durango &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\DebugGame-Scorpio &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\DebugGame-Prospero &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\DebugGame-Prospero &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Win64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
@@ -926,7 +956,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -939,7 +969,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Win32 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
@@ -948,7 +979,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -961,7 +992,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Durango &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
@@ -970,7 +1002,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -983,7 +1015,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\WinPixEventRuntime\bin\x64\WinPixEventRuntime.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul)
+IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-msc-v143\Demo-Scorpio &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
@@ -992,7 +1025,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEMO_GAME=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;R_TRACK_RENDER_EVENTS=1;R_DEBUG_GPU_RESOURCES=1;R_DEBUG=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -1004,6 +1037,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\Demo-Prospero &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Debug\assimp-vc143-mtd.dll ..\..\..\..\Build-clang\Demo-Prospero &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <ClCompile>
@@ -1011,7 +1047,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1028,6 +1064,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Win64 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Win64 &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <ClCompile>
@@ -1035,7 +1074,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1052,6 +1091,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Win32 &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Win32 &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <ClCompile>
@@ -1059,7 +1101,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1076,6 +1118,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Durango &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Durango &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <ClCompile>
@@ -1083,7 +1128,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1100,6 +1145,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Scorpio &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-msc-v143\ShippingGame-Scorpio &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
     <ClCompile>
@@ -1107,7 +1155,7 @@
       <PrecompiledHeaderFile>RendererPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;RENDERER_MODULE=1;R_WITH_D3D12=1;R_WITH_DXR=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Public;Classes;Private\PCH;..\Core\Public;..\Math\Public;..\Engine\Public;..\..\..\ThirdParty\WinPixEventRuntime\Include;..\..\..\ThirdParty\OpenFBX\src;..\..\..\ThirdParty\assimp-5.3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1124,6 +1172,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll\ (xcopy /Q /E /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-clang\ShippingGame-Prospero &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Engine\ThirdParty\assimp-5.2.5\bin\Release\assimp-vc143-mt.dll ..\..\..\..\Build-clang\ShippingGame-Prospero &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Private\Direct3D12\Utility\DDSTextureLoader.h" />
@@ -1132,6 +1183,8 @@
     <ClInclude Include="Private\PCH\RendererPCH.h" />
     <ClInclude Include="Public\APIBridge\CommonFunctions.h" />
     <ClInclude Include="Public\APIBridge\EnumTranslations.h" />
+    <ClInclude Include="Public\Animation.h" />
+    <ClInclude Include="Public\AnimationManager.h" />
     <ClInclude Include="Public\BatchRenderer.h" />
     <ClInclude Include="Public\Color.h" />
     <ClInclude Include="Public\ColorBuffer.h" />
@@ -1139,6 +1192,7 @@
     <ClInclude Include="Public\CommandContext.h" />
     <ClInclude Include="Public\CommandManager.h" />
     <ClInclude Include="Public\CommonEnums.h" />
+    <ClInclude Include="Public\CommonMacros.h" />
     <ClInclude Include="Public\CommonStructHelpers.h" />
     <ClInclude Include="Public\CommonStructs.h" />
     <ClInclude Include="Public\ConstantBuffer.h" />
@@ -1151,6 +1205,7 @@
     <ClInclude Include="Public\IndexBuffer.h" />
     <ClInclude Include="Public\LinearAllocator.h" />
     <ClInclude Include="Public\ManagedAsset.h" />
+    <ClInclude Include="Public\MeshGeometry.h" />
     <ClInclude Include="Public\ModelManager.h" />
     <ClInclude Include="Public\PipelineState.h" />
     <ClInclude Include="Public\PixelBuffer.h" />
@@ -1161,6 +1216,7 @@
     <ClInclude Include="Public\RendererFwd.h" />
     <ClInclude Include="Public\RendererInitializer.h" />
     <ClInclude Include="Public\RootSignature.h" />
+    <ClInclude Include="Public\SkeletalMeshGeometry.h" />
     <ClInclude Include="Public\StaticMeshGeometry.h" />
     <ClInclude Include="Public\SwapChain.h" />
     <ClInclude Include="Public\Texture.h" />
@@ -1173,6 +1229,7 @@
   <ItemGroup>
     <ClCompile Include="Private\APIBridge\CommonFunctions.cpp" />
     <ClCompile Include="Private\APIBridge\EnumTranslations.cpp" />
+    <ClCompile Include="Private\AnimationManager.cpp" />
     <ClCompile Include="Private\BatchRenderer.cpp" />
     <ClCompile Include="Private\Color.cpp" />
     <ClCompile Include="Private\CommandContext.cpp" />
@@ -1199,6 +1256,7 @@
     <ClCompile Include="Private\Direct3D12\Utility\DDSTextureLoader.cpp" />
     <ClCompile Include="Private\Direct3D12\VertexBufferD3D12.cpp" />
     <ClCompile Include="Private\GeometryBufferManager.cpp" />
+    <ClCompile Include="Private\MeshGeometry.cpp" />
     <ClCompile Include="Private\ModelManager.cpp" />
     <ClCompile Include="Private\PCH\RendererPCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -1208,6 +1266,7 @@
     <ClCompile Include="Private\RendererDetail.cpp" />
     <ClCompile Include="Private\RendererInitializer.cpp" />
     <ClCompile Include="Private\RootSignature.cpp" />
+    <ClCompile Include="Private\SkeletalMeshGeometry.cpp" />
     <ClCompile Include="Private\StaticMeshGeometry.cpp" />
     <ClCompile Include="Private\TextureManager.cpp" />
   </ItemGroup>
