@@ -39,8 +39,8 @@ void HelixEdHomeUI::SetupPanels()
 	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
 	pDebugPawn->GetRootComponent()->SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
 	pDebugPawn->GetRootComponent()->SetRotation( GEditorEngine->GetPreferences().DebugCameraRotation );
-	pDebugPawn->SetVerticalLookSpeed( GEditorEngine->GetPreferences().DebugCameraPitchSpeed );
-	pDebugPawn->SetHorizontalLookSpeed( GEditorEngine->GetPreferences().DebugCameraYawSpeed );
+	/*pDebugPawn->SetVerticalLookSpeed( GEditorEngine->GetPreferences().DebugCameraPitchSpeed );
+	pDebugPawn->SetHorizontalLookSpeed( GEditorEngine->GetPreferences().DebugCameraYawSpeed );*/
 	m_WorldOutline.AddListener( this, &HelixEdHomeUI::OnEvent );
 	m_WorldOutline.SetWorld( &GEditorEngine->GetGameWorld() );
 	m_ContentBrowserPanel.AddListener( this, &HelixEdHomeUI::OnEvent );

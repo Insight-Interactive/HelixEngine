@@ -158,10 +158,10 @@ void HEditorEngine::SaveEditorPreferences()
 		Writer.EndArray();
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraPitchSpeed ) );
-		Writer.Double( m_HomeUI.GetDebugPawn()->GetVerticalLookSpeed() );
+		//Writer.Double( m_HomeUI.GetDebugCharacter()->GetVerticalLookSpeed() );
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraYawSpeed ) );
-		Writer.Double( m_HomeUI.GetDebugPawn()->GetHorizontalLookSpeed() );
+		//Writer.Double( m_HomeUI.GetDebugCharacter()->GetHorizontalLookSpeed() );
 	}
 	Writer.EndObject();
 

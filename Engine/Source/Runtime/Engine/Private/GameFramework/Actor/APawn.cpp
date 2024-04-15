@@ -9,8 +9,6 @@
 
 APawn::APawn( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
-	, m_CameraPitchSpeedMultiplier(kDefaultCameraPitchSpeedMultiplier)
-	, m_CameraYawSpeedMultiplier(kDefaultCameraYawSpeedMultiplier)
 	, m_MovementSpeed(kDefaultMovementSpeed)
 	, m_SprintSpeed(kDefaultSprintSpeed)
 	, m_Velocity(0.f)

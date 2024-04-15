@@ -34,7 +34,7 @@ void SceneViewportPanel::Initialize( FViewportContext* pOwningTab )
 	Super::Initialize( pOwningTab );
 
 	m_DescriptorHandle = GTextureHeap.Alloc( 1 );
-	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), TEXT( "Editor Debug Pawn" ), true };
+	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), TEXT( "Editor Debug Pawn" ), true, true };
 	m_pDebugPawn = new ADebugPawn( InitArgs );
 	m_pDebugPawn->BeginPlay();
 	
@@ -73,7 +73,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 			// Handle debug camera controls
 			// Only rotate the camera if the mouse is over the scene viewport.
 			//
-			HCameraComponent* pCamera = m_pDebugPawn->GetCameraComponent();
+			HFirstPersonCameraComponent* pCamera = m_pDebugPawn->GetCameraComponent();
 			if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ) || m_IsCameraRotating)
 			{
 				m_IsCameraRotating = true;
@@ -115,7 +115,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 
 void SceneViewportPanel::ActivateDebugCamera()
 {
-	GetOwningViewport().GetWorld().SetCurrentSceneRenderCamera( m_pDebugPawn->GetCameraComponent() );
+	GetOwningViewport().GetWorld().SetCurrentSceneRenderCamera( (HCameraComponent*)m_pDebugPawn->GetCameraComponent() );
 	UnFreezeDebugCamera();
 }
 

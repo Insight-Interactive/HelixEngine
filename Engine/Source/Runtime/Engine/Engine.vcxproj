@@ -1263,6 +1263,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h" />
     <ClInclude Include="Private\PCH\EnginePCH.h" />
     <ClInclude Include="Private\Windows\Desktop\Resource\resource.h" />
     <ClInclude Include="Public\App\App.h" />
@@ -1296,9 +1297,9 @@
     <ClInclude Include="Public\Engine\ViewportContext.h" />
     <ClInclude Include="Public\Engine\Window.h" />
     <ClInclude Include="Public\GameFramework\Actor\AActor.h" />
+    <ClInclude Include="Public\GameFramework\Actor\ACharacter.h" />
     <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h" />
     <ClInclude Include="Public\GameFramework\Actor\APawn.h" />
-    <ClInclude Include="Public\GameFramework\Actor\ACharacter.h" />
     <ClInclude Include="Public\GameFramework\Actor\AThirdPersonCharacter.h" />
     <ClInclude Include="Public\GameFramework\Components\HActorComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HBillboardComponent.h" />
@@ -1381,9 +1382,9 @@
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
     <ClCompile Include="Private\Engine\ViewportContext.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp" />
+    <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp" />
-    <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AThirdPersonCharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HActorComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HBillboardComponent.cpp" />
@@ -1394,6 +1395,7 @@
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HFirstPersonCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HLuaScriptComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />

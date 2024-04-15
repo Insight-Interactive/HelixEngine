@@ -151,7 +151,7 @@ void HEngine::Startup()
 
 #if HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 	// Create the splash screen to serve as a loading indicator to the user.
-	GThreadPool->Kick( SplashMain, NULL );
+	//GThreadPool->Kick( SplashMain, NULL );
 #endif // HE_PLATFORM_USES_WHOLE_WINDOW_SPLASH
 
 	m_GameWorld.SetViewport( &m_MainViewPort );

@@ -2,7 +2,7 @@
 
 #include "Developer/ADebugPawn.h"
 
-#include "GameFramework/Components/HCameraComponent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 #include "GameFramework/Components/HControllerComponent.h"
 #include "World/World.h"
 
@@ -10,7 +10,7 @@
 ADebugPawn::ADebugPawn( FActorInitArgs& InitArgs )
 	: APawn( InitArgs )
 {
-	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "Debug Camera" ) );
+	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( TEXT( "Debug Camera" ) );
 	m_pCameraComponent->AttachTo(GetRootComponent());
 	m_CanMove = true;
 }
@@ -40,11 +40,11 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 		float Y = GetWorld()->GetOwningViewport()->GetMouseMoveDeltaY();
 		if (Y != 0.f)
 		{
-			LookUp( Y );
+			m_pCameraComponent->LookUp( Y );
 		}
 		if (X != 0.f)
 		{
-			LookRight( X );
+			m_pCameraComponent->LookRight( X );
 		}
 	}
 
@@ -75,24 +75,6 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 		{
 			MoveUp( -1.f );
 		}
-	}
-}
-
-void ADebugPawn::LookUp( float Value )
-{
-	if (m_CanRotateCamera)
-	{
-		m_pCameraComponent->Rotate( Value * m_CameraPitchSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f, 0.0f );
-		m_pRootComponent->SetRotation( m_pCameraComponent->GetRotation() );
-	}
-}
-
-void ADebugPawn::LookRight( float Value )
-{
-	if (m_CanRotateCamera)
-	{
-		m_pCameraComponent->Rotate( 0.0f, Value * m_CameraYawSpeedMultiplier * GetWorld()->GetDeltaTime(), 0.0f );
-		m_pRootComponent->SetRotation(m_pCameraComponent->GetRotation() );
 	}
 }
 

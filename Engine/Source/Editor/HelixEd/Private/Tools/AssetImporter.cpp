@@ -8,9 +8,9 @@
 #include "AssetRegistry/Asset.h"
 #include "AssetRegistry/AssetDatabase.h"
 
-#include "miniz.c"
+//#include "miniz.c"
 #include "ofbx.h"
-#include "ofbx.cpp"
+//#include "ofbx.cpp"
 
 
 //

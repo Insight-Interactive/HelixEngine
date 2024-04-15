@@ -12,14 +12,15 @@
 ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	: APawn( InitArgs )
 {
-	m_pCharacterBounds = AddComponent<HCapsuleColliderComponent>( TEXT( "CharacterBounds" ) );
-	m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
-	m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
-	m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
+	if (!InitArgs.bDisableCollision)
+	{
+		m_pCharacterBounds = AddComponent<HCapsuleColliderComponent>( TEXT( "CharacterBounds" ) );
+		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
+		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
+		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
 
-	SetRootComponent( m_pCharacterBounds );
-
-	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "PlayerCamera" ) );
+		SetRootComponent( m_pCharacterBounds );
+	}
 }
 
 ACharacter::~ACharacter()

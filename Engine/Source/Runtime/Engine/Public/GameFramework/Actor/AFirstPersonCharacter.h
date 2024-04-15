@@ -20,9 +20,6 @@ private:
 	void TogglePitchYawRotation();
 
 private:
-	FVector2 m_Rotation;
-	FQuat m_RotX;
-	FQuat m_RotY;
 	bool m_CanRotateCamera;
 
 };

@@ -9,8 +9,6 @@ class HControllerComponent;
 
 static const float kDefaultMovementSpeed = 32.f;
 static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 3.f;
-static const float kDefaultCameraPitchSpeedMultiplier = 50.f;
-static const float kDefaultCameraYawSpeedMultiplier = 50.f;
 
 HCLASS()
 class APawn : public AActor
@@ -34,10 +32,6 @@ public:
 
 	void SetMovementSpeed(float Value);
 	float GetMovementSpeed() const;
-	float GetVerticalLookSpeed() const;
-	float GetHorizontalLookSpeed() const;
-	void SetVerticalLookSpeed( float Speed );
-	void SetHorizontalLookSpeed( float Speed );
 
 protected:
 	virtual void SetupController(HControllerComponent& Controller)
@@ -51,8 +45,6 @@ protected:
 
 
 protected:
-	float m_CameraPitchSpeedMultiplier;
-	float m_CameraYawSpeedMultiplier;
 	float m_MovementSpeed;
 	float m_SprintSpeed;
 	float m_Velocity;
@@ -67,29 +59,9 @@ protected:
 // Inline function implementations
 //
 
-inline void APawn::SetMovementSpeed(float Value)
+inline void APawn::SetMovementSpeed( float Value )
 {
 	m_MovementSpeed = Value;
-}
-
-inline float APawn::GetVerticalLookSpeed() const
-{
-	return m_CameraPitchSpeedMultiplier;
-}
-
-inline float APawn::GetHorizontalLookSpeed() const
-{
-	return m_CameraYawSpeedMultiplier;
-}
-
-inline void APawn::SetVerticalLookSpeed( float Speed )
-{
-	m_CameraPitchSpeedMultiplier = Speed;
-}
-
-inline void APawn::SetHorizontalLookSpeed( float Speed )
-{
-	m_CameraYawSpeedMultiplier = Speed;
 }
 
 inline float APawn::GetMovementSpeed() const

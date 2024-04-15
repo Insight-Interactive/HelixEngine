@@ -18,6 +18,7 @@ struct FActorInitArgs
 	const HWorld*	pWorld;
 	const HName&	Name;
 	const bool		bIsDynamicInstance;
+	const bool		bDisableCollision = false;
 };
 
 class HWorld;
