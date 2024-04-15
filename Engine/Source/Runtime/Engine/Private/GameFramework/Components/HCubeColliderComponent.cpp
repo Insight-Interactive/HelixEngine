@@ -13,6 +13,7 @@
 HCubeColliderComponent::HCubeColliderComponent( FComponentInitArgs& InitArgs )
 	: HColliderComponent( InitArgs )
 {
+	SetScale( m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth() );
 }
 
 HCubeColliderComponent::~HCubeColliderComponent()
@@ -113,6 +114,7 @@ void HCubeColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfDepth ), Dimensions.z );
 	
 	SetHalfWidthHeightDepth( Dimensions.x, Dimensions.y, Dimensions.z );
+	SetScale( Dimensions.x, Dimensions.y, Dimensions.z );
 }
 
 void HCubeColliderComponent::RegisterCollider()

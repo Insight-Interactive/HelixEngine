@@ -2,7 +2,7 @@
 
 #include "LuaScript.h"
 
-#include "SourceContext.h"
+#include "LuaScriptVM.h"
 
 
 LuaScript::LuaScript()

@@ -5,7 +5,7 @@
 #include "GameFramework/HObject.h"
 #include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
-#include "SourceContext.h"
+#include "LuaScript.h"
 
 #define HE_GENERATED_BODY( Class )				\
 			Class( FActorInitArgs& InitArgs );	\
@@ -54,7 +54,7 @@ public:
 	void SetRootComponent(HSceneComponent* pRoot);
 	HSceneComponent* GetRootComponent();
 
-	SourceContext& GetScript();
+	LuaScript& GetScript();
 
 
 protected:
@@ -76,7 +76,7 @@ protected:
 
 	HWorld* m_pOwningWorld;
 
-	SourceContext m_Script;
+	LuaScript m_Script;
 	bool m_IsDynamicInstance;
 };
 
@@ -140,7 +140,7 @@ FORCEINLINE HSceneComponent* AActor::GetRootComponent()
 	return m_pRootComponent;
 }
 
-FORCEINLINE SourceContext& AActor::GetScript()
+FORCEINLINE LuaScript& AActor::GetScript()
 {
 	return m_Script;
 }

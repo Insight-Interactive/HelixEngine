@@ -12,7 +12,7 @@
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "Engine/Subsystem/RenderingSubsystem.h"
 #include "Engine/Event/EventEmitter.h"
-#include "SourceContext.h"
+#include "LuaScriptVM.h"
 
 
 class WindowClosedEvent;
@@ -145,7 +145,7 @@ protected:
 	// Subsystems
 	FPhysicsSubsystem		m_PhysicsSubsystem;
 	FRenderingSubsystem		m_ReneringSubsystem;
-	SourceContext			m_ScriptSubsystem;
+	LuaScriptVM			m_ScriptSubsystem;
 };
 
 // Global engine reference. Accessible in all engine build configurtions.

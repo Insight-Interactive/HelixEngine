@@ -14,6 +14,7 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	m_pCameraBoom = AddComponent<HCameraBoomComponent>( TEXT( "CameraBoom" ) );
 	m_pCameraBoom->AttachTo( m_pRootComponent );
 	
+	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "ThirdPersonCamera" ) );
 	m_pCameraComponent->AttachTo( m_pCameraBoom );
 	m_pCameraComponent->SetObjectName( TEXT( "FollowCamera" ) );
 

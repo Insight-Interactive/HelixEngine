@@ -26,7 +26,7 @@ void APawn::Move(const FVector3& Direction, const float Value)
 {
 	if (m_pRootComponent != nullptr)
 	{
-		m_Velocity = m_MovementSpeed * Value * GEngine->GetDeltaTime();
+		m_Velocity = m_MovementSpeed * Value * (float)GEngine->GetDeltaTime();
 		FVector3 Pos = m_pRootComponent->GetPosition();
 		Pos += Direction * m_Velocity;
 		m_pRootComponent->SetPosition(Pos);

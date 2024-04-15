@@ -6,16 +6,15 @@
 
 
 class LuaScript;
-class SourceContext;
 
 /*
 	The global context in which all lua source code executes.
 */
-class SCRIPT_API SourceContext : public TSingleton<SourceContext>
+class SCRIPT_API LuaScriptVM : public TSingleton<LuaScriptVM>
 {
 public:
-	SourceContext();
-	~SourceContext();
+	LuaScriptVM();
+	~LuaScriptVM();
 
 	void Setup();
 	void Teardown();
@@ -33,7 +32,7 @@ private:
 	void Scr_DebugLog( const Char* Msg );
 
 private:
-	LuaPlus::LuaState* m_pLuaSrcContext;
+	LuaPlus::LuaState* m_pLuaState;
 
 };
 
@@ -41,21 +40,21 @@ private:
 // Inline function implementations
 //
 
-FORCEINLINE bool SourceContext::IsReady() const
+FORCEINLINE bool LuaScriptVM::IsReady() const
 {
-	return m_pLuaSrcContext != nullptr;
+	return m_pLuaState != nullptr;
 }
 
-FORCEINLINE LuaPlus::LuaState* SourceContext::GetLuaState()
+FORCEINLINE LuaPlus::LuaState* LuaScriptVM::GetLuaState()
 {
 	HE_ASSERT( IsReady() );
-	return m_pLuaSrcContext;
+	return m_pLuaState;
 }
 
 template <typename ClassType, typename CallbackType>
-FORCEINLINE bool SourceContext::BindLuaFunction( const char* ScriptSytaxName, ClassType& CallbackContext, CallbackType Callback )
+FORCEINLINE bool LuaScriptVM::BindLuaFunction( const char* ScriptSytaxName, ClassType& CallbackContext, CallbackType Callback )
 {
-	m_pLuaSrcContext->GetGlobals().RegisterDirect( ScriptSytaxName, CallbackContext, Callback );
+	m_pLuaState->GetGlobals().RegisterDirect( ScriptSytaxName, CallbackContext, Callback );
 
 	return true;
 }

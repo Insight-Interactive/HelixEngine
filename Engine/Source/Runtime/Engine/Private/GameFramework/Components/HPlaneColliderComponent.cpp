@@ -76,6 +76,8 @@ void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
 	m_RigidBody.SetHalfWidth( Width );
 	m_RigidBody.SetHalfHeight( Height );
 
+	SetScale( Width, HPlaneRigidBody::GetConstantDepth(), Height );
+
 	RegisterCollider();
 }
 
