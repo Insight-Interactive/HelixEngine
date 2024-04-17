@@ -82,6 +82,8 @@ void HelixEdHomeUI::OnEvent( Event& e )
 	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &HelixEdHomeUI::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HelixEdHomeUI::OnObjectSelected );
 	Dispatcher.Dispatch<ContentItemDoubleClicked>( GEditorEngine, &HEditorEngine::OnContentItemClicked );
+
+	m_SceneViewport.OnEvent( e );
 }
 
 bool HelixEdHomeUI::OnAppBeginPlay( EngineBeginPlayEvent& e )

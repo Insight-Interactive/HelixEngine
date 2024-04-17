@@ -15,9 +15,8 @@ public:
 
 	virtual void Tick( float DeltaTime ) override;
 
-private:
-	void UpdateCameraPitch();
-	void UpdateCameraYaw();
+	void UpdateCameraPitch( float Value );
+	void UpdateCameraYaw( float Value );
 
 private:
 	bool m_UseCameraCollision;

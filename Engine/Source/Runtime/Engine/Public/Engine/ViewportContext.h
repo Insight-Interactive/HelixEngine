@@ -167,7 +167,7 @@ FORCEINLINE void FViewportContext::HideMouse()
 
 FORCEINLINE void FViewportContext::LockMouseToScreenCenter()
 {
-	m_InputDispatcher.GetInputSureyor().AcquireMouse();
+	m_InputDispatcher.GetInputSureyor().AcquireMouse();		
 }
 
 FORCEINLINE void FViewportContext::UnlockMouseFromScreenCenter()

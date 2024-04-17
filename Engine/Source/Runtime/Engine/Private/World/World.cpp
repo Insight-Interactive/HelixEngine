@@ -36,6 +36,10 @@ void HWorld::Initialize( const Char* LevelURL )
 
 	RegisterScenes();
 
+	FActorInitArgs PlrCharacterInitArgs{ this, TEXT( "Player Character" ), true };
+	m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	//m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
+
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
 	HE_ASSERT( WorldJsonSource->IsOpen() );
@@ -98,9 +102,6 @@ void HWorld::RegisterScenes()
 
 void HWorld::BeginPlay()
 {
-	FActorInitArgs InitArgs{ this, TEXT( "Player Character" ), true };
-	m_pPlayerCharacter = new AThirdPersonCharacter( InitArgs );
-	//m_pPlayerCharacter = new AFirstPersonCharacter( InitArgs );
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
 	AddPlayerCharacterRef( m_pPlayerCharacter );
 
@@ -175,6 +176,7 @@ void HWorld::Flush()
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();
 		m_PlayerCharacterRefs.clear();
+		m_pPlayerCharacter->RemoveAllComponents();
 		HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 
 		// Cleanup the physics scene.

@@ -36,6 +36,7 @@ protected:
 private:
 	void RegisterCollider();
 	void UnRegisterCollider();
+	void UpdateRotation();
 
 private:
 	HCapsuleRigidBody m_RigidBody;

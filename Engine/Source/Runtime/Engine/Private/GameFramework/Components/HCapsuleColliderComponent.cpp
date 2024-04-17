@@ -2,10 +2,6 @@
 
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
 
-#include "EnginePCH.h"
-
-#include "GameFramework/Components/HCapsuleColliderComponent.h"
-
 #include "World/World.h"
 #include "Engine/Engine.h"
 #include "Renderer/GeometryGenerator.h"
@@ -14,7 +10,7 @@
 HCapsuleColliderComponent::HCapsuleColliderComponent( FComponentInitArgs& InitArgs )
 	: HColliderComponent( InitArgs )
 {
-
+	UpdateRotation();
 }
 
 HCapsuleColliderComponent::~HCapsuleColliderComponent()
@@ -54,9 +50,7 @@ void HCapsuleColliderComponent::Tick( float Delta )
 {
 	Super::Tick( Delta );
 
-	// Returned Physx quaternion seems to insist on adding 90 degrees of rotation arround the z axis for some reason. Reverse it here.
-	FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
-	HSceneComponent::SetRotation( Rot * GetRigidBody().GetSimulatedRotation() );
+	UpdateRotation();
 }
 
 void HCapsuleColliderComponent::SetRadius( float NewRadius )
@@ -113,14 +107,23 @@ void HCapsuleColliderComponent::Deserialize( const ReadContext& Value )
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), HalfHeight );
 
 	SetRadiusAndHalfHeight( Radius, HalfHeight );
+	UpdateRotation();
 }
 
 void HCapsuleColliderComponent::RegisterCollider()
 {
 	GetWorld()->AddCapsuleColliderComponent( this, m_IsStatic, GetIsTrigger() );
+	UpdateRotation();
 }
 
 void HCapsuleColliderComponent::UnRegisterCollider()
 {
 	GetWorld()->RemoveColliderComponent( this );
+}
+
+void HCapsuleColliderComponent::UpdateRotation()
+{
+	// Returned Physx quaternion seems to insist on adding 90 degrees of rotation arround the z axis for some reason. Reverse it here.
+	FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
+	HSceneComponent::SetRotation( Rot * GetRigidBody().GetSimulatedRotation() );
 }

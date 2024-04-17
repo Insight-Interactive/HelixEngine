@@ -41,6 +41,9 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
+
+	Controller.BindAxis( "LookUp", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraPitch );
+	Controller.BindAxis( "LookRight", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraYaw );
 }
 
 

@@ -499,6 +499,7 @@ bool HEditorEngine::OnAppEndPlay( EngineEndPlayEvent& e )
 	SetIsPlayingInEditor( false );
 	m_GameWorld.Reload();
 
+	GGameInstance->OnGameLostFocus();
 	// Reset the input state.
 	m_MainViewPort.GetInputDispatcher()->SetCanDispatchListeners( false );
 	m_MainViewPort.GetInputDispatcher()->FlushCallbacks();

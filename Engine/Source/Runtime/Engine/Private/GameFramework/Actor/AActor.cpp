@@ -166,6 +166,7 @@ void AActor::RemoveAllComponents()
 		m_Components[i]->OnDestroy();
 		delete m_Components[i];
 	}
+	m_Components.clear();
 }
 
 void AActor::BeginPlay()

@@ -26,8 +26,8 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	UpdateCameraPitch();
-	UpdateCameraYaw();
+	//UpdateCameraPitch();
+	//UpdateCameraYaw();
 
 	// Player-to-camera collision detection
 	//
@@ -76,9 +76,9 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 	}*/
 }
 
-void HCameraBoomComponent::UpdateCameraPitch()
+void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 {
-	float PitchDelta = GetWorld()->GetMouseMoveDeltaY();
+	//float PitchDelta = GetWorld()->GetMouseMoveDeltaY();
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 
@@ -104,9 +104,9 @@ void HCameraBoomComponent::UpdateCameraPitch()
 	}
 }
 
-void HCameraBoomComponent::UpdateCameraYaw()
+void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
-	float YawDelta = GetWorld()->GetMouseMoveDeltaX();
+	//float YawDelta = GetWorld()->GetMouseMoveDeltaX();
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 

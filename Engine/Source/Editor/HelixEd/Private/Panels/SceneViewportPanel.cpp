@@ -13,6 +13,7 @@
 #include "GameFramework/Actor/ACharacter.h"
 #include "GameFramework/Components/HCameraComponent.h"
 #include "Engine/Event/EngineEvent.h"
+#include "Input/MouseEvent.h"
 
 
 extern HGameInstance* GGameInstance;
@@ -21,7 +22,6 @@ extern HGameInstance* GGameInstance;
 SceneViewportPanel::SceneViewportPanel()
 	: m_DescriptorHandle()
 	, m_IsCameraRotating( false )
-	, m_ShouldIgnoreInput( false )
 {
 }
 
@@ -48,19 +48,23 @@ void SceneViewportPanel::UnInitialize()
 
 void SceneViewportPanel::Tick( float DeltaTime ) 
 {
-	if(m_IsCameraRotating)
+	//if(m_IsCameraRotating)
 		m_pDebugPawn->Tick( DeltaTime );
 
-	if (GetOwningViewport().IsPressed( Key_LShift ) && GetOwningViewport().IsFirstPressed( Key_Escape ))
+	if (GEngine->IsPlayingInEditor())
 	{
-		// Notify the game the "window"(the scene viewport) lost focus.
-		GGameInstance->OnGameLostFocus();
+		if (GetOwningViewport().IsPressed( Key_LShift ) && GetOwningViewport().IsFirstPressed( Key_Escape ))
+		{
+			// Notify the game the "window"(the scene viewport) lost focus.
+			//GGameInstance->OnGameLostFocus();
 
-		UnFreezeDebugCamera();
+			UnFreezeDebugCamera();
 
-		// Unlock the mouse if the game locked it.
-		GetOwningViewport().UnlockMouseFromScreenCenter();
-		GetOwningViewport().GetInputDispatcher()->SetCanDispatchListeners( false );
+			// Unlock the mouse if the game locked it.
+			GetOwningViewport().ShowMouse();
+			GetOwningViewport().UnlockMouseFromScreenCenter();
+			GetOwningViewport().GetInputDispatcher()->SetCanDispatchListeners( false );
+		}
 	}
 }
 
@@ -68,33 +72,34 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "Scene Viewport", NULL, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse );
 	{
-		if (!m_ShouldIgnoreInput)
+		// Handle debug camera controls
+		// Only rotate the camera if the mouse is over the scene viewport.
+		//
+		if (!GEngine->IsPlayingInEditor() && ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ))
 		{
-			// Handle debug camera controls
-			// Only rotate the camera if the mouse is over the scene viewport.
-			//
-			HFirstPersonCameraComponent* pCamera = m_pDebugPawn->GetCameraComponent();
-			if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ) || m_IsCameraRotating)
-			{
-				m_IsCameraRotating = true;
-				GetOwningViewport().LockMouseToScreenCenter();
-			}
-			// Don't stop rotating until the user lets go of the mouse button.
-			m_IsCameraRotating = ImGui::IsMouseDown( ImGuiMouseButton_Right );
-			m_pDebugPawn->SetCanRotateCamera( m_IsCameraRotating );
-
 			if (!m_IsCameraRotating)
 			{
-				GetOwningViewport().UnlockMouseFromScreenCenter();
-			}
+				m_IsCameraRotating = true;
+				GetOwningViewport().HideMouse();
+				GetOwningViewport().LockMouseToScreenCenter();
 
-			if (ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Left ) && GEngine->IsPlayingInEditor())
-			{
-				GetOwningViewport().GetInputDispatcher()->SetCanDispatchListeners( true );
-				GGameInstance->OnGameSetFocus();
+				m_pDebugPawn->SetCanRotateCamera( true );
 			}
 		}
+		else
+		{
+			if (!GEngine->IsPlayingInEditor() && !ImGui::IsMouseDown( ImGuiMouseButton_Right ))
+			{
+				if (m_IsCameraRotating)
+				{
+					m_IsCameraRotating = false;
+					GetOwningViewport().ShowMouse();
+					GetOwningViewport().UnlockMouseFromScreenCenter();
 
+					m_pDebugPawn->SetCanRotateCamera( false );
+				}
+			}
+		}
 
 		// Get the render target image and present it into the viewport.
 		//
@@ -144,19 +149,28 @@ void SceneViewportPanel::OnEvent( Event& e )
 	// Editor
 	Dispatcher.Dispatch<EngineBeginPlayEvent>( this, &SceneViewportPanel::OnAppBeginPlay );
 	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &SceneViewportPanel::OnAppEndPlay );
+
+	Dispatcher.Dispatch<MouseButtonPressedEvent>( this, &SceneViewportPanel::OnMouseButtonPressed );
+	Dispatcher.Dispatch<MouseButtonReleasedEvent>( this, &SceneViewportPanel::OnMouseButtonReleased );
 }
 
 bool SceneViewportPanel::OnAppBeginPlay( EngineBeginPlayEvent& e )
 {
-	// If the app is simulating let the simulation take full advantage of the input.
-	m_ShouldIgnoreInput = true;
-
 	return false;
 }
 
 bool SceneViewportPanel::OnAppEndPlay( EngineEndPlayEvent& e )
 {
-	m_ShouldIgnoreInput = false;
-	
+	return false;
+}
+
+
+bool SceneViewportPanel::OnMouseButtonPressed( MouseButtonPressedEvent& e )
+{
+	return false;
+}
+
+bool SceneViewportPanel::OnMouseButtonReleased( MouseButtonReleasedEvent& e )
+{
 	return false;
 }

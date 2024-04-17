@@ -4,7 +4,6 @@
 
 #include "World/World.h"
 
-
 HFirstPersonCameraComponent::HFirstPersonCameraComponent( FComponentInitArgs& InitArgs )
 	: HCameraComponent( InitArgs )
 	, m_CameraPitchSpeedMultiplier( kDefaultCameraPitchSpeedMultiplier )
