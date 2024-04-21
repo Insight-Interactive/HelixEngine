@@ -163,6 +163,9 @@ void HColliderComponent::Serialize( WriteContext& Output )
 
 			Output.Key( "IsStatic" );
 			Output.Bool( GetRigidBody().GetIsStatic() );
+
+			Output.Key( "CollisionBoundsDrawEnabled" );
+			Output.Bool( m_CollisionBoundsDrawEnabled );
 		}
 		Output.EndObject();
 	}
@@ -181,6 +184,8 @@ void HColliderComponent::Deserialize( const ReadContext& Value )
 	GetRigidBody().SetDensity( Density );
 
 	JsonUtility::GetBoolean( This, "IsStatic", m_IsStatic );
+
+	JsonUtility::GetBoolean( This, "CollisionBoundsDrawEnabled", m_CollisionBoundsDrawEnabled );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()

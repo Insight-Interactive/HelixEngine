@@ -37,8 +37,8 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 {
 	if (m_CanRotateCamera)
 	{
-		float X = GetWorld()->GetOwningViewport()->GetMouseMoveDeltaX();
-		float Y = GetWorld()->GetOwningViewport()->GetMouseMoveDeltaY();
+		float X = GetWorld()->GetMouseMoveDeltaX();
+		float Y = GetWorld()->GetMouseMoveDeltaY();
 		if (Y != 0.f)
 		{
 			m_pCameraComponent->LookUp( Y );
@@ -51,28 +51,28 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 
 	if (m_CanMove)
 	{
-		FViewportContext* pViewport = GetWorld()->GetOwningViewport();
-		if (pViewport->IsPressed( Key_W ))
+		HWorld* pWorld = GetWorld();
+		if (pWorld->IsPressed( Key_W ))
 		{
 			MoveForward( 1.f );
 		}
-		if (pViewport->IsPressed( Key_S ))
+		if (pWorld->IsPressed( Key_S ))
 		{
 			MoveForward( -1.f );
 		}
-		if (pViewport->IsPressed( Key_D ))
+		if (pWorld->IsPressed( Key_D ))
 		{
 			MoveRight( 1.f );
 		}
-		if (pViewport->IsPressed( Key_A ))
+		if (pWorld->IsPressed( Key_A ))
 		{
 			MoveRight( -1.f );
 		}
-		if (pViewport->IsPressed( Key_E ))
+		if (pWorld->IsPressed( Key_E ))
 		{
 			MoveUp( 1.f );
 		}
-		if (pViewport->IsPressed( Key_Q ))
+		if (pWorld->IsPressed( Key_Q ))
 		{
 			MoveUp( -1.f );
 		}

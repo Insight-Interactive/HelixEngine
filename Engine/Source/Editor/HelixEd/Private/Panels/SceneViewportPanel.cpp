@@ -11,7 +11,7 @@
 #include "Developer/ADebugPawn.h"
 #include "GameFramework/GameInstance.h"
 #include "GameFramework/Actor/ACharacter.h"
-#include "GameFramework/Components/HCameraComponent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Input/MouseEvent.h"
 
@@ -37,7 +37,7 @@ void SceneViewportPanel::Initialize( FViewportContext* pOwningTab )
 	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), TEXT( "Editor Debug Pawn" ), true, true };
 	m_pDebugPawn = new ADebugPawn( InitArgs );
 	m_pDebugPawn->BeginPlay();
-	
+
 	ActivateDebugCamera();
 }
 

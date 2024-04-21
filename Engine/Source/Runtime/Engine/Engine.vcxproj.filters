@@ -246,6 +246,9 @@
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HLuaScriptComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
@@ -378,7 +381,6 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -493,6 +495,9 @@
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HFirstPersonCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HLuaScriptComponent.cpp">
@@ -630,7 +635,6 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Private\GameFramework\Components\HFirstPersonCameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

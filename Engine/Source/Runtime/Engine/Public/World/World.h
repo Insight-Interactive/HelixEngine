@@ -10,6 +10,8 @@
 #include "PhysicsScene.h"
 #include "UI/Panel.h"
 #include "UI/Label.h"
+#include "Input/InputEnums.h"
+
 
 class HLevel;
 class FCommandContext;
@@ -33,6 +35,8 @@ class HWorld : public HObject, public FSerializeableInterface
 	friend class WorldOutlinePanel;
 	friend class HEditorEngine;
 	friend class FViewportContext;
+	friend class HControllerComponent; // To bind input dispatchers
+	friend class HGameInstance; // To bind menu callbacks
 	using Super = HObject;
 public:
 	HWorld();
@@ -41,14 +45,12 @@ public:
 	void Initialize( const Char* LevelURL );
 	void Initialize();
 	void Flush();
-	float GetDeltaTime() const;
 
 	void BeginPlay();
 	void Tick( float DeltaTime );
 	void Render( FCommandContext& CmdContext );
 
 	HCameraManager* GetCameraManager();
-	FViewportContext* GetOwningViewport();
 	HCameraComponent* GetCurrentSceneRenderCamera();
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
@@ -70,6 +72,12 @@ public:
 
 	float GetMouseMoveDeltaX();
 	float GetMouseMoveDeltaY();
+	bool IsPressed( DigitalInput Key );
+	bool IsFirstPressed( DigitalInput Key );
+	bool IsReleased( DigitalInput Key );
+
+	float GetWindowWidth();
+	float GetWindowHeight();
 
 	AActor* CreateEmptyActorInstance( const HName& Name );
 	template <typename ActorType>
@@ -83,6 +91,7 @@ public:
 	bool Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults = nullptr, std::vector<HColliderComponent*>* IgnoreActors = nullptr );
 
 protected:
+	FViewportContext* GetOwningViewport();
 
 	bool AdvancePhysics( float DeltaTime );
 	

@@ -80,11 +80,6 @@ void HWorld::Initialize()
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 }
 
-float HWorld::GetDeltaTime() const
-{
-	return (float)GEngine->GetDeltaTime();
-}
-
 void HWorld::SetViewport( FViewportContext* pViewport )
 {
 	m_pRenderingViewport = pViewport;
@@ -375,10 +370,42 @@ bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, flo
 
 float HWorld::GetMouseMoveDeltaX()
 {
-	return GetOwningViewport()->GetMouseMoveDeltaX();
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return m_pRenderingViewport->GetMouseMoveDeltaX();
 }
 
 float HWorld::GetMouseMoveDeltaY()
 {
-	return GetOwningViewport()->GetMouseMoveDeltaY();
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return m_pRenderingViewport->GetMouseMoveDeltaY();
+}
+
+bool HWorld::IsPressed( DigitalInput Key )
+{
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return m_pRenderingViewport->IsPressed( Key );
+}
+
+bool HWorld::IsFirstPressed( DigitalInput Key )
+{
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return m_pRenderingViewport->IsFirstPressed( Key );
+}
+
+bool HWorld::IsReleased( DigitalInput Key )
+{
+	HE_ASSERT( m_pRenderingViewport!= nullptr );
+	return m_pRenderingViewport->IsReleased( Key );
+}
+
+float HWorld::GetWindowWidth()
+{
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return (float)m_pRenderingViewport->GetWindow().GetWidth();
+}
+
+float HWorld::GetWindowHeight()
+{
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return (float)m_pRenderingViewport->GetWindow().GetHeight();
 }

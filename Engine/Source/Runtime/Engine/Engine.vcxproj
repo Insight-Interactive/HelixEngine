@@ -1263,7 +1263,6 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h" />
     <ClInclude Include="Private\PCH\EnginePCH.h" />
     <ClInclude Include="Private\Windows\Desktop\Resource\resource.h" />
     <ClInclude Include="Public\App\App.h" />
@@ -1311,6 +1310,7 @@
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HLuaScriptComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />

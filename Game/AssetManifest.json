@@ -4,7 +4,8 @@
           "4539421c-d8b4-4936-bb0c-8dde1e24f9b9": "Content/Models/Cube.fbx",
           "a5b1d8a5-f186-4298-b36e-9bd840e14c6b": "Content/Models/Sphere.fbx",
           "76c3094a-f60f-4049-8a7b-698e5327bbcb": "Content/Models/Plane.fbx",
-          "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule.fbx"
+          "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule.fbx",
+          "2e65d3a9-9a0e-457b-809a-a163c67fa369": "Content/Models/m1911_static.fbx"
         },
         {
             "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
@@ -26,7 +27,8 @@
             "54640ee4-194b-4bbf-9d78-d9aa5196ae26": "Content/Actors/SphereActor.hactor",
             "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d": "Content/Actors/GroundFloor.hactor",
             "b2f8e8de-14fb-4979-b849-1a1236b0d8fa": "Content/Actors/RotatingActor.hactor",
-            "3d4d64b8-5938-461d-88fe-5b864d17a84e": "Content/Actors/MagicGate.hactor"
+            "3d4d64b8-5938-461d-88fe-5b864d17a84e": "Content/Actors/MagicGate.hactor",
+            "a2945e8c-8a41-4c75-8b1f-100de47ced70": "Content/Actors/M1911.hactor"
         },
         {
             "724546e1-911f-4cd2-9b14-97c212be3e9a": "Shaders/Core/DefaultGeometryPass.vs.cso",

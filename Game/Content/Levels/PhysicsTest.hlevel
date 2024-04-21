@@ -43,6 +43,19 @@
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
                 }
+            ],
+            "a2945e8c-8a41-4c75-8b1f-100de47ced70":[
+                {
+                    "PositionX": -50.0,
+                    "PositionY": 0.0,
+                    "PositionZ": 50.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                }
             ]
         }
     ]

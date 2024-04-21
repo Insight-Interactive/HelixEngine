@@ -44,14 +44,15 @@ void HCameraComponent::SetProjectionValues(float FOVDegrees, float NearZ, float 
 	m_ViewProps.NearZ = NearZ;
 	m_ViewProps.FarZ = FarZ;
 
-	const float DisplayWidth = (float)GetWorld()->GetOwningViewport()->GetWindow().GetWidth();
-	const float DisplayHeight = (float)GetWorld()->GetOwningViewport()->GetWindow().GetHeight();
+	const float DisplayWidth = GetWorld()->GetWindowWidth();
+	const float DisplayHeight = GetWorld()->GetWindowHeight();
 
 	switch (m_ViewProps.ProjectionType)
 	{
 	case VT_Perspective:
 	{
-		const float FOVRadians = FOVDegrees * (3.14f / 180.0f);
+		
+		const float FOVRadians = Math::DegreesToRadians( FOVDegrees );
 		const float AspectRatio = DisplayWidth / DisplayHeight;
 		m_ViewProps.ProjectionMat = XMMatrixPerspectiveFovLH(FOVRadians, AspectRatio, NearZ, FarZ);
 	}
@@ -63,6 +64,7 @@ void HCameraComponent::SetProjectionValues(float FOVDegrees, float NearZ, float 
 	break;
 	default:
 		HE_LOG( Warning, TEXT( "Unidentified projection type provided when calculation projection values." ) );
+		HE_ASSERT( false );
 	break;
 	}
 }
