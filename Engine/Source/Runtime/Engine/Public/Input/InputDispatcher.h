@@ -1,7 +1,7 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 /*
-	File: InputDispatcher.h
-	Source: InputDispatcher.cpp
+	File: FInputDispatcher.h
+	Source: FInputDispatcher.cpp
 
 	Author: Garrett Courtney
 
@@ -14,14 +14,15 @@
 
 #include "Callbacks.h"
 #include "Input/RawInput.h"
+#include "AssetRegistry/SerializeableInterface.h"
 
 
 class AxisEvent;
 class ActionEvent;
 class KeyPressedEvent;
 class MouseScrolledEvent;
-class MouseMovedEvent;
 class InputEvent;
+class FWindow;
 
 
 /*
@@ -50,17 +51,20 @@ struct ActionMapping
 
 using ActionCallback	= std::function<void( void )>;
 using AxisCallback		= std::function<void( float )>;
-using ActionPair		= std::pair<int32, EInputEvent>;
+using ActionPair		= std::pair<StringHashValue, EInputEvent>;
 
 class Event;
 
-class InputDispatcher
+class FInputDispatcher : public FSerializeableInterface
 {
+	friend class HEngine;
+	friend class HEditorEngine;
+	friend class SceneViewportPanel;
 public:
-	InputDispatcher();
-	~InputDispatcher();
+	FInputDispatcher();
+	~FInputDispatcher();
 
-	void Initialize( void* pNativeWindow );
+	void Initialize( FWindow* pNativeWindow );
 	void UnInitialize();
 
 	/*
@@ -103,11 +107,30 @@ public:
 	*/
 	void ProcessInputEvent( Event& e );
 
-	RawInputSurveyer& GetInputSureyor();
+	FRawInputSurveyer& GetInputSureyor();
+
+protected:
+	void LoadMappingsFromFile( const Char* Filename );
+	virtual void Serialize( const Char* Filepath ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
-	void AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey );
-	void AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale );
+	/*
+		Unregisters all callbacks registered to this input dispatcher.
+	*/
+	void FlushCallbacks();
+	/*
+		Set wether this dispatcher can call its bound callbacks.
+	*/
+	void SetCanDispatchListeners( bool CanDispatch );
+	/*
+		Returns true if this dispatcher can call callbacks attached too it.
+	*/
+	bool GetCanDispatchListeners() const;
+
+	void AddActionMappingInternal( StringHashValue HintHash, DigitalInput MappedKey, const Char* HintName = NULL );
+	void AddAxisMappingInternal( StringHashValue HintHash, DigitalInput MappedKey, float Scale, const Char* HintName = NULL );
 
 	/*
 		Extension of "ProcessInputEvent" that allows the function call and event declaration to be declared inline.
@@ -126,6 +149,7 @@ private:
 	bool DispatchActionEvent( ActionEvent& e );
 
 private:
+	static const uint32 kMaxHintNameLength = 32;
 	/*
 		Internal non-client facing axis mapping representation.
 	*/
@@ -135,6 +159,9 @@ private:
 			: HintHash( Hash ), MappedKeycode( Key ), Scale( AxisScale )
 		{
 		}
+#if HE_WITH_EDITOR
+		Char HintName[kMaxHintNameLength];
+#endif
 		int32			HintHash;
 		DigitalInput	MappedKeycode;
 		float			Scale;
@@ -149,13 +176,19 @@ private:
 			: HintHash( Hash ), MappedKeycode( Key )
 		{
 		}
+#if HE_WITH_EDITOR
+		Char HintName[kMaxHintNameLength];
+#endif
 		int32			HintHash;
 		DigitalInput	MappedKeycode;
 	};
 
 private:
+	// Wether or not registered callbacks can be called.
+	bool m_CanDispatchListeners;
+
 	// Surveys the bound window for input. Driving the callback dispatch algorithm.
-	RawInputSurveyer m_InputSurveyer;
+	FRawInputSurveyer m_InputSurveyer;
 
 	// Holds all axis mapping profiles.
 	std::vector<AxisMappingInternal> m_AxisMappings;
@@ -163,10 +196,10 @@ private:
 	// Holds all action mapping profiles.
 	std::vector<ActionMappingInternal> m_ActionMappings;
 
-	// Holds all callback funcitons and their corisponding hints found the Axis mappings stored in InputDispatcher::m_AxisMappings.
-	std::map<int32, std::vector<AxisCallback>> m_AxisCallbacks;
+	// Holds all callback funcitons and their corisponding hints found the Axis mappings stored in FInputDispatcher::m_AxisMappings.
+	std::map<StringHashValue, std::vector<AxisCallback>> m_AxisCallbacks;
 
-	// Holds all callback funcitons and their corisponding hints found the actoin mappings stored in InputDispatcher::m_ActionMappings.
+	// Holds all callback funcitons and their corisponding hints found the actoin mappings stored in FInputDispatcher::m_ActionMappings.
 	std::map<ActionPair, std::vector<ActionCallback>> m_ActionCallbacks;
 
 };
@@ -176,54 +209,89 @@ private:
 // Inline function implementations
 //
 
-
-FORCEINLINE void InputDispatcher::AddActionMapping( ActionMapping& Mapping )
+FORCEINLINE void FInputDispatcher::SetCanDispatchListeners( bool CanDispatch )
 {
-	AddActionMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeyCode );
+	m_CanDispatchListeners = CanDispatch;
 }
 
-FORCEINLINE void InputDispatcher::AddAxisMapping( AxisMapping& Mapping )
+FORCEINLINE bool FInputDispatcher::GetCanDispatchListeners() const
 {
-	AddAxisMappingInternal( StringHash( Mapping.Hint, strlen( Mapping.Hint ) ), Mapping.MappedKeycode, Mapping.Scale );
+	return m_CanDispatchListeners;
 }
 
-FORCEINLINE void InputDispatcher::AddActionMapping( const char* Hint, DigitalInput MappedKey )
+FORCEINLINE void FInputDispatcher::FlushCallbacks()
 {
-	AddActionMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey );
+	m_AxisCallbacks.clear();
+	m_ActionCallbacks.clear();
 }
 
-FORCEINLINE void InputDispatcher::AddAxisMapping( const char* Hint, DigitalInput MappedKey, float Scale )
+FORCEINLINE void FInputDispatcher::AddActionMapping( ActionMapping& Mapping )
 {
-	AddAxisMappingInternal( StringHash( Hint, strlen( Hint ) ), MappedKey, Scale );
+	AddActionMappingInternal( StringHash( Mapping.Hint ), Mapping.MappedKeyCode
+#if HE_WITH_EDITOR
+		, Mapping.Hint 
+#endif
+	);
 }
 
-FORCEINLINE void InputDispatcher::AddActionMappingInternal( int32 HintHash, DigitalInput MappedKey )
+FORCEINLINE void FInputDispatcher::AddAxisMapping( AxisMapping& Mapping )
 {
-	m_ActionMappings.emplace_back( HintHash, MappedKey );
+	AddAxisMappingInternal( StringHash( Mapping.Hint ), Mapping.MappedKeycode, Mapping.Scale, Mapping.Hint );
 }
 
-FORCEINLINE void InputDispatcher::AddAxisMappingInternal( int32 HintHash, DigitalInput MappedKey, float Scale )
+FORCEINLINE void FInputDispatcher::AddActionMapping( const char* Hint, DigitalInput MappedKey )
 {
-	m_AxisMappings.emplace_back( HintHash, MappedKey, Scale );
+	AddActionMappingInternal( StringHash( Hint ), MappedKey
+#if HE_WITH_EDITOR
+		, Hint
+#endif
+	);
 }
 
-FORCEINLINE void InputDispatcher::RegisterAxisCallback( const char* MappedHint, AxisCallback Callback )
+FORCEINLINE void FInputDispatcher::AddAxisMapping( const char* Hint, DigitalInput MappedKey, float Scale )
 {
-	m_AxisCallbacks[StringHash( MappedHint, strlen( MappedHint ) )].push_back( Callback );
+	AddAxisMappingInternal( StringHash( Hint ), MappedKey, Scale
+#if HE_WITH_EDITOR
+		, Hint 
+#endif
+	);
 }
 
-FORCEINLINE void InputDispatcher::RegisterActionCallback( const char* MappedHint, EInputEvent EventType, ActionCallback Callback )
+FORCEINLINE void FInputDispatcher::AddActionMappingInternal(StringHashValue HintHash, DigitalInput MappedKey, const Char* HintName )
 {
-	m_ActionCallbacks[{StringHash( MappedHint, strlen( MappedHint ) ), EventType}].push_back( Callback );
+	ActionMappingInternal Mapping(HintHash, MappedKey);
+#if HE_WITH_EDITOR
+	strcpy_s( Mapping.HintName, HintName );
+#endif
+	m_ActionMappings.emplace_back( Mapping );
+}
+
+FORCEINLINE void FInputDispatcher::AddAxisMappingInternal(StringHashValue HintHash, DigitalInput MappedKey, float Scale, const Char* HintName )
+{
+	AxisMappingInternal Mapping( HintHash, MappedKey, Scale );
+#if HE_WITH_EDITOR
+	strcpy_s( Mapping.HintName, HintName );
+#endif
+	m_AxisMappings.emplace_back( Mapping );
+}
+
+FORCEINLINE void FInputDispatcher::RegisterAxisCallback( const char* MappedHint, AxisCallback Callback )
+{
+	m_AxisCallbacks[StringHash( MappedHint )].push_back( Callback );
+}
+
+FORCEINLINE void FInputDispatcher::RegisterActionCallback( const char* MappedHint, EInputEvent EventType, ActionCallback Callback )
+{
+	m_ActionCallbacks[{StringHash( MappedHint ), EventType}].push_back( Callback );
 }
 
 template <typename EventType, typename ... EventInitArgs>
-FORCEINLINE void InputDispatcher::ProcessInputEventEx( EventInitArgs ... Args )
+FORCEINLINE void FInputDispatcher::ProcessInputEventEx( EventInitArgs ... Args )
 {
 	ProcessInputEvent( EventType( Args... ) );
 }
 
-FORCEINLINE RawInputSurveyer& InputDispatcher::GetInputSureyor()
+FORCEINLINE FRawInputSurveyer& FInputDispatcher::GetInputSureyor()
 {
 	return m_InputSurveyer;
 }

@@ -1,0 +1,23 @@
+# CMake generation dependency list for this directory.
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeCInformation.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeCXXInformation.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeCommonLanguageInclude.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeGenericSystem.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeInitializeConfigs.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeLanguageInformation.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeRCInformation.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeSystemSpecificInformation.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Compiler/MSVC-C.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Compiler/MSVC-CXX.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Platform/Windows-MSVC-C.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Platform/Windows-MSVC.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Platform/Windows.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmake/x64/share/cmake-3.15/Modules/Platform/WindowsPaths.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/compiler/public/CMakeLists.txt
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/compiler/vc16win64/CMakeFiles/3.15.4/CMakeCCompiler.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/compiler/vc16win64/CMakeFiles/3.15.4/CMakeCXXCompiler.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/compiler/vc16win64/CMakeFiles/3.15.4/CMakeRCCompiler.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/compiler/vc16win64/CMakeFiles/3.15.4/CMakeSystem.cmake

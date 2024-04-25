@@ -19,6 +19,7 @@
 //--------------------------------------------------------------------------------------
 
 #pragma once
+#if R_WITH_D3D12
 
 #include <d3d12.h>
 
@@ -56,3 +57,5 @@ HRESULT __cdecl CreateDDSTextureFromFile(_In_ ID3D12Device* d3dDevice,
 );
 
 size_t BitsPerPixel(_In_ DXGI_FORMAT fmt);
+
+#endif // R_WITH_D3D12

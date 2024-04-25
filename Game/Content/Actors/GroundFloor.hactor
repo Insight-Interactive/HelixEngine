@@ -1,0 +1,86 @@
+{
+  "AActor": [
+    {
+      "ObjectName": "GroundFloor",
+      "ObjectGUID": "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d"
+    },
+    {
+      "Components": [
+        {
+          "HStaticMeshComponent": [
+            {
+              "HSceneComponent": [
+                {
+                  "ObjectName": "FloorMesh",
+                  "ObjectGUID": "636db35e-24a9-4977-b899-ac0537cd99fd"
+                },
+                {
+                  "m_Transform": [
+                    {
+                      "PositionX": 0.0,
+                      "PositionY": 0.0,
+                      "PositionZ": 0.0,
+                      "RotationX": 0.0,
+                      "RotationY": 0.0,
+                      "RotationZ": 0.0,
+                      "ScaleX": 200.0,
+                      "ScaleY": 1.0,
+                      "ScaleZ": 200.0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "m_bIsDrawEnabled": true,
+              "m_MeshAsset": "4539421c-d8b4-4936-bb0c-8dde1e24f9b9",
+              "m_MaterialAsset": "0d68e992-aa25-4aa4-9f81-0eb775320c1e"
+            }
+          ]
+        },
+        {
+          "HPlaneColliderComponent":[
+            {
+              "HColliderComponent":[
+                {
+                  "HSceneComponent": [
+                    {
+                      "ObjectName": "PlaneCollider",
+                      "ObjectGUID": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
+                    },
+                    {
+                      "m_Transform": [
+                        {
+                          "PositionX": 0.0,
+                          "PositionY": 0.0,
+                          "PositionZ": 0.0,
+                          "RotationX": 0.0,
+                          "RotationY": 0.0,
+                          "RotationZ": 0.0,
+                          "RotationW": 0.0,
+                          "ScaleX": 1.0,
+                          "ScaleY": 1.0,
+                          "ScaleZ": 1.0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "IsTrigger": false,
+                  "Density": 10.0,
+                  "IsStatic": true,
+                  "EnableSimulation": true
+                }
+              ]
+            },
+            {
+              "m_RigidBody.m_HalfWidth": 200.0,
+              "m_RigidBody.m_HalfHeight": 200.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

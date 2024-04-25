@@ -1,41 +1,38 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "World/CameraManager.h"
 
 #include "Engine/ViewportContext.h"
-#include "Actor/Components/HCameraComponent.h"
+#include "GameFramework/Components/HCameraComponent.h"
 
 
-CameraManager::CameraManager( HWorld* pWorld )
+HCameraManager::HCameraManager( HWorld* pWorld )
 	: m_pWorld( pWorld )
 {
 
 }
 
-CameraManager::~CameraManager()
+HCameraManager::~HCameraManager()
 {
 
 }
 
-void CameraManager::Tick( float DeltaTime )
+void HCameraManager::Tick( float DeltaTime )
 {
 	for (size_t i = 0; i < m_Cameras.size(); ++i)
 	{
-		m_Cameras[i]->UpdateViewMat();
+		m_Cameras[i]->BuildViewMatrix();																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 	}
 }
 
-void CameraManager::CacheCamera( HCameraComponent* pCamera )
+void HCameraManager::CacheCamera( HCameraComponent* pCamera )
 {
 	HE_ASSERT( pCamera != NULL ); // Trying to cache a null camera.
-
-	FVector2 WindowDims = m_pWorld->GetOwningViewport()->GetWindow().GetDimensions();
-	pCamera->SetProjectionValues( pCamera->GetFieldOfView(), WindowDims.x, WindowDims.y, pCamera->GetNearZ(), pCamera->GetFarZ() );
-
 	m_Cameras.push_back( pCamera );
 }
 
-void CameraManager::RemoveCachedCamera( HCameraComponent* pCamera )
+void HCameraManager::RemoveCachedCamera( HCameraComponent* pCamera )
 {
 	for (size_t i = 0; i < m_Cameras.size(); ++i)
 	{

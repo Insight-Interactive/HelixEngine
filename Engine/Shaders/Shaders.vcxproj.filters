@@ -4,6 +4,9 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Debug">
+      <UniqueIdentifier>{76695299-E229-CECF-AB64-174D17E412AC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Sky">
       <UniqueIdentifier>{26D41F53-9289-9848-1B7E-921F87328F4C}</UniqueIdentifier>
     </Filter>
@@ -19,8 +22,20 @@
     <Filter Include="Public\DeferredShading">
       <UniqueIdentifier>{32B6DFAE-1EB0-0801-071D-9F11F3B56E6D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\ForwardShading">
+      <UniqueIdentifier>{A67D9A1C-12EA-5517-DBDD-ED744709787F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\UI">
+      <UniqueIdentifier>{31B571CE-9D1F-2645-E65D-D7EA5207049A}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Private\Debug\DebugLine.ps.hlsl">
+      <Filter>Private\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Private\Debug\DebugLine.vs.hlsl">
+      <Filter>Private\Debug</Filter>
+    </FxCompile>
     <FxCompile Include="Private\Sky\SkyboxPass.ps.hlsl">
       <Filter>Private\Sky</Filter>
     </FxCompile>
@@ -33,28 +48,70 @@
     <FxCompile Include="Private\Utility\ScreenAlignedQuad.vs.hlsl">
       <Filter>Private\Utility</Filter>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.ps.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomGeometryPass.ps.hlsl">
       <Filter>Public\DeferredShading</Filter>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericGeometryPass.vs.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomGeometryPass.vs.hlsl">
       <Filter>Public\DeferredShading</Filter>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericLightPass.ps.hlsl">
+    <FxCompile Include="Public\DeferredShading\CustomLightPass.ps.hlsl">
       <Filter>Public\DeferredShading</Filter>
     </FxCompile>
-    <FxCompile Include="Public\DeferredShading\GenericLightPass.vs.hlsl">
+    <FxCompile Include="Public\DeferredShading\DefaultGeometryPass.ps.hlsl">
       <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultGeometryPass.vs.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\DefaultLightPass.ps.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultForwardPass.vs.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.ps.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\DefaultUnlit.vs.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\ForwardShading\Wireframe.ps.hlsl">
+      <Filter>Public\ForwardShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\UI\Text.ps.hlsl">
+      <Filter>Public\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\UI\Text.vs.hlsl">
+      <Filter>Public\UI</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Private\Debug\DebugCommon.hlsli">
+      <Filter>Private\Debug</Filter>
+    </None>
+    <None Include="Public\Core\Common.hlsli">
+      <Filter>Public\Core</Filter>
+    </None>
     <None Include="Public\Core\Core.hlsli">
       <Filter>Public\Core</Filter>
     </None>
     <None Include="Public\Core\LightsFwd.hlsli">
       <Filter>Public\Core</Filter>
     </None>
+    <None Include="Public\Core\PBRCommon.hlsli">
+      <Filter>Public\Core</Filter>
+    </None>
     <None Include="Public\DeferredShading\DeferredShadingCommon.hlsli">
       <Filter>Public\DeferredShading</Filter>
+    </None>
+    <None Include="Public\ForwardShading\ForwardShadingCommon.hlsli">
+      <Filter>Public\ForwardShading</Filter>
+    </None>
+    <None Include="Public\UI\UIShadingCommon.hlsli">
+      <Filter>Public\UI</Filter>
     </None>
     <None Include="Shaders.module.lua" />
   </ItemGroup>

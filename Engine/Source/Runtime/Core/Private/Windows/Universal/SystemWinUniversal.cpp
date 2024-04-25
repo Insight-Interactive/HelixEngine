@@ -23,6 +23,17 @@ namespace System
 		return EXIT_SUCCESS;
 	}
 
+
+	bool InitializePlatform()
+	{
+		return true;
+	}
+
+	bool UninitializePlatform()
+	{
+		return true;
+	}
+
 	ThreadId CreateAndRunThread(const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData/* = NULL*/, const uint64 StackSize/* = kDefaultStackSize*/, const int32 Flags/* = kJoinable*/)
 	{
 		Win32ThreadData* ThreadData = new Win32ThreadData();
@@ -83,10 +94,10 @@ namespace System
 		{
 		}
 	}
+
 	void ProcessMessages()
 	{
-		// Do nothing for Windows Universal.
-		return;
+		CoreWindow::GetForCurrentThread().Dispatcher().ProcessEvents( CoreProcessEventsOption::ProcessAllIfPresent );
 	}
 
 	DLLHandle LoadDynamicLibrary(const wchar_t* Filepath)
@@ -101,10 +112,11 @@ namespace System
 		return (int32)::FreeLibrary((HMODULE)Handle);
 	}
 
-	void CreateMessageBox(const wchar_t* Message, const wchar_t* Title, void* pParentWindow/* = NULL*/)
+	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon, void* pParentWindow/* = NULL*/)
 	{
 		winrt::Windows::UI::Popups::MessageDialog Dialog(Message, Title);
 		Dialog.ShowAsync();
+		return (MessageDialogResult)-1;
 	}
 
 	uint32 GetLastSystemErrorCode()
@@ -182,14 +194,14 @@ namespace System
 		return GetCommandLineA();
 	}
 
-	uint64 QueryPerformanceCounter()
+	int64 QueryPerfCounter()
 	{
 		LARGE_INTEGER Tick = { 0 };
 		HE_ASSERT( QueryPerformanceCounter( &Tick ) == TRUE );
 		return (uint64)Tick.QuadPart;
 	}
 
-	uint64 QueryPerformanceFrequency()
+	int64 QueryPerfFrequency()
 	{
 		LARGE_INTEGER Frequency = { 0 };
 

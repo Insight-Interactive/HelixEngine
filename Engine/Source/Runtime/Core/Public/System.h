@@ -19,23 +19,95 @@ namespace System
 	};
 
 	struct ThreadId
-#if defined HE_WINDOWS
 	{
+#if HE_WINDOWS
 		DWORD Id;
 		HANDLE Handle;
 
-		bool operator == (const ThreadId& rhs) { return rhs.Id == this->Id; }
-		bool operator != (const ThreadId& rhs) { return rhs.Id != this->Id; }
-	};
-#else
-	{
-	};
+		FORCEINLINE bool operator == (const ThreadId& rhs) { return rhs.Id == this->Id; }
+		FORCEINLINE bool operator != (const ThreadId& rhs) { return rhs.Id != this->Id; }
 #endif
+	};
 
+	enum MessageDialogResult
+	{
+		MDR_Ok =
+#if HE_WINDOWS_DESKTOP
+		IDOK,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
+#endif
+		MDR_No =
+#if HE_WINDOWS_DESKTOP
+		IDNO,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
+#endif
+		MDR_Cancel = 
+#if HE_WINDOWS_DESKTOP
+		IDCANCEL,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
+#endif
+	};
+	enum MessageDialogInput
+	{
+		MDI_Ok = 
+#if HE_WINDOWS_DESKTOP
+		MB_OK,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
+#endif
+		MDI_OkCancel = 
+#if HE_WINDOWS_DESKTOP
+		MB_OKCANCEL,
+#elif HE_WINDOWS_UNIVERSAL
+		0,
+#endif
+	};
+	enum MessageDialogIcon
+	{
+		MDIcon_Critical = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONHAND,
+#endif
+		MDIcon_Question = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONQUESTION,
+#endif
+		MDIcon_Warning = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONWARNING,
+#endif
+		MDIcon_Info = 
+#if HE_WINDOWS_DESKTOP
+		MB_ICONINFORMATION,
+#endif
+	};
+
+	/*
+		Initialize any platform system dependencies. Returns true if succeeded, false if not.
+	*/
+	bool InitializePlatform();
+
+	/*
+		Uninitialize any platform system dependencies. Returns true if succeeded, false if not.
+	*/
+	bool UninitializePlatform();
+
+	/*
+		Create and run a new thread.
+	*/
 	ThreadId CreateAndRunThread(const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData = NULL, const uint64 StackSize = kDefaultStackSize, const int32 Flags = kJoinable);
 
+	/*
+		Join an existing thread to this thread.
+	*/
 	void JoinThread(ThreadId Thread);
 
+	/*
+		Set the debug name for an existing thread.
+	*/
 	void SetThreadName(ThreadId Thread, const char* NewName);
 
 	/*
@@ -45,12 +117,13 @@ namespace System
 	void ProcessMessages();
 
 	/*
-		Create a message box to be immediatly displayed to th user.
+		Create a message box to be immediatly displayed to the user. Creating a message box is a blocking call.
 		@param Message - The message to display inside the message box.
 		@param Title - The message to be displayer in the titlebar of the message box window.
+		@param Type - The type of message box to be displayed.
 		@param pParentWindow - A pointer to the native window's handle.
 	*/
-	void CreateMessageBox(const wchar_t* Message, const wchar_t* Title, void* pParentWindow = NULL);
+	MessageDialogResult CreateMessageBox(const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon = MDIcon_Warning, void* pParentWindow = NULL);
 
 	/*
 		Loads a DLL into the curent application's address space.
@@ -104,6 +177,12 @@ namespace System
 	void SetWorkingDirectory(TChar* Path);
 
 	/*
+		Returns true if a file exists, false if not.
+		@param Path - The full path to the file in question.
+	*/
+	bool FileExists( const TChar* Path );
+
+	/*
 		Returns the number of CPU cores the current thread posseses.
 	*/
 	uint32 GetProcessorCount();
@@ -114,9 +193,18 @@ namespace System
 	*/
 	void Sleep(uint32 Miliseconds);
 
+	/*
+		Returns a pointer to this thread's command line.
+	*/
 	Char* GetProcessCommandLine();
 
-	int64 QueryPerformanceCounter();
+	/*
+		Quiries the systems high performance system timer and returns the result.
+	*/
+	int64 QueryPerfCounter();
 
-	int64 QueryPerformanceFrequency();
+	/*
+		Quiries the systems CPU tick frequency and returns the result.
+	*/
+	int64 QueryPerfFrequency();
 }

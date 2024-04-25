@@ -1,30 +1,51 @@
 // Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "CoreFwd.h"
 #include "TSingleton.h"
 
-#if GAME_MODULE
-#	define GAME_API __declspec(dllexport)
-#else
-#	define GAME_API __declspec(dllimport)
-#endif
+#include "Engine/Engine.h"
 
-class GAME_API HGameInstance
+
+class ACharacter;
+class EngineBeginPlayEvent;
+
+class HGameInstance : public TSingleton<HGameInstance>
 {
+	friend class HEngine;
 public:
-	HGameInstance()
-	{
-	}
-	virtual ~HGameInstance()
-	{
-	}
+	HGameInstance();
+	virtual ~HGameInstance();
+
+	virtual void OnGameSetFocus();
+	virtual void OnGameLostFocus();
+	virtual void BeginPlay();
+	virtual void Tick( float DeltaTime );
+
+	HWorld* GetWorld();
 
 protected:
-	uint32 m_SomeVariable;
+	void SetWorld( HWorld* pWorld );
+	
+	void OnEvent( EngineEvent& e );
+	bool OnEnginePostStartup( EngineBeginPlayEvent& e );
+
+	void ToggleMenu();
+
+protected:
+	HWorld* m_pWorld;
 
 };
 
-static HGameInstance* GGameInstance = NULL;
 
-GAME_API HGameInstance* MakeGameInstance();
+// Inline function imlpementations
+//
+
+FORCEINLINE void HGameInstance::SetWorld( HWorld* pWorld )
+{
+	m_pWorld = pWorld;
+}
+
+FORCEINLINE HWorld* HGameInstance::GetWorld()
+{
+	return m_pWorld;
+}

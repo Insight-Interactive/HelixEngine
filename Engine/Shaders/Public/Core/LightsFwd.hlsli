@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 
 //
 // Common Light Stuctures.
@@ -5,8 +6,9 @@
 
 struct PointLight
 {
-    float4 Position;
-    float4 Color;
+    float3 Position;
+    float Radius;
+    float3 Color;
     float Brightness;
     uint Id;
 };

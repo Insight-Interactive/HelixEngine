@@ -3,19 +3,18 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-#include "RenderContext.h"
 
+class FRenderContext;
+class FSwapChain;
 
-class HEngine;
-
-class RENDER_API RendererInitializer
+class RENDER_API FRendererInitializer
 {
-	friend HEngine;
+	friend class FRenderingSubsystem;
 public:
-	static void InitializeSwapChain( ISwapChain** pOutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height );
+	static void InitializeSwapChain( FSwapChain& OutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height );
 
 private:
-	static void InitializeContext( ERenderBackend API, RenderContext& Context );
-	static void UnInitializeContext( RenderContext& Context );
+	static void InitializeContext( FRenderContext& Context );
+	static void UnInitializeContext( FRenderContext& Context );
 
 };

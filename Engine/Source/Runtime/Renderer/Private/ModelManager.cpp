@@ -1,132 +1,66 @@
-#include <RendererPCH.h>
+// Copyright 2021 Insight Interactive. All Rights Reserved.
+#include "RendererPCH.h"
 
 #include "ModelManager.h"
+
+#include "FileSystem.h"
+#include "StringHelper.h"
+#include "AssetRegistry/Asset.h"
+#include "VertexLayouts.h"
+#include "Hash.h"
 
 #include "miniz.c"
 #include "ofbx.h"
 #include "ofbx.cpp"
 
 
-#include "FileSystem.h"
-#include "StringHelper.h"
-#include "VertexLayouts.h"
+extern FStaticGeometryManager GStaticGeometryManager;
 
 
-extern StaticGeometryManager GStaticGeometryManager;
-
-
-void ManagedStaticMeshGeometry::WaitForLoad() const
+void HManagedStaticMeshGeometry::WaitForLoad() const
 {
 	while ((volatile bool&)m_IsLoading)
 		std::this_thread::yield();
 }
 
-void ManagedStaticMeshGeometry::Unload()
+void HManagedStaticMeshGeometry::Unload()
 {
-	GStaticGeometryManager.DestroyMesh(m_MapKey);
+	GStaticGeometryManager.DestroyMesh( m_MapKey );
 }
 
-void StaticGeometryManager::DestroyMesh(const String& Key)
+StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
 {
-	auto Iter = m_ModelCache.find(Key);
-	if (Iter != m_ModelCache.end())
-		m_ModelCache.erase(Iter);
+	//HE_ASSERT( StringHelper::GetFileExtension( FilePath ) == "hasset" ); // Trying to load a file that is not an hasset.
 
-}
-
-bool StaticGeometryManager::MeshExists(const String& Name)
-{
-	auto Iter = m_ModelCache.find(Name);
-	return Iter != m_ModelCache.end();
-}
-
-void StaticGeometryManager::FlushCache()
-{
-	m_ModelCache.clear();
-}
-
-void StaticGeometryManager::LoadFBXFromFile(const char* FilePath)
-{
-	ManagedStaticMeshGeometry* pMesh = NULL;
+	String MeshName = StringHelper::GetFilenameFromDirectoryNoExtension( FilePath );
+	if (MeshExists( MeshName ))
+		return GetStaticMeshByName( MeshName );
 
 	// Read the data file from disk.
 	//
-	DataBlob Memory = FileSystem::ReadRawData(FilePath);
-	HE_ASSERT(Memory.IsValid()); // Failed to load model.
+	DataBlob FileData = FileSystem::ReadRawData( FilePath.c_str() );
 
-	const ofbx::u8* pData = (const ofbx::u8*)Memory.GetBufferPointer();
-	std::vector<Vertex3D> Verticies;
-	std::vector<uint32> Indices;
+	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
+	//std::vector<FVertex3D> Verticies;
+	//std::vector<uint32> Indices;
 
-	// TODO: Only FBX file format is supported currently. Add more file formats.
 	// Process the mesh as an fbx file.
 	//
 	ofbx::IScene* pScene = ofbx::load(
 		pData,
-		(int)Memory.GetDataSize(),
+		(int)FileData.GetDataSize(),
 		(ofbx::u64)ofbx::LoadFlags::TRIANGULATE
 	);
 	if (pScene == NULL)
 	{
-		R_LOG(Error, TEXT("[Static Geometry Manager][ofbx] An error occured when loading a model: %s"), ofbx::getError());
-		return;
+		R_LOG( Error, TEXT( "An error occured when importing model! Error code: %s" ), ofbx::getError() );
+		return nullptr;
 	}
 
-	// Parse the mesh.
-	//
-	const ofbx::GlobalSettings* s = pScene->getGlobalSettings();
-	for (int i = 0; i < pScene->getMeshCount(); ++i)
-	{
-		const ofbx::Mesh& Mesh = *pScene->getMesh(i);
-		std::vector<Vertex3D> Verticies; Verticies.reserve(Mesh.getGeometry()->getVertexCount());
-		std::vector<uint32> Indices; Indices.reserve(Mesh.getGeometry()->getIndexCount());
-		
-		String Name = StringHelper::GetFilenameFromDirectory(Mesh.name);
-		uint64 HashName = std::hash<String>{}(Mesh.name);
-		{
-			ScopedCriticalSection Gaurd(m_MapMutex);
+	const ofbx::Mesh& Mesh = *pScene->getMesh( 0 ); // TODO: What about multiple meshes!?
+	std::vector<FVertex3D> Verticies; Verticies.reserve( Mesh.getGeometry()->getVertexCount() );
+	std::vector<uint32> Indices; Indices.reserve( Mesh.getGeometry()->getIndexCount() );
 
-			auto Iter = m_ModelCache.find(Name);
-			if (Iter != m_ModelCache.end())
-			{
-				pMesh = Iter->second.get();
-				pMesh->WaitForLoad();
-				continue;
-			}
-			else
-			{
-				ParseFBXMesh(Mesh, Verticies, Indices);
-
-				pMesh = new ManagedStaticMeshGeometry(Name);
-				pMesh->SetHashName(HashName);
-				pMesh->Create(Verticies.data(), (uint32)Verticies.size() * sizeof(Vertex3D), (uint32)Verticies.size(), sizeof(Vertex3D), Indices.data(), (uint32)Indices.size() * sizeof(uint32), (uint32)Indices.size());
-				pMesh->SetLoadCompleted(true);
-
-				m_ModelCache[Name].reset(pMesh);
-			}
-		}
-	}
-}
-
-StaticMeshGeometryRef StaticGeometryManager::RegisterGeometry(const std::string& Name, void* Verticies, uint32 VertexDataSizeInBytes, uint32 NumVerticies, uint32 VertexSize, void* Indices, uint32 IndexDataSizeInBytes, uint32 NumIndices)
-{
-#if HE_WITH_EDITOR
-	HE_ASSERT(MeshExists(Name) == false); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
-#endif
-
-	uint64 HashName = std::hash<std::string>{}(Name);
-	ManagedStaticMeshGeometry* pMesh = new ManagedStaticMeshGeometry(Name);
-	pMesh->SetHashName(HashName);
-	pMesh->Create(Verticies, VertexDataSizeInBytes, NumVerticies, VertexSize, Indices, IndexDataSizeInBytes, NumIndices);
-	pMesh->SetLoadCompleted(true);
-
-	m_ModelCache[Name].reset(pMesh);
-
-	return pMesh;
-}
-
-void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Vertex3D>& OutVerticies, std::vector<uint32>& OutIndices)
-{
 	const ofbx::Geometry& Geometry = *(Mesh.getGeometry());
 
 	const ofbx::Vec3* RawVerticies = Geometry.getVertices();
@@ -134,7 +68,7 @@ void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Ver
 
 	for (int i = 0; i < VertexCount; ++i)
 	{
-		Vertex3D Vertex;
+		FVertex3D Vertex;
 
 		Vertex.Position.x = (float)RawVerticies[i].x;
 		Vertex.Position.y = (float)RawVerticies[i].y;
@@ -164,9 +98,9 @@ void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Ver
 				Vertex.Tangent.y = (float)tans[i].y;
 				Vertex.Tangent.z = (float)tans[i].z;
 
-				FVector3 TempTangent((float)tans[i].x, (float)tans[i].y, (float)tans[i].z);
-				FVector3 Normal(Vertex.Normal.x, Vertex.Normal.y, Vertex.Normal.z);
-				FVector3 BiTangent = Normal.Cross(TempTangent);
+				FVector3 TempTangent( (float)tans[i].x, (float)tans[i].y, (float)tans[i].z );
+				FVector3 Normal( Vertex.Normal.x, Vertex.Normal.y, Vertex.Normal.z );
+				FVector3 BiTangent = Normal.Cross( TempTangent );
 
 				Vertex.BiTangent.x = BiTangent.x;
 				Vertex.BiTangent.y = BiTangent.y;
@@ -174,9 +108,9 @@ void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Ver
 			}
 			else
 			{
-				Vertex.UV0 = FVector2(0.0f, 0.0f);
-				Vertex.Tangent = FVector3(0.0f, 0.0f, 0.0f);
-				Vertex.BiTangent = FVector3(0.0f, 0.0f, 0.0f);
+				Vertex.UV0 = FVector2( 0.0f, 0.0f );
+				Vertex.Tangent = FVector3( 0.0f, 0.0f, 0.0f );
+				Vertex.BiTangent = FVector3( 0.0f, 0.0f, 0.0f );
 			}
 
 			if (Geometry.getColors() != NULL)
@@ -189,7 +123,7 @@ void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Ver
 			}
 		}
 
-		OutVerticies.push_back(Vertex);
+		Verticies.push_back( Vertex );
 	}
 
 	const int* RawFaceIndicies = Geometry.getFaceIndices();
@@ -199,67 +133,72 @@ void StaticGeometryManager::ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<Ver
 		int idx = RawFaceIndicies[i];
 
 		// If the index is negative in fbx that means it is the last index of that polygon.
-		// So, make it positive and subtrct one.
+		// So, make it positive and subtract one.
 		if (idx < 0)
 			idx = -(idx + 1);
 
-		OutIndices.push_back(idx);
+		Indices.push_back( idx );
 	}
+	// Create the mesh geometry, register it with the GPU and cache it.
+	StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
+	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
+	pMesh->SetHashName( NameHash );
+	pMesh->Create(
+		Verticies.data(), Verticies.size(),  sizeof(FVertex3D),
+		Indices.data(), Indices.size() * sizeof(uint32), Indices.size()
+	);
+	pMesh->SetLoadCompleted( true );
 
+	//// Read the data file from disk.
+	////
+	//DataBlob Memory = FileSystem::ReadRawData( FilePath.c_str() );
+	//HE_ASSERT( Memory.IsValid() ); // Failed to load model.
+
+	//uint8* DataHead = Memory.GetBufferPointer();
+
+	//// Copy the header information.
+	//const HMeshAsset::HMeshAssetHeader& MeshHeader = *(HMeshAsset::HMeshAssetHeader*)DataHead;
+	//HE_ASSERT( MeshHeader.Type == AT_Mesh ); // Trying to parse an asset that is not a mesh!
+	//DataHead += HMeshAsset::kMeshHeaderSizeInBytes;		// Now pointing to first vertex in the vertex buffer.
+
+	//// Get the vertex data.
+	//const uint32 VertexBufferSize = MeshHeader.NumVerticies * MeshHeader.VertexSizeInBytes;
+	//uint8* FirstVertex = DataHead;
+	//DataHead += VertexBufferSize; // Now pointing to first index.
+
+	//// Get the index data.
+	//const uint32 IndexBufferSize = MeshHeader.NumIndices * MeshHeader.IndexSizeInBytes;
+	//uint8* FirstIndex = DataHead;
+
+
+	//// Create the mesh geometry, register it with the GPU and cache it.
+	//StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
+	//HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
+	//pMesh->SetHashName( NameHash );
+	//pMesh->Create(
+	//	FirstVertex, MeshHeader.NumVerticies, MeshHeader.VertexSizeInBytes,
+	//	FirstIndex, IndexBufferSize, MeshHeader.NumIndices
+	//);
+	//pMesh->SetLoadCompleted( true );
+
+	ScopedCriticalSection Guard( m_MapMutex );
+	m_ModelCache[MeshName].reset( pMesh );
+	return m_ModelCache[MeshName];
 }
 
-StaticMeshGeometryRef::StaticMeshGeometryRef(const StaticMeshGeometryRef& ref)
-	: m_Ref(ref.m_Ref)
+StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
 {
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
+#if HE_WITH_EDITOR
+	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
+#endif
+
+	StringHashValue HashName = StringHash( Name.c_str(), Name.size() );
+	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
+	pMesh->SetHashName( HashName );
+	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
+	pMesh->SetLoadCompleted( true );
+
+	ScopedCriticalSection Guard( m_MapMutex );
+	m_ModelCache[Name].reset( pMesh );
+	return m_ModelCache[Name];
 }
-
-StaticMeshGeometryRef::StaticMeshGeometryRef(ManagedStaticMeshGeometry* tex)
-	: m_Ref(tex)
-{
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
-}
-
-StaticMeshGeometryRef::~StaticMeshGeometryRef()
-{
-	if (m_Ref != nullptr && --m_Ref->m_ReferenceCount == 0)
-		m_Ref->Unload();
-}
-
-void StaticMeshGeometryRef::operator= (std::nullptr_t)
-{
-	if (m_Ref != nullptr)
-		--m_Ref->m_ReferenceCount;
-
-	m_Ref = nullptr;
-}
-
-void StaticMeshGeometryRef::operator= (StaticMeshGeometryRef& rhs)
-{
-	if (m_Ref != nullptr)
-		--m_Ref->m_ReferenceCount;
-
-	m_Ref = rhs.m_Ref;
-
-	if (m_Ref != nullptr)
-		++m_Ref->m_ReferenceCount;
-}
-
-bool StaticMeshGeometryRef::IsValid() const
-{
-	return m_Ref && m_Ref->IsValid();
-}
-
-StaticMeshGeometry* StaticMeshGeometryRef::Get()
-{
-	return (StaticMeshGeometry*)m_Ref;
-}
-
-StaticMeshGeometry* StaticMeshGeometryRef::operator->()
-{
-	HE_ASSERT(m_Ref != nullptr);
-	return (StaticMeshGeometry*)m_Ref;
-}
-

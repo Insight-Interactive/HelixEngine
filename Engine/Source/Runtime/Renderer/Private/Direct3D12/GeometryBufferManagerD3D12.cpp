@@ -1,47 +1,55 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "GeometryBufferManagerD3D12.h"
-#include "ICommandManager.h"
+#include "GeometryBufferManager.h"
+#include "CommandManager.h"
 
 
-VertexBufferUID GeometryBufferManagerD3D12::AllocateVertexBuffer()
+VertexBufferUID FGeometryBufferManager::AllocateVertexBuffer()
 {
-	VertexBufferUID NewUID = s_NextVertexBufferID++;
+	ScopedCriticalSection Guard( m_VertexBufferGuard );
 
-	auto InsertResult = m_VertexBufferLUT.try_emplace(NewUID, VertexBufferD3D12{});
-	HE_ASSERT(InsertResult.second == true); // Trying to create a vertex buffer with an already existing ID! This is not allowed.
+	VertexBufferUID NewUID = SNextVertexBufferID++;
 
-	m_VertexBufferLUT[NewUID].SetUID(NewUID);
+	auto InsertResult = m_VertexBufferLUT.try_emplace( NewUID );
+	HE_ASSERT( InsertResult.second == true ); // Trying to create a vertex buffer with an already existing ID! This is not allowed.
+	InsertResult.first->second.SetUID( NewUID );
 
 	return NewUID;
 }
 
-IndexBufferUID GeometryBufferManagerD3D12::AllocateIndexBuffer()
+IndexBufferUID FGeometryBufferManager::AllocateIndexBuffer()
 {
-	IndexBufferUID NewUID = s_NextIndexBufferID++;
-	auto InsertResult = m_IndexBufferLUT.try_emplace(NewUID, IndexBufferD3D12{});
-	HE_ASSERT(InsertResult.second == true); // Trying to create a index buffer with an already existing ID! This is not allowed.
+	ScopedCriticalSection Guard( m_IndexBufferGuard );
 
-	m_IndexBufferLUT[NewUID].SetUID(NewUID);
+	IndexBufferUID NewUID = SNextIndexBufferID++;
+	auto InsertResult = m_IndexBufferLUT.try_emplace( NewUID );
+	HE_ASSERT( InsertResult.second == true ); // Trying to create a index buffer with an already existing ID! This is not allowed.
+	InsertResult.first->second.SetUID( NewUID );
 
 	return NewUID;
 }
 
-void GeometryBufferManagerD3D12::DeAllocateVertexBuffer(VertexBufferUID& UID)
+void FGeometryBufferManager::DeAllocateVertexBuffer( VertexBufferUID& UID )
 {
-	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGPU();
+	HE_ASSERT( UID != HE_INVALID_VERTEX_BUFFER_HANDLE );
 
-	HE_ASSERT(UID != HE_INVALID_VERTEX_BUFFER_HANDLE);
-	m_VertexBufferLUT.erase(UID);
+	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
+	GCommandManager.IdleGpu();
+
+	m_VertexBufferLUT.erase( UID );
+	UID = HE_INVALID_VERTEX_BUFFER_HANDLE;
 }
 
-void GeometryBufferManagerD3D12::DeAllocateIndexBuffer(IndexBufferUID& UID)
+void FGeometryBufferManager::DeAllocateIndexBuffer( IndexBufferUID& UID )
 {
+	HE_ASSERT( UID != HE_INVALID_INDEX_BUFFER_HANDLE );
+	
 	// Flush the currently executing gpu commands so we dont destroy resoures while they're in flight.
-	GCommandManager->IdleGPU();
+	GCommandManager.IdleGpu();
 
-	HE_ASSERT(UID != HE_INVALID_INDEX_BUFFER_HANDLE);
-	m_IndexBufferLUT.erase(UID);
+	m_IndexBufferLUT.erase( UID );
+	UID = HE_INVALID_INDEX_BUFFER_HANDLE;
 }
 
+#endif // R_WITH_D3D12

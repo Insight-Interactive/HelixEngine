@@ -1,0 +1,82 @@
+{
+  "AActor": [
+    {
+      "ObjectName": "SphereActor",
+      "ObjectGUID": "54640ee4-194b-4bbf-9d78-d9aa5196ae26"
+    },
+    {
+      "Components": [
+        {
+          "HSphereColliderComponent":[
+            {
+              "HColliderComponent":[
+                {
+                  "HSceneComponent": [
+                    {
+                      "ObjectName": "SphereCollider",
+                      "ObjectGUID": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
+                    },
+                    {
+                      "m_Transform": [
+                        {
+                          "PositionX": 0.0,
+                          "PositionY": 0.0,
+                          "PositionZ": 0.0,
+                          "RotationX": 0.0,
+                          "RotationY": 0.0,
+                          "RotationZ": 0.0,
+                          "ScaleX": 1.0,
+                          "ScaleY": 1.0,
+                          "ScaleZ": 1.0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "m_IsTrigger": false
+                }
+              ]
+            },
+            {
+              "m_RigidBody.m_IsStatic": false,
+              "m_RigidBody.m_Radius": 10.0
+            }
+          ]
+        },
+        {
+          "HStaticMeshComponent": [
+            {
+              "HSceneComponent": [
+                {
+                  "ObjectName": "SphereStaticMesh",
+                  "ObjectGUID": "a05eeb01-f872-42a1-ab36-f8371a7dd3cd"
+                },
+                {
+                  "m_Transform": [
+                    {
+                      "PositionX": 0.0,
+                      "PositionY": 0.0,
+                      "PositionZ": 0.0,
+                      "RotationX": 0.0,
+                      "RotationY": 0.0,
+                      "RotationZ": 0.0,
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0,
+                      "ScaleZ": 1.0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "m_bIsDrawEnabled": true,
+              "m_MeshAsset": "a5b1d8a5-f186-4298-b36e-9bd840e14c6b",
+              "m_MaterialAsset": "d7d2911a-0461-4a69-b28d-259389c45f87"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

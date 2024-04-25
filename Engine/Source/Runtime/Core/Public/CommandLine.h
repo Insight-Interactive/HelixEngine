@@ -3,16 +3,19 @@
 #include "CoreFwd.h"
 
 
-class CommandLine
+class FCommandLine
 {
 public:
-	CommandLine();
-	~CommandLine();
+	FCommandLine();
+	~FCommandLine();
 
-	void Process( WChar* CommandLine );
+	void Process( const WChar* CommandLine );
 
-	WString& operator[]( const WString& Key );
+	const WString& operator[]( const WString& Key );
 	bool CommandExists( const WString& Key );
+	bool ArgumentEquals( const WString& Key, const WString& Value );
+
+	void AppendArg( const WString& Key, const WString& Value );
 
 private:
 	std::map<WString, WString> m_CommandLineArgs;
@@ -23,12 +26,22 @@ private:
 // Inline function implementations
 //
 
-inline WString& CommandLine::operator[]( const WString& Key )
+FORCEINLINE const WString& FCommandLine::operator[]( const WString& Key )
 {
 	return m_CommandLineArgs[Key];
 }
 
-inline bool CommandLine::CommandExists( const WString& Key )
+FORCEINLINE bool FCommandLine::CommandExists( const WString& Key )
 {
 	return m_CommandLineArgs.find( Key ) != m_CommandLineArgs.end();
+}
+
+FORCEINLINE bool FCommandLine::ArgumentEquals( const WString& Key, const WString& Value ) 
+{
+	return m_CommandLineArgs[Key] == Value;
+}
+
+FORCEINLINE void FCommandLine::AppendArg( const WString& Key, const WString& Value )
+{
+	m_CommandLineArgs.emplace( Key, Value );
 }

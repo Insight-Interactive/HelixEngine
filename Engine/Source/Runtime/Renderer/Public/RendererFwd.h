@@ -2,9 +2,9 @@
 
 
 #if RENDERER_MODULE
-#	define RENDER_API //__declspec(dllexport)
+#	define RENDER_API
 #else
-#	define RENDER_API //__declspec(dllimport)
+#	define RENDER_API
 #endif
 
 #if R_WITH_D3D12 || R_WITH_D3D11
@@ -15,8 +15,14 @@
 
 #define R_MAX_DEVICE_NAME_LENGTH ( 64 )
 
+#if R_WITH_D3D12
+#	define HE_D3D12_GPU_VIRTUAL_ADDRESS_NULL      ((D3D12_GPU_VIRTUAL_ADDRESS)0)
+#	define HE_D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN   ((D3D12_GPU_VIRTUAL_ADDRESS)-1)
+#endif
+
+
 #if HE_ENABLE_LOGS
-extern class Logger GRendererLogger;
+	extern class Logger GRendererLogger;
 /*
 	Log a message to the console.
 	@param Severety - The severity of the error.

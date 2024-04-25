@@ -19,33 +19,35 @@ filter ("platforms:Win64")
 		"HE_WINDOWS_DESKTOP",
 	}
 
-filter ("platforms:XboxOne")
+filter ("platforms:Durango")
 	defines	
 	{
 		"HE_WINDOWS_UNIVERSAL",
-		"HE_XBOX_ONE",
+		"HE_XBOX",
+		"HE_DURANGO",
 		"HE_GAME_CONSOLE",
 	}
 
-filter ("platforms:XboxOneX")
+filter ("platforms:Scorpio")
 	defines	
 	{
 		"HE_WINDOWS_UNIVERSAL",
-		"HE_XBOX_ONE_X",
+		"HE_XBOX",
+		"HE_SCORPIO",
 		"HE_GAME_CONSOLE",
 	}
 
-filter ("platforms:Win32 or Win64 or XboxOne or XboxOneX")
+filter ("platforms:Win32 or Win64 or Durango or Scorpio")
 	defines
 	{
 		"HE_WINDOWS",
 	}
 
-filter ("platforms:Playstation5")
+filter ("platforms:Prospero")
 	defines
 	{
 		"HE_PLAYSTATION",
-		"HE_PS5",
+		"HE_PROSPERO",
 		"HE_GAME_CONSOLE",
 	}
 
@@ -54,7 +56,7 @@ filter ("platforms:Playstation5")
 -- Common
 --
 
-filter ("configurations:DebugEditor or Development or DebugGame")
+filter ("configurations:DebugEditor or Development or DebugGame or Demo")
 	defines
 	{
 		"HE_ENABLE_LOGS",
@@ -66,4 +68,10 @@ filter ("configurations:DebugEditor")
 	{
 		"HE_DEBUG_THREADS",
 		"HE_DEBUG_FILESYSTEM",
+	}
+
+filter ("configurations:DebugGame or Demo or ShippingGame")
+	defines
+	{
+		"HE_STANDALONE",
 	}

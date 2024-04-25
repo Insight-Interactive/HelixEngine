@@ -1,32 +1,64 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Engine/HelixEngine.h"
 
 #if HE_WITH_EDITOR
-#	include "Editor/HEditorEngine.h"
+#	include "Editor/EditorEngine.h"
 #else
-#	include "Engine/HEngine.h"
+#	include "Engine/Engine.h"
 #endif // HE_WITH_EDITOR
 
-
-
-void GuardedMain(WChar* CmdLine)
+/*
+	Private class used to boostrap and launch the engine.
+*/
+class HEngineLaunchBootstraper
 {
-	CommandLine Args;
-	Args.Process( CmdLine );
+public:
+	static void Execute( HEngine** pEngine, WChar* CommandLine )
+	{
+		FCommandLine Args;
+		Args.Process( CommandLine );
 
 #if HE_WITH_EDITOR
-	if (Args[L"-launchcfg"] == L"LaunchEditor")
-	{
-		GEngine = new HEditorEngine();
-	}
-	else if (Args[L"-launchcfg"] == L"LaunchGame")
+		if (Args.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ))
+		{
+			(*pEngine) = new HEditorEngine( Args );
+		}
+		else 
 #endif // HE_WITH_EDITOR
-	{
-		GEngine = new HEngine();
+			if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
+		{
+			(*pEngine) = new HEngine( Args );
+		}
+		else
+		{
+			HE_CREATE_BUFFER( WChar, ErrMsg, 1024 );
+			ZeroMemory( ErrMsg, sizeof( ErrMsg ) );
+			swprintf_s( ErrMsg, L"Unable to determine launch configuration!\nIncomplete or corrupt command line arguments given.\nCommand line: \"%s\"", CommandLine );
+			HE_ASSERTEX( false, ErrMsg );
+		}
+
+		HE_ASSERT( (*pEngine) != NULL );
+		(*pEngine)->EngineMain();
+
+		HE_SAFE_DELETE_PTR( *pEngine );
 	}
+};
 
-	GEngine->EngineMain();
+void GuardedMain( WChar* CmdLine )
+{
+#if HE_USE_EXCEPTIONS
+	__try
+#endif
+	{
+		HEngineLaunchBootstraper::Execute( &GEngine, CmdLine );
+	}
+#if HE_USE_EXCEPTIONS
+	catch (...)
+	{
 
-	HE_SAFE_DELETE_PTR( GEngine );
+	}
+#endif
+
 }

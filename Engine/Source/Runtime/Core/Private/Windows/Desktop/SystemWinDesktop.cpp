@@ -24,6 +24,21 @@ namespace System
 		return EXIT_SUCCESS;
 	}
 
+	bool InitializePlatform()
+	{
+		// Init the COM library.
+		HRESULT hr = CoInitialize( NULL );
+		return SUCCEEDED( hr );
+	}
+
+	bool UninitializePlatform()
+	{
+		// UnInit the COM library.
+		CoUninitialize();
+		
+		return true;
+	}
+
 	ThreadId CreateAndRunThread( const char* Name, const uint32 CoreIndex, JobEntryPointFn EntryPoint, void* UserData/* = NULL*/, const uint64 StackSize/* = kDefaultStackSize*/, const int32 Flags/* = kJoinable*/ )
 	{
 		Win32ThreadData* ThreadData = new Win32ThreadData();
@@ -86,8 +101,7 @@ namespace System
 	}
 	void ProcessMessages()
 	{
-		MSG Message;
-		ZeroMemory( &Message, sizeof( MSG ) );
+		MSG Message = { 0 };
 		while (::PeekMessage( &Message, NULL, 0, 0, PM_REMOVE ))
 		{
 			::TranslateMessage( &Message );
@@ -107,9 +121,10 @@ namespace System
 		return (int32)::FreeLibrary( (HMODULE)Handle );
 	}
 
-	void CreateMessageBox( const wchar_t* Message, const wchar_t* Title, void* pParentWindow/* = NULL*/ )
+	MessageDialogResult CreateMessageBox( const WChar* Message, const WChar* Title, MessageDialogInput Type, MessageDialogIcon Icon, void* pParentWindow/* = NULL*/ )
 	{
-		::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, MB_OK );
+		UINT Flags = Icon | MB_DEFBUTTON1 | MB_SYSTEMMODAL;
+		return (MessageDialogResult)::MessageBox( RCast<HWND>( pParentWindow ), Message, Title, (UINT)Type | Flags );
 	}
 
 	TChar* GetLastSystemError()
@@ -192,7 +207,7 @@ namespace System
 	uint32 GetProcessorCount()
 	{
 		SYSTEM_INFO SystemInfo = {};
-		GetSystemInfo( &SystemInfo );
+		::GetSystemInfo( &SystemInfo );
 
 		return SystemInfo.dwNumberOfProcessors;
 	}
@@ -204,20 +219,20 @@ namespace System
 
 	Char* GetProcessCommandLine()
 	{
-		return GetCommandLineA();
+		return ::GetCommandLineA();
 	}
 
-	int64 QueryPerformanceCounter()
+	int64 QueryPerfCounter()
 	{
 		LARGE_INTEGER Tick = { 0 };
-		HE_ASSERT( QueryPerformanceCounter( &Tick ) == TRUE );
+		HE_ASSERT( ::QueryPerformanceCounter( &Tick ) == TRUE );
 		return (int64)Tick.QuadPart;
 	}
 
-	int64 QueryPerformanceFrequency()
+	int64 QueryPerfFrequency()
 	{
 		LARGE_INTEGER Frequency = { 0 };
-		HE_ASSERT( QueryPerformanceFrequency( &Frequency ) == TRUE );
+		HE_ASSERT( ::QueryPerformanceFrequency( &Frequency ) == TRUE );
 
 		return (int64)Frequency.QuadPart;
 	}

@@ -7,40 +7,24 @@
 #include "TSingleton.h"
 
 
-class ISwapChain;
+class FSwapChain;
+class FRenderDevice;
 
-
-enum ERenderBackend
-{
-	RB_Invalid,
-	RB_Direct3D11,
-	RB_Direct3D12,
-
-	RB_Count,
-};
-
-struct RenderBackendDescription
-{
-	TChar			APIName[32];
-	ERenderBackend	Type;
-};
-extern const RenderBackendDescription RenderBackends[];
-
+extern FRenderDevice GGraphicsDevice;
 
 /*
 	Responsible for handling rendering related messaged and resource management.
 */
-class RENDER_API RenderContext : public TSingleton<RenderContext>
+class RENDER_API FRenderContext : public TSingleton<FRenderContext>
 {
-	friend class IRenderContextFactory;
-	friend class RenderContextFactoryD3D12;
-	friend class RendererInitializer;
+	friend class FRenderContextFactory;
+	friend class FRenderContextFactoryD3D12;
+	friend class FRendererInitializer;
 public:
-	RenderContext()
-		: m_BackendType(RB_Invalid)
+	FRenderContext()
 	{
 	}
-	virtual ~RenderContext()
+	virtual ~FRenderContext()
 	{
 	}
 
@@ -53,38 +37,8 @@ public:
 	void OnWindowBorderlessModeEntered();
 	void OnNativeResolutionChanged(const uint32& Width, const uint32& height);
 
-	//
-	// Getters/Setters
-	//
-	FORCEINLINE ERenderBackend GetBackendType() const;
-	FORCEINLINE bool IsReady() const;
-
 protected:
 	virtual void Initialize();
 	virtual void UnInitialize();
 
-	FORCEINLINE void SetBackendType(ERenderBackend Type);
-
-protected:
-	ERenderBackend m_BackendType;
-	
 };
-
-//
-// Inline Function Implementations
-//
-
-FORCEINLINE ERenderBackend RenderContext::GetBackendType() const
-{
-	return m_BackendType;
-}
-
-FORCEINLINE void RenderContext::SetBackendType(ERenderBackend Type)
-{
-	m_BackendType = Type;
-}
-
-FORCEINLINE bool RenderContext::IsReady() const
-{
-	return (m_BackendType != RB_Invalid);
-}

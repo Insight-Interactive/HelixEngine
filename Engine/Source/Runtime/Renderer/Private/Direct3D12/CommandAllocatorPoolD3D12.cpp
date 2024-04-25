@@ -1,27 +1,31 @@
 #include "RendererPCH.h"
+#if R_WITH_D3D12
 
-#include "CommandAllocatorPoolD3D12.h"
+#include "CommandAllocatorPool.h"
+
+#include "RenderDevice.h"
 
 
-D3D12CommandAllocatorPool::D3D12CommandAllocatorPool(const D3D12_COMMAND_LIST_TYPE& Type)
+FCommandAllocatorPool::FCommandAllocatorPool(const D3D12_COMMAND_LIST_TYPE& Type)
 	: m_cCommandListType(Type)
-	, m_pID3D12Device(NULL)
+	, m_pRenderDeviceRef(NULL)
 {
 }
 
-D3D12CommandAllocatorPool::~D3D12CommandAllocatorPool()
+FCommandAllocatorPool::~FCommandAllocatorPool()
 {
-	m_pID3D12Device = NULL;
+	m_pRenderDeviceRef = NULL;
 }
 
-void D3D12CommandAllocatorPool::Initialize(ID3D12Device* pD3DDevice)
+void FCommandAllocatorPool::Initialize(FRenderDevice& RenderDevice )
 {
-	HE_ASSERT(pD3DDevice != NULL);
-	m_pID3D12Device = pD3DDevice;
+	m_pRenderDeviceRef = &RenderDevice;
 }
 
-ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 CompletedFenceValue)
+ID3D12CommandAllocator* FCommandAllocatorPool::RequestAllocator(uint64 CompletedFenceValue)
 {
+	ID3D12Device* pID3D12Device = (ID3D12Device*)m_pRenderDeviceRef->GetNativeDevice();
+
 	m_AllocatorMutex.Enter();
 
 	ID3D12CommandAllocator* pAllocator = NULL;
@@ -34,7 +38,7 @@ ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 Compl
 		{
 			pAllocator = AllocatorPair.second;
 			HRESULT hr = pAllocator->Reset();
-			ThrowIfFailedMsg(hr, TEXT("Failed to reset command allocator!"));
+			ThrowIfFailedMsg(hr, "Failed to reset command allocator!");
 			m_ReadyAllocators.pop();
 		}
 	}
@@ -42,11 +46,13 @@ ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 Compl
 	// If no allocator's were ready to be reused, create a new one
 	if (pAllocator == nullptr)
 	{
-		HRESULT hr = m_pID3D12Device->CreateCommandAllocator(m_cCommandListType, IID_PPV_ARGS(&pAllocator));
-		ThrowIfFailedMsg(hr, TEXT("Failed to create command allocator"));
-		wchar_t AllocatorName[32];
+		HRESULT hr = pID3D12Device->CreateCommandAllocator(m_cCommandListType, IID_PPV_ARGS(&pAllocator));
+		ThrowIfFailedMsg(hr, "Failed to create command allocator");
+#if R_DEBUG_GPU_RESOURCES
+		WChar AllocatorName[32];
 		swprintf(AllocatorName, 32, L"CommandAllocator %zu", m_AllocatorPool.size());
 		pAllocator->SetName(AllocatorName);
+#endif // R_DEBUG_GPU_RESOURCES
 		m_AllocatorPool.push_back(pAllocator);
 	}
 
@@ -54,7 +60,7 @@ ID3D12CommandAllocator* D3D12CommandAllocatorPool::RequestAllocator(uint64 Compl
 	return pAllocator;
 }
 
-void D3D12CommandAllocatorPool::DiscardAllocator(uint64 FenceValue, ID3D12CommandAllocator* pAllocator)
+void FCommandAllocatorPool::DiscardAllocator(uint64 FenceValue, ID3D12CommandAllocator* pAllocator)
 {
 	m_AllocatorMutex.Enter();
 
@@ -63,3 +69,5 @@ void D3D12CommandAllocatorPool::DiscardAllocator(uint64 FenceValue, ID3D12Comman
 
 	m_AllocatorMutex.Exit();
 }
+
+#endif // R_WITH_D3D12

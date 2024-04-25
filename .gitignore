@@ -5,6 +5,11 @@
 
 # Helix
 [Bb]uild-*
+Engine/Programs/Intermediate/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxitems
 
 # User-specific files
 *.rsuser

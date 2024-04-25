@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "RendererFwd.h"
@@ -6,93 +7,136 @@
 #include "StaticMeshGeometry.h"
 #include "CriticalSection.h"
 
-class RENDER_API ManagedStaticMeshGeometry : public StaticMeshGeometry
+
+/*
+	Light wrapper around HStaticMeshGeometry to define higher level loading state and 
+	cache storage inside FStaticGeometryManager.
+*/
+class RENDER_API HManagedStaticMeshGeometry : public HStaticMeshGeometry
 {
-	friend class StaticMeshGeometryRef;
-	friend class StaticGeometryManager;
+	friend class FStaticGeometryManager;
 public:
-	ManagedStaticMeshGeometry() = default;
-	virtual ~ManagedStaticMeshGeometry() = default;
-
-	void WaitForLoad() const;
+	virtual ~HManagedStaticMeshGeometry()
+	{
+		m_IsValid = false;
+		m_IsLoading = false;
+	}
+	void WaitForLoad()	const;
+	bool IsValid()		const { return m_IsValid; }
 
 protected:
-	ManagedStaticMeshGeometry(const std::string& HashName)
-		: m_MapKey(HashName)
+	HManagedStaticMeshGeometry( const String& HashName )
+		: m_MapKey( HashName )
+		, m_IsValid( false )
+		, m_IsLoading( true )
 	{
-	}
-	void SetLoadCompleted(bool Completed)
-	{
-		m_IsLoading = !Completed;
 	}
 
-protected:
-	bool IsValid(void) const { return m_IsValid; }
+	void SetLoadCompleted( bool IsCompleted )
+	{
+		m_IsLoading = !IsCompleted;
+		m_IsValid = IsCompleted;
+	}
+
 	void Unload();
 
-	std::string m_MapKey; // For deleting from the map later.
+private:
+	String m_MapKey; // For deleting from the map later.
 	bool m_IsValid;
 	bool m_IsLoading;
-	uint64 m_ReferenceCount;
+
 };
+typedef std::shared_ptr<HManagedStaticMeshGeometry> StaticMeshGeometryRef;
+typedef StaticMeshGeometryRef HStaticMesh;
 
 
-class RENDER_API StaticMeshGeometryRef
+/*
+	Keeps track of the static mesh geometry currently loaded in the world.
+*/
+class RENDER_API FStaticGeometryManager
 {
 public:
-	StaticMeshGeometryRef(const StaticMeshGeometryRef& ref);
-	StaticMeshGeometryRef(ManagedStaticMeshGeometry* tex = nullptr);
-	~StaticMeshGeometryRef();
-	StaticMeshGeometryRef& operator=(const StaticMeshGeometryRef& Other)
+	FStaticGeometryManager()
 	{
-		this->m_Ref = Other.m_Ref;
-		return *this;
+	}
+	~FStaticGeometryManager()
+	{
 	}
 
+	StaticMeshGeometryRef LoadHAssetMeshFromFile( const String& FilePath );
 
-	void operator= (std::nullptr_t);
-	void operator= (StaticMeshGeometryRef& rhs);
+	/*
+		Destroys a mesh from the cache and returns true if succeeded, false if not.
+	*/
+	bool DestroyMesh( const String& Key );
 
-	// Check that this points to a valid peice of static geometry (which loaded successfully)
-	bool IsValid() const;
+	/*
+		Checks if a mesh exists in the cache and returns true if it does, false if not.
+	*/
+	bool MeshExists( const String& Name ) const;
 
-	// Get the texture pointer.  Client is responsible to not dereference
-	// null pointers.
-	StaticMeshGeometry* Get();
-
-	StaticMeshGeometry* operator->();
-
-private:
-	ManagedStaticMeshGeometry* m_Ref;
-};
-
-namespace ofbx
-{
-	struct Mesh;
-}
-
-class RENDER_API StaticGeometryManager
-{
-public:
-	StaticGeometryManager() = default;
-	~StaticGeometryManager() = default;
-
-	void LoadFBXFromFile(const char* FilePath);
-	void DestroyMesh(const String& Key);
-	bool MeshExists(const String& Name);
+	/*
+		Destroys all meshes in the cache.
+	*/
 	void FlushCache();
 
-	StaticMeshGeometryRef GetStaticMeshByName(const std::string& Name)
-	{
-		return m_ModelCache.at(Name).get();
-	}
+	StaticMeshGeometryRef GetStaticMeshByName( const String& Name );
+	StaticMeshGeometryRef RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
 
-	StaticMeshGeometryRef RegisterGeometry(const std::string& Name, void* Verticies, uint32 VertexDataSizeInBytes, uint32 NumVerticies, uint32 VertexSize, void* Indices, uint32 IndexDataSizeInBytes, uint32 NumIndices);
-
-protected:
-	void ParseFBXMesh(const ofbx::Mesh& Mesh, std::vector<struct Vertex3D>& OutVerticies, std::vector<uint32>& OutIndices);
 
 private:
-	std::map< String, std::unique_ptr<ManagedStaticMeshGeometry> > m_ModelCache;
 	CriticalSection m_MapMutex;
+	std::unordered_map< String, StaticMeshGeometryRef > m_ModelCache;
+
 };
+
+
+//
+// Inline function implementations
+//
+
+inline StaticMeshGeometryRef FStaticGeometryManager::GetStaticMeshByName( const String& Name )
+{
+	auto Iter = m_ModelCache.find( Name );
+	if (Iter != m_ModelCache.end())
+	{
+		return m_ModelCache.at( Name );
+	}
+	else
+	{
+		HE_ASSERT( false );
+	}
+
+	return NULL;
+}
+
+inline bool FStaticGeometryManager::DestroyMesh( const String& Key )
+{
+	auto Iter = m_ModelCache.find( Key );
+	if (Iter != m_ModelCache.end())
+	{
+		ScopedCriticalSection Guard( m_MapMutex );
+		m_ModelCache.erase( Iter );
+		return true;
+	}
+
+	return false;
+}
+
+inline bool FStaticGeometryManager::MeshExists( const String& Name ) const
+{
+	auto Iter = m_ModelCache.find( Name );
+	return Iter != m_ModelCache.end();
+}
+
+inline void FStaticGeometryManager::FlushCache()
+{
+	R_LOG( Warning, TEXT( "Model cache being flushed!" ) );
+	ScopedCriticalSection Guard( m_MapMutex );
+
+	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
+	{
+		Iter->second.reset();
+	}
+	m_ModelCache.clear();
+}

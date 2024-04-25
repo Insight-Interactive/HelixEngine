@@ -5,12 +5,12 @@
 namespace StringHelper
 {
 	/*
-		Convert a UTF-8 string to a UTF-16 wide string.
+		Converts a UTF-8 string to a UTF-16 wide string.
 	*/
 	WString UTF8ToUTF16(const String& str);
 
 	/*
-		Convert a UTF-16 string to a UTF-8 wide string.
+		Converts a UTF-16 wide string to a UTF-8 string.
 	*/
 	String UTF16ToUTF8(const WString& wStr);
 

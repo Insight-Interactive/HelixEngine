@@ -2,7 +2,7 @@
 
 #include "MathCore.h"
 
-struct Vertex3D
+struct FVertex3D
 {
 	FVector3 Position;
 	FVector3 Normal;
@@ -12,13 +12,24 @@ struct Vertex3D
 	FVector2 UV0;
 };
 
-struct Vertex2D
+struct FVertex2D
 {
 	FVector2 Position;
 	FVector2 UVs;
 };
 
-struct SimpleVertex3D
+struct FSimpleVertex3D
 {
 	FVector3 Position;
+};
+
+struct FTextVertex2D
+{
+	FTextVertex2D( FVector4& _Position, FVector4& _UVs, FVector4& _Color )
+		: Position( _Position ), UVs( _UVs ), Color( _Color ) {}
+
+	FTextVertex2D( float r, float g, float b, float a, float u, float v, float tw, float th, float x, float y, float w, float h ) : Color( r, g, b, a ), UVs( u, v, tw, th ), Position( x, y, w, h ) {}
+	FVector4 Position;
+	FVector4 UVs;
+	FVector4 Color;
 };

@@ -2,8 +2,31 @@
 
 #include "Logger.h"
 
+#include "CriticalSection.h"
+
+
+// Output Buffer
+//
+
+void OutputBuffer::FlushBuffer()
+{
+	m_Stream.str( TEXT( "" ) );
+}
+
+HName OutputBuffer::GetStringBuffer()
+{
+	return m_Stream.str();
+}
+
+
+// Logger
+//
+
+OutputBuffer Logger::SOutputBuffer;
+CriticalSection GStreamGuard;
+
 Logger::Logger()
-	: m_UseConsole(true)
+	: m_UseConsole( false )
 {
 }
 
@@ -14,7 +37,7 @@ Logger::~Logger()
 void Logger::Initialize(TChar* Name)
 {
 	SetLoggerName(Name);
-	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: {%s}"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
+	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: %s"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
 }
 
 void Logger::SetLoggerName(TChar* Name)
@@ -59,24 +82,33 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		PrintBuffer(TraceBuffer, TEXT("[%s][Critical] - "), GetLoggerName());
 		break;
 	default:
-		//PrintBuffer(TraceBuffer, TEXT("Invalid log severity given to logger. Choose one option from ELogSeverity enum."));
+		PrintBuffer(TraceBuffer, TEXT("Invalid log severity given to logger. Choose one option from ELogSeverity enum."));
 		break;
 	}
 
-	// Ensure the buffers are null terminated to avoid MSVC-C6054.
+	// Ensure the buffers are null terminated.
 	TraceBuffer[kMaxLogLength - 1] = '\0';
 	OutputBuffer[kMaxLogLength - 1] = '\0';
 
-	if (GetShouldUseConsole())
-	{
-		Printf(TraceBuffer);
-		Printf(OutputBuffer);
-		Printf(TEXT("\n"));
-	}
 	// Print message
-#if _MSC_VER
-	OutputDebugString(TraceBuffer);
-	OutputDebugString(OutputBuffer);
-	OutputDebugString(TEXT("\n"));
+	{
+		ScopedCriticalSection StreamGuard( GStreamGuard );
+		SOutputBuffer << TraceBuffer;
+		SOutputBuffer << OutputBuffer;
+		SOutputBuffer << TEXT( "\n" );
+	}
+	if (m_UseConsole)
+	{
+		Printf( TraceBuffer );
+		Printf( OutputBuffer );
+		Printf( TEXT("\n") );
+	}
+#if HE_COMPILE_MSVC
+	if ( IsDebuggerPresent() )
+	{
+		OutputDebugString(TraceBuffer);
+		OutputDebugString(OutputBuffer);
+		OutputDebugString(TEXT("\n"));
+	}
 #endif
 }

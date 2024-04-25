@@ -8,9 +8,9 @@
 {
 	// Set the working directory of the application no matter what environment we are running in.
 	TChar Path[HE_MAX_PATH];
-	System::GetWorkingDirectory(HE_MAX_PATH, Path);
-	System::SetWorkingDirectory(Path);
-	
+	System::GetWorkingDirectory( HE_MAX_PATH, Path );
+	System::SetWorkingDirectory( Path );
+
 	return true;
 }
 
@@ -38,4 +38,16 @@
 	fclose(pFile);
 
 	return Data;
+}
+
+/*static*/ bool FileSystem::DoesFileExist( const char* Filepath )
+{
+	FILE* Result = NULL;
+	fopen_s( &Result, Filepath, "r" );
+	if (Result != NULL)
+	{
+		fclose( Result );
+		return true;
+	}
+	return false;
 }

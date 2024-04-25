@@ -2,8 +2,46 @@
 
 //#include "CoreFwd.h"
 #include <memory>
+//using Ref = std::shared_ptr<T>;
 template <typename T>
-using Ref = std::shared_ptr<T>;
+class CORE_API Ref
+{
+public:
+	template <typename ... Args>
+	Ref( Args ... args )
+	{
+		m_Ptr = std::make_shared<T>( args... );
+	}
+
+	inline void Reset(T* pOther)
+	{
+		m_Ptr.reset( pOther );
+	}
+	
+	inline void Reset( )
+	{
+		m_Ptr.reset(  );
+	}
+
+	inline T* Get()
+	{
+		return m_Ptr.get();
+	}
+
+	inline bool operator != ( const Ref<T>& rhs )
+	{
+		return m_Ptr != rhs.m_Ptr;
+	}
+
+	inline T* operator ->()
+	{
+		return Get();
+	}
+
+private:
+	std::shared_ptr<T> m_Ptr;
+};
+
 //
 //template <typename DataType>
 //class CORE_API Ref

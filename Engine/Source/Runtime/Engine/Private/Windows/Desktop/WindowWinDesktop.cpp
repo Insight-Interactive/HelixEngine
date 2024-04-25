@@ -4,20 +4,24 @@
 #include "Engine/Window.h"
 
 #include "System.h"
-#include "Engine/HEngine.h"
+#include "Engine/Engine.h"
 
-#include "RenderContextFactoryD3D12.h"
 #include "RendererInitializer.h"
 #include "Input/InputEnums.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Engine/Event/EngineEvent.h"
 
+#include "Resource/resource.h"
+
+
+uint32 FWindow::SWindowInstanceCount = 0;
+CriticalSection FWindow::SWindowInstanceCounterGuard;
 
 LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 
-Window::Window()
+FWindow::FWindow()
 	: m_hWindowHandle( NULL )
 	, m_WindowMode( WM_Windowed )
 {
@@ -25,30 +29,26 @@ Window::Window()
 	ZeroMemory( &m_DebugName, sizeof( m_DebugName ) );
 }
 
-Window::Window( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, Window* pParent )
-	: m_hWindowHandle( NULL )
-	, m_WindowMode( WM_Windowed )
+FWindow::FWindow( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, FWindow* pParent )
+	: FWindow()
 {
-	ZeroMemory( &m_WindowClassName, sizeof( m_WindowClassName ) );
-	ZeroMemory( &m_DebugName, sizeof( m_DebugName ) );
-
-	Description Desc;
-	Desc.Title = Title;
-	Desc.Width = Width;
-	Desc.Height = Height;
-	Desc.bHasTitleBar = bHasTitleBar;
-	Desc.bShowImmediate = bShowImmediate;
-	Desc.pParent = pParent;
+	FWindow::Description Desc;
+	Desc.Title				= Title;
+	Desc.Resolution.Width	= Width;
+	Desc.Resolution.Height	= Height;
+	Desc.bHasTitleBar		= bHasTitleBar;
+	Desc.bShowImmediate		= bShowImmediate;
+	Desc.pParent			= pParent;
 
 	Create( Desc );
 }
 
-Window::~Window()
+FWindow::~FWindow()
 {
 	Destroy();
 }
 
-void Window::Create( const Window::Description& Desc )
+void FWindow::Create( const FWindow::Description& Desc )
 {
 	SetLastError( 0 );
 
@@ -61,50 +61,50 @@ void Window::Create( const Window::Description& Desc )
 	m_Desc = Desc;
 
 	HINSTANCE WindowsAppInstance = GetModuleHandle( NULL );
-	static uint32 WindowInstanceCount = 0;
 
-	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), WindowInstanceCount );
 
-	CopyMemory( m_DebugName, Desc.Title, lstrlen( Desc.Title ) * sizeof( TChar ) );
+	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), SWindowInstanceCount );
+
+	TCharStrCpy( m_DebugName, Desc.Title );
 	HE_LOG( Log, TEXT( "Registering Windows Desktop window with title:  %s  (Class: %s)" ), Desc.Title ? Desc.Title : TEXT( "Unnamed window" ), m_WindowClassName );
 
 	// Resources
-	LPWSTR Cursor = IDC_ARROW;
+	LPWSTR Cursor	= IDC_ARROW;
+	LPWSTR Icon		= MAKEINTRESOURCE( IDI_HELIX );
 
-	WNDCLASSEX wc = {};
-	wc.cbSize			= sizeof( WNDCLASSEX );
-	wc.lpfnWndProc		= WindowProceedure;
-	wc.hInstance		= WindowsAppInstance;
-	wc.lpszClassName	= m_WindowClassName;
-	wc.hCursor			= LoadCursor( NULL, Cursor );
-	::RegisterClassEx( &wc );
-	HE_ASSERT( GetLastError() == 0 );
+	WNDCLASSEX WinClass = {};
+	WinClass.cbSize			= sizeof( WinClass );
+	WinClass.lpfnWndProc	= WindowProceedure;
+	WinClass.hInstance		= WindowsAppInstance;
+	WinClass.lpszClassName	= m_WindowClassName;
+	WinClass.hIcon			= LoadIcon( WindowsAppInstance, Icon );
+	WinClass.hCursor		= LoadCursor( NULL, Cursor );
+	::RegisterClassEx( &WinClass );
+	DWORD Err = GetLastError();
+	if (Err == 0)
+	{
+		ScopedCriticalSection Guard( SWindowInstanceCounterGuard );
+		SWindowInstanceCount++;
+	}
+	HE_ASSERT( Err == 0 );
 
 
 	// Assemble a rect to align the window with the center to the screen.
-	RECT WindowRect;
-	ZeroMemory( &WindowRect, sizeof( RECT ) );
-	int centerScreenX = ::GetSystemMetrics( SM_CXSCREEN ) / 2 - m_Desc.Width / 2;
-	int centerScreenY = ::GetSystemMetrics( SM_CYSCREEN ) / 2 - m_Desc.Height / 2;
-	WindowRect.left = centerScreenX;
-	WindowRect.top = centerScreenY + 35;
-	WindowRect.right = WindowRect.left + m_Desc.Width;
-	WindowRect.bottom = WindowRect.top + m_Desc.Height;
-	::AdjustWindowRect( &WindowRect, WS_OVERLAPPEDWINDOW, FALSE );
+	FRect WindowRect = BuildCenterScreenAlignedRect( m_Desc.Resolution );
 
 	m_WindowStyle = m_Desc.bHasTitleBar ? WS_OVERLAPPEDWINDOW : WS_POPUPWINDOW | WS_VISIBLE;
-	HWND hParent = m_Desc.pParent ? (HWND)m_Desc.pParent->GetNativeWindow() : NULL;
+	HWND hParent = m_Desc.pParent ? *(HWND*)m_Desc.pParent->GetNativeWindow() : NULL;
 
 	m_hWindowHandle = ::CreateWindowEx(
-		NULL,					// Window Styles
-		m_WindowClassName,		// Window Class
-		m_Desc.Title,			// Window Title
-		m_WindowStyle,			// Window Style
+		NULL,					// FWindow ExStyles
+		m_WindowClassName,		// FWindow Class
+		m_Desc.Title,			// FWindow Title
+		m_WindowStyle,			// FWindow Style
 
-		WindowRect.left,						// Start X
-		WindowRect.top,							// Start Y
-		WindowRect.right - WindowRect.left,		// Width
-		WindowRect.bottom - WindowRect.top,		// Height
+		WindowRect.Left,						// Start X
+		WindowRect.Top,							// Start Y
+		WindowRect.Right - WindowRect.Left,		// Width
+		WindowRect.Bottom - WindowRect.Top,		// Height
 
 		hParent,				// Parent window
 		NULL,					// Menu
@@ -114,18 +114,19 @@ void Window::Create( const Window::Description& Desc )
 
 	if (m_Desc.bHasTitleBar)
 		SetTitle( m_Desc.Title );
-	//else
-	//	SetWindowLong(m_hWindowHandle, GWL_STYLE, 0);
 
 	if (Desc.bShowImmediate)
 		Show();
 
+	if (m_Desc.bAllowDropFiles)
+		DragAcceptFiles( m_hWindowHandle, TRUE );
+
 	CreateSwapChain();
 
-	WindowInstanceCount++;
+	MakeMoueWindowAssociation();
 }
 
-void Window::Destroy()
+void FWindow::Destroy()
 {
 	if (IsValid())
 	{
@@ -149,44 +150,44 @@ void Window::Destroy()
 			return;
 		}
 
-		HE_SAFE_DELETE_PTR( m_pSwapChain );
+		m_SwapChain.UnInitialize();
 	}
 }
 
-void Window::Close()
+void FWindow::Close()
 {
 	WindowClosedEvent e;
 	EmitEvent( e );
 }
 
-bool Window::IsValid()
+bool FWindow::IsValid()
 {
 	return m_hWindowHandle != NULL;
 }
 
-bool Window::IsVisible()
+bool FWindow::IsVisible()
 {
 	return ::IsWindowVisible( m_hWindowHandle );
 }
 
-void Window::Show()
+void FWindow::Show()
 {
 	HE_LOG( Log, TEXT( "Showing window with name  %s." ), m_DebugName );
 	::ShowWindow( m_hWindowHandle, SW_SHOW );
 }
 
-void Window::Hide()
+void FWindow::Hide()
 {
 	HE_LOG( Log, TEXT( "Hiding window with name  %s." ), m_DebugName );
 	::ShowWindow( m_hWindowHandle, SW_HIDE );
 }
 
-bool Window::HasFocus()
+bool FWindow::HasFocus()
 {
 	return ::GetFocus() == m_hWindowHandle;
 }
 
-void Window::SetFocus()
+void FWindow::SetFocus()
 {
 	HE_LOG( Log, TEXT( "Setting window with name  %s  as focus." ), m_DebugName );
 
@@ -194,42 +195,62 @@ void Window::SetFocus()
 	::SetFocus( m_hWindowHandle );
 }
 
-void Window::Maximize()
+void FWindow::Maximize()
 {
 	ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
 }
 
-void Window::Minimize()
+void FWindow::Minimize()
 {
 	ShowWindow( m_hWindowHandle, SW_MINIMIZE );
 }
 
-void Window::PresentOneFrame()
+void FWindow::PresentOneFrame()
 {
-	m_pSwapChain->SwapBuffers();
+	m_SwapChain.SwapBuffers();
 }
 
-bool Window::SetTitle( const TChar* NewTitle )
+bool FWindow::SetTitle( const TChar* NewTitle )
 {
 	if (!m_Desc.bHasTitleBar)
 	{
-		HE_LOG( Warning, TEXT( "Trying to set a title for a window that has no title bar. Attempting to override..." ) );
+		HE_LOG( Warning, TEXT( "Trying to set a title (%s) for a window (%s) that has no title bar!" ), NewTitle, m_DebugName );
+		return false;
 	}
 
 	return ::SetWindowText( m_hWindowHandle, NewTitle );
 }
 
-IColorBuffer* Window::GetRenderSurface()
+void FWindow::GetTitle( TChar* OutTitleBuffer, uint32 BufferLength ) const
 {
-	return m_pSwapChain->GetColorBufferForCurrentFrame();
+	if (HasTitleBar())
+	{
+		GetWindowText( m_hWindowHandle, OutTitleBuffer, BufferLength );
+	}
+	else
+	{
+		OutTitleBuffer = NULL;
+		BufferLength = -1;
+	}
 }
 
-void* Window::GetNativeWindow()
+void FWindow::AllowFileDrops( bool bAllow )
 {
-	return RCast<void*>(m_hWindowHandle);
+	m_Desc.bAllowDropFiles = bAllow;
+	DragAcceptFiles( m_hWindowHandle, (BOOL)bAllow );
 }
 
-void Window::SetParent( Window* pParent )
+FColorBuffer& FWindow::GetRenderSurface()
+{
+	return m_SwapChain.GetColorBufferForCurrentFrame();
+}
+
+void* FWindow::GetNativeWindow()
+{
+	return (void*)&m_hWindowHandle;
+}
+
+void FWindow::SetParent( FWindow* pParent )
 {
 	HWND hParent = NULL;
 	if (pParent != NULL && pParent->IsValid())
@@ -240,83 +261,191 @@ void Window::SetParent( Window* pParent )
 	::SetParent( m_hWindowHandle, hParent );
 }
 
-void Window::OnWindowModeChanged()
+FRect FWindow::GetRect() const
 {
-	switch (GetWindowMode())
+	RECT Rect = {};
+	GetWindowRect( m_hWindowHandle, &Rect );
+	return FRect{ Rect.left, Rect.top, Rect.right, Rect.bottom };
+}
+
+void FWindow::MakeMoueWindowAssociation()
+{
+	RAWINPUTDEVICE RID = {};
+	RID.usUsagePage = HID_USAGE_PAGE_GENERIC;
+	RID.usUsage		= HID_USAGE_GENERIC_MOUSE;
+	RID.dwFlags		= 0;
+	RID.hwndTarget	= NULL;
+	if (!RegisterRawInputDevices( &RID, 1, sizeof( RID ) ))
 	{
-	case EWindowMode::WM_FullScreen:
-	{
-		//
-		// Bring us into fullscreen mode.
-		//
-		HE_LOG( Log, TEXT( "Entering fullscreen mode." ) );
-
-		// Save the old window rect so we can restore it when exiting fullscreen mode.
-		::GetWindowRect( m_hWindowHandle, &m_WindowRect );
-
-		// Make the window borderless so that the client area can fill the screen.
-		SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
-
-		// Get the settings of the primary display.
-		DEVMODE DevMode = {};
-		DevMode.dmSize = sizeof( DEVMODE );
-		EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
-
-		RECT FullscreenWindowRect = {
-			DevMode.dmPosition.x,
-			DevMode.dmPosition.y,
-			DevMode.dmPosition.x + SCast<LONG>( DevMode.dmPelsWidth ),
-			DevMode.dmPosition.y + SCast<LONG>( DevMode.dmPelsHeight )
-		};
-
-		SetWindowPos(
-			m_hWindowHandle,
-			HWND_TOPMOST,
-			FullscreenWindowRect.left,
-			FullscreenWindowRect.top,
-			FullscreenWindowRect.right,
-			FullscreenWindowRect.bottom,
-			SWP_FRAMECHANGED | SWP_NOACTIVATE );
-
-		ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
-
-		m_pSwapChain->ToggleFullScreen( !m_pSwapChain->GetIsFullScreenEnabled() );
-	}
-	break;
-	case EWindowMode::WM_Windowed:
-	{
-		::SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle );
-
-		::SetWindowPos(
-			m_hWindowHandle,
-			HWND_NOTOPMOST,
-			m_WindowRect.left,
-			m_WindowRect.top,
-			m_WindowRect.right - m_WindowRect.left,
-			m_WindowRect.bottom - m_WindowRect.top,
-			SWP_FRAMECHANGED | SWP_NOACTIVATE );
-
-		::ShowWindow( m_hWindowHandle, SW_NORMAL );
-
-		HE_LOG( Log, TEXT( "Exiting fullscreen mode." ) );
-	}
-	break;
+		HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
 	}
 }
 
-void Window::CreateSwapChain()
+/*static*/ FRect FWindow::BuildCenterScreenAlignedRect( const FResolution& WindowResolution )
 {
-	RendererInitializer::InitializeSwapChain( &m_pSwapChain, GetNativeWindow(), GetWidth(), GetHeight() );
+	FRect WindowRect = { };
+	int CenterScreenX = ::GetSystemMetrics( SM_CXSCREEN ) / 2 - WindowResolution.Width / 2;
+	int CenterScreenY = ::GetSystemMetrics( SM_CYSCREEN ) / 2 - WindowResolution.Height / 2;
+	WindowRect.Left		= CenterScreenX;
+	WindowRect.Top		= CenterScreenY + 35;
+	WindowRect.Right	= WindowRect.Left + WindowResolution.Width;
+	WindowRect.Bottom	= WindowRect.Top + WindowResolution.Height;
+
+	return WindowRect;
+}
+
+void FWindow::OnWindowModeChanged()
+{
+	switch (GetWindowMode())
+	{
+	case EWindowMode::WM_Borderless:
+		{
+			//
+			// Bring us into borderless mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering borderless mode." ), m_DebugName );
+
+			GetSwapChain()->ToggleFullScreen( true );
+
+			// Make the window borderless so that the client area can fill the screen.
+			SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME) );
+
+			// Get the settings of the primary display.
+			DEVMODE DevMode = {};
+			DevMode.dmSize = sizeof( DEVMODE );
+			EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
+
+			RECT FullscreenWindowRect =
+			{
+				DevMode.dmPosition.x,
+				DevMode.dmPosition.y,
+				DevMode.dmPosition.x + (LONG)DevMode.dmPelsWidth,
+				DevMode.dmPosition.y + (LONG)DevMode.dmPelsHeight
+			};
+
+			SetWindowPos(
+				m_hWindowHandle,
+				HWND_TOPMOST,
+				FullscreenWindowRect.left,
+				FullscreenWindowRect.top,
+				FullscreenWindowRect.right,
+				FullscreenWindowRect.bottom,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+			ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+
+			break;
+		}
+	case EWindowMode::WM_FullScreen:
+		{
+			//
+			// Bring us into fullscreen mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering fullscreen mode." ), m_DebugName );
+
+			GetSwapChain()->ToggleFullScreen( true );
+
+			// Get the settings of the primary display.
+			DEVMODE DevMode = {};
+			DevMode.dmSize = sizeof( DEVMODE );
+			EnumDisplaySettings( nullptr, ENUM_CURRENT_SETTINGS, &DevMode );
+
+			RECT FullscreenWindowRect = 
+			{
+				DevMode.dmPosition.x,
+				DevMode.dmPosition.y,
+				DevMode.dmPosition.x + (LONG) DevMode.dmPelsWidth,
+				DevMode.dmPosition.y + (LONG) DevMode.dmPelsHeight 
+			};
+
+			SetWindowPos(
+				m_hWindowHandle,
+				HWND_TOPMOST,
+				FullscreenWindowRect.left,
+				FullscreenWindowRect.top,
+				FullscreenWindowRect.right,
+				FullscreenWindowRect.bottom,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+			ShowWindow( m_hWindowHandle, SW_MAXIMIZE );
+		
+			break;
+		}
+	case EWindowMode::WM_Windowed:
+		{
+			//
+			// Bring us into windowed mode.
+			//
+			HE_LOG( Log, TEXT( "Window \"%s\" Entering window mode." ), m_DebugName );
+
+			GetSwapChain()->ToggleFullScreen( false );
+
+			::SetWindowLong( m_hWindowHandle, GWL_STYLE, m_WindowStyle );
+		
+			FRect DefaultRect = FWindow::BuildCenterScreenAlignedRect( GCommonResolutions[k720p] );
+
+			::SetWindowPos(
+				m_hWindowHandle,
+				HWND_NOTOPMOST,
+				DefaultRect.Left,
+				DefaultRect.Top,
+				DefaultRect.Right  - DefaultRect.Left,
+				DefaultRect.Bottom - DefaultRect.Top,
+				SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+		
+			::ShowWindow( m_hWindowHandle, SW_NORMAL );
+		
+			break;
+		}
+	default:
+		break;
+	}
+
+	// Resize the window's swapchain.
+	// Note: Let WM_SIZE handle the swapchain resize. 
+
+}
+
+void FWindow::CreateSwapChain()
+{
+	FRendererInitializer::InitializeSwapChain( m_SwapChain, GetNativeWindow(), GetWidth(), GetHeight() );
 }
 
 //
 // Windows Desktop platform
 //
 
+WPARAM MapLeftRightKeys( WPARAM vk, LPARAM lParam )
+{
+	WPARAM NewVk = vk;
+
+	UINT Scancode = (lParam & 0x00ff0000) >> 16;
+	int Extended = (lParam & 0x01000000) != 0;
+
+	switch (vk) {
+	case VK_SHIFT:
+		NewVk = MapVirtualKey( Scancode, MAPVK_VSC_TO_VK_EX );
+		break;
+	case VK_CONTROL:
+		NewVk = Extended ? VK_RCONTROL : VK_LCONTROL;
+		break;
+	case VK_MENU:
+		NewVk = Extended ? VK_RMENU : VK_LMENU;
+		break;
+	default:
+		// not a key we map from generic to left/right specialized
+		//  just return it.
+		NewVk = vk;
+		break;
+	}
+
+	return NewVk;
+}
 
 LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	Window* pWindow = (Window*)GetWindowLongPtr( hWnd, GWLP_USERDATA );
+	FWindow* pWindow = (FWindow*)GetWindowLongPtr( hWnd, GWLP_USERDATA );
 
 	switch (uMsg)
 	{
@@ -327,23 +456,52 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		return 1;
 	}
 	// ------------------------
-	// Window Events
+	// FWindow Events
 	// ------------------------
-	case WM_EXITSIZEMOVE:
+#if HE_WITH_EDITOR
+	case WM_DROPFILES:
 	{
+		UINT iFile = 0;
+		WCHAR lpszFile[MAX_PATH];
+		UINT cch = MAX_PATH;
+		UINT ret = DragQueryFile( (HDROP)wParam, iFile, lpszFile, cch );
+		
+		WindowFileDropEvent e( lpszFile );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
+#endif // HE_WITH_EDITOR
+	case WM_SIZE:
+	{
+		switch (wParam)
+		{
+		case SIZE_MAXIMIZED:
+		{
+			WindowMaximizedEvent e;
+			pWindow->EmitEvent( e );
+			break;
+		}
+		case SIZE_MINIMIZED:
+		{
+			WindowMinimizedEvent e;
+			pWindow->EmitEvent( e );
+			break;
+		}
+		default:
+			break;
+		}
+
 		// Get the new window dimensions.
-		RECT ClientRect = {};
-		GetClientRect( hWnd, &ClientRect );
-		uint32 NewWidth ( ClientRect.right - ClientRect.left );
-		uint32 NewHeight( ClientRect.bottom - ClientRect.top );
+		uint32 NewWidth		= LOWORD( lParam );
+		uint32 NewHeight	= HIWORD( lParam );
 
 		// Resize the window's swapchain.
 		pWindow->GetSwapChain()->Resize( NewWidth, NewHeight );
-			
+
 		// Emit the resize event.
 		WindowResizeEvent e( NewWidth, NewHeight );
 		pWindow->EmitEvent( e );
-		
+
 		return 0;
 	}
 	case WM_KILLFOCUS:
@@ -366,9 +524,33 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 	// ------------------------
 	// Mouse Messages
 	// ------------------------
+	case WM_INPUT:
+	{
+		UINT DataSize = 0;
+		::GetRawInputData( (HRAWINPUT)lParam, RID_INPUT, NULL, &DataSize, sizeof( RAWINPUTHEADER ) );
+		
+		if (DataSize > 0)
+		{
+			void* RawData = HE_StackAlloc( DataSize );
+			if (::GetRawInputData( (HRAWINPUT)lParam, RID_INPUT, RawData, &DataSize, sizeof( RAWINPUTHEADER ) ) == DataSize)
+			{
+				RAWINPUT* pInputData = RCast<RAWINPUT*>( RawData );
+				if (pInputData->header.dwType == RIM_TYPEMOUSE)
+				{
+					MouseRawPointerMovedEvent e( (float)pInputData->data.mouse.lLastX, (float)pInputData->data.mouse.lLastY );
+					pWindow->EmitEvent( e );
+				}
+			}
+		}
+		// Cleanup the rids.
+		return DefWindowProc( hWnd, uMsg, wParam, lParam );
+	}
+	// ------------------------
+	// Mouse Messages
+	// ------------------------
 	case WM_MOUSEMOVE:
 	{
-		MousePositionMovedEvent e( LOWORD( lParam ), HIWORD( lParam ) );
+		MousePositionMovedEvent e( (float)GET_X_LPARAM( lParam ), (float)GET_Y_LPARAM( lParam ) );
 		pWindow->EmitEvent( e );
 		return 0;
 	}
@@ -408,18 +590,34 @@ LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		pWindow->EmitEvent( e );
 		return 0;
 	}
+	case WM_MOUSEWHEEL:
+	{
+		float YOffset = GET_WHEEL_DELTA_WPARAM( wParam ) / 120.0f;
+		MouseWheelScrolledEvent e( 0.f, YOffset );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
+	case WM_MOUSEHWHEEL:
+	{
+		float XOffset = GET_WHEEL_DELTA_WPARAM( wParam ) / 120.0f;
+		MouseWheelScrolledEvent e( XOffset, 0.f );
+		pWindow->EmitEvent( e );
+		return 0;
+	}
 	// ------------------------
 	// Key Messages
 	// ------------------------
 	case WM_KEYDOWN:
 	{
-		KeyPressedEvent e( (int32)wParam, (int16)lParam );
+		WPARAM MappedKey = MapLeftRightKeys( wParam, lParam );
+		KeyPressedEvent e( (int32)MappedKey, (int16)lParam );
 		pWindow->EmitEvent( e );
 		return 0;
 	}
 	case WM_KEYUP:
 	{
-		KeyReleasedEvent e( (int32)wParam );
+		WPARAM MappedKey = MapLeftRightKeys( wParam, lParam );
+		KeyReleasedEvent e( (int32)MappedKey );
 		pWindow->EmitEvent( e );
 		return 0;
 	}

@@ -4,7 +4,7 @@
 #include "CommonEnums.h"
 
 
-struct ViewPort
+struct FViewPort
 {
 	float TopLeftX;
 	float TopLeftY;
@@ -14,7 +14,7 @@ struct ViewPort
 	float MaxDepth;
 };
 
-struct Rect
+struct FRect
 {
 	int32 Left;
 	int32 Top;
@@ -22,20 +22,20 @@ struct Rect
 	int32 Bottom;
 };
 
-struct SampleDesc
+struct FSampleDesc
 {
 	uint32 Count;
 	uint32 Quality;
 };
 
-struct MipRegion
+struct FMipRegion
 {
 	uint32 Width;
 	uint32 Height;
 	uint32 Depth;
 };
 
-struct ResourceDesc
+struct FResourceDesc
 {
 	EResourceDimension Dimension;
 	uint64 Alignment;
@@ -44,42 +44,41 @@ struct ResourceDesc
 	uint16 DepthOrArraySize;
 	uint16 MipLevels;
 	EFormat Format;
-	SampleDesc SampleDesc;
+	FSampleDesc SampleDesc;
 	ETextureLayout Layout;
 	EResourceFlags Flags;
-	MipRegion SamplerFeedbackMipRegion;
+	FMipRegion SamplerFeedbackMipRegion;
 };
 
-struct SwapChainDescription
+struct FSwapChainDesc
 {
 	uint32 Width;
 	uint32 Height;
-	uint32 BufferCount;
-	SampleDesc SampleDesc;
-	EFormat Format;
+	FSampleDesc SampleDesc;
+	ESwapchainBitDepth BackBufferColorDepth;
 	void* NativeWindow;
 };
 
-struct DepthStencilValue
+struct FDepthStencilValue
 {
 	float Depth;
 	uint8 Stencil;
 };
 
-struct ClearValue
+struct FClearValue
 {
 	EFormat Format;
 	float Color[4];
-	DepthStencilValue DepthStencil;
+	FDepthStencilValue DepthStencil;
 };
 
-struct ShaderByteCode
+struct FShaderByteCode
 {
 	const void* pShaderByteCode;
 	uint64 ByteCodeLength;
 };
 
-struct RenderTargetBlendDesc
+struct FRenderTargetBlendDesc
 {
 	bool BlendEnable;
 	bool LogicOpEnable;
@@ -93,21 +92,21 @@ struct RenderTargetBlendDesc
 	uint8 RenderTargetWriteMask;
 };
 
-struct SubResourceData
+struct FSubResourceData
 {
 	const void* pData;
 	uint64 RowPitch;
 	uint64 SlicePitch;
 };
 
-struct BlendDesc
+struct FBlendDesc
 {
 	bool AlphaToCoverageEnable;
 	bool IndependentBlendEnable;
-	RenderTargetBlendDesc  RenderTarget[8];
+	FRenderTargetBlendDesc  RenderTarget[8];
 };
 
-struct StencilOpDesc
+struct FStencilOpDesc
 {
 	EStencilOp StencilFailOp;
 	EStencilOp StencilDepthFailOp;
@@ -115,7 +114,7 @@ struct StencilOpDesc
 	EComparisonFunc StencilFunc;
 };
 
-struct DepthStencilStateDesc
+struct FDepthStencilStateDesc
 {
 	bool DepthEnable;
 	EDepthWriteMask DepthWriteMask;
@@ -123,12 +122,11 @@ struct DepthStencilStateDesc
 	bool StencilEnabled;
 	uint8 StencilReadMask;
 	uint8 StencilWriteMask;
-	StencilOpDesc FrontFace;
-	StencilOpDesc BackFace;
-
+	FStencilOpDesc FrontFace;
+	FStencilOpDesc BackFace;
 };
 
-struct RasterizerDesc
+struct FRasterizerDesc
 {
 	EFillMode FillMode;
 	ECullMode CullMode;
@@ -143,7 +141,7 @@ struct RasterizerDesc
 	EConseritiveRasterMode ConservativeRaster;
 };
 
-struct InputElementDesc
+struct FInputElementDesc
 {
 	char* SemanticName;
 	uint32 SemanticIndex;
@@ -154,37 +152,37 @@ struct InputElementDesc
 	uint32 InstanceDataStepRate;
 };
 
-struct InputLayoutDesc
+struct FInputLayoutDesc
 {
-	const InputElementDesc* pInputElementDescs;
+	const FInputElementDesc* pInputElementDescs;
 	uint32 NumElements;
 };
 
-struct PipelineStateDesc
+struct FPipelineStateDesc
 {
-	class IRootSignature* pRootSignature;
-	ShaderByteCode VertexShader;
-	ShaderByteCode PixelShader;
-	ShaderByteCode DomainShader;
-	ShaderByteCode HullShader;
-	ShaderByteCode GeometryShader;
-	BlendDesc BlendState;
+	class FRootSignature* pRootSignature;
+	FShaderByteCode VertexShader;
+	FShaderByteCode PixelShader;
+	FShaderByteCode DomainShader;
+	FShaderByteCode HullShader;
+	FShaderByteCode GeometryShader;
+	FBlendDesc BlendState;
 	uint32 SampleMask;
-	RasterizerDesc RasterizerDesc;
-	DepthStencilStateDesc DepthStencilState;
-	InputLayoutDesc InputLayout;
+	FRasterizerDesc RasterizerDesc;
+	FDepthStencilStateDesc DepthStencilState;
+	FInputLayoutDesc InputLayout;
 	EIndexBufferStripCutValue IBStripCutValue;
 	EPrimitiveTopologyType PrimitiveTopologyType;
 	uint32 NumRenderTargets;
 	EFormat RTVFormats[8];
 	EFormat DSVFormat;
-	SampleDesc SampleDesc;
+	FSampleDesc SampleDesc;
 	uint32 NodeMask;
 	void* CachedPSO;
 	EPipelineStateFlags Flags;
 };
 
-struct DescriptorRange
+struct FDescriptorRange
 {
 	EDescriptorRangeType Type;
 	uint32 NumDescriptors;
@@ -193,26 +191,26 @@ struct DescriptorRange
 	uint32 OffsetInDescriptorsFromTableStart;
 };
 
-struct RootDescriptorTable
+struct FRootDescriptorTable
 {
 	uint32 NumDescriptorRanges;
-	const DescriptorRange* pDescriptorRanges;
+	const FDescriptorRange* pDescriptorRanges;
 };
 
-struct RootConstants
+struct FRootConstants
 {
 	uint32 ShaderRegister;
 	uint32 RegisterSpace;
 	uint32 Num32BitValues;
 };
 
-struct RootDescriptor
+struct FRootDescriptor
 {
 	uint32 ShaderRegister;
 	uint32 RegisterSpace;
 };
 
-struct SamplerDesc
+struct FSamplerDesc
 {
 	EFilter Filter;
 	ETextureAddressMode AddressU;
@@ -226,7 +224,7 @@ struct SamplerDesc
 	float MaxLOD;
 };
 
-struct StaticSamplerDesc
+struct FStaticSamplerDesc
 {
 	EFilter Filter;
 	ETextureAddressMode AddressU;
@@ -243,38 +241,41 @@ struct StaticSamplerDesc
 	EShaderVisibility ShaderVisibility;
 };
 
-struct RootParameter
+struct FRootParameterDesc
 {
 	ERootParameterType ParameterType;
 	union
 	{
-		RootDescriptorTable DescriptorTable;
-		RootConstants Constants;
-		RootDescriptor Descriptor;
+		FRootDescriptorTable DescriptorTable;
+		FRootConstants Constants;
+		FRootDescriptor Descriptor;
 	};
 	EShaderVisibility ShaderVisibility;
 };
 
-struct RootSignatureDesc
+struct FRootSignatureDesc
 {
 	uint32 NumParams;
-	const RootParameter* pParameters;
+	const FRootParameterDesc* pParameters;
 	uint32 NumStaticSamplers;
-	const StaticSamplerDesc* pStaticSamplers;
+	const FStaticSamplerDesc* pStaticSamplers;
 	ERootSignatureFlags Flags;
 };
 
-struct CpuDescriptorHandle
+struct FCpuDescriptorHandle
 {
 	uint64 Ptr;
 };
 
-struct GpuDescriptorHandle
+struct FGpuDescriptorHandle
 {
 	uint64 Ptr;
 };
 
-struct Blob
+struct FResolution
 {
-
+	uint32 Width;
+	uint32 Height;
 };
+
+

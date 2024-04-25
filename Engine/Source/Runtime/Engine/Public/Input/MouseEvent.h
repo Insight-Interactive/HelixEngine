@@ -9,7 +9,7 @@ class MousePositionMovedEvent : public Event, public InputEvent
 {
 public:
 	MousePositionMovedEvent( float x, float y )
-		: InputEvent( MouseAnyMoved, IE_Moved )
+		: InputEvent( MousePositionMoved, IE_Moved )
 		, m_MouseX( x )
 		, m_MouseY( y ) 
 	{
@@ -34,37 +34,40 @@ private:
 };
 
 
-class MouseMovedEvent : public Event, public InputEvent
+class MouseRawPointerMovedEvent : public Event, public InputEvent
 {
 public:
-	MouseMovedEvent( float Value, DigitalInput KeyMapCode )
-		: InputEvent( KeyMapCode, IE_Moved )
-		, m_Value( Value )
+	MouseRawPointerMovedEvent( float X, float Y )
+		: InputEvent( MouseRawInput, IE_Moved )
+		, m_X( X )
+		, m_Y( Y )
 	{
 	}
 
-	inline float GetDelta() const { return m_Value; }
+	inline float GetX() const { return m_X; }
+	inline float GetY() const { return m_Y; }
 
 	String ToString() const override
 	{
 		std::stringstream ss;
-		ss << "MouseMovedEvent: " << m_Value;
+		ss << "MouseRawPointerMovedEvent: " << m_X << ", " << m_Y;
 		return ss.str();
 	}
 
-	EVENT_CLASS_TYPE( ET_MouseMoved )
+	EVENT_CLASS_TYPE( ET_RawMouseMoved )
 		EVENT_CLASS_CATEGORY( EC_Mouse | EC_Input )
 
 private:
-	float m_Value;
+	float m_X;
+	float m_Y;
 };
 
 
-class MouseScrolledEvent : public Event, public InputEvent
+class MouseWheelScrolledEvent : public Event, public InputEvent
 {
 public:
-	MouseScrolledEvent( float xOffset, float yOffset, DigitalInput KeyMapCode, EInputEvent EventType )
-		: InputEvent( KeyMapCode, EventType )
+	MouseWheelScrolledEvent( float xOffset, float yOffset )
+		: InputEvent( AnalogMouseScroll, IE_Moved )
 		, m_XOffset( xOffset )
 		, m_YOffset( yOffset ) 
 	{

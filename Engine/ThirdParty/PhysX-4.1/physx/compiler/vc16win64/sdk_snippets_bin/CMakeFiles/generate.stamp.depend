@@ -1,0 +1,15 @@
+# CMake generation dependency list for this directory.
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/ConfigureFileMT.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/GetCompilerAndPlatform.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/NvidiaBuildOptions.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/SetOutputPaths.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/CMakeLists.txt
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/SnippetRender.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/SnippetTemplate.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/SnippetUtils.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/SnippetVehicleTemplate.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/windows/CMakeLists.txt
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/windows/SnippetRender.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/windows/SnippetTemplate.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/windows/SnippetUtils.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/snippets/compiler/cmake/windows/SnippetVehicleTemplate.cmake

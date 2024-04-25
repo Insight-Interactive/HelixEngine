@@ -8,31 +8,31 @@ project ("HelixEd")
 	kind ("StaticLib")
 	language ("C++")
 	cppdialect ("C++17")
-	staticruntime ("Off")
+	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en-US")
-	defaultlanguage ("en-us")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
 	pchheader("HelixEdPCH.h")
 	pchsource("Private/PCH/HelixEdPCH.cpp")
 
-	files
-	{
-		"HelixEd.module.lua",
+	filter "configurations:DebugEditor or Development"
+		files
+		{
+			"HelixEd.module.lua",
 
-		"Public/**.h",
-		"Public/**.cpp",
-		"Public/**.inl",
-		"Private/**.h",
-		"Private/**.cpp",
-		"Private/**.inl",
+			"Public/**.h",
+			"Public/**.cpp",
+			"Public/**.inl",
+			"Private/**.h",
+			"Private/**.cpp",
+			"Private/**.inl",
 
-		-- Third Party 
+			-- Third Party 
 
-	}
+		}
 
 	includedirs
 	{
@@ -41,24 +41,28 @@ project ("HelixEd")
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 		heGetModulePublicDir( "Renderer" ),
+		heGetModulePublicDir( "Physics" ),
+		heGetModulePublicDir( "Scripting" ),
 
 		-- Generaly grabbing the engine runtime should never be done.
 		-- However, the editor needs it.
 		heGetEngineRuntimeModulePublicDir ( "Engine" ),
-		heGetEngineRuntimeModulePrivatecDir ( "Renderer" ),
+		heGetEngineRuntimeModulePrivateDir ( "Renderer" ),
 
 		-- Third Party 
 		heGetThirdPartyModule( "ImGui" ),
-	}
-
-	links
-	{
-		"Core",
+		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
+		heGetThirdPartyModule( "Rapidjson" )	.. "include/",
+		heGetThirdPartyModule( "PhysX-4.1" )	.. "physx/include/",
+		heGetThirdPartyModule( "PhysX-4.1" )	.. "pxshared/include/",
+		heGetThirdPartyModule( "LuaPlus" ),
+		heGetThirdPartyModule( "Lua535" ),
 	}
 
 	defines
 	{
 		"HELIXED_MODULE=1",
+		"R_WITH_D3D12=1",
 	}
 
 	flags
@@ -72,7 +76,7 @@ project ("HelixEd")
 		{
 		}
 	
-	filter { "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
+	filter { "platforms:Win64 or Win32 or Durango or Scorpio" }
 		postbuildcommands
 		{
 		}

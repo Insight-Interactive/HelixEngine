@@ -33,18 +33,19 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Engine.App">
       <uap:VisualElements
-        DisplayName="Helix Engine"
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
         Description="Generic Helix Engine application."
-        BackgroundColor="black">
+        BackgroundColor="black" DisplayName="Helix Engine">
         <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png" Square310x310Logo="Assets\Square310x310Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square310x310Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="black"/>
-        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
+        <uap:SplashScreen Image="SplashScreen.png"  BackgroundColor="black"/>
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png"  Notification="badge"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

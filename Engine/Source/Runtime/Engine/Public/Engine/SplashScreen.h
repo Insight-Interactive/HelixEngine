@@ -3,25 +3,31 @@
 #include "Engine/Window.h"
 
 #include "ModelManager.h"
-#include "ITextureManager.h"
+#include "TextureManager.h"
+#include "RootSignature.h"
+#include "PipelineState.h"
 
-class ICommandContext;
-class IRootSignature;
-class IPipelineState;
 
-class SplashScreen : public Window
+class FCommandContext;
+class FRootSignature;
+class FPipelineState;
+
+class FSplashScreen : public FWindow
 {
 public:
-	SplashScreen(const String& SplashTexturePath = "");
-	virtual ~SplashScreen();
+	FSplashScreen(const String& SplashTexturePath = "");
+	virtual ~FSplashScreen();
 
-	void Render( ICommandContext& CmdContext );
+	void Render( FCommandContext& CmdContext );
 
 	void EndFrame();
 
+	FViewPort& GetViewport();
+	FRect& GetScissorRect();
+
 protected:
-	ViewPort m_ViewPort;
-	Rect m_ScissorRect;
+	FViewPort m_ViewPort;
+	FRect m_ScissorRect;
 
 
 	enum
@@ -31,10 +37,10 @@ protected:
 
 	// Rendering Resources.
 	//
-	IRootSignature* m_pRootSig;
-	IPipelineState* m_pPipeline;
+	FRootSignature m_RootSig;
+	FPipelineState m_Pipeline;
 	StaticMeshGeometryRef m_ScreenQuadRef;
-	TextureRef m_SplashTexture;
+	HTexture m_SplashTexture;
 };
 
 
@@ -43,7 +49,17 @@ protected:
 //
 
 
-inline void SplashScreen::EndFrame()
+inline void FSplashScreen::EndFrame()
 {
 	PresentOneFrame();
+}
+
+inline FViewPort& FSplashScreen::GetViewport()
+{
+	return m_ViewPort;
+}
+
+inline FRect& FSplashScreen::GetScissorRect()
+{
+	return m_ScissorRect;
 }

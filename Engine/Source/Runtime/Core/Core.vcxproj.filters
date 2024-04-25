@@ -54,7 +54,16 @@
     <ClInclude Include="Public\FileSystem.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\FixedLoop.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Flag.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\FrameTimer.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GUID.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\Handle.h">
@@ -63,10 +72,19 @@
     <ClInclude Include="Public\Hash.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\JsonUtility.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\JsonUtility.inl">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Logger.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\MathCommon.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Path.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\Ref.h">
@@ -93,12 +111,18 @@
     <ClInclude Include="Public\TSingleton.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\ThreadPool.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\FileSystem.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Guid.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\Logger.cpp">
@@ -108,6 +132,9 @@
       <Filter>Private\PCH</Filter>
     </ClCompile>
     <ClCompile Include="Private\StringHelper.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\ThreadPool.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\Windows\CriticalSectionWinDesktop.cpp">

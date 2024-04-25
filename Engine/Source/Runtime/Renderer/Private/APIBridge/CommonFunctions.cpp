@@ -2,6 +2,7 @@
 
 #include "APIBridge/CommonFunctions.h"
 
+
 namespace APIBridge
 {
 
@@ -67,20 +68,22 @@ namespace APIBridge
 		HRESULT hr = S_OK;
 		IDXGISwapChain1* pTempSwapChain = NULL;
 #if HE_WINDOWS_DESKTOP
-		hr = (*ppInFactory)->CreateSwapChainForHwnd(pDevice, SCast<HWND>(NativeWindow), Desc, NULL, NULL, &pTempSwapChain);
-		ThrowIfFailedMsg(hr, TEXT("Failed to create swap chain for HWND!"));
+		hr = (*ppInFactory)->CreateSwapChainForHwnd(pDevice, *(HWND*)NativeWindow, Desc, NULL, NULL, &pTempSwapChain);
+		ThrowIfFailedMsg(hr, "Failed to create swap chain for HWND!");
 		if (AllowTearing)
 		{
-			hr = (*ppInFactory)->MakeWindowAssociation(SCast<HWND>(NativeWindow), DXGI_MWA_NO_ALT_ENTER);
-			ThrowIfFailedMsg(hr, TEXT("Failed to Make Window Association"));
+			hr = (*ppInFactory)->MakeWindowAssociation(SCast<HWND>(NativeWindow), 0);
+			ThrowIfFailedMsg(hr, "Failed to Make FWindow Association");
 		}
 #elif HE_WINDOWS_UNIVERSAL
+		//CoreWindow* pCoreWindow = RCast<CoreWindow*>( NativeWindow );
+		//void* abi = winrt::get_abi( *pCoreWindow );
 		hr = (*ppInFactory)->CreateSwapChainForCoreWindow(pDevice, RCast<::IUnknown*>(NativeWindow), Desc, NULL, &pTempSwapChain);
-		ThrowIfFailed(hr, TEXT("Failed to Create swap chain for CoreWindow!"));
+		ThrowIfFailedMsg(hr, "Failed to Create swap chain for CoreWindow!");
 #endif
 
 		hr = pTempSwapChain->QueryInterface(IID_PPV_ARGS(ppOutSwapChain));
-		ThrowIfFailedMsg(hr, TEXT("Failed to query interface for temporary DXGI swapchain!"));
+		ThrowIfFailedMsg(hr, "Failed to query interface for temporary DXGI swapchain!");
 
 		return hr;
 	}

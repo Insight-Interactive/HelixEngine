@@ -8,11 +8,10 @@ project ("Renderer")
 	kind ("StaticLib")
 	language ("C++")
 	cppdialect ("C++17")
-	staticruntime ("Off")
+	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en-US")
-	defaultlanguage ("en-us")
+	defaultlanguage ("en")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
@@ -37,18 +36,21 @@ project ("Renderer")
 	includedirs
 	{
 		"Public/",
+		"Classes/",
 		"Private/PCH/",
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
 
+		heGetEngineRuntimeModulePublicDir ( "Engine" ), -- To get access to *.hasset headers
+
 		-- Third Party 
 		heGetThirdPartyModule( "WinPixEventRuntime" ) .. "Include/",
-		heGetThirdPartyModule( "OpenFBX" ) .. "src/",
+		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
 	}
 
 	links
 	{
-		"Core",
+--		"Core",
 	}
 
 	defines
@@ -64,7 +66,7 @@ project ("Renderer")
 	}
 	
 
-	filter { "configurations:DebugEditor or Development" }
+	filter { "configurations:DebugEditor or Development or Demo" }
 		defines
 		{
 			"R_TRACK_RENDER_EVENTS=1",
@@ -72,10 +74,10 @@ project ("Renderer")
 			"R_DEBUG=1",
 		}
 	
-	filter { "platforms:Win64 or Win32 or XboxOne or XboxOneX" }
+	filter { "configurations:DebugEditor or Development or Demo", "platforms:Win64 or Win32 or Durango or Scorpio" }
 		postbuildcommands
 		{
-			"%{dllCopyCommands.PIXWinDesktopx64}"
+			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua
 		}
 
 

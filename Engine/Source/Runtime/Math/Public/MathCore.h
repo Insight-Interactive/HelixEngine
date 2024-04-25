@@ -15,6 +15,52 @@ struct FQuat;
 struct Plane;
 
 
+constexpr float HE_PI = 3.141592654f;
+constexpr float HE_2PI = 6.283185307f;
+constexpr float HE_1DIVPI = 0.318309886f;
+constexpr float HE_1DIV2PI = 0.159154943f;
+constexpr float HE_PIDIV2 = 1.570796327f;
+constexpr float HE_PIDIV4 = 0.785398163f;
+constexpr float HE_PIDIV180 = HE_PI / 180.f;
+constexpr float HE_180DIVPI = 180.f / HE_PI;
+
+namespace Math
+{
+    template <typename T>
+    inline T Clamp( const T& Value, const T& Min, const T& Max )
+    {
+        const T Val = Value < Min ? Min : Value;
+        return Val > Max ? Max : Val;
+    }
+
+    template <typename T>
+    inline T DegreesToRadians( const T& Degrees )
+    {
+        return Degrees * HE_PIDIV180;
+    }
+
+    template <typename T>
+    inline T RadiansToDegrees( const T& Radians )
+    {
+        return Radians * HE_180DIVPI;
+    }
+}
+
+struct FAngles
+{
+    FAngles()
+        : pitch( 0.f )
+        , yaw( 0.f )
+        , roll( 0.f )
+    {
+    }
+    
+    float pitch;
+    float yaw;
+    float roll;
+
+};
+
 //------------------------------------------------------------------------------
 // 2D vector
 struct MATH_API FVector2 : public XMFLOAT2
@@ -100,15 +146,15 @@ struct MATH_API FVector2 : public XMFLOAT2
     static void Refract(const FVector2& ivec, const FVector2& nvec, float refractionIndex, FVector2& result) noexcept;
     static FVector2 Refract(const FVector2& ivec, const FVector2& nvec, float refractionIndex) noexcept;
 
-    static void Transform(const FVector2& v, const FQuat& quat, FVector2& result) noexcept;
-    static FVector2 Transform(const FVector2& v, const FQuat& quat) noexcept;
+    static void FTransform(const FVector2& v, const FQuat& quat, FVector2& result) noexcept;
+    static FVector2 FTransform(const FVector2& v, const FQuat& quat) noexcept;
 
-    static void Transform(const FVector2& v, const FMatrix& m, FVector2& result) noexcept;
-    static FVector2 Transform(const FVector2& v, const FMatrix& m) noexcept;
-    static void Transform(_In_reads_(count) const FVector2* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector2* resultArray) noexcept;
+    static void FTransform(const FVector2& v, const FMatrix& m, FVector2& result) noexcept;
+    static FVector2 FTransform(const FVector2& v, const FMatrix& m) noexcept;
+    static void FTransform(_In_reads_(count) const FVector2* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector2* resultArray) noexcept;
 
-    static void Transform(const FVector2& v, const FMatrix& m, FVector4& result) noexcept;
-    static void Transform(_In_reads_(count) const FVector2* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
+    static void FTransform(const FVector2& v, const FMatrix& m, FVector4& result) noexcept;
+    static void FTransform(_In_reads_(count) const FVector2* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
 
     static void TransformNormal(const FVector2& v, const FMatrix& m, FVector2& result) noexcept;
     static FVector2 TransformNormal(const FVector2& v, const FMatrix& m) noexcept;
@@ -184,12 +230,13 @@ struct MATH_API FVector3 : public XMFLOAT3
     FVector3 Cross(const FVector3& V) const noexcept;
 
     void Normalize() noexcept;
-    void Normalize(FVector3& result) const noexcept;
 
     void Clamp(const FVector3& vmin, const FVector3& vmax) noexcept;
     void Clamp(const FVector3& vmin, const FVector3& vmax, FVector3& result) const noexcept;
 
     // Static functions
+    static FVector3 Normalize( const FVector3& v1 ) noexcept;
+
     static float Distance(const FVector3& v1, const FVector3& v2) noexcept;
     static float DistanceSquared(const FVector3& v1, const FVector3& v2) noexcept;
 
@@ -220,15 +267,15 @@ struct MATH_API FVector3 : public XMFLOAT3
     static void Refract(const FVector3& ivec, const FVector3& nvec, float refractionIndex, FVector3& result) noexcept;
     static FVector3 Refract(const FVector3& ivec, const FVector3& nvec, float refractionIndex) noexcept;
 
-    static void Transform(const FVector3& v, const FQuat& quat, FVector3& result) noexcept;
-    static FVector3 Transform(const FVector3& v, const FQuat& quat) noexcept;
+    static void FTransform(const FVector3& v, const FQuat& quat, FVector3& result) noexcept;
+    static FVector3 FTransform(const FVector3& v, const FQuat& quat) noexcept;
 
-    static void Transform(const FVector3& v, const FMatrix& m, FVector3& result) noexcept;
-    static FVector3 Transform(const FVector3& v, const FMatrix& m) noexcept;
-    static void Transform(_In_reads_(count) const FVector3* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector3* resultArray) noexcept;
+    static void FTransform(const FVector3& v, const FMatrix& m, FVector3& result) noexcept;
+    static FVector3 FTransform(const FVector3& v, const FMatrix& m) noexcept;
+    static void FTransform(_In_reads_(count) const FVector3* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector3* resultArray) noexcept;
 
-    static void Transform(const FVector3& v, const FMatrix& m, FVector4& result) noexcept;
-    static void Transform(_In_reads_(count) const FVector3* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
+    static void FTransform(const FVector3& v, const FMatrix& m, FVector4& result) noexcept;
+    static void FTransform(_In_reads_(count) const FVector3* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
 
     static void TransformNormal(const FVector3& v, const FMatrix& m, FVector3& result) noexcept;
     static FVector3 TransformNormal(const FVector3& v, const FMatrix& m) noexcept;
@@ -343,18 +390,18 @@ struct MATH_API FVector4 : public XMFLOAT4
     static void Refract(const FVector4& ivec, const FVector4& nvec, float refractionIndex, FVector4& result) noexcept;
     static FVector4 Refract(const FVector4& ivec, const FVector4& nvec, float refractionIndex) noexcept;
 
-    static void Transform(const FVector2& v, const FQuat& quat, FVector4& result) noexcept;
-    static FVector4 Transform(const FVector2& v, const FQuat& quat) noexcept;
+    static void FTransform(const FVector2& v, const FQuat& quat, FVector4& result) noexcept;
+    static FVector4 FTransform(const FVector2& v, const FQuat& quat) noexcept;
 
-    static void Transform(const FVector3& v, const FQuat& quat, FVector4& result) noexcept;
-    static FVector4 Transform(const FVector3& v, const FQuat& quat) noexcept;
+    static void FTransform(const FVector3& v, const FQuat& quat, FVector4& result) noexcept;
+    static FVector4 FTransform(const FVector3& v, const FQuat& quat) noexcept;
 
-    static void Transform(const FVector4& v, const FQuat& quat, FVector4& result) noexcept;
-    static FVector4 Transform(const FVector4& v, const FQuat& quat) noexcept;
+    static void FTransform(const FVector4& v, const FQuat& quat, FVector4& result) noexcept;
+    static FVector4 FTransform(const FVector4& v, const FQuat& quat) noexcept;
 
-    static void Transform(const FVector4& v, const FMatrix& m, FVector4& result) noexcept;
-    static FVector4 Transform(const FVector4& v, const FMatrix& m) noexcept;
-    static void Transform(_In_reads_(count) const FVector4* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
+    static void FTransform(const FVector4& v, const FMatrix& m, FVector4& result) noexcept;
+    static FVector4 FTransform(const FVector4& v, const FMatrix& m) noexcept;
+    static void FTransform(_In_reads_(count) const FVector4* varray, size_t count, const FMatrix& m, _Out_writes_(count) FVector4* resultArray) noexcept;
 
     // Constants
     static const FVector4 Zero;
@@ -511,8 +558,8 @@ struct MATH_API FMatrix : public XMFLOAT4X4
     static void Lerp(const FMatrix& M1, const FMatrix& M2, float t, FMatrix& result) noexcept;
     static FMatrix Lerp(const FMatrix& M1, const FMatrix& M2, float t) noexcept;
 
-    static void Transform(const FMatrix& M, const FQuat& rotation, FMatrix& result) noexcept;
-    static FMatrix Transform(const FMatrix& M, const FQuat& rotation) noexcept;
+    static void FTransform(const FMatrix& M, const FQuat& rotation, FMatrix& result) noexcept;
+    static FMatrix FTransform(const FMatrix& M, const FQuat& rotation) noexcept;
 
     // Constants
     static const FMatrix Identity;
@@ -582,6 +629,8 @@ struct MATH_API FQuat : public XMFLOAT4
 
     float Dot(const FQuat& Q) const noexcept;
 
+    FVector3 ToEulerAngles() const noexcept;
+
     // Static functions
     static FQuat CreateFromAxisAngle(const FVector3& axis, float angle) noexcept;
     static FQuat CreateFromYawPitchRoll(float yaw, float pitch, float roll) noexcept;
@@ -595,6 +644,8 @@ struct MATH_API FQuat : public XMFLOAT4
 
     static void Concatenate(const FQuat& q1, const FQuat& q2, FQuat& result) noexcept;
     static FQuat Concatenate(const FQuat& q1, const FQuat& q2) noexcept;
+
+    static FQuat Inverse( const FQuat& Quat );
 
     // Constants
     static const FQuat Identity;
@@ -655,11 +706,11 @@ struct Plane : public XMFLOAT4
     float DotNormal(const FVector3& normal) const noexcept;
 
     // Static functions
-    static void Transform(const Plane& plane, const FMatrix& M, Plane& result) noexcept;
-    static Plane Transform(const Plane& plane, const FMatrix& M) noexcept;
+    static void FTransform(const Plane& plane, const FMatrix& M, Plane& result) noexcept;
+    static Plane FTransform(const Plane& plane, const FMatrix& M) noexcept;
 
-    static void Transform(const Plane& plane, const FQuat& rotation, Plane& result) noexcept;
-    static Plane Transform(const Plane& plane, const FQuat& rotation) noexcept;
+    static void FTransform(const Plane& plane, const FQuat& rotation, Plane& result) noexcept;
+    static Plane FTransform(const Plane& plane, const FQuat& rotation) noexcept;
     // Input quaternion must be the inverse transpose of the transformation
 };
 

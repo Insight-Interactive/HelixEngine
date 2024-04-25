@@ -1,3 +1,4 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "RendererFwd.h"
@@ -6,34 +7,41 @@
 #include "RenderContext.h"
 #include "RendererCore.h"
 
-class IDevice;
-class ISwapChain;
-class ICommandManager;
-class IContextManager;
-class IGeometryBufferManager;
-class IConstantBufferManager;
-class ITextureManager;
+class FRenderDevice;
+class FSwapChain;
+class FCommandManager;
+class FContextManager;
+class FGeometryBufferManager;
+class FConstantBufferManager;
+class FTextureManager;
+class FFontManager;
 
-class RENDER_API IRenderContextFactory
+class RENDER_API FRenderContextFactory
 {
-protected:
-	virtual void CreateContext(RenderContext& OutContext) = 0;
+public:
+	FRenderContextFactory();
+	~FRenderContextFactory();
 
+	void CreateContext(FRenderContext& OutContext);
+	void CreateSwapChain( FSwapChain& OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, FCommandManager& InCommandManager, FRenderDevice& InDevice );
+
+protected:
 	FORCEINLINE void InitializeMainComponents();
 
-	virtual void CreateDevice(IDevice** OutDevice) = 0;
-	virtual void CreateSwapChain(ISwapChain** OutSwapChain, void* pNativeSurface, uint32 RenderSurfaceWidth, uint32 RenderSurfaceHeight, ICommandManager* InCommandManager, IDevice* InDevice) = 0;
-	virtual void CreateCommandManager(ICommandManager** OutCommandManager, IDevice* InDevice) = 0;
-	virtual void CreateContextManager(IContextManager** OutCommandContext) = 0;
-	virtual void CreateGeometryManager(IGeometryBufferManager** OutGeometryManager) = 0;
-	virtual void CreateConstantBufferManager(IConstantBufferManager** OutCBManager) = 0;
-	virtual void CreateTextureManager(ITextureManager** OutTexManager) = 0;
+	void CreateDevice(FRenderDevice& OutDevice);
+	void CreateCommandManager(FCommandManager& OutCommandManager);
+	void CreateContextManager(FContextManager& OutCommandContext);
+	void CreateGeometryManager(FGeometryBufferManager& OutGeometryManager);
+	void CreateTextureManager(FTextureManager& OutTexManager);
 
-protected:
-	IRenderContextFactory()
-	{
-		CreateLogger(GRendererLogger, "Renderer");
-	}
+private:
+
+#if R_WITH_D3D12
+	IDXGIFactory6* m_pDXGIFactory;
+
+	void CreateDXGIFactory();
+
+#endif // R_WITH_D3D12
 
 };
 
@@ -42,10 +50,10 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE void IRenderContextFactory::InitializeMainComponents()
+FORCEINLINE void FRenderContextFactory::InitializeMainComponents()
 {
-	CreateDevice(&GDevice);
+	CreateDevice(GGraphicsDevice);
 
-	CreateCommandManager(&GCommandManager, GDevice);
-	CreateContextManager(&GContextManager);
+	CreateCommandManager(GCommandManager);
+	CreateContextManager(GContextManager);
 }

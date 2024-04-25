@@ -2,23 +2,68 @@
 
 #include "Panels/Panel.h"
 
-#include "IDescriptorHeap.h"
+#include "DescriptorHeap.h"
+
+
+class ADebugPawn;
+class EngineBeginPlayEvent;
+class EngineEndPlayEvent;
+class MouseButtonPressedEvent;
+class MouseButtonReleasedEvent;
 
 
 class SceneViewportPanel : public Panel
 {
+	using Super = Panel;
+	friend class HelixEdHomeUI;
 public:
 	SceneViewportPanel();
 	virtual ~SceneViewportPanel();
 
-	virtual void Initialize() override;
+	virtual void Initialize( FViewportContext* pOwningViewport ) override;
 	virtual void UnInitialize() override;
 
 	virtual void Tick( float DeltaTime ) override;
-	virtual void Render( ICommandContext& CmdCtx ) override;
+	virtual void Render( FCommandContext& CmdCtx ) override;
+
+	/*
+		Set the debug camera as the main rendering camera 
+		and activate its controls
+	*/
+	void ActivateDebugCamera();
+	
+	/*
+		Deactivate the debug camera's controls.
+	*/
+	void DeactivateDebugCamera();
+
+	ADebugPawn* GetDebugPawn();
+
+protected:
+	void FreezeDebugCamera();
+	void UnFreezeDebugCamera();
+
+	virtual void OnEvent( Event& e ) override;
+
+	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
+	bool OnAppEndPlay( EngineEndPlayEvent& e );
+	bool OnMouseButtonPressed( MouseButtonPressedEvent& e );
+	bool OnMouseButtonReleased( MouseButtonReleasedEvent& e );
+
 
 private:
-	DescriptorHandle m_DescriptorHandle;
-	uint32 m_HandleSize = 0;
+	FDescriptorHandle m_DescriptorHandle;
 
+	ADebugPawn* m_pDebugPawn;
+
+	bool m_IsCameraRotating;
 };
+
+//
+// Inline function implementations
+//
+
+inline ADebugPawn* SceneViewportPanel::GetDebugPawn()
+{
+	return m_pDebugPawn;
+}

@@ -1,0 +1,21 @@
+# CMake generation dependency list for this directory.
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/ConfigureFileMT.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/GetCompilerAndPlatform.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/NvidiaBuildOptions.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/cmakemodules/SetOutputPaths.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/targa/targa-config-version.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/externals/targa/targa-config.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/CMakeLists.txt
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/SampleBase.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/SampleFramework.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/SamplePlatform.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/SampleRenderer.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/Samples.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/SamplesToolkit.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/CMakeLists.txt
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/SampleBase.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/SampleFramework.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/SamplePlatform.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/SampleRenderer.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/Samples.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/PhysX-4.1/physx/samples/compiler/cmake/windows/SamplesToolkit.cmake

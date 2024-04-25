@@ -10,10 +10,12 @@ using EventCallbackFn = std::function<void( Event& )>;
 enum class EEventType
 {
 	ET_None = 0,
-	// Window
-	ET_WindowClose, ET_WindowResize, ET_WindowFocus, ET_WindowLostFocus, ET_ToggleWindowFullScreen, 
+	// FWindow
+	ET_WindowClose, ET_WindowResize, ET_WindowFocus, ET_WindowLostFocus, ET_ToggleWindowFullScreen, ET_WindowFileDrop, ET_WindowMaximized, ET_WindowMinimized,
 	// Application
-	ET_AppBeginPlay, ET_AppEndPlay, ET_AppTick, ET_AppRender, ET_AppSuspending, ET_AppResuming,
+	ET_AppSuspending, ET_AppResuming,
+	// Engine
+	ET_ObjectSelected, ET_EnginePreStartup, ET_EngineStartup, ET_EnginePostStartup, ET_EngineBeginPlay, ET_EngineEndPlay, ET_EngineTick, ET_EngineRender,
 	// Input
 	ET_InputAction, ET_InputAxis,
 	// Key
@@ -22,6 +24,8 @@ enum class EEventType
 	ET_MouseButtonPressed, ET_MouseButtonReleased, ET_MouseMoved, ET_RawMouseMoved, ET_MouseScrolled,
 	// Gamepad
 	ET_GamepadThumbstickMoved,
+	// Editor
+	ET_ContentItemDoubleClicked, ET_EditorTabOpened, ET_EditorTabClosed,
 
 	ET_EventCount,
 };
@@ -41,6 +45,8 @@ enum EEventCategory
 	EC_Network		= 0x0200,
 	EC_Window		= 0x0400,
 	EC_Renderer		= 0x0800,
+	EC_Engine		= 0x1000,
+	EC_Editor		= 0x2000,
 };
 
 #define EVENT_CLASS_TYPE( Type )	static EEventType GetStaticType()	{ return EEventType::##Type; }				\
@@ -51,7 +57,7 @@ enum EEventCategory
 
 
 /*
-	Describes an event that can be braudcasted by an event dispatcher.
+	Describes an event that can be broadcasted by an event dispatcher.
 */
 class Event
 {
@@ -118,6 +124,9 @@ public:
 		: InputEvent( KeyMapCode, Status )
 	{
 	}
+	virtual ~ActionEvent()
+	{
+	}
 
 	EVENT_CLASS_TYPE( ET_InputAction )
 		EVENT_CLASS_CATEGORY( EC_Input )
@@ -131,6 +140,9 @@ public:
 	AxisEvent( DigitalInput KeyMapCode, float Delta )
 		: InputEvent( KeyMapCode, IE_Moved )
 		, m_Delta( Delta )
+	{
+	}
+	virtual ~AxisEvent()
 	{
 	}
 
@@ -155,17 +167,20 @@ public:
 		: m_Event( event ) 
 	{
 	}
+	~EventDispatcher()
+	{
+	}
 
 	/*
 		Calls the bound function with the specified event as the input parameter.
 		Ex) Dispach<MyEvent>( this, &SomeClass::SomeMemberFn );
 	*/
 	template <typename EventType, typename ClassTarget>
-	bool Dispatch( ClassTarget* pClass, bool(ClassTarget::* pFn)(EventType&) )
+	bool Dispatch( ClassTarget* pClass, bool(ClassTarget::* pMemberFn)(EventType&) )
 	{
 		if (m_Event.GetEventType() == EventType::GetStaticType())
 		{
-			m_Event.m_IsHandled = HE_INVOKE_MEMBER_FN( pClass, pFn, *(EventType*)&m_Event );
+			m_Event.m_IsHandled = HE_INVOKE_MEMBER_FN( pClass, pMemberFn, *(EventType*)&m_Event );
 			return true;
 		}
 		return false;

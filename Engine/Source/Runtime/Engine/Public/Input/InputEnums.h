@@ -18,6 +18,7 @@ enum EGampadRumbleMotor
 
 enum DigitalInput
 {
+	// CAUTION: Editing these has repercussions on input mapping files such as "DefaultInput.ini"
 	// Keyboard
 	// Key_ must start at zero, see m_DXKeyMapping
 	Key_Escape = 0,
@@ -105,12 +106,13 @@ enum DigitalInput
 	Key_Decimal,
 	Key_F11,
 	Key_F12,
-	Key_NumpAdenter,
+	Key_NumEnter,
 	Key_RControl,
 	Key_Divide,
 	Key_Sysrq,
 	Key_RAlt,
 	Key_Pause,
+	Key_Plus,
 	Key_Home,
 	Key_Up,
 	Key_PageUp,
@@ -125,10 +127,8 @@ enum DigitalInput
 	Key_RightWindows,
 	Key_Apps,
 
-	NumKeys,
-
 	// Gamepad
-	DPadUp = NumKeys,
+	DPadUp,
 	DPadDown,
 	DPadLeft,
 	DPadRight,
@@ -138,10 +138,16 @@ enum DigitalInput
 	RThumbClick,
 	LShoulder,
 	RShoulder,
+	// Xbox
 	AButton,
 	BButton,
 	XButton,
-	YButton,
+	YButton = 118,
+	// Playstation (analogous to Xbox buttons).
+	CrossButton		= AButton,
+	CircleButton	= BButton,
+	SquareButton	= XButton,
+	TriangleButton	= YButton,
 
 	// Mouse
 	Mouse0,
@@ -151,7 +157,7 @@ enum DigitalInput
 	Mouse4,
 	Mouse5,
 	Mouse6,
-	Mouse7,
+	Mouse7 = 126,
 
 
 	// Gamepad
@@ -161,20 +167,24 @@ enum DigitalInput
 	AnalogLeftStickX,
 	AnalogLeftStickY,
 	AnalogRightStickX,
-	AnalogRightStickY,
+	AnalogRightStickY = 132,
 
 	// Mouse
 	AnalogMouseX,
 	AnalogMouseY,
-	AnalogMouseScroll,
+	AnalogMouseScroll = 136,
 
-	// Misc
+	// Misc - Internal
 	PlatformDefined,
 	MouseAnyMoved,
+	MousePositionMoved,
+	MouseRawInput
 };
 
-static const uint32 kNumAnalogInputs	= AnalogMouseScroll - AnalogLeftTrigger;
-static const uint32 kNumDigitalInputs	= Mouse7 - Key_Escape;
+static const uint32 kNumKeys			= (Key_Apps - Key_Escape) + 1;
+static const uint32 kNumMouseInputs		= (Mouse7 - Mouse0) + 1;
+static const uint32 kNumAnalogInputs	= (AnalogMouseScroll - AnalogLeftTrigger) + 1;
+static const uint32 kNumDigitalInputs	= (Mouse7 - Key_Escape) + 1;
 
 
 /*
@@ -226,3 +236,17 @@ static const uint32 kNumDigitalInputs	= Mouse7 - Key_Escape;
 	True if the value is a valid gamepad trigger movement type. False if not.
 */
 #define IsValidGamepadTriggerAnalog( Value )		( Value == AnalogLeftTrigger || Value == AnalogRightTrigger )
+
+/*
+	Internal enums to track state of buttons from frame to frame.
+*/
+enum
+{
+	// Current state of buttons.
+	kState_Current = 0,
+	// Previous state of buttons.
+	kState_Previous = 1,
+
+	// Num states.
+	kState_Count = 2,
+};

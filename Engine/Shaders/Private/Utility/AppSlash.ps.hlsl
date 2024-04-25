@@ -1,13 +1,10 @@
+// Copyright 2021 Insight Interactive. All Rights Reserved.
 #include "../../Public/Core/Core.hlsli"
 
 
-// Samplers
-//
-SamplerState g_LinearWrapSampler : register(s0);
-
 // Textures
 //
-Texture2D g_SplashImage : register(t0);
+HE_DECLARE_TEXTURE2D( SplashImage, 0);
 
 // Structures
 //
@@ -29,7 +26,7 @@ PSOutput main( PSInput Input )
 {
     PSOutput Result;
 
-    Result.Color = g_SplashImage.Sample( g_LinearWrapSampler, Input.TexCoords );
+    Result.Color = SplashImage.Sample( LinearWrapSampler, Input.TexCoords );
 
     return Result;
 }

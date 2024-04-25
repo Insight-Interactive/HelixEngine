@@ -5,8 +5,34 @@
 #include "Cast.h"
 #include "CoreFwd.h"
 
+
+class OutputBuffer final
+{
+public:
+	OutputBuffer()
+	{
+	}
+	~OutputBuffer()
+	{
+	}
+
+	inline void operator << ( const HName& Str )
+	{
+		m_Stream << Str.c_str();
+	}
+
+	void FlushBuffer();
+	HName GetStringBuffer();
+
+
+private:
+	TStringStream m_Stream;
+
+};
+
+
 /*
-	Valid log categories for HE_LOG
+	Valid log categories for logging instance.
 */
 enum class ELogSeverity
 {
@@ -29,6 +55,16 @@ public:
 		Initialize the logger.
 	*/
 	void Initialize(TChar* Name);
+
+	/*
+		Returns a reference to the global log buffer where log messages are stored.
+	*/
+	static OutputBuffer& GetOutputGlobalBuffer();
+
+	/*
+		Flush the log buffer and erase all log messages.
+	*/
+	static void FlushGlobalLogBuffer();
 
 	/*
 		Set the name of the logger.
@@ -54,12 +90,14 @@ public:
 	FORCEINLINE const TChar* GetLoggerName();
 
 	// Logger that will log output to the console window. Recommended that you dont call directly. 
-	// Instead, use IE_LOG so logs will be stripped from release builds.
+	// Instead, use macro to wrap this so logs will be stripped from release builds.
 	void LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* File, const TChar* Function, int Line, ...);
 
 private:
 	TChar m_LoggerName[kMakLoggerNameLength];
 	bool m_UseConsole;
+
+	static OutputBuffer SOutputBuffer;
 };
 
 bool Logger::GetShouldUseConsole()
@@ -78,7 +116,21 @@ const TChar* Logger::GetLoggerName()
 }
 
 #if HE_ENABLE_LOGS
-#	define CreateLogger(Logger, Name) (Logger).Initialize( TEXT(Name) )
+#	define CreateLogger(LoggerInstance, Name) ( LoggerInstance ).Initialize( TEXT(Name) )
 #else
-#	define CreateLogger(Logger, Name)
+#	define CreateLogger(LoggerInstance, Name)
 #endif
+
+//
+// Inline function implementations
+//
+
+/*static*/ inline OutputBuffer& Logger::GetOutputGlobalBuffer()
+{
+	return SOutputBuffer;
+}
+
+/*static*/ inline void Logger::FlushGlobalLogBuffer()
+{
+	SOutputBuffer.FlushBuffer();
+}

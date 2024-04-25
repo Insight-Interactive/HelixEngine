@@ -19,14 +19,16 @@
 //--------------------------------------------------------------------------------------
 
 #include <RendererPCH.h>
+#if R_WITH_D3D12
 
 #include "../Utility/DDSTextureLoader.h"
 
 #include "dds.h"
-#include "../GpuResourceD3D12.h"
-#include "../CommandContextD3D12.h"
-#include "../LinearAllocator.h"
+#include "GpuResource.h"
+#include "CommandContext.h"
+#include "LinearAllocator.h"
 #include "RendererCore.h"
+
 
 struct handle_closer { void operator()(HANDLE h) { if (h) CloseHandle(h); } };
 typedef std::unique_ptr<void, handle_closer> ScopedHandle;
@@ -814,26 +816,26 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
     HeapProps.CreationNodeMask = 1;
     HeapProps.VisibleNodeMask = 1;
 
-    D3D12_RESOURCE_DESC ResourceDesc;
-    ResourceDesc.Alignment = 0;
-    ResourceDesc.Width = static_cast<UINT64>(width);
-    ResourceDesc.Height = static_cast<UINT>(height);
-    ResourceDesc.DepthOrArraySize = static_cast<UINT16>(arraySize);
-    ResourceDesc.MipLevels = static_cast<UINT16>(mipCount);
-    ResourceDesc.Format = format;
-    ResourceDesc.SampleDesc.Count = 1;
-    ResourceDesc.SampleDesc.Quality = 0;
-    ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-    ResourceDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+    D3D12_RESOURCE_DESC FResourceDesc;
+    FResourceDesc.Alignment = 0;
+    FResourceDesc.Width = static_cast<UINT64>(width);
+    FResourceDesc.Height = static_cast<UINT>(height);
+    FResourceDesc.DepthOrArraySize = static_cast<UINT16>(arraySize);
+    FResourceDesc.MipLevels = static_cast<UINT16>(mipCount);
+    FResourceDesc.Format = format;
+    FResourceDesc.SampleDesc.Count = 1;
+    FResourceDesc.SampleDesc.Quality = 0;
+    FResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+    FResourceDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
     switch (resDim)
     {
     case D3D12_RESOURCE_DIMENSION_TEXTURE1D:
     {
-        ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE1D;
+        FResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE1D;
 
         ID3D12Resource* tex = nullptr;
-        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &ResourceDesc,
+        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &FResourceDesc,
             D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&tex));
 
         if (SUCCEEDED(hr) && tex != nullptr)
@@ -845,13 +847,13 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
             if (arraySize > 1)
             {
                 SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE1DARRAY;
-                SRVDesc.Texture1DArray.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                SRVDesc.Texture1DArray.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
                 SRVDesc.Texture1DArray.ArraySize = static_cast<UINT>(arraySize);
             }
             else
             {
                 SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE1D;
-                SRVDesc.Texture1D.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                SRVDesc.Texture1D.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
             }
 
             d3dDevice->CreateShaderResourceView(tex, &SRVDesc, textureView);
@@ -873,10 +875,10 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
 
     case D3D12_RESOURCE_DIMENSION_TEXTURE2D:
     {
-        ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+        FResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 
         ID3D12Resource* tex = nullptr;
-        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &ResourceDesc,
+        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &FResourceDesc,
             D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&tex));
 
         if (SUCCEEDED(hr) && tex != 0)
@@ -890,7 +892,7 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
                 if (arraySize > 6)
                 {
                     SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBEARRAY;
-                    SRVDesc.TextureCubeArray.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                    SRVDesc.TextureCubeArray.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
 
                     // Earlier we set arraySize to (NumCubes * 6)
                     SRVDesc.TextureCubeArray.NumCubes = static_cast<UINT>(arraySize / 6);
@@ -898,19 +900,19 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
                 else
                 {
                     SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
-                    SRVDesc.TextureCube.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                    SRVDesc.TextureCube.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
                 }
             }
             else if (arraySize > 1)
             {
                 SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2DARRAY;
-                SRVDesc.Texture2DArray.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                SRVDesc.Texture2DArray.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
                 SRVDesc.Texture2DArray.ArraySize = static_cast<UINT>(arraySize);
             }
             else
             {
                 SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-                SRVDesc.Texture2D.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+                SRVDesc.Texture2D.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
                 SRVDesc.Texture2D.MostDetailedMip = 0;
             }
 
@@ -933,11 +935,11 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
 
     case D3D12_RESOURCE_DIMENSION_TEXTURE3D:
     {
-        ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE3D;
-        ResourceDesc.DepthOrArraySize = static_cast<UINT16>(depth);
+        FResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE3D;
+        FResourceDesc.DepthOrArraySize = static_cast<UINT16>(depth);
 
         ID3D12Resource* tex = nullptr;
-        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &ResourceDesc,
+        hr = d3dDevice->CreateCommittedResource(&HeapProps, D3D12_HEAP_FLAG_NONE, &FResourceDesc,
             D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&tex));
 
         if (SUCCEEDED(hr) && tex != nullptr)
@@ -947,7 +949,7 @@ static HRESULT CreateD3DResources(_In_ ID3D12Device* d3dDevice,
             SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
             SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE3D;
-            SRVDesc.Texture3D.MipLevels = (!mipCount) ? -1 : ResourceDesc.MipLevels;
+            SRVDesc.Texture3D.MipLevels = (!mipCount) ? -1 : FResourceDesc.MipLevels;
             SRVDesc.Texture3D.MostDetailedMip = 0;
 
             d3dDevice->CreateShaderResourceView(tex, &SRVDesc, textureView);
@@ -1190,22 +1192,21 @@ static HRESULT CreateTextureFromDDS(_In_ ID3D12Device* d3dDevice,
 
         if (SUCCEEDED(hr))
         {
-            GpuResourceD3D12 DestTexture(*texture, RS_CopyDestination);
-
+            FGpuResource DestTexture(*texture, RS_CopyDestination);
+            
             {
                 uint32 NumSubresources = arraySize;
                 NumSubresources *= (uint32)mipCount;
                 UINT64 uploadBufferSize = GetRequiredIntermediateSize(*texture, 0, NumSubresources);
 
-                ICommandContext& InitContext = ICommandContext::Begin(L"Texture Init");
-                CommandContextD3D12& D3D12InitContext = *DCast<CommandContextD3D12*>(&InitContext);
+                FCommandContext& InitContext = FCommandContext::Begin(L"Texture Init");
                 {
-                    // copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
-                    DynAlloc mem = D3D12InitContext.ReserveUploadMemory(uploadBufferSize);
-                    UpdateSubresources(RCast<ID3D12GraphicsCommandList*>(InitContext.GetNativeContext()), *texture, mem.Buffer.GetResource(), 0, 0, NumSubresources, initData.get());
+                    // Copy data to the intermediate upload heap and then schedule a copy from the upload heap to the default texture
+                    DynAlloc mem = InitContext.ReserveUploadMemory(uploadBufferSize);
+                    ::UpdateSubresources((ID3D12GraphicsCommandList*)InitContext.GetNativeContext(), (ID3D12Resource*)DestTexture.GetResource(), (ID3D12Resource*)mem.Buffer.GetResource(), 0, 0, NumSubresources, initData.get());
                     InitContext.TransitionResource(DestTexture, RS_GenericRead);
                 }
-                // Execute the command list and wait for it to finish so we can release the upload buffer
+                // Execute the command list and wait for it to finish so we can release the upload buffer.
                 InitContext.End(true);
             }
         }
@@ -1370,3 +1371,5 @@ HRESULT CreateDDSTextureFromFile(
 
     return hr;
 }
+
+#endif // R_WITH_D3D12

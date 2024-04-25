@@ -20,17 +20,17 @@ private:
 
 
 /*
-	Enters and exits a critical section based on a scoped lifetime.
+	Enters and exits a critical section based on a scoped lifetime (RAII)
 */
 struct ScopedCriticalSection
 {
-	ScopedCriticalSection(CriticalSection& Section)
+	FORCEINLINE ScopedCriticalSection(CriticalSection& Section)
 		: m_Section(Section)
 	{
 		m_Section.Enter();
 	}
 
-	~ScopedCriticalSection()
+	FORCEINLINE ~ScopedCriticalSection()
 	{
 		m_Section.Exit();
 	}

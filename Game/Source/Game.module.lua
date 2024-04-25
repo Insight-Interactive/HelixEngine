@@ -1,12 +1,12 @@
 include ("Helix/HelixModule.lua")
 
 
-project ("Game")
+project ("Game-Core")
     location ("./")
-    kind ("SharedLIb")
+    kind ("StaticLib")
     language ("C++")
     cppdialect ("C++17")
-    staticruntime ("Off")
+    staticruntime ("On")
     targetname ("%{prj.name}")
     systemversion ("latest")
     defaultlanguage ("en-US")
@@ -30,19 +30,30 @@ project ("Game")
 
     defines
     {
+		"_CRT_SECURE_NO_WARNINGS",
         "GAME_MODULE=1",
+		"R_WITH_D3D12=1",
     }
 
     includedirs
     {
         "Public/",
         "Private/PCH/",
-        heGetModulePublicDir( "Core" ),
-        heGetModulePublicDir( "Engine" ),
+		heGetModulePublicDir( "Engine" ),
+		heGetModulePublicDir( "Core" ),
+		heGetModulePublicDir( "Math" ),
+		heGetModulePublicDir( "Renderer" ),
+		heGetModulePublicDir( "Physics" ),
+		heGetModulePublicDir( "Scripting" ),
+
+		-- Third Party
+		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
+		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
+		heGetThirdPartyModule( "LuaPlus" ),
+        
     }
     
     links
     {
-        "Core",
     }
     

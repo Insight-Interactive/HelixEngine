@@ -2,11 +2,12 @@
 
 #include "StringHelper.h"
 
+
 namespace StringHelper
 {
 	WString UTF8ToUTF16(const String& str)
 	{
-		return std::wstring(str.begin(), str.end());
+		return WString(str.begin(), str.end());
 	}
 
 	String UTF16ToUTF8(const WString& wStr)
@@ -14,7 +15,7 @@ namespace StringHelper
 		HE_PRAGMA_DISABLE
 		(
 			4244,
-			return std::string(wStr.begin(), wStr.end());
+			return String(wStr.begin(), wStr.end());
 		);
 	}
 

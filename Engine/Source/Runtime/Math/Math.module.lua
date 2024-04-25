@@ -6,10 +6,10 @@ project ("Math")
     kind ("StaticLib")
     language ("C++")
     cppdialect ("C++17")
-    staticruntime ("Off")
+    staticruntime ("On")
     targetname ("Helix-%{prj.name}")
     systemversion ("latest")
-    defaultlanguage ("en-US")
+    defaultlanguage ("en")
     targetdir( heGetBuildFolder() )
     objdir( heGetBuildIntFolder() )
     pchheader("MathPCH.h")
@@ -40,7 +40,7 @@ project ("Math")
 
     links
     {
-        "Core",
+--        "Core",
     }
 
     defines

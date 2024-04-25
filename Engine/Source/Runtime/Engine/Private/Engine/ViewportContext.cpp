@@ -3,48 +3,32 @@
 
 #include "Engine/ViewportContext.h"
 
-#include "Engine/HEngine.h"
-#include "IGpuResource.h"
-#include "ICommandContext.h"
-#include "IConstantBufferManager.h"
-#include "StandaloneRenderer/ShaderRegisters.h"
-#include "StandaloneRenderer/GeometryGenerator.h"
-#include "StandaloneRenderer/ConstantBufferStructures.h"
-#include "StandaloneRenderer/MaterialManager.h"
-#include "Actor/Components/HCameraComponent.h"
-#include "StandaloneRenderer/Common.h"
-#include "StandaloneRenderer/LightManager.h"
-
-#include "StandaloneRenderer/Technique/SkyPass.h"
-#include "StandaloneRenderer/Technique/DeferredShadingTech.h"
-#include "StandaloneRenderer/Technique/PostProcessUber.h"
+#include "World/World.h"
+#include "Engine/Engine.h"
+#include "Engine/Event/EngineEvent.h"
+#include "Input/KeyEvent.h"
+#include "Input/MouseEvent.h"
+#include "UI/Panel.h"
+#include "CommandContext.h"
 
 
-#include "IDevice.h"
-
-
-ViewportContext::ViewportContext()
+FViewportContext::FViewportContext()
+	: m_pWorldInView( nullptr )
+	, m_DepthBuffer( 1, 0 )
 {
-	m_DeferredShader = new DeferredShadingTech();
-	m_SkyPass = new SkyboxPass();
-	m_PostProcessPass = new PostProcesssUber();
 }
 
-ViewportContext::~ViewportContext()
+FViewportContext::~FViewportContext()
 {
-	HE_SAFE_DELETE_PTR( m_DeferredShader );
-	HE_SAFE_DELETE_PTR( m_SkyPass );
-	HE_SAFE_DELETE_PTR( m_PostProcessPass );
 }
 
-void ViewportContext::Initialize( const Window::Description& WindowDesc )
+void FViewportContext::Initialize( const FWindow::Description& WindowDesc )
 {
 	m_Window.Create( WindowDesc );
-	m_InputDispatcher.Initialize( m_Window.GetNativeWindow() );
+	m_Window.GetSwapChain()->SetClearColor( FColor( .25f, 0.f, 1.f ) );
+	m_Window.AddListener( this, &FViewportContext::OnEvent );
 
-	m_GameWorld.SetViewport( this );
-	m_GameWorld.Initialize();
-	m_GameWorld.BeginPlay();
+	m_InputDispatcher.Initialize( &m_Window );
 
 	m_ViewPort.TopLeftX = 0.f;
 	m_ViewPort.TopLeftY = 0.f;
@@ -53,196 +37,225 @@ void ViewportContext::Initialize( const Window::Description& WindowDesc )
 	m_ViewPort.Width = (float)m_Window.GetWidth();
 	m_ViewPort.Height = (float)m_Window.GetHeight();
 
-	m_ScissorRect.Left = 0;
 	m_ScissorRect.Top = 0;
+	m_ScissorRect.Left = 0;
 	m_ScissorRect.Right = m_Window.GetWidth();
 	m_ScissorRect.Bottom = m_Window.GetHeight();
 
-	m_Window.GetSwapChain()->SetClearColor( Color( .25f, 0.f, 1.f ) );
-
-	m_Window.AddListener( this, &ViewportContext::OnEvent );
-	m_PostProcessPass = new PostProcesssUber();
 
 	InitializeRenderingResources();
 }
 
-void ViewportContext::Uninitialize()
+void FViewportContext::Uninitialize()
 {
-
-	for (size_t i = 0; i < m_pSceneConstantBuffers.size(); ++i)
-	{
-		GConstantBufferManager->DestroyConstantBuffer( m_pSceneConstantBuffers[i]->GetUID() );
-		GConstantBufferManager->DestroyConstantBuffer( m_pLightConstantBuffers[i]->GetUID() );
-	}
-	m_PostProcessPass->UnInitialize();
-	m_DeferredShader->UnInitialize();
-	m_SkyPass->UnInitialize();
-
 	m_InputDispatcher.UnInitialize();
 	m_Window.Destroy();
-	m_GameWorld.Flush();
-
-	HE_SAFE_DELETE_PTR( m_pSceneRenderTarget );
 }
 
-void ViewportContext::Update( float DeltaTime )
+void FViewportContext::Tick( float DeltaTime )
 {
+	// Update the world inputs.
 	m_InputDispatcher.UpdateInputs( DeltaTime );
-
-	m_GameWorld.Tick( DeltaTime );
 }
 
-void ViewportContext::Render()
+void FViewportContext::Render()
 {
-	IColorBuffer* pSwapChainBackBuffer = m_Window.GetRenderSurface();
-
-	ICommandContext& CmdContext = ICommandContext::Begin( TEXT( "Scene Pass" ) );
+	if (GEngine->GetIsEditorPresent())
 	{
-		IGpuResource& SwapChainGpuResource = *DCast<IGpuResource*>( pSwapChainBackBuffer );
-		CmdContext.TransitionResource( SwapChainGpuResource, RS_RenderTarget );
-		CmdContext.ClearColorBuffer( *pSwapChainBackBuffer, GetClientRect() );
-
-		RenderWorld( CmdContext, *m_pSceneRenderTarget );
+		// Render to a intermediate texture for the editor to display.
+		RenderWorld( m_SceneRenderTarget );
+		RenderUI( m_SceneRenderTarget );
 	}
-	CmdContext.End();
+	else
+	{
+		if (m_pWorldInView != nullptr)
+		{
+			// Render directly to the swapchain.
+			FColorBuffer& RenterTarget = m_Window.GetRenderSurface();
+			RenderWorld( RenterTarget );
+			RenderUI( RenterTarget );
+
+			// Transition.
+			FCommandContext& CmdContext = FCommandContext::Begin( TEXT( "Present" ) );
+			CmdContext.TransitionResource( RenterTarget, RS_Present );
+			CmdContext.End( true );
+
+			PresentOneFrame();
+		}
+	}
 }
 
-void ViewportContext::RenderWorld( ICommandContext& CmdContext, IColorBuffer& RenderTarget  )
+void FViewportContext::SetWorld( HWorld* pWorldToView )
 {
-	IGpuResource& RenderTargetResource = *RenderTarget.As<IGpuResource*>();
-	CmdContext.TransitionResource( RenderTargetResource, RS_RenderTarget );
+	m_pWorldInView = pWorldToView;
+}
 
-	// Deferred Pass
+void FViewportContext::RenderWorld( FColorBuffer& RenderTarget  )
+{
+	if (m_pWorldInView == nullptr) // This viewport is not viewing a world just return.
+		return;
+
+	HScene& Scene = m_pWorldInView->GetScene();
+
+	m_SceneRenderer.RenderScene(
+		Scene, RenderTarget, 
+		GetClientViewport(), GetClientRect(),
+		GetWindow().GetSwapChain()->GetCurrentFrameIndex(),
+		m_pWorldInView->GetCurrentSceneRenderCamera() );
+}
+
+void FViewportContext::RenderUI( FColorBuffer& RenderTarget )
+{
+	if (m_pWorldInView == nullptr) // This viewport is not viewing a world just return.
+		return;
+
+	std::vector<FUIPanel*>& Panels = m_pWorldInView->GetUIPanels();
+
+	for (FUIPanel* pPanel : Panels)
 	{
-		// Bind the texture heap
-		//
-		CmdContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
+		HE_ASSERT( pPanel != nullptr );
 
-		// Render the Geometry Pass
-		//
-		m_DeferredShader->GetGeometryPass().Bind( CmdContext, GetClientRect() );
+		if (pPanel->IsHidden())
+			continue;
 
-		// Set common state
-		//
-		SetCommonRenderState( CmdContext );
-
-		// Draw world
-		//
-		m_GameWorld.Render( CmdContext );
-
-		m_DeferredShader->GetGeometryPass().UnBind( CmdContext );
-	}
-
-	// Prep the render target to be rendered too.
-	//
-	CmdContext.ClearColorBuffer( RenderTarget, GetClientRect() );
-	const IColorBuffer* pRTs[] = {
-		&RenderTarget,
-	};
-	CmdContext.OMSetRenderTargets( 1, pRTs, NULL );
-	CmdContext.RSSetViewPorts( 1, &GetClientViewport() );
-	CmdContext.RSSetScissorRects( 1, &GetClientRect() );
-
-	// Light Pass
-	{
-		// Render the Light Pass
-		//
-		m_DeferredShader->GetLightPass().Bind( CmdContext, GetClientRect() );
-		SetCommonRenderState( CmdContext );
-		CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-		CmdContext.BindVertexBuffer( 0, m_pScreenQuadRef->GetVertexBuffer() );
-		CmdContext.BindIndexBuffer( m_pScreenQuadRef->GetIndexBuffer() );
-		CmdContext.DrawIndexedInstanced( m_pScreenQuadRef->GetNumIndices(), 1, 0, 0, 0 );
-		m_DeferredShader->GetLightPass().UnBind( CmdContext );
-
-		// Render the sky last to prevent overdraw
-		//
-		m_SkyPass->Bind( CmdContext, RenderTarget, *m_DeferredShader->GetGeometryPass().GetSceneDepthBuffer() );
-		CmdContext.SetDescriptorHeap( RHT_CBV_SRV_UAV, GTextureHeap );
-		SetCommonRenderState( CmdContext );
-		m_SkyPass->UnBind( CmdContext, *m_DeferredShader->GetGeometryPass().GetSceneDepthBuffer() );
-	}
-
-	// Post-Process Pass
-	{
-		/*m_PostProcessPass.Bind( CmdContext, GetClientRect() );
-
-		m_PostProcessPass.UnBind( CmdContext );*/
+		m_UIRenderer.RenderPanel(
+			*pPanel, RenderTarget,
+			m_SceneRenderer.GetDepthBuffer(),
+			GetClientViewport(), GetClientRect(),
+			GetWindow().GetSwapChain()->GetCurrentFrameIndex() );
 	}
 }
 
-void ViewportContext::InitializeRenderingResources()
+void FViewportContext::InitializeRenderingResources()
 {
 	FVector2 RenderResolution( (float)m_Window.GetWidth(), (float)m_Window.GetHeight() );
-	m_DeferredShader->Initialize( RenderResolution, m_Window.GetSwapChain()->GetBackBufferFormat() );
-	m_SkyPass->Initialize( m_Window.GetSwapChain()->GetDesc().Format, m_DeferredShader->GetGeometryPass().GetDepthFormat() );
-	m_PostProcessPass->Initialize( RenderResolution );
+	EFormat SwapchainFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	if (GEngine->GetIsEditorPresent())
+		m_SceneRenderTarget.Create( L"Pre-Display Buffer", (uint32)RenderResolution.x, (uint32)RenderResolution.y, 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
 
-	m_pScreenQuadRef = GeometryGenerator::GenerateScreenAlignedQuadMesh();
-	
-	GDevice->CreateColorBuffer( TEXT( "Pre-Display Buffer" ), (uint32)RenderResolution.x, (uint32)RenderResolution.y, 1, m_Window.GetSwapChain()->GetBackBufferFormat(), &m_pSceneRenderTarget );
+	FSceneRendererInitParams SceneParams;
+	ZeroMemory( &SceneParams, sizeof( SceneParams ) );
+	SceneParams.RenderingResolution = m_Window.GetDimensions();
+	SceneParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	m_SceneRenderer.Initialize( SceneParams, *this );
 
-
-	//
-	// Init constant buffers, one for each frame index.
-	//
-	uint32 NumBackBuffers = m_Window.GetSwapChain()->GetNumBackBuffers();
-	m_pSceneConstantBuffers.resize( (size_t)NumBackBuffers );
-	m_pLightConstantBuffers.resize( (size_t)NumBackBuffers );
-	for (uint32 i = 0; i < NumBackBuffers; ++i)
-	{
-		WString SceneConstsBufferName = L"Scene Constants Frame: " + i;
-		GConstantBufferManager->CreateConstantBuffer( SceneConstsBufferName.c_str(), &m_pSceneConstantBuffers[i], sizeof( SceneConstantsCBData ) );
-
-		WString SceneLightsBufferName = L"Scene Lights Frame: " + i;
-		GConstantBufferManager->CreateConstantBuffer( SceneLightsBufferName.c_str(), &m_pLightConstantBuffers[i], sizeof( SceneLightsCBData ) );
-	}
+	FUIRendererInitParams UIParams;
+	ZeroMemory( &UIParams, sizeof( UIParams ) );
+	UIParams.RenderingResolution = m_Window.GetDimensions();
+	UIParams.BackBufferFormat = m_Window.GetSwapChain()->GetBackBufferFormat();
+	m_UIRenderer.Initialize( UIParams, *this );
+}
+void FViewportContext::ReloadRenderPipelines()
+{
+	m_SceneRenderer.ReloadPipelines();
 }
 
-void ViewportContext::SetCommonRenderState( ICommandContext& CmdContext )
+FColorBuffer& FViewportContext::GetMainSceneRenderTarget()
 {
-	// Set View and Scissor
-	//
-	CmdContext.RSSetViewPorts( 1, &GetClientViewport() );
-	CmdContext.RSSetScissorRects( 1, &GetClientRect() );
-
-	// Set Constant Buffers
-	//
-	SceneConstantsCBData* pCBData = GetSceneConstBufferForCurrentFrame()->GetBufferPointer<SceneConstantsCBData>();
-	HCameraComponent* pCurrentCamera = m_GameWorld.GetCurrentSceneRenderCamera();
-	if (pCurrentCamera)
-	{
-		pCBData->ViewMat = pCurrentCamera->GetViewMatrix().Transpose();
-		pCBData->ProjMat = pCurrentCamera->GetProjectionMatrix().Transpose();
-		pCBData->ViewMat.Invert( pCBData->InverseViewMat );
-		pCBData->ProjMat.Invert( pCBData->InverseProjMat );
-		pCBData->CameraPos = pCurrentCamera->GetTransform().GetAbsoluteWorldPosition();
-		pCBData->CameraFarZ = pCurrentCamera->GetFarZ();
-		pCBData->CameraNearZ = pCurrentCamera->GetNearZ();
-	}
-	//pData->WorldTime = (float)m_GFXTimer.Seconds();
-	CmdContext.SetGraphicsConstantBuffer( kSceneConstants, GetSceneConstBufferForCurrentFrame() );
-
-	// Set the lights
-	SceneLightsCBData* pLights = GetLightConstBufferForCurrentFrame()->GetBufferPointer<SceneLightsCBData>();
-	uint64 PointLightBufferSize = sizeof( PointLightCBData ) * GLightManager.GetScenePointLightCount();
-	uint64 DirectionalLightBufferSize = sizeof( DirectionalLightCBData ) * GLightManager.GetSceneDirectionalLightCount();
-	CopyMemory( GLightManager.GetPointLighBufferPointer(), pLights->PointLights, PointLightBufferSize );
-	CopyMemory( GLightManager.GetDirectionalLightBufferPointer(), pLights->DirectionalLights, DirectionalLightBufferSize );
-
-	// TODO: pLights->NumSpotLights = GLightManager.GetSceneSpotLightCount();
-	pLights->NumPointLights = GLightManager.GetScenePointLightCount();
-	pLights->NumDirectionalLights = GLightManager.GetSceneDirectionalLightCount();
-
-	CmdContext.SetGraphicsConstantBuffer( kLights, GetLightConstBufferForCurrentFrame() );
+	if (GEngine->GetIsEditorPresent())
+		return m_SceneRenderTarget;
+	else
+		return GetWindow().GetRenderSurface();
 }
 
 //
 // Event Processing
 //
 
-
-void ViewportContext::OnEvent( Event& e )
+void FViewportContext::OnEvent( Event& e )
 {
+	EventDispatcher Dispatcher(e);
 
+	// Window
+	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &FViewportContext::OnWindowLostFocus );
+	Dispatcher.Dispatch<WindowFocusEvent>( this, &FViewportContext::OnWindowFocus );
+	Dispatcher.Dispatch<WindowResizeEvent>( this, &FViewportContext::OnWindowResize );
+
+	// Mouse
+	Dispatcher.Dispatch<MouseRawPointerMovedEvent>( this, &FViewportContext::OnMouseRawPointerMoved );
+	Dispatcher.Dispatch<MouseWheelScrolledEvent>( this, &FViewportContext::OnMouseWheelScrolled );
+	Dispatcher.Dispatch<MouseButtonPressedEvent>( this, &FViewportContext::OnMouseButtonPressed );
+	Dispatcher.Dispatch<MouseButtonReleasedEvent>( this, &FViewportContext::OnMouseButtonReleased );
+
+	// Keyboard
+	Dispatcher.Dispatch<KeyPressedEvent>( this, &FViewportContext::OnKeyPressed );
+	Dispatcher.Dispatch<KeyReleasedEvent>( this, &FViewportContext::OnKeyReleased );
 }
+
+bool FViewportContext::OnWindowLostFocus( WindowLostFocusEvent& e )
+{
+	if (!GEngine->GetIsEditorPresent())
+	{
+		//ShowMouse();
+		//UnlockMouseFromScreenCenter();
+	}
+
+	return false;
+}
+
+bool FViewportContext::OnWindowFocus( WindowFocusEvent& e )
+{
+	if (!GEngine->GetIsEditorPresent())
+	{
+		//HideMouse();
+		//LockMouseToScreenCenter();
+	}
+
+	return false;
+}
+
+bool FViewportContext::OnWindowResize( WindowResizeEvent& e )
+{
+	if (!GEngine->GetIsEditorPresent())
+	{
+		// Only resize the buffers if we the editor is not present. 
+		// Otherwise we are rendering to a texture.
+		GCommandManager.IdleGpu();
+		m_SceneRenderer.ResizeBuffers( e.GetWidth(), e.GetHeight() );
+		m_SceneRenderTarget.Create( L"Pre-Display Buffer", e.GetWidth(), e.GetHeight(), 1, m_Window.GetSwapChain()->GetBackBufferFormat() );
+
+		m_ViewPort.Width		= (float)e.GetWidth();
+		m_ViewPort.Height		= (float)e.GetHeight();
+		m_ScissorRect.Right		= e.GetWidth();
+		m_ScissorRect.Bottom	= e.GetHeight();
+	}
+
+	return false;
+}
+
+bool FViewportContext::OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseMoveDelta( e.GetX(), e.GetY() );
+	return false;
+}
+
+bool FViewportContext::OnMouseWheelScrolled( MouseWheelScrolledEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseScrollDelta( e.GetXOffset(), e.GetYOffset() );
+	return false;
+}
+
+bool FViewportContext::OnMouseButtonPressed( MouseButtonPressedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, true );
+	return false;
+}
+
+bool FViewportContext::OnMouseButtonReleased( MouseButtonReleasedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, false );
+	return false;
+}
+
+bool FViewportContext::OnKeyPressed( KeyPressedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), true );
+	return false;
+}
+
+bool FViewportContext::OnKeyReleased( KeyReleasedEvent& e )
+{
+	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), false );
+	return false;
+}
+

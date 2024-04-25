@@ -2,61 +2,78 @@
 
 #include "CoreFwd.h"
 
-template <typename ClassType>
+/*
+	Sets a single instance of a class to be the only instance available for its type.
+*/
+template <typename ClassType, bool bShouldHeapAllocate = false>
 class TSingleton
 {
 public:
-	static FORCEINLINE ClassType* GetInstance();
-	static FORCEINLINE bool IsValid();
-
+	static ClassType* GetInstance();
+	static bool IsValid();
 
 private:
 	static void InValidate();
 
-	static ClassType* s_Instance;
+	static ClassType* SInstance;
 
 protected:
-	FORCEINLINE TSingleton();
-	FORCEINLINE virtual ~TSingleton();
+	TSingleton();
+	virtual ~TSingleton();
 };
 
 //
 // TSingleton implementation
 //
 
-template <typename ClassType>
-ClassType* TSingleton<ClassType>::s_Instance = NULL;
+template <typename ClassType, bool bShouldHeapAllocate>
+ClassType* TSingleton<ClassType, bShouldHeapAllocate>::SInstance = NULL;
 
-template <typename ClassType>
-FORCEINLINE TSingleton<ClassType>::TSingleton()
+template <typename ClassType, bool bShouldHeapAllocate>
+FORCEINLINE TSingleton<ClassType, bShouldHeapAllocate>::TSingleton()
 {
-	if (s_Instance == NULL)
+	if constexpr (bShouldHeapAllocate)
 	{
-		s_Instance = (ClassType*)this;
+		SInstance = new ClassType();
 	}
+	else
+	{
+		if (SInstance == NULL)
+		{
+			SInstance = (ClassType*)this;
+		}
+	}
+	HE_ASSERT( SInstance != NULL );
 }
 
-template <typename ClassType>
-FORCEINLINE TSingleton<ClassType>::~TSingleton()
+template <typename ClassType, bool bShouldHeapAllocate>
+FORCEINLINE TSingleton<ClassType, bShouldHeapAllocate>::~TSingleton()
 {
 	InValidate();
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE ClassType* TSingleton<ClassType>::GetInstance()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE ClassType* TSingleton<ClassType, bShouldHeapAllocate>::GetInstance()
 {
-	HE_ASSERT(s_Instance != NULL); // Trying to get an instance of a class that has not been initialized.
-	return s_Instance;
+	HE_ASSERT(SInstance != NULL); // Trying to get an instance of a class that has not been initialized.
+	return SInstance;
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE bool TSingleton<ClassType>::IsValid()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE bool TSingleton<ClassType, bShouldHeapAllocate>::IsValid()
 {
-	return s_Instance != NULL;
+	return SInstance != NULL;
 }
 
-template <typename ClassType>
-/*static*/ FORCEINLINE void TSingleton<ClassType>::InValidate()
+template <typename ClassType, bool bShouldHeapAllocate>
+/*static*/ FORCEINLINE void TSingleton<ClassType, bShouldHeapAllocate>::InValidate()
 {
-	s_Instance = NULL;
+	if constexpr (bShouldHeapAllocate)
+	{
+		if (SInstance != NULL)
+		{
+			delete SInstance;
+		}
+	}
+	SInstance = NULL;
 }

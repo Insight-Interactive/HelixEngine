@@ -3,3 +3,8 @@
 
 #include <string.h>
 #include <iostream>
+#include <sstream>
+
+#ifdef HE_WINDOWS
+#	include <Windows.h>
+#endif
