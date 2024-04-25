@@ -36,15 +36,17 @@ void HWorld::Initialize( const Char* LevelURL )
 
 	RegisterScenes();
 
+	bool UseFirstPersonCharacter = true;
+
 	FActorInitArgs PlrCharacterInitArgs{ this, TEXT( "Player Character" ), true };
-	m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	if (UseFirstPersonCharacter)
+		m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
+	else
+		m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	
 	HCapsuleColliderComponent* pCapsule = m_pPlayerCharacter->GetComponent<HCapsuleColliderComponent>();
-	pCapsule->SetPosition( pCapsule->GetPosition() + FVector3( 0.f, pCapsule->GetHalfHeight() + pCapsule->GetRadius(), 0.f));
+	pCapsule->SetPosition( pCapsule->GetPosition() + FVector3( 0.f, pCapsule->GetHeight(), 0.f ) );
 	pCapsule->SetRotation( 0.f, 0.f, 1.57f );
-	pCapsule->SetDensity( 10.f );
-	//const FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
-	//pCapsule->SetRotation( Rot );
-	//m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
 	//TODO Player is teleporting on play. Why?
 	
 	rapidjson::Document WorldJsonDoc;

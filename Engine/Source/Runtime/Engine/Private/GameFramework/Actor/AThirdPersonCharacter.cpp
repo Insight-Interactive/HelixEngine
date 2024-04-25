@@ -34,7 +34,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 {
 	Super::SetupController( Controller );
 
-	// Setup event callbacks for camera movement.
+	// Setup event callbacks for movement.
 	//
 	// Locamotion
 	Controller.BindAxis( "MoveForward", this, &AThirdPersonCharacter::ThirdPersonMoveForward );
@@ -42,6 +42,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
 
+	// Camera
 	Controller.BindAxis( "LookUp", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraPitch );
 	Controller.BindAxis( "LookRight", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraYaw );
 }

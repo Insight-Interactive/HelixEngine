@@ -5,6 +5,7 @@
 
 static const float kDefaultCameraPitchSpeedMultiplier = 50.f;
 static const float kDefaultCameraYawSpeedMultiplier = 50.f;
+static const float kDefaultCameraRollSpeedMultiplier = 50.f;
 
 class HFirstPersonCameraComponent : public HCameraComponent
 {
@@ -14,19 +15,22 @@ public:
 
 	void LookUp( float Value );
 	void LookRight( float Value );
+	void Roll( float Value );
 
 	float GetVerticalLookSpeed() const;
 	float GetHorizontalLookSpeed() const;
 	void SetVerticalLookSpeed( float Speed );
 	void SetHorizontalLookSpeed( float Speed );
 
+	FVector3 m_Rotation;
 private:
-	FVector2 m_Rotation;
 	FQuat m_RotX;
 	FQuat m_RotY;
+	FQuat m_RotZ;
 
 	float m_CameraPitchSpeedMultiplier;
 	float m_CameraYawSpeedMultiplier;
+	float m_CameraRollSpeedMultiplier;
 
 };
 

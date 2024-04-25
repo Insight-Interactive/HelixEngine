@@ -10,7 +10,7 @@
 HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: Super( InitArgs )
 	, m_UseCameraCollision( true )
-	, m_CameraCollisionTraceDistance( 2.f )
+	, m_CameraCollisionTraceDistance( 5.f )
 	, m_CameraDistance( -50.f )
 	, m_ViewOffset( 0.f, 0.f, 0.f ) //20.f, 10.f, 0.f
 {
@@ -26,28 +26,25 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	//UpdateCameraPitch();
-	//UpdateCameraYaw();
-
-	// Player-to-camera collision detection
-	//
-	//FVector3 TraceStart = m_pRootComponent->GetWorldPosition();
-	//FVector3 TraceEnd = m_pCameraComponent->GetWorldPosition();
+	//// Player-to-camera collision detection
+	////
+	//FVector3 TraceStart = FVector3::Zero;
+	//FVector3 TraceEnd = GetPosition();
 	//FVector3 TraceDir = TraceStart - TraceEnd;
 
 	//FVector3 TraceDirNormal = FVector3::Normalize( TraceDir );
 
-	// Front trace
+	//// Front trace
 	//{
 	//	FRaycastHitInfo HitInfo = {};
 	//	std::vector<HColliderComponent*> IgnoreColliders;
-	//	IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
-	//	bool ForwardHit = GetWorld()->Raycast( TraceStart, TraceDirNormal, TraceDir.Length(), &HitInfo, &IgnoreColliders, FG_WorldGeometry );
+	//	//IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
+	//	bool ForwardHit = GetWorld()->Raycast( TraceStart, TraceDirNormal, TraceDir.Length(), &HitInfo, &IgnoreColliders );
 	//	//bool BackwardHit = GetWorld()->Raycast( m_pCameraComponent->GetWorldPosition(), m_pCameraComponent->GetLocalBackward(), TraceDistance );
 
 	//	if ( ForwardHit )
 	//	{
-	//		m_pCameraComponent->SetPosition( HitInfo.HitPos );
+	//		SetPosition( HitInfo.HitPos );
 
 	//		/*FDebugLineRenderInfo info = {};
 	//		info.Start = TraceStart;

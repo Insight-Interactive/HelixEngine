@@ -6,6 +6,7 @@
 #include "Developer/ADebugPawn.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Editor/Event/EditorEvent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 
 
 HelixEdHomeUI::HelixEdHomeUI( FViewportContext& Owner )
@@ -37,8 +38,16 @@ void HelixEdHomeUI::SetupPanels()
 
 	m_ToolbarPanel.AddListener( this, &HelixEdHomeUI::OnEvent );
 	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
+	HFirstPersonCameraComponent* pDebugCamera = pDebugPawn->GetCameraComponent();
 	pDebugPawn->GetRootComponent()->SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
-	pDebugPawn->GetRootComponent()->SetRotation( GEditorEngine->GetPreferences().DebugCameraRotation );
+	FVector3& SavedAngles = GEditorEngine->GetPreferences().DebugCameraRotation;
+	FQuat CameraRotation = FQuat::CreateFromYawPitchRoll( SavedAngles.y, SavedAngles.x, SavedAngles.z );
+	pDebugPawn->GetCameraComponent()->SetRotation( CameraRotation );
+	pDebugCamera->m_Rotation = SavedAngles;
+	/*pDebugCamera->m_Rotation.x = SavedAngles.x;
+	pDebugCamera->m_Rotation.y = SavedAngles.y;
+	pDebugCamera->LookUp( 0.01f );
+	pDebugCamera->LookRight( 0.01f );*/
 	/*pDebugPawn->SetVerticalLookSpeed( GEditorEngine->GetPreferences().DebugCameraPitchSpeed );
 	pDebugPawn->SetHorizontalLookSpeed( GEditorEngine->GetPreferences().DebugCameraYawSpeed );*/
 	m_WorldOutline.AddListener( this, &HelixEdHomeUI::OnEvent );

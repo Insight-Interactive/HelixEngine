@@ -18,7 +18,7 @@ enum EGampadRumbleMotor
 
 enum DigitalInput
 {
-	// CAUTION: Editing these has repercussions on input mapping files such as "DefaultInput.ini"
+	// CAUTION: Editing these has repercussions on input mapping files such as "InputMappings.ini"
 	// Keyboard
 	// Key_ must start at zero, see m_DXKeyMapping
 	Key_Escape = 0,

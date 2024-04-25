@@ -167,7 +167,7 @@ void HEngine::PostStartup()
 	const String& StartingWorldPath = FGameProject::GetInstance()->GetDefaultLevelPath();
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "DefaultInput.ini" );
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "InputMappings.ini" );
 	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
 	m_MainViewPort.Show();

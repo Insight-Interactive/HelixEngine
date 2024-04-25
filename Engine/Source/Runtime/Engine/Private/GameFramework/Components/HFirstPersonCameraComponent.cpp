@@ -9,6 +9,7 @@ HFirstPersonCameraComponent::HFirstPersonCameraComponent( FComponentInitArgs& In
 	: HCameraComponent( InitArgs )
 	, m_CameraPitchSpeedMultiplier( kDefaultCameraPitchSpeedMultiplier )
 	, m_CameraYawSpeedMultiplier( kDefaultCameraYawSpeedMultiplier )
+	, m_CameraRollSpeedMultiplier( kDefaultCameraRollSpeedMultiplier )
 {
 }
 
@@ -24,12 +25,19 @@ void HFirstPersonCameraComponent::LookUp( float Value )
 	m_Rotation.x += Value * m_CameraPitchSpeedMultiplier * (float)GEngine->GetDeltaTime();
 	m_Rotation.x = Math::Clamp( m_Rotation.x, -kXRotationClamp, kXRotationClamp );
 	m_RotX = FQuat::CreateFromAxisAngle( FVector3::Right, m_Rotation.x );
-	SetRotation( m_RotX * m_RotY );
+	SetRotation( m_RotX * m_RotY * m_RotZ );
 }
 
 void HFirstPersonCameraComponent::LookRight( float Value )
 {
 	m_Rotation.y += Value * m_CameraYawSpeedMultiplier * (float)GEngine->GetDeltaTime();
 	m_RotY = FQuat::CreateFromAxisAngle( FVector3::Up, m_Rotation.y );
-	SetRotation( m_RotX * m_RotY );
+	SetRotation( m_RotX * m_RotY * m_RotZ );
+}
+
+void HFirstPersonCameraComponent::Roll( float Value )
+{
+	m_Rotation.z += Value * m_CameraRollSpeedMultiplier * (float)GEngine->GetDeltaTime();
+	m_RotZ = FQuat::CreateFromAxisAngle( FVector3::Forward, m_Rotation.z );
+	SetRotation( m_RotX * m_RotY * m_RotZ );
 }
