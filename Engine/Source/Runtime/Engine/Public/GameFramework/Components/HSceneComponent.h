@@ -10,6 +10,7 @@ HCOMPONENT()
 class HSceneComponent : public HActorComponent
 {
 	friend class AActor;
+	friend class HWorld; // For transform serialization
 	using Super = HActorComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HSceneComponent )
@@ -58,8 +59,8 @@ public:
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	HSceneComponent*	m_pParent;

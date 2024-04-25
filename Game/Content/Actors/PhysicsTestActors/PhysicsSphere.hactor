@@ -1,20 +1,20 @@
 {
   "AActor": [
     {
-      "ObjectName": "MagicGate",
-      "ObjectGUID": "3d4d64b8-5938-461d-88fe-5b864d17a84e"
+      "ObjectName": "Physics Sphere",
+      "ObjectGUID": "3b781ea0-f649-4b0f-843e-e926c9ac3fdb"
     },
     {
       "Components": [
         {
-          "HCubeColliderComponent":[
+          "HSphereColliderComponent":[
             {
               "HColliderComponent":[
                 {
                   "HSceneComponent": [
                     {
-                      "ObjectName": "PlayerTrigger",
-                      "ObjectGUID": "121c2e9c-3d2d-4989-95a2-143d0118e255"
+                      "ObjectName": "SphereCollider",
+                      "ObjectGUID": "deaa0432-d42d-4bae-af94-42b591ba8f9b"
                     },
                     {
                       "m_Transform": [
@@ -34,17 +34,15 @@
                   ]
                 },
                 {
-                  "IsTrigger": true,
+                  "IsTrigger": false,
                   "Density": 10.0,
-                  "IsStatic": true,
+                  "IsStatic": false,
                   "EnableSimulation": true
                 }
               ]
             },
             {
-              "m_RigidBody.m_HalfWidth": 20.0,
-              "m_RigidBody.m_HalfHeight": 10.0,
-              "m_RigidBody.m_HalfDepth": 10.0
+              "m_RigidBody.m_Radius": 10.0
             }
           ]
         }

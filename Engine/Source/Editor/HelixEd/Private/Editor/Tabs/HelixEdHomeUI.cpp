@@ -117,7 +117,7 @@ void HelixEdHomeUI::OnExitMenuItem()
 
 void HelixEdHomeUI::OnSaveMenuItem()
 {
-
+	GEditorEngine->GetGameWorld().Save();
 }
 
 void HelixEdHomeUI::OnEditorPreferencesMenuItem()

@@ -35,6 +35,7 @@ public:
 	void SetDensity( const float& NewDensity );
 	void EnableSimulation();
 	void DisableSimulation();
+	bool IsSimulationEnabled();
 	float GetMass() const;
 	void SetMass( const float& NewMass );
 	bool GetIsKinematic() const;

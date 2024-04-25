@@ -13,7 +13,7 @@ FShaderDatabase::~FShaderDatabase()
 {
 }
 
-void FShaderDatabase::Deserialize( const ReadContext& Value )
+void FShaderDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -27,7 +27,7 @@ void FShaderDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FShaderDatabase::Serialize( WriteContext& Writer )
+void FShaderDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

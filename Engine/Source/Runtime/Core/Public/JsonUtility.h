@@ -11,10 +11,14 @@
 #include "Transform.h"
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
 
 
 namespace JsonUtility
 {
+	typedef rapidjson::PrettyWriter<rapidjson::StringBuffer> WriteContext;
+	typedef rapidjson::Value ReadContext;
+
 	/*
 		Populates a json document with a pre-opened file. Returns true if succeeded false if not.
 		@param File - Preloaded file ontainting the json source.
@@ -86,6 +90,16 @@ namespace JsonUtility
 		]
 	*/
 	bool GetTransform( const rapidjson::Value& OwningObject, const char* PropertyName, FTransform& OutTransform );
+
+	/*
+		Writes a Transform in the proper format to be read with JSonUtility::GetTransform()
+	*/
+	void WriteTransform( WriteContext& Output, const char* PropertyName, const FTransform& Transform );
+
+	/*
+		Writes just the transforms values with no object blocks in Json.
+	*/
+	void WriteTransformValues( WriteContext& Output, const FTransform& Transform );
 }
 
 #include "JsonUtility.inl"

@@ -110,7 +110,7 @@ void HEditorEngine::LoadEditorPreferences()
 void HEditorEngine::SaveEditorPreferences()
 {
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writer( StrBuffer );
+	JsonUtility::WriteContext Writer( StrBuffer );
 
 	Writer.StartObject();
 	{

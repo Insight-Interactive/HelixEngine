@@ -38,8 +38,15 @@ void HWorld::Initialize( const Char* LevelURL )
 
 	FActorInitArgs PlrCharacterInitArgs{ this, TEXT( "Player Character" ), true };
 	m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	HCapsuleColliderComponent* pCapsule = m_pPlayerCharacter->GetComponent<HCapsuleColliderComponent>();
+	pCapsule->SetPosition( pCapsule->GetPosition() + FVector3( 0.f, pCapsule->GetHalfHeight() + pCapsule->GetRadius(), 0.f));
+	pCapsule->SetRotation( 0.f, 0.f, 1.57f );
+	pCapsule->SetDensity( 10.f );
+	//const FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
+	//pCapsule->SetRotation( Rot );
 	//m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
-
+	//TODO Player is teleporting on play. Why?
+	
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
 	HE_ASSERT( WorldJsonSource->IsOpen() );
@@ -78,6 +85,11 @@ void HWorld::Initialize()
 
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+}
+
+void HWorld::Save()
+{
+	Serialize( m_Filepath.c_str() );
 }
 
 void HWorld::SetViewport( FViewportContext* pViewport )
@@ -201,10 +213,10 @@ void HWorld::ReloadAndBeginPlay()
 
 void HWorld::Serialize( const Char* Filename )
 {
-	HE_ASSERT( Filename == NULL ); // World has a reference to its filepath. No need to pass one in.
+	HE_ASSERT( Filename != NULL ); // World has a reference to its filepath. No need to pass one in.
 
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writer( StrBuffer );
+	JsonUtility::WriteContext Writer( StrBuffer );
 
 	Writer.StartObject();
 	{
@@ -221,7 +233,24 @@ void HWorld::Serialize( const Char* Filename )
 			// Serialize the level.
 			Writer.StartObject();
 			{
-				m_Level.Serialize( Writer );
+				std::vector<AActor*>& LevelActors = m_Level.GetAllActors();
+				for (uint32 i = 0; i < LevelActors.size(); i++)
+				{
+					AActor& Actor = *LevelActors[i];
+					
+					Writer.Key( Actor.GetGuid().ToString().CStr() );
+					Writer.StartArray();
+
+					Writer.StartObject();
+					if (HSceneComponent* pRootComponenet = Actor.GetRootComponent())
+					{
+						JsonUtility::WriteTransformValues( Writer, pRootComponenet->m_Transform );
+					}
+					Writer.EndObject();
+
+					Writer.EndArray();
+				}
+				//m_Level.Serialize( Writer );
 			}
 			Writer.EndObject();
 
@@ -242,23 +271,24 @@ void HWorld::Serialize( const Char* Filename )
 	}
 }
 
-void HWorld::Serialize( WriteContext& Output )
+void HWorld::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( "Name" );
-	Output.String( TCharToChar( GetObjectName() ) );
+	Output.String( "Test" );
+	//Output.String( TCharToChar( GetObjectName() ) );
 
 	Output.Key( "TickInterval" );
 	Output.Double( 1.0 );
 }
 
-void HWorld::Deserialize( const ReadContext& Value )
+void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	float TickInterval = 0.f;
-	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );
-
 	Char WorldName[64];
 	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
 	Super::SetObjectName( CharToTChar( WorldName ) );
+
+	float TickInterval = 0.f;
+	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
@@ -325,7 +355,8 @@ void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, b
 		(PhysicsCallbackHandler*)pCapsule,
 		false,
 		10.f,
-		IsStatic, FG_Player, FG_WorldGeometry );
+		IsStatic,
+		FG_Player, FG_WorldGeometry );
 }
 
 void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )

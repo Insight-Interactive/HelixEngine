@@ -41,8 +41,8 @@ public:
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 	bool GetCanDrawDebugBillboard() const;
 

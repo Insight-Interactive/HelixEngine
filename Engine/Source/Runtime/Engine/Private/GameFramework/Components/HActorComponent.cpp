@@ -25,7 +25,7 @@ HWorld* HActorComponent::GetWorld()
 	return m_pOwner->GetWorld();
 }
 
-void HActorComponent::Serialize( WriteContext& Output )
+void HActorComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key("ObjectName");
 	Output.String( TCharToChar(GetObjectName()) );
@@ -34,7 +34,7 @@ void HActorComponent::Serialize( WriteContext& Output )
 	Output.String(GetGuid().ToString().CStr());
 }
 
-void HActorComponent::Deserialize( const ReadContext& Value )
+void HActorComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	// Object Name
 	char ObjectNameBuffer[32];

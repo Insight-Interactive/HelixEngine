@@ -9,8 +9,8 @@ public:
 	FMeshDatabase();
 	virtual ~FMeshDatabase();
 
-	virtual void Deserialize( const ReadContext& Value ) override;
-	virtual void Serialize( WriteContext& Writer ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Writer ) override;
 
 	virtual void Initialize() override;
 	virtual void UnInitialize() override;

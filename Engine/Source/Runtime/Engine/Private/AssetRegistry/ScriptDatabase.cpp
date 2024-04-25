@@ -14,7 +14,7 @@ FScriptDatabase::~FScriptDatabase()
 
 }
 
-void FScriptDatabase::Deserialize( const ReadContext& Value )
+void FScriptDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -28,7 +28,7 @@ void FScriptDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FScriptDatabase::Serialize( WriteContext& Writer )
+void FScriptDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

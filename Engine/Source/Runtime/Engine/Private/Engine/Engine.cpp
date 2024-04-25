@@ -132,8 +132,7 @@ void HEngine::Startup()
 	FWindow::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar		= true;
 	ClientDesc.bShowImmediate	= false;
-	ClientDesc.Resolution		= GCommonResolutions[k720p]; 
-	ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
+	ClientDesc.Resolution		= GCommonResolutions[k1080p]; 
 #if HE_WITH_EDITOR
 	HName EngineTitle = TEXT( "Helix Editor" );
 	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );

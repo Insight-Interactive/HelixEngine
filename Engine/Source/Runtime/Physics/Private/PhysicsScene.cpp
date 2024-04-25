@@ -328,11 +328,11 @@ void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, con
 #if HE_DEBUG_PHYSICS
 	Flags.set(PxShapeFlag::eVISUALIZATION);
 #endif
-	if (IsTrigger)
-		Flags.set(PxShapeFlag::eTRIGGER_SHAPE);
-	
+
 	if (IsTrigger)
 	{
+		Flags.set( PxShapeFlag::eTRIGGER_SHAPE );
+
 		PxShape* pShape = Physics.createShape( Geo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, Flags );
 		HE_ASSERT( pShape != nullptr ); 
 

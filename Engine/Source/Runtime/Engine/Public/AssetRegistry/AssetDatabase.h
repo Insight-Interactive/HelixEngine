@@ -167,7 +167,7 @@ private:
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 {
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writer( StrBuffer );
+	JsonUtility::WriteContext Writer( StrBuffer );
 
 	Writer.StartObject();
 	{

@@ -11,7 +11,7 @@ FFontDatabase::~FFontDatabase()
 {
 }
 
-void FFontDatabase::Deserialize( const ReadContext& Value )
+void FFontDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -25,7 +25,7 @@ void FFontDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FFontDatabase::Serialize( WriteContext& Writer )
+void FFontDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

@@ -124,13 +124,13 @@ bool HPointLightComponent::GetCanDrawDebugBillboard() const
 	return !GEngine->IsPlayingInEditor();
 }
 
-void HPointLightComponent::Serialize( WriteContext& Output )
+void HPointLightComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Super::Serialize( Output );
 
 }
 
-void HPointLightComponent::Deserialize( const ReadContext& Value )
+void HPointLightComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	enum
 	{

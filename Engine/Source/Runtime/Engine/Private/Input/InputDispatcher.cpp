@@ -34,7 +34,7 @@ void FInputDispatcher::UnInitialize()
 void FInputDispatcher::Serialize( const Char* Filepath )
 {
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writter( StrBuffer );
+	JsonUtility::WriteContext Writter( StrBuffer );
 
 	Writter.StartObject();
 	{
@@ -54,7 +54,7 @@ void FInputDispatcher::Serialize( const Char* Filepath )
 	}
 }
 
-void FInputDispatcher::Serialize( WriteContext& Output )
+void FInputDispatcher::Serialize( JsonUtility::WriteContext& Output )
 {
 #if HE_WITH_EDITOR // In client shipping builds, the user should never be able to serialize new input mappings.
 	Output.Key( "AxisMappings" );
@@ -100,7 +100,7 @@ void FInputDispatcher::Serialize( WriteContext& Output )
 #endif // HE_WITH_EDITOR
 }
 
-void FInputDispatcher::Deserialize( const ReadContext& Value )
+void FInputDispatcher::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	// Add the axis mappings
 	const rapidjson::Value& AxisMappingsArray = Value["AxisMappings"];

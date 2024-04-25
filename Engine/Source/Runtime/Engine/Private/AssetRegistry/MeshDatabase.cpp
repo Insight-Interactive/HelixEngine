@@ -15,7 +15,7 @@ FMeshDatabase::~FMeshDatabase()
 
 }
 
-void FMeshDatabase::Deserialize( const ReadContext& Value )
+void FMeshDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -29,7 +29,7 @@ void FMeshDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FMeshDatabase::Serialize( WriteContext& Writer )
+void FMeshDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

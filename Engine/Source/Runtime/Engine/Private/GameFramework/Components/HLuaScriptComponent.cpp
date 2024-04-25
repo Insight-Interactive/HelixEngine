@@ -23,11 +23,11 @@ void HLuaScriptComponent::Tick( float DeltaTime )
 
 }
 
-void HLuaScriptComponent::Serialize( WriteContext& Output )
+void HLuaScriptComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 }
 
-void HLuaScriptComponent::Deserialize( const ReadContext& Value )
+void HLuaScriptComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value[0] );
 

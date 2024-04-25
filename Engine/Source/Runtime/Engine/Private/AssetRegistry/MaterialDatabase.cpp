@@ -14,7 +14,7 @@ FMaterialDatabase::~FMaterialDatabase()
 {
 }
 
-void FMaterialDatabase::Deserialize( const ReadContext& Value )
+void FMaterialDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (auto itr = Value.MemberBegin(); itr != Value.MemberEnd(); ++itr)
 	{
@@ -27,7 +27,7 @@ void FMaterialDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FMaterialDatabase::Serialize( WriteContext& Writer )
+void FMaterialDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

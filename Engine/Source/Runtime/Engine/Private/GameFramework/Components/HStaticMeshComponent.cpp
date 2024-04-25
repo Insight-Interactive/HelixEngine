@@ -75,7 +75,7 @@ void HStaticMeshComponent::OnAttach()
 
 }
 
-void HStaticMeshComponent::Serialize( WriteContext& Output )
+void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key(HE_STRINGIFY(HStaticMeshComponent));
 	Output.StartArray();
@@ -104,7 +104,7 @@ void HStaticMeshComponent::Serialize( WriteContext& Output )
 	Output.EndArray();
 }
 
-void HStaticMeshComponent::Deserialize( const ReadContext& Value ) 
+void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value ) 
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY(HSceneComponent)]);
 

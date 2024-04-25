@@ -1,5 +1,5 @@
 {
-  "GameName": "Game",
-  "ProjectName":  "Helix Sample Project",
+  "GameName": "3p-WW1",
+  "ProjectName":  "Atlas",
   "DefaultLevel": "Levels/PhysicsTest.hlevel"
 }

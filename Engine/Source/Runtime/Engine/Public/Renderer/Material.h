@@ -123,8 +123,8 @@ protected:
 
 	template <typename T>
 	bool SetShaderFloatVar( const Char* VariableName, const T& Value );
-	void DeserializeTextureReflection( const ReadContext& TextureJson );
-	void DeserializeBufferReflection( const ReadContext& BufferJson );
+	void DeserializeTextureReflection( const JsonUtility::ReadContext& TextureJson );
+	void DeserializeBufferReflection( const JsonUtility::ReadContext& BufferJson );
 
 protected:
 #if HE_DEBUG

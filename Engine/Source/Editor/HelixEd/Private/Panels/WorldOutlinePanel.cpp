@@ -46,10 +46,13 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 						e.SetSelectedObject( pCurrentActor );
 						EmitEvent( e );
 					}
+
 					ImGui::TreePop();
 				}
 			}
 		}
+
+
 	}
 	ImGui::End();
 }

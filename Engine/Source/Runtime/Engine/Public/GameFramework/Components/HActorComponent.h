@@ -61,8 +61,8 @@ protected:
 	// Called when the owning actor has completly finished deserializing all other components it owns.
 	virtual void OnOwnerDeserializeComplete();
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 
 protected:

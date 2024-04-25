@@ -12,19 +12,20 @@ class HPlaneColliderComponent : public HColliderComponent
 public:
 	HE_COMPONENT_GENERATED_BODY( HPlaneColliderComponent );
 
+	virtual HRigidBody& GetRigidBody() override;
+	virtual const HRigidBody& GetRigidBody() const override;
+
 	virtual bool IsStatic() const override;
+	void SetWidth( float Width );
+	void SetHeight( float Depth );
+	void SetWidthAndHeight( float Width, float Depth );
 
 protected:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
 
-	virtual void Tick( float DeltaTime );
-
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
-
-	virtual HRigidBody& GetRigidBody() override;
-	virtual const HRigidBody& GetRigidBody() const override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	void RegisterCollider();
