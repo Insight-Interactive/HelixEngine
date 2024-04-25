@@ -42,6 +42,7 @@ public:
 
 	virtual void SetPosition( const FVector3& NewPos );
 	virtual void SetRotation( const FQuat& NewRotation );
+	virtual void SetRotation( const FVector3& NewEulerRotation );
 	virtual void SetScale( const FVector3& NewScale );
 	virtual void SetPosition( const float& X, const float& Y, const float& Z );
 	virtual void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
@@ -178,6 +179,11 @@ FORCEINLINE void HSceneComponent::SetPosition( const FVector3& NewPos )
 FORCEINLINE void HSceneComponent::SetRotation( const FQuat& NewRotation )
 {
 	m_Transform.SetRotation( NewRotation );
+}
+
+FORCEINLINE void HSceneComponent::SetRotation( const FVector3& NewEulerRotation )
+{
+	SetRotation( FQuat::CreateFromYawPitchRoll( NewEulerRotation.y, NewEulerRotation.x, NewEulerRotation.z ) );
 }
 
 FORCEINLINE void HSceneComponent::SetScale( const FVector3& NewScale )

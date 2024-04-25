@@ -145,7 +145,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetCameraComponent()->m_Rotation;
+				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetCameraComponent()->GetCameraAngles();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraRot.x );
 				Writer.Key( "Y" );

@@ -40,16 +40,8 @@ void HelixEdHomeUI::SetupPanels()
 	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
 	HFirstPersonCameraComponent* pDebugCamera = pDebugPawn->GetCameraComponent();
 	pDebugPawn->GetRootComponent()->SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
-	FVector3& SavedAngles = GEditorEngine->GetPreferences().DebugCameraRotation;
-	FQuat CameraRotation = FQuat::CreateFromYawPitchRoll( SavedAngles.y, SavedAngles.x, SavedAngles.z );
-	pDebugPawn->GetCameraComponent()->SetRotation( CameraRotation );
-	pDebugCamera->m_Rotation = SavedAngles;
-	/*pDebugCamera->m_Rotation.x = SavedAngles.x;
-	pDebugCamera->m_Rotation.y = SavedAngles.y;
-	pDebugCamera->LookUp( 0.01f );
-	pDebugCamera->LookRight( 0.01f );*/
-	/*pDebugPawn->SetVerticalLookSpeed( GEditorEngine->GetPreferences().DebugCameraPitchSpeed );
-	pDebugPawn->SetHorizontalLookSpeed( GEditorEngine->GetPreferences().DebugCameraYawSpeed );*/
+	pDebugCamera->SetCameraAngles( GEditorEngine->GetPreferences().DebugCameraRotation );
+
 	m_WorldOutline.AddListener( this, &HelixEdHomeUI::OnEvent );
 	m_WorldOutline.SetWorld( &GEditorEngine->GetGameWorld() );
 	m_ContentBrowserPanel.AddListener( this, &HelixEdHomeUI::OnEvent );

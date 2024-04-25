@@ -21,12 +21,11 @@ public:
 	float GetHorizontalLookSpeed() const;
 	void SetVerticalLookSpeed( float Speed );
 	void SetHorizontalLookSpeed( float Speed );
+	FVector3 GetCameraAngles();
+	void SetCameraAngles( FVector3& Angles );
 
-	FVector3 m_Rotation;
 private:
-	FQuat m_RotX;
-	FQuat m_RotY;
-	FQuat m_RotZ;
+	FVector3 m_Rotation;
 
 	float m_CameraPitchSpeedMultiplier;
 	float m_CameraYawSpeedMultiplier;
@@ -57,4 +56,15 @@ inline void HFirstPersonCameraComponent::SetVerticalLookSpeed( float Speed )
 inline void HFirstPersonCameraComponent::SetHorizontalLookSpeed( float Speed )
 {
 	m_CameraYawSpeedMultiplier = Speed;
+}
+
+inline FVector3 HFirstPersonCameraComponent::GetCameraAngles()
+{
+	return m_Rotation;
+}
+
+inline void HFirstPersonCameraComponent::SetCameraAngles( FVector3& Angles )
+{
+	m_Rotation = Angles;
+	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }
