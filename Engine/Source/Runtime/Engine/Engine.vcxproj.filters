@@ -171,9 +171,6 @@
     <ClInclude Include="Public\Engine\FileExplorerWindow.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\Timer.h">
-      <Filter>Public\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Engine\GameProject.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -198,6 +195,9 @@
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h">
       <Filter>Public\Engine\Subsystem</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Engine\Timer.h">
+      <Filter>Public\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Engine\ViewportContext.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -210,12 +210,9 @@
     <ClInclude Include="Public\GameFramework\Actor\ACharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Public\GameFramework\Actor\ADebugPawn.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
-=======
->>>>>>> Development
     <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
@@ -446,9 +443,6 @@
     <ClCompile Include="Private\Engine\Events.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\Timer.cpp">
-      <Filter>Private\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Engine\GameProject.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
@@ -470,6 +464,9 @@
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp">
       <Filter>Private\Engine\Subsystem</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Engine\Timer.cpp">
+      <Filter>Private\Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Private\Engine\ViewportContext.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
@@ -479,12 +476,9 @@
     <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Private\GameFramework\Actor\ADebugPawn.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
-=======
->>>>>>> Development
     <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>

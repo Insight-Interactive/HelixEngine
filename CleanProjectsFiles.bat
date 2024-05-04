@@ -4,6 +4,8 @@ echo /********************************************/
 echo    Removing Visual Studio C++ Project Files
 echo /********************************************/
 
+del /q /s *.sln
+
 cd Engine/Source
 del /q /s *.sln
 del /q /s *.vcxproj
