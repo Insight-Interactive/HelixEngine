@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 /*
 	File: JsonUtility.h
 	Author: Garrett Courtney

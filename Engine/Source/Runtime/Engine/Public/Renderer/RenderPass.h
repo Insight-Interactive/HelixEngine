@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 /*
 	File: FRenderPass.h
 	Source: None

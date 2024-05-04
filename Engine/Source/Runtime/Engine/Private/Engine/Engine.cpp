@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Engine/Engine.h"
@@ -72,6 +72,8 @@ void HEngine::PreStartup()
 
 	EmitEvent( EnginePreStartupEvent() );
 
+	// Initialize all core systems.
+
 	System::InitializePlatform();
 	SystemTime::Initialize();
 	m_AppStartTime = SystemTime::GetCurrentTick();
@@ -98,7 +100,7 @@ void HEngine::PreStartup()
 	m_ReneringSubsystem.RunAsync();
 	m_PhysicsSubsystem.RunAsync();
 
-	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
+	HE_LOG( Log, TEXT( "Engine pre-startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks(m_AppStartTime, SystemTime::GetCurrentTick() ) );
 }
 
 void HEngine::Startup()
@@ -106,6 +108,9 @@ void HEngine::Startup()
 	HE_LOG( Log, TEXT( "Starting up engine." ) );
 
 	EmitEvent( EngineStartupEvent() );
+
+	// Startup the game and load all client facing resources.
+	uint64 StartupTick = SystemTime::GetCurrentTick();
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
@@ -154,7 +159,7 @@ void HEngine::Startup()
 
 	m_GameWorld.SetViewport( &m_MainViewPort );
 
-	HE_LOG( Log, TEXT( "Engine startup complete." ) );
+	HE_LOG( Log, TEXT( "Engine startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks( StartupTick, SystemTime::GetCurrentTick() ) );
 }
 
 void HEngine::PostStartup()
