@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "HSceneComponent.h"
@@ -15,9 +16,8 @@ public:
 
 	virtual void Tick( float DeltaTime ) override;
 
-private:
-	void UpdateCameraPitch();
-	void UpdateCameraYaw();
+	void UpdateCameraPitch( float Value );
+	void UpdateCameraYaw( float Value );
 
 private:
 	bool m_UseCameraCollision;

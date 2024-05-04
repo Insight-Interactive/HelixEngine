@@ -3,7 +3,7 @@
 #include "GameFramework/Components/HLuaScriptComponent.h"
 
 #include "AssetRegistry/AssetDatabase.h"
-#include "SourceContext.h"
+#include "LuaScriptVM.h"
 
 
 HLuaScriptComponent::HLuaScriptComponent( FComponentInitArgs& InitArgs )
@@ -19,15 +19,15 @@ HLuaScriptComponent::~HLuaScriptComponent()
 
 void HLuaScriptComponent::Tick( float DeltaTime ) 
 {
-	SourceContext::GetInstance()->RunScript( *m_ScriptAsset.get() );
+	LuaScriptVM::GetInstance()->RunScript( *m_ScriptAsset.get() );
 
 }
 
-void HLuaScriptComponent::Serialize( WriteContext& Output )
+void HLuaScriptComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 }
 
-void HLuaScriptComponent::Deserialize( const ReadContext& Value )
+void HLuaScriptComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value[0] );
 

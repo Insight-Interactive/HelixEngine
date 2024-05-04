@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Components/HColliderComponent.h"
@@ -18,8 +19,8 @@ protected:
 
 	virtual void Tick( float DeltaTime ) override;
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	LuaScriptRef m_ScriptAsset;

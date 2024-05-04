@@ -12,16 +12,17 @@
 
 AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	: ACharacter( InitArgs )
+	, m_IsAiming( false )
+	, m_ADSTimeSeconds( 0.1f )
+	, m_ADSFOVDegrees( 50.f )
 {
 	m_pCameraBoom = AddComponent<HCameraBoomComponent>( TEXT( "CameraBoom" ) );
 	m_pCameraBoom->AttachTo( m_pRootComponent );
 	
+	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "ThirdPersonCamera" ) );
 	m_pCameraComponent->AttachTo( m_pCameraBoom );
 	m_pCameraComponent->SetObjectName( TEXT( "FollowCamera" ) );
-
-	//m_pCharacterMesh = AddComponent<HSkeletalMeshComponent>( TEXT( "CharacterMesh" ) );
-	//FGUID guid = FGUID::CreateFromString( "e1e1007c-f54e-4e84-9051-e6b7d0f02ff7" );
-	//m_pCharacterMesh->SetSkeletalMesh( FAssetDatabase::GetSkeletalMesh( guid ) );
+	m_CameraFOV = m_pCameraComponent->GetFieldOfView();
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -38,13 +39,19 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 {
 	Super::SetupController( Controller );
 
-	// Setup event callbacks for camera movement.
+	// Setup event callbacks for movement.
 	//
 	// Locamotion
 	Controller.BindAxis( "MoveForward", this, &AThirdPersonCharacter::ThirdPersonMoveForward );
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
+	
+	// Camera
+	Controller.BindAxis( "LookUp", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraPitch );
+	Controller.BindAxis( "LookRight", m_pCameraBoom, &HCameraBoomComponent::UpdateCameraYaw );
+	Controller.BindAction( "AimDownSight", IE_Pressed, this, &AThirdPersonCharacter::AimDownSight );
+	Controller.BindAction( "AimDownSight", IE_Released, this, &AThirdPersonCharacter::AimDownSight );
 }
 
 
@@ -56,4 +63,19 @@ void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
 void AThirdPersonCharacter::ThirdPersonMoveRight( float Delta )
 {
 	Move( m_pCameraComponent->GetLocalRight(), Delta );
+}
+
+void AThirdPersonCharacter::AimDownSight()
+{
+	m_IsAiming = !m_IsAiming;
+
+	// TODO BUG(Garrett): Zooming out mid-zooom will restart lerp timer!
+	if (m_IsAiming)
+	{
+		m_pCameraComponent->LerpFieldOfView( m_ADSFOVDegrees, m_ADSTimeSeconds );
+	}
+	else
+	{
+		m_pCameraComponent->LerpFieldOfView( m_CameraFOV, m_ADSTimeSeconds );
+	}
 }

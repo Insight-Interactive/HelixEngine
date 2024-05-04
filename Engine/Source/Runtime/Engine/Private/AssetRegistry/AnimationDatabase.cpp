@@ -15,7 +15,7 @@ FAnimationDatabase::~FAnimationDatabase()
 
 }
 
-void FAnimationDatabase::Deserialize( const ReadContext& Value )
+void FAnimationDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -29,7 +29,7 @@ void FAnimationDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FAnimationDatabase::Serialize( WriteContext& Writer )
+void FAnimationDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

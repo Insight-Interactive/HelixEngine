@@ -89,6 +89,8 @@ void GameMenu::OnGameSetFocus()
 
 void GameMenu::OnGameLostFocus()
 {
+	FViewportContext& ClientViewport = GEngine->GetClientViewport();
+
 	switch (m_MenuState)
 	{
 	case MS_Frontend:
@@ -98,8 +100,8 @@ void GameMenu::OnGameLostFocus()
 		m_PauseMenuUI.Show();
 		break;
 	case MS_InGame:
-		GEngine->GetClientViewport().ShowMouse();
-		GEngine->GetClientViewport().UnlockMouseFromScreenCenter();
+		ClientViewport.ShowMouse();
+		ClientViewport.UnlockMouseFromScreenCenter();
 		break;
 	}
 }

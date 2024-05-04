@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "TSingleton.h"
@@ -184,7 +185,7 @@ private:
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
 {
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writer( StrBuffer );
+	JsonUtility::WriteContext Writer( StrBuffer );
 
 	Writer.StartObject();
 	{

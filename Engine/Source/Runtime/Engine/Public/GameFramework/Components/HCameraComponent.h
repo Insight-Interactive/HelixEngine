@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Transform.h"
@@ -31,6 +31,16 @@ struct ProjectionProperties
 	EViewType ProjectionType;
 };
 
+
+struct FOVLerpParams
+{
+	float StartFOV;
+	float EndFOV;
+	float TimeSeconds;
+	
+	float TimeCounter;
+};
+
 HCOMPONENT()
 class HCameraComponent : public HSceneComponent
 {
@@ -48,12 +58,13 @@ public:
 
 	const FMatrix& GetViewMatrix();
 	const FMatrix& GetProjectionMatrix();
-	float GetNearZ();
-	float GetFarZ();
-	float GetFieldOfView();
+	float GetNearZ() const;
+	float GetFarZ() const;
+	float GetFieldOfView() const;
 	void SetNearZ( float Value );
 	void SetFarZ( float Value );
 	void SetFieldOfView( float Value );
+	void LerpFieldOfView( float NewFOV, float TimeSeconds );
 
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
@@ -61,10 +72,14 @@ protected:
 private:
 	void BuildViewMatrix();
 
+
 protected:
 	ProjectionProperties m_ViewProps;
 	float m_FieldOfView;
 
+	FOVLerpParams m_FOVLerpParams;
+	bool m_ShouldLerpFOV;
+	
 };
 
 
@@ -82,17 +97,17 @@ inline const FMatrix& HCameraComponent::GetProjectionMatrix()
 	return m_ViewProps.ProjectionMat;
 }
 
-inline float HCameraComponent::GetNearZ()
+inline float HCameraComponent::GetNearZ() const
 {
 	return m_ViewProps.NearZ;
 }
 
-inline float HCameraComponent::GetFarZ()
+inline float HCameraComponent::GetFarZ() const
 {
 	return m_ViewProps.FarZ;
 }
 
-inline float HCameraComponent::GetFieldOfView()
+inline float HCameraComponent::GetFieldOfView() const
 {
 	return m_FieldOfView;
 }
@@ -100,16 +115,19 @@ inline float HCameraComponent::GetFieldOfView()
 inline void HCameraComponent::SetNearZ( float Value )
 {
 	m_ViewProps.NearZ = Value;
+	SetProjectionValues( Value, m_ViewProps.NearZ, m_ViewProps.FarZ );
 }
 
 inline void HCameraComponent::SetFarZ( float Value )
 {
 	m_ViewProps.FarZ = Value;
+	SetProjectionValues( Value, m_ViewProps.NearZ, m_ViewProps.FarZ );
 }
 
 inline void HCameraComponent::SetFieldOfView( float Value )
 {
 	m_FieldOfView = Value;
+	SetProjectionValues( Value, m_ViewProps.NearZ, m_ViewProps.FarZ );
 }
 
 inline void HCameraComponent::BuildViewMatrix()

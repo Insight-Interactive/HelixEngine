@@ -1,13 +1,17 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/HObject.h"
 #include "AssetRegistry/SerializeableInterface.h"
 
-
-#define HE_COMPONENT_GENERATED_BODY( Class )		\
-			Class( FComponentInitArgs& InitArgs );	\
-			virtual ~Class();
+/*
+	Autogenerate the required methods needed to derive from HActorComponent.
+*/
+#define HE_COMPONENT_GENERATED_BODY( Class )													\
+	Class( FComponentInitArgs& InitArgs );														\
+	virtual ~Class();																			\
+	public:																						\
+	virtual const char* GetComponenetStaticName() override { return HE_STRINGIFY( Class ); }	\
 
 #define HCOMPONENT()
 
@@ -37,9 +41,13 @@ public:
 	// Returns the Actor class this component belongs too.
 	AActor* GetOwner();
 
+	// Returns the class name of this componenent. Override for behavior.
+	virtual const char* GetComponenetStaticName() = 0;
+
 protected:
-	HE_COMPONENT_GENERATED_BODY( HActorComponent )
-	
+	HActorComponent( FComponentInitArgs& InitArgs );
+	virtual ~HActorComponent();
+
 
 	// Returns the world the component resides in.
 	HWorld* GetWorld();
@@ -61,8 +69,8 @@ protected:
 	// Called when the owning actor has completly finished deserializing all other components it owns.
 	virtual void OnOwnerDeserializeComplete();
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 
 protected:

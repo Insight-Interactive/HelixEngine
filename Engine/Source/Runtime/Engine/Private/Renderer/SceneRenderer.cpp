@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Renderer/SceneRenderer.h"
@@ -174,7 +174,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_BatchRenderer.SetRenderTarget( m_pOwningViewport->GetMainSceneRenderTarget() );
 		m_BatchRenderer.PreRender( CmdContext );
 		SetCommonRenderState( CmdContext, false, true );
-		m_BatchRenderer.Tick( (float)GEngine->GetDeltaTime() );
+		m_BatchRenderer.Tick( GEngine->GetDeltaTime() );
 		m_BatchRenderer.Render( CmdContext );
 	}
 

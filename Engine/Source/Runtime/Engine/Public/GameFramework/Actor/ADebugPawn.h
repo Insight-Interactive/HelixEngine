@@ -1,9 +1,10 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Actor/APawn.h"
 
 
-class HCameraComponent;
+class HFirstPersonCameraComponent;
 
 class ADebugPawn : public APawn
 {
@@ -14,20 +15,18 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaMs ) override;
 
-	HCameraComponent* GetCameraComponent();
+	HFirstPersonCameraComponent* GetCameraComponent();
 	void SetCanMove( bool CanMove );
 
 	void SetCanRotateCamera( bool CanRotate );
 
 protected:
-	void LookUp( float Value );
-	void LookRight( float Value );
 	void TogglePitchYawRotation();
 
 	void UpdateMovement( float DeltaTime );
 
 private:
-	HCameraComponent* m_pCameraComponent;
+	HFirstPersonCameraComponent* m_pCameraComponent;
 	bool m_CanRotateCamera;
 	bool m_CanMove;
 	FVector2 m_Rotation;
@@ -41,7 +40,7 @@ private:
 // Inline function implementations
 //
 
-inline HCameraComponent* ADebugPawn::GetCameraComponent()
+inline HFirstPersonCameraComponent* ADebugPawn::GetCameraComponent()
 {
 	return m_pCameraComponent;
 }

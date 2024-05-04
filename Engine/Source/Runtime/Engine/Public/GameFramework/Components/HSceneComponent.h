@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Components/HActorComponent.h"
@@ -10,6 +10,7 @@ HCOMPONENT()
 class HSceneComponent : public HActorComponent
 {
 	friend class AActor;
+	friend class HWorld; // For transform serialization
 	using Super = HActorComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HSceneComponent )
@@ -41,6 +42,7 @@ public:
 
 	virtual void SetPosition( const FVector3& NewPos );
 	virtual void SetRotation( const FQuat& NewRotation );
+	virtual void SetRotation( const FVector3& NewEulerRotation );
 	virtual void SetScale( const FVector3& NewScale );
 	virtual void SetPosition( const float& X, const float& Y, const float& Z );
 	virtual void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
@@ -58,8 +60,8 @@ public:
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	HSceneComponent*	m_pParent;
@@ -177,6 +179,11 @@ FORCEINLINE void HSceneComponent::SetPosition( const FVector3& NewPos )
 FORCEINLINE void HSceneComponent::SetRotation( const FQuat& NewRotation )
 {
 	m_Transform.SetRotation( NewRotation );
+}
+
+FORCEINLINE void HSceneComponent::SetRotation( const FVector3& NewEulerRotation )
+{
+	SetRotation( FQuat::CreateFromYawPitchRoll( NewEulerRotation.y, NewEulerRotation.x, NewEulerRotation.z ) );
 }
 
 FORCEINLINE void HSceneComponent::SetScale( const FVector3& NewScale )

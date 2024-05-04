@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/HObject.h"
@@ -10,6 +10,8 @@
 #include "PhysicsScene.h"
 #include "UI/Panel.h"
 #include "UI/Label.h"
+#include "Input/InputEnums.h"
+
 
 class HLevel;
 class FCommandContext;
@@ -34,6 +36,8 @@ class HWorld : public HObject, public FSerializeableInterface
 	friend class WorldOutlinePanel;
 	friend class HEditorEngine;
 	friend class FViewportContext;
+	friend class HControllerComponent; // To bind input dispatchers
+	friend class HGameInstance; // To bind menu callbacks
 	using Super = HObject;
 public:
 	HWorld();
@@ -41,15 +45,14 @@ public:
 
 	void Initialize( const Char* LevelURL );
 	void Initialize();
+	void Save();
 	void Flush();
-	float GetDeltaTime() const;
 
 	void BeginPlay();
 	void Tick( float DeltaTime );
 	void Render( FCommandContext& CmdContext );
 
 	HCameraManager* GetCameraManager();
-	FViewportContext* GetOwningViewport();
 	HCameraComponent* GetCurrentSceneRenderCamera();
 	void SetCurrentSceneRenderCamera( HCameraComponent* pCamera );
 	void SetViewport( FViewportContext* pViewport );
@@ -66,11 +69,16 @@ public:
 	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
-	void AddPlayerCharacterRef( ACharacter* pCharacter );
 	ACharacter* GetPlayerCharacter( uint32 Index = 0 );
 
 	float GetMouseMoveDeltaX();
 	float GetMouseMoveDeltaY();
+	bool IsPressed( DigitalInput Key );
+	bool IsFirstPressed( DigitalInput Key );
+	bool IsReleased( DigitalInput Key );
+
+	float GetWindowWidth();
+	float GetWindowHeight();
 
 	AActor* CreateEmptyActorInstance( const HName& Name );
 	template <typename ActorType>
@@ -84,9 +92,8 @@ public:
 	bool Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults = nullptr, std::vector<HColliderComponent*>* IgnoreActors = nullptr );
 
 protected:
+	FViewportContext* GetOwningViewport();
 
-	bool AdvancePhysics( float DeltaTime );
-	
 	/*
 		Reload the world.
 	*/
@@ -98,8 +105,8 @@ protected:
 	void ReloadAndBeginPlay();
 
 	virtual void Serialize( const Char* Filename ) override;
-	virtual void Serialize( WriteContext& Value ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Value ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 	void RegisterScenes();
 
@@ -117,8 +124,6 @@ protected:
 	HPhysicsScene m_PhysicsScene;
 
 	ACharacter* m_pPlayerCharacter;
-	std::vector<ACharacter*> m_PlayerCharacterRefs;
-	ADebugPawn* m_pDebugPawn;
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
@@ -205,15 +210,9 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 }
 
-FORCEINLINE void HWorld::AddPlayerCharacterRef( ACharacter* pCharacter )
-{
-	m_PlayerCharacterRefs.push_back( pCharacter );
-}
-
 FORCEINLINE ACharacter* HWorld::GetPlayerCharacter( uint32 Index )
 {
-	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
-	return m_PlayerCharacterRefs[Index];
+	return m_pPlayerCharacter;
 }
 
 FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const HName& Name )

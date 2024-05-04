@@ -82,7 +82,7 @@ void ActorEditorTab::OnDeactivated()
 void ActorEditorTab::SetupPanels()
 {
 	m_SceneViewport.Initialize( this );
-	m_ActorWorld.SetCurrentSceneRenderCamera( m_SceneViewport.GetDebugPawn()->GetCameraComponent() );
+	m_ActorWorld.SetCurrentSceneRenderCamera( (HCameraComponent*)m_SceneViewport.GetDebugPawn()->GetCameraComponent() );
 
 }
 

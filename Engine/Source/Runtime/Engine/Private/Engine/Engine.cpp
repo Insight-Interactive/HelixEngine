@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Engine/Engine.h"
@@ -38,7 +38,7 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ) )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
-	, m_AppSeconds( 0.0 )
+	, m_AppStartTime( 0 )
 	, m_FrameTimeScale( 1.f )
 {
 }
@@ -49,11 +49,8 @@ HEngine::~HEngine()
 
 void HEngine::EngineMain()
 {
-	if (IsInitialized())
-	{
-		HE_LOG( Warning, TEXT( "Trying to call Engine::EngineMain() on an engine instance that is already initialized!" ) );
-		HE_DEBUG_BREAK();
-	}
+	HE_ASSERTEX( !IsInitialized(), TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!") )
+
 	// Startup.
 	PreStartup();
 	Startup();
@@ -75,7 +72,11 @@ void HEngine::PreStartup()
 
 	EmitEvent( EnginePreStartupEvent() );
 
+	// Initialize all core systems.
+
 	System::InitializePlatform();
+	SystemTime::Initialize();
+	m_AppStartTime = SystemTime::GetCurrentTick();
 
 	// Initialize the thread pool.
 	GThreadPool = new ThreadPool( System::GetProcessorCount(), NULL );
@@ -99,7 +100,7 @@ void HEngine::PreStartup()
 	m_ReneringSubsystem.RunAsync();
 	m_PhysicsSubsystem.RunAsync();
 
-	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
+	HE_LOG( Log, TEXT( "Engine pre-startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks(m_AppStartTime, SystemTime::GetCurrentTick() ) );
 }
 
 void HEngine::Startup()
@@ -107,6 +108,9 @@ void HEngine::Startup()
 	HE_LOG( Log, TEXT( "Starting up engine." ) );
 
 	EmitEvent( EngineStartupEvent() );
+
+	// Startup the game and load all client facing resources.
+	uint64 StartupTick = SystemTime::GetCurrentTick();
 
 	// TODO: Make this dynamic
 	const Char* GameProjectDirectory =
@@ -132,8 +136,7 @@ void HEngine::Startup()
 	FWindow::Description ClientDesc = {};
 	ClientDesc.bHasTitleBar		= true;
 	ClientDesc.bShowImmediate	= false;
-	ClientDesc.Resolution		= GCommonResolutions[k720p]; 
-	ClientDesc.Resolution.Width += 230; ClientDesc.Resolution.Height += 200;
+	ClientDesc.Resolution		= GCommonResolutions[k1080p]; 
 #if HE_WITH_EDITOR
 	HName EngineTitle = TEXT( "Helix Editor" );
 	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
@@ -156,7 +159,7 @@ void HEngine::Startup()
 
 	m_GameWorld.SetViewport( &m_MainViewPort );
 
-	HE_LOG( Log, TEXT( "Engine startup complete." ) );
+	HE_LOG( Log, TEXT( "Engine startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks( StartupTick, SystemTime::GetCurrentTick() ) );
 }
 
 void HEngine::PostStartup()
@@ -168,7 +171,7 @@ void HEngine::PostStartup()
 	const String& StartingWorldPath = FGameProject::GetInstance()->GetDefaultLevelPath();
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "DefaultInput.ini" );
+	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "InputMappings.ini" );
 	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
 
 	m_MainViewPort.Show();
@@ -232,8 +235,7 @@ void HEngine::Tick()
 	{
 		System::ProcessMessages();
 		
-		TickTimers();
-		float DeltaTime = (float)GetDeltaTime();
+		float DeltaTime = GetDeltaTime();
 		EmitEvent( EngineTickEvent( DeltaTime ) );
 
 		m_MainViewPort.Tick( DeltaTime );
@@ -243,6 +245,8 @@ void HEngine::Tick()
 
 		EmitEvent( EngineRenderEvent() );
 		RenderClientViewport( DeltaTime );
+
+		TickTimers();
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );

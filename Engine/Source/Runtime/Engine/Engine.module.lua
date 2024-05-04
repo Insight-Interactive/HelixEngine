@@ -1,4 +1,4 @@
--- Copyright 2021 Insight Interactive. All Rights Reserved.
+-- Copyright 2024 Insight Interactive. All Rights Reserved.
 include ("Helix/HelixModule.lua")
 include ("Helix/ThirdPartyLibraries.lua")
 include ("Helix/PostBuildCommands.lua")

@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 /*
 	File: FInputDispatcher.h
 	Source: FInputDispatcher.cpp
@@ -112,8 +112,8 @@ public:
 protected:
 	void LoadMappingsFromFile( const Char* Filename );
 	virtual void Serialize( const Char* Filepath ) override;
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	/*

@@ -164,22 +164,64 @@ inline bool JsonUtility::GetTransform( const rapidjson::Value& OwningObject, con
 {
 	const rapidjson::Value& TransformJson = OwningObject[PropertyName][0];
 
-	FVector3 Position, Rotation, Scale;
+	FVector3 Position, EulerRotation, Scale;
 	JsonUtility::GetFloat( TransformJson, "PositionX", Position.x );
 	JsonUtility::GetFloat( TransformJson, "PositionY", Position.y );
 	JsonUtility::GetFloat( TransformJson, "PositionZ", Position.z );
 
-	JsonUtility::GetFloat( TransformJson, "RotationX", Rotation.x );
-	JsonUtility::GetFloat( TransformJson, "RotationY", Rotation.y );
-	JsonUtility::GetFloat( TransformJson, "RotationZ", Rotation.z );
+	JsonUtility::GetFloat( TransformJson, "RotationX", EulerRotation.x );
+	JsonUtility::GetFloat( TransformJson, "RotationY", EulerRotation.y );
+	JsonUtility::GetFloat( TransformJson, "RotationZ", EulerRotation.z );
 	
 	JsonUtility::GetFloat( TransformJson, "ScaleX", Scale.x );
 	JsonUtility::GetFloat( TransformJson, "ScaleY", Scale.y );
 	JsonUtility::GetFloat( TransformJson, "ScaleZ", Scale.z );
 	
 	OutTransform.SetPosition( Position );
-	OutTransform.SetRotation( Rotation );
+	OutTransform.SetRotation( EulerRotation );
 	OutTransform.SetScale( Scale );
 
 	return true;
+}
+
+inline void JsonUtility::WriteTransform( JsonUtility::WriteContext& Output, const char* PropertyName, const FTransform& Transform )
+{
+	Output.Key( PropertyName );
+	Output.StartArray();
+	{
+		Output.StartObject();
+
+		WriteTransformValues( Output, Transform );
+
+		Output.EndObject();
+	}
+	Output.EndArray();
+}
+
+inline void JsonUtility::WriteTransformValues( WriteContext& Output, const FTransform& Transform )
+{
+	FVector3 Pos = Transform.GetPosition();
+	FVector3 Rot = Transform.GetEulerRotation();
+	FVector3 Sca = Transform.GetScale();
+
+	Output.Key( "PositionX" );
+	Output.Double( Pos.x );
+	Output.Key( "PositionY" );
+	Output.Double( Pos.y );
+	Output.Key( "PositionZ" );
+	Output.Double( Pos.z );
+
+	Output.Key( "RotationX" );
+	Output.Double( Rot.x );
+	Output.Key( "RotationY" );
+	Output.Double( Rot.y );
+	Output.Key( "RotationZ" );
+	Output.Double( Rot.z );
+
+	Output.Key( "ScaleX" );
+	Output.Double( Sca.x );
+	Output.Key( "ScaleY" );
+	Output.Double( Sca.y );
+	Output.Key( "ScaleZ" );
+	Output.Double( Sca.z );
 }

@@ -6,6 +6,7 @@
 #include "GameFramework/Actor/ADebugPawn.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Editor/Event/EditorEvent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 
 
 HelixEdHomeUI::HelixEdHomeUI( FViewportContext& Owner )
@@ -37,10 +38,10 @@ void HelixEdHomeUI::SetupPanels()
 
 	m_ToolbarPanel.AddListener( this, &HelixEdHomeUI::OnEvent );
 	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
+	HFirstPersonCameraComponent* pDebugCamera = pDebugPawn->GetCameraComponent();
 	pDebugPawn->GetRootComponent()->SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
-	pDebugPawn->GetRootComponent()->SetRotation( GEditorEngine->GetPreferences().DebugCameraRotation );
-	pDebugPawn->SetVerticalLookSpeed( GEditorEngine->GetPreferences().DebugCameraPitchSpeed );
-	pDebugPawn->SetHorizontalLookSpeed( GEditorEngine->GetPreferences().DebugCameraYawSpeed );
+	pDebugCamera->SetCameraAngles( GEditorEngine->GetPreferences().DebugCameraRotation );
+
 	m_WorldOutline.AddListener( this, &HelixEdHomeUI::OnEvent );
 	m_WorldOutline.SetWorld( &GEditorEngine->GetGameWorld() );
 	m_ContentBrowserPanel.AddListener( this, &HelixEdHomeUI::OnEvent );
@@ -82,6 +83,8 @@ void HelixEdHomeUI::OnEvent( Event& e )
 	Dispatcher.Dispatch<EngineEndPlayEvent>( this, &HelixEdHomeUI::OnAppEndPlay );
 	Dispatcher.Dispatch<ObjectSelectedEvent>( this, &HelixEdHomeUI::OnObjectSelected );
 	Dispatcher.Dispatch<ContentItemDoubleClicked>( GEditorEngine, &HEditorEngine::OnContentItemClicked );
+
+	m_SceneViewport.OnEvent( e );
 }
 
 bool HelixEdHomeUI::OnAppBeginPlay( EngineBeginPlayEvent& e )
@@ -115,7 +118,7 @@ void HelixEdHomeUI::OnExitMenuItem()
 
 void HelixEdHomeUI::OnSaveMenuItem()
 {
-
+	GEditorEngine->GetGameWorld().Save();
 }
 
 void HelixEdHomeUI::OnEditorPreferencesMenuItem()

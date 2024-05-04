@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Engine/Engine.h"
@@ -33,7 +34,7 @@ struct EditorPreferences
 	float VerticalScrollSpeed;
 	float HorizontalScrollSpeed;
 	FVector3 DebugCameraPosition;
-	FQuat DebugCameraRotation;
+	FVector3 DebugCameraRotation;
 	float DebugCameraPitchSpeed;
 	float DebugCameraYawSpeed;
 };

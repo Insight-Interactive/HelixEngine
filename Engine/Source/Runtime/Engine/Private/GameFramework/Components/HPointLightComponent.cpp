@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Components/HPointLightComponent.h"
@@ -124,13 +124,13 @@ bool HPointLightComponent::GetCanDrawDebugBillboard() const
 	return !GEngine->IsPlayingInEditor();
 }
 
-void HPointLightComponent::Serialize( WriteContext& Output )
+void HPointLightComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Super::Serialize( Output );
 
 }
 
-void HPointLightComponent::Deserialize( const ReadContext& Value )
+void HPointLightComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	enum
 	{

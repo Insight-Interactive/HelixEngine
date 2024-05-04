@@ -1,8 +1,10 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 
 #include "GameFramework/Actor/ACharacter.h"
 
+HCLASS()
 class AFirstPersonCharacter : public ACharacter
 {
 	using Super = ACharacter;
@@ -20,9 +22,6 @@ private:
 	void TogglePitchYawRotation();
 
 private:
-	FVector2 m_Rotation;
-	FQuat m_RotX;
-	FQuat m_RotY;
 	bool m_CanRotateCamera;
 
 };

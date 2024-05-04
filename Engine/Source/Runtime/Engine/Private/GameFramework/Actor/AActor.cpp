@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/AActor.h"
@@ -9,8 +9,10 @@
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
+#include "GameFramework/Components/HCapsuleColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
@@ -26,7 +28,7 @@ AActor::~AActor()
 
 }
 
-void AActor::Serialize( WriteContext& Output )
+void AActor::Serialize( JsonUtility::WriteContext& Output )
 {
 	if (m_IsDynamicInstance)
 		return;
@@ -67,7 +69,7 @@ void AActor::Serialize( WriteContext& Output )
 	Output.EndObject();
 }
 
-void AActor::Deserialize( const ReadContext& Value )
+void AActor::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	enum
 	{
@@ -97,6 +99,7 @@ void AActor::Deserialize( const ReadContext& Value )
 	const Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
 	const Char* LuaScriptKey = HE_STRINGIFY( HLuaScriptComponent );
 	const Char* CameraBoomKey = HE_STRINGIFY( HCameraBoomComponent );
+	const Char* CapsuleColliderKey = HE_STRINGIFY( HCapsuleColliderComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -132,6 +135,11 @@ void AActor::Deserialize( const ReadContext& Value )
 			AddComponent<HCubeColliderComponent>( TEXT( "<Unnamed Cube Collider Component>" ) )
 				->Deserialize( CurrentComponent[CubeColliderKey] );
 		}
+		else if (CurrentComponent.HasMember( CapsuleColliderKey ))
+		{
+			AddComponent<HCapsuleColliderComponent>( TEXT( "<Unnamed Capsule Collider Component>" ) )
+				->Deserialize( CurrentComponent[CapsuleColliderKey] );
+		}
 		else if (CurrentComponent.HasMember( LuaScriptKey ))
 		{
 			AddComponent<HLuaScriptComponent>( TEXT( "<Unnamed Lua Script Component>" ) )
@@ -166,6 +174,7 @@ void AActor::RemoveAllComponents()
 		m_Components[i]->OnDestroy();
 		delete m_Components[i];
 	}
+	m_Components.clear();
 }
 
 void AActor::BeginPlay()

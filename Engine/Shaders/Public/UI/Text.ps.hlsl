@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "UIShadingCommon.hlsli"
 
 HE_DECLARE_TEXTURE2D( TextGlyph, 0 );

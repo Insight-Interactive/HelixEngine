@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "World/Level.h"
@@ -46,7 +46,7 @@ void HLevel::Flush()
 		for (size_t i = 0; i < m_Actors.size(); ++i)
 		{
 			m_Actors[i]->RemoveAllComponents();
-			delete m_Actors[i];
+			HE_SAFE_DELETE_PTR( m_Actors[i] )
 		}
 
 		m_Actors.clear();
@@ -61,7 +61,7 @@ void HLevel::Render( FCommandContext& CmdContext )
 	}
 }
 
-void HLevel::Serialize( WriteContext& Output )
+void HLevel::Serialize( JsonUtility::WriteContext& Output )
 {
 	for (auto Iter = m_Actors.begin(); Iter != m_Actors.end(); ++Iter)
 	{
@@ -111,7 +111,7 @@ void LoadActorAsyncMain( void* pData )
 
 }
 
-void HLevel::Deserialize( const ReadContext& Value )
+void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	m_IsLoading.Set();
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
@@ -146,29 +146,11 @@ void HLevel::Deserialize( const ReadContext& Value )
 						FVector3 Pos = Transform.GetPosition();
 						pRoot->Translate( Pos.x, Pos.y, Pos.z );
 						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->SetRotation( Rot.x, Rot.y, Rot.z );
+						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
 						FVector3 Sca = Transform.GetScale();
 						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}
 					pNewActor->OnDeserializeComplete();
-				}
-				else if (ObjectType == kPlayerCharacterType)
-				{
-					ACharacter* pPlayer = CreateActor<ACharacter>( TEXT( "<Unnamed Player Character>" ) );
-					GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
-					GetWorld()->AddPlayerCharacterRef( pPlayer );
-					if (HSceneComponent* pRoot = pPlayer->GetRootComponent())
-					{
-						FTransform Transform;
-						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
-						FVector3 Pos = Transform.GetPosition();
-						pRoot->Translate( Pos.x, Pos.y, Pos.z );
-						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->SetRotation( Rot.x, Rot.y, Rot.z );
-						FVector3 Sca = Transform.GetScale();
-						pRoot->Scale( Sca.x, Sca.y, Sca.z );
-					}
-					pPlayer->OnDeserializeComplete();
 				}
 			}
 		}

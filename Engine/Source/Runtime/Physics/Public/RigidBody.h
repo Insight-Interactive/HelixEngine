@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Transform.h"
@@ -35,6 +35,7 @@ public:
 	void SetDensity( const float& NewDensity );
 	void EnableSimulation();
 	void DisableSimulation();
+	bool IsSimulationEnabled();
 	float GetMass() const;
 	void SetMass( const float& NewMass );
 	bool GetIsKinematic() const;

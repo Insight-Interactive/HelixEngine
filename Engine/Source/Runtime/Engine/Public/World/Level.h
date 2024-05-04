@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Flag.h"
@@ -26,6 +27,20 @@ public:
 	template <typename ActorType>
 	ActorType* CreateActor(const HName& Name = TEXT("<Unnamed Actor>"));
 
+	AActor* GetActor( HName& Name ) const
+	{
+		for (uint32 i = 0; i < m_Actors.size(); i++)
+		{
+			AActor& Actor = *m_Actors[i];
+			if (Actor.GetObjectName() == Name)
+				return &Actor;
+		}
+
+		return nullptr;
+	}
+
+	std::vector<AActor*>& GetAllActors() { return m_Actors; }
+
 	HWorld* GetWorld();
 
 protected:
@@ -35,8 +50,8 @@ protected:
 	void Tick(float DeltaTime);
 	void Render(FCommandContext& CmdContext);
 
-	virtual void Serialize( WriteContext& Value ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Value ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 protected:
 	std::vector<AActor*> m_Actors;

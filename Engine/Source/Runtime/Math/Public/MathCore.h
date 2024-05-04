@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "MathFwd.h"
@@ -21,6 +22,8 @@ constexpr float HE_1DIVPI = 0.318309886f;
 constexpr float HE_1DIV2PI = 0.159154943f;
 constexpr float HE_PIDIV2 = 1.570796327f;
 constexpr float HE_PIDIV4 = 0.785398163f;
+constexpr float HE_PIDIV180 = HE_PI / 180.f;
+constexpr float HE_180DIVPI = 180.f / HE_PI;
 
 namespace Math
 {
@@ -34,13 +37,25 @@ namespace Math
     template <typename T>
     inline T DegreesToRadians( const T& Degrees )
     {
-        return Degrees * (HE_PI / 180.0f);
+        return Degrees * HE_PIDIV180;
     }
 
     template <typename T>
     inline T RadiansToDegrees( const T& Radians )
     {
-        return Radians * (180.0f / HE_PI);
+        return Radians * HE_180DIVPI;
+    }
+
+    template<typename T>
+    inline T Lerp( const T From, const T To, const T Delta )
+    {
+        return From * (T( 1 ) - Delta) + (To - Delta);
+    }
+
+    template<typename T>
+    T LerpForTime( T From, T To, T CurrentTime, T Time )
+    {
+        return From + ((To - From) * CurrentTime) / Time;
     }
 }
 

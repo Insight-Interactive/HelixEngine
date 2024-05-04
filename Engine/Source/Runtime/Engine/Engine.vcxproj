@@ -1300,7 +1300,7 @@
     <ClInclude Include="Public\Engine\Event\Event.h" />
     <ClInclude Include="Public\Engine\Event\EventEmitter.h" />
     <ClInclude Include="Public\Engine\FileExplorerWindow.h" />
-    <ClInclude Include="Public\Engine\FrameTimeManager.h" />
+    <ClInclude Include="Public\Engine\Timer.h" />
     <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\ScriptManager.h" />
@@ -1313,7 +1313,10 @@
     <ClInclude Include="Public\Engine\Window.h" />
     <ClInclude Include="Public\GameFramework\Actor\AActor.h" />
     <ClInclude Include="Public\GameFramework\Actor\ACharacter.h" />
+<<<<<<< HEAD
     <ClInclude Include="Public\GameFramework\Actor\ADebugPawn.h" />
+=======
+>>>>>>> Development
     <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h" />
     <ClInclude Include="Public\GameFramework\Actor\APawn.h" />
     <ClInclude Include="Public\GameFramework\Actor\AThirdPersonCharacter.h" />
@@ -1327,6 +1330,7 @@
     <ClInclude Include="Public\GameFramework\Components\HControllerComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HCubeColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h" />
+    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HLuaScriptComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPlaneColliderComponent.h" />
     <ClInclude Include="Public\GameFramework\Components\HPointLightComponent.h" />
@@ -1391,7 +1395,7 @@
     <ClCompile Include="Private\Engine\Engine.cpp" />
     <ClCompile Include="Private\Engine\EngineEvent.cpp" />
     <ClCompile Include="Private\Engine\Events.cpp" />
-    <ClCompile Include="Private\Engine\FrameTimeManager.cpp" />
+    <ClCompile Include="Private\Engine\Timer.cpp" />
     <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\ScriptManager.cpp" />
@@ -1402,7 +1406,10 @@
     <ClCompile Include="Private\Engine\ViewportContext.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Private\GameFramework\Actor\ADebugPawn.cpp" />
+=======
+>>>>>>> Development
     <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\APawn.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AThirdPersonCharacter.cpp" />
@@ -1415,6 +1422,7 @@
     <ClCompile Include="Private\GameFramework\Components\HControllerComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HCubeColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp" />
+    <ClCompile Include="Private\GameFramework\Components\HFirstPersonCameraComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HLuaScriptComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPlaneColliderComponent.cpp" />
     <ClCompile Include="Private\GameFramework\Components\HPointLightComponent.cpp" />

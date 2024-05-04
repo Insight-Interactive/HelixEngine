@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "AssetRegistry/ActorDatabase.h"
@@ -15,7 +15,7 @@ FActorDatabase::~FActorDatabase()
 
 }
 
-void FActorDatabase::Deserialize( const ReadContext& Value )
+void FActorDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -29,7 +29,7 @@ void FActorDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FActorDatabase::Serialize( WriteContext& Writer )
+void FActorDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once 
 
 #define NOMINMAX
@@ -11,6 +11,10 @@
 #include <map>
 #include <iostream>
 #include <sstream>
+#include <assert.h>
+
+#include "DataTypes.h"
+
 
 #if HE_WINDOWS
 #	include <Windows.h>

@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "CoreFwd.h"
@@ -241,7 +242,9 @@ FORCEINLINE void File::Load( const Char* pFilePath, EFileUsageMode UsageMode, EC
 
 FORCEINLINE void File::Unload()
 {
-	HE_ASSERT( m_pFile != null );
+	if (m_pFile == NULL)
+		return; // Should we assert instead?
+
 	fclose( m_pFile );
 	if (m_pContents != NULL)
 	{

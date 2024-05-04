@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/APawn.h"
@@ -9,8 +9,6 @@
 
 APawn::APawn( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
-	, m_CameraPitchSpeedMultiplier(kDefaultCameraPitchSpeedMultiplier)
-	, m_CameraYawSpeedMultiplier(kDefaultCameraYawSpeedMultiplier)
 	, m_MovementSpeed(kDefaultMovementSpeed)
 	, m_SprintSpeed(kDefaultSprintSpeed)
 	, m_Velocity(0.f)

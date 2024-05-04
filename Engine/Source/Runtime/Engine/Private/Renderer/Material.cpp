@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Renderer/Material.h"
@@ -291,7 +291,7 @@ void FMaterial::BuildRootSignature()
 
 }
 
-void FMaterial::DeserializeTextureReflection( const ReadContext& TextureReflection )
+void FMaterial::DeserializeTextureReflection( const JsonUtility::ReadContext& TextureReflection )
 {
 	for (auto itr = TextureReflection.MemberBegin(); itr != TextureReflection.MemberEnd(); ++itr)
 	{
@@ -303,7 +303,7 @@ void FMaterial::DeserializeTextureReflection( const ReadContext& TextureReflecti
 	}
 }
 
-void FMaterial::DeserializeBufferReflection( const ReadContext& BufferJson )
+void FMaterial::DeserializeBufferReflection( const JsonUtility::ReadContext& BufferJson )
 {
 
 	for (auto itr = BufferJson.MemberBegin(); itr != BufferJson.MemberEnd(); ++itr)

@@ -1,28 +1,31 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "AssetRegistry/Asset.h"
 #include "GameFramework/HObject.h"
-#include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
-#include "SourceContext.h"
 
-#define HE_GENERATED_BODY( Class )				\
-			Class( FActorInitArgs& InitArgs );	\
-			virtual ~Class();							
+#include "LuaScript.h"
+#include "GameFramework/Components/HActorComponent.h"
+
+
+#define HE_GENERATED_BODY( Class )															\
+	Class( FActorInitArgs& InitArgs );														\
+	virtual ~Class();																		\
+	virtual const char* GetStaticClassName() override { return HE_STRINGIFY( Class ); }		\
 
 #define HCLASS()
+
+class HWorld;
+class HSceneComponent;
+class FCommandContext;
 
 struct FActorInitArgs
 {
 	const HWorld*	pWorld;
 	const HName&	Name;
 	const bool		bIsDynamicInstance;
+	const bool		bDisableCollision = false;
 };
-
-class HWorld;
-class HActorComponent;
-class FCommandContext;
 
 HCLASS()
 class AActor : public HObject, public FSerializeableInterface
@@ -33,7 +36,10 @@ class AActor : public HObject, public FSerializeableInterface
 	friend class DetailsPanel;
 	using Super = HObject;
 public:
-	HE_GENERATED_BODY( AActor )
+	AActor( FActorInitArgs& InitArgs );
+	virtual ~AActor();
+	virtual const char* GetStaticClassName() { return HE_STRINGIFY( AActor ); }
+
 
 	// Called once when the game has started playing.
 	virtual void BeginPlay();
@@ -53,7 +59,7 @@ public:
 	void SetRootComponent(HSceneComponent* pRoot);
 	HSceneComponent* GetRootComponent();
 
-	SourceContext& GetScript();
+	LuaScript& GetScript();
 
 
 protected:
@@ -61,8 +67,8 @@ protected:
 	HWorld* GetWorld();
 	void SetOwningWorld( HWorld* pWorld );
 
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 	virtual void OnDeserializeComplete();
 
 #if HE_WITH_EDITOR
@@ -75,7 +81,7 @@ protected:
 
 	HWorld* m_pOwningWorld;
 
-	SourceContext m_Script;
+	LuaScript m_Script;
 	bool m_IsDynamicInstance;
 };
 
@@ -139,7 +145,7 @@ FORCEINLINE HSceneComponent* AActor::GetRootComponent()
 	return m_pRootComponent;
 }
 
-FORCEINLINE SourceContext& AActor::GetScript()
+FORCEINLINE LuaScript& AActor::GetScript()
 {
 	return m_Script;
 }

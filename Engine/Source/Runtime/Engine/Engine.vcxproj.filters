@@ -171,7 +171,7 @@
     <ClInclude Include="Public\Engine\FileExplorerWindow.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\FrameTimeManager.h">
+    <ClInclude Include="Public\Engine\Timer.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\GameProject.h">
@@ -210,9 +210,12 @@
     <ClInclude Include="Public\GameFramework\Actor\ACharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Public\GameFramework\Actor\ADebugPawn.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
+=======
+>>>>>>> Development
     <ClInclude Include="Public\GameFramework\Actor\AFirstPersonCharacter.h">
       <Filter>Public\GameFramework\Actor</Filter>
     </ClInclude>
@@ -250,6 +253,9 @@
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HDirectionalLightComponent.h">
+      <Filter>Public\GameFramework\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GameFramework\Components\HFirstPersonCameraComponent.h">
       <Filter>Public\GameFramework\Components</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameFramework\Components\HLuaScriptComponent.h">
@@ -440,7 +446,7 @@
     <ClCompile Include="Private\Engine\Events.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\FrameTimeManager.cpp">
+    <ClCompile Include="Private\Engine\Timer.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\GameProject.cpp">
@@ -473,9 +479,12 @@
     <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Private\GameFramework\Actor\ADebugPawn.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
+=======
+>>>>>>> Development
     <ClCompile Include="Private\GameFramework\Actor\AFirstPersonCharacter.cpp">
       <Filter>Private\GameFramework\Actor</Filter>
     </ClCompile>
@@ -510,6 +519,9 @@
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HDirectionalLightComponent.cpp">
+      <Filter>Private\GameFramework\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\GameFramework\Components\HFirstPersonCameraComponent.cpp">
       <Filter>Private\GameFramework\Components</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameFramework\Components\HLuaScriptComponent.cpp">

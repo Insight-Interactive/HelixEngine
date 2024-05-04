@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 namespace ContainerTests
@@ -7,6 +7,11 @@ namespace ContainerTests
 }
 
 namespace MathTests
+{
+	int Run();
+}
+
+namespace TimerTests
 {
 	int Run();
 }

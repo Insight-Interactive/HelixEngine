@@ -10,7 +10,7 @@
 #include "Engine/Event/EngineEvent.h"
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"
-#include "GameFramework/Components/HCameraComponent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 #include "Texture.h"
 #include "ColorBuffer.h"
 #include "GpuResource.h"
@@ -73,7 +73,7 @@ void HEditorEngine::Startup()
 void HEditorEngine::LoadEditorPreferences()
 {
 	rapidjson::Document PrefsJsonDoc;
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultEditor.ini";
+	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
 	FileRef PrefsJsonSource( EditorConfigPath.c_str(), FUM_Read );
 	HE_ASSERT( PrefsJsonSource->IsOpen() );
 	JsonUtility::LoadDocument( PrefsJsonSource, PrefsJsonDoc );
@@ -110,7 +110,7 @@ void HEditorEngine::LoadEditorPreferences()
 void HEditorEngine::SaveEditorPreferences()
 {
 	rapidjson::StringBuffer StrBuffer;
-	WriteContext Writer( StrBuffer );
+	JsonUtility::WriteContext Writer( StrBuffer );
 
 	Writer.StartObject();
 	{
@@ -145,7 +145,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetRootComponent()->GetRotation();
+				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetCameraComponent()->GetCameraAngles();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraRot.x );
 				Writer.Key( "Y" );
@@ -158,14 +158,14 @@ void HEditorEngine::SaveEditorPreferences()
 		Writer.EndArray();
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraPitchSpeed ) );
-		Writer.Double( m_HomeUI.GetDebugPawn()->GetVerticalLookSpeed() );
+		//Writer.Double( m_HomeUI.GetDebugCharacter()->GetVerticalLookSpeed() );
 
 		Writer.Key( HE_STRINGIFY( EditorPreferences::DebugCameraYawSpeed ) );
-		Writer.Double( m_HomeUI.GetDebugPawn()->GetHorizontalLookSpeed() );
+		//Writer.Double( m_HomeUI.GetDebugCharacter()->GetHorizontalLookSpeed() );
 	}
 	Writer.EndObject();
 
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultEditor.ini";
+	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
 	FileRef OutFile( EditorConfigPath, FUM_Write, CM_Text );
 	HE_ASSERT( OutFile->IsOpen() );
 	if (OutFile->IsOpen())
@@ -499,6 +499,7 @@ bool HEditorEngine::OnAppEndPlay( EngineEndPlayEvent& e )
 	SetIsPlayingInEditor( false );
 	m_GameWorld.Reload();
 
+	GGameInstance->OnGameLostFocus();
 	// Reset the input state.
 	m_MainViewPort.GetInputDispatcher()->SetCanDispatchListeners( false );
 	m_MainViewPort.GetInputDispatcher()->FlushCallbacks();
@@ -576,19 +577,19 @@ void HEditorEngine::OnLaunchStandalone()
 
 void RunActorEditor( void* pData )
 {
-	ImGuiContext* pImGuiCtx = ImGui::CreateContext();
+	/*ImGuiContext* pImGuiCtx = ImGui::CreateContext();
 
 	ActorEditorTab& Editor = *(ActorEditorTab*)pData;
-	FFrameTimer Timer;
+	FTimer Timer;
 	while (Editor.GetWindow().IsValid())
 	{
 		Timer.Tick();
 
-		Editor.Tick( (float)Timer.GetTimeMiliSeconds() );
+		Editor.Tick( (float)Timer.GetTimeSeconds() );
 		FCommandContext& CmdCtx = FCommandContext::Begin( TEXT( "Render Actor Editor" ) );
 		{
 			Editor.Render( CmdCtx );
 		}
 		CmdCtx.End();
-	}
+	}*/
 }

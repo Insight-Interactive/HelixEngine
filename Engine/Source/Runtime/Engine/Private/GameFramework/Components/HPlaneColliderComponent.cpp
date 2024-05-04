@@ -21,8 +21,12 @@ HPlaneColliderComponent::~HPlaneColliderComponent()
 void HPlaneColliderComponent::OnCreate()
 {
 	Super::OnCreate();
-	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
 
+#if HE_DEBUG
+	m_MeshAsset = GeometryGenerator::Generate1x1x1CubeMesh();
+#endif
+
+	SetWidthAndHeight( 1.f, 1.f );
 }
 
 void HPlaneColliderComponent::OnDestroy()
@@ -32,14 +36,7 @@ void HPlaneColliderComponent::OnDestroy()
 	UnRegisterCollider();
 }
 
-void HPlaneColliderComponent::Tick( float DeltaTime )
-{
-	Super::Tick(DeltaTime);
-
-	SetScale( m_RigidBody.GetHalfWidth(), HPlaneRigidBody::GetConstantDepth(), m_RigidBody.GetHalfHeight() );
-}
-
-void HPlaneColliderComponent::Serialize( WriteContext& Output )
+void HPlaneColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( HPlaneColliderComponent ) );
 	Output.StartArray();
@@ -51,7 +48,6 @@ void HPlaneColliderComponent::Serialize( WriteContext& Output )
 		}
 		Output.EndObject();
 
-		// Static mesh properties.
 		Output.StartObject();
 		{
 			Output.Key( HE_STRINGIFY( m_Width ) );
@@ -65,18 +61,18 @@ void HPlaneColliderComponent::Serialize( WriteContext& Output )
 	Output.EndArray();
 }
 
-void HPlaneColliderComponent::Deserialize( const ReadContext& Value )
+void HPlaneColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
-	const ReadContext& This = Value[1];
+	const JsonUtility::ReadContext& This = Value[1];
 	float Width, Height;
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Width );
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Height );
-	m_RigidBody.SetHalfWidth( Width );
-	m_RigidBody.SetHalfHeight( Height );
+	
+	SetWidthAndHeight( Width, Height );
 
-	RegisterCollider();
+	m_RigidBody.DisableSimulation();
 }
 
 void HPlaneColliderComponent::RegisterCollider()
@@ -87,4 +83,23 @@ void HPlaneColliderComponent::RegisterCollider()
 void HPlaneColliderComponent::UnRegisterCollider()
 {
 	GetWorld()->RemoveColliderComponent( this );
+}
+
+void HPlaneColliderComponent::SetWidth( float Width )
+{
+	SetWidthAndHeight( Width, m_RigidBody.GetHalfHeight() );
+}
+
+void HPlaneColliderComponent::SetHeight( float Depth )
+{
+	SetWidthAndHeight( m_RigidBody.GetHalfWidth(), Depth );
+}
+
+void HPlaneColliderComponent::SetWidthAndHeight( float Width, float Height )
+{
+	m_RigidBody.SetHalfWidth( Width );
+	m_RigidBody.SetHalfHeight( Height );
+	SetScale( Width, HPlaneRigidBody::GetConstantDepth(), Height );
+
+	RegisterCollider();
 }

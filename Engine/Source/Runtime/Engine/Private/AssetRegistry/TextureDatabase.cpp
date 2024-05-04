@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "AssetRegistry/TextureDatabase.h"
@@ -16,7 +16,7 @@ FTextureDatabase::~FTextureDatabase()
 
 }
 
-void FTextureDatabase::Deserialize( const ReadContext& Value )
+void FTextureDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	for (rapidjson::Value::ConstMemberIterator itr = Value.MemberBegin();
 		itr != Value.MemberEnd(); ++itr)
@@ -30,7 +30,7 @@ void FTextureDatabase::Deserialize( const ReadContext& Value )
 	}
 }
 
-void FTextureDatabase::Serialize( WriteContext& Writer )
+void FTextureDatabase::Serialize( JsonUtility::WriteContext& Writer )
 {
 	for (auto Iter = m_Data.begin(); Iter != m_Data.end(); Iter++)
 	{

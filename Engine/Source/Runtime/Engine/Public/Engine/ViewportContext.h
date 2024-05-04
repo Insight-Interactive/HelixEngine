@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "CommonStructs.h"
@@ -167,7 +167,7 @@ FORCEINLINE void FViewportContext::HideMouse()
 
 FORCEINLINE void FViewportContext::LockMouseToScreenCenter()
 {
-	m_InputDispatcher.GetInputSureyor().AcquireMouse();
+	m_InputDispatcher.GetInputSureyor().AcquireMouse();		
 }
 
 FORCEINLINE void FViewportContext::UnlockMouseFromScreenCenter()

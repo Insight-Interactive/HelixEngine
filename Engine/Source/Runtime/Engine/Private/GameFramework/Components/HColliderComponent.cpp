@@ -13,9 +13,10 @@
 HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	: HSceneComponent( InitArgs )
 	, m_IsTrigger( false )
-	, m_CollisionBoundsDrawEnabled( false )
+	, m_CollisionBoundsDrawEnabled( true )
 	, m_Material( nullptr )
 	, m_IsStatic ( false )
+	, m_SimulationEnabled( true )
 {
 	m_MeshWorldCB.Create( L"[Collider Component] World CB" );
 }
@@ -24,6 +25,29 @@ HColliderComponent::~HColliderComponent()
 {
 	m_MeshWorldCB.Destroy();
 	delete m_Material;
+}
+
+void HColliderComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (m_SimulationEnabled)
+		GetRigidBody().EnableSimulation(); // Simulation is disabled by default on level load to prevent simulation while using the editor.
+}
+
+void HColliderComponent::Tick( float DeltaTime )
+{
+	Super::Tick( DeltaTime );
+
+	HRigidBody& rb = GetRigidBody();
+	
+	if (rb.IsSleeping())
+		return;
+	
+	// Fetch the results of the simulation and apply them to the game.
+	FTransform SimTransform = rb.GetSimulationWorldTransform();
+	Super::SetPosition( SimTransform.GetPosition() );
+	Super::SetRotation( SimTransform.GetRotation() );
 }
 
 void HColliderComponent::SetPosition( const FVector3& NewPos )
@@ -76,30 +100,12 @@ void HColliderComponent::Scale( const float& X, const float& Y, const float& Z )
 	Super::Scale( X, Y, Z );
 }
 
-void HColliderComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void HColliderComponent::Tick( float DeltaTime ) 
-{
-	Super::Tick( DeltaTime );
-	
-	HRigidBody& rb = GetRigidBody();
-	//if (!rb.IsSleeping())
-	{
-		// Fetch the results of the simulation.
-		FTransform SimTransform = GetRigidBody().GetSimulationWorldTransform();
-		Super::SetPosition( SimTransform.GetPosition() );
-		Super::SetRotation( SimTransform.GetRotation() );
-	}
-}
-
 void HColliderComponent::Render( FCommandContext& GfxContext )
 {
 	Super::Render(GfxContext);
 
-	if (!GetIsDrawEnabled())
+#if HE_DEBUG
+	if (!m_CollisionBoundsDrawEnabled)
 		return;
 
 	/*HCameraComponent* pCamera = GetWorld()->GetCurrentSceneRenderCamera();
@@ -126,7 +132,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	{
 		// Set the world buffer.
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat = GetWorldMatrix().Transpose();
+		pWorld->kWorldMat = GetLocalMatrix().Transpose();
 
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
@@ -138,9 +144,10 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 		GfxContext.BindIndexBuffer( m_MeshAsset->GetIndexBuffer() );
 		GfxContext.DrawIndexedInstanced( m_MeshAsset->GetNumIndices(), 1, 0, 0, 0 );
 	}
+#endif
 }
 
-void HColliderComponent::Serialize( WriteContext& Output )
+void HColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( HColliderComponent ) );
 	Output.StartArray();
@@ -155,7 +162,7 @@ void HColliderComponent::Serialize( WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
-			Output.Key( HE_STRINGIFY( m_IsTrigger ) );
+			Output.Key( "IsTrigger" );
 			Output.Bool( m_IsTrigger );
 
 			Output.Key( "Density" );
@@ -163,24 +170,36 @@ void HColliderComponent::Serialize( WriteContext& Output )
 
 			Output.Key( "IsStatic" );
 			Output.Bool( GetRigidBody().GetIsStatic() );
+
+			Output.Key( "CollisionBoundsDrawEnabled" );
+			Output.Bool( m_CollisionBoundsDrawEnabled );
+
+			Output.Key( "EnableSimulation" );
+			Output.Bool( GetRigidBody().IsSimulationEnabled() );
+
+			// TODO: Save material refernece
 		}
 		Output.EndObject();
 	}
 	Output.EndArray();
 }
 
-void HColliderComponent::Deserialize( const ReadContext& Value )
+void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY( HSceneComponent )] );
 
-	const ReadContext& This = Value[1];
-	JsonUtility::GetBoolean( This, HE_STRINGIFY( m_IsTrigger ), m_IsTrigger );
+	const JsonUtility::ReadContext& This = Value[1];
+	JsonUtility::GetBoolean( This, "IsTrigger", m_IsTrigger );
 	
 	float Density = 0.f;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( Density ), Density );
+	JsonUtility::GetFloat( This, "Density", Density );
 	GetRigidBody().SetDensity( Density );
 
 	JsonUtility::GetBoolean( This, "IsStatic", m_IsStatic );
+
+	JsonUtility::GetBoolean( This, "CollisionBoundsDrawEnabled", m_CollisionBoundsDrawEnabled );
+
+	JsonUtility::GetBoolean( This, "EnableSimulation", m_SimulationEnabled );
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()

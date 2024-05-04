@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "HelixEdPCH.h"
 
 #include "Panels/WorldOutlinePanel.h"
@@ -46,10 +46,13 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 						e.SetSelectedObject( pCurrentActor );
 						EmitEvent( e );
 					}
+
 					ImGui::TreePop();
 				}
 			}
 		}
+
+
 	}
 	ImGui::End();
 }

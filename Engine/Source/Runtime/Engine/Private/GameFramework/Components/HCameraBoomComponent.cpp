@@ -3,14 +3,14 @@
 #include "GameFramework/Components/HCameraBoomComponenet.h"
 
 #include "GameFramework/Components/HCameraComponent.h"
-#include "World/World.h"
+#include "Engine/Engine.h"
 #include "Engine/ViewportContext.h"
 
 
 HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: Super( InitArgs )
-	, m_UseCameraCollision( false )
-	, m_CameraCollisionTraceDistance( 2.f )
+	, m_UseCameraCollision( true )
+	, m_CameraCollisionTraceDistance( 5.f )
 	, m_CameraDistance( -50.f )
 	, m_ViewOffset( 0.f, 0.f, 0.f ) //20.f, 10.f, 0.f
 {
@@ -26,28 +26,25 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	UpdateCameraPitch();
-	UpdateCameraYaw();
-
-	// Player-to-camera collision detection
-	//
-	//FVector3 TraceStart = m_pRootComponent->GetWorldPosition();
-	//FVector3 TraceEnd = m_pCameraComponent->GetWorldPosition();
+	//// Player-to-camera collision detection
+	////
+	//FVector3 TraceStart = FVector3::Zero;
+	//FVector3 TraceEnd = GetPosition();
 	//FVector3 TraceDir = TraceStart - TraceEnd;
 
 	//FVector3 TraceDirNormal = FVector3::Normalize( TraceDir );
 
-	// Front trace
+	//// Front trace
 	//{
 	//	FRaycastHitInfo HitInfo = {};
 	//	std::vector<HColliderComponent*> IgnoreColliders;
-	//	IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
-	//	bool ForwardHit = GetWorld()->Raycast( TraceStart, TraceDirNormal, TraceDir.Length(), &HitInfo, &IgnoreColliders, FG_WorldGeometry );
+	//	//IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
+	//	bool ForwardHit = GetWorld()->Raycast( TraceStart, TraceDirNormal, TraceDir.Length(), &HitInfo, &IgnoreColliders );
 	//	//bool BackwardHit = GetWorld()->Raycast( m_pCameraComponent->GetWorldPosition(), m_pCameraComponent->GetLocalBackward(), TraceDistance );
 
 	//	if ( ForwardHit )
 	//	{
-	//		m_pCameraComponent->SetPosition( HitInfo.HitPos );
+	//		SetPosition( HitInfo.HitPos );
 
 	//		/*FDebugLineRenderInfo info = {};
 	//		info.Start = TraceStart;
@@ -76,13 +73,13 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 	}*/
 }
 
-void HCameraBoomComponent::UpdateCameraPitch()
+void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 {
-	float PitchDelta = GetWorld()->GetMouseMoveDeltaY();
+	//float PitchDelta = GetWorld()->GetMouseMoveDeltaY();
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 
-	float Rotation = -(PitchDelta * 2048) * GetWorld()->GetDeltaTime();
+	float Rotation = -(PitchDelta * 2048.f) * GEngine->GetDeltaTime();
 	Rotation = Math::DegreesToRadians( Rotation );
 	float RotatedY = cosf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.y;
 	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;
@@ -104,13 +101,13 @@ void HCameraBoomComponent::UpdateCameraPitch()
 	}
 }
 
-void HCameraBoomComponent::UpdateCameraYaw()
+void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
-	float YawDelta = GetWorld()->GetMouseMoveDeltaX();
+	//float YawDelta = GetWorld()->GetMouseMoveDeltaX();
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 
-	float Rotation = (YawDelta * 2048) * GetWorld()->GetDeltaTime();
+	float Rotation = (YawDelta * 2048.f) * GEngine->GetDeltaTime();
 	Rotation = Math::DegreesToRadians( Rotation );
 	float RotatedX = cosf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.x;
 	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;

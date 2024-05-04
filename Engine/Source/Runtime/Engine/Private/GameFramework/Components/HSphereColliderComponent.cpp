@@ -10,28 +10,32 @@
 HSphereColliderComponent::HSphereColliderComponent( FComponentInitArgs& InitArgs )
 	: HColliderComponent( InitArgs )
 {
-
 }
 
 HSphereColliderComponent::~HSphereColliderComponent()
 {
-
 }
 
-void HSphereColliderComponent::Tick( float DeltaTime )
+void HSphereColliderComponent::OnCreate()
 {
-	Super::Tick( DeltaTime );
+	Super::OnCreate();
 
-	SetScale( m_RigidBody.GetRadius() * 2, m_RigidBody.GetRadius() * 2, m_RigidBody.GetRadius() * 2 );
+#if HE_DEBUG
+	m_MeshAsset = GeometryGenerator::GenerateSphere( 1, 10, 10 );
+#endif
+
+	SetRadius( 1.f );
+	m_RigidBody.DisableSimulation();
 }
 
-void HSphereColliderComponent::SetRadius( float NewRadius )
+void HSphereColliderComponent::OnDestroy()
 {
-	m_RigidBody.SetRadius( NewRadius );
-	RegisterCollider();
+	Super::OnDestroy();
+
+	UnRegisterCollider();
 }
 
-void HSphereColliderComponent::Serialize( WriteContext& Output )
+void HSphereColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( HSphereColliderComponent ) );
 	Output.StartArray();
@@ -54,20 +58,33 @@ void HSphereColliderComponent::Serialize( WriteContext& Output )
 	Output.EndArray();
 }
 
-void HSphereColliderComponent::Deserialize( const ReadContext& Value )
+void HSphereColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
 
-	const ReadContext& This = Value[1];
+	const JsonUtility::ReadContext& This = Value[1];
 	float Radius = 0.f;
 	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
 
-	m_MeshAsset = GeometryGenerator::GenerateSphere(1, 10, 10);
-
 	SetRadius( Radius );
+
+	m_RigidBody.DisableSimulation();
+}
+
+void HSphereColliderComponent::SetRadius( float NewRadius )
+{
+	m_RigidBody.SetRadius( NewRadius );
+	SetScale( m_RigidBody.GetRadius(), m_RigidBody.GetRadius(), m_RigidBody.GetRadius() );
+
+	RegisterCollider();
 }
 
 void HSphereColliderComponent::RegisterCollider()
 {
 	GetWorld()->AddSphereColliderComponent( this, m_IsStatic, GetIsTrigger() );
+}
+
+void HSphereColliderComponent::UnRegisterCollider()
+{
+	GetWorld()->RemoveColliderComponent( this );
 }

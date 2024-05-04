@@ -126,6 +126,7 @@ HPhysicsScene::HPhysicsScene()
 	: m_pOwningContextRef( nullptr )
 	, m_pScene( nullptr )
 	, m_SimulationStepRate( 1.f / 60.f )
+	, m_StepAccumulator( 0.f )
 {
 
 }
@@ -239,7 +240,7 @@ void HPhysicsScene::ProcessEventQueue()
 			FlushInternal();
 			break;
 		case PE_TickScene:
-			Tick();
+			Tick(1.f / 60.f, 1.f);
 			break;
 		default:
 			HE_ASSERT( false );
@@ -328,11 +329,11 @@ void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, con
 #if HE_DEBUG_PHYSICS
 	Flags.set(PxShapeFlag::eVISUALIZATION);
 #endif
-	if (IsTrigger)
-		Flags.set(PxShapeFlag::eTRIGGER_SHAPE);
-	
+
 	if (IsTrigger)
 	{
+		Flags.set( PxShapeFlag::eTRIGGER_SHAPE );
+
 		PxShape* pShape = Physics.createShape( Geo, *Physics.createMaterial( 1.f, 1.f, 0.f ), false, Flags );
 		HE_ASSERT( pShape != nullptr ); 
 
@@ -445,21 +446,22 @@ void HPhysicsScene::RemoveActor( HRigidBody& Collider )
 	}
 }
 
-void HPhysicsScene::Tick()
+void HPhysicsScene::Tick( float DeltaTime, float StepRateScale )
 {
+	m_StepAccumulator += DeltaTime;
+	if (m_StepAccumulator < m_SimulationStepRate)
+		return;
+
+	m_StepAccumulator -= m_SimulationStepRate;
+
 	if (m_IsSimulationPaused.IsSet())
 		return;
 
 	m_IsSimulating.Set();
-	TickInternal();
-	m_IsSimulating.Clear();
-}
-
-void HPhysicsScene::TickInternal()
-{
+	
 	if (IsValid())
 	{
-		m_pScene->simulate( m_SimulationStepRate );
+		m_pScene->simulate( m_SimulationStepRate * StepRateScale );
 		m_pScene->fetchResults( true );
 	}
 	else
@@ -467,6 +469,8 @@ void HPhysicsScene::TickInternal()
 		P_LOG( Warning, TEXT( "Trying to tick a physics scene that has not been initialized!" ) );
 		HE_ASSERT( false );
 	}
+
+	m_IsSimulating.Clear();
 }
 
 void HPhysicsScene::WaittillSimulationFinished() const

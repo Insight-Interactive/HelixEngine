@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Components/HSceneComponent.h"
@@ -53,8 +54,10 @@ protected:
 
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaTime ) override;
-	virtual void Serialize( WriteContext& Output ) override;
-	virtual void Deserialize( const ReadContext& Value ) override;
+
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
+	
 	virtual void OnOwnerDeserializeComplete() override;
 	virtual void Render( FCommandContext& GfxContext ) override;
 
@@ -74,17 +77,12 @@ protected:
 	*/
 	virtual void OnStay( HColliderComponent* Other ) { }
 
-protected:
 	virtual void OnCreate();
 	virtual void OnDestroy();
-	// Each collier type overrides this to return their rigid body subclass.
-	virtual HRigidBody& GetRigidBody() = 0;
-	virtual const HRigidBody& GetRigidBody() const = 0;
 
 	// PhysicsCallbackHandler overrides
 	virtual void CollisionEvent( ECollisionType Type, PhysicsCallbackHandler* pCollider ) override;
 
-protected:
 	// Debug Mesh
 	bool									m_CollisionBoundsDrawEnabled;
 	HStaticMesh								m_MeshAsset;
@@ -92,12 +90,18 @@ protected:
 	FMaterialInstance*						m_Material;
 	// Internal
 	bool m_IsStatic;
+
 private:
+
+	// Each collier type overrides this to return their rigid body subclass.
+	virtual HRigidBody& GetRigidBody() = 0;
+	virtual const HRigidBody& GetRigidBody() const = 0;
 	/*
 		Whether this collider is a trigger or not. If true no physics are applied to this collider.
 	*/
 	bool m_IsTrigger;
 
+	bool m_SimulationEnabled;
 };
 
 //

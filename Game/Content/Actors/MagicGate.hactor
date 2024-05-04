@@ -34,9 +34,10 @@
                   ]
                 },
                 {
-                  "m_IsTrigger": true,
-                  "Density": 10,
-                  "IsStatic": true
+                  "IsTrigger": true,
+                  "Density": 10.0,
+                  "IsStatic": true,
+                  "EnableSimulation": true
                 }
               ]
             },

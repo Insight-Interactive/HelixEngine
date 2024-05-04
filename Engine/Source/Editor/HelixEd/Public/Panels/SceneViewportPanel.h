@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "Panels/Panel.h"
@@ -8,10 +9,14 @@
 class ADebugPawn;
 class EngineBeginPlayEvent;
 class EngineEndPlayEvent;
+class MouseButtonPressedEvent;
+class MouseButtonReleasedEvent;
+
 
 class SceneViewportPanel : public Panel
 {
 	using Super = Panel;
+	friend class HelixEdHomeUI;
 public:
 	SceneViewportPanel();
 	virtual ~SceneViewportPanel();
@@ -43,6 +48,9 @@ protected:
 
 	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
 	bool OnAppEndPlay( EngineEndPlayEvent& e );
+	bool OnMouseButtonPressed( MouseButtonPressedEvent& e );
+	bool OnMouseButtonReleased( MouseButtonReleasedEvent& e );
+
 
 private:
 	FDescriptorHandle m_DescriptorHandle;
@@ -50,7 +58,6 @@ private:
 	ADebugPawn* m_pDebugPawn;
 
 	bool m_IsCameraRotating;
-	bool m_ShouldIgnoreInput;
 };
 
 //
