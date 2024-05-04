@@ -26,7 +26,7 @@ private:
 	HCameraBoomComponent* m_pCameraBoom;
 
 	float m_ADSFOVDegrees;
-	float m_PreADSFOV;
+	float m_CameraFOV;
 	bool m_IsAiming;
 	float m_ADSTimeSeconds;
 

@@ -13,7 +13,6 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_IsAiming( false )
 	, m_ADSTimeSeconds( 0.1f )
 	, m_ADSFOVDegrees( 50.f )
-	, m_PreADSFOV( 1.f )
 {
 	m_pCameraBoom = AddComponent<HCameraBoomComponent>( TEXT( "CameraBoom" ) );
 	m_pCameraBoom->AttachTo( m_pRootComponent );
@@ -21,7 +20,7 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "ThirdPersonCamera" ) );
 	m_pCameraComponent->AttachTo( m_pCameraBoom );
 	m_pCameraComponent->SetObjectName( TEXT( "FollowCamera" ) );
-
+	m_CameraFOV = m_pCameraComponent->GetFieldOfView();
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -68,14 +67,13 @@ void AThirdPersonCharacter::AimDownSight()
 {
 	m_IsAiming = !m_IsAiming;
 
-	// TODO: Spamming ads will break fov
+	// TODO BUG(Garrett): Zooming out mid-zooom will restart lerp timer!
 	if (m_IsAiming)
 	{
-		m_PreADSFOV = m_pCameraComponent->GetFieldOfView();
 		m_pCameraComponent->LerpFieldOfView( m_ADSFOVDegrees, m_ADSTimeSeconds );
 	}
 	else
 	{
-		m_pCameraComponent->LerpFieldOfView( m_PreADSFOV, m_ADSTimeSeconds );
+		m_pCameraComponent->LerpFieldOfView( m_CameraFOV, m_ADSTimeSeconds );
 	}
 }

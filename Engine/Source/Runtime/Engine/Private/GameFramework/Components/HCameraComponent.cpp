@@ -29,7 +29,7 @@ void HCameraComponent::BeginPlay()
 
 void HCameraComponent::LerpFieldOfView( float NewFOV, float TimeSeconds )
 {
-	m_FOVLerpParams.StartFOV = GetFieldOfView();
+	m_FOVLerpParams.StartFOV = m_FieldOfView;
 	m_FOVLerpParams.EndFOV = NewFOV;
 	m_FOVLerpParams.TimeSeconds = TimeSeconds;
 	m_FOVLerpParams.TimeCounter = 0.f;
