@@ -26,11 +26,12 @@ public:
 			(*pEngine) = new HEditorEngine( Args );
 		}
 		else 
+		if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
 #endif // HE_WITH_EDITOR
-			if (Args.ArgumentEquals( L"-launchcfg", L"LaunchGame" ))
 		{
 			(*pEngine) = new HEngine( Args );
 		}
+#if HE_WITH_EDITOR
 		else
 		{
 			HE_CREATE_BUFFER( WChar, ErrMsg, 1024 );
@@ -38,6 +39,7 @@ public:
 			swprintf_s( ErrMsg, L"Unable to determine launch configuration!\nIncomplete or corrupt command line arguments given.\nCommand line: \"%s\"", CommandLine );
 			HE_ASSERTEX( false, ErrMsg );
 		}
+#endif // HE_WITH_EDITOR
 
 		HE_ASSERT( (*pEngine) != NULL );
 		(*pEngine)->EngineMain();

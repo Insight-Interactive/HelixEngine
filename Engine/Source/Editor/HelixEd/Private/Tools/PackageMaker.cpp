@@ -24,11 +24,11 @@ const Char* kBuildConfigStrings[BuildConfig_Count]
 /*
 	Default location for visual studio devenv executable. Does not include .exe extention.
 */
-const Char* kVisualStudioDevEnvNoExe = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\devenv";
+const Char* kVisualStudioDevEnvNoExe = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv";
 /*
 	Default location for visual studio devenv executable.
 */
-const Char* kVisualStudioDevEnv = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\devenv.exe";
+const Char* kVisualStudioDevEnv = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv.exe";
 
 
 bool PackageMaker::CheckVisualStudioInstalled()

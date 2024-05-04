@@ -105,11 +105,14 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 
 void HWorld::RegisterScenes()
 {
-	m_PhysicsScene.Setup( GEngine->GetPhysicsSubsystem().GetPhysicsContext() );
+	FPhysicsSubsystem& PhysicsSubsystem = GEngine->GetPhysicsSubsystem();
+	FRenderingSubsystem& RenderingSubsystem = GEngine->GetRenderingSubsystem();
+	
+	m_PhysicsScene.Setup( PhysicsSubsystem.GetPhysicsContext() );
+	PhysicsSubsystem.AddSceneForSimulation( m_PhysicsScene );
 
-	GEngine->GetRenderingSubsystem().PushUIPanelForRendering( m_DebugUI );
-	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
-	GEngine->GetPhysicsSubsystem().AddSceneForSimulation( m_PhysicsScene );
+	RenderingSubsystem.PushUIPanelForRendering( m_DebugUI );
+	RenderingSubsystem.PushSceneForRendering( m_Scene );
 }
 
 void HWorld::BeginPlay()
