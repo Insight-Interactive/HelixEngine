@@ -46,7 +46,7 @@ void HLevel::Flush()
 		for (size_t i = 0; i < m_Actors.size(); ++i)
 		{
 			m_Actors[i]->RemoveAllComponents();
-			delete m_Actors[i];
+			HE_SAFE_DELETE_PTR( m_Actors[i] )
 		}
 
 		m_Actors.clear();
@@ -151,24 +151,6 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 						pRoot->Scale( Sca.x, Sca.y, Sca.z );
 					}
 					pNewActor->OnDeserializeComplete();
-				}
-				else if (ObjectType == kPlayerCharacterType)
-				{
-					ACharacter* pPlayer = CreateActor<ACharacter>( TEXT( "<Unnamed Character>" ) );
-					GetWorld()->SetCurrentSceneRenderCamera( pPlayer->GetCameraComponent() );
-					GetWorld()->AddPlayerCharacterRef( pPlayer );
-					if (HSceneComponent* pRoot = pPlayer->GetRootComponent())
-					{
-						FTransform Transform;
-						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
-						FVector3 Pos = Transform.GetPosition();
-						pRoot->Translate( Pos.x, Pos.y, Pos.z );
-						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
-						FVector3 Sca = Transform.GetScale();
-						pRoot->Scale( Sca.x, Sca.y, Sca.z );
-					}
-					pPlayer->OnDeserializeComplete();
 				}
 			}
 		}

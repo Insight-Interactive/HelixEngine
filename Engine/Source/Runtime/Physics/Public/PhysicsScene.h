@@ -147,7 +147,7 @@ public:
 
 	void Setup( HPhysicsContext& PhysicsContext );
 	void Teardown();
-	void Tick();
+	void Tick( float DeltaTime, float StepRateScale );
 
 	void ProcessEventQueue();
 	// Steps the physics simulation through time.
@@ -181,8 +181,7 @@ private:
 	void InitRigidBody( HRigidBody& outRB, const physx::PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup);
 
 	void FlushInternal();
-	void TickInternal();
-
+	
 protected:
 	HPhysicsContext* m_pOwningContextRef;
 
@@ -190,6 +189,7 @@ protected:
 	float m_SimulationStepRate;
 	FFlag m_IsSimulationPaused;
 	FFlag m_IsSimulating;
+	float m_StepAccumulator;
 
 	PhysicsEventQueue m_EventQueue;
 

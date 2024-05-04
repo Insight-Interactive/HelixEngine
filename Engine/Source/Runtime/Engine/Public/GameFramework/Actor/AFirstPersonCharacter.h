@@ -3,6 +3,7 @@
 
 #include "GameFramework/Actor/ACharacter.h"
 
+HCLASS()
 class AFirstPersonCharacter : public ACharacter
 {
 	using Super = ACharacter;

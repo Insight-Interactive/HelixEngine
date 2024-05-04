@@ -168,7 +168,7 @@
     <ClInclude Include="Public\Engine\FileExplorerWindow.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\FrameTimeManager.h">
+    <ClInclude Include="Public\Engine\Timer.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\GameProject.h">
@@ -428,7 +428,7 @@
     <ClCompile Include="Private\Engine\Events.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\FrameTimeManager.cpp">
+    <ClCompile Include="Private\Engine\Timer.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\GameProject.cpp">

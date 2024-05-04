@@ -79,7 +79,7 @@ void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 
-	float Rotation = -(PitchDelta * 2048.f) * (float)GEngine->GetDeltaTime();
+	float Rotation = -(PitchDelta * 2048.f) * GEngine->GetDeltaTime();
 	Rotation = Math::DegreesToRadians( Rotation );
 	float RotatedY = cosf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.y;
 	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;
@@ -107,7 +107,7 @@ void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 	FVector3 CameraPosPreRotation = GetPosition();
 	const FVector3& LookAtPos = FVector3::Zero;
 
-	float Rotation = (YawDelta * 2048.f) * (float)GEngine->GetDeltaTime();
+	float Rotation = (YawDelta * 2048.f) * GEngine->GetDeltaTime();
 	Rotation = Math::DegreesToRadians( Rotation );
 	float RotatedX = cosf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.x;
 	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;

@@ -11,6 +11,10 @@
 #include <map>
 #include <iostream>
 #include <sstream>
+#include <assert.h>
+
+#include "DataTypes.h"
+
 
 #if HE_WINDOWS
 #	include <Windows.h>

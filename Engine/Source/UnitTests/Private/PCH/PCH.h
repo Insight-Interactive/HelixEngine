@@ -4,6 +4,8 @@
 #include <string.h>
 #include <iostream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 #ifdef HE_WINDOWS
 #	include <Windows.h>

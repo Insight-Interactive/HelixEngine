@@ -68,7 +68,6 @@ public:
 	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
-	void AddPlayerCharacterRef( ACharacter* pCharacter );
 	ACharacter* GetPlayerCharacter( uint32 Index = 0 );
 
 	float GetMouseMoveDeltaX();
@@ -94,8 +93,6 @@ public:
 protected:
 	FViewportContext* GetOwningViewport();
 
-	bool AdvancePhysics( float DeltaTime );
-	
 	/*
 		Reload the world.
 	*/
@@ -126,7 +123,6 @@ protected:
 	HPhysicsScene m_PhysicsScene;
 
 	ACharacter* m_pPlayerCharacter;
-	std::vector<ACharacter*> m_PlayerCharacterRefs;
 	String m_Filepath;
 
 	HCameraComponent* m_RenderingCamera;
@@ -213,15 +209,9 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 }
 
-FORCEINLINE void HWorld::AddPlayerCharacterRef( ACharacter* pCharacter )
-{
-	m_PlayerCharacterRefs.push_back( pCharacter );
-}
-
 FORCEINLINE ACharacter* HWorld::GetPlayerCharacter( uint32 Index )
 {
-	HE_ASSERT( Index >= 0 && Index < m_PlayerCharacterRefs.size() );
-	return m_PlayerCharacterRefs[Index];
+	return m_pPlayerCharacter;
 }
 
 FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const HName& Name )

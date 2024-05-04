@@ -6,10 +6,15 @@
 #include "Engine/ViewportContext.h"
 #include "World/CameraManager.h"
 #include "World/World.h"
+#include "Engine/Engine.h"
+#include "ThreadPool.h"
+#include "SystemTime.h"
 
 
 HCameraComponent::HCameraComponent(FComponentInitArgs& InitArgs)
 	: HSceneComponent(InitArgs)
+	, m_FieldOfView( kDefaultFOV )
+	, m_ShouldLerpFOV( false )
 {
 }
 
@@ -22,8 +27,27 @@ void HCameraComponent::BeginPlay()
 {
 }
 
+void HCameraComponent::LerpFieldOfView( float NewFOV, float TimeSeconds )
+{
+	m_FOVLerpParams.StartFOV = GetFieldOfView();
+	m_FOVLerpParams.EndFOV = NewFOV;
+	m_FOVLerpParams.TimeSeconds = TimeSeconds;
+	m_FOVLerpParams.TimeCounter = 0.f;
+	m_ShouldLerpFOV = true;
+}
+
 void HCameraComponent::Tick(float DeltaTime)
 {
+	if (m_ShouldLerpFOV)
+	{
+		m_FOVLerpParams.TimeCounter += DeltaTime;
+		float NewFOV = Math::LerpForTime( m_FOVLerpParams.StartFOV, m_FOVLerpParams.EndFOV, m_FOVLerpParams.TimeCounter, m_FOVLerpParams.TimeSeconds );
+
+		if (m_FOVLerpParams.TimeCounter > m_FOVLerpParams.TimeSeconds)
+			m_ShouldLerpFOV = false;
+
+		SetFieldOfView( NewFOV );
+	}
 }
 
 void HCameraComponent::OnCreate()
@@ -51,7 +75,6 @@ void HCameraComponent::SetProjectionValues(float FOVDegrees, float NearZ, float 
 	{
 	case VT_Perspective:
 	{
-		
 		const float FOVRadians = Math::DegreesToRadians( FOVDegrees );
 		const float AspectRatio = DisplayWidth / DisplayHeight;
 		m_ViewProps.ProjectionMat = XMMatrixPerspectiveFovLH(FOVRadians, AspectRatio, NearZ, FarZ);

@@ -28,15 +28,3 @@ ACharacter::~ACharacter()
 
 }
 
-void ACharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	FVector3 PlayerStartPos( -4.8f, 10.f, -106.4f );
-	m_pRootComponent->SetPosition( PlayerStartPos );
-}
-
-void ACharacter::Tick( float DeltaMs )
-{
-	Super::Tick( DeltaMs );
-
-}

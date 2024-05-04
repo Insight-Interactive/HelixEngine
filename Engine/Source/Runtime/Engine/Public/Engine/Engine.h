@@ -7,12 +7,13 @@
 #include "RenderContext.h"
 #include "Engine/GameProject.h"
 #include "Engine/ViewportContext.h"
-#include "Engine/FrameTimeManager.h"
+#include "Engine/Timer.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "Engine/Subsystem/RenderingSubsystem.h"
 #include "Engine/Event/EventEmitter.h"
 #include "LuaScriptVM.h"
+#include "SystemTime.h"
 
 
 class WindowClosedEvent;
@@ -54,9 +55,19 @@ public:
 	void TogglePauseGame( bool GameIsPaused );
 
 	/*
-		Returns the time between frame buffer flips in miliseconds.
+		Returns the time between frame buffer flips.
 	*/
-	double GetDeltaTime() const;
+	float GetDeltaTime() const;
+
+	/*
+		Returns the unscaled time between frame buffer flips.
+	*/
+	float GetDeltaTimeUnscaled() const;
+
+	/*
+		Returns the scale of delta time.
+	*/
+	float GetDeltaTimeScale() const;
 
 	/*
 		Scales the delta time value used for the game
@@ -131,9 +142,13 @@ protected:
 	bool					m_IsInitialized;
 	bool					m_IsEditorPresent;
 	bool					m_IsPlayingInEditor;
-	FFrameTimer				m_FrameTimer;
+	
+	float m_FrameTime = 0.f;
+	int64 m_FrameStartTick = 0;
 	float					m_FrameTimeScale;
-	double					m_AppSeconds;
+	int64					m_AppStartTime;
+
+
 	FViewportContext		m_MainViewPort;
 	HWorld					m_GameWorld;
 
@@ -186,9 +201,19 @@ FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )
 	}
 }
 
-FORCEINLINE double HEngine::GetDeltaTime() const
+FORCEINLINE float HEngine::GetDeltaTime() const
 {
-	return m_FrameTimer.GetTimeMiliSeconds() * m_FrameTimeScale;
+	return m_FrameTime * m_FrameTimeScale;
+}
+
+FORCEINLINE float HEngine::GetDeltaTimeUnscaled() const
+{
+	return m_FrameTime;
+}
+
+FORCEINLINE float HEngine::GetDeltaTimeScale() const
+{
+	return m_FrameTimeScale;
 }
 
 FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
@@ -198,13 +223,14 @@ FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
 
 FORCEINLINE double HEngine::GetAppSeconds() const
 {
-	return m_AppSeconds;
+	return (double)SystemTime::TimeBetweenTicks( m_AppStartTime, SystemTime::GetCurrentTick() );
 }
 
 FORCEINLINE void HEngine::TickTimers()
 {
-	m_FrameTimer.Tick();
-	m_AppSeconds += m_FrameTimer.GetTimeSeconds();
+	int64 CurrentTick = SystemTime::GetCurrentTick();
+	m_FrameTime = (float)SystemTime::TimeBetweenTicks( m_FrameStartTick, CurrentTick );
+	m_FrameStartTick = CurrentTick;
 }
 
 FORCEINLINE bool HEngine::GetIsEditorPresent() const

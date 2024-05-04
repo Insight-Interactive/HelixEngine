@@ -172,7 +172,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_BatchRenderer.SetRenderTarget( m_pOwningViewport->GetMainSceneRenderTarget() );
 		m_BatchRenderer.PreRender( CmdContext );
 		SetCommonRenderState( CmdContext, false, true );
-		m_BatchRenderer.Tick( (float)GEngine->GetDeltaTime() );
+		m_BatchRenderer.Tick( GEngine->GetDeltaTime() );
 		m_BatchRenderer.Render( CmdContext );
 	}
 

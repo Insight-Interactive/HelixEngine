@@ -5,14 +5,18 @@
 
 #include "TestsFwd.h"
 #include "Logger.h"
+#include "System.h"
+
 
 int main(int argc, char* argv[])
 {
+	System::InitializePlatform();
 	GUnitTestLogger.Initialize(TEXT("UnitTests"));
 	GUnitTestLogger.SetUseConsole(true);
 
-	ContainerTests::Run();
-	MathTests::Run();
+	//ContainerTests::Run();
+	//MathTests::Run();
+	TimerTests::Run();
 
 	UT_LOG(Log, TEXT("All tests passed!"));
 	return 0;

@@ -38,7 +38,7 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ) )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
-	, m_AppSeconds( 0.0 )
+	, m_AppStartTime( 0 )
 	, m_FrameTimeScale( 1.f )
 {
 }
@@ -49,11 +49,8 @@ HEngine::~HEngine()
 
 void HEngine::EngineMain()
 {
-	if (IsInitialized())
-	{
-		HE_LOG( Warning, TEXT( "Trying to call Engine::EngineMain() on an engine instance that is already initialized!" ) );
-		HE_DEBUG_BREAK();
-	}
+	HE_ASSERTEX( !IsInitialized(), TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!") )
+
 	// Startup.
 	PreStartup();
 	Startup();
@@ -76,6 +73,8 @@ void HEngine::PreStartup()
 	EmitEvent( EnginePreStartupEvent() );
 
 	System::InitializePlatform();
+	SystemTime::Initialize();
+	m_AppStartTime = SystemTime::GetCurrentTick();
 
 	// Initialize the thread pool.
 	GThreadPool = new ThreadPool( System::GetProcessorCount(), NULL );
@@ -231,8 +230,7 @@ void HEngine::Tick()
 	{
 		System::ProcessMessages();
 		
-		TickTimers();
-		float DeltaTime = (float)GetDeltaTime();
+		float DeltaTime = GetDeltaTime();
 		EmitEvent( EngineTickEvent( DeltaTime ) );
 
 		m_MainViewPort.Tick( DeltaTime );
@@ -242,6 +240,8 @@ void HEngine::Tick()
 
 		EmitEvent( EngineRenderEvent() );
 		RenderClientViewport( DeltaTime );
+
+		TickTimers();
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );

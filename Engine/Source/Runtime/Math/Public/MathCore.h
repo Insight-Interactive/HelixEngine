@@ -44,6 +44,18 @@ namespace Math
     {
         return Radians * HE_180DIVPI;
     }
+
+    template<typename T>
+    inline T Lerp( const T From, const T To, const T Delta )
+    {
+        return From * (T( 1 ) - Delta) + (To - Delta);
+    }
+
+    template<typename T>
+    T LerpForTime( T From, T To, T CurrentTime, T Time )
+    {
+        return From + ((To - From) * CurrentTime) / Time;
+    }
 }
 
 struct FAngles

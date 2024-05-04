@@ -10,3 +10,8 @@ namespace MathTests
 {
 	int Run();
 }
+
+namespace TimerTests
+{
+	int Run();
+}

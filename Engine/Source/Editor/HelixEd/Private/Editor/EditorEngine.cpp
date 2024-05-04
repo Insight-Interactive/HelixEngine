@@ -577,19 +577,19 @@ void HEditorEngine::OnLaunchStandalone()
 
 void RunActorEditor( void* pData )
 {
-	ImGuiContext* pImGuiCtx = ImGui::CreateContext();
+	/*ImGuiContext* pImGuiCtx = ImGui::CreateContext();
 
 	ActorEditorTab& Editor = *(ActorEditorTab*)pData;
-	FFrameTimer Timer;
+	FTimer Timer;
 	while (Editor.GetWindow().IsValid())
 	{
 		Timer.Tick();
 
-		Editor.Tick( (float)Timer.GetTimeMiliSeconds() );
+		Editor.Tick( (float)Timer.GetTimeSeconds() );
 		FCommandContext& CmdCtx = FCommandContext::Begin( TEXT( "Render Actor Editor" ) );
 		{
 			Editor.Render( CmdCtx );
 		}
 		CmdCtx.End();
-	}
+	}*/
 }

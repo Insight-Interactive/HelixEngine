@@ -4,10 +4,14 @@
 #include "GameFramework/HObject.h"
 #include "AssetRegistry/SerializeableInterface.h"
 
-
-#define HE_COMPONENT_GENERATED_BODY( Class )		\
-			Class( FComponentInitArgs& InitArgs );	\
-			virtual ~Class();
+/*
+	Autogenerate the required methods needed to derive from HActorComponent.
+*/
+#define HE_COMPONENT_GENERATED_BODY( Class )													\
+	Class( FComponentInitArgs& InitArgs );														\
+	virtual ~Class();																			\
+	public:																						\
+	virtual const char* GetComponenetStaticName() override { return HE_STRINGIFY( Class ); }	\
 
 #define HCOMPONENT()
 
@@ -37,9 +41,13 @@ public:
 	// Returns the Actor class this component belongs too.
 	AActor* GetOwner();
 
+	// Returns the class name of this componenent. Override for behavior.
+	virtual const char* GetComponenetStaticName() = 0;
+
 protected:
-	HE_COMPONENT_GENERATED_BODY( HActorComponent )
-	
+	HActorComponent( FComponentInitArgs& InitArgs );
+	virtual ~HActorComponent();
+
 
 	// Returns the world the component resides in.
 	HWorld* GetWorld();

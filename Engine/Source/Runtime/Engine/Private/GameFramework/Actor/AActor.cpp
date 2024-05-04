@@ -12,6 +12,7 @@
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
