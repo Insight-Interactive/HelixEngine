@@ -1,10 +1,10 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "Engine/Subsystem/PhysicsSubsystem.h"
 
 #include "PhysicsScene.h"
-#include "Engine/FrameTimeManager.h"
+#include "Engine/Timer.h"
 
 
 FPhysicsSubsystem::FPhysicsSubsystem()

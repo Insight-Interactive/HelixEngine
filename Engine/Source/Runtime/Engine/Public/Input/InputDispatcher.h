@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 /*
 	File: FInputDispatcher.h
 	Source: FInputDispatcher.cpp

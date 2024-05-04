@@ -1,8 +1,10 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 
 #include "GameFramework/Actor/ACharacter.h"
 
+HCLASS()
 class AFirstPersonCharacter : public ACharacter
 {
 	using Super = ACharacter;

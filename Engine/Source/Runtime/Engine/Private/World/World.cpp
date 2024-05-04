@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "World/World.h"
@@ -36,16 +36,18 @@ void HWorld::Initialize( const Char* LevelURL )
 
 	RegisterScenes();
 
+	bool UseFirstPersonCharacter = false;
+
 	FActorInitArgs PlrCharacterInitArgs{ this, TEXT( "Player Character" ), true };
-	m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	if (UseFirstPersonCharacter)
+		m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
+	else
+		m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	m_Level.GuardedAddActor( m_pPlayerCharacter );
+
 	HCapsuleColliderComponent* pCapsule = m_pPlayerCharacter->GetComponent<HCapsuleColliderComponent>();
-	pCapsule->SetPosition( pCapsule->GetPosition() + FVector3( 0.f, pCapsule->GetHalfHeight() + pCapsule->GetRadius(), 0.f));
-	pCapsule->SetRotation( 0.f, 0.f, 1.57f );
-	pCapsule->SetDensity( 10.f );
-	//const FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( 90.f ) );
-	//pCapsule->SetRotation( Rot );
-	//m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
-	//TODO Player is teleporting on play. Why?
+	pCapsule->SetPosition( m_pPlayerCharacter->GetRootComponent()->GetPosition() + FVector3(0.f, pCapsule->GetHeight(), 0.f));
+	pCapsule->SetRotation( 0.f, 0.f, Math::DegreesToRadians(90.f) );
 	
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL, FUM_Read );
@@ -66,6 +68,7 @@ void HWorld::Initialize( const Char* LevelURL )
 		// Load the worlds actors.
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
+		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
 
 		// TEMP
 		m_DebugUI.AddWidget( m_FPSCounter );
@@ -73,8 +76,10 @@ void HWorld::Initialize( const Char* LevelURL )
 
 		AddPanel( &m_DebugUI );
 	}
-
-	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+	else
+	{
+		HE_ASSERT( false );
+	}
 }
 
 void HWorld::Initialize()
@@ -100,50 +105,36 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 
 void HWorld::RegisterScenes()
 {
-	m_PhysicsScene.Setup( GEngine->GetPhysicsSubsystem().GetPhysicsContext() );
+	FPhysicsSubsystem& PhysicsSubsystem = GEngine->GetPhysicsSubsystem();
+	FRenderingSubsystem& RenderingSubsystem = GEngine->GetRenderingSubsystem();
+	
+	m_PhysicsScene.Setup( PhysicsSubsystem.GetPhysicsContext() );
+	PhysicsSubsystem.AddSceneForSimulation( m_PhysicsScene );
 
-	GEngine->GetRenderingSubsystem().PushUIPanelForRendering( m_DebugUI );
-	GEngine->GetRenderingSubsystem().PushSceneForRendering( m_Scene );
-	GEngine->GetPhysicsSubsystem().AddSceneForSimulation( m_PhysicsScene );
+	RenderingSubsystem.PushUIPanelForRendering( m_DebugUI );
+	RenderingSubsystem.PushSceneForRendering( m_Scene );
 }
 
 void HWorld::BeginPlay()
 {
 	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
-	AddPlayerCharacterRef( m_pPlayerCharacter );
 
 	m_Level.BeginPlay();
-	m_pPlayerCharacter->BeginPlay();
-}
-
-float Accumulator = 0.f;
-float StepSize = 1.f / 60.f;
-
-bool HWorld::AdvancePhysics(float DeltaTime)
-{
-	Accumulator += DeltaTime;
-	if (Accumulator < StepSize)
-		return false;
-
-	Accumulator -= StepSize;
-	m_PhysicsScene.Tick();
-
-	return true;
 }
 
 void HWorld::Tick( float DeltaTime )
 {
 	//m_PhysicsScene.WaittillSimulationFinished(); // Sync the physics thread.
 	
-	AdvancePhysics( DeltaTime );
+	m_PhysicsScene.Tick( GEngine->GetDeltaTimeUnscaled(), GEngine->GetDeltaTimeScale());
 
 	static float SecondTimer = 0.f;
 	static float FPS = 0.f;
-	SecondTimer += DeltaTime;
+	SecondTimer += GEngine->GetDeltaTimeUnscaled();
 	if (SecondTimer > 1.f)
 	{
 		WString Label = L"FPS: " + std::to_wstring( (int)FPS );
-		Label += L" (" + std::to_wstring( DeltaTime );
+		Label += L" (" + std::to_wstring( GEngine->GetDeltaTimeUnscaled() );
 		Label += +L" ms)";
 		m_FPSCounter.SetText( Label );
 		FPS = 0.f;
@@ -156,7 +147,6 @@ void HWorld::Tick( float DeltaTime )
 
 	if (GEngine->IsPlayingInEditor())
 	{
-		m_pPlayerCharacter->Tick( DeltaTime );
 		m_Level.Tick( DeltaTime );
 	}
 
@@ -182,9 +172,6 @@ void HWorld::Flush()
 
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();
-		m_PlayerCharacterRefs.clear();
-		m_pPlayerCharacter->RemoveAllComponents();
-		HE_SAFE_DELETE_PTR( m_pPlayerCharacter );
 
 		// Cleanup the physics scene.
 		m_PhysicsScene.Teardown();
@@ -193,9 +180,6 @@ void HWorld::Flush()
 
 void HWorld::Render( FCommandContext& CmdContext )
 {
-	if (m_pPlayerCharacter != NULL)
-		m_pPlayerCharacter->Render( CmdContext );
-
 	m_Level.Render( CmdContext );
 }
 
@@ -250,6 +234,7 @@ void HWorld::Serialize( const Char* Filename )
 
 					Writer.EndArray();
 				}
+
 				//m_Level.Serialize( Writer );
 			}
 			Writer.EndObject();
@@ -274,11 +259,7 @@ void HWorld::Serialize( const Char* Filename )
 void HWorld::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( "Name" );
-	Output.String( "Test" );
-	//Output.String( TCharToChar( GetObjectName() ) );
-
-	Output.Key( "TickInterval" );
-	Output.Double( 1.0 );
+	Output.String( TCharToChar( GetObjectName() ) );
 }
 
 void HWorld::Deserialize( const JsonUtility::ReadContext& Value )

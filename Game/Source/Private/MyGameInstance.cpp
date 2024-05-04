@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "GamePCH.h"
 
 #include "MyGameInstance.h"
@@ -28,14 +28,10 @@ void MyGameInstance::OnGameLostFocus()
 {
 	m_InGameMenu.OnGameLostFocus();
 }
-HCapsuleColliderComponent* Comp;
+
 void MyGameInstance::BeginPlay()
 {
 	Super::BeginPlay();
-
-	AActor* NewActor = GetWorld()->GetCurrentLevel().CreateActor<AActor>( TEXT( "Capsule Actor" ) );
-	Comp = NewActor->AddComponent<HCapsuleColliderComponent>( TEXT( "Bounds" ) );
-	Comp->SetPosition( 0.f, 50.f, 0.f );
 
 	m_InGameMenu.Setup();
 }
@@ -44,9 +40,6 @@ void MyGameInstance::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	
-
-	//Comp->Rotate( 0.f, 0.f, 0.01 );
-
 	m_InGameMenu.Tick( DeltaTime );
 }
 

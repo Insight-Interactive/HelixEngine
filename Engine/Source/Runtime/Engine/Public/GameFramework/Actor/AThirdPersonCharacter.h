@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Actor/ACharacter.h"
@@ -6,6 +6,7 @@
 
 class HCameraBoomComponent;
 
+HCLASS()
 class AThirdPersonCharacter : public ACharacter
 {
 	using Super = ACharacter;
@@ -17,12 +18,16 @@ public:
 private:
 	virtual void SetupController( HControllerComponent& Controller ) override;
 
-	void LookUp( float Value );
-	void LookRight( float Value );
 	void ThirdPersonMoveForward( float Delta );
 	void ThirdPersonMoveRight( float Delta );
+	void AimDownSight();
 
 private:
 	HCameraBoomComponent* m_pCameraBoom;
+
+	float m_ADSFOVDegrees;
+	float m_CameraFOV;
+	bool m_IsAiming;
+	float m_ADSTimeSeconds;
 
 };

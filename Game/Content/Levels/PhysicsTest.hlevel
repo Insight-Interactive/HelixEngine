@@ -1,8 +1,7 @@
 {
     "World": [
         {
-            "Name": "Physics Test",
-            "TickInterval": 1.0
+            "Name": "Physics Test"
         },
         {
             "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d":[

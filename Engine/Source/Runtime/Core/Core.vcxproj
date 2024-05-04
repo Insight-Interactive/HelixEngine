@@ -1119,6 +1119,7 @@
     <ClInclude Include="Public\Semaphore.h" />
     <ClInclude Include="Public\StringHelper.h" />
     <ClInclude Include="Public\System.h" />
+    <ClInclude Include="Public\SystemTime.h" />
     <ClInclude Include="Public\TSingleton.h" />
     <ClInclude Include="Public\ThreadPool.h" />
   </ItemGroup>
@@ -1131,6 +1132,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Private\StringHelper.cpp" />
+    <ClCompile Include="Private\SystemTime.cpp" />
     <ClCompile Include="Private\ThreadPool.cpp" />
     <ClCompile Include="Private\Windows\CriticalSectionWinDesktop.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">true</ExcludedFromBuild>

@@ -10,7 +10,7 @@
 #include "Engine/Event/EngineEvent.h"
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"
-#include "GameFramework/Components/HCameraComponent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 #include "Texture.h"
 #include "ColorBuffer.h"
 #include "GpuResource.h"
@@ -73,7 +73,7 @@ void HEditorEngine::Startup()
 void HEditorEngine::LoadEditorPreferences()
 {
 	rapidjson::Document PrefsJsonDoc;
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultEditor.ini";
+	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
 	FileRef PrefsJsonSource( EditorConfigPath.c_str(), FUM_Read );
 	HE_ASSERT( PrefsJsonSource->IsOpen() );
 	JsonUtility::LoadDocument( PrefsJsonSource, PrefsJsonDoc );
@@ -145,7 +145,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetRootComponent()->GetRotation();
+				FVector3 DebugCameraRot = m_HomeUI.GetDebugPawn()->GetCameraComponent()->GetCameraAngles();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraRot.x );
 				Writer.Key( "Y" );
@@ -165,7 +165,7 @@ void HEditorEngine::SaveEditorPreferences()
 	}
 	Writer.EndObject();
 
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/DefaultEditor.ini";
+	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
 	FileRef OutFile( EditorConfigPath, FUM_Write, CM_Text );
 	HE_ASSERT( OutFile->IsOpen() );
 	if (OutFile->IsOpen())
@@ -577,19 +577,19 @@ void HEditorEngine::OnLaunchStandalone()
 
 void RunActorEditor( void* pData )
 {
-	ImGuiContext* pImGuiCtx = ImGui::CreateContext();
+	/*ImGuiContext* pImGuiCtx = ImGui::CreateContext();
 
 	ActorEditorTab& Editor = *(ActorEditorTab*)pData;
-	FFrameTimer Timer;
+	FTimer Timer;
 	while (Editor.GetWindow().IsValid())
 	{
 		Timer.Tick();
 
-		Editor.Tick( (float)Timer.GetTimeMiliSeconds() );
+		Editor.Tick( (float)Timer.GetTimeSeconds() );
 		FCommandContext& CmdCtx = FCommandContext::Begin( TEXT( "Render Actor Editor" ) );
 		{
 			Editor.Render( CmdCtx );
 		}
 		CmdCtx.End();
-	}
+	}*/
 }

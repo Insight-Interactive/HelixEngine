@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "RendererPCH.h"
 
 #include "ModelManager.h"
@@ -145,7 +145,7 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	pMesh->SetHashName( NameHash );
 	pMesh->Create(
 		Verticies.data(), Verticies.size(),  sizeof(FVertex3D),
-		Indices.data(), Indices.size() * sizeof(uint32), Indices.size()
+		Indices.data(), Indices.size() * sizeof(uint32), (uint32)Indices.size()
 	);
 	pMesh->SetLoadCompleted( true );
 

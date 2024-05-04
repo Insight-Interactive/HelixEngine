@@ -114,6 +114,7 @@
     <ClInclude Include="Public\ThreadPool.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\SystemTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp">
@@ -149,6 +150,7 @@
     <ClCompile Include="Private\Windows\Universal\SystemWinUniversal.cpp">
       <Filter>Private\Windows\Universal</Filter>
     </ClCompile>
+    <ClCompile Include="Private\SystemTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.module.lua" />

@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/APawn.h"
@@ -26,7 +26,7 @@ void APawn::Move(const FVector3& Direction, const float Value)
 {
 	if (m_pRootComponent != nullptr)
 	{
-		m_Velocity = m_MovementSpeed * Value * (float)GEngine->GetDeltaTime();
+		m_Velocity = m_MovementSpeed * Value * GEngine->GetDeltaTime();
 		FVector3 Pos = m_pRootComponent->GetPosition();
 		Pos += Direction * m_Velocity;
 		m_pRootComponent->SetPosition(Pos);

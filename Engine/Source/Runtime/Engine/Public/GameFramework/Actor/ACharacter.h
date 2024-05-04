@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Actor/APawn.h"
@@ -13,10 +13,6 @@ class ACharacter : public APawn
 	using Super = APawn;
 public:
 	HE_GENERATED_BODY( ACharacter );
-
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaMs) override;
 
 	inline HCameraComponent* GetCameraComponent();
 

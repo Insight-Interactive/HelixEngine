@@ -1,17 +1,23 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "AssetRegistry/Asset.h"
 #include "GameFramework/HObject.h"
-#include "GameFramework/Components/HSceneComponent.h"
 #include "AssetRegistry/SerializeableInterface.h"
-#include "LuaScript.h"
 
-#define HE_GENERATED_BODY( Class )				\
-			Class( FActorInitArgs& InitArgs );	\
-			virtual ~Class();							
+#include "LuaScript.h"
+#include "GameFramework/Components/HActorComponent.h"
+
+
+#define HE_GENERATED_BODY( Class )															\
+	Class( FActorInitArgs& InitArgs );														\
+	virtual ~Class();																		\
+	virtual const char* GetStaticClassName() override { return HE_STRINGIFY( Class ); }		\
 
 #define HCLASS()
+
+class HWorld;
+class HSceneComponent;
+class FCommandContext;
 
 struct FActorInitArgs
 {
@@ -20,10 +26,6 @@ struct FActorInitArgs
 	const bool		bIsDynamicInstance;
 	const bool		bDisableCollision = false;
 };
-
-class HWorld;
-class HActorComponent;
-class FCommandContext;
 
 HCLASS()
 class AActor : public HObject, public FSerializeableInterface
@@ -34,7 +36,10 @@ class AActor : public HObject, public FSerializeableInterface
 	friend class DetailsPanel;
 	using Super = HObject;
 public:
-	HE_GENERATED_BODY( AActor )
+	AActor( FActorInitArgs& InitArgs );
+	virtual ~AActor();
+	virtual const char* GetStaticClassName() { return HE_STRINGIFY( AActor ); }
+
 
 	// Called once when the game has started playing.
 	virtual void BeginPlay();

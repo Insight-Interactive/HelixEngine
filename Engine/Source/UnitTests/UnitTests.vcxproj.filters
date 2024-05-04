@@ -35,6 +35,7 @@
     <ClCompile Include="Private\TestsDetail.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\TimerTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UnitTests.module.lua" />

@@ -1,4 +1,4 @@
-// Copyright 2021 Insight Interactive. All Rights Reserved.
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/AActor.h"
@@ -12,6 +12,7 @@
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
+#include "GameFramework/Components/HSceneComponent.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )

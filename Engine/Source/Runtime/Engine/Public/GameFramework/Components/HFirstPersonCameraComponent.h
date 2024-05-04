@@ -1,3 +1,4 @@
+// Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
 #include "GameFramework/Components/HCameraComponent.h"
@@ -5,6 +6,7 @@
 
 static const float kDefaultCameraPitchSpeedMultiplier = 50.f;
 static const float kDefaultCameraYawSpeedMultiplier = 50.f;
+static const float kDefaultCameraRollSpeedMultiplier = 50.f;
 
 class HFirstPersonCameraComponent : public HCameraComponent
 {
@@ -14,19 +16,21 @@ public:
 
 	void LookUp( float Value );
 	void LookRight( float Value );
+	void Roll( float Value );
 
 	float GetVerticalLookSpeed() const;
 	float GetHorizontalLookSpeed() const;
 	void SetVerticalLookSpeed( float Speed );
 	void SetHorizontalLookSpeed( float Speed );
+	FVector3 GetCameraAngles();
+	void SetCameraAngles( FVector3& Angles );
 
 private:
-	FVector2 m_Rotation;
-	FQuat m_RotX;
-	FQuat m_RotY;
+	FVector3 m_Rotation;
 
 	float m_CameraPitchSpeedMultiplier;
 	float m_CameraYawSpeedMultiplier;
+	float m_CameraRollSpeedMultiplier;
 
 };
 
@@ -53,4 +57,15 @@ inline void HFirstPersonCameraComponent::SetVerticalLookSpeed( float Speed )
 inline void HFirstPersonCameraComponent::SetHorizontalLookSpeed( float Speed )
 {
 	m_CameraYawSpeedMultiplier = Speed;
+}
+
+inline FVector3 HFirstPersonCameraComponent::GetCameraAngles()
+{
+	return m_Rotation;
+}
+
+inline void HFirstPersonCameraComponent::SetCameraAngles( FVector3& Angles )
+{
+	m_Rotation = Angles;
+	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }
