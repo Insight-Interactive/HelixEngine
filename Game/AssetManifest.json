@@ -35,7 +35,8 @@
             "a2945e8c-8a41-4c75-8b1f-100de47ced70": "Content/Actors/M1911.hactor",
             "4a207c51-3a70-4031-892f-4c6f21673240": "Content/Actors/PhysicsTestActors/PhysicsCube.hactor",
             "3b781ea0-f649-4b0f-843e-e926c9ac3fdb": "Content/Actors/PhysicsTestActors/PhysicsSphere.hactor",
-            "233270a0-296d-42cb-beca-aa4b8ffc256e": "Content/Actors/PhysicsTestActors/PhysicsCapsule.hactor"
+            "233270a0-296d-42cb-beca-aa4b8ffc256e": "Content/Actors/PhysicsTestActors/PhysicsCapsule.hactor",
+            "ec96640f-e5b8-41fa-9265-c25e8687089d": "Content/Actors/AnimationTestActors/WalkingGuy.hactor"
         },
         {
             "724546e1-911f-4cd2-9b14-97c212be3e9a": "Shaders/Core/DefaultGeometryPass.vs.cso",

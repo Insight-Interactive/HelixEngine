@@ -8,16 +8,22 @@
 
 struct FAnimationKeyFrame
 {
+	FAnimationKeyFrame()
+		: m_Timestamp( 0.f ) {}
+
 	float m_Timestamp;
-	FTransform m_AnimatedTransform;
+	FVector3 Position;
+	FQuat Rotation;
 };
 
 
 class RENDER_API FAnimation : public ManagedAsset<FAnimation>
 {
 public:
-	double m_Duration;
-	double m_TicksPerSecond;
+	FAnimation()
+		: m_Duration( 0.f ), m_TicksPerSecond( 0.f ) {}
+	float m_Duration;
+	float m_TicksPerSecond;
 
 	String m_Name;
 	float m_Length;

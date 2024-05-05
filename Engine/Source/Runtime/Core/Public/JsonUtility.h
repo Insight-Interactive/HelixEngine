@@ -10,6 +10,7 @@
 
 #include "FileSystem.h"
 #include "Transform.h"
+#include "GUID.h"
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/prettywriter.h>
@@ -67,6 +68,8 @@ namespace JsonUtility
 		Reads and returns a string property from a json value. Returns true if succeeded false if not.
 	*/
 	bool GetString( const rapidjson::Value& Value, const char* PropertyName, char* OutStringBuffer, uint32 BufferSize );
+
+	bool GetGuid( const rapidjson::Value& Value, const char* PropertyName, FGUID& outGuid );
 
 	/*
 		Reads and returns a boolean property from a json value. Returns true if succeeded false if not.

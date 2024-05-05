@@ -27,12 +27,17 @@ protected:
 	virtual void OnDestroy() override;
 	virtual void Render( FCommandContext& GfxContext ) override;
 
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
+
 private:
-	HSkeletalMesh m_SkeletalMesh;
+	HSkeletalMesh						m_SkeletalMesh;
 	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
 
 	double m_StartTimeMillis;
-	HAnimation m_anim;
+	HAnimation m_Animation;
+
+	TConstantBuffer<JointCBData>		m_JointCB;
 
 	struct DebugJoint
 	{
@@ -40,7 +45,7 @@ private:
 		TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
 	};
 	std::vector<DebugJoint> m_DebugSkeletonMeshes;
-	HMaterial							m_DebugMaterialAsset;
+	HMaterial				m_DebugMaterialAsset;
 };
 
 // 

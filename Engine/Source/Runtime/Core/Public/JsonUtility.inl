@@ -117,6 +117,21 @@ inline bool JsonUtility::GetString( const rapidjson::Value& Value, const char* P
 	return true;
 }
 
+inline bool JsonUtility::GetGuid( const rapidjson::Value& Value, const char* PropertyName, FGUID& outGuid )
+{
+	HE_ASSERT( PropertyName != NULL );
+
+	Char GuidBuffer[64];
+	ZeroMemory( GuidBuffer, sizeof( GuidBuffer ) );
+	bool FoundProperty = JsonUtility::GetString( Value, PropertyName, GuidBuffer, sizeof( GuidBuffer ) );
+	if (!FoundProperty)
+		return false;
+
+	FGUID::CreateFromString( GuidBuffer, outGuid );
+
+	return outGuid.IsValid();
+}
+
 inline bool JsonUtility::GetString( const rapidjson::Value& Value, const char* PropertyName, char* OutStringBuffer, uint32 BufferSize )
 {
 	HE_ASSERT( PropertyName != NULL );

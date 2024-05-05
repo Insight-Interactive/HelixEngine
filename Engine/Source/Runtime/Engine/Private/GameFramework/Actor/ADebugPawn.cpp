@@ -35,10 +35,13 @@ void ADebugPawn::Tick( float DeltaMs )
 
 void ADebugPawn::UpdateMovement( float DeltaTime )
 {
+	HWorld* pWorld = GetWorld();
+
 	if (m_CanRotateCamera)
 	{
-		float X = GetWorld()->GetMouseMoveDeltaX();
-		float Y = GetWorld()->GetMouseMoveDeltaY();
+		// Handle camera rotation
+		float X = pWorld->GetMouseMoveDeltaX();
+		float Y = pWorld->GetMouseMoveDeltaY();
 		if (Y != 0.f)
 		{
 			m_pCameraComponent->LookUp( Y );
@@ -51,7 +54,18 @@ void ADebugPawn::UpdateMovement( float DeltaTime )
 
 	if (m_CanMove)
 	{
-		HWorld* pWorld = GetWorld();
+		// Handle sprint
+		if (pWorld->IsFirstPressed( Key_LShift ))
+		{
+			Sprint();
+		}
+		if (pWorld->IsReleased( Key_LShift ))
+		{
+			if (m_bIsSprinting)
+				Sprint();
+		}
+
+		// Handle movement
 		if (pWorld->IsPressed( Key_W ))
 		{
 			MoveForward( 1.f );

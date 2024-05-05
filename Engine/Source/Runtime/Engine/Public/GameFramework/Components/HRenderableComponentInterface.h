@@ -26,8 +26,8 @@ protected:
 	void Render( FCommandContext& GfxContext );
 
 protected:
-	bool m_bIsDrawEnabled;
-	HMaterial							m_MaterialAsset;
+	bool		m_bIsDrawEnabled;
+	HMaterial	m_MaterialAsset;
 
 };
 

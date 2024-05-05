@@ -13,10 +13,12 @@ HAnimation FAnimationManager::LoadAnimation( const String& Filename )
 
 void ProcessAnimation( const aiScene* pScene, FAnimation& outAnim)
 {
+    HE_ASSERT( pScene->mNumAnimations > 0 );
+
     aiAnimation* pAnimation = pScene->mAnimations[0];
     outAnim.m_Name = pAnimation->mName.C_Str();
-    outAnim.m_Duration = pAnimation->mDuration;
-    outAnim.m_TicksPerSecond = pAnimation->mTicksPerSecond;
+    outAnim.m_Duration = (float)pAnimation->mDuration;
+    outAnim.m_TicksPerSecond = (float)pAnimation->mTicksPerSecond;
 
     for (uint32 i = 0; i < pAnimation->mNumChannels; i++)
     {
@@ -33,11 +35,11 @@ void ProcessAnimation( const aiScene* pScene, FAnimation& outAnim)
             animatedFrame.m_Timestamp = (float)pBoneAnim->mPositionKeys[j].mTime;
             const aiVector3D& keyPos = pBoneAnim->mPositionKeys[j].mValue;
             const aiQuaternion& keyRot = pBoneAnim->mRotationKeys[j].mValue;
-            animatedFrame.m_AnimatedTransform.SetPosition( keyPos.x, keyPos.y, keyPos.z );
-            animatedFrame.m_AnimatedTransform.SetRotation( FQuat(keyRot.x, keyRot.y, keyRot.z, keyRot.w) );
+            animatedFrame.Position = FVector3( keyPos.x, keyPos.y, keyPos.z );
+            animatedFrame.Rotation = FQuat(keyRot.x, keyRot.y, keyRot.z, keyRot.w);
+            // Note: Animated scaling is not supported...
         }
     }
-
 }
 
 ManagedAnimation* FAnimationManager::FindOrLoadAnimationMeshFromFile( const String& FilePath )

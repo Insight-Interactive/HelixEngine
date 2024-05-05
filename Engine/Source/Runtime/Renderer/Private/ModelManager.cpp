@@ -243,7 +243,7 @@ void ParseBoneWeights( const std::vector<FJoint>& Joints, const aiMesh* pMesh, s
 		for (uint32 j = 0; j < pBone->mNumWeights; j++)
 		{
 			const aiVertexWeight& VertWeight = pBone->mWeights[j];
-			const uint32 VertexId = BaseVertexIndex + VertWeight.mVertexId;
+			const uint32& VertexId = BaseVertexIndex + VertWeight.mVertexId;
 
 			for (uint32 k = 0; k < HE_MAX_JOINTS_PER_VERTEX; k++) // Find a free index in the array
 			{
@@ -349,9 +349,10 @@ SkeletalMeshGeometryRef FGeometryManager::SK_ParseMeshes( const aiScene* pScene 
 			{
 				aiNode* pArmatureRoot = pMesh->mBones[0]->mArmature;
 				// TODO: Go through all the nodes in the armature and find the root bone name
-				memcpy( &pSkeletalMesh->m_GlobalInverseTransform, &pArmatureRoot->mTransformation, sizeof( FMatrix ) );
+				//memcpy( &pSkeletalMesh->m_GlobalInverseTransform, &pArmatureRoot->mTransformation, sizeof( FMatrix ) );
+				ConvertAssimp4x4Matrix( pArmatureRoot->mTransformation, pSkeletalMesh->m_GlobalInverseTransform );
 				pSkeletalMesh->m_GlobalInverseTransform = pSkeletalMesh->m_GlobalInverseTransform.Invert();
-
+				
 				//aiNode* pNode = pMesh->mBones[0]->mNode;
 				//pSkeletalMesh->Joints.reserve( pMesh->mNumBones );
 
@@ -377,7 +378,6 @@ SkeletalMeshGeometryRef FGeometryManager::SK_ParseMeshes( const aiScene* pScene 
 		IndexGroupOffset += TotalGroupIndicies;
 		TotalGroupIndicies = 0;
 	}
-	pSkeletalMesh->m_JointCB.Create( L"Skeleton Joints" );// TODO: this should belong to each unique instance.
 	pSkeletalMesh->SetLoadCompleted( true );
 
 	String Name = pScene->mName.C_Str();

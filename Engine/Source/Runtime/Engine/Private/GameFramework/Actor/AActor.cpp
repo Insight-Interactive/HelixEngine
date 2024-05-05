@@ -13,6 +13,7 @@
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
 #include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Components/HSkeletalMeshComponenet.h"
 
 
 AActor::AActor( FActorInitArgs& InitArgs )
@@ -91,15 +92,16 @@ void AActor::Deserialize( const JsonUtility::ReadContext& Value )
 	SetGuid( FGUID::CreateFromString( GuidStr ) );
 
 	// Loop over all the actor's components.
-	const Char* StaticMeshKey = HE_STRINGIFY( HStaticMeshComponent );
-	const Char* PointLightKey = HE_STRINGIFY( HPointLightComponent );
-	const Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
-	const Char* PlaneColliderKey = HE_STRINGIFY( HPlaneColliderComponent );
-	const Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
-	const Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
-	const Char* LuaScriptKey = HE_STRINGIFY( HLuaScriptComponent );
-	const Char* CameraBoomKey = HE_STRINGIFY( HCameraBoomComponent );
-	const Char* CapsuleColliderKey = HE_STRINGIFY( HCapsuleColliderComponent );
+	constexpr Char* StaticMeshKey = HE_STRINGIFY( HStaticMeshComponent );
+	constexpr Char* PointLightKey = HE_STRINGIFY( HPointLightComponent );
+	constexpr Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
+	constexpr Char* PlaneColliderKey = HE_STRINGIFY( HPlaneColliderComponent );
+	constexpr Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
+	constexpr Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
+	constexpr Char* LuaScriptKey = HE_STRINGIFY( HLuaScriptComponent );
+	constexpr Char* CameraBoomKey = HE_STRINGIFY( HCameraBoomComponent );
+	constexpr Char* CapsuleColliderKey = HE_STRINGIFY( HCapsuleColliderComponent );
+	constexpr Char* SkeletalMeshKey = HE_STRINGIFY( HSkeletalMeshComponent );
 	const rapidjson::Value& ActorComponents = ActorProps["Components"];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
@@ -148,7 +150,12 @@ void AActor::Deserialize( const JsonUtility::ReadContext& Value )
 		else if (CurrentComponent.HasMember( CameraBoomKey ))
 		{
 			AddComponent<HCameraBoomComponent>( TEXT( "<Unnamed Camera Boom Component>" ) )
-				->Deserialize( CurrentComponent[LuaScriptKey] );
+				->Deserialize( CurrentComponent[CameraBoomKey] );
+		}
+		else if (CurrentComponent.HasMember( SkeletalMeshKey ))
+		{
+			AddComponent<HSkeletalMeshComponent>( TEXT( "<Unnamed Skeletal Mesh Component>" ) )
+				->Deserialize( CurrentComponent[SkeletalMeshKey] );
 		}
 		else
 		{

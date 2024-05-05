@@ -23,15 +23,10 @@ GP_PSInputSkinned main( GP_VSInputSkinned Input )
     //float3 skinnedPos = mul( float4(Input.Position, 1.0f), jointTransform ).xyz;
     //Result.Position = mul( float4(skinnedPos, 1), WorldViewProjection );
     
-    float weights[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-    weights[0] = Input.Weights[0];
-    weights[1] = Input.Weights[1];
-    weights[2] = Input.Weights[2];
-    weights[3] = 1.0f - weights[0] - weights[1] - weights[2];
     float3 totalLocalPos = float3(0, 0, 0);
     for (int i = 0; i < HE_MAX_JOINTS_PER_VERTEX; i++)
     {
-        totalLocalPos += weights[i] * mul( float4(Input.Position, 0), Joints[Input.JointIDs[i]] ).xyz;
+        totalLocalPos += Input.Weights[i] * mul( float4(Input.Position, 0), Joints[Input.JointIDs[i]] ).xyz;
     }
     Result.Position = mul( float4(totalLocalPos, 1), WorldViewProjection );
 
