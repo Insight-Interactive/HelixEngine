@@ -7,7 +7,8 @@
           "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f": "Content/Models/Capsule01.fbx",
           "e1e1007c-f54e-4e84-9051-e6b7d0f02ff7": "Content/Models/SkeletalMesh/boblampclean.md5mesh",
           "6123f7cc-4d94-47fb-ba9c-0455bae42877": "Content/Models/SkeletalMesh/SK_Mannequin.FBX",
-          "2e65d3a9-9a0e-457b-809a-a163c67fa369": "Content/Models/m1911_static.fbx"
+          "2e65d3a9-9a0e-457b-809a-a163c67fa369": "Content/Models/m1911_static.fbx",
+          "3ca2b729-5778-4b4b-9e30-82971b58d2a6": "Content/Models/SkeletalMesh/SK_Bot.fbx"
         },
         {
             "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
@@ -62,7 +63,8 @@
         },
         {
           "34338626-951c-492f-b41f-f852ce5e074c": "Content/Animation/boblampclean.md5anim",
-          "6127cd49-9fee-467b-9d27-164df2fba4f5": "Content/Animation/ThirdPersonWalk.FBX"
+          "6127cd49-9fee-467b-9d27-164df2fba4f5": "Content/Animation/ThirdPersonWalk.FBX",
+          "81e10bf1-e5b8-4851-8276-1f339228e7d8": "Content/Animation/AI_Walk_Relaxed.fbx"
         }
     ]
 }

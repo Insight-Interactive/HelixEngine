@@ -57,7 +57,7 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 
 HE_DECLARE_CONSTANT_BUFFER( SkeletonBones_CB, kSkeletonBonesReg )
 {
-    float4x4 Joints[HE_MAX_JOINTS_PER_MODEL];
+    float4x4 Joints[R_MAX_JOINTS_PER_MODEL];
 }
 
 //

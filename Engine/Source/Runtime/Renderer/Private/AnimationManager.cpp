@@ -69,7 +69,7 @@ ManagedAnimation* FAnimationManager::FindOrLoadAnimationMeshFromFile( const Stri
     }
 
     Assimp::Importer Importer;
-    const aiScene* pScene = Importer.ReadFile( FilePath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_PopulateArmatureData );
+    const aiScene* pScene = Importer.ReadFile( FilePath, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_PopulateArmatureData );
     if (!pScene) {
         R_LOG( Error, TEXT( "Failed to read animation from file: %s" ), StringHelper::UTF8ToUTF16( Importer.GetErrorString() ).c_str() );
         HE_ASSERT( false );

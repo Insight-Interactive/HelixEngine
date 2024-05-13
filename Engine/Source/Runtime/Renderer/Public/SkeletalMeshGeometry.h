@@ -5,7 +5,6 @@
 #include "Hash.h"
 
 
-#define R_MAX_NUM_BONES_PER_VERTEX 4
 #define R_JOINT_INVALID_INDEX uint32(-1)
 
 struct FJoint
@@ -18,10 +17,10 @@ struct FJoint
 		m_ParentIndex = R_JOINT_INVALID_INDEX;
 	}
 	uint32 m_ParentIndex;
-	Char m_Name[32];
+	Char m_Name[64];
 	HHash m_NameHash;
 
-	FMatrix m_LocalMatrix; // relative to this bone's parent
+	FMatrix m_LocalMatrix; // Relative to this bone's parent
 	FMatrix m_OffsetMatrix;
 };
 
@@ -29,7 +28,7 @@ struct FJoint
 HE_ALIGN( 16 ) struct JointCBData
 {
 	// Skeleton Joints.
-	FMatrix kJoints[HE_MAX_JOINTS_PER_MODEL];
+	FMatrix kJoints[R_MAX_JOINTS_PER_MODEL];
 };
 
 

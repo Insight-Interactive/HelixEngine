@@ -45,7 +45,7 @@ FInputElementDesc GSkinnedMeshInputElements[8] =
 	{ "BITANGENT",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "COLOR",		0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "UVS",		0, F_R32G32_Float,			0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
-	{ "JOINTIDS",	0, F_R8G8B8A8_UInt,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 }, // See HE_MAX_JOINTS_PER_VERTEX in RendererFwd.h
+	{ "JOINTIDS",	0, F_R32G32B32A32_UInt,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 }, // See R_MAX_JOINTS_PER_VERTEX in RendererFwd.h
 	{ "WEIGHTS",	0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 };
 const uint32 kNumSkinnedMeshCommonInputElements = HE_ARRAYSIZE( GSkinnedMeshInputElements );

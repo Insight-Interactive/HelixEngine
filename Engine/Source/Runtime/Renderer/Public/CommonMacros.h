@@ -25,7 +25,7 @@
 
 // The maximum number of back buffers a swapchain can have.
 #define HE_MAX_SWAPCHAIN_BACK_BUFFERS	3
-#define HE_MAX_JOINTS_PER_VERTEX		4
-#define HE_MAX_JOINTS_PER_MODEL			96
+#define R_MAX_JOINTS_PER_VERTEX			4
+#define R_MAX_JOINTS_PER_MODEL			96
 
 #endif

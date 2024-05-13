@@ -67,72 +67,92 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		//HE_LOG( Log, TEXT( "%f" ), AnimTimeSeconds );
 
 		// Calc animation
-		std::vector<FMatrix> LocalTransforms( m_SkeletalMesh->Joints.size() );
+		std::vector<FMatrix> WorldTransforms( m_SkeletalMesh->Joints.size() );
 
 		HHash hashName = StringHash( "pelvis" );
 		for (uint32 i = 0; i < m_SkeletalMesh->Joints.size(); i++)
 		{
 			FJoint& joint = m_SkeletalMesh->Joints[i];
 
-			LocalTransforms[i] = joint.m_LocalMatrix;
+			WorldTransforms[i] = joint.m_LocalMatrix;
+
+			FMatrix ParentTransform = FMatrix::Identity;
+			if (joint.m_ParentIndex != R_JOINT_INVALID_INDEX)
+				ParentTransform = WorldTransforms[joint.m_ParentIndex];
 
 			if (m_Animation->m_KeyFrames.find( joint.m_Name ) != m_Animation->m_KeyFrames.end())
 			{
-				uint32 KeyIndex = 0;
-				uint32 NextKeyIndex = 0;
-				for (uint32 i = 0; i < m_Animation->m_KeyFrames[joint.m_Name].size() - 1; i++)
+				FMatrix AnimatedResult;
+
+				if (m_Animation->m_KeyFrames[joint.m_Name].size() == 1)
 				{
-					if (AnimationTimeTicks < m_Animation->m_KeyFrames[joint.m_Name][i + 1].m_Timestamp)
-					{
-						KeyIndex = i;
-						break;
-					}
+					// Only one keyframe, no need to lerp between the same frame.
+
+					const FVector3& Position = m_Animation->m_KeyFrames[joint.m_Name][0].Position;
+					const FQuat& Rotation = m_Animation->m_KeyFrames[joint.m_Name][0].Rotation;
+
+					const FMatrix TranslationMat = FMatrix::CreateTranslation( Position );
+					const FMatrix RotationMat = FMatrix::CreateFromQuaternion( Rotation );
+
+					AnimatedResult = (RotationMat * TranslationMat);
 				}
-				NextKeyIndex = KeyIndex + 1;
-				float t1 = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].m_Timestamp;
-				float t2 = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].m_Timestamp;
-				float DeltaTime = t2 - t1;
-				float Factor = (AnimationTimeTicks - t1) / DeltaTime;
-				HE_ASSERT( Factor >= 0.f && Factor <= 1.f );
-				
-				const FVector3& StartPosition = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].Position;
-				const FVector3& EndPosition = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].Position;
-				FVector3 AnimatedPosition = FVector3::Lerp( StartPosition, EndPosition, Factor );
-				
-				const FQuat& StartRotation = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].Rotation;
-				const FQuat& EndRotation = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].Rotation;
-				FQuat AnimatedRotation = FQuat::Slerp( StartRotation, EndRotation, Factor );
+				else
+				{
+					uint32 KeyIndex = 0;
+					uint32 NextKeyIndex = 0;
+					for (uint32 i = 0; i < m_Animation->m_KeyFrames[joint.m_Name].size() - 1; i++)
+					{
+						if (AnimationTimeTicks < m_Animation->m_KeyFrames[joint.m_Name][i + 1].m_Timestamp)
+						{
+							KeyIndex = i;
+							break;
+						}
+					}
+					NextKeyIndex = KeyIndex + 1;
 
-				FMatrix TranslationMat = FMatrix::CreateTranslation( AnimatedPosition );
-				FMatrix RotationMat = FMatrix::CreateFromQuaternion( AnimatedRotation );
+					float t1 = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].m_Timestamp;
+					float t2 = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].m_Timestamp;
+					float TimeDiff = t2 - t1;
+					float Factor = (AnimationTimeTicks - t1) / TimeDiff;
+					HE_ASSERT( Factor >= 0.f && Factor <= 1.f );
 
-				FMatrix ParentTransform = FMatrix::Identity;
-				if (joint.m_ParentIndex != R_JOINT_INVALID_INDEX)
-					ParentTransform = LocalTransforms[joint.m_ParentIndex];
+					const FVector3& StartPosition = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].Position;
+					const FVector3& EndPosition = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].Position;
+					const FVector3 AnimatedPosition = FVector3::Lerp( StartPosition, EndPosition, Factor );
 
-				//FMatrix Rotation;
-				//if (joint.m_NameHash == hashName)
-				//	Rotation = FMatrix::CreateFromYawPitchRoll( GEngine->GetAppSeconds(), 0, 0 );
+					const FQuat& StartRotation = m_Animation->m_KeyFrames[joint.m_Name][KeyIndex].Rotation;
+					const FQuat& EndRotation = m_Animation->m_KeyFrames[joint.m_Name][NextKeyIndex].Rotation;
+					const FQuat AnimatedRotation = FQuat::Lerp( StartRotation, EndRotation, Factor );
 
-				//joint.m_LocalMatrix
-				LocalTransforms[i] = (RotationMat * TranslationMat) * ParentTransform;
+					const FMatrix TranslationMat = FMatrix::CreateTranslation( AnimatedPosition );
+					const FMatrix RotationMat = FMatrix::CreateFromQuaternion( AnimatedRotation );
+
+					AnimatedResult = RotationMat * TranslationMat;
+				}
+
+				WorldTransforms[i] = AnimatedResult * ParentTransform;
 			}
+			/*else
+			{
+				WorldTransforms[i] = FMatrix::Identity;
+			}*/
 		}
 
-		m_DebugMaterialAsset->Bind(GfxContext);
+		/*m_DebugMaterialAsset->Bind(GfxContext);
 
 		for (uint32 i = 0; i < m_DebugSkeletonMeshes.size(); i++)
 		{
 			DebugJoint& Joint = m_DebugSkeletonMeshes[i];
 			MeshWorldCBData* DebugCBData = Joint.m_MeshWorldCB.GetBufferPointer();
-			DebugCBData->kWorldMat = (LocalTransforms[i] * GetWorldMatrix()).Transpose();
+			DebugCBData->kWorldMat = (FMatrix::CreateScale( 0.5f ) * WorldTransforms[i] * GetWorldMatrix()).Transpose();
 			Joint.m_MeshWorldCB.SetDirty(true );
+			
 			GfxContext.SetGraphicsConstantBuffer( kMeshWorld, Joint.m_MeshWorldCB );
 			GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
 			GfxContext.BindVertexBuffer( 0, Joint.m_MeshAsset->GetVertexBuffer() );
 			GfxContext.BindIndexBuffer( Joint.m_MeshAsset->GetIndexBuffer() );
 			GfxContext.DrawIndexedInstanced( Joint.m_MeshAsset->GetNumIndices(), 1, 0, 0, 0 );
-		}
+		}*/
 
 
 		JointCBData* pJointCB = m_JointCB.GetBufferPointer();
@@ -141,8 +161,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 			FJoint& joint = m_SkeletalMesh->Joints[i];
 			FMatrix& FinalTransform = pJointCB->kJoints[i];
 
-			FinalTransform = LocalTransforms[i] * m_SkeletalMesh->m_GlobalInverseTransform;
-			FinalTransform = FinalTransform.Transpose();
+			FinalTransform = ( WorldTransforms[i] * joint.m_OffsetMatrix ).Transpose();
 		}
 		m_JointCB.SetDirty( true );
 
@@ -156,14 +175,15 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
 		pWorld->kWorldMat = GetWorldMatrix().Transpose();
 		m_MeshWorldCB.SetDirty( true );
+
+		for (uint32 i = 0; i < m_SkeletalMesh->m_Meshes.size(); i++)
+		{
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		// Set Joints
 		GfxContext.SetGraphicsConstantBuffer( kSkeletonBones, m_JointCB );
 
 
-		for (uint32 i = 0; i < m_SkeletalMesh->m_Meshes.size(); i++)
-		{
 			FMeshGeometry& SKMesh = m_SkeletalMesh->m_Meshes[i];
 
 			// TODO Request draw from model in model manager to render meshes of the same type in batches.

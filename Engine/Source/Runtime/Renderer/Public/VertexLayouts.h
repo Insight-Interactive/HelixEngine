@@ -2,6 +2,8 @@
 #pragma once
 
 #include "MathCore.h"
+#include "CommonMacros.h"
+
 
 struct FVertex3D
 {
@@ -31,8 +33,8 @@ struct FSkinnedVertex3D
 	FVector3 BiTangent;
 	FVector4 Color;
 	FVector2 UV0;
-	uint8 Joints[4];// Note: Keep this in sync with Renderer::SkeletalMesh.h
-	float Weights[4];
+	uint32 Joints[R_MAX_JOINTS_PER_VERTEX]; // Note: Keep this in sync with GP_VSInputSkinned in DeferedShadingCommon.hlsli
+	float Weights[R_MAX_JOINTS_PER_VERTEX];
 };
 
 struct FVertex2D

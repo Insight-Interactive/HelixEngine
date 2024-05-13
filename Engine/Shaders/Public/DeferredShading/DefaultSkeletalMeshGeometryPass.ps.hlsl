@@ -20,7 +20,7 @@ GP_PSOutput main( GP_PSInputSkinned Input )
 
 	float4 FragColor = float4(0, 0, 1, 1);
 
-	uint gDisplayBoneIndex = 5;
+	uint gDisplayBoneIndex = 10;
 
 	for (int i = 0; i < 4; i++) {
 		if (Input.JointIDs[i] == gDisplayBoneIndex) {
