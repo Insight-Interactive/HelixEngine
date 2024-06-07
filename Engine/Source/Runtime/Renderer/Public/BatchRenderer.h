@@ -8,7 +8,7 @@
 #include "RootSignature.h"
 #include "VertexBuffer.h"
 
-static const uint32 kMaxLineRenders = 20;
+static const uint32 kMaxLineRenders = 256;
 static const uint32 kMaxNumLineVerts = kMaxLineRenders * 2;
 
 struct FDebugLineRenderInfo
@@ -16,15 +16,13 @@ struct FDebugLineRenderInfo
 	FVector3 Start;
 	FVector3 End;
 	FColor Color;
-	float Thickness;
-	float Lifetime;
+	bool IgnoreDepth;
 
 	FORCEINLINE	FDebugLineRenderInfo()
 		: Start( 0.f, 0.f, 0.f )
 		, End( 1.f, 0.f, 0.f )
 		, Color( 1.f, 0.f, 0.f )
-		, Thickness( 1.f )
-		, Lifetime( 5.f )
+		, IgnoreDepth( false )
 	{
 	}
 };
@@ -33,8 +31,6 @@ struct FDebugLineVertex
 {
 	FVector3 Position;
 	FVector4 Color;
-	float Thickness;
-	float Lifetime;
 };
 
 class FColorBuffer;
@@ -53,19 +49,32 @@ public:
 	void SetRenderTarget( FColorBuffer& RenderTarget );
 	void SetDepthBuffer( FDepthBuffer& DepthBuffer );
 
-	void Tick( float DeltaTime );
 	void PreRender( FCommandContext& CmdContext );
 	void Render( FCommandContext& CmdContext );
 
 	void SubmitLineRenderRequest( const FDebugLineRenderInfo& LineInfo );
 
 protected:
-	FDynamicVertexBuffer m_LinesVB;
-	FDebugLineVertex m_LineVertexPool[kMaxNumLineVerts];
-	uint32 m_NumPendingLines;
+	struct LineBatchInfo
+	{
+		LineBatchInfo();
+		~LineBatchInfo() = default;
+
+		void Initialize();
+		void RenderLines( FCommandContext& CmdContext );
+		void AddLine( const FDebugLineRenderInfo& LineInfo );
+
+		FDynamicVertexBuffer m_LinesVB;
+		FDebugLineVertex m_LineVertexPool[kMaxNumLineVerts];
+		uint32 m_NumPendingLines;
+		uint32 m_FreeVertexPos;
+	};
+	LineBatchInfo m_DepthLines;
+	LineBatchInfo m_NoDepthLines;
 
 	FRootSignature m_RS;
-	FPipelineState m_PSO;
+	FPipelineState m_DepthPSO;
+	FPipelineState m_NoDepthPSO;
 
 	FColorBuffer* m_pRenderTarget;
 	FDepthBuffer* m_pDepthBuffer;
