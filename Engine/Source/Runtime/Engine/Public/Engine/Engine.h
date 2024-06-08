@@ -143,12 +143,13 @@ protected:
 	bool					m_IsEditorPresent;
 	bool					m_IsPlayingInEditor;
 	
-	float m_FrameTime = 0.f;
-	int64 m_FrameStartTick = 0;
+	// Timing
+	float					m_FrameTime;
+	int64					m_FrameStartTick;
 	float					m_FrameTimeScale;
 	int64					m_AppStartTime;
 
-
+	// Game world and main client viewport
 	FViewportContext		m_MainViewPort;
 	HWorld					m_GameWorld;
 

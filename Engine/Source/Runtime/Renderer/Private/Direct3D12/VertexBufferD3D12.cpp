@@ -96,7 +96,7 @@ void FDynamicVertexBuffer::Create( const WChar* Name, uint32 VertexDataSize, uin
 	m_GpuVirtualAddress = m_pID3D12Resource->GetGPUVirtualAddress();
 
 	D3D12_RANGE ReadRange = {};        // We do not intend to read from this resource on the CPU.
-	hr = m_pID3D12Resource->Map( 0, &ReadRange, (void**)&m_WritePtr );
+	hr = m_pID3D12Resource->Map( 0, &ReadRange, (void**)&m_GpuWritePtr );
 	ThrowIfFailedMsg( hr, "Failed to create committed resource for dynamic vertex buffer buffer!" );
 
 	// Initialize the vertex buffer view.
