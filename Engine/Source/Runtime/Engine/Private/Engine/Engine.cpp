@@ -40,6 +40,8 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
 	, m_AppStartTime( 0 )
 	, m_FrameTimeScale( 1.f )
+	, m_FrameTime ( 0.f )
+	, m_FrameStartTick ( 0 )
 {
 }
 
