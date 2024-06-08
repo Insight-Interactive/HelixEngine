@@ -71,7 +71,7 @@ class FDynamicVertexBuffer : public FVertexBuffer
 {
 public:
 	FDynamicVertexBuffer()
-		: m_WritePtr( nullptr )
+		: m_GpuWritePtr( nullptr )
 		, m_pVertexData( nullptr )
 		, m_VertexDataSize( 0 )
 	{
@@ -87,7 +87,7 @@ public:
 	uint8* GetGpuWritePointer();
 
 private:
-	uint8* m_WritePtr;
+	uint8* m_GpuWritePtr;
 	uint8* m_pVertexData;
 	uint32 m_VertexDataSize;
 
@@ -100,10 +100,10 @@ private:
 
 FORCEINLINE uint8* FDynamicVertexBuffer::GetGpuWritePointer()
 {
-	return m_WritePtr;
+	return m_GpuWritePtr;
 }
 
 FORCEINLINE void FDynamicVertexBuffer::Upload()
 {
-	memcpy( GetGpuWritePointer(), (const void*)m_pVertexData, m_VertexDataSize );
+	memcpy( m_GpuWritePtr, (const void*)m_pVertexData, m_VertexDataSize );
 }

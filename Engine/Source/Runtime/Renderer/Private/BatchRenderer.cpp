@@ -13,9 +13,7 @@
 FBatchRenderer::FBatchRenderer()
 	: m_pRenderTarget( nullptr )
 	, m_pDepthBuffer( nullptr )
-	, m_NumPendingLines( 0 )
 {
-	ZeroMemory( m_LineVertexPool, sizeof( m_LineVertexPool ) );
 }
 
 FBatchRenderer::~FBatchRenderer()
@@ -25,9 +23,11 @@ FBatchRenderer::~FBatchRenderer()
 
 void FBatchRenderer::Initialize( FColorBuffer& RenderTarget, FDepthBuffer& DepthBufferTarget )
 {
+	m_DepthLines.Initialize();
+	m_NoDepthLines.Initialize();
+
 	SetRenderTarget( RenderTarget );
 	SetDepthBuffer( DepthBufferTarget );
-	m_LinesVB.Create( L"Line Vertex Buffer Pool", kMaxLineRenders * sizeof( FDebugLineVertex ), sizeof( FDebugLineVertex ), m_LineVertexPool );
 	
 	m_RS.Reset( 1 );
 	m_RS[kSceneConstants].InitAsConstantBuffer( kSceneConstants, SV_All );
@@ -38,12 +38,10 @@ void FBatchRenderer::Initialize( FColorBuffer& RenderTarget, FDepthBuffer& Depth
 	DataBlob VSShader = FileSystem::ReadRawData( "Shaders/Core/DebugLine.vs.cso" );
 	DataBlob PSShader = FileSystem::ReadRawData( "Shaders/Core/DebugLine.ps.cso" );
 
-	//D3D12_INPUT_ELEMENT_DESC
-	FInputElementDesc MeshInputElements[3] =
+	FInputElementDesc MeshInputElements[2] =
 	{
 		{ "POSITION",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT, IC_PerVertexData, 0 },
 		{ "COLOR",		0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT, IC_PerVertexData, 0 },
-		{ "THICKNESS",	0, F_R32_Float,				0, HE_APPEND_ALIGNED_ELEMENT, IC_PerVertexData, 0 },
 	};
 	const uint32 kNumMeshInputElements = HE_ARRAYSIZE( MeshInputElements );
 
@@ -62,7 +60,10 @@ void FBatchRenderer::Initialize( FColorBuffer& RenderTarget, FDepthBuffer& Depth
 	PSODesc.RTVFormats[0] = RenderTarget.GetFormat();
 	PSODesc.DSVFormat = DepthBufferTarget.GetFormat();
 	PSODesc.SampleDesc = { 1, 0 };
-	m_PSO.Initialize( PSODesc );
+	m_DepthPSO.Initialize( PSODesc );
+
+	PSODesc.DepthStencilState.DepthEnable = false;
+	m_NoDepthPSO.Initialize( PSODesc );
 }
 
 void FBatchRenderer::UnInitialize()
@@ -80,27 +81,6 @@ void FBatchRenderer::SetDepthBuffer( FDepthBuffer& DepthBuffer )
 	m_pDepthBuffer = &DepthBuffer;
 }
 
-void FBatchRenderer::Tick( float DeltaTime )
-{
-	FDebugLineVertex* CBLineData = &m_LineVertexPool[0];
-
-	for (uint32 i = 0; i < m_NumPendingLines; ++i)
-	{
-		FDebugLineVertex& LineInfo = m_LineVertexPool[i];
-
-		LineInfo.Lifetime -= DeltaTime;
-		if (LineInfo.Lifetime <= 0.f)
-		{
-			ZeroMemory( &m_LineVertexPool[i], sizeof( FDebugLineVertex ) );
-			ZeroMemory( &m_LineVertexPool[i + 1], sizeof( FDebugLineVertex ) );
-
-			m_NumPendingLines--;
-			continue;
-		}
-		CBLineData++;
-	}
-}
-
 void FBatchRenderer::PreRender( FCommandContext& CmdContext )
 {
 	if (m_pRenderTarget == nullptr)
@@ -110,7 +90,6 @@ void FBatchRenderer::PreRender( FCommandContext& CmdContext )
 	const FColorBuffer* RTs[] = { m_pRenderTarget };
 	CmdContext.OMSetRenderTargets( 1, RTs, m_pDepthBuffer );
 	CmdContext.SetGraphicsRootSignature( m_RS );
-	CmdContext.SetPipelineState( m_PSO );
 }
 
 void FBatchRenderer::Render( FCommandContext& CmdContext )
@@ -118,34 +97,65 @@ void FBatchRenderer::Render( FCommandContext& CmdContext )
 	if (m_pRenderTarget == nullptr)
 		return;
 
+	CmdContext.SetPipelineState( m_DepthPSO );
+	m_DepthLines.RenderLines( CmdContext );
+
+	CmdContext.SetPipelineState( m_NoDepthPSO );
+	m_NoDepthLines.RenderLines( CmdContext );
+}
+
+void FBatchRenderer::SubmitLineRenderRequest( const FDebugLineRenderInfo& LineInfo )
+{
+	if (LineInfo.IgnoreDepth)
+		m_NoDepthLines.AddLine( LineInfo );
+	else
+		m_DepthLines.AddLine( LineInfo );
+}
+
+
+// FBatchRenderer::LineBatchInfo
+//
+
+FBatchRenderer::LineBatchInfo::LineBatchInfo()
+: m_NumPendingLines( 0 )
+, m_FreeVertexPos( 0 )
+{
+	ZeroMemory( m_LineVertexPool, sizeof( m_LineVertexPool ) );
+}
+
+void FBatchRenderer::LineBatchInfo::Initialize()
+{
+	m_LinesVB.Create( L"Line Vertex Buffer Pool", kMaxNumLineVerts * sizeof( FDebugLineVertex ), sizeof( FDebugLineVertex ), m_LineVertexPool );
+}
+
+void FBatchRenderer::LineBatchInfo::AddLine( const FDebugLineRenderInfo& LineInfo )
+{
+	if (m_NumPendingLines == kMaxLineRenders)
+	{
+		R_LOG( Warning, TEXT( "Trying to add line to batch renderer but no more slots are available! No new lines where added." ) );
+		return;
+	}
+
+	m_LineVertexPool[m_FreeVertexPos].Position = LineInfo.Start;
+	m_LineVertexPool[m_FreeVertexPos + 1].Position = LineInfo.End;
+
+	m_LineVertexPool[m_FreeVertexPos].Color = LineInfo.Color.ToVector4();
+	m_LineVertexPool[m_FreeVertexPos + 1].Color = LineInfo.Color.ToVector4();
+
+	m_NumPendingLines++;
+	m_FreeVertexPos += 2;
+}
+
+void FBatchRenderer::LineBatchInfo::RenderLines( FCommandContext& CmdContext )
+{
 	m_LinesVB.Upload();
 	CmdContext.SetPrimitiveTopologyType( PT_Linelist );
 	CmdContext.BindVertexBuffer( 0, m_LinesVB );
 	CmdContext.DrawInstanced( m_NumPendingLines * 2, 1, 0, 0 );
 	CmdContext.EndDebugMarker();
-}
 
-void FBatchRenderer::SubmitLineRenderRequest( const FDebugLineRenderInfo& LineInfo )
-{
-	// Find two free verticies to emplace into the vertex pool.
-	for (uint32 i = 0; i < kMaxLineRenders; i++)
-	{
-		if (m_LineVertexPool[i].Lifetime <= 0.f)
-		{
-			m_LineVertexPool[i].Position	= LineInfo.Start;
-			m_LineVertexPool[i].Color		= LineInfo.Color.ToVector4();
-			m_LineVertexPool[i].Thickness	= LineInfo.Thickness;
-			m_LineVertexPool[i].Lifetime	= LineInfo.Lifetime;
-
-			m_LineVertexPool[i + 1].Position	= LineInfo.End;
-			m_LineVertexPool[i + 1].Color		= LineInfo.Color.ToVector4();
-			m_LineVertexPool[i + 1].Thickness	= LineInfo.Thickness;
-			m_LineVertexPool[i + 1].Lifetime	= LineInfo.Lifetime;
-			
-			m_NumPendingLines++;
-			return;
-		}
-	}
-
-	R_LOG( Warning, TEXT( "Trying to add line to batch renderer but no more slots are available! No new lines where added." ) );
+	// Reset the line buffer. Only draw lines for one frame.
+	ZeroMemory( &m_LineVertexPool, sizeof( m_LineVertexPool ) );
+	m_NumPendingLines = 0;
+	m_FreeVertexPos = 0;
 }
