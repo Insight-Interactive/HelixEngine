@@ -94,10 +94,10 @@ void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 			Output.Bool(m_bIsDrawEnabled);
 
 			Output.Key(HE_STRINGIFY(m_MeshAsset));
-			Output.String(m_MeshAsset->GetGUID().ToString().CStr());
+			Output.String(m_MeshAsset->GetGuid().ToString().CStr());
 
 			Output.Key(HE_STRINGIFY(m_MaterialAsset));
-			Output.String(m_MaterialAsset->GetGUID().ToString().CStr());
+			Output.String(m_MaterialAsset->GetGuid().ToString().CStr());
 		}
 		Output.EndObject();
 	}

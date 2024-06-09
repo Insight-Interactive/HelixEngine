@@ -61,7 +61,7 @@ public:
 	//
 
 	const String& GetDebugName() const;
-	FGUID GetGUID() const;
+	FGUID GetGuid() const;
 	EMaterialBlendMode GetBlendMode() const;
 	EMaterialDomain GetDomain() const;
 	EShadingModel GetShadingModel() const;
@@ -234,7 +234,7 @@ FORCEINLINE const String& FMaterial::GetDebugName() const
 #endif
 }
 
-FORCEINLINE FGUID FMaterial::GetGUID() const
+FORCEINLINE FGUID FMaterial::GetGuid() const
 {
 	return m_GUID;
 }

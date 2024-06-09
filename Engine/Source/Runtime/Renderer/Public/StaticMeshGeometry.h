@@ -35,6 +35,7 @@ struct FDrawArgs
 class RENDER_API HStaticMeshGeometry
 {
 	friend class FStaticGeometryManager;
+	friend class FAssetDatabase;
 public:
 	HStaticMeshGeometry()
 	{
@@ -52,7 +53,7 @@ public:
 	FIndexBuffer& GetIndexBuffer();
 	uint32 GetNumVerticies() const;
 	uint32 GetNumIndices() const;
-	FGUID GetGUID() const;
+	FGUID GetGuid() const;
 
 	void Create( void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices );
 
@@ -60,7 +61,7 @@ private:
 	void Initialize();
 	void UnInitialize();
 
-	void SetHashName( const FGUID& NewUID );
+	void SetGuid( const FGUID& NewUID );
 
 
 protected:
@@ -96,7 +97,7 @@ inline uint32 HStaticMeshGeometry::GetNumIndices() const
 	return m_DrawArgs.NumIndices;
 }
 
-inline FGUID HStaticMeshGeometry::GetGUID() const
+inline FGUID HStaticMeshGeometry::GetGuid() const
 {
 	return m_Guid;
 }
@@ -109,7 +110,7 @@ inline void HStaticMeshGeometry::UnInitialize()
 {
 }
 
-inline void HStaticMeshGeometry::SetHashName( const FGUID& NewGUID )
+inline void HStaticMeshGeometry::SetGuid( const FGUID& NewGUID )
 {
 	m_Guid = NewGUID;
 }

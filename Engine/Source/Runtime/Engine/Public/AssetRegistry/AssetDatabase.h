@@ -107,7 +107,11 @@ private:
 
 /*static*/ FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
 {
-	return GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+	StaticMeshGeometryRef Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+	if(!Mesh->GetGuid().IsValid())
+		Mesh->SetGuid( Guid );
+	return Mesh;
+
 }
 
 /*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const FGUID& Guid )

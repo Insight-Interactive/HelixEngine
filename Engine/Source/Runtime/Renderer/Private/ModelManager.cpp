@@ -41,8 +41,6 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	DataBlob FileData = FileSystem::ReadRawData( FilePath.c_str() );
 
 	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
-	//std::vector<FVertex3D> Verticies;
-	//std::vector<uint32> Indices;
 
 	// Process the mesh as an fbx file.
 	//
@@ -142,10 +140,9 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	// Create the mesh geometry, register it with the GPU and cache it.
 	StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
-	pMesh->SetHashName( NameHash );
 	pMesh->Create(
-		Verticies.data(), Verticies.size(),  sizeof(FVertex3D),
-		Indices.data(), Indices.size() * sizeof(uint32), (uint32)Indices.size()
+		Verticies.data(), (uint32)Verticies.size(),  sizeof(FVertex3D),
+		Indices.data(), (uint32)Indices.size() * sizeof(uint32), (uint32)Indices.size()
 	);
 	pMesh->SetLoadCompleted( true );
 
@@ -194,7 +191,6 @@ StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::strin
 
 	StringHashValue HashName = StringHash( Name.c_str(), Name.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
-	pMesh->SetHashName( HashName );
 	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );
 
