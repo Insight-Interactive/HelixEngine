@@ -12,6 +12,7 @@
 /*
 	Light wrapper around HStaticMeshGeometry to define higher level loading state and 
 	cache storage inside FGeometryManager.
+	TODO: Consolodate with Managed Asset class
 */
 template <typename BaseClass>
 class RENDER_API ManagedMeshGeometry : public BaseClass

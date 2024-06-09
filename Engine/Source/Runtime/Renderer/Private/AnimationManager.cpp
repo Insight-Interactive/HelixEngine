@@ -76,6 +76,7 @@ ManagedAnimation* FAnimationManager::FindOrLoadAnimationMeshFromFile( const Stri
         return nullptr;
     }
     ProcessAnimation( pScene, pAnimation->GetAsset() );
+    pAnimation->SetLoadCompleted( true );
 
     return pAnimation;
 }
