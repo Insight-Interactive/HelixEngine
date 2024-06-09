@@ -93,6 +93,10 @@ public:
 	virtual void Destroy() override;
 	virtual void UploadBuffer() override;
 
+	uint8* operator->()
+	{
+		return GetBufferPointer();
+	}
 	uint8* GetBufferPointer();
 
 private:
@@ -121,6 +125,11 @@ public:
 
 	virtual void Create( const WChar* Name, uint32 Size = 0/* Ignored for this buffer type.. */ ) override;
 	virtual void Destroy() override;
+
+	BufferDataType* operator->()
+	{
+		return GetBufferPointer();
+	}
 
 	BufferDataType* GetBufferPointer();
 

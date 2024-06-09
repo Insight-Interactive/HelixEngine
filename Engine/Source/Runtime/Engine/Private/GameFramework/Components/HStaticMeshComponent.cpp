@@ -30,19 +30,18 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 {
 	Super::Render(GfxContext);
 
-	if (!GetIsDrawEnabled()) return;
-	
-	if (m_MaterialAsset.IsValid())
-	{
-		// Set the material information.
-		m_MaterialAsset->Bind(GfxContext);
-	}
+	if (!m_bIsDrawEnabled) return;
 
 	if (m_MeshAsset->IsValid())
 	{
+		if (m_MaterialAsset.IsValid())
+		{
+			// Set the material information.
+			m_MaterialAsset->Bind( GfxContext );
+		}
+
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat =  GetWorldMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = GetWorldMatrix().Transpose();
 		m_MeshWorldCB.SetDirty(true);
 		GfxContext.SetGraphicsConstantBuffer(kMeshWorld, m_MeshWorldCB);
 

@@ -105,8 +105,7 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 		m_BillboardTransform.LookAt( Camera->GetWorldPosition() );
 
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 

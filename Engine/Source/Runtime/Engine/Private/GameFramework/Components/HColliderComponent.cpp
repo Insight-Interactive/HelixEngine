@@ -131,8 +131,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (m_MeshAsset.get() && m_MeshAsset->IsValid())
 	{
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat = GetLocalMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = GetLocalMatrix().Transpose();
 
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
