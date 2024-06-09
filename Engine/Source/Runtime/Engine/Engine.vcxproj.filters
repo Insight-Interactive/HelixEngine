@@ -168,9 +168,6 @@
     <ClInclude Include="Public\Engine\FileExplorerWindow.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Engine\Timer.h">
-      <Filter>Public\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Engine\GameProject.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -194,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h">
       <Filter>Public\Engine\Subsystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine\Timer.h">
+      <Filter>Public\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine\ViewportContext.h">
       <Filter>Public\Engine</Filter>
@@ -428,9 +428,6 @@
     <ClCompile Include="Private\Engine\Events.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Engine\Timer.cpp">
-      <Filter>Private\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Engine\GameProject.cpp">
       <Filter>Private\Engine</Filter>
     </ClCompile>
@@ -451,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp">
       <Filter>Private\Engine\Subsystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine\Timer.cpp">
+      <Filter>Private\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\ViewportContext.cpp">
       <Filter>Private\Engine</Filter>

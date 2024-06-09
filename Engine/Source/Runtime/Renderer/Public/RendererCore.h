@@ -70,8 +70,6 @@ extern FCommandManager GCommandManager;
 extern FContextManager GContextManager;
 // Graphics rendering device.
 extern FRenderDevice GGraphicsDevice;
-// Geometry buffer overloard.
-extern FGeometryBufferManager GGeometryManager;
 // Texture overlord.
 extern FTextureManager GTextureManager;
 // Font overlord.

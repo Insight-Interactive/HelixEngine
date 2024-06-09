@@ -84,9 +84,6 @@
     <ClInclude Include="Public\DynamicDescriptorHeap.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\GeometryBufferManager.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="Public\GpuResource.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -235,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="Private\Direct3D12\VertexBufferD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\GeometryBufferManager.cpp">
-      <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\ModelManager.cpp">
       <Filter>Private</Filter>

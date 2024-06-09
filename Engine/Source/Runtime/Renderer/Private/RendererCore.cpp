@@ -8,7 +8,6 @@
 #include "CommandManager.h"
 #include "CommandContext.h"
 #include "TextureManager.h"
-#include "GeometryBufferManager.h"
 
 
 // -----------------------------
@@ -18,7 +17,6 @@
 FCommandManager GCommandManager;
 FContextManager GContextManager;
 FRenderDevice GGraphicsDevice;
-FGeometryBufferManager GGeometryManager;
 FTextureManager GTextureManager;
 FTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;

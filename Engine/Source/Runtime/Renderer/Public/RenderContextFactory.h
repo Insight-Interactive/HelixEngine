@@ -31,7 +31,6 @@ protected:
 	void CreateDevice(FRenderDevice& OutDevice);
 	void CreateCommandManager(FCommandManager& OutCommandManager);
 	void CreateContextManager(FContextManager& OutCommandContext);
-	void CreateGeometryManager(FGeometryBufferManager& OutGeometryManager);
 	void CreateTextureManager(FTextureManager& OutTexManager);
 
 private:

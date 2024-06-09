@@ -1146,7 +1146,6 @@
     <ClInclude Include="Public\DescriptorAllocator.h" />
     <ClInclude Include="Public\DescriptorHeap.h" />
     <ClInclude Include="Public\DynamicDescriptorHeap.h" />
-    <ClInclude Include="Public\GeometryBufferManager.h" />
     <ClInclude Include="Public\GpuResource.h" />
     <ClInclude Include="Public\IndexBuffer.h" />
     <ClInclude Include="Public\LinearAllocator.h" />
@@ -1198,7 +1197,6 @@
     <ClCompile Include="Private\Direct3D12\TextureManagerD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\Utility\DDSTextureLoader.cpp" />
     <ClCompile Include="Private\Direct3D12\VertexBufferD3D12.cpp" />
-    <ClCompile Include="Private\GeometryBufferManager.cpp" />
     <ClCompile Include="Private\ModelManager.cpp" />
     <ClCompile Include="Private\PCH\RendererPCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

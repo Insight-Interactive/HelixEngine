@@ -1284,7 +1284,6 @@
     <ClInclude Include="Public\Engine\Event\Event.h" />
     <ClInclude Include="Public\Engine\Event\EventEmitter.h" />
     <ClInclude Include="Public\Engine\FileExplorerWindow.h" />
-    <ClInclude Include="Public\Engine\Timer.h" />
     <ClInclude Include="Public\Engine\GameProject.h" />
     <ClInclude Include="Public\Engine\HelixEngine.h" />
     <ClInclude Include="Public\Engine\ScriptManager.h" />
@@ -1293,6 +1292,7 @@
     <ClInclude Include="Public\Engine\Subsystem\RenderingSubsystem.h" />
     <ClInclude Include="Public\Engine\Subsystem\ScriptSubsystem.h" />
     <ClInclude Include="Public\Engine\Subsystem\SubsystemInterface.h" />
+    <ClInclude Include="Public\Engine\Timer.h" />
     <ClInclude Include="Public\Engine\ViewportContext.h" />
     <ClInclude Include="Public\Engine\Window.h" />
     <ClInclude Include="Public\GameFramework\Actor\AActor.h" />
@@ -1372,7 +1372,6 @@
     <ClCompile Include="Private\Engine\Engine.cpp" />
     <ClCompile Include="Private\Engine\EngineEvent.cpp" />
     <ClCompile Include="Private\Engine\Events.cpp" />
-    <ClCompile Include="Private\Engine\Timer.cpp" />
     <ClCompile Include="Private\Engine\GameProject.cpp" />
     <ClCompile Include="Private\Engine\HelixEngine.cpp" />
     <ClCompile Include="Private\Engine\ScriptManager.cpp" />
@@ -1380,6 +1379,7 @@
     <ClCompile Include="Private\Engine\Subsystem\PhysicsSubsystem.cpp" />
     <ClCompile Include="Private\Engine\Subsystem\RenderingSubsystem.cpp" />
     <ClCompile Include="Private\Engine\Subsystem\SubsystemInterface.cpp" />
+    <ClCompile Include="Private\Engine\Timer.cpp" />
     <ClCompile Include="Private\Engine\ViewportContext.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\AActor.cpp" />
     <ClCompile Include="Private\GameFramework\Actor\ACharacter.cpp" />

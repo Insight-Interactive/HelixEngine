@@ -108,13 +108,15 @@
     <ClInclude Include="Public\System.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\SystemTime.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\TSingleton.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\ThreadPool.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\SystemTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\CommandLine.cpp">
@@ -135,6 +137,9 @@
     <ClCompile Include="Private\StringHelper.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\SystemTime.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\ThreadPool.cpp">
       <Filter>Private</Filter>
     </ClCompile>
@@ -150,7 +155,6 @@
     <ClCompile Include="Private\Windows\Universal\SystemWinUniversal.cpp">
       <Filter>Private\Windows\Universal</Filter>
     </ClCompile>
-    <ClCompile Include="Private\SystemTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.module.lua" />

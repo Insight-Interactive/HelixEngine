@@ -4,9 +4,10 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-#include "GeometryBufferManager.h"
 #include "RendererCore.h"
 #include "GUID.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 
 struct FDrawArgs
@@ -14,21 +15,17 @@ struct FDrawArgs
 	FDrawArgs()
 		: NumVerts( 0 )
 		, NumIndices( 0 )
-		, VertexBufferHandle( HE_INVALID_VERTEX_BUFFER_HANDLE )
-		, IndexBufferHandle( HE_INVALID_INDEX_BUFFER_HANDLE )
 	{
 	}
 	~FDrawArgs()
 	{
 		NumVerts = -1;
 		NumIndices = -1;
-		VertexBufferHandle = HE_INVALID_VERTEX_BUFFER_HANDLE;
-		IndexBufferHandle = HE_INVALID_INDEX_BUFFER_HANDLE;
 	}
 	uint32 NumVerts;
 	uint32 NumIndices;
-	VertexBufferUID VertexBufferHandle;
-	IndexBufferUID IndexBufferHandle;
+	FVertexBuffer m_VertexBuffer;
+	FIndexBuffer m_IndexBuffer;
 };
 
 /*
@@ -81,12 +78,12 @@ protected:
 
 inline FVertexBuffer& HStaticMeshGeometry::GetVertexBuffer()
 {
-	return GGeometryManager.GetVertexBufferByUID( m_DrawArgs.VertexBufferHandle );
+	return m_DrawArgs.m_VertexBuffer;
 }
 
 inline FIndexBuffer& HStaticMeshGeometry::GetIndexBuffer()
 {
-	return GGeometryManager.GetIndexBufferByUID( m_DrawArgs.IndexBufferHandle );
+	return m_DrawArgs.m_IndexBuffer;
 }
 
 inline uint32 HStaticMeshGeometry::GetNumVerticies() const
@@ -106,14 +103,10 @@ inline FGUID HStaticMeshGeometry::GetGUID() const
 
 inline void HStaticMeshGeometry::Initialize()
 {
-	m_DrawArgs.VertexBufferHandle = GGeometryManager.AllocateVertexBuffer();
-	m_DrawArgs.IndexBufferHandle = GGeometryManager.AllocateIndexBuffer();
 }
 
 inline void HStaticMeshGeometry::UnInitialize()
 {
-	GGeometryManager.DeAllocateVertexBuffer( m_DrawArgs.VertexBufferHandle );
-	GGeometryManager.DeAllocateIndexBuffer( m_DrawArgs.IndexBufferHandle );
 }
 
 inline void HStaticMeshGeometry::SetHashName( const FGUID& NewGUID )
