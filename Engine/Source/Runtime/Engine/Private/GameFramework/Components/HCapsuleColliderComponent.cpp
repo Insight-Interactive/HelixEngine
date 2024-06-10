@@ -21,7 +21,7 @@ void HCapsuleColliderComponent::OnCreate()
 	Super::OnCreate();
 
 #if HE_DEBUG
-	m_MeshAsset = FAssetDatabase::GetStaticMesh( FGUID( "73f5ee42-1b58-4a16-96ff-d26f0bd11a6f" ) );
+	m_MeshAsset = FAssetDatabase::GetStaticMesh( "Capsule01.fbx");
 #endif
 
 	SetRadiusAndHalfHeight( 5.f, 5.f );

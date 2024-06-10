@@ -3,7 +3,6 @@
 
 #include "TSingleton.h"
 
-#include "AssetRegistry/MeshDatabase.h"
 #include "AssetRegistry/ActorDatabase.h"
 #include "AssetRegistry/ShaderDatabase.h"
 #include "AssetRegistry/TextureDatabase.h"
@@ -37,7 +36,6 @@ class FAssetDatabase
 public:
 
 	static HTexture GetTexture( const FGUID& Guid );
-	static HStaticMesh GetStaticMesh( const FGUID& Guid );
 	static HMaterial GetMaterial( const FGUID& Guid );
 	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
@@ -62,7 +60,6 @@ protected:
 	static bool SaveAssetDatabases();
 	static bool IsAnyDatabaseDirty();
 
-	static void RegisterMesh( const FGUID& MeshGuid, const Char* Filepath );
 	static void RegisterTexture( const FGUID& TextureGuid, const Char* Filepath );
 	static void RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath );
 	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
@@ -70,14 +67,12 @@ protected:
 	static void RegisterScript( const FGUID& ScriptGuid, const Char* Filepath );
 	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
 
-	static const String LookupMesh( const FGUID& Guid );
 	static const String LookupTexture( const FGUID& Guid );
 	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
 	static const String LookupScript( const FGUID& Guid );
 	static const String LookupFont( const FGUID& Guid );
 
-	static FMeshDatabase& GetMeshDatabase();
 	static FTextureDatabase& GetTextureDatabase();
 	static FMaterialDatabase& GetMaterialDatabase();
 	static FActorDatabase& GetActorDatabase();
@@ -85,7 +80,6 @@ protected:
 	static FFontDatabase& GetFontDatabase();
 
 protected:
-	FMeshDatabase		m_MeshDatabase;
 	FActorDatabase		m_ActorDatabase;
 	FShaderDatabase		m_ShaderDatabase;
 	FTextureDatabase	m_TextureDatabase;
@@ -111,17 +105,10 @@ private:
 /*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
 {
 	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%s\\Models\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
-
-}
-
-/*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const FGUID& Guid )
-{
-	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
-	if(!Mesh->GetGuid().IsValid())
-		Mesh->SetGuid( Guid );
+	sprintf_s( Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( Path );
+	HE_ASSERT( Mesh->IsValid() );
 	return Mesh;
-
 }
 
 /*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const FGUID& Guid )
@@ -147,11 +134,6 @@ private:
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
 {
 	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
-}
-
-/*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
-{
-	return SInstance->m_MeshDatabase;
 }
 
 /*static*/ FORCEINLINE FTextureDatabase& FAssetDatabase::GetTextureDatabase()
@@ -188,9 +170,6 @@ private:
 	{
 		Writer.Key( HE_STRINGIFY( FAssetDatabase ) );
 		Writer.StartArray();
-		Writer.StartObject();
-		SInstance->m_MeshDatabase.Serialize( Writer );
-		Writer.EndObject();
 
 		Writer.StartObject();
 		SInstance->m_TextureDatabase.Serialize( Writer );
@@ -220,12 +199,7 @@ private:
 
 /*static*/ FORCEINLINE bool FAssetDatabase::IsAnyDatabaseDirty()
 {
-	return SInstance->m_MeshDatabase.GetIsDirty() || SInstance->m_TextureDatabase.GetIsDirty() || SInstance->m_MaterialDatabase.GetIsDirty() || SInstance->m_ActorDatabase.GetIsDirty();
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterMesh( const FGUID& MeshGuid, const Char* Filepath )
-{
-	SInstance->m_MeshDatabase.RegisterAsset( MeshGuid, Filepath );
+	return SInstance->m_TextureDatabase.GetIsDirty() || SInstance->m_MaterialDatabase.GetIsDirty() || SInstance->m_ActorDatabase.GetIsDirty();
 }
 
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterTexture( const FGUID& TextureGuid, const Char* Filepath )
@@ -256,11 +230,6 @@ private:
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterFont( const FGUID& FontGuid, const Char* Filepath )
 {
 	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MeshDatabase.GetValueByKey( Guid );
 }
 
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupTexture( const FGUID& Guid )

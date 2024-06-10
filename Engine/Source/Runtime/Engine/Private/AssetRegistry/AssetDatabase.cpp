@@ -43,18 +43,16 @@ FAssetDatabase::~FAssetDatabase()
 		{
 			// AssetManifest.json JSON element indicies
 
-			kModelsDbIndex		= 0,
-			kTexturesDbIndex	= 1,
-			kMaterialsDbIndex	= 2,
-			kActorsDbIndex		= 3,
-			kShadersDbIndex		= 4,
-			kScriptDbIndex		= 5,
-			kFontDBIndex		= 6
+			kTexturesDbIndex	= 0,
+			kMaterialsDbIndex	= 1,
+			kActorsDbIndex		= 2,
+			kShadersDbIndex		= 3,
+			kScriptDbIndex		= 4,
+			kFontDBIndex		= 5
 		};
 
 		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
 
-		SInstance->m_MeshDatabase.Deserialize( AssetDbRoot[kModelsDbIndex] );
 		SInstance->m_TextureDatabase.Deserialize( AssetDbRoot[kTexturesDbIndex] );
 		SInstance->m_MaterialDatabase.Deserialize( AssetDbRoot[kMaterialsDbIndex] );
 		SInstance->m_ActorDatabase.Deserialize( AssetDbRoot[kActorsDbIndex] );
@@ -62,7 +60,6 @@ FAssetDatabase::~FAssetDatabase()
 		SInstance->m_ScriptDatabase.Deserialize( AssetDbRoot[kScriptDbIndex] );
 		SInstance->m_FontDatabase.Deserialize( AssetDbRoot[kFontDBIndex] );
 
-		SInstance->m_MeshDatabase.Initialize();
 		SInstance->m_TextureDatabase.Initialize();
 		SInstance->m_MaterialDatabase.Initialize();
 		SInstance->m_ActorDatabase.Initialize();
@@ -81,7 +78,6 @@ FAssetDatabase::~FAssetDatabase()
 {
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 
-	SInstance->m_MeshDatabase.UnInitialize();
 	SInstance->m_TextureDatabase.UnInitialize();
 	SInstance->m_MaterialDatabase.UnInitialize();
 	SInstance->m_ActorDatabase.UnInitialize();

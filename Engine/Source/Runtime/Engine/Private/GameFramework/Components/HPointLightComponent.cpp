@@ -21,7 +21,7 @@ HPointLightComponent::HPointLightComponent( FComponentInitArgs& InitArgs )
 	{
 		m_MeshWorldCB.Create( L"[PointLight Component] World CB" );
 		m_MaterialRef = FAssetDatabase::GetMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ) );
-		m_LightDebugMesh = FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) );// GeometryGenerator::GenerateScreenAlignedQuadMesh();
+		m_LightDebugMesh = FAssetDatabase::GetStaticMesh( "Cube.fbx" );// GeometryGenerator::GenerateScreenAlignedQuadMesh();
 	}
 
 	//FMaterialInstance matinst;

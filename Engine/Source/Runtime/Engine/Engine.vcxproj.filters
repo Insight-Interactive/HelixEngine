@@ -132,9 +132,6 @@
     <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\MeshDatabase.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\ScriptDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
@@ -402,9 +399,6 @@
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp">
-      <Filter>Private\AssetRegistry</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\MeshDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\ScriptDatabase.cpp">
