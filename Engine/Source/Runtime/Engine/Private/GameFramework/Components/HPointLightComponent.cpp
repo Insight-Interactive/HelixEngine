@@ -20,7 +20,7 @@ HPointLightComponent::HPointLightComponent( FComponentInitArgs& InitArgs )
 	if (GetCanDrawDebugBillboard())
 	{
 		m_MeshWorldCB.Create( L"[PointLight Component] World CB" );
-		m_MaterialRef = FAssetDatabase::GetMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ) );
+		m_MaterialRef = FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ); // TODO Make a material for this
 		m_LightDebugMesh = FAssetDatabase::GetStaticMesh( "Cube.fbx" );// GeometryGenerator::GenerateScreenAlignedQuadMesh();
 	}
 

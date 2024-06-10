@@ -461,9 +461,9 @@ void FMaterialInstance::LoadFromFile( const Char* Filepath)
 		const rapidjson::Value& CommonParams = MaterialInstRoot[kCommonParams];
 		
 		// Lookup and load the base material this instance derives from.
-		Char GuidStr[64];
-		JsonUtility::GetString( CommonParams, "ParentGUID", GuidStr, sizeof(GuidStr));
-		CreateFromParent( FGUID::CreateFromString( GuidStr ) );
+		Char ParentStr[64];
+		JsonUtility::GetString( CommonParams, "ParentMaterial", ParentStr, sizeof( ParentStr ));
+		CreateFromParent( ParentStr );
 
 		// Override the parent's parameters.
 		const rapidjson::Value& Textures = MaterialInstRoot[kTextures];
@@ -474,7 +474,9 @@ void FMaterialInstance::LoadFromFile( const Char* Filepath)
 	}
 }
 
-void FMaterialInstance::CreateFromParent( const FGUID& ParentGuid )
+void FMaterialInstance::CreateFromParent( const char* ParentMaterial )
 {
-	Super::LoadFromFile( FAssetDatabase::LookupMaterial( ParentGuid ) );
+	char Path[HE_MAX_PATH];
+	sprintf_s( Path, "%sMaterials\\%s", FGameProject::GetInstance()->GetContentFolder(), ParentMaterial );
+	Super::LoadFromFile( Path );
 }

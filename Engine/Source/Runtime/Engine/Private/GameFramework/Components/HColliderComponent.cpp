@@ -24,7 +24,7 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 HColliderComponent::~HColliderComponent()
 {
 	m_MeshWorldCB.Destroy();
-	delete m_Material;
+	HE_SAFE_DELETE_PTR( m_Material );
 }
 
 void HColliderComponent::BeginPlay()
@@ -211,7 +211,7 @@ void HColliderComponent::OnCreate()
 	Super::OnCreate(); 
 
 	m_Material = new FMaterialInstance();
-	m_Material->CreateFromParent( "141d7fa2-8208-4ba2-ba33-3fa72163c4d8" );
+	m_Material->CreateFromParent( "M_Wireframe.hmat" );
 
 	GetWorld()->GetScene().AddDebugCollider( this );
 }
@@ -219,6 +219,8 @@ void HColliderComponent::OnCreate()
 void HColliderComponent::OnDestroy()
 {
 	Super::OnDestroy();
+
+	HE_SAFE_DELETE_PTR( m_Material );
 
 	HWorld& World = *GetWorld();
 	World.GetScene().RemoveDebugCollider( this );

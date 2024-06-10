@@ -34,7 +34,7 @@
             {
               "m_bIsDrawEnabled": true,
               "m_MeshAsset": "m1911_static.fbx",
-              "m_MaterialAsset": "0d68e992-aa25-4aa4-9f81-0eb775320c1e"
+              "m_MaterialAsset": "M_RustedMetal.hmat"
             }
           ]
         }

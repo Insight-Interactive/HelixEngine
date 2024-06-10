@@ -168,7 +168,7 @@ public:
 	virtual ~FMaterialInstance();
 
 	virtual void LoadFromFile( const Char* Filepath );
-	void CreateFromParent( const FGUID& ParentGuid );
+	void CreateFromParent( const char* ParentMaterial );
 
 
 protected:

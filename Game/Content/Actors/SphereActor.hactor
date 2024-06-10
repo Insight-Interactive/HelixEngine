@@ -72,7 +72,7 @@
             {
               "m_bIsDrawEnabled": true,
               "m_MeshAsset": "Sphere.fbx",
-              "m_MaterialAsset": "d7d2911a-0461-4a69-b28d-259389c45f87"
+              "m_MaterialAsset": "M_Wood.hmat"
             }
           ]
         }

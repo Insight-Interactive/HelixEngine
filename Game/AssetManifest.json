@@ -1,12 +1,6 @@
 {
     "FAssetDatabase": [
         {
-            "0d68e992-aa25-4aa4-9f81-0eb775320c1e": "Content/Materials/M_RustedMetal.hmat",
-            "d7d2911a-0461-4a69-b28d-259389c45f87": "Content/Materials/M_Wood.hmat",
-            "2a4a5a3f-a6f6-4704-bc75-db3bf68dbbc5": "Content/Materials/M_DefaultUnlit.hmat",
-            "141d7fa2-8208-4ba2-ba33-3fa72163c4d8": "Content/Materials/M_Wireframe.hmat"
-        },
-        {
             "76b2b57a-e199-4032-89f5-cc498feec3cc": "Content/Actors/MyCoolActor.hactor",
             "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d": "Content/Actors/GroundFloor.hactor",
             "3d4d64b8-5938-461d-88fe-5b864d17a84e": "Content/Actors/MagicGate.hactor",

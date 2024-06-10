@@ -1271,7 +1271,6 @@
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h" />
     <ClInclude Include="Public\AssetRegistry\FontDatabase.h" />
-    <ClInclude Include="Public\AssetRegistry\MaterialDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\ScriptDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h" />
     <ClInclude Include="Public\AssetRegistry\ShaderDatabase.h" />
@@ -1361,7 +1360,6 @@
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp" />
     <ClCompile Include="Private\AssetRegistry\FontDatabase.cpp" />
-    <ClCompile Include="Private\AssetRegistry\MaterialDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\ScriptDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp" />
     <ClCompile Include="Private\Engine\BuildConfigValidation.cpp" />

@@ -116,9 +116,7 @@ void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MeshAsset), MeshBuffer, sizeof( MeshBuffer ));
 	SetMesh(FAssetDatabase::GetStaticMesh( MeshBuffer ));
 
-	Char MaterialGuidBuffer[64];
-	ZeroMemory(MaterialGuidBuffer, sizeof(MaterialGuidBuffer));
-	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MaterialAsset), MaterialGuidBuffer, sizeof(MaterialGuidBuffer));
-	FGUID MatAssetGuid = FGUID::CreateFromString(MaterialGuidBuffer);
-	SetMaterial(FAssetDatabase::GetMaterial(MatAssetGuid));
+	Char MaterialBuffer[64];
+	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MaterialAsset), MaterialBuffer, sizeof( MaterialBuffer ));
+	SetMaterial( FAssetDatabase::GetMaterial( MaterialBuffer ) );
 }

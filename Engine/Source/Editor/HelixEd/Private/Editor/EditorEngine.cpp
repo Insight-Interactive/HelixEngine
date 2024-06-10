@@ -446,11 +446,6 @@ void HEditorEngine::PackageGame()
 
 void HEditorEngine::RegisterEditorOnlyAssets()
 {
-	// Materials
-	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
-
-	// Prevent editor only assets from dirtying the databases.
-	FAssetDatabase::GetMaterialDatabase().SetDirty( false );
 }
 
 bool HEditorEngine::OnWindowLostFocus( WindowLostFocusEvent& e )

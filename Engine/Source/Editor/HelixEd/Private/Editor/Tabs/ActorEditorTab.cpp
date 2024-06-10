@@ -43,7 +43,7 @@ ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 
 	Mesh = AddComponent<HStaticMeshComponent>( TEXT( "CubeMesh" ) );
 	Mesh->SetMesh( FAssetDatabase::GetStaticMesh( "Cube.fbx" ) );
-	Mesh->SetMaterial( FAssetDatabase::GetMaterial( FGUID::CreateFromString( "0d68e992-aa25-4aa4-9f81-0eb775320c1e" ) ) );
+	Mesh->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
 
 	Light = AddComponent<HPointLightComponent>( TEXT( "PointLight" ) );
 	Light->SetBrightness( 800.f );
