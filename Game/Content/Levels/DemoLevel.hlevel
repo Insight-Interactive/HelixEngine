@@ -5,7 +5,7 @@
             "TickInterval": 1.0
         },
         {
-            "76b2b57a-e199-4032-89f5-cc498feec3cc": [
+            "MyCoolActor.hactor": [
                 {
                     "PositionX": 0.0,
                     "PositionY": 40.0,
@@ -18,7 +18,7 @@
                     "ScaleZ": 1.0
                 }
             ],
-            "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d":[
+            "GroundFloor.hactor":[
                 {
                     "PositionX": 0.0,
                     "PositionY": 0.0,
@@ -31,7 +31,7 @@
                     "ScaleZ": 1.0
                 }
             ],
-            "3d4d64b8-5938-461d-88fe-5b864d17a84e":[
+            "MagicGate.hactor":[
                 {
                     "PositionX": 0.0,
                     "PositionY": 0.0,

@@ -114,9 +114,6 @@
     <ClInclude Include="Public\App\App.h">
       <Filter>Public\App</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\ActorDatabase.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\Asset.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
@@ -373,9 +370,6 @@
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
       <Filter>Private\App</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\ActorDatabase.cpp">
-      <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\Asset.cpp">
       <Filter>Private\AssetRegistry</Filter>

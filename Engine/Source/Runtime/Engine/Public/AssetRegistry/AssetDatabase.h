@@ -3,7 +3,6 @@
 
 #include "TSingleton.h"
 
-#include "AssetRegistry/ActorDatabase.h"
 #include "AssetRegistry/ShaderDatabase.h"
 #include "AssetRegistry/FontDatabase.h"
 
@@ -53,21 +52,16 @@ protected:
 	static void Uninitialize();
 
 	static bool SaveAssetDatabases();
-	static bool IsAnyDatabaseDirty();
 
-	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
 	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
 
-	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
 	static const String LookupFont( const FGUID& Guid );
 
-	static FActorDatabase& GetActorDatabase();
 	static FFontDatabase& GetFontDatabase();
 
 protected:
-	FActorDatabase		m_ActorDatabase;
 	FShaderDatabase		m_ShaderDatabase;
 	FFontDatabase		m_FontDatabase;
 
@@ -129,11 +123,6 @@ private:
 	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
 }
 
-/*static*/ FORCEINLINE FActorDatabase& FAssetDatabase::GetActorDatabase()
-{
-	return SInstance->m_ActorDatabase;
-}
-
 /*static*/ FORCEINLINE FFontDatabase& FAssetDatabase::GetFontDatabase()
 {
 	return SInstance->m_FontDatabase;
@@ -150,10 +139,6 @@ private:
 		Writer.StartArray();
 
 		Writer.StartObject();
-		SInstance->m_ActorDatabase.Serialize( Writer );
-		Writer.EndObject();
-
-		Writer.StartObject();
 		SInstance->m_ShaderDatabase.Serialize( Writer );
 		Writer.EndObject();
 		Writer.EndArray();
@@ -164,17 +149,7 @@ private:
 	FGameProject::GetInstance()->GetProjectDirectoryFullPath( kAssetManifestFilename, DestinationFilepath, sizeof( DestinationFilepath ) );
 	bool IsWriteSuccessful = JsonUtility::WriteDocument( DestinationFilepath, StrBuffer );
 
-	return !IsAnyDatabaseDirty() && IsWriteSuccessful;
-}
-
-/*static*/ FORCEINLINE bool FAssetDatabase::IsAnyDatabaseDirty()
-{
-	return SInstance->m_ActorDatabase.GetIsDirty();
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterActor( const FGUID& ActorGuid, const Char* Filepath )
-{
-	SInstance->m_ActorDatabase.RegisterAsset( ActorGuid, Filepath );
+	return IsWriteSuccessful;
 }
 
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterShader( const FGUID& ShaderGuid, const Char* Filepath )
@@ -185,11 +160,6 @@ private:
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterFont( const FGUID& FontGuid, const Char* Filepath )
 {
 	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupActor( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ActorDatabase.GetValueByKey( Guid );
 }
 
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )

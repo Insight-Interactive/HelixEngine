@@ -116,14 +116,13 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 	m_IsLoading.Set();
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{
-		FGUID ActorGuid = FGUID::CreateFromString( Iter->name.GetString() );
-		const String& ActorFilePath = FAssetDatabase::LookupActor( ActorGuid );
-		HE_ASSERT( !ActorFilePath.empty() );
+		char ActorPath[HE_MAX_PATH];
+		sprintf_s( ActorPath, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
 
 		// Load the actor
 		//
 		rapidjson::Document JsonDoc;
-		FileRef JsonSource( ActorFilePath.c_str(), FUM_Read );
+		FileRef JsonSource( ActorPath, FUM_Read );
 		JsonUtility::LoadDocument( JsonSource, JsonDoc );
 		if (JsonDoc.IsObject())
 		{
@@ -156,7 +155,7 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 		}
 		else
 		{
-			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorFilePath ) );
+			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath ) );
 			HE_ASSERT( false );
 		}
 	}

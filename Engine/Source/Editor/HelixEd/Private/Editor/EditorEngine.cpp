@@ -463,10 +463,6 @@ bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
-	if (FAssetDatabase::IsAnyDatabaseDirty())
-	{
-		OnSaveMenuItem();
-	}
 	return false;
 }
 
