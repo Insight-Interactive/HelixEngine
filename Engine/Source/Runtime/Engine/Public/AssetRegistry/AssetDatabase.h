@@ -4,7 +4,6 @@
 #include "TSingleton.h"
 
 #include "AssetRegistry/ShaderDatabase.h"
-#include "AssetRegistry/FontDatabase.h"
 
 #include "ModelManager.h"
 #include "TextureManager.h"
@@ -35,6 +34,7 @@ public:
 	static HTexture GetTexture( const char* TextureName );
 	static HMaterial GetMaterial( const char* MaterialName );
 	static LuaScriptRef GetScript( const char* ScriptName );
+	static HFont GetFont( const char* FontName );
 
 	static String LookupShaderPath( const FGUID& Guid );
 	static HFont GetFont( const FGUID& FontGuid );
@@ -59,11 +59,8 @@ protected:
 	static const String LookupShader( const FGUID& Guid );
 	static const String LookupFont( const FGUID& Guid );
 
-	static FFontDatabase& GetFontDatabase();
-
 protected:
 	FShaderDatabase		m_ShaderDatabase;
-	FFontDatabase		m_FontDatabase;
 
 private:
 	static FAssetDatabase* SInstance;
@@ -113,6 +110,15 @@ private:
 	return Script;
 }
 
+/*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const char* FontName )
+{
+	char Path[HE_MAX_PATH];
+	sprintf_s( Path, "%sFonts\\%s", FGameProject::GetInstance()->GetContentFolder(), FontName );
+	HFont Font = GFontManager.FindOrLoadFont( Path );
+
+	return Font;
+}
+
 /*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
 	return SInstance->LookupShader( Guid );
@@ -121,11 +127,6 @@ private:
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
 {
 	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
-}
-
-/*static*/ FORCEINLINE FFontDatabase& FAssetDatabase::GetFontDatabase()
-{
-	return SInstance->m_FontDatabase;
 }
 
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
@@ -157,17 +158,7 @@ private:
 	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterFont( const FGUID& FontGuid, const Char* Filepath )
-{
-	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
-}
-
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
 	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupFont( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_FontDatabase.GetValueByKey( Guid );
 }

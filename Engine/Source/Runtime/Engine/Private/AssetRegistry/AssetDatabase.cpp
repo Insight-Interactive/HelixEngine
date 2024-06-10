@@ -44,16 +44,13 @@ FAssetDatabase::~FAssetDatabase()
 			// AssetManifest.json JSON element indicies
 
 			kShadersDbIndex		= 0,
-			kFontDBIndex		= 1
 		};
 
 		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
 
 		SInstance->m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
-		SInstance->m_FontDatabase.Deserialize( AssetDbRoot[kFontDBIndex] );
 
 		SInstance->m_ShaderDatabase.Initialize();
-		SInstance->m_FontDatabase.Initialize();
 	}
 	else
 	{
