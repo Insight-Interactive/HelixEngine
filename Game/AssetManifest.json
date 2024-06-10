@@ -1,15 +1,6 @@
 {
     "FAssetDatabase": [
         {
-            "086ba262-1900-49f0-aa6a-e9a396314730": "Content/Textures/RustedIron/RustedIron_Albedo.dds",
-            "22f34b3e-b377-4ec5-9e47-dd2aa1225216": "Content/Textures/Hardwood/Hardwood_Normal.dds",
-            "e6b8d84b-066a-47de-9cf4-2eb2feafa939": "Content/Textures/RustedIron/RustedIron_Normal.dds",
-            "149ac663-a662-4d51-a57b-8253b53f80bc": "Content/Textures/Hardwood/Hardwood_Albedo.dds",
-            "24b331bc-e24e-48d8-bc1b-60eef6100bef": "Content/Textures/RustedIron/RustedIron_Roughness.dds",
-            "cc738bba-7088-4f1b-9121-444e28f7f6e8": "Content/Textures/RustedIron/RustedIron_Metallic.dds",
-            "6878e921-457d-47f8-8307-2ce37456e019": "Content/Fonts/Ariel.dds"
-        },
-        {
             "0d68e992-aa25-4aa4-9f81-0eb775320c1e": "Content/Materials/M_RustedMetal.hmat",
             "d7d2911a-0461-4a69-b28d-259389c45f87": "Content/Materials/M_Wood.hmat",
             "2a4a5a3f-a6f6-4704-bc75-db3bf68dbbc5": "Content/Materials/M_DefaultUnlit.hmat",

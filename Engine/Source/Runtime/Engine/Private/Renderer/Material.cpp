@@ -248,10 +248,9 @@ void FMaterial::DeserializeTextureReflection( const JsonUtility::ReadContext& Te
 	for (auto itr = TextureReflection.MemberBegin(); itr != TextureReflection.MemberEnd(); ++itr)
 	{
 		const Char* ResourceName = itr->name.GetString();
-		const Char* GuidStr = itr->value.GetString();
-		FGUID TextureGuid = FGUID::CreateFromString( GuidStr );
+		const Char* TextureName = itr->value.GetString();
 
-		SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureGuid ) );
+		SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureName ) );
 	}
 }
 

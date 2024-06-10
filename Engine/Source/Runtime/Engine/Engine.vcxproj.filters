@@ -141,9 +141,6 @@
     <ClInclude Include="Public\AssetRegistry\ShaderDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\TextureDatabase.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Engine\Engine.h">
       <Filter>Public\Engine</Filter>
     </ClInclude>
@@ -405,9 +402,6 @@
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp">
-      <Filter>Private\AssetRegistry</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\TextureDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine\BuildConfigValidation.cpp">

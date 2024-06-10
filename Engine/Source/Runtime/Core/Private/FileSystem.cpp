@@ -16,6 +16,8 @@
 
 /*static*/ DataBlob FileSystem::ReadRawData(const char* Path)
 {
+	HE_ASSERT( FileSystem::DoesFileExist( Path ) );
+
 	DataBlob Data;
 	
 	FILE* pFile = NULL;

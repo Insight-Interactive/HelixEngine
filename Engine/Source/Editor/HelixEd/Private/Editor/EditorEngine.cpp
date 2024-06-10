@@ -446,14 +446,10 @@ void HEditorEngine::PackageGame()
 
 void HEditorEngine::RegisterEditorOnlyAssets()
 {
-	// Textures
-	FAssetDatabase::RegisterTexture( FGUID::CreateFromString( "f82b1d85-d192-4264-9cda-f2787718af53" ), "Content\\Engine\\Textures\\LevelEditorTextures\\T_PointLight.dds" );
-
 	// Materials
 	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
 
 	// Prevent editor only assets from dirtying the databases.
-	FAssetDatabase::GetTextureDatabase().SetDirty( false );
 	FAssetDatabase::GetMaterialDatabase().SetDirty( false );
 }
 

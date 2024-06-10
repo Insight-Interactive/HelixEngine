@@ -61,7 +61,7 @@ void FFont::Initialize( const String& Filename )
 	DepthStateDesc.DepthEnable = false;
 	PSODesc.DepthStencilState = DepthStateDesc;
 	m_Pipeline.Initialize( PSODesc );
-    m_FontTexture = FAssetDatabase::GetTexture( FGUID::CreateFromString( "6878e921-457d-47f8-8307-2ce37456e019" ) );
+    m_FontTexture = FAssetDatabase::GetTexture( "FontAtlas/Ariel.dds" );
     LoadFont( Filename, 1920, 1080 );// TODO: This need to be the viewport dimensions
 }
 
