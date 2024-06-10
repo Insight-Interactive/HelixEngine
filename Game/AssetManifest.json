@@ -25,9 +25,6 @@
             "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso"
         },
         {
-          "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb": "Content/Scripts/RotationScript.lua"
-        },
-        {
           "f3de7104-86de-4f96-83ae-6eaa8f38f46d": "Content/Fonts/Ariel.fnt"
         }
     ]

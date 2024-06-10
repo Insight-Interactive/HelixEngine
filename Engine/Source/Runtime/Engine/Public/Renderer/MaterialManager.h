@@ -17,7 +17,6 @@ public:
 	~MaterialManager();
 
 	HMaterial FindOrLoadMaterialFromFile(const String& Path);
-	HMaterial CreateOneOffMaterial( const String& Path );
 	void DestroyMaterial(const String& Key);
 	HMaterial GetMaterialByName( const String& Id );
 	void FlushMaterialCache();

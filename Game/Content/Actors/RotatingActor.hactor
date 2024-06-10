@@ -45,7 +45,7 @@
               "ObjectGUID": "c917c76d-bdbc-4753-9011-586213b4e032"
             },
             {
-              "m_ScriptAsset": "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb"
+              "m_ScriptAsset": "RotationScript.lua"
             }
           ]
         }

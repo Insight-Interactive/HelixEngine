@@ -46,20 +46,6 @@ HMaterial MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 	return GetMaterialByName( Name );
 }
 
-HMaterial MaterialManager::CreateOneOffMaterial( const String& Path )
-{
-	ManagedMaterial* pMaterial = NULL;
-
-	String Name = StringHelper::GetFilenameFromDirectoryNoExtension( Path );
-	pMaterial = new FMaterial();
-	pMaterial->SetName( Name );
-	pMaterial->GetAsset().LoadFromFile( Path );
-	pMaterial->GetAsset().SetDebugName( Name );
-	pMaterial->SetLoadCompleted( true );
-
-	return pMaterial;
-}
-
 void MaterialManager::DestroyMaterial(const String& Key)
 {
 	ScopedCriticalSection Guard(m_MapMutex);

@@ -33,9 +33,7 @@ void HLuaScriptComponent::Deserialize( const JsonUtility::ReadContext& Value )
 
 	const rapidjson::Value& ScriptComponent = Value[1];
 
-	Char ScriptGuidBuffer[64];
-	ZeroMemory( ScriptGuidBuffer, sizeof( ScriptGuidBuffer ) );
-	JsonUtility::GetString( ScriptComponent, HE_STRINGIFY( m_ScriptAsset ), ScriptGuidBuffer, sizeof( ScriptGuidBuffer ) );
-	FGUID ScriptGuid = FGUID::CreateFromString( ScriptGuidBuffer );
-	m_ScriptAsset = FAssetDatabase::GetScript( ScriptGuid );
+	Char ScriptBuffer[64];
+	JsonUtility::GetString( ScriptComponent, HE_STRINGIFY( m_ScriptAsset ), ScriptBuffer, sizeof( ScriptBuffer ) );
+	m_ScriptAsset = FAssetDatabase::GetScript( ScriptBuffer );
 }

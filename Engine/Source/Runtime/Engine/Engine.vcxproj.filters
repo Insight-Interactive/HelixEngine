@@ -129,9 +129,6 @@
     <ClInclude Include="Public\AssetRegistry\FontDatabase.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
-    <ClInclude Include="Public\AssetRegistry\ScriptDatabase.h">
-      <Filter>Public\AssetRegistry</Filter>
-    </ClInclude>
     <ClInclude Include="Public\AssetRegistry\SerializeableInterface.h">
       <Filter>Public\AssetRegistry</Filter>
     </ClInclude>
@@ -390,9 +387,6 @@
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\FontDatabase.cpp">
-      <Filter>Private\AssetRegistry</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\AssetRegistry\ScriptDatabase.cpp">
       <Filter>Private\AssetRegistry</Filter>
     </ClCompile>
     <ClCompile Include="Private\AssetRegistry\ShaderDatabase.cpp">

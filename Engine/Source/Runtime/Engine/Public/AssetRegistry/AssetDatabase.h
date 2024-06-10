@@ -5,7 +5,6 @@
 
 #include "AssetRegistry/ActorDatabase.h"
 #include "AssetRegistry/ShaderDatabase.h"
-#include "AssetRegistry/ScriptDatabase.h"
 #include "AssetRegistry/FontDatabase.h"
 
 #include "ModelManager.h"
@@ -36,12 +35,9 @@ public:
 	static HStaticMesh GetStaticMesh( const char* MeshName );
 	static HTexture GetTexture( const char* TextureName );
 	static HMaterial GetMaterial( const char* MaterialName );
+	static LuaScriptRef GetScript( const char* ScriptName );
 
-
-	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
-	static LuaScriptRef GetScript( const FGUID& Guid );
-	static const String LookupMaterial( const FGUID& Guid );
 	static HFont GetFont( const FGUID& FontGuid );
 
 
@@ -61,22 +57,18 @@ protected:
 
 	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
-	static void RegisterScript( const FGUID& ScriptGuid, const Char* Filepath );
 	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
 
 	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
-	static const String LookupScript( const FGUID& Guid );
 	static const String LookupFont( const FGUID& Guid );
 
 	static FActorDatabase& GetActorDatabase();
-	static FScriptDatabase& GetScriptDatabase();
 	static FFontDatabase& GetFontDatabase();
 
 protected:
 	FActorDatabase		m_ActorDatabase;
 	FShaderDatabase		m_ShaderDatabase;
-	FScriptDatabase		m_ScriptDatabase;
 	FFontDatabase		m_FontDatabase;
 
 private:
@@ -118,19 +110,18 @@ private:
 	return Material;
 }
 
-/*static*/ FORCEINLINE HMaterial FAssetDatabase::CreateOneOffMaterial( const FGUID& ParentGuid )
+/*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const char* ScriptName )
 {
-	return GMaterialManager.CreateOneOffMaterial( SInstance->LookupMaterial( ParentGuid ) );
+	char Path[HE_MAX_PATH];
+	sprintf_s( Path, "%sScripts\\%s", FGameProject::GetInstance()->GetContentFolder(), ScriptName );
+	LuaScriptRef Script = GScriptManager.FindOrLoadScript( Path );
+
+	return Script;
 }
 
 /*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
 	return SInstance->LookupShader( Guid );
-}
-
-/*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const FGUID& Guid )
-{
-	return GScriptManager.FindOrLoadScript( SInstance->LookupScript( Guid ) );
 }
 
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
@@ -141,11 +132,6 @@ private:
 /*static*/ FORCEINLINE FActorDatabase& FAssetDatabase::GetActorDatabase()
 {
 	return SInstance->m_ActorDatabase;
-}
-
-/*static*/ FORCEINLINE FScriptDatabase& FAssetDatabase::GetScriptDatabase()
-{
-	return SInstance->m_ScriptDatabase;
 }
 
 /*static*/ FORCEINLINE FFontDatabase& FAssetDatabase::GetFontDatabase()
@@ -196,11 +182,6 @@ private:
 	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterScript( const FGUID& ScriptGuid, const Char* Filepath )
-{
-	SInstance->m_ScriptDatabase.RegisterAsset( ScriptGuid, Filepath );
-}
-
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterFont( const FGUID& FontGuid, const Char* Filepath )
 {
 	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
@@ -214,11 +195,6 @@ private:
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
 	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupScript( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ScriptDatabase.GetValueByKey( Guid );
 }
 
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupFont( const FGUID& Guid )
