@@ -8,7 +8,9 @@
 
 FGameProject::FGameProject()
 {
-
+	ZeroMemory( m_ProjectRoot, sizeof( m_ProjectRoot ) );
+	ZeroMemory( m_ConfigDirectory, sizeof( m_ConfigDirectory ) );
+	ZeroMemory( m_ContentDirectory, sizeof( m_ContentDirectory ) );
 }
 
 FGameProject::~FGameProject()
@@ -54,10 +56,12 @@ const String FGameProject::GetDefaultLevelPath() const
 	JsonUtility::LoadDocument( m_HProject, WorldJsonDoc );
 	if (WorldJsonDoc.IsObject())
 	{
-		Char LevelPath[HE_MAX_PATH];
+		char LevelPath[HE_MAX_PATH];
 		JsonUtility::GetString( WorldJsonDoc, "DefaultLevel", LevelPath, sizeof( LevelPath ) );
 
-		return GetContentFolder() + "/" + String(LevelPath);
+		char FullPath[HE_MAX_PATH];
+		FGameProject::GetInstance()->GetContentDirectoryFullPath( LevelPath, FullPath, sizeof( FullPath ) );
+		return String(FullPath);
 	}
 
 	return String( "" );

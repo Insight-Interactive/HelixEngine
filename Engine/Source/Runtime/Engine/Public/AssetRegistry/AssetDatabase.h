@@ -37,13 +37,16 @@ class FAssetDatabase
 public:
 
 	static HTexture GetTexture( const FGUID& Guid );
-	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
+	static HStaticMesh GetStaticMesh( const FGUID& Guid );
 	static HMaterial GetMaterial( const FGUID& Guid );
 	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
 	static String LookupShaderPath( const FGUID& Guid );
 	static LuaScriptRef GetScript( const FGUID& Guid );
 	static const String LookupMaterial( const FGUID& Guid );
 	static HFont GetFont( const FGUID& FontGuid );
+
+	static HStaticMesh GetStaticMesh( const char* MeshName );
+
 
 protected:
 	FAssetDatabase();
@@ -105,9 +108,16 @@ private:
 	return GTextureManager.LoadTexture( SInstance->LookupTexture( Guid ), DT_Magenta2D, false );
 }
 
-/*static*/ FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
+/*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
 {
-	StaticMeshGeometryRef Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+	char Path[HE_MAX_PATH];
+	sprintf_s( Path, "%s\\Models\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+
+}
+
+/*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const FGUID& Guid )
+{
+	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
 	if(!Mesh->GetGuid().IsValid())
 		Mesh->SetGuid( Guid );
 	return Mesh;
@@ -201,8 +211,9 @@ private:
 	}
 	Writer.EndObject();
 
-	String DestinationFilepath = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
-	bool IsWriteSuccessful = JsonUtility::WriteDocument( DestinationFilepath.c_str(), StrBuffer );
+	char DestinationFilepath[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetProjectDirectoryFullPath( kAssetManifestFilename, DestinationFilepath, sizeof( DestinationFilepath ) );
+	bool IsWriteSuccessful = JsonUtility::WriteDocument( DestinationFilepath, StrBuffer );
 
 	return !IsAnyDatabaseDirty() && IsWriteSuccessful;
 }

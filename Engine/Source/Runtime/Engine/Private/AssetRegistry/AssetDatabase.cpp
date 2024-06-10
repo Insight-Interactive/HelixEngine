@@ -30,7 +30,10 @@ FAssetDatabase::~FAssetDatabase()
 {
 	// Load all the asset databases.
 	rapidjson::Document JsonDoc;
-	FileRef JsonSource( FGameProject::GetInstance()->GetProjectRoot() + kAssetManifestFilename, FUM_Read, CM_Text );
+
+	char ManifestPath[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetProjectDirectoryFullPath( kAssetManifestFilename, ManifestPath, sizeof( ManifestPath ) );
+	FileRef JsonSource( ManifestPath , FUM_Read, CM_Text );
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{

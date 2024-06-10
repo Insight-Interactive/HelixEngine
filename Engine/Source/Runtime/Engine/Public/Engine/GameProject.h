@@ -6,6 +6,13 @@
 #include "App/App.h"
 #include "FileSystem.h"
 
+#define AppendAssetToPath(AssetName, PathDestination, DestinationLength, RootDirectory)	\
+HE_ASSERT( DestinationLength > 0 && DestinationLength <= HE_MAX_PATH );					\
+HE_ASSERT( PathDestination != nullptr && AssetName != nullptr );						\
+ZeroMemory( PathDestination, DestinationLength );										\
+strcpy_s( PathDestination, DestinationLength, (const char*)RootDirectory );				\
+strcat_s( PathDestination, DestinationLength, AssetName );								\
+
 /*
 	Represents a game project that the engine is currently editing and/or playing.
 */
@@ -13,16 +20,29 @@ class FGameProject : public TSingleton<FGameProject>
 {
 	friend class HEngine;
 public:
-	const String& GetProjectRoot() const;
-	const String& GetConfigFolder() const;
-	const String& GetContentFolder() const;
+	const char* GetProjectRoot() const;
+	const char* GetConfigFolder() const;
+	const char* GetContentFolder() const;
 	const String GetDefaultLevelPath() const;
 
+	void GetProjectDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
+	{
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ProjectRoot );
+	}
+
+	void GetConfigDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
+	{
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ConfigDirectory );
+	}
+
 	/*
-		Returns the full path for a piece of content located in the project's content directory.
+		Returns the full path for a piece of content located in the project's Content directory.
 	*/
-	String GetContentFullPath( const String& ContentSubDirectory );
-	String GetConfigFileFullPath( const String& ConfigFileSubDirectory );
+	void GetContentDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
+	{
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ContentDirectory );
+	}
+
 
 	const HName& GetGameName() const;
 	const HName& GetProjectName() const;
@@ -42,33 +62,25 @@ private:
 
 	FileRef m_HProject;
 
-	String m_ProjectRoot;
-	String m_ConfigDirectory;
-	String m_ContentDirectory;
+	char m_ProjectRoot[HE_MAX_PATH];
+	char m_ConfigDirectory[HE_MAX_PATH];
+	char m_ContentDirectory[HE_MAX_PATH];
 };
 
-FORCEINLINE const String& FGameProject::GetProjectRoot() const
+#undef AppendAssetToPath
+
+FORCEINLINE const char* FGameProject::GetProjectRoot() const
 {
 	return m_ProjectRoot;
 }
-FORCEINLINE const String& FGameProject::GetConfigFolder() const
+FORCEINLINE const char* FGameProject::GetConfigFolder() const
 {
 	return m_ConfigDirectory;
 }
 
-FORCEINLINE const String& FGameProject::GetContentFolder() const
+FORCEINLINE const char* FGameProject::GetContentFolder() const
 {
 	return m_ContentDirectory;
-}
-
-FORCEINLINE String FGameProject::GetContentFullPath( const String& ContentSubDirectory )
-{
-	return GetContentFolder() + "/" + ContentSubDirectory;
-}
-
-FORCEINLINE String FGameProject::GetConfigFileFullPath( const String& ConfigFileSubDirectory )
-{
-	return GetConfigFolder() + "/" + ConfigFileSubDirectory;
 }
 
 FORCEINLINE const HName& FGameProject::GetGameName() const
@@ -83,12 +95,15 @@ FORCEINLINE const HName& FGameProject::GetProjectName() const
 
 FORCEINLINE void FGameProject::SetProjectRootDirectory( const Char* ProjectRoot )
 {
-	m_ProjectRoot = 
 #if HE_STANDALONE && !HE_DEMO_GAME
 	"Data\\";
+	sprintf_s( m_ProjectRoot, sizeof( m_ProjectRoot ), "Data\\" );
 #else	
-	ProjectRoot;
+	sprintf_s( m_ProjectRoot, sizeof( m_ProjectRoot ), ProjectRoot );
 #endif
-	m_ContentDirectory = m_ProjectRoot + "Content";
-	m_ConfigDirectory = m_ProjectRoot + "Config";
+	strcpy_s( m_ContentDirectory, m_ProjectRoot );
+	strcat_s( m_ContentDirectory, "Content\\" );
+
+	strcpy_s( m_ConfigDirectory, m_ProjectRoot );
+	strcat_s( m_ConfigDirectory, "Config\\" );
 }

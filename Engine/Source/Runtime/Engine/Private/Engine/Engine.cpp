@@ -173,8 +173,9 @@ void HEngine::PostStartup()
 	const String& StartingWorldPath = FGameProject::GetInstance()->GetDefaultLevelPath();
 	m_GameWorld.Initialize( StartingWorldPath.c_str() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "InputMappings.ini" );
-	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
+	char Path[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "InputMappings.ini", Path, sizeof( Path ) );
+	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( Path );
 
 	m_MainViewPort.Show();
 	m_MainViewPort.BringToFocus();
@@ -312,13 +313,14 @@ void HEngine::RequestShutdown()
 {
 	HE_UNUSED_PARAM( pUserData );
 
-	String SplashTextureDir =
+	char TexturePath[HE_MAX_PATH];
 #if HE_WITH_EDITOR || HE_DEMO_GAME
-		FGameProject::GetInstance()->GetContentFolder() + "/Engine/Textures/Splash/HelixEd-Splash.dds";
+		FGameProject::GetInstance()->GetContentDirectoryFullPath( "/Engine/Textures/Splash/HelixEd-Splash.dds", TexturePath, sizeof(TexturePath) );
 #else
+		ZeroMemory( TexturePath, sizeof( TexturePath ) );
 		""; // TODO: Custom game splash image.
 #endif
-	FSplashScreen AppSplash( SplashTextureDir );
+	FSplashScreen AppSplash( TexturePath );
 
 	while (!GEngine->IsInitialized())
 	{

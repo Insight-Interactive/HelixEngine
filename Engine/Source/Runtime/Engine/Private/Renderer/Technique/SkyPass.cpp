@@ -34,8 +34,9 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 	// Resources
 	//
 	m_SkyGeometry = GeometryGenerator::GenerateSphere(10, 20, 20); 
-	String SkyTexture = FGameProject::GetInstance()->GetContentFolder() + "/Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds";
-	m_SkyDiffuse = GTextureManager.LoadTexture(SkyTexture, DT_Magenta2D, false);
+	char TexturePath[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetContentDirectoryFullPath( "Textures/Skyboxes/PlainSunset/PlainSunset_Diff.dds", TexturePath, sizeof(TexturePath) );
+	m_SkyDiffuse = GTextureManager.LoadTexture( TexturePath, DT_Magenta2D, false);
 
 
 	// Create the pipeline state.
