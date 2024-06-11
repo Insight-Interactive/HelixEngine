@@ -37,8 +37,6 @@ FAssetDatabase::~FAssetDatabase()
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
-		GFontManager.Initialize();
-		
 		enum
 		{
 			// AssetManifest.json JSON element indicies
@@ -64,6 +62,4 @@ FAssetDatabase::~FAssetDatabase()
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 
 	SInstance->m_ShaderDatabase.UnInitialize();
-	
-	GFontManager.UnInitialize();
 }

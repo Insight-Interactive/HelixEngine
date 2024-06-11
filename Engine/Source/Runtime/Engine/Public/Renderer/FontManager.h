@@ -31,9 +31,6 @@ private:
 	ManagedFont* FindOrLoadFont( const String& Filename );
 
 protected:
-	void Initialize();
-	void UnInitialize();
-
 	CriticalSection m_Mutex;
 
 protected:

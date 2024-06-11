@@ -194,9 +194,6 @@
     <ClCompile Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Direct3D12\GeometryBufferManagerD3D12.cpp">
-      <Filter>Private\Direct3D12</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Direct3D12\IndexBufferD3D12.cpp">
       <Filter>Private\Direct3D12</Filter>
     </ClCompile>

@@ -51,7 +51,6 @@ class FCommandManager;
 class FContextManager;
 class FCommandContext;
 class FConstantBufferManager;
-class FGeometryBufferManager;
 class FTextureManager;
 class FFontManager;
 class FConstantBufferInterface;

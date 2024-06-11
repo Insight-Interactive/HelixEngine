@@ -50,13 +50,3 @@ ManagedFont* FFontManager::FindOrLoadFont( const String& Filename )
 
 	return pFont;
 }
-
-void FFontManager::Initialize()
-{
-
-}
-
-void FFontManager::UnInitialize()
-{
-
-}

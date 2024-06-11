@@ -268,14 +268,12 @@ void FCommandContext::SetDepthBufferAsTexture(uint32 RootParameterIndex, const F
 
 void FCommandContext::SetColorBuffersAsTextures(uint32 RootParameterIndex, uint32 Offset, uint32 Count, const FColorBuffer* Buffers[])
 {
-	D3D12_CPU_DESCRIPTOR_HANDLE* Handles = (D3D12_CPU_DESCRIPTOR_HANDLE*)HE_StackAlloc( sizeof( D3D12_CPU_DESCRIPTOR_HANDLE ) * Count );
-	HE_ASSERT( Handles != NULL ); // Failed to allocate stack memory for descriptor handles.
+	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> Handles(Count);
 	for (uint32 i = 0; i < Count; ++i)
 	{
-		Handles++;
-		*Handles = Buffers[i]->GetSRVHandle();
+		Handles[i] = Buffers[i]->GetSRVHandle();
 	}
-	m_DynamicViewDescriptorHeap.SetGraphicsDescriptorHandles(RootParameterIndex, Offset, Count, Handles);
+	m_DynamicViewDescriptorHeap.SetGraphicsDescriptorHandles(RootParameterIndex, Offset, Count, Handles.data());
 }
 
 void FCommandContext::SetColorBufferAsTexture(uint32 RootParameterIndex, uint32 Offset, FColorBuffer* Buffer)

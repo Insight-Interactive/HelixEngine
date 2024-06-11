@@ -90,7 +90,7 @@
 		HE_PRAGMA (warning (disable : PragmaCode))	\
 		__VA_ARGS__									\
 		HE_PRAGMA (warning (pop))						
-#define HE_StackAlloc(Size)				_malloca(Size)
+#define HE_StackAlloc(Size)				::_alloca(Size)
 #define HE_HeapAlloc(Size)				::malloc(Size)
 #define HE_HeapFree(HeapPtr)			::free(HeapPtr)
 #define HE_ReAlloc(HeapPtr, Size)		::realloc(HeapPtr, Size)

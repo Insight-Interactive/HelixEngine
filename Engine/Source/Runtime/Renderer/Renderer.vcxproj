@@ -1184,7 +1184,6 @@
     <ClCompile Include="Private\Direct3D12\DescriptorAllocatorD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\DescriptorHeapD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\DynamicDescriptorHeapD3D12.cpp" />
-    <ClCompile Include="Private\Direct3D12\GeometryBufferManagerD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\IndexBufferD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\LinearAllocatorD3D12.cpp" />
     <ClCompile Include="Private\Direct3D12\PipelineStateD3D12.cpp" />

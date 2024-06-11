@@ -11,7 +11,6 @@ class FRenderDevice;
 class FSwapChain;
 class FCommandManager;
 class FContextManager;
-class FGeometryBufferManager;
 class FConstantBufferManager;
 class FTextureManager;
 class FFontManager;

@@ -16,7 +16,6 @@ class FCommandContext;
 */
 class RENDER_API FVertexBuffer : public FGpuResource
 {
-	friend class FGeometryBufferManager;
 public:
 	FVertexBuffer()
 	{

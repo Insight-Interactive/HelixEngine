@@ -54,10 +54,8 @@ protected:
 	static bool SaveAssetDatabases();
 
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
-	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
 
 	static const String LookupShader( const FGUID& Guid );
-	static const String LookupFont( const FGUID& Guid );
 
 protected:
 	FShaderDatabase		m_ShaderDatabase;
@@ -122,11 +120,6 @@ private:
 /*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
 	return SInstance->LookupShader( Guid );
-}
-
-/*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
-{
-	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
 }
 
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
