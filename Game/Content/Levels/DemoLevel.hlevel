@@ -1,8 +1,7 @@
 {
     "World": [
         {
-            "Name": "DemoLevel",
-            "TickInterval": 1.0
+            "Name": "DemoLevel"
         },
         {
             "MyCoolActor.hactor": [

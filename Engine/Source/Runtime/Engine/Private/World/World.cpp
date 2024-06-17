@@ -30,9 +30,9 @@ HWorld::~HWorld()
 	Flush();
 }
 
-void HWorld::Initialize( const Char* LevelURL )
+void HWorld::Initialize( const FPath& LevelURL )
 {
-	m_Filepath = LevelURL;
+	m_LevelFilepath = LevelURL;
 
 	RegisterScenes();
 
@@ -50,7 +50,7 @@ void HWorld::Initialize( const Char* LevelURL )
 	pCapsule->SetRotation( 0.f, 0.f, Math::DegreesToRadians(90.f) );
 	
 	rapidjson::Document WorldJsonDoc;
-	FileRef WorldJsonSource( LevelURL, FUM_Read );
+	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
 	HE_ASSERT( WorldJsonSource->IsOpen() );
 	JsonUtility::LoadDocument( WorldJsonSource, WorldJsonDoc );
 	if (WorldJsonDoc.IsObject())
@@ -84,7 +84,7 @@ void HWorld::Initialize( const Char* LevelURL )
 
 void HWorld::Initialize()
 {
-	m_Filepath = "Default (Non-Load)";
+	m_LevelFilepath.SetPath( "Default (Non-Load)" );
 	SetObjectName( TEXT( "Default World" ) );
 	RegisterScenes();
 
@@ -94,7 +94,7 @@ void HWorld::Initialize()
 
 void HWorld::Save()
 {
-	Serialize( m_Filepath.c_str() );
+	Serialize( m_LevelFilepath.GetFullPath() );
 }
 
 void HWorld::SetViewport( FViewportContext* pViewport )
@@ -162,6 +162,8 @@ void HWorld::Flush()
 		/*m_PhysicsScene.WaittillSimulationFinished();
 		m_PhysicsScene.RequestSceneFlush();*/
 
+		RemovePanel( &m_DebugUI );
+
 		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
 
 		// Cleanup the rendering resources.
@@ -186,7 +188,7 @@ void HWorld::Render( FCommandContext& CmdContext )
 void HWorld::Reload()
 {
 	Flush();
-	Initialize( m_Filepath.c_str() );
+	Initialize( m_LevelFilepath.GetFullPath() );
 }
 
 void HWorld::ReloadAndBeginPlay()
@@ -244,7 +246,7 @@ void HWorld::Serialize( const Char* Filename )
 	}
 	Writer.EndObject();
 
-	FileRef OutFile( m_Filepath, FUM_Write, CM_Text );
+	FileRef OutFile( m_LevelFilepath.GetFullPath(), FUM_Write, CM_Text);
 	HE_ASSERT( OutFile->IsOpen() );
 	if (OutFile->IsOpen())
 	{
@@ -267,9 +269,6 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 	Char WorldName[64];
 	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
 	Super::SetObjectName( CharToTChar( WorldName ) );
-
-	float TickInterval = 0.f;
-	JsonUtility::GetFloat( Value, "TickInterval", TickInterval );
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

@@ -4,19 +4,18 @@
 class FPath
 {
 public:
-	FPath( const Char* Str );
+	FPath();
+	FPath( const char* Path );
 	~FPath();
 
-	String ToString() const;
+	FPath( FPath& other );
 
-	const String& GetDirectory() const;
-	const String& GetFilename() const;
-	const String& GetExtention() const;
+	bool IsValid() const;
+	const char* GetFullPath() const;
+	void SetPath( const char* Path );
+	void Concat( const char* Path );
 
-protected:
-	String m_Directory;
-	String m_Filename;
-	String m_Extention;
+	char m_Path[HE_MAX_PATH];
 
 };
 
@@ -24,22 +23,4 @@ protected:
 // Inline function implementations
 //
 
-inline const String& FPath::ToString() const
-{
-	return GetDirectory() + GetFilename() + GetExtention();
-}
-
-inline const String& FPath::GetDirectory() const
-{
-	return m_Directory;
-}
-
-inline const String& FPath::GetFilename() const
-{
-	return m_Filename;
-}
-
-inline const String& FPath::GetExtention() const
-{
-	return m_Extention;
-}
+#include "Path.inl"

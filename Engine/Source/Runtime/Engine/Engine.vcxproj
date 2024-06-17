@@ -619,7 +619,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -629,7 +629,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -645,7 +645,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -655,7 +655,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -671,7 +671,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -694,7 +694,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -717,7 +717,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_WITH_EDITOR=1;HE_DEBUG_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_DEBUG_THREADS;HE_DEBUG_FILESYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -740,7 +740,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -750,7 +750,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -766,7 +766,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -776,7 +776,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;..\..\Editor\HelixEd\Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -792,7 +792,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -815,7 +815,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -838,7 +838,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEVELOPMENT=1;HE_WITH_EDITOR=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -861,7 +861,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -871,7 +871,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -890,7 +890,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -900,7 +900,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -919,7 +919,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -942,7 +942,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -965,7 +965,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEBUG_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -988,7 +988,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -998,7 +998,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -1017,7 +1017,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -1027,7 +1027,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -1046,7 +1046,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -1069,7 +1069,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -1092,7 +1092,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_DEBUG=1;HE_DEMO_GAME=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_ENABLE_LOGS;HE_ENABLE_ASSERTS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -1115,7 +1115,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -1128,7 +1128,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN64;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -1149,7 +1149,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -1162,7 +1162,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT=\"../../../..\";HE_WIN32;HE_WINDOWS_DESKTOP;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
@@ -1183,7 +1183,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_DURANGO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -1211,7 +1211,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_WINDOWS_UNIVERSAL;HE_XBOX;HE_SCORPIO;HE_GAME_CONSOLE;HE_WINDOWS;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -1239,7 +1239,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HE_PS5;HE_SHIPPING=1;_CRT_SECURE_NO_WARNINGS;ENGINE_MODULE=1;R_WITH_D3D12=1;HELIX_ENGINE_ROOT="../../../..";HE_PLAYSTATION;HE_PROSPERO;HE_GAME_CONSOLE;HE_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Public;Private\PCH;..\Core\Public;..\Math\Public;..\Renderer\Public;..\Physics\Public;..\Scripting\Public;..\..\..\ThirdParty\rapidxml-1.13\Include;..\..\..\ThirdParty\Rapidjson\include;..\..\..\ThirdParty\LuaPlus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>

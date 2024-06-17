@@ -14,7 +14,7 @@ typedef Ref< TDynamicArray<uint8> > ByteArray;
 struct DataBlob
 {
 	friend class FileSystem;
-	const uint32 kInvalidDataSize = -1;
+	const uint32 kInvalidDataSize = 0;
 public:
 	DataBlob()
 		: m_DataSize(0)
@@ -32,11 +32,29 @@ public:
 		m_ByteArray = NULL;
 		m_DataSize = kInvalidDataSize;
 	}
+	inline DataBlob( DataBlob& other )
+	{
+		*this = other;
+	}
+	inline DataBlob& operator=(const DataBlob& other )
+	{
+		if (this == &other)
+			return *this;
+
+		m_ByteArray = other.m_ByteArray;
+		m_DataSize = other.m_DataSize;
+
+		return *this;
+	}
 	inline TDynamicArray<uint8>* operator->()
 	{
 		return m_ByteArray.Get();
 	}
 	inline uint8* GetBufferPointer()
+	{
+		return m_ByteArray.Get()->Data();
+	}
+	inline const uint8* GetBufferPointer() const
 	{
 		return m_ByteArray.Get()->Data();
 	}

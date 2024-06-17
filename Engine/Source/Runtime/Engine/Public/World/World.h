@@ -11,6 +11,7 @@
 #include "UI/Panel.h"
 #include "UI/Label.h"
 #include "Input/InputEnums.h"
+#include "Path.h"
 
 
 class HLevel;
@@ -42,7 +43,7 @@ public:
 	HWorld();
 	virtual ~HWorld();
 
-	void Initialize( const Char* LevelURL );
+	void Initialize( const FPath& LevelURL );
 	void Initialize();
 	void Save();
 	void Flush();
@@ -123,7 +124,7 @@ protected:
 	HPhysicsScene m_PhysicsScene;
 
 	ACharacter* m_pPlayerCharacter;
-	String m_Filepath;
+	FPath m_LevelFilepath;
 
 	HCameraComponent* m_RenderingCamera;
 	FViewportContext* m_pRenderingViewport;
@@ -191,7 +192,7 @@ FORCEINLINE void HWorld::AddPanel( FUIPanel* pPanel )
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Trying to add a UI panel to the world but it was already added!" ) );
+		HE_LOG( Warning, TEXT( "Trying to add a UI panel to the world but it was already added! Doing nothing for now." ) );
 	}
 }
 

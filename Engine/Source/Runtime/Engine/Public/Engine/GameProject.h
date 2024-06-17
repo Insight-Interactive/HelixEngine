@@ -23,29 +23,38 @@ public:
 	const char* GetProjectRoot() const;
 	const char* GetConfigFolder() const;
 	const char* GetContentFolder() const;
-	const String GetDefaultLevelPath() const;
+	const void GetDefaultLevelPath( FPath& outPath ) const;
 
+	/*
+		Returns the full path for a piece of content located in the Game project's root directory.
+		HelixEngine/Game/AssetName
+	*/
 	void GetProjectDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
 	{
-		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ProjectRoot );
-	}
-
-	void GetConfigDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
-	{
-		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ConfigDirectory );
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ProjectRoot.m_Path );
 	}
 
 	/*
-		Returns the full path for a piece of content located in the project's Content directory.
+		Returns the full path for a piece of content located in the Game project's Config directory.
+		HelixEngine/Game/Config/AssetName
+	*/
+	void GetConfigDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
+	{
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ConfigDirectory.m_Path );
+	}
+
+	/*
+		Returns the full path for a piece of content located in the Game project's Content directory.
+		HelixEngine/Game/Content/AssetName
 	*/
 	void GetContentDirectoryFullPath( const char* AssetName, char* PathDestination, const uint32& DestinationLength )
 	{
-		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ContentDirectory );
+		AppendAssetToPath( AssetName, PathDestination, DestinationLength, m_ContentDirectory.m_Path );
 	}
 
 
 	const HName& GetGameName() const;
-	const HName& GetProjectName() const;
+	const char* GetProjectName() const;
 
 protected:
 	FGameProject();
@@ -54,33 +63,31 @@ protected:
 	/*
 		Loads a game project from *.hproject
 	*/
-	void Startup( const Char* HProjectFilpath );
-	void SetProjectRootDirectory( const Char* ProjectRoot );
+	void Startup( FPath& HProjectFilpath );
+	void SetProjectRootDirectory( const char* ProjectRoot );
 
 private:
-	HName m_ProjectName;
+	char m_ProjectName[64];
 
-	FileRef m_HProject;
-
-	char m_ProjectRoot[HE_MAX_PATH];
-	char m_ConfigDirectory[HE_MAX_PATH];
-	char m_ContentDirectory[HE_MAX_PATH];
+	FPath m_ProjectRoot;
+	FPath m_ConfigDirectory;
+	FPath m_ContentDirectory;
 };
 
 #undef AppendAssetToPath
 
 FORCEINLINE const char* FGameProject::GetProjectRoot() const
 {
-	return m_ProjectRoot;
+	return m_ProjectRoot.GetFullPath();
 }
 FORCEINLINE const char* FGameProject::GetConfigFolder() const
 {
-	return m_ConfigDirectory;
+	return m_ConfigDirectory.GetFullPath();
 }
 
 FORCEINLINE const char* FGameProject::GetContentFolder() const
 {
-	return m_ContentDirectory;
+	return m_ContentDirectory.GetFullPath();
 }
 
 FORCEINLINE const HName& FGameProject::GetGameName() const
@@ -88,22 +95,22 @@ FORCEINLINE const HName& FGameProject::GetGameName() const
 	return FApp::GetInstance()->GetName();
 }
 
-FORCEINLINE const HName& FGameProject::GetProjectName() const
+FORCEINLINE const char* FGameProject::GetProjectName() const
 {
 	return m_ProjectName;
 }
 
-FORCEINLINE void FGameProject::SetProjectRootDirectory( const Char* ProjectRoot )
+FORCEINLINE void FGameProject::SetProjectRootDirectory( const char* ProjectRoot )
 {
 #if HE_STANDALONE && !HE_DEMO_GAME
 	"Data\\";
 	sprintf_s( m_ProjectRoot, sizeof( m_ProjectRoot ), "Data\\" );
 #else	
-	sprintf_s( m_ProjectRoot, sizeof( m_ProjectRoot ), ProjectRoot );
+	m_ProjectRoot.SetPath( ProjectRoot );
 #endif
-	strcpy_s( m_ContentDirectory, m_ProjectRoot );
-	strcat_s( m_ContentDirectory, "Content\\" );
+	m_ContentDirectory.SetPath( m_ProjectRoot.m_Path );
+	m_ContentDirectory.Concat( "Content\\" );
 
-	strcpy_s( m_ConfigDirectory, m_ProjectRoot );
-	strcat_s( m_ConfigDirectory, "Config\\" );
+	m_ConfigDirectory.SetPath( m_ProjectRoot.m_Path );
+	m_ConfigDirectory.Concat( "Config\\" );
 }

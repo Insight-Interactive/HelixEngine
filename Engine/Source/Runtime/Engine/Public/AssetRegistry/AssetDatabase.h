@@ -20,6 +20,8 @@ static const char* kAssetManifestFilename = "AssetManifest.json";
 	Master database containing specialized databases for all project assets. Does not hold data for assets,
 	just references on where to find them on disk. The use of global asset mangers (such as GTextureManager)
 	should should not be used; use this class instead.
+
+	All assets must abide by the folder structure.
 */
 class FAssetDatabase
 {
@@ -37,7 +39,6 @@ public:
 	static HFont GetFont( const char* FontName );
 
 	static String LookupShaderPath( const FGUID& Guid );
-	static HFont GetFont( const FGUID& FontGuid );
 
 
 protected:
@@ -72,18 +73,18 @@ private:
 
 /*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
 {
-	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
-	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( Path );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( Path.m_Path );
 	HE_ASSERT( Mesh->IsValid() );
 	return Mesh;
 }
 
 /*static*/ FORCEINLINE HTexture FAssetDatabase::GetTexture( const char* TextureName )
 {
-	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%sTextures\\%s", FGameProject::GetInstance()->GetContentFolder(), TextureName );
-	HTexture Texture = GTextureManager.LoadTexture( Path, DT_Magenta2D, false );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sTextures\\%s", FGameProject::GetInstance()->GetContentFolder(), TextureName );
+	HTexture Texture = GTextureManager.LoadTexture( Path.m_Path, DT_Magenta2D, false );
 	HE_ASSERT( Texture.IsValid() );
 
 	return Texture;
@@ -91,9 +92,9 @@ private:
 
 /*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const char* MaterialName )
 {
-	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%sMaterials\\%s", FGameProject::GetInstance()->GetContentFolder(), MaterialName );
-	HMaterial Material = GMaterialManager.FindOrLoadMaterialFromFile( Path );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sMaterials\\%s", FGameProject::GetInstance()->GetContentFolder(), MaterialName );
+	HMaterial Material = GMaterialManager.FindOrLoadMaterialFromFile( Path.m_Path );
 	HE_ASSERT( Material.IsValid() );
 
 	return Material;
@@ -101,18 +102,18 @@ private:
 
 /*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const char* ScriptName )
 {
-	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%sScripts\\%s", FGameProject::GetInstance()->GetContentFolder(), ScriptName );
-	LuaScriptRef Script = GScriptManager.FindOrLoadScript( Path );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sScripts\\%s", FGameProject::GetInstance()->GetContentFolder(), ScriptName );
+	LuaScriptRef Script = GScriptManager.FindOrLoadScript( Path.m_Path );
 
 	return Script;
 }
 
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const char* FontName )
 {
-	char Path[HE_MAX_PATH];
-	sprintf_s( Path, "%sFonts\\%s", FGameProject::GetInstance()->GetContentFolder(), FontName );
-	HFont Font = GFontManager.FindOrLoadFont( Path );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sFonts\\%s", FGameProject::GetInstance()->GetContentFolder(), FontName );
+	HFont Font = GFontManager.FindOrLoadFont( Path.m_Path );
 
 	return Font;
 }

@@ -12,6 +12,7 @@
 #include "Renderer/ShaderRegisters.h"
 #include "Renderer/ShaderReflection.h"
 #include "Renderer/ConstantBufferStructures.h"
+#include "Shader.h"
 
 
 // FMaterial
@@ -161,14 +162,16 @@ void FMaterial::BuildPipelineState()
 	RootSigName += StringHelper::UTF8ToUTF16( GetDebugName() );
 #endif
 	const WChar* name = RootSigName.c_str();
+	FShader VertexShader;
+	FShader PixelShader;
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( FAssetDatabase::LookupShaderPath( m_VertexShaderGuid ).c_str() );
-	DataBlob PSShader = FileSystem::ReadRawData( FAssetDatabase::LookupShaderPath( m_PixelShaderGuid ).c_str() );
+	VertexShader.LoadFromFile( FAssetDatabase::LookupShaderPath( m_VertexShaderGuid ).c_str() );
+	PixelShader.LoadFromFile( FAssetDatabase::LookupShaderPath( m_PixelShaderGuid ).c_str() );
 
-	FShaderReflection VertexReflection( VSShader.GetBufferPointer(), VSShader.GetDataSize() );
-	FShaderReflection PixelReflection( PSShader.GetBufferPointer(), PSShader.GetDataSize() );
+	FShaderReflection VertexReflection( VertexShader );
+	FShaderReflection PixelReflection( PixelShader );
 
 	const uint32 kNumStaticSamplers = (PixelReflection.GetNumTextureNormalInstructions() > 0) ? 1 : 0; // TODO: "1" should be the number of static samplers used in the shader
 	const uint32 NumResources = (PixelReflection.GetNumBoundResources() + VertexReflection.GetNumBoundResources()) - kNumStaticSamplers;
@@ -180,8 +183,8 @@ void FMaterial::BuildPipelineState()
 
 
 	FPipelineStateDesc PSODesc = {};
-	PSODesc.VertexShader					= { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
-	PSODesc.PixelShader						= { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.VertexShader					= { VertexShader.GetData(), VertexShader.GetDataSize() };
+	PSODesc.PixelShader						= { PixelShader.GetData(), PixelShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs	= GSceneMeshInputElements;
 	PSODesc.InputLayout.NumElements			= kNumSceneMeshCommonInputElements;
 	PSODesc.pRootSignature					= &m_RootSig;

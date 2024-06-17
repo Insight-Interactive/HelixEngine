@@ -87,6 +87,9 @@
     <ClInclude Include="Public\Path.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Path.inl">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Ref.h">
       <Filter>Public</Filter>
     </ClInclude>

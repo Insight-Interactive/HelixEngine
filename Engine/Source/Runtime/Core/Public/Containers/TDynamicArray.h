@@ -36,6 +36,7 @@ public:
 		@returns Pointer to the beginning of the data pool.
 	*/
 	INLINE ElementType* Data();
+	INLINE const ElementType* Data() const;
 
 	/*
 		Returns a constant pointer to the beginning of the collection in memory.

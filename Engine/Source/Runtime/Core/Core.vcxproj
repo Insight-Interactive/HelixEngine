@@ -1112,6 +1112,7 @@
     <ClInclude Include="Public\Logger.h" />
     <ClInclude Include="Public\MathCommon.h" />
     <ClInclude Include="Public\Path.h" />
+    <ClInclude Include="Public\Path.inl" />
     <ClInclude Include="Public\Ref.h" />
     <ClInclude Include="Public\Ref.inl" />
     <ClInclude Include="Public\Scope.h" />

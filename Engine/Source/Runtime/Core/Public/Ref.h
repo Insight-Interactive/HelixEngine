@@ -29,6 +29,11 @@ public:
 		return m_Ptr.get();
 	}
 
+	inline const T* Get() const
+	{
+		return m_Ptr.get();
+	}
+
 	inline bool operator != ( const Ref<T>& rhs )
 	{
 		return m_Ptr != rhs.m_Ptr;

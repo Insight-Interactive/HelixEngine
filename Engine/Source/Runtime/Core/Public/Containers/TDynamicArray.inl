@@ -80,6 +80,12 @@ INLINE ElementType* TDynamicArray<ElementType>::Data()
 }
 
 template<typename ElementType>
+INLINE const ElementType* TDynamicArray<ElementType>::Data() const
+{
+	return m_Data;
+}
+
+template<typename ElementType>
 INLINE const ElementType* TDynamicArray<ElementType>::DataConst()
 {
 	return RCast<const ElementType*>(m_Data);

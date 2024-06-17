@@ -41,6 +41,7 @@ struct FConstantBufferReflection
 	std::vector<FShaderVariableDescription> Variables;
 };
 
+class FShader;
 
 /*
 	Reflects a shader and gives runtime information about it.
@@ -48,6 +49,7 @@ struct FConstantBufferReflection
 class FShaderReflection
 {
 public:
+	FShaderReflection(const FShader& Shader);
 	FShaderReflection(const uint8* pShaderData, const uint32& ShaderDataSize);
 	~FShaderReflection();
 
