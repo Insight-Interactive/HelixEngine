@@ -14,7 +14,7 @@ project ("Core")
     targetdir ( heGetBuildFolder() )
     objdir ( heGetBuildIntFolder() )
 
-    pchheader("CorePCH.h")
+    pchheader("Private/PCH/CorePCH.h")
     pchsource("Private/PCH/CorePCH.cpp")
 
     files

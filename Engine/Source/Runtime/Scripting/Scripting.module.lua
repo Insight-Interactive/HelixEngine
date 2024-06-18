@@ -11,7 +11,6 @@ project ("Scripting")
 	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 	

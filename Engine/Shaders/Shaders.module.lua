@@ -6,7 +6,6 @@ project ("Shaders")
 	kind ("Utility")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en-US")
 
     --filter{ "configurations:DebugEditor or Development" }
 	    targetdir( heGetBuildFolder() .. "/Shaders/Core/" )

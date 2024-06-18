@@ -11,11 +11,10 @@ project ("Physics")
 	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
-	defaultlanguage ("en")
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 
-	pchheader("PhysicsPCH.h")
+	pchheader("Private/PCH/PhysicsPCH.h")
 	pchsource("Private/PCH/PhysicsPCH.cpp")
 
 	files

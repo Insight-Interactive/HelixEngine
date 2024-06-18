@@ -12,15 +12,9 @@ project ("Engine")
 	staticruntime ("On")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
-<<<<<<< Updated upstream
-	defaultlanguage ("en")
-	locale("en-US")
-=======
-	--defaultlanguage ("en-US")
->>>>>>> Stashed changes
 	targetdir( heGetBuildFolder() )
 	objdir( heGetBuildIntFolder() )
-	pchheader("EnginePCH.h")
+	pchheader("Private/PCH/EnginePCH.h")
 	pchsource("Private/PCH/EnginePCH.cpp")
 
 

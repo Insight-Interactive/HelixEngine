@@ -14,7 +14,7 @@ project ("UnitTests")
     targetdir( heGetBuildFolder() )
     objdir( heGetBuildIntFolder() )
 
-    pchheader("PCH.h")
+    pchheader("Private/PCH/PCH.h")
     pchsource("Private/PCH/PCH.cpp")
 
     files
