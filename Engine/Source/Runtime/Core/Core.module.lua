@@ -10,11 +10,7 @@ project ("Core")
     staticruntime ("On")
     targetname ("Helix-%{prj.name}")
     systemversion ("10.0.18362.0:latest")
-<<<<<<< Updated upstream
     defaultlanguage ("en")
-=======
-    --defaultlanguage ("en-US")
->>>>>>> Stashed changes
     targetdir ( heGetBuildFolder() )
     objdir ( heGetBuildIntFolder() )
 
