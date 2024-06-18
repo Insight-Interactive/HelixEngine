@@ -37,11 +37,15 @@ HE_DECLARE_CONSTANT_BUFFER(SceneConstants_CB, kSceneConstantsReg)
     float kWorldTime;
     float kCameraNearZ;
     float kCameraFarZ;
+
+    float SCPad[58];
 }
 
 HE_DECLARE_CONSTANT_BUFFER(MeshWorld_CB, kMeshWorldReg)
 {
     float4x4 kWorldMat;
+
+    float MWPad[48];
 }
 
 HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
@@ -52,6 +56,8 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
 	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+ 
+    float LightPad[60];
 }
 
 

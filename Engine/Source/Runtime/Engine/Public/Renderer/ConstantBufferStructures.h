@@ -18,9 +18,7 @@ typedef Handle DirectionalLightDataHandle;
 #define IE_INVALID_POINT_LIGHT_HANDLE		( PointLightDataHandle		(-1) )
 #define IE_INVALID_DIRECTIONAL_LIGHT_HANDLE	( DirectionalLightDataHandle(-1) )
 
-const float kDefaultBrightness = 20.f;
-
-HE_ALIGN( 16 ) struct SceneConstantsCBData
+struct SceneConstantsCBData
 {
 	FMatrix kViewMat;
 	FMatrix kProjMat;
@@ -30,28 +28,42 @@ HE_ALIGN( 16 ) struct SceneConstantsCBData
 	float kWorldTime;
 	float kCameraNearZ;
 	float kCameraFarZ;
+	
+	float Pad[58];
 };
-HE_ALIGN( 16 ) struct MeshWorldCBData
+static_assert((sizeof( SceneConstantsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+
+struct MeshWorldCBData
 {
 	// World space model matrix.
 	FMatrix kWorldMat;
+	
+	float Pad[48];
 };
-HE_ALIGN( 16 ) struct MaterialConstantsCBData
+static_assert((sizeof( MeshWorldCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+
+struct MaterialConstantsCBData
 {
 	// Color override.
 	FVector4 kColor;
+	
+	float Pad[60];
 };
+static_assert((sizeof( MaterialConstantsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 
-HE_ALIGN( 16 ) struct WireframeParamsCBData
+struct WireframeParamsCBData
 {
 	FVector3 kColor;
 	float kOpacity;
+	
+	float Pad[60];
 };
+static_assert((sizeof( WireframeParamsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 
 // Light Structures
 // Keep these in sync with "Shaders/Public/Core/LightsFwd.hlsli"
 //
-HE_ALIGN( 16 ) struct PointLightCBData
+struct PointLightCBData
 {
 	// The position of the light in world space.
 	FVector3				Position;
@@ -67,8 +79,11 @@ HE_ALIGN( 16 ) struct PointLightCBData
 
 	// The unique identifier of the light.
 	PointLightDataHandle	Id;
+
+	float Pad[55];
 };
-HE_ALIGN( 16 ) struct DirectionalLightCBData
+static_assert((sizeof( PointLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+struct DirectionalLightCBData
 {
 	// The direction of the light.
 	FVector4						Direction;
@@ -81,27 +96,35 @@ HE_ALIGN( 16 ) struct DirectionalLightCBData
 
 	// The unique identifier of the light.
 	DirectionalLightDataHandle		Id;
+
+	float Pad[54];
 };
-HE_ALIGN( 16 ) struct SpotLightCBData
+static_assert((sizeof( DirectionalLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+struct SpotLightCBData
 {
 	float					TEMP;
 	SpotLightDataHandle		Id;
+	
+	float Pad[62];
 };
+static_assert((sizeof( SpotLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 struct SceneLightsCBData
 {
 	uint32					NumPointLights;
 	uint32					NumDirectionalLights;
 	float					Unused0[2];
 
-	PointLightCBData			PointLights[HE_MAX_POINT_LIGHTS];
+	PointLightCBData		PointLights[HE_MAX_POINT_LIGHTS];
 	DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 	//TODO: SpotLightData			SpotLights[HE_MAX_SPOT_LIGHTS];
+
+	float Pad[60];
 };
+static_assert((sizeof( SceneLightsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 HE_ALIGN( 16 ) struct PostProcessSettings
 {
 
 };
-
 // Input layouts.
 extern FInputElementDesc g_SceneMeshInputElements[];
 extern const uint32 kNumSceneMeshCommonInputElements;
