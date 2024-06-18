@@ -297,7 +297,7 @@ typedef std::stringstream TStringStream;
 #if HE_COMPILE_MSVC
 #	define HE_DISABLE_MSVC_WARNINGS				\
 	HE_PRAGMA ( warning ( push )	)			\
-	HE_PRAGMA ( warning ( disable : 26812) )	 // The enum type '<SomeType>' is unscoped.Prefer 'enum class' over 'enum'
+	HE_PRAGMA ( warning ( disable : 26812) )	 // The enum type '<SomeType>' is unscoped. Prefer 'enum class' over 'enum'
 
 
 #	define HE_RESTORE_MSVC_WARNINGS \

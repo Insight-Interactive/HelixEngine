@@ -12,6 +12,7 @@ project ("PackageCooker")
 	staticruntime ("On")
 	targetname ("%{prj.name}")
 	systemversion ("latest")
+	
 	targetdir( heGetBuildFolder() )
 	objdir( heGetBuildIntFolder() )
 	pchheader("PackageCookerPCH.h")

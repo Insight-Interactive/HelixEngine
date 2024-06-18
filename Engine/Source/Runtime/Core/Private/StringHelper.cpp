@@ -21,7 +21,7 @@ namespace StringHelper
 
 	String GetDirectoryFromPath(const String& filepath)
 	{
-		size_t off1 = filepath.find_last_of(TEXT('\\'));
+		size_t off1 = filepath.find_last_of(HE_TEXT('\\'));
 		size_t off2 = filepath.find_last_of(TEXT('/'));
 		if (off1 == String::npos && off2 == String::npos) //If no slash or backslash in path?
 		{

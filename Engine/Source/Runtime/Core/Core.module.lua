@@ -9,8 +9,7 @@ project ("Core")
     cppdialect ("C++17")
     staticruntime ("On")
     targetname ("Helix-%{prj.name}")
-    systemversion ("10.0.18362.0:latest")
-    defaultlanguage ("en")
+    --defaultlanguage ("en-US")
     targetdir ( heGetBuildFolder() )
     objdir ( heGetBuildIntFolder() )
 
@@ -54,11 +53,20 @@ project ("Core")
     
 
     filter ("platforms:Win64 or Win32")
+        systemversion ("10.0.18362.0:latest")
         files
         {
             "Private/Windows/Desktop/**.h",
             "Private/Windows/Desktop/**.cpp",
             "Private/Windows/Desktop/**.inl",
+        }
+
+    filter ("platforms:MacOSX")
+        files
+        {
+            "Private/MacOSX/Desktop/**.h",
+            "Private/MacOSX/Desktop/**.cpp",
+            "Private/MacOSX/Desktop/**.inl",
         }
 
    filter ("platforms:Durango or Scorpio")

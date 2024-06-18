@@ -11,6 +11,7 @@ project ("HelixEd")
 	staticruntime ("On")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
+	
 	targetdir ( heGetBuildFolder() )
 	objdir ( heGetBuildIntFolder() )
 

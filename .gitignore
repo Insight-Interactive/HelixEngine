@@ -384,3 +384,5 @@ build/
 
 # Backup files
 *~.nib
+
+*.xcscheme
