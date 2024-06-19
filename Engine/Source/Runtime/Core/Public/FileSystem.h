@@ -4,7 +4,7 @@
 #include "CoreFwd.h"
 
 #include "DataTypeWrappers.h"
-
+#include "Path.h"
 
 class FileSystem
 {
@@ -77,6 +77,7 @@ class File
 public:
 	File( const Char* pFilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
 	File( const String& FilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
+	File( const FPath& FilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode );
 	File();
 	~File();
 
@@ -163,6 +164,11 @@ FORCEINLINE File::File( const Char* pFilePath, EFileUsageMode UsageMode, EConten
 
 FORCEINLINE File::File( const String& Filepath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
 	: File(Filepath.c_str(), UsageMode, ContentUsageMode)
+{
+}
+
+FORCEINLINE File::File( const FPath& FilePath, EFileUsageMode UsageMode, EContentMode ContentUsageMode )
+	: File( FilePath.GetFullPath(), UsageMode, ContentUsageMode)
 {
 }
 

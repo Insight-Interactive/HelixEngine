@@ -71,8 +71,8 @@
             },
             {
               "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "a5b1d8a5-f186-4298-b36e-9bd840e14c6b",
-              "m_MaterialAsset": "d7d2911a-0461-4a69-b28d-259389c45f87"
+              "m_MeshAsset": "Sphere.fbx",
+              "m_MaterialAsset": "M_Wood.hmat"
             }
           ]
         }

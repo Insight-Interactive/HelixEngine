@@ -137,7 +137,7 @@ void FRenderDevice::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** 
 	(*ppAdapter)->GetDesc1(&Desc);
 	
 	::wcscpy_s(OutDeviceQueryResult.DeviceName, Desc.Description);
-	R_LOG(Log, TEXT("\"%s\" selected as D3D 12 graphics hardware."), OutDeviceQueryResult.DeviceName);
+	R_LOG(Log, TEXT("\"%s\" selected as D3D12 graphics hardware."), OutDeviceQueryResult.DeviceName);
 }
 
 void FRenderDevice::UnInitialize()

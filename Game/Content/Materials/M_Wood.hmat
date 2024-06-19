@@ -9,8 +9,8 @@
       "IsTwoSided": false
     },
     {
-      "MaterialAlbedo": "149ac663-a662-4d51-a57b-8253b53f80bc",
-      "MaterialNormal": "22f34b3e-b377-4ec5-9e47-dd2aa1225216"
+      "MaterialAlbedo": "Hardwood/Hardwood_Albedo.dds",
+      "MaterialNormal": "Hardwood/Hardwood_Normal.dds"
     },
     {
       "kOpacity": 0.7

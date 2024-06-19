@@ -7,7 +7,6 @@
 #include "CommandContext.h"
 #include "CommandManager.h"
 #include "TextureManager.h"
-#include "GeometryBufferManager.h"
 #include "ConstantBuffer.h"
 #include "ModelManager.h"
 

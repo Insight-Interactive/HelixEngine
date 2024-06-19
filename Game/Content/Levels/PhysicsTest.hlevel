@@ -4,7 +4,7 @@
             "Name": "Physics Test"
         },
         {
-            "2884a2e4-d3c2-4b64-ac0a-4fba85c65a0d":[
+            "GroundFloor.hactor":[
                 {
                     "PositionX": 0.0,
                     "PositionY": 0.0,
@@ -17,7 +17,7 @@
                     "ScaleZ": 1.0
                 }
             ],
-            "4a207c51-3a70-4031-892f-4c6f21673240": [
+            "PhysicsTestActors/PhysicsCube.hactor": [
                 {
                     "PositionX": 0.0,
                     "PositionY": 40.0,
@@ -30,7 +30,7 @@
                     "ScaleZ": 1.0
                 }
             ],
-            "3b781ea0-f649-4b0f-843e-e926c9ac3fdb":[
+            "PhysicsTestActors/PhysicsSphere.hactor":[
                 {
                     "PositionX": 50.0,
                     "PositionY": 40.0,
@@ -43,7 +43,7 @@
                     "ScaleZ": 1.0
                 }
             ],
-            "233270a0-296d-42cb-beca-aa4b8ffc256e":[
+            "PhysicsTestActors/PhysicsCapsule.hactor":[
                 {
                     "PositionX": -50.0,
                     "PositionY": 40.0,

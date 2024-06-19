@@ -20,8 +20,8 @@ HPointLightComponent::HPointLightComponent( FComponentInitArgs& InitArgs )
 	if (GetCanDrawDebugBillboard())
 	{
 		m_MeshWorldCB.Create( L"[PointLight Component] World CB" );
-		m_MaterialRef = FAssetDatabase::GetMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ) );
-		m_LightDebugMesh = FAssetDatabase::GetStaticMesh( FGUID::CreateFromString( "4539421c-d8b4-4936-bb0c-8dde1e24f9b9" ) );// GeometryGenerator::GenerateScreenAlignedQuadMesh();
+		m_MaterialRef = FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ); // TODO Make a material for this
+		m_LightDebugMesh = FAssetDatabase::GetStaticMesh( "Cube.fbx" );// GeometryGenerator::GenerateScreenAlignedQuadMesh();
 	}
 
 	//FMaterialInstance matinst;
@@ -105,8 +105,7 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 		m_BillboardTransform.LookAt( Camera->GetWorldPosition() );
 
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 

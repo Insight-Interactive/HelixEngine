@@ -13,6 +13,8 @@
 */
 class RENDER_API HStaticMeshGeometry : public FMeshGeometry
 {
+	friend class FStaticGeometryManager;
+	friend class FAssetDatabase;
 public:
 	HStaticMeshGeometry()
 	{
@@ -21,7 +23,6 @@ public:
 	{
 	}
 
-private:
-
 };
+
 

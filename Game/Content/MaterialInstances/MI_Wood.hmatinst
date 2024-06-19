@@ -2,7 +2,7 @@
     "FMaterialInstance":[
         {
             "m_GUID": "da0724e5-eb70-4fbc-aeac-813ae0aade04",
-            "ParentGUID": "d7d2911a-0461-4a69-b28d-259389c45f87"
+            "ParentMaterial": "M_Wood.hmat"
         },
         {
             "MaterialAlbedo": "149ac663-a662-4d51-a57b-8253b53f80bc",

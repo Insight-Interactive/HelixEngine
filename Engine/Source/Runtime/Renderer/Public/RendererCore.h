@@ -30,7 +30,6 @@ class FCommandManager;
 class FContextManager;
 class FCommandContext;
 class FConstantBufferManager;
-class FGeometryBufferManager;
 class FTextureManager;
 class FFontManager;
 class FAnimationManager;
@@ -50,8 +49,6 @@ extern FCommandManager GCommandManager;
 extern FContextManager GContextManager;
 // Graphics rendering device.
 extern FRenderDevice GGraphicsDevice;
-// Geometry buffer overloard.
-extern FGeometryBufferManager GGeometryBufferManager;
 // Texture overlord.
 extern FTextureManager GTextureManager;
 // Font overlord.

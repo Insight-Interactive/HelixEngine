@@ -8,8 +8,8 @@
 #include "CommandManager.h"
 #include "CommandContext.h"
 #include "TextureManager.h"
-#include "GeometryBufferManager.h"
 #include "AnimationManager.h"
+
 
 // -----------------------------
 //	Extern Variable Definitions
@@ -18,7 +18,6 @@
 FCommandManager GCommandManager;
 FContextManager GContextManager;
 FRenderDevice GGraphicsDevice;
-FGeometryBufferManager GGeometryBufferManager;
 FTextureManager GTextureManager;
 FTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;

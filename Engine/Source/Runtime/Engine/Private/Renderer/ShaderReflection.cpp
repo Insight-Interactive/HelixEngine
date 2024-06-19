@@ -1,7 +1,14 @@
 #include "EnginePCH.h"
 
 #include "Renderer/ShaderReflection.h"
+#include "Shader.h"
 
+
+FShaderReflection::FShaderReflection( const FShader& Shader )
+	: m_pReflector( NULL )
+{
+	ReflectShader_Internal( Shader.GetData(), Shader.GetDataSize());
+}
 
 FShaderReflection::FShaderReflection(const uint8* pShaderData, const uint32& ShaderDataSize)
 	: m_pReflector( NULL )

@@ -8,7 +8,6 @@
 
 FGameProject::FGameProject()
 {
-
 }
 
 FGameProject::~FGameProject()
@@ -16,10 +15,10 @@ FGameProject::~FGameProject()
 
 }
 
-void FGameProject::Startup( const Char* HProjectFilpath )
+void FGameProject::Startup( FPath& HProjectFilpath )
 {
 	rapidjson::Document WorldJsonDoc;
-	m_HProject->Load( HProjectFilpath, FUM_Read, CM_Text );
+	FileRef m_HProject( HProjectFilpath, FUM_Read, CM_Text );
 	if (m_HProject->IsOpen())
 	{
 		JsonUtility::LoadDocument( m_HProject, WorldJsonDoc );
@@ -31,14 +30,11 @@ void FGameProject::Startup( const Char* HProjectFilpath )
 			JsonUtility::GetString( WorldJsonDoc, "GameName", NameBuffer, sizeof( NameBuffer ) );
 			FApp::GetInstance()->SetName( CharToTChar( String( NameBuffer) ) );
 
-			ZeroMemory( NameBuffer, sizeof( NameBuffer ) );
-
 			// Set project name.
-			JsonUtility::GetString( WorldJsonDoc, "ProjectName", NameBuffer, sizeof( NameBuffer ) );
-			m_ProjectName = CharToTChar( String( NameBuffer ) );
+			JsonUtility::GetString( WorldJsonDoc, "ProjectName", m_ProjectName, sizeof( m_ProjectName ) );
 		}
 	
-		String ProjectRoot = StringHelper::GetDirectoryFromPath( HProjectFilpath ) + "\\";
+		String ProjectRoot = StringHelper::GetDirectoryFromPath( HProjectFilpath.GetFullPath() ) + "\\";
 		SetProjectRootDirectory( ProjectRoot.c_str() );
 	}
 	else
@@ -47,18 +43,23 @@ void FGameProject::Startup( const Char* HProjectFilpath )
 	}
 }
 
-const String FGameProject::GetDefaultLevelPath() const
+const void FGameProject::GetDefaultLevelPath( FPath& outPath ) const
 {
+	HE_ASSERT( m_ProjectRoot.IsValid() ); // Project was not initialized yet!
+
 	rapidjson::Document WorldJsonDoc;
 
-	JsonUtility::LoadDocument( m_HProject, WorldJsonDoc );
+	FPath HProjectPath;
+	HProjectPath.SetPath( m_ProjectRoot.GetFullPath() );
+	HProjectPath.Concat( "Game.hproject" );
+
+	FileRef HProject( HProjectPath, FUM_Read, CM_Text );
+	JsonUtility::LoadDocument( HProject, WorldJsonDoc );
 	if (WorldJsonDoc.IsObject())
 	{
-		Char LevelPath[HE_MAX_PATH];
+		char LevelPath[HE_MAX_PATH];
 		JsonUtility::GetString( WorldJsonDoc, "DefaultLevel", LevelPath, sizeof( LevelPath ) );
 
-		return GetContentFolder() + "/" + String(LevelPath);
+		FGameProject::GetInstance()->GetContentDirectoryFullPath( LevelPath, outPath.m_Path, sizeof( outPath.m_Path ) );
 	}
-
-	return String( "" );
 }

@@ -44,8 +44,10 @@ void EditorUIContext::Setup()
 		IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;			// Enable Window Independence
 		IO.ConfigWindowsMoveFromTitleBarOnly = true;
 		IO.ConfigDockingAlwaysTabBar = true;
-		String FontDir = FGameProject::GetInstance()->GetContentFullPath( "Engine/Fonts/Cousine-Regular.ttf" );
-		IO.Fonts->AddFontFromFileTTF( FontDir.c_str(), 15.0f );
+		
+		char Path[HE_MAX_PATH];
+		FGameProject::GetInstance()->GetContentDirectoryFullPath( "Engine/Fonts/Cousine-Regular.ttf", Path, sizeof( Path ) );
+		IO.Fonts->AddFontFromFileTTF( Path, 15.0f );
 		IO.IniFilename = NULL;
 	}
 

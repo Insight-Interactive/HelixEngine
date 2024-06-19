@@ -91,9 +91,7 @@ StaticMeshGeometryRef FGeometryManager::ProcessMesh( aiMesh* mesh, const aiScene
 
 
 	// Create the mesh geometry, register it with the GPU and cache it.
-	HHash NameHash = StringHash( mesh->mName.C_Str(), mesh->mName.length );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( mesh->mName.C_Str() );
-	pMesh->SetHashName( NameHash );
 	pMesh->Create(
 		Vertices.data(), (uint32)Vertices.size(), sizeof(FVertex3D),
 		Indices.data(), (uint32)Indices.size() * sizeof( uint32 ), (uint32)Indices.size()
@@ -263,7 +261,7 @@ void ParseBoneWeights( const std::vector<FJoint>& Joints, const aiMesh* pMesh, s
 
 SkeletalMeshGeometryRef FGeometryManager::SK_ParseMeshes( const aiScene* pScene )
 {
-	HManagedSkeletalMeshGeometry* pSkeletalMesh = new HManagedSkeletalMeshGeometry( pScene->mName.C_Str() );
+	HManagedSkeletalMeshGeometry* pSkeletalMesh = new HManagedSkeletalMeshGeometry( "TEMP SK NAME");
 	pSkeletalMesh->m_Meshes.resize( pScene->mNumMeshes );
 
 
@@ -381,8 +379,6 @@ SkeletalMeshGeometryRef FGeometryManager::SK_ParseMeshes( const aiScene* pScene 
 
 		const char* Name = pMesh->mName.C_Str();
 		HHash NameHash = StringHash( Name, strlen( Name ) );
-		pSkeletalMesh->m_Meshes[i].SetHashName( NameHash );
-		pSkeletalMesh->m_Meshes[i].SetName( Name );
 		pSkeletalMesh->m_Meshes[i].Create(
 			pVertData, pMesh->mNumVertices, sizeof( FSkinnedVertex3D ),
 			pIndexData, TotalGroupIndicies * sizeof( uint32 ), TotalGroupIndicies
@@ -433,7 +429,6 @@ StaticMeshGeometryRef FGeometryManager::RegisterGeometry( const std::string& Nam
 
 	HHash HashName = StringHash( Name.c_str(), Name.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
-	pMesh->SetHashName( HashName );
 	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );
 

@@ -1,0 +1,9 @@
+{
+    "FFont":[
+        {
+            "m_GUID": "d4d22d52-1527-4e53-b2a2-895549474961",
+            "m_FontTexture": "FontAtlas/Ariel.dds",
+            "Font": "Ariel.fnt"
+        }
+    ]
+}

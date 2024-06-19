@@ -61,8 +61,29 @@ void FFont::Initialize( const String& Filename )
 	DepthStateDesc.DepthEnable = false;
 	PSODesc.DepthStencilState = DepthStateDesc;
 	m_Pipeline.Initialize( PSODesc );
-    m_FontTexture = FAssetDatabase::GetTexture( FGUID::CreateFromString( "6878e921-457d-47f8-8307-2ce37456e019" ) );
-    LoadFont( Filename, 1920, 1080 );// TODO: This need to be the viewport dimensions
+
+
+    FileRef JsonSource( Filename.c_str(), FUM_Read);
+    rapidjson::Document JsonDoc;
+    JsonUtility::LoadDocument( JsonSource, JsonDoc );
+    if (JsonDoc.IsObject())
+    {
+        const rapidjson::Value& FontObject = JsonDoc["FFont"][0];
+
+        Char StrBuffer[64];
+        JsonUtility::GetString( FontObject, HE_STRINGIFY(m_GUID), StrBuffer, sizeof( StrBuffer ));
+
+        ZeroMemory( StrBuffer, sizeof( StrBuffer ) );
+        JsonUtility::GetString( FontObject, HE_STRINGIFY( m_FontTexture ), StrBuffer, sizeof( StrBuffer ) );
+        m_FontTexture = FAssetDatabase::GetTexture( StrBuffer );
+
+        ZeroMemory( StrBuffer, sizeof( StrBuffer ) );
+        JsonUtility::GetString( FontObject, "Font", StrBuffer, sizeof(StrBuffer));
+        char Path[HE_MAX_PATH];
+        sprintf_s( Path, "%sFonts\\%s", FGameProject::GetInstance()->GetContentFolder(), StrBuffer );
+        LoadFont( Path, 1920, 1080 );// TODO: This need to be the viewport dimensions
+
+    }
 }
 
 void FFont::LoadFont( const String& filename, int windowWidth, int windowHeight )
@@ -224,6 +245,8 @@ void FFont::LoadFont( const String& filename, int windowWidth, int windowHeight 
         float t = (float)std::stoi( tmp.substr( startpos, tmp.size() - startpos ) );
         m_Kernings[k].Amount = (float)t / (float)windowWidth;
     }
+
+    fs.close();
 }
 
 float FFont::GetKerning( WChar First, WChar Second )

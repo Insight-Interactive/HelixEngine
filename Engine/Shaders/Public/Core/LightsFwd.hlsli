@@ -11,6 +11,8 @@ struct PointLight
     float3 Color;
     float Brightness;
     uint Id;
+
+    float PLPad[55];
 };
 
 struct DirectionalLight
@@ -19,5 +21,7 @@ struct DirectionalLight
     float4 Color;
     float Brightness;
     uint Id;
+
+    float DLPad[54];
 };
 

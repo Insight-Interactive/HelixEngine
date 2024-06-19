@@ -27,7 +27,7 @@ void FLabel::Initialize()
 
 	// TODO: make this resize based on the current sentence size so gpu memory isn't wasted
 	m_VertexBuffer.Create( L"Font Verticies", kMaxTextCharacters * sizeof( FTextVertex2D ), sizeof( FTextVertex2D ), nullptr );
-	m_Font = FAssetDatabase::GetFont( "f3de7104-86de-4f96-83ae-6eaa8f38f46d" );
+	m_Font = FAssetDatabase::GetFont( "Ariel.hfont" );
 }
 
 void FLabel::UnInitialize()

@@ -8,7 +8,6 @@
 #include "CommandManager.h"
 #include "CommandContext.h"
 #include "Swapchain.h"
-#include "GeometryBufferManager.h"
 #include "ConstantBuffer.h"
 #include "TextureManager.h"
 
@@ -35,7 +34,6 @@ void FRenderContextFactory::CreateContext(FRenderContext& OutContext)
 	// Initialize heaps and other resources.
 	GTextureHeap.Create( L"Scene Texture Descriptors", RHT_CBV_SRV_UAV, 4096 );
 
-	CreateGeometryManager( GGeometryBufferManager );
 	CreateTextureManager(GTextureManager);
 
 
@@ -103,11 +101,6 @@ void FRenderContextFactory::CreateCommandManager(FCommandManager& OutCommandMana
 }
 
 void FRenderContextFactory::CreateContextManager(FContextManager& OutCommandContext)
-{
-	//
-}
-
-void FRenderContextFactory::CreateGeometryManager(FGeometryBufferManager& OutGeometryManager)
 {
 	//
 }

@@ -9,10 +9,10 @@
       "IsTwoSided": false
     },
     {
-      "MaterialAlbedo": "086ba262-1900-49f0-aa6a-e9a396314730",
-      "MaterialNormal": "e6b8d84b-066a-47de-9cf4-2eb2feafa939",
-      "MaterialRoughness": "24b331bc-e24e-48d8-bc1b-60eef6100bef",
-      "MaterialMetallic": "cc738bba-7088-4f1b-9121-444e28f7f6e8"
+      "MaterialAlbedo": "RustedIron/RustedIron_Albedo.dds",
+      "MaterialNormal": "RustedIron/RustedIron_Normal.dds",
+      "MaterialRoughness": "RustedIron/RustedIron_Roughness.dds",
+      "MaterialMetallic": "RustedIron/RustedIron_Metallic.dds"
     },
     {
 

@@ -2,7 +2,7 @@
     "FMaterialInstance":[
         {
             "m_GUID": "e971e05f-f6fb-412c-992c-e578547e226a",
-            "ParentGUID": "141d7fa2-8208-4ba2-ba33-3fa72163c4d8"
+            "ParentMaterial": "M_Wireframe.hmat"
         },
         {
             "TestParam": "TextureGUID"

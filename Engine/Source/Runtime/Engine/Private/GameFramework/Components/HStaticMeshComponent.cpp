@@ -40,8 +40,7 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 			m_MaterialAsset->Bind( GfxContext );
 
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat =  GetWorldMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = GetWorldMatrix().Transpose();
 		m_MeshWorldCB.SetDirty(true);
 		GfxContext.SetGraphicsConstantBuffer(kMeshWorld, m_MeshWorldCB);
 
@@ -93,10 +92,10 @@ void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 			Output.Bool(m_bIsDrawEnabled);
 
 			Output.Key(HE_STRINGIFY(m_MeshAsset));
-			Output.String(m_MeshAsset->GetGUID().ToString().CStr());
+			Output.String(m_MeshAsset->GetGuid().ToString().CStr());
 
 			Output.Key(HE_STRINGIFY(m_MaterialAsset));
-			Output.String(m_MaterialAsset->GetGUID().ToString().CStr());
+			Output.String(m_MaterialAsset->GetGuid().ToString().CStr());
 		}
 		Output.EndObject();
 	}
@@ -112,15 +111,11 @@ void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value )
 
 	JsonUtility::GetBoolean(StaticMesh, HE_STRINGIFY(m_bIsDrawEnabled), m_bIsDrawEnabled);
 
-	Char MeshGuidBuffer[64];
-	ZeroMemory(MeshGuidBuffer, sizeof(MeshGuidBuffer));
-	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MeshAsset), MeshGuidBuffer, sizeof(MeshGuidBuffer));
-	FGUID MeshGuid = FGUID::CreateFromString(MeshGuidBuffer);
-	SetMesh(FAssetDatabase::GetStaticMesh(MeshGuid));
+	Char MeshBuffer[64];
+	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MeshAsset), MeshBuffer, sizeof( MeshBuffer ));
+	SetMesh(FAssetDatabase::GetStaticMesh( MeshBuffer ));
 
-	Char MaterialGuidBuffer[64];
-	ZeroMemory(MaterialGuidBuffer, sizeof(MaterialGuidBuffer));
-	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MaterialAsset), MaterialGuidBuffer, sizeof(MaterialGuidBuffer));
-	FGUID MatAssetGuid = FGUID::CreateFromString(MaterialGuidBuffer);
-	SetMaterial(FAssetDatabase::GetMaterial(MatAssetGuid));
+	Char MaterialBuffer[64];
+	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MaterialAsset), MaterialBuffer, sizeof( MaterialBuffer ));
+	SetMaterial( FAssetDatabase::GetMaterial( MaterialBuffer ) );
 }

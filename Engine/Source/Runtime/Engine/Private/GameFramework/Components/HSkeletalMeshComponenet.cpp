@@ -34,12 +34,9 @@ void HSkeletalMeshComponent::OnCreate()
 
 	GetWorld()->GetScene().AddSkeletalMesh( this );
 	
-	HMaterial NewMaterial = FAssetDatabase::GetMaterial( "1a0f9c51-367c-4f09-9c04-e86bed7d92e7" );
-	SetMaterial( NewMaterial );
-
 	m_StartTimeMillis = double(System::QueryPerfCounter() / 10000);
 
-	m_DebugMaterialAsset = FAssetDatabase::GetMaterial( "e40a0db0-8368-46b2-be14-6aa89eddba81" );
+	m_DebugMaterialAsset = FAssetDatabase::GetMaterial( "M_SolidColor.hmat" );
 }
 
 void HSkeletalMeshComponent::OnDestroy()
@@ -234,6 +231,10 @@ void HSkeletalMeshComponent::Deserialize( const JsonUtility::ReadContext& Value 
 	ZeroMemory( GuidBuffer, sizeof( GuidBuffer ) );
 	JsonUtility::GetString( SkeletalMesh, HE_STRINGIFY( m_SkeletalMesh ), GuidBuffer, sizeof( GuidBuffer ) );
 	SetSkeletalMesh( FAssetDatabase::GetSkeletalMesh( GuidBuffer ) );
+
+	ZeroMemory( GuidBuffer, sizeof( GuidBuffer ) );
+	JsonUtility::GetString( SkeletalMesh, HE_STRINGIFY( m_MaterialAsset ), GuidBuffer, sizeof( GuidBuffer ) );
+	SetMaterial( FAssetDatabase::GetMaterial( GuidBuffer ) );
 
 	ZeroMemory( GuidBuffer, sizeof( GuidBuffer ) );
 	JsonUtility::GetString( SkeletalMesh, HE_STRINGIFY( m_Animation ), GuidBuffer, sizeof( GuidBuffer ) );

@@ -3,13 +3,7 @@
 
 #include "TSingleton.h"
 
-#include "AssetRegistry/MeshDatabase.h"
-#include "AssetRegistry/ActorDatabase.h"
 #include "AssetRegistry/ShaderDatabase.h"
-#include "AssetRegistry/TextureDatabase.h"
-#include "AssetRegistry/MaterialDatabase.h"
-#include "AssetRegistry/ScriptDatabase.h"
-#include "AssetRegistry/FontDatabase.h"
 #include "AssetRegistry/AnimationDatabase.h"
 
 #include "ModelManager.h"
@@ -28,6 +22,8 @@ static const char* kAssetManifestFilename = "AssetManifest.json";
 	Master database containing specialized databases for all project assets. Does not hold data for assets,
 	just references on where to find them on disk. The use of global asset mangers (such as GTextureManager)
 	should should not be used; use this class instead.
+
+	All assets must abide by the folder structure.
 */
 class FAssetDatabase
 {
@@ -38,15 +34,14 @@ class FAssetDatabase
 	friend class HLevel;
 public:
 
-	static HTexture GetTexture( const FGUID& Guid );
-	static StaticMeshGeometryRef GetStaticMesh( const FGUID& Guid );
-	static SkeletalMeshGeometryRef GetSkeletalMesh( const FGUID& Guid );
-	static HMaterial GetMaterial( const FGUID& Guid );
-	static HMaterial CreateOneOffMaterial( const FGUID& ParentGuid );
+	static HStaticMesh GetStaticMesh( const char* MeshName );
+	static HTexture GetTexture( const char* TextureName );
+	static HMaterial GetMaterial( const char* MaterialName );
+	static LuaScriptRef GetScript( const char* ScriptName );
+	static HFont GetFont( const char* FontName );
+	static SkeletalMeshGeometryRef GetSkeletalMesh( const char* SkeletalMeshName );
+
 	static String LookupShaderPath( const FGUID& Guid );
-	static LuaScriptRef GetScript( const FGUID& Guid );
-	static const String LookupMaterial( const FGUID& Guid );
-	static HFont GetFont( const FGUID& FontGuid );
 	static HAnimation GetAnimation( const FGUID& Guid );
 
 protected:
@@ -61,40 +56,15 @@ protected:
 	static void Uninitialize();
 
 	static bool SaveAssetDatabases();
-	static bool IsAnyDatabaseDirty();
 
-	static void RegisterMesh( const FGUID& MeshGuid, const Char* Filepath );
-	static void RegisterTexture( const FGUID& TextureGuid, const Char* Filepath );
-	static void RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath );
-	static void RegisterActor( const FGUID& ActorGuid, const Char* Filepath );
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
-	static void RegisterScript( const FGUID& ScriptGuid, const Char* Filepath );
-	static void RegisterFont( const FGUID& FontGuid, const Char* Filepath );
 	static void RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath );
 
-	static const String LookupMesh( const FGUID& Guid );
-	static const String LookupTexture( const FGUID& Guid );
-	static const String LookupActor( const FGUID& Guid );
 	static const String LookupShader( const FGUID& Guid );
-	static const String LookupScript( const FGUID& Guid );
-	static const String LookupFont( const FGUID& Guid );
 	static const String LookupAnimation( const FGUID& Guid );
 
-	static FMeshDatabase& GetMeshDatabase();
-	static FTextureDatabase& GetTextureDatabase();
-	static FMaterialDatabase& GetMaterialDatabase();
-	static FActorDatabase& GetActorDatabase();
-	static FScriptDatabase& GetScriptDatabase();
-	static FFontDatabase& GetFontDatabase();
-
 protected:
-	FMeshDatabase		m_MeshDatabase;
-	FActorDatabase		m_ActorDatabase;
 	FShaderDatabase		m_ShaderDatabase;
-	FTextureDatabase	m_TextureDatabase;
-	FMaterialDatabase	m_MaterialDatabase;
-	FScriptDatabase		m_ScriptDatabase;
-	FFontDatabase		m_FontDatabase;
 	FAnimationDatabase	m_AnimationDatabase;
 
 private:
@@ -106,45 +76,51 @@ private:
 // Inline function implementations
 //
 
-
-/*static*/ FORCEINLINE HTexture FAssetDatabase::GetTexture( const FGUID& Guid )
+/*static*/ FORCEINLINE SkeletalMeshGeometryRef FAssetDatabase::GetSkeletalMesh( const char* SkeletalMeshName )
 {
-	return GTextureManager.LoadTexture( SInstance->LookupTexture( Guid ), DT_Magenta2D, false );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), SkeletalMeshName );
+	SkeletalMeshGeometryRef Mesh = GGeometryManager.LoadSkeletalMeshFromFile( Path.m_Path );
+	HE_ASSERT( Mesh->IsValid() );
+	return Mesh;
 }
 
-/*static*/ FORCEINLINE StaticMeshGeometryRef FAssetDatabase::GetStaticMesh( const FGUID& Guid )
+/*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
 {
-	return GGeometryManager.LoadHAssetMeshFromFile( SInstance->LookupMesh( Guid ) );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+	HStaticMesh Mesh = GGeometryManager.LoadHAssetMeshFromFile( Path.m_Path );
+	HE_ASSERT( Mesh->IsValid() );
+	return Mesh;
 }
 
-/*static*/ FORCEINLINE SkeletalMeshGeometryRef FAssetDatabase::GetSkeletalMesh( const FGUID& Guid )
+/*static*/ FORCEINLINE HTexture FAssetDatabase::GetTexture( const char* TextureName )
 {
-	return GGeometryManager.LoadSkeletalMeshFromFile( SInstance->LookupMesh( Guid ) );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sTextures\\%s", FGameProject::GetInstance()->GetContentFolder(), TextureName );
+	HTexture Texture = GTextureManager.LoadTexture( Path.m_Path, DT_Magenta2D, false );
+	HE_ASSERT( Texture.IsValid() );
+
+	return Texture;
 }
 
-/*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const FGUID& Guid )
+/*static*/ FORCEINLINE HMaterial FAssetDatabase::GetMaterial( const char* MaterialName )
 {
-	return GMaterialManager.FindOrLoadMaterialFromFile( SInstance->LookupMaterial( Guid ) );
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sMaterials\\%s", FGameProject::GetInstance()->GetContentFolder(), MaterialName );
+	HMaterial Material = GMaterialManager.FindOrLoadMaterialFromFile( Path.m_Path );
+	HE_ASSERT( Material.IsValid() );
+
+	return Material;
 }
 
-/*static*/ FORCEINLINE HMaterial FAssetDatabase::CreateOneOffMaterial( const FGUID& ParentGuid )
+/*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const char* ScriptName )
 {
-	return GMaterialManager.CreateOneOffMaterial( SInstance->LookupMaterial( ParentGuid ) );
-}
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sScripts\\%s", FGameProject::GetInstance()->GetContentFolder(), ScriptName );
+	LuaScriptRef Script = GScriptManager.FindOrLoadScript( Path.m_Path );
 
-/*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
-{
-	return SInstance->LookupShader( Guid );
-}
-
-/*static*/ FORCEINLINE LuaScriptRef FAssetDatabase::GetScript( const FGUID& Guid )
-{
-	return GScriptManager.FindOrLoadScript( SInstance->LookupScript( Guid ) );
-}
-
-/*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const FGUID& FontGuid )
-{
-	return GFontManager.FindOrLoadFont( SInstance->LookupFont( FontGuid ) );
+	return Script;
 }
 
 /*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const FGUID& Guid )
@@ -152,34 +128,18 @@ private:
 	return GAnimationManager.LoadAnimation( SInstance->LookupAnimation( Guid ) );
 }
 
-/*static*/ FORCEINLINE FMeshDatabase& FAssetDatabase::GetMeshDatabase()
+/*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const char* FontName )
 {
-	return SInstance->m_MeshDatabase;
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sFonts\\%s", FGameProject::GetInstance()->GetContentFolder(), FontName );
+	HFont Font = GFontManager.FindOrLoadFont( Path.m_Path );
+
+	return Font;
 }
 
-/*static*/ FORCEINLINE FTextureDatabase& FAssetDatabase::GetTextureDatabase()
+/*static*/ FORCEINLINE String FAssetDatabase::LookupShaderPath( const FGUID& Guid )
 {
-	return SInstance->m_TextureDatabase;
-}
-
-/*static*/ FORCEINLINE FMaterialDatabase& FAssetDatabase::GetMaterialDatabase()
-{
-	return SInstance->m_MaterialDatabase;
-}
-
-/*static*/ FORCEINLINE FActorDatabase& FAssetDatabase::GetActorDatabase()
-{
-	return SInstance->m_ActorDatabase;
-}
-
-/*static*/ FORCEINLINE FScriptDatabase& FAssetDatabase::GetScriptDatabase()
-{
-	return SInstance->m_ScriptDatabase;
-}
-
-/*static*/ FORCEINLINE FFontDatabase& FAssetDatabase::GetFontDatabase()
-{
-	return SInstance->m_FontDatabase;
+	return SInstance->LookupShader( Guid );
 }
 
 /*static*/ FORCEINLINE bool FAssetDatabase::SaveAssetDatabases()
@@ -191,21 +151,6 @@ private:
 	{
 		Writer.Key( HE_STRINGIFY( FAssetDatabase ) );
 		Writer.StartArray();
-		Writer.StartObject();
-		SInstance->m_MeshDatabase.Serialize( Writer );
-		Writer.EndObject();
-
-		Writer.StartObject();
-		SInstance->m_TextureDatabase.Serialize( Writer );
-		Writer.EndObject();
-
-		Writer.StartObject();
-		SInstance->m_MaterialDatabase.Serialize( Writer );
-		Writer.EndObject();
-
-		Writer.StartObject();
-		SInstance->m_ActorDatabase.Serialize( Writer );
-		Writer.EndObject();
 
 		Writer.StartObject();
 		SInstance->m_ShaderDatabase.Serialize( Writer );
@@ -214,35 +159,11 @@ private:
 	}
 	Writer.EndObject();
 
-	String DestinationFilepath = FGameProject::GetInstance()->GetProjectRoot() + "/AssetManifest.json";
-	bool IsWriteSuccessful = JsonUtility::WriteDocument( DestinationFilepath.c_str(), StrBuffer );
+	char DestinationFilepath[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetProjectDirectoryFullPath( kAssetManifestFilename, DestinationFilepath, sizeof( DestinationFilepath ) );
+	bool IsWriteSuccessful = JsonUtility::WriteDocument( DestinationFilepath, StrBuffer );
 
-	return !IsAnyDatabaseDirty() && IsWriteSuccessful;
-}
-
-/*static*/ FORCEINLINE bool FAssetDatabase::IsAnyDatabaseDirty()
-{
-	return SInstance->m_MeshDatabase.GetIsDirty() || SInstance->m_TextureDatabase.GetIsDirty() || SInstance->m_MaterialDatabase.GetIsDirty() || SInstance->m_ActorDatabase.GetIsDirty();
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterMesh( const FGUID& MeshGuid, const Char* Filepath )
-{
-	SInstance->m_MeshDatabase.RegisterAsset( MeshGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterTexture( const FGUID& TextureGuid, const Char* Filepath )
-{
-	SInstance->m_TextureDatabase.RegisterAsset( TextureGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterMaterial( const FGUID& MaterialGuid, const Char* Filepath )
-{
-	SInstance->m_MaterialDatabase.RegisterAsset( MaterialGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterActor( const FGUID& ActorGuid, const Char* Filepath )
-{
-	SInstance->m_ActorDatabase.RegisterAsset( ActorGuid, Filepath );
+	return IsWriteSuccessful;
 }
 
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterShader( const FGUID& ShaderGuid, const Char* Filepath )
@@ -250,54 +171,13 @@ private:
 	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterScript( const FGUID& ScriptGuid, const Char* Filepath )
-{
-	SInstance->m_ScriptDatabase.RegisterAsset( ScriptGuid, Filepath );
-}
-
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterFont( const FGUID& FontGuid, const Char* Filepath )
-{
-	SInstance->m_FontDatabase.RegisterAsset( FontGuid, Filepath );
-}
-
 /*static*/ FORCEINLINE void FAssetDatabase::RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath )
 {
 	SInstance->m_AnimationDatabase.RegisterAsset( AnimGuid, Filepath );
 }
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupMesh( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MeshDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupTexture( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_TextureDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupMaterial( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_MaterialDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupActor( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ActorDatabase.GetValueByKey( Guid );
-}
-
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
 	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupScript( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_ScriptDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupFont( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_FontDatabase.GetValueByKey( Guid );
 }
 
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupAnimation( const FGUID& Guid )

@@ -13,7 +13,6 @@ class FCommandContext;
 
 class RENDER_API FIndexBuffer : public FGpuResource
 {
-	friend class FGeometryBufferManager;
 public:
 	FIndexBuffer()
 	{

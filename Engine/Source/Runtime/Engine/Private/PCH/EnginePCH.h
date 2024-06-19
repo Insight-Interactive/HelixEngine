@@ -95,7 +95,7 @@
 #include "FileSystem.h"
 #include "JsonUtility.h"
 #include "StringHelper.h"
-
+#include "Path.h"
 #include "GUID.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"

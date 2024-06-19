@@ -11,7 +11,6 @@ class FRenderDevice;
 class FSwapChain;
 class FCommandManager;
 class FContextManager;
-class FGeometryBufferManager;
 class FConstantBufferManager;
 class FTextureManager;
 class FFontManager;
@@ -31,7 +30,6 @@ protected:
 	void CreateDevice(FRenderDevice& OutDevice);
 	void CreateCommandManager(FCommandManager& OutCommandManager);
 	void CreateContextManager(FContextManager& OutCommandContext);
-	void CreateGeometryManager(FGeometryBufferManager& OutGeometryManager);
 	void CreateTextureManager(FTextureManager& OutTexManager);
 
 private:

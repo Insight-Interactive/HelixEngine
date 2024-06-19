@@ -33,8 +33,8 @@
               },
               {
                 "m_bIsDrawEnabled": true,
-                "m_MaterialAsset": "d7d2911a-0461-4a69-b28d-259389c45f87",
-                "m_SkeletalMesh": "3ca2b729-5778-4b4b-9e30-82971b58d2a6",
+                "m_MaterialAsset": "M_Animated.hmat",
+                "m_SkeletalMesh": "SkeletalMesh/SK_Bot.fbx",
                 "m_Animation":"81e10bf1-e5b8-4851-8276-1f339228e7d8"
               }
             ]

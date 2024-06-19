@@ -60,8 +60,9 @@ void HEditorEngine::Startup()
 
 	m_UIContext.Setup();
 
-	String ImGuiIniPath = FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini";
-	ImGui::LoadIniSettingsFromDisk( ImGuiIniPath.c_str() );
+	char Path[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "imgui.ini", Path, sizeof( Path ) );
+	ImGui::LoadIniSettingsFromDisk( Path );
 	LoadEditorPreferences();
 
 	m_HomeUI.SetupPanels();
@@ -73,9 +74,12 @@ void HEditorEngine::Startup()
 void HEditorEngine::LoadEditorPreferences()
 {
 	rapidjson::Document PrefsJsonDoc;
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
-	FileRef PrefsJsonSource( EditorConfigPath.c_str(), FUM_Read );
+
+	char Path[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "EditorPreferences.ini", Path, sizeof( Path ) );
+	FileRef PrefsJsonSource( Path, FUM_Read );
 	HE_ASSERT( PrefsJsonSource->IsOpen() );
+
 	JsonUtility::LoadDocument( PrefsJsonSource, PrefsJsonDoc );
 	if (PrefsJsonDoc.IsObject())
 	{
@@ -165,8 +169,9 @@ void HEditorEngine::SaveEditorPreferences()
 	}
 	Writer.EndObject();
 
-	String EditorConfigPath = FGameProject::GetInstance()->GetConfigFolder() + "/EditorPreferences.ini";
-	FileRef OutFile( EditorConfigPath, FUM_Write, CM_Text );
+	char Path[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "EditorPreferences.ini", Path, sizeof( Path ) );
+	FileRef OutFile( Path, FUM_Write, CM_Text );
 	HE_ASSERT( OutFile->IsOpen() );
 	if (OutFile->IsOpen())
 	{
@@ -178,7 +183,8 @@ void HEditorEngine::SaveEditorPreferences()
 	}
 
 	// Save the editor layout.
-	ImGui::SaveIniSettingsToDisk( (FGameProject::GetInstance()->GetConfigFolder() + "/imgui.ini").c_str() );
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "imgui.ini", Path, sizeof( Path ) );
+	ImGui::SaveIniSettingsToDisk( Path );
 }
 
 void HEditorEngine::RenderClientViewport( float DeltaTime )
@@ -430,25 +436,16 @@ void HEditorEngine::PackageGame()
 	String GameTargetBuildDir = StringHelper::UTF16ToUTF8( SelectedFolder );
 
 
-	const String& ProjLocation = FGameProject::GetInstance()->GetProjectRoot();
+	const char* ProjLocation = FGameProject::GetInstance()->GetProjectRoot();
 	const HName TGameName = FApp::GetInstance()->GetName();
 	const String GameName = TCharToChar( TGameName );
 
 
-	PackageMaker::BuildPackage( DebugGame, Win64, GameName.c_str(), ProjLocation.c_str(), GameTargetBuildDir.c_str() );
+	PackageMaker::BuildPackage( DebugGame, Win64, GameName.c_str(), ProjLocation, GameTargetBuildDir.c_str() );
 }
 
 void HEditorEngine::RegisterEditorOnlyAssets()
 {
-	// Textures
-	FAssetDatabase::RegisterTexture( FGUID::CreateFromString( "f82b1d85-d192-4264-9cda-f2787718af53" ), "Content\\Engine\\Textures\\LevelEditorTextures\\T_PointLight.dds" );
-
-	// Materials
-	FAssetDatabase::RegisterMaterial( FGUID::CreateFromString( "89c46eee-1937-4ad8-9039-14afb3a8d414" ), "Content\\Engine\\Materials\\M_DefaultUnlit.hmat" );
-
-	// Prevent editor only assets from dirtying the databases.
-	FAssetDatabase::GetTextureDatabase().SetDirty( false );
-	FAssetDatabase::GetMaterialDatabase().SetDirty( false );
 }
 
 bool HEditorEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
@@ -466,10 +463,6 @@ bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
 	RequestShutdown();
-	if (FAssetDatabase::IsAnyDatabaseDirty())
-	{
-		OnSaveMenuItem();
-	}
 	return false;
 }
 

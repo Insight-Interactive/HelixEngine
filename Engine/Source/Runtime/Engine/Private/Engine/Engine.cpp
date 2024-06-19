@@ -115,13 +115,13 @@ void HEngine::Startup()
 	uint64 StartupTick = SystemTime::GetCurrentTick();
 
 	// TODO: Make this dynamic
-	const Char* GameProjectDirectory =
+	FPath HProjectPath;
 #if HE_STANDALONE && !HE_DEMO_GAME
-		"Data\\Game.hproject";
+		HProjectPath.SetPath( "Data\\Game.hproject" );
 #else
-		"C:\\Dev\\InsightInteractive\\HelixEngine\\Game\\Game.hproject";
+		HProjectPath.SetPath( "C:\\Dev\\InsightInteractive\\HelixEngine\\Game\\Game.hproject" );
 #endif
-	FGameProject::GetInstance()->Startup( GameProjectDirectory );
+	FGameProject::GetInstance()->Startup( HProjectPath );
 
 	// Initialize the application context.
 	FApp::GetInstance()->Startup();
@@ -141,7 +141,9 @@ void HEngine::Startup()
 	ClientDesc.Resolution		= GCommonResolutions[k1080p]; 
 #if HE_WITH_EDITOR
 	HName EngineTitle = TEXT( "Helix Editor" );
-	EngineTitle += TEXT( " (" ) + FGameProject::GetInstance()->GetProjectName() + TEXT( ")" );
+	EngineTitle += TEXT( " (" );
+	EngineTitle += CharToTChar( FGameProject::GetInstance()->GetProjectName() );
+	EngineTitle += TEXT( ")" );
 	EngineTitle += TEXT( " [" HE_PLATFORM_STRING " - " HE_CONFIG_STRING "]" );
 	if (!GetIsEditorPresent())
 		EngineTitle += TEXT( " (Standalone)" );
@@ -170,11 +172,13 @@ void HEngine::PostStartup()
 
 	EmitEvent( EnginePostStartupEvent() );
 
-	const String& StartingWorldPath = FGameProject::GetInstance()->GetDefaultLevelPath();
-	m_GameWorld.Initialize( StartingWorldPath.c_str() );
+	FPath DefaultLevelPath;
+	FGameProject::GetInstance()->GetDefaultLevelPath( DefaultLevelPath );
+	m_GameWorld.Initialize( DefaultLevelPath.GetFullPath() );
 
-	String InputConfigPath = FGameProject::GetInstance()->GetConfigFileFullPath( "InputMappings.ini" );
-	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( InputConfigPath.c_str() );
+	char Path[HE_MAX_PATH];
+	FGameProject::GetInstance()->GetConfigDirectoryFullPath( "InputMappings.ini", Path, sizeof( Path ) );
+	m_MainViewPort.GetInputDispatcher()->LoadMappingsFromFile( Path );
 
 	m_MainViewPort.Show();
 	m_MainViewPort.BringToFocus();
@@ -312,13 +316,14 @@ void HEngine::RequestShutdown()
 {
 	HE_UNUSED_PARAM( pUserData );
 
-	String SplashTextureDir =
+	char TexturePath[HE_MAX_PATH];
 #if HE_WITH_EDITOR || HE_DEMO_GAME
-		FGameProject::GetInstance()->GetContentFolder() + "/Engine/Textures/Splash/HelixEd-Splash.dds";
+		FGameProject::GetInstance()->GetContentDirectoryFullPath( "/Engine/Textures/Splash/HelixEd-Splash.dds", TexturePath, sizeof(TexturePath) );
 #else
+		ZeroMemory( TexturePath, sizeof( TexturePath ) );
 		""; // TODO: Custom game splash image.
 #endif
-	FSplashScreen AppSplash( SplashTextureDir );
+	FSplashScreen AppSplash( TexturePath );
 
 	while (!GEngine->IsInitialized())
 	{

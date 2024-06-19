@@ -12,6 +12,7 @@
 #include "Renderer/ShaderRegisters.h"
 #include "Renderer/ShaderReflection.h"
 #include "Renderer/ConstantBufferStructures.h"
+#include "Shader.h"
 
 
 // FMaterial
@@ -167,14 +168,16 @@ void FMaterial::BuildPipelineState()
 	RootSigName += StringHelper::UTF8ToUTF16( GetDebugName() );
 #endif
 	const WChar* name = RootSigName.c_str();
+	FShader VertexShader;
+	FShader PixelShader;
 
 	// Create the pipeline state.
 	//
-	DataBlob VSShader = FileSystem::ReadRawData( FAssetDatabase::LookupShaderPath( m_VertexShaderGuid ).c_str() );
-	DataBlob PSShader = FileSystem::ReadRawData( FAssetDatabase::LookupShaderPath( m_PixelShaderGuid ).c_str() );
+	VertexShader.LoadFromFile( FAssetDatabase::LookupShaderPath( m_VertexShaderGuid ).c_str() );
+	PixelShader.LoadFromFile( FAssetDatabase::LookupShaderPath( m_PixelShaderGuid ).c_str() );
 
-	FShaderReflection VertexReflection( VSShader.GetBufferPointer(), VSShader.GetDataSize() );
-	FShaderReflection PixelReflection( PSShader.GetBufferPointer(), PSShader.GetDataSize() );
+	FShaderReflection VertexReflection( VertexShader );
+	FShaderReflection PixelReflection( PixelShader );
 
 
 	// Choose the appropriate input layout. Their vertex shader could could require either static of skinned vertex layouts. 
@@ -228,8 +231,8 @@ void FMaterial::BuildPipelineState()
 	// Assemble the pipeline state and build it.
 	//
 	FPipelineStateDesc PSODesc = {};
-	PSODesc.VertexShader					= { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
-	PSODesc.PixelShader						= { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
+	PSODesc.VertexShader					= { VertexShader.GetData(), VertexShader.GetDataSize() };
+	PSODesc.PixelShader						= { PixelShader.GetData(), PixelShader.GetDataSize() };
 	PSODesc.InputLayout.pInputElementDescs	= pInputElemDesc;
 	PSODesc.InputLayout.NumElements			= NumInputElems;
 	PSODesc.pRootSignature					= &m_RootSig;
@@ -296,10 +299,9 @@ void FMaterial::DeserializeTextureReflection( const JsonUtility::ReadContext& Te
 	for (auto itr = TextureReflection.MemberBegin(); itr != TextureReflection.MemberEnd(); ++itr)
 	{
 		const Char* ResourceName = itr->name.GetString();
-		const Char* GuidStr = itr->value.GetString();
-		FGUID TextureGuid = FGUID::CreateFromString( GuidStr );
+		const Char* TextureName = itr->value.GetString();
 
-		SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureGuid ) );
+		SetTexture( ResourceName, FAssetDatabase::GetTexture( TextureName ) );
 	}
 }
 
@@ -511,9 +513,9 @@ void FMaterialInstance::LoadFromFile( const Char* Filepath)
 		const rapidjson::Value& CommonParams = MaterialInstRoot[kCommonParams];
 		
 		// Lookup and load the base material this instance derives from.
-		Char GuidStr[64];
-		JsonUtility::GetString( CommonParams, "ParentGUID", GuidStr, sizeof(GuidStr));
-		CreateFromParent( FGUID::CreateFromString( GuidStr ) );
+		Char ParentStr[64];
+		JsonUtility::GetString( CommonParams, "ParentMaterial", ParentStr, sizeof( ParentStr ));
+		CreateFromParent( ParentStr );
 
 		// Override the parent's parameters.
 		const rapidjson::Value& Textures = MaterialInstRoot[kTextures];
@@ -524,7 +526,9 @@ void FMaterialInstance::LoadFromFile( const Char* Filepath)
 	}
 }
 
-void FMaterialInstance::CreateFromParent( const FGUID& ParentGuid )
+void FMaterialInstance::CreateFromParent( const char* ParentMaterial )
 {
-	Super::LoadFromFile( FAssetDatabase::LookupMaterial( ParentGuid ) );
+	char Path[HE_MAX_PATH];
+	sprintf_s( Path, "%sMaterials\\%s", FGameProject::GetInstance()->GetContentFolder(), ParentMaterial );
+	Super::LoadFromFile( Path );
 }
