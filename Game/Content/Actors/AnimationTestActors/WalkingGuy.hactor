@@ -19,7 +19,7 @@
                       {
                         "PositionX": 0.0,
                         "PositionY": 0.0,
-                        "PositionZ": 100.0,
+                        "PositionZ": 0.0,
                         "RotationX": 0.0,
                         "RotationY": 0.0,
                         "RotationZ": 0.0,
@@ -35,7 +35,7 @@
                 "m_bIsDrawEnabled": true,
                 "m_MaterialAsset": "M_Animated.hmat",
                 "m_SkeletalMesh": "SkeletalMesh/SK_Bot.fbx",
-                "m_Animation":"81e10bf1-e5b8-4851-8276-1f339228e7d8"
+                "m_Animation":"AI_Walk_Relaxed.fbx"
               }
             ]
           }

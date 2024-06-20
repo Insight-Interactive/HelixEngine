@@ -40,9 +40,9 @@ public:
 	static LuaScriptRef GetScript( const char* ScriptName );
 	static HFont GetFont( const char* FontName );
 	static SkeletalMeshGeometryRef GetSkeletalMesh( const char* SkeletalMeshName );
+	static HAnimation GetAnimation( const char* Animation );
 
 	static String LookupShaderPath( const FGUID& Guid );
-	static HAnimation GetAnimation( const FGUID& Guid );
 
 protected:
 	FAssetDatabase();
@@ -58,14 +58,11 @@ protected:
 	static bool SaveAssetDatabases();
 
 	static void RegisterShader( const FGUID& ShaderGuid, const Char* Filepath );
-	static void RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath );
 
 	static const String LookupShader( const FGUID& Guid );
-	static const String LookupAnimation( const FGUID& Guid );
 
 protected:
 	FShaderDatabase		m_ShaderDatabase;
-	FAnimationDatabase	m_AnimationDatabase;
 
 private:
 	static FAssetDatabase* SInstance;
@@ -83,6 +80,15 @@ private:
 	SkeletalMeshGeometryRef Mesh = GGeometryManager.LoadSkeletalMeshFromFile( Path.m_Path );
 	HE_ASSERT( Mesh->IsValid() );
 	return Mesh;
+}
+
+/*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const char* Animation )
+{
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sAnimations\\%s", FGameProject::GetInstance()->GetContentFolder(), Animation );
+	HAnimation Anim = GAnimationManager.LoadAnimation( Path.m_Path );
+
+	return Anim;
 }
 
 /*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
@@ -121,11 +127,6 @@ private:
 	LuaScriptRef Script = GScriptManager.FindOrLoadScript( Path.m_Path );
 
 	return Script;
-}
-
-/*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const FGUID& Guid )
-{
-	return GAnimationManager.LoadAnimation( SInstance->LookupAnimation( Guid ) );
 }
 
 /*static*/ FORCEINLINE HFont FAssetDatabase::GetFont( const char* FontName )
@@ -171,16 +172,7 @@ private:
 	SInstance->m_ShaderDatabase.RegisterAsset( ShaderGuid, Filepath );
 }
 
-/*static*/ FORCEINLINE void FAssetDatabase::RegisterAnimation( const FGUID& AnimGuid, const Char* Filepath )
-{
-	SInstance->m_AnimationDatabase.RegisterAsset( AnimGuid, Filepath );
-}
 /*static*/ FORCEINLINE const String FAssetDatabase::LookupShader( const FGUID& Guid )
 {
 	return SInstance->m_ShaderDatabase.GetValueByKey( Guid );
-}
-
-/*static*/ FORCEINLINE const String FAssetDatabase::LookupAnimation( const FGUID& Guid )
-{
-	return FGameProject::GetInstance()->GetProjectRoot() + SInstance->m_AnimationDatabase.GetValueByKey( Guid );
 }

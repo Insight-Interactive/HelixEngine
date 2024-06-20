@@ -42,16 +42,13 @@ FAssetDatabase::~FAssetDatabase()
 			// AssetManifest.json JSON element indicies
 
 			kShadersDbIndex		= 0,
-			kAnimationIndex		= 1
 		};
 
 		const rapidjson::Value& AssetDbRoot = JsonDoc[HE_STRINGIFY( FAssetDatabase )];
 
 		SInstance->m_ShaderDatabase.Deserialize( AssetDbRoot[kShadersDbIndex] );
-		SInstance->m_AnimationDatabase.Deserialize( AssetDbRoot[kAnimationIndex] );
 
 		SInstance->m_ShaderDatabase.Initialize();
-		SInstance->m_AnimationDatabase.Initialize();
 	}
 	else
 	{
@@ -65,5 +62,4 @@ FAssetDatabase::~FAssetDatabase()
 	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
 
 	SInstance->m_ShaderDatabase.UnInitialize();
-	SInstance->m_AnimationDatabase.UnInitialize();
 }

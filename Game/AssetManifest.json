@@ -15,11 +15,6 @@
             "e6d7b6e3-a012-424f-a1fe-486aee8b60ca": "Shaders/Core/SolidColor.ps.cso",
             "d7b84cd6-7942-4247-b55e-a36f1c1660a4": "Shaders/Core/DefaultSkeletalMeshGeometryPass.ps.cso",
             "cd635ce4-8e10-4f50-8cfe-2f40dfc5f27e": "Shaders/Core/DefaultSkeletalMeshGeometryPass.vs.cso"
-        },
-        {
-          "81e10bf1-e5b8-4851-8276-1f339228e7d8": "Content/Animation/AI_Walk_Relaxed.fbx",
-          "6127cd49-9fee-467b-9d27-164df2fba4f5": "Content/Animation/ThirdPersonWalk.FBX",
-          "34338626-951c-492f-b41f-f852ce5e074c": "Content/Animation/boblampclean.md5anim"
         }
     ]
 }

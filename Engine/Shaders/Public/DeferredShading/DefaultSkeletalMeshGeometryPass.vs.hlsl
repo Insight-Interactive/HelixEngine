@@ -14,7 +14,7 @@ GP_PSInputSkinned main( GP_VSInputSkinned Input )
 
     const float4x4 WorldView = mul( kWorldMat, kCameraView );
     const float4x4 WorldViewProjection = mul( WorldView, kCameraProjection );
-    const float4x4 ViewProjection = mul( WorldView, kCameraProjection );
+    const float4x4 ViewProjection = mul( kCameraView, kCameraProjection );
 
 
     for (int i = 0; i < R_MAX_JOINTS_PER_VERTEX; i++)

@@ -138,7 +138,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		}
 		else
 		{
-			HHash hashName = StringHash( "pelvis" );
+			HHash hashName = StringHash( "mixamoorig:Head" );
 			for (uint32 i = 0; i < m_SkeletalMesh->Joints.size(); i++)
 			{
 				FJoint& joint = m_SkeletalMesh->Joints[i];
@@ -169,13 +169,11 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		}
 
 
-		JointCBData* pJointCB = m_JointCB.GetBufferPointer();
 		for (uint32 i = 0; i < m_SkeletalMesh->Joints.size(); i++)
 		{
 			FJoint& joint = m_SkeletalMesh->Joints[i];
-			FMatrix& FinalTransform = pJointCB->kJoints[i];
 
-			FinalTransform = ( WorldTransforms[i] * joint.m_OffsetMatrix ).Transpose();
+			m_JointCB->kJoints[i] = ( WorldTransforms[i] ).Transpose();
 		}
 		m_JointCB.SetDirty( true );
 
@@ -186,8 +184,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		}
 
 		// Set the world buffer.
-		MeshWorldCBData* pWorld = m_MeshWorldCB.GetBufferPointer();
-		pWorld->kWorldMat = GetWorldMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = GetWorldMatrix().Transpose();
 		m_MeshWorldCB.SetDirty( true );
 
 		for (uint32 i = 0; i < m_SkeletalMesh->m_Meshes.size(); i++)
