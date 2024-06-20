@@ -35,7 +35,7 @@
                 "m_bIsDrawEnabled": true,
                 "m_MaterialAsset": "M_Animated.hmat",
                 "m_SkeletalMesh": "SkeletalMesh/SK_Bot.fbx",
-                "m_Animation":"AI_Walk_Relaxed.fbx"
+                "m_Animation":"BipedalLocamotion/Walk_Relaxed.fbx"
               }
             ]
           }

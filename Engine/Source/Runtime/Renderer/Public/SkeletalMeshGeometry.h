@@ -25,12 +25,6 @@ struct FJoint
 };
 
 
-HE_ALIGN( 16 ) struct JointCBData
-{
-	// Skeleton Joints.
-	FMatrix kJoints[R_MAX_JOINTS_PER_MODEL];
-};
-
 
 class RENDER_API HSkeletalMeshGeometry 
 {
