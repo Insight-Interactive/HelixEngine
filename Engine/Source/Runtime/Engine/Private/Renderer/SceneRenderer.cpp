@@ -237,15 +237,15 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 		TConstantBuffer<SceneLightsCBData>& Buffer = GetLightConstBufferForCurrentFrame();
 		SceneLightsCBData& pLights = *Buffer.GetBufferPointer();
 		{
-			uint64 PointLightBufferSize = sizeof( PointLightCBData ) * GLightManager.GetScenePointLightCount();
+			uint64 PointLightBufferSize = sizeof( PointLightData ) * GLightManager.GetScenePointLightCount();
 			uint64 DirectionalLightBufferSize = sizeof( DirectionalLightCBData ) * GLightManager.GetSceneDirectionalLightCount();
 
 			CopyMemory( pLights.PointLights, GLightManager.GetPointLighBufferPointer(), PointLightBufferSize );
-			CopyMemory( pLights.DirectionalLights, GLightManager.GetDirectionalLightBufferPointer(), DirectionalLightBufferSize );
+			//CopyMemory( pLights.DirectionalLights, GLightManager.GetDirectionalLightBufferPointer(), DirectionalLightBufferSize );
 
 			// TODO: pLights->NumSpotLights = GLightManager.GetSceneSpotLightCount();
 			pLights.NumPointLights = GLightManager.GetScenePointLightCount();
-			pLights.NumDirectionalLights = GLightManager.GetSceneDirectionalLightCount();
+			//pLights.NumDirectionalLights = GLightManager.GetSceneDirectionalLightCount();
 
 			Buffer.SetDirty(true);
 		}

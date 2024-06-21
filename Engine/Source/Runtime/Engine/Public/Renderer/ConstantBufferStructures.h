@@ -63,7 +63,7 @@ static_assert((sizeof( WireframeParamsCBData ) % 256) == 0, "Constant Buffer siz
 // Light Structures
 // Keep these in sync with "Shaders/Public/Core/LightsFwd.hlsli"
 //
-struct PointLightCBData
+HE_ALIGN( 16 ) struct PointLightData
 {
 	// The position of the light in world space.
 	FVector3				Position;
@@ -71,7 +71,7 @@ struct PointLightCBData
 	// The radial influence of the light.
 	float					Radius;
 
-	// The color of the light. Fourth component is unused.
+	// The color of the light.
 	FVector3				Color;
 
 	// The brightness the light will illuminate.
@@ -79,11 +79,8 @@ struct PointLightCBData
 
 	// The unique identifier of the light.
 	PointLightDataHandle	Id;
-
-	float Pad[55];
 };
-static_assert((sizeof( PointLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
-struct DirectionalLightCBData
+HE_ALIGN( 16 ) struct DirectionalLightCBData
 {
 	// The direction of the light.
 	FVector4						Direction;
@@ -96,31 +93,30 @@ struct DirectionalLightCBData
 
 	// The unique identifier of the light.
 	DirectionalLightDataHandle		Id;
-
-	float Pad[54];
 };
-static_assert((sizeof( DirectionalLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
-struct SpotLightCBData
+HE_ALIGN( 16 ) struct SpotLightCBData
 {
-	float					TEMP;
-	SpotLightDataHandle		Id;
+	// The color of the light.
+	FVector4				Color;
+
+	float					Radius;
 	
-	float Pad[62];
+	PointLightDataHandle	Id;
 };
-static_assert((sizeof( SpotLightCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 struct SceneLightsCBData
 {
 	uint32					NumPointLights;
-	uint32					NumDirectionalLights;
-	float					Unused0[2];
+	//uint32					NumDirectionalLights;
 
-	PointLightCBData		PointLights[HE_MAX_POINT_LIGHTS];
-	DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+	PointLightData		PointLights[HE_MAX_POINT_LIGHTS];
+	//DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 	//TODO: SpotLightData			SpotLights[HE_MAX_SPOT_LIGHTS];
 
-	float Pad[60];
+	float Pad[76];
 };
+constexpr uint32 size = sizeof( SceneLightsCBData );
 static_assert((sizeof( SceneLightsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+
 HE_ALIGN( 16 ) struct PostProcessSettings
 {
 

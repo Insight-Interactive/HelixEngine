@@ -112,6 +112,7 @@ protected:
 
 	std::vector<FUIPanel*>& GetUIPanels();
 
+	PointLightDataHandle m_TestPointLight;
 
 protected:
 	std::vector<FUIPanel*> m_UIPanels;

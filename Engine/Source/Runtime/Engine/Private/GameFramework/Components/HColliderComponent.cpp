@@ -190,7 +190,7 @@ void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	const JsonUtility::ReadContext& This = Value[1];
 	JsonUtility::GetBoolean( This, "IsTrigger", m_IsTrigger );
 	
-	float Density = 0.f;
+	float Density = 1.f;
 	JsonUtility::GetFloat( This, "Density", Density );
 	GetRigidBody().SetDensity( Density );
 

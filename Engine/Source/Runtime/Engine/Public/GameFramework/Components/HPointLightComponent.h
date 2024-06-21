@@ -66,7 +66,7 @@ protected:
 inline FColor HPointLightComponent::GetColor() const
 {
 	FColor RetVal( 0.f );
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		RetVal.R = pData->Color.x;
@@ -78,7 +78,7 @@ inline FColor HPointLightComponent::GetColor() const
 
 inline float HPointLightComponent::GetBrightness() const
 {
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		return pData->Brightness;
@@ -89,7 +89,7 @@ inline float HPointLightComponent::GetBrightness() const
 
 inline void HPointLightComponent::SetColor( const FColor& NewColor )
 {
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		pData->Color = NewColor.ToVector3();
@@ -98,7 +98,7 @@ inline void HPointLightComponent::SetColor( const FColor& NewColor )
 
 inline void HPointLightComponent::SetBrightness( float NewBrightness )
 {
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		pData->Brightness = NewBrightness;

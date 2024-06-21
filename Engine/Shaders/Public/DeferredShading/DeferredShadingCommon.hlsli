@@ -18,10 +18,10 @@ struct GP_PSInput // VS Output
 {
 	float4 Position		: SV_POSITION;
 	float3 Normal		: NORMAL;
-	float3 Tangent		: TANGENT;
-	float3 BiTangent	: BITANGENT;
 	float4 VertexColor	: COLOR;
 	float2 UVs			: UVS;
+
+	float3x3 TBN : TBN;
 };
 
 // Pixel Stage

@@ -58,8 +58,9 @@ void HWorld::Initialize( const FPath& LevelURL )
 		const rapidjson::Value& World = WorldJsonDoc["World"];
 		enum
 		{
-			kSettings = 0,
-			kActors = 1,
+			kSettings	= 0,
+			kActors		= 1,
+			kLights		= 2
 		};
 		// Load the world's settings
 		const rapidjson::Value& WorldSettings = World[kSettings];
@@ -69,6 +70,29 @@ void HWorld::Initialize( const FPath& LevelURL )
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
 		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+
+		// Load static placed lights
+		const rapidjson::Value& Lights = World[kLights];
+		for (auto Iter = Lights.MemberBegin(); Iter != Lights.MemberEnd(); Iter++)
+		{
+
+			if (strcmp(Iter->name.GetString(), "PointLight") == 0)
+			{
+				PointLightData* pData = nullptr;
+				GLightManager.AllocatePointLightData( m_TestPointLight, &pData );
+				HE_ASSERT( pData!= nullptr );
+
+				FTransform Transform;
+				JsonUtility::GetTransform( Lights, Iter->name.GetString(), Transform);
+				pData->Position = Transform.GetPosition();
+
+				JsonUtility::GetFloat( Iter->value[1], "R", pData->Color.x );
+				JsonUtility::GetFloat( Iter->value[1], "G", pData->Color.y );
+				JsonUtility::GetFloat( Iter->value[1], "B", pData->Color.z );
+				JsonUtility::GetFloat( Iter->value[1], "Brightness", pData->Brightness );
+				JsonUtility::GetFloat( Iter->value[1], "Radius", pData->Radius );
+			}
+		}
 
 		// TEMP
 		m_DebugUI.AddWidget( m_FPSCounter );

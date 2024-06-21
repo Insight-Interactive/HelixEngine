@@ -11,7 +11,7 @@
             {
               "HSceneComponent": [
                 {
-                  "ObjectName": "CubeStaticMesh",
+                  "ObjectName": "Cube_Mesh",
                   "ObjectGUID": "3e571b60-d990-4fb9-8cd0-aac5cbe305a0"
                 },
                 {
@@ -34,7 +34,7 @@
             {
               "m_bIsDrawEnabled": true,
               "m_MeshAsset": "Cube.fbx",
-              "m_MaterialAsset": "M_RustedMetal.hmat"
+              "m_MaterialAsset": "M_Wood.hmat"
             }
           ]
         },

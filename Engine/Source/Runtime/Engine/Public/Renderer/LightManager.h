@@ -27,29 +27,29 @@ public:
 		@param [out] OutHandle - Handle to the newly allocated light.
 		@param [out] ppOutLight - Optional pointer to the light that will be created. Only for use with initialization.
 	*/
-	void AllocateSpotLightData(SpotLightDataHandle& OutHandle, SpotLightCBData** ppOutLight);
+	void AllocateSpotLightData( SpotLightDataHandle& OutHandle, SpotLightCBData** ppOutLight );
 
 	/*
 		Allocates a point light and adds it to the scene. Populates a handle to the newly created point light.
 		@param [out] OutHandle - Handle to the newly allocated light.
 		@param [out] ppOutLight - Optional pointer to the light that will be created. Only for use with initialization.
 	*/
-	void AllocatePointLightData(PointLightDataHandle& OutHandle, PointLightCBData** ppOutLight);
+	void AllocatePointLightData( PointLightDataHandle& OutHandle, PointLightData** ppOutLight );
 
 	/*
 		Allocates a directional light and adds it to the scene. Populates a handle to the newly created point light.
 		@param [out] OutHandle - Handle to the newly allocated light.
 		@param [out] ppOutLight - Optional pointer to the light that will be created. Only for use with initialization.
 	*/
-	void AllocateDirectionalLightData(DirectionalLightDataHandle& OutHandle, DirectionalLightCBData** ppOutLight);
+	void AllocateDirectionalLightData( DirectionalLightDataHandle& OutHandle, DirectionalLightCBData** ppOutLight );
 
 
-	SpotLightCBData* GetSpotLightData(SpotLightDataHandle Handle);
-	PointLightCBData* GetPointLightData(PointLightDataHandle Handle);
-	DirectionalLightCBData* GetDirectionalLightData(DirectionalLightDataHandle Handle);
+	SpotLightCBData* GetSpotLightData( SpotLightDataHandle Handle);
+	PointLightData* GetPointLightData( PointLightDataHandle Handle);
+	DirectionalLightCBData* GetDirectionalLightData( DirectionalLightDataHandle Handle );
 
 	SpotLightCBData* GetSpotLightBufferPointer();
-	PointLightCBData* GetPointLighBufferPointer();
+	PointLightData* GetPointLighBufferPointer();
 	DirectionalLightCBData* GetDirectionalLightBufferPointer();
 
 	uint32 GetSceneSpotLightCount();
@@ -58,20 +58,20 @@ public:
 
 private:
 	void InitializeSpotLightData(SpotLightCBData& Light);
-	void InitializePointLightData(PointLightCBData& Light);
+	void InitializePointLightData(PointLightData& Light);
 	void InitializeDirectionalLightData(DirectionalLightCBData& Light);
 
 	template <typename LightType, typename LightHandleType>
-	LightType* InternalFindLightByHandle(std::vector<LightType>& LightBuffer, const LightHandleType& Handle);
+	LightType* InternalFindLightByHandle( std::vector<LightType>& LightBuffer, const LightHandleType& Handle );
 
 private:
 	std::vector<SpotLightCBData>			m_SceneSpotLightDatas;
-	std::vector<PointLightCBData>			m_ScenePointLightDatas;
+	std::vector<PointLightData>			m_ScenePointLightDatas;
 	std::vector<DirectionalLightCBData>		m_SceneDirectionalLightDatas;
 
-	SpotLightDataHandle					s_NextSpotLightDatahandle;
-	PointLightDataHandle				s_NextPointLightDataHandle;
-	DirectionalLightDataHandle			s_NextDirectionalLightDataHandle;
+	uint32					s_NextSpotLightDatahandle;
+	uint32				s_NextPointLightDataHandle;
+	uint32			s_NextDirectionalLightDataHandle;
 
 };
 
@@ -105,16 +105,16 @@ FORCEINLINE void LightManager::AllocateSpotLightData(SpotLightDataHandle& OutHan
 	OutHandle = NewLight.Id;
 }
 
-FORCEINLINE void LightManager::AllocatePointLightData(PointLightDataHandle& OutHandle, PointLightCBData** pOutLight)
+FORCEINLINE void LightManager::AllocatePointLightData( PointLightDataHandle& OutHandle, PointLightData** pOutLight)
 {
 	if (m_ScenePointLightDatas.size() == HE_MAX_POINT_LIGHTS)
 	{
 		HE_LOG(Warning, TEXT("Too many point lights added to the scene!"));
 
 		*pOutLight = NULL;
-		OutHandle = IE_INVALID_POINT_LIGHT_HANDLE;
+		OutHandle = -1;
 	}
-	PointLightCBData& NewLight = m_ScenePointLightDatas.emplace_back(PointLightCBData{});
+	PointLightData& NewLight = m_ScenePointLightDatas.emplace_back(PointLightData{});
 	InitializePointLightData(NewLight);
 	NewLight.Id = s_NextPointLightDataHandle++;
 
@@ -142,26 +142,24 @@ FORCEINLINE void LightManager::AllocateDirectionalLightData(DirectionalLightData
 	OutHandle = NewLight.Id;
 }
 
-FORCEINLINE SpotLightCBData* LightManager::GetSpotLightData(SpotLightDataHandle Handle)
+FORCEINLINE SpotLightCBData* LightManager::GetSpotLightData( SpotLightDataHandle Handle)
 {
 	return InternalFindLightByHandle(m_SceneSpotLightDatas, Handle);
 }
 
-FORCEINLINE PointLightCBData* LightManager::GetPointLightData(PointLightDataHandle Handle)
+FORCEINLINE PointLightData* LightManager::GetPointLightData( PointLightDataHandle Handle)
 {
 	return InternalFindLightByHandle(m_ScenePointLightDatas, Handle);
 }
 
-FORCEINLINE DirectionalLightCBData* LightManager::GetDirectionalLightData(DirectionalLightDataHandle Handle)
+FORCEINLINE DirectionalLightCBData* LightManager::GetDirectionalLightData( DirectionalLightDataHandle Handle)
 {
 	return InternalFindLightByHandle(m_SceneDirectionalLightDatas, Handle);
 }
 
 template <typename LightType, typename LightHandleType>
-FORCEINLINE LightType* LightManager::InternalFindLightByHandle(std::vector<LightType>& LightBuffer, const LightHandleType& LightHandle)
+FORCEINLINE LightType* LightManager::InternalFindLightByHandle( std::vector<LightType>& LightBuffer, const LightHandleType& LightHandle )
 {
-	HE_ASSERT(LightHandle.IsValid()); // Invalid handle provided when searching for corresponding light!
-
 	for (uint64 i = 0; i < LightBuffer.size(); ++i)
 	{
 		if (LightBuffer[i].Id == LightHandle)
@@ -172,7 +170,7 @@ FORCEINLINE LightType* LightManager::InternalFindLightByHandle(std::vector<Light
 	return NULL;
 }
 
-FORCEINLINE PointLightCBData* LightManager::GetPointLighBufferPointer()
+FORCEINLINE PointLightData* LightManager::GetPointLighBufferPointer()
 {
 	return m_ScenePointLightDatas.data();
 }
@@ -207,17 +205,17 @@ FORCEINLINE void LightManager::InitializeSpotLightData(SpotLightCBData& Light)
 
 }
 
-FORCEINLINE void LightManager::InitializePointLightData(PointLightCBData& Light)
+FORCEINLINE void LightManager::InitializePointLightData(PointLightData& Light)
 {
-	ZeroMemory(&Light, sizeof(PointLightCBData));
-	Light.Brightness = kDefaultBrightness;
+	ZeroMemory(&Light, sizeof(PointLightData));
+	Light.Brightness = 20.f;
 	Light.Color = FVector3::One;
 }
 
 FORCEINLINE void LightManager::InitializeDirectionalLightData(DirectionalLightCBData& Light)
 {
 	ZeroMemory(&Light, sizeof(DirectionalLightCBData));
-	Light.Brightness = kDefaultBrightness;
+	Light.Brightness = 20.f;
 	Light.Color = FVector4::One;
 	Light.Direction = FVector4::One;
 }

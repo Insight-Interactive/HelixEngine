@@ -37,7 +37,7 @@ void HPointLightComponent::SetPosition( const FVector3& NewPos )
 {
 	Super::SetPosition( NewPos );
 	
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		pData->Position = GetWorldPosition();
@@ -48,7 +48,7 @@ void HPointLightComponent::SetPosition( const float& X, const float& Y, const fl
 {
 	Super::SetPosition( X, Y, Z );
 
-	PointLightCBData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
 		pData->Position = GetWorldPosition();

@@ -2,6 +2,29 @@
 #include "../../../Source/Runtime/Engine/Public/Engine/EngineDefines.h"
 #include "LightsFwd.hlsli"
 
+//
+// Common Light Stuctures.
+//
+
+struct PointLight
+{
+    float3 Position;
+    float Radius;
+    float3 Color;
+    float Brightness;
+    uint Id;
+};
+
+struct DirectionalLight
+{
+    float4 Direction;
+    float4 Color;
+    float Brightness;
+    uint Id;
+
+    float DLPad[54];
+};
+
 
 //
 // Core Types and Macros for Rendering 
@@ -51,13 +74,12 @@ HE_DECLARE_CONSTANT_BUFFER(MeshWorld_CB, kMeshWorldReg)
 HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 {
     uint kNumPointLights;
-    uint kNumDirectionalLights;
-	/* float Unused0[2]; */
+    //uint kNumDirectionalLights;
 
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
-	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+	//DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
  
-    float LightPad[60];
+    float LightPad[27];
 }
 
 

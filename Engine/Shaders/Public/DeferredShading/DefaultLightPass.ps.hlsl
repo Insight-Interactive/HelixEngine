@@ -29,19 +29,31 @@ LP_PSOutput main(LP_PSInput Input)
 	float Depth				= SceneDepth.Sample(LinearWrapSampler, Input.UVs).r;
 	float3 WorldPos			= ConstructWorldPosFromDepth(Depth, Input.UVs, kInverseViewMat, kInverseProjMat);
 
+	/*float3 LightLuminance = PBRLightPixel( AlbedoSample, NormalSample, RoughnessSample, MetallicSample, SpecularSample, WorldPos, Input.UVs );
 	float3 Albedo = pow( abs( AlbedoSample ), float3(2.2, 2.2, 2.2) );
-	float3 LightLuminance = PBRLightPixel( AlbedoSample, NormalSample, RoughnessSample, MetallicSample, SpecularSample, WorldPos, Input.UVs );
-	
-    float3 Ambient = float3(0.03, 0.03, 0.03) * Albedo;
+	float3 Ambient = float3(0.03, 0.03, 0.03) * Albedo;
 	float3 Color = Ambient + LightLuminance;
     Color = Color / (Color + float3(1, 1, 1));
     Color = pow(abs(Color), float3(1 / 2.2, 1 / 2.2, 1 / 2.2));
-	Output.Result = float4(Color , 1.f);
+	Output.Result = float4(Color , 1.f);*/
+	
+	float3 ViewDir = normalize( kCameraPos - WorldPos );
+
+	float3 LightLuminance = float3(0.f, 0.f, 0.f);
+	for (uint i = 0; i < kNumPointLights; i++)
+	{
+		float3 LightDir = normalize(kPointLights[i].Position - WorldPos);
+		float3 Halfway = normalize( ViewDir + LightDir );
+		float Spec = pow( max( dot( NormalSample, LightDir ), 0.f ), 2.f );
+		float3 Specular = kPointLights[i].Color * Spec;
+
+		LightLuminance += Specular;
+	}
 	
 	// DEBUG
 	//
 	//float LinearDepth = LinearizeDepth(Depth, kCameraNearZ, kCameraFarZ);
-	//Output.Result = float4(AlbedoSample, 1);
+	Output.Result = float4(AlbedoSample * LightLuminance, 1);
 	
 	return Output;
 }

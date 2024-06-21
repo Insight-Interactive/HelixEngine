@@ -126,6 +126,9 @@
     <ClInclude Include="Public\RootSignature.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Shader.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\StaticMeshGeometry.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -150,7 +153,6 @@
     <ClInclude Include="Public\VertexLayouts.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\APIBridge\CommonFunctions.cpp">
@@ -252,13 +254,15 @@
     <ClCompile Include="Private\RootSignature.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Shader.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
     <ClCompile Include="Private\StaticMeshGeometry.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\TextureManager.cpp">
       <Filter>Private</Filter>
     </ClCompile>
-    <ClCompile Include="Private\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer.module.lua" />

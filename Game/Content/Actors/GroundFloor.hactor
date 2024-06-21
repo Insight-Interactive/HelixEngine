@@ -33,7 +33,7 @@
             },
             {
               "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "Cube.fbx",
+              "m_MeshAsset": "Cube01.fbx",
               "m_MaterialAsset": "M_RustedMetal.hmat"
             }
           ]

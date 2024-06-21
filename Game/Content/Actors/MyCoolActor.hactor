@@ -79,17 +79,6 @@
               "m_MaterialAsset": "M_RustedMetal.hmat"
             }
           ]
-        },
-        {
-          "HLuaScriptComponent":[
-            {
-              "ObjectName": "RotatingScript",
-              "ObjectGUID": "eb305086-b0f8-419b-b0be-ef991211b4a6"
-            },
-            {
-              "m_ScriptAsset": "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb"
-            }
-          ]
         }
       ]
     }
