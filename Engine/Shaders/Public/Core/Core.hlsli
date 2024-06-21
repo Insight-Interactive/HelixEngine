@@ -1,6 +1,5 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "../../../Source/Runtime/Engine/Public/Engine/EngineDefines.h"
-#include "LightsFwd.hlsli"
 
 //
 // Common Light Stuctures.

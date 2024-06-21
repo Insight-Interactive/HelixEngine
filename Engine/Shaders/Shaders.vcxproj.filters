@@ -98,9 +98,6 @@
     <None Include="Public\Core\Core.hlsli">
       <Filter>Public\Core</Filter>
     </None>
-    <None Include="Public\Core\LightsFwd.hlsli">
-      <Filter>Public\Core</Filter>
-    </None>
     <None Include="Public\Core\PBRCommon.hlsli">
       <Filter>Public\Core</Filter>
     </None>

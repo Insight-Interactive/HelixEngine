@@ -15,6 +15,7 @@
 #include "GameFramework/Components/HCubeColliderComponent.h"
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
 
+
 HWorld::HWorld()
 	: m_CameraManager( this )
 	, m_Scene( this )
@@ -73,10 +74,13 @@ void HWorld::Initialize( const FPath& LevelURL )
 
 		// Load static placed lights
 		const rapidjson::Value& Lights = World[kLights];
+		StringHashValue PointLightHash = StringHash( "PointLight" );
+		StringHashValue DirectionalLightHash = StringHash( "DirectionalLight" );
+		StringHashValue SpotLightHash = StringHash( "SpotLight" );
 		for (auto Iter = Lights.MemberBegin(); Iter != Lights.MemberEnd(); Iter++)
 		{
-
-			if (strcmp(Iter->name.GetString(), "PointLight") == 0)
+			StringHashValue LightTypeHash = StringHash(Iter->name.GetString());
+			if (PointLightHash == LightTypeHash)
 			{
 				PointLightData* pData = nullptr;
 				GLightManager.AllocatePointLightData( m_TestPointLight, &pData );
@@ -91,6 +95,18 @@ void HWorld::Initialize( const FPath& LevelURL )
 				JsonUtility::GetFloat( Iter->value[1], "B", pData->Color.z );
 				JsonUtility::GetFloat( Iter->value[1], "Brightness", pData->Brightness );
 				JsonUtility::GetFloat( Iter->value[1], "Radius", pData->Radius );
+			}
+			else if (DirectionalLightHash == LightTypeHash)
+			{
+
+			}
+			else if (SpotLightHash == LightTypeHash)
+			{
+
+			}
+			else
+			{
+				HE_ASSERT( false );
 			}
 		}
 

@@ -94,6 +94,7 @@ FORCEINLINE void LightManager::AllocateSpotLightData(SpotLightDataHandle& OutHan
 
 		*pOutLight = NULL;
 		OutHandle = IE_INVALID_SPOT_LIGHT_HANDLE;
+		return;
 	}
 	SpotLightCBData& NewLight = m_SceneSpotLightDatas.emplace_back(SpotLightCBData{});
 	InitializeSpotLightData(NewLight);
@@ -113,6 +114,7 @@ FORCEINLINE void LightManager::AllocatePointLightData( PointLightDataHandle& Out
 
 		*pOutLight = NULL;
 		OutHandle = -1;
+		return;
 	}
 	PointLightData& NewLight = m_ScenePointLightDatas.emplace_back(PointLightData{});
 	InitializePointLightData(NewLight);
@@ -129,8 +131,10 @@ FORCEINLINE void LightManager::AllocateDirectionalLightData(DirectionalLightData
 	if (m_SceneDirectionalLightDatas.size() == HE_MAX_DIRECTIONAL_LIGHTS)
 	{
 		HE_LOG(Warning, TEXT("Too many directional lights added to the scene!"));
+
 		*pOutLight = NULL;
 		OutHandle = IE_INVALID_DIRECTIONAL_LIGHT_HANDLE;
+		return;
 	}
 	DirectionalLightCBData& NewLight = m_SceneDirectionalLightDatas.emplace_back(DirectionalLightCBData{});
 	InitializeDirectionalLightData(NewLight);

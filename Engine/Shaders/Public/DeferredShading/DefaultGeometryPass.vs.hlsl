@@ -24,10 +24,5 @@ GP_PSInput main(GP_VSInput Input)
     float3 N = normalize( float3(mul( float4(Input.Normal, 0.f), kWorldMat ).xyz) );
     Result.TBN = float3x3(T, B, N);
 
-
-    //Result.Normal = normalize(mul(float4(Input.Normal, 0), kWorldMat)).xyz;
-    //Result.Tangent = mul(float4(Input.Tangent, 1), WorldView).xyz;
-    //Result.BiTangent = mul(float4(Input.BiTangent, 1), WorldView).xyz;
-
     return Result;
 }
