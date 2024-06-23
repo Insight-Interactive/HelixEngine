@@ -15,10 +15,15 @@
       "MaterialMetallic": "RustedIron/RustedIron_Metallic.dds"
     },
     {
-
+      "kUVOffset":[
+        {
+          "r": 10.0,
+          "g": 10.0
+        }
+      ]
     },
     {
-      "VertexShader": "724546e1-911f-4cd2-9b14-97c212be3e9a",
+      "VertexShader": "9357df8a-a1b9-41ef-8476-7e1f5bab0be3",
       "PixelShader": "9fd732ad-0a78-453d-8585-3028ecabede1"
     }
   ]

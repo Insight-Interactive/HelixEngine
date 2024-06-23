@@ -20,8 +20,6 @@ struct DirectionalLight
     float4 Color;
     float Brightness;
     uint Id;
-
-    float DLPad[54];
 };
 
 
@@ -67,18 +65,16 @@ HE_DECLARE_CONSTANT_BUFFER(MeshWorld_CB, kMeshWorldReg)
 {
     float4x4 kWorldMat;
 
-    float MWPad[48];
+    float MWPad[46];
 }
 
 HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 {
     uint kNumPointLights;
-    //uint kNumDirectionalLights;
+    uint kNumDirectionalLights;
 
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
-	//DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
- 
-    float LightPad[27];
+	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 }
 
 

@@ -4,10 +4,10 @@
             "Name": "DemoLevel"
         },
         {
-            "MyCoolActor.hactor": [
+            "MaterialDemoStand.hactor": [
                 {
                     "PositionX": 0.0,
-                    "PositionY": 40.0,
+                    "PositionY": 0.0,
                     "PositionZ": 100.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
@@ -35,8 +35,8 @@
             "PointLight":[
                 {
                     "PositionX": 0.0,
-                    "PositionY": 20.0,
-                    "PositionZ": 50.0,
+                    "PositionY": 50.0,
+                    "PositionZ": 100.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -48,7 +48,7 @@
                     "R": 255.0,
                     "G": 255.0,
                     "B": 255.0,
-                    "Brightness": 200.0,
+                    "Brightness": 1.0,
                     "Radius": 50.0
                 }
             ]

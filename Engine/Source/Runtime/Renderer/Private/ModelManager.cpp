@@ -106,6 +106,8 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 			}
 			else
 			{
+				HE_ASSERT( false );// Mesh does not have tangents or bitangents!
+
 				Vertex.UV0 = FVector2( 0.0f, 0.0f );
 				Vertex.Tangent = FVector3( 0.0f, 0.0f, 0.0f );
 				Vertex.BiTangent = FVector3( 0.0f, 0.0f, 0.0f );

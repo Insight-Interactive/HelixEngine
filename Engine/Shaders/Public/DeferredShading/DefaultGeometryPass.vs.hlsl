@@ -1,5 +1,6 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "../Core/Core.hlsli"
+#include "../Core/Common.hlsli"
 #include "DeferredShadingCommon.hlsli"
 
 
@@ -19,10 +20,7 @@ GP_PSInput main(GP_VSInput Input)
     Result.UVs = Input.UVs;
     Result.Normal = Input.Normal;
 
-    float3 T = normalize( float3(mul( float4(Input.Tangent, 0.f), kWorldMat ).xyz) );
-    float3 B = normalize( float3(mul( float4(Input.BiTangent, 0.f), kWorldMat ).xyz) );
-    float3 N = normalize( float3(mul( float4(Input.Normal, 0.f), kWorldMat ).xyz) );
-    Result.TBN = float3x3(T, B, N);
+    CalculateTangentSpaceNormals( Result.TBN, Input.Normal, Input.Tangent, Input.BiTangent, kWorldMat );
 
     return Result;
 }

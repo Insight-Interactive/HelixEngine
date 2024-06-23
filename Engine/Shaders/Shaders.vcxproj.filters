@@ -66,6 +66,12 @@
     <FxCompile Include="Public\DeferredShading\DefaultLightPass.ps.hlsl">
       <Filter>Public\DeferredShading</Filter>
     </FxCompile>
+    <FxCompile Include="Public\DeferredShading\MaterialBall.vs.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\RustedMetal.vs.hlsl">
+      <Filter>Public\DeferredShading</Filter>
+    </FxCompile>
     <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">
       <Filter>Public\ForwardShading</Filter>
     </FxCompile>

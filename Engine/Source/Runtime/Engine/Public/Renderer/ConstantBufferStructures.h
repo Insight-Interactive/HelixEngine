@@ -37,8 +37,10 @@ struct MeshWorldCBData
 {
 	// World space model matrix.
 	FMatrix kWorldMat;
+
+	FVector2 kUVOffset;
 	
-	float Pad[48];
+	float Pad[46];
 };
 static_assert((sizeof( MeshWorldCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 
@@ -61,7 +63,7 @@ struct WireframeParamsCBData
 static_assert((sizeof( WireframeParamsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 
 // Light Structures
-// Keep these in sync with "Shaders/Public/Core/LightsFwd.hlsli"
+// Keep these in sync with "Shaders/Public/Core/Core.hlsli"
 //
 HE_ALIGN( 16 ) struct PointLightData
 {
@@ -106,13 +108,11 @@ HE_ALIGN( 16 ) struct SpotLightCBData
 struct SceneLightsCBData
 {
 	uint32					NumPointLights;
-	//uint32					NumDirectionalLights;
+	uint32					NumDirectionalLights;
 
-	PointLightData		PointLights[HE_MAX_POINT_LIGHTS];
-	//DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+	PointLightData			PointLights[HE_MAX_POINT_LIGHTS];
+	DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
 	//TODO: SpotLightData			SpotLights[HE_MAX_SPOT_LIGHTS];
-
-	float Pad[76];
 };
 constexpr uint32 size = sizeof( SceneLightsCBData );
 static_assert((sizeof( SceneLightsCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");

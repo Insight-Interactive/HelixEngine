@@ -11,7 +11,9 @@
             "c7cd8297-1098-446c-8d01-7d175f81564c": "Shaders/Core/DefaultForwardPass.ps.cso",
             "3c5f2a9f-ff5b-4eac-a311-b78d1f0aeca4": "Shaders/Core/Wireframe.ps.cso",
             "41c75002-f4b1-4030-adec-7a5088a4e65b": "Shaders/Core/Text.vs.cso",
-            "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso"
+            "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso",
+            "3e5d14f5-da55-4e50-b69f-622dd69ef93e": "Shaders/Core/MaterialBall.vs.cso",
+            "9357df8a-a1b9-41ef-8476-7e1f5bab0be3": "Shaders/Core/RustedMetal.vs.cso"
         }
     ]
 }

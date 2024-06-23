@@ -116,13 +116,13 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 	m_IsLoading.Set();
 	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
 	{
-		char ActorPath[HE_MAX_PATH];
-		sprintf_s( ActorPath, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
+		FPath ActorPath;
+		sprintf_s( ActorPath.m_Path, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
 
 		// Load the actor
 		//
 		rapidjson::Document JsonDoc;
-		FileRef JsonSource( ActorPath, FUM_Read );
+		FileRef JsonSource( ActorPath.GetFullPath(), FUM_Read);
 		JsonUtility::LoadDocument( JsonSource, JsonDoc );
 		if (JsonDoc.IsObject())
 		{
@@ -138,16 +138,17 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 					// Create the actor and deserialize its components.
 					AActor* pNewActor = CreateActor<AActor>( TEXT( "<Unnamed Actor>" ) );
 					pNewActor->Deserialize( ActorObject );
+					// TODO: This should be refactored. It messes with the root transform too much!
 					if (HSceneComponent* pRoot = pNewActor->GetRootComponent())
 					{
 						FTransform Transform;
 						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
 						FVector3 Pos = Transform.GetPosition();
 						pRoot->Translate( Pos.x, Pos.y, Pos.z );
-						FVector3 Rot = Transform.GetRotation().ToEulerAngles();
+						/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
 						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
 						FVector3 Sca = Transform.GetScale();
-						pRoot->Scale( Sca.x, Sca.y, Sca.z );
+						pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
 					}
 					pNewActor->OnDeserializeComplete();
 				}
@@ -155,7 +156,7 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 		}
 		else
 		{
-			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath ) );
+			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath.GetFullPath() ) );
 			HE_ASSERT( false );
 		}
 	}

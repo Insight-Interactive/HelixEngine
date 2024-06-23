@@ -33,7 +33,7 @@ LP_PSOutput main(LP_PSInput Input)
 	float3 Albedo = pow( abs( AlbedoSample ), float3(2.2, 2.2, 2.2) );
 	float3 Ambient = float3( 0.03, 0.03, 0.03 ) * Albedo;
 	float3 Color = Ambient + LightLuminance;
-    Color = Color / ( Color + float3(1, 1, 1) );
+    Color = Color / ( Color + float3(1, 1, 1) ); 
 	Color = pow( abs( Color ), float3(1 / 2.2, 1 / 2.2, 1 / 2.2) );
 	Output.Result = float4(Color, 1.f );
 	

@@ -112,7 +112,8 @@ FORCEINLINE void LightManager::AllocatePointLightData( PointLightDataHandle& Out
 	{
 		HE_LOG(Warning, TEXT("Too many point lights added to the scene!"));
 
-		*pOutLight = NULL;
+		if (pOutLight != NULL)
+			*pOutLight = NULL;
 		OutHandle = -1;
 		return;
 	}

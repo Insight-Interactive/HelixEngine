@@ -51,6 +51,8 @@ float3 PBRLightPixel( float3 AlbedoSample, float3 NormalSample, float RoughnessS
     F0 = lerp( F0, AlbedoSample, MetallicSample );
     float3 V = normalize( kCameraPos - WorldPos );
 
+    // Accumulate point light luminance.
+    //
     float3 PointLightLuminance = float3(0.f, 0.f, 0.f);
     for (uint i = 0; i < kNumPointLights; i++)
     {
@@ -75,10 +77,11 @@ float3 PBRLightPixel( float3 AlbedoSample, float3 NormalSample, float RoughnessS
         float3 Specular = Numerator / Denominator;
 
         float NdotL = max( dot( NormalSample, L ), 0.0 );
-        PointLightLuminance += (kD * AlbedoSample / PI + Specular)* Radiance* NdotL;
+        PointLightLuminance += ((kD * AlbedoSample / PI + Specular) * Radiance * NdotL) * kPointLights[i].Brightness;
     }
 
     // Accumulate directional light luminance.
+    //
     //float3 DirectionalLightLuminance = float3(0.f, 0.f, 0.f);
     //float3 LightDir = normalize(float3(0.f, 0.f, 0.25f));
     //float Angle = max(dot(Normal, LightDir), 0);

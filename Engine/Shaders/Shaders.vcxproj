@@ -392,202 +392,102 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
     <OutDir>..\..\Build-msc-v143\DebugEditor-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugEditor-Win64\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|x64'">
     <OutDir>..\..\Build-msc-v143\DebugEditor-Win32\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugEditor-Win32\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|Win32'">
     <OutDir>..\..\Build-msc-v143\DebugEditor-Durango\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugEditor-Durango\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|Win32'">
     <OutDir>..\..\Build-msc-v143\DebugEditor-Scorpio\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugEditor-Scorpio\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|x64'">
     <OutDir>..\..\Build-clang\DebugEditor-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\DebugEditor-Prospero\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|x64'">
     <OutDir>..\..\Build-msc-v143\Development-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Development-Win64\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|x64'">
     <OutDir>..\..\Build-msc-v143\Development-Win32\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Development-Win32\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|Win32'">
     <OutDir>..\..\Build-msc-v143\Development-Durango\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Development-Durango\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|Win32'">
     <OutDir>..\..\Build-msc-v143\Development-Scorpio\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Development-Scorpio\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|x64'">
     <OutDir>..\..\Build-clang\Development-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\Development-Prospero\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|x64'">
     <OutDir>..\..\Build-msc-v143\DebugGame-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugGame-Win64\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|x64'">
     <OutDir>..\..\Build-msc-v143\DebugGame-Win32\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugGame-Win32\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|Win32'">
     <OutDir>..\..\Build-msc-v143\DebugGame-Durango\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugGame-Durango\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|Win32'">
     <OutDir>..\..\Build-msc-v143\DebugGame-Scorpio\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\DebugGame-Scorpio\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|x64'">
     <OutDir>..\..\Build-clang\DebugGame-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\DebugGame-Prospero\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|x64'">
     <OutDir>..\..\Build-msc-v143\Demo-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Win64\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|x64'">
     <OutDir>..\..\Build-msc-v143\Demo-Win32\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Win32\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|Win32'">
     <OutDir>..\..\Build-msc-v143\Demo-Durango\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Durango\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|Win32'">
     <OutDir>..\..\Build-msc-v143\Demo-Scorpio\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\Demo-Scorpio\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|x64'">
     <OutDir>..\..\Build-clang\Demo-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\Demo-Prospero\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|x64'">
     <OutDir>..\..\Build-msc-v143\ShippingGame-Win64\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\ShippingGame-Win64\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|x64'">
     <OutDir>..\..\Build-msc-v143\ShippingGame-Win32\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\ShippingGame-Win32\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|Win32'">
     <OutDir>..\..\Build-msc-v143\ShippingGame-Durango\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\ShippingGame-Durango\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|Win32'">
     <OutDir>..\..\Build-msc-v143\ShippingGame-Scorpio\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-msc-v143\Intermediates\ShippingGame-Scorpio\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|x64'">
     <OutDir>..\..\Build-clang\ShippingGame-Prospero\Shaders\Core\</OutDir>
     <IntDir>..\..\Build-clang\Intermediates\ShippingGame-Prospero\Shaders\Core\</IntDir>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Prospero|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win32|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Prospero|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win32|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Win64|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Prospero|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win32|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Win64|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Prospero|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win32|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Win64|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Prospero|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win32|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Win64|Win32'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Durango|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Scorpio|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Durango|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame Scorpio|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Durango|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo Scorpio|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Durango|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development Scorpio|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Durango|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ShippingGame Scorpio|x64'">
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor Win64|x64'">
   </ItemDefinitionGroup>
@@ -686,6 +586,14 @@
     </FxCompile>
     <FxCompile Include="Public\DeferredShading\DefaultLightPass.ps.hlsl">
       <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\MaterialBall.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Public\DeferredShading\RustedMetal.vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.1</ShaderModel>
     </FxCompile>
     <FxCompile Include="Public\ForwardShading\DefaultForwardPass.ps.hlsl">

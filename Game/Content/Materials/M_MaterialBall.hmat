@@ -1,0 +1,30 @@
+{
+  "FMaterial": [
+    {
+      "m_GUID": "0d68e992-aa25-4aa4-9f81-0eb775320c1e",
+      "EMaterialBlendMode": 0,
+      "EMaterialDomain": 0,
+      "EShadingModel": 0,
+      "EFillMode": 3,
+      "IsTwoSided": false
+    },
+    {
+      "MaterialAlbedo": "Hardwood/Hardwood_Albedo.dds",
+      "MaterialNormal": "Hardwood/Hardwood_Normal.dds",
+      "MaterialRoughness": "Hardwood/Hardwood_Roughness.dds",
+      "MaterialMetallic": "Hardwood/Hardwood_Metallic.dds"
+    },
+    {
+      "kUVOffset":[
+        {
+          "r": 10.0,
+          "g": 10.0
+        }
+      ]
+    },
+    {
+      "VertexShader": "3e5d14f5-da55-4e50-b69f-622dd69ef93e",
+      "PixelShader": "9fd732ad-0a78-453d-8585-3028ecabede1"
+    }
+  ]
+}
