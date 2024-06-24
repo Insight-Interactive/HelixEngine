@@ -75,7 +75,6 @@ void HWorld::Initialize( const FPath& LevelURL )
 		// Load static placed lights
 		const rapidjson::Value& Lights = World[kLights];
 		StringHashValue PointLightHash = StringHash( "PointLight" );
-		StringHashValue DirectionalLightHash = StringHash( "DirectionalLight" );
 		StringHashValue SpotLightHash = StringHash( "SpotLight" );
 		for (auto Iter = Lights.MemberBegin(); Iter != Lights.MemberEnd(); Iter++)
 		{
@@ -96,10 +95,6 @@ void HWorld::Initialize( const FPath& LevelURL )
 				JsonUtility::GetFloat( Iter->value[1], "Brightness", pData->Brightness );
 				JsonUtility::GetFloat( Iter->value[1], "Radius", pData->Radius );
 			}
-			else if (DirectionalLightHash == LightTypeHash)
-			{
-
-			}
 			else if (SpotLightHash == LightTypeHash)
 			{
 
@@ -109,6 +104,11 @@ void HWorld::Initialize( const FPath& LevelURL )
 				HE_ASSERT( false );
 			}
 		}
+
+		DirectionalLightCBData* Sun = GLightManager.GetWordSunDirectionalLight();
+		Sun->Direction = FVector4( -0.2f, -1.0f, -0.3f, 0.f );
+		Sun->Color = FVector4::One * 255.f;
+		Sun->Brightness = 1.f;
 
 		// TEMP
 		m_DebugUI.AddWidget( m_FPSCounter );

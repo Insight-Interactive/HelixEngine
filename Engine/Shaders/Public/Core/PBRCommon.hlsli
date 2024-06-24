@@ -77,22 +77,28 @@ float3 PBRLightPixel( float3 AlbedoSample, float3 NormalSample, float RoughnessS
         float3 Specular = Numerator / Denominator;
 
         float NdotL = max( dot( NormalSample, L ), 0.0 );
-        PointLightLuminance += ((kD * AlbedoSample / PI + Specular) * Radiance * NdotL) * kPointLights[i].Brightness;
+        PointLightLuminance += ((kD * AlbedoSample / PI + Specular) * saturate(Radiance) * NdotL) * kPointLights[i].Brightness;
     }
 
-    // Accumulate directional light luminance.
-    //
-    //float3 DirectionalLightLuminance = float3(0.f, 0.f, 0.f);
-    //float3 LightDir = normalize(float3(0.f, 0.f, 0.25f));
-    //float Angle = max(dot(Normal, LightDir), 0);
-    //DirectionalLightLuminance += float3(1.f, 1.f, 1.f) * Angle;
-    //for (uint d = 0; d < kNumDirectionalLights; d++)
-    //{
-    //    float3 LightDir = normalize(kDirectionalLights[d].Direction.xyz);
-    //    float Angle = max(dot(NormalSample, LightDir), 0);
 
-    //    DirectionalLightLuminance += (kDirectionalLights[d].Color.rgb * kDirectionalLights[d].Brightness) * Angle;
-    //}
+    float3 L = normalize( -kWorldSun.Direction.xyz );
+    float3 H = normalize( V + L );
 
-    return float3(PointLightLuminance);
+    // Cook-Torrance BRDF
+    float NDF = DistributionGGX( NormalSample, H, RoughnessSample );
+    float G = GeometrySmith( NormalSample, V, L, RoughnessSample );
+    float3 F = FresnelSchlick( max( dot( H, V ), 0.0f ), F0 );
+
+    float3 kS = F;
+    float3 kD = float3(1.0, 1.0, 1.0) - kS;
+    kD *= 1.0 - MetallicSample;
+
+    float3 Numerator = NDF * G * F;
+    float Denominator = 4.0 * max( dot( NormalSample, V ), 0.0 ) * max( dot( NormalSample, L ), 0.0 ) + 0.0001;
+    float3 Specular = Numerator / Denominator;
+
+    float NdotL = max( dot( NormalSample, L ), 0.0 );
+    float3 WorldSunLuninance = ((kD * AlbedoSample / PI + Specular) * saturate(kWorldSun.Color.rgb) * NdotL) * kWorldSun.Brightness;
+
+    return float3(PointLightLuminance + WorldSunLuninance);
 }

@@ -12,11 +12,9 @@
 //
 typedef Handle SpotLightDataHandle;
 typedef Handle PointLightDataHandle;
-typedef Handle DirectionalLightDataHandle;
 
 #define IE_INVALID_SPOT_LIGHT_HANDLE		( SpotLightDataHandle		(-1) )
 #define IE_INVALID_POINT_LIGHT_HANDLE		( PointLightDataHandle		(-1) )
-#define IE_INVALID_DIRECTIONAL_LIGHT_HANDLE	( DirectionalLightDataHandle(-1) )
 
 struct SceneConstantsCBData
 {
@@ -92,9 +90,6 @@ HE_ALIGN( 16 ) struct DirectionalLightCBData
 
 	// The brightness the light will illuminate.
 	float							Brightness;
-
-	// The unique identifier of the light.
-	DirectionalLightDataHandle		Id;
 };
 HE_ALIGN( 16 ) struct SpotLightCBData
 {
@@ -108,10 +103,9 @@ HE_ALIGN( 16 ) struct SpotLightCBData
 struct SceneLightsCBData
 {
 	uint32					NumPointLights;
-	uint32					NumDirectionalLights;
 
 	PointLightData			PointLights[HE_MAX_POINT_LIGHTS];
-	DirectionalLightCBData	DirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+	DirectionalLightCBData	kWorldSun;
 	//TODO: SpotLightData			SpotLights[HE_MAX_SPOT_LIGHTS];
 };
 constexpr uint32 size = sizeof( SceneLightsCBData );

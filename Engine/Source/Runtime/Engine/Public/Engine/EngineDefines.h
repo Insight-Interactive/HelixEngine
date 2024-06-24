@@ -47,7 +47,6 @@
 // Lighting
 #define HE_MAX_POINT_LIGHTS			4
 #define HE_MAX_SPOT_LIGHTS			4
-#define HE_MAX_DIRECTIONAL_LIGHTS	1
 // Shader constant buffer registers
 // These register indicies are reserved and constant across all shaders and must NOT be changed!
 // New constant buffers should reside in indicies immediatly following the last index to insure no buffer registers are duplicated.

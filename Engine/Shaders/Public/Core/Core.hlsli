@@ -74,7 +74,7 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
     uint kNumDirectionalLights;
 
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
-	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
+	DirectionalLight kWorldSun;
 }
 
 
