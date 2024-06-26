@@ -13,7 +13,8 @@
 
 
 HLevel::HLevel( HWorld* pOwner )
-	: m_pOwningWorld( pOwner )
+	: HObject( "Level" )
+	, m_pOwningWorld( pOwner )
 {
 }
 
@@ -136,7 +137,7 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 					const rapidjson::Value& ActorObject = JsonDoc[kBaseActorType];
 
 					// Create the actor and deserialize its components.
-					AActor* pNewActor = CreateActor<AActor>( TEXT( "<Unnamed Actor>" ) );
+					AActor* pNewActor = CreateActor<AActor>( "<Unnamed Actor>" );
 					pNewActor->Deserialize( ActorObject );
 					// TODO: This should be refactored. It messes with the root transform too much!
 					if (HSceneComponent* pRoot = pNewActor->GetRootComponent())

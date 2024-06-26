@@ -2,7 +2,6 @@
 #pragma once
 
 #include "GameFramework/HObject.h"
-#include "AssetRegistry/SerializeableInterface.h"
 
 /*
 	Autogenerate the required methods needed to derive from HActorComponent.
@@ -25,7 +24,12 @@ class FCommandContext;
 */
 struct FComponentInitArgs
 {
-	const HName&	Name;
+	FComponentInitArgs( const char* Name, AActor* pOwner )
+	{
+		strcpy_s( this->Name, Name );
+		this->pOwner = pOwner;
+	}
+	char Name[kMaxHObjectNameLength];
 	const AActor*	pOwner;
 };
 
@@ -34,7 +38,7 @@ struct FComponentInitArgs
 	components which bestow behavior to it.
 */
 HCOMPONENT()
-class HActorComponent : public HObject, public FSerializeableInterface
+class HActorComponent : public HObject
 {
 	friend class AActor;
 public:

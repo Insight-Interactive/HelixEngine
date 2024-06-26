@@ -37,8 +37,8 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 			{
 				AActor* pCurrentActor = Level.m_Actors[j];
 
-				const HName& ActorName = pCurrentActor->GetObjectName();
-				if (ImGui::TreeNodeEx( TCharToChar( ActorName ), ImGuiTreeNodeFlags_Leaf ))
+				const char* ActorName = pCurrentActor->GetObjectName();
+				if (ImGui::TreeNodeEx( ActorName, ImGuiTreeNodeFlags_Leaf ))
 				{
 					if (ImGui::IsItemClicked())
 					{

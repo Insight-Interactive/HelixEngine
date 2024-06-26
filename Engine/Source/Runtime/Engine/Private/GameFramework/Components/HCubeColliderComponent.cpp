@@ -40,17 +40,17 @@ void HCubeColliderComponent::OnDestroy()
 
 void HCubeColliderComponent::OnEnter( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT(  "------ %s Entered %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT(  "------ %s Entered %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::OnExit( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "------ %s Exit %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "------ %s Exit %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::OnStay( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "------ %s Stay %s" ), GetOwner()->GetObjectName().c_str(), Other->GetOwner()->GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "------ %s Stay %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::Serialize( JsonUtility::WriteContext& Output )
@@ -83,13 +83,12 @@ void HCubeColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HCubeColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
 	FVector3 Dimensions;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Dimensions.x );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Dimensions.y );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfDepth ), Dimensions.z );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfWidth ), Dimensions.x );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfHeight ), Dimensions.y );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfDepth ), Dimensions.z );
 	
 	SetHalfWidthHeightDepth( Dimensions.x, Dimensions.y, Dimensions.z );
 	

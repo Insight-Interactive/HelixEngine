@@ -4,14 +4,13 @@
 #include "Flag.h"
 #include "CriticalSection.h"
 #include "GameFramework/HObject.h"
-#include "AssetRegistry/SerializeableInterface.h"
 #include "GameFramework/Actor/AActor.h"
 
 class AActor;
 class HWorld;
 class FCommandContext;
 
-class HLevel : public HObject, public FSerializeableInterface
+class HLevel : public HObject
 {
 	friend class HWorld;
 	friend class WorldOutlinePanel;
@@ -25,14 +24,15 @@ public:
 	bool IsLoading() const;
 
 	template <typename ActorType>
-	ActorType* CreateActor(const HName& Name = TEXT("<Unnamed Actor>"));
+	ActorType* CreateActor(const char* Name = "<Unnamed Actor>");
 
-	AActor* GetActor( HName& Name ) const
+	AActor* GetActor( const char* Name ) const
 	{
+		StringHashValue NameHash = StringHash( Name );
 		for (uint32 i = 0; i < m_Actors.size(); i++)
 		{
 			AActor& Actor = *m_Actors[i];
-			if (Actor.GetObjectName() == Name)
+			if ( StringHash( Actor.GetObjectName() ) == NameHash )
 				return &Actor;
 		}
 
@@ -68,7 +68,7 @@ protected:
 //
 
 template <typename ActorType>
-FORCEINLINE ActorType* HLevel::CreateActor(const HName& Name)
+FORCEINLINE ActorType* HLevel::CreateActor(const char* Name)
 {
 	HE_ASSERT( m_pOwningWorld != NULL ); // Cannot add an actor to a level with a null world!
 

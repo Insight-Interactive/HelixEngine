@@ -40,10 +40,7 @@ void AActor::Serialize( JsonUtility::WriteContext& Output )
 		{
 			Output.StartObject();
 			{
-				Output.Key( "ObjectName" );
-				Output.String( TCharToChar( GetObjectName().c_str() ) );
-				Output.Key( "ObjectGUID" );
-				Output.String( GetGuid().ToString().CStr() );
+				Super::Serialize( Output );
 			}
 			Output.EndObject();
 
@@ -55,7 +52,11 @@ void AActor::Serialize( JsonUtility::WriteContext& Output )
 					for (uint32 i = 0; i < m_Components.size(); ++i)
 					{
 						Output.StartObject();
-						m_Components[i]->Serialize( Output );
+						{
+							Output.Key( "ComponentType" );
+							Output.String( m_Components[i]->GetComponenetStaticName() );
+							m_Components[i]->Serialize( Output );
+						}
 						Output.EndObject();
 					}
 				}
@@ -79,80 +80,76 @@ void AActor::Deserialize( const JsonUtility::ReadContext& Value )
 	const rapidjson::Value& HObjectProps = Value[kHObjectProps];
 	const rapidjson::Value& ActorProps = Value[kActorProps];
 
-	// Object Name
-	char ObjectNameBuffer[32];
-	JsonUtility::GetString( HObjectProps, "ObjectName", ObjectNameBuffer, sizeof( ObjectNameBuffer ) );
-	SetObjectName( CharToTChar( ObjectNameBuffer ) );
-
-	// GUID
-	Char GuidStr[64];
-	ZeroMemory( GuidStr, sizeof( GuidStr ) );
-	JsonUtility::GetString( HObjectProps, "ObjectGUID", GuidStr, sizeof( GuidStr ) );
-	SetGuid( FGUID::CreateFromString( GuidStr ) );
+	HObject::Deserialize( HObjectProps );
 
 	// Loop over all the actor's components.
-	const Char* StaticMeshKey = HE_STRINGIFY( HStaticMeshComponent );
-	const Char* PointLightKey = HE_STRINGIFY( HPointLightComponent );
-	const Char* SceneComponentKey = HE_STRINGIFY( HSceneComponent );
-	const Char* PlaneColliderKey = HE_STRINGIFY( HPlaneColliderComponent );
-	const Char* SphereColliderKey = HE_STRINGIFY( HSphereColliderComponent );
-	const Char* CubeColliderKey = HE_STRINGIFY( HCubeColliderComponent );
-	const Char* LuaScriptKey = HE_STRINGIFY( HLuaScriptComponent );
-	const Char* CameraBoomKey = HE_STRINGIFY( HCameraBoomComponent );
-	const Char* CapsuleColliderKey = HE_STRINGIFY( HCapsuleColliderComponent );
-	const rapidjson::Value& ActorComponents = ActorProps["Components"];
+	const StringHashValue StaticMeshKey = StringHash( HE_STRINGIFY( HStaticMeshComponent ) );
+	const StringHashValue PointLightKey = StringHash( HE_STRINGIFY( HPointLightComponent ) );
+	const StringHashValue SceneComponentKey = StringHash( HE_STRINGIFY( HSceneComponent ) );
+	const StringHashValue PlaneColliderKey = StringHash( HE_STRINGIFY( HPlaneColliderComponent ) );
+	const StringHashValue SphereColliderKey = StringHash( HE_STRINGIFY( HSphereColliderComponent ) );
+	const StringHashValue CubeColliderKey = StringHash( HE_STRINGIFY( HCubeColliderComponent ) );
+	const StringHashValue LuaScriptKey = StringHash( HE_STRINGIFY( HLuaScriptComponent ) );
+	const StringHashValue CameraBoomKey = StringHash( HE_STRINGIFY( HCameraBoomComponent ) );
+	const StringHashValue CapsuleColliderKey = StringHash( HE_STRINGIFY( HCapsuleColliderComponent ) );
+	const rapidjson::Value& ActorComponents = ActorProps[ "Components" ];
+	Char TypeBuffer[64];
 	for (uint32 i = 0; i < ActorComponents.Size(); ++i)
 	{
 		const rapidjson::Value& CurrentComponent = ActorComponents[i];
 
-		if (CurrentComponent.HasMember( StaticMeshKey ))
+		JsonUtility::GetString( CurrentComponent, "ComponentType", TypeBuffer, sizeof( TypeBuffer ));
+		HE_ASSERT( TypeBuffer != "\0" ); // All components MUST have "ComponentType" KVP!
+		StringHashValue ComponentTypeHash = StringHash( TypeBuffer );
+
+		if ( ComponentTypeHash == StaticMeshKey )
 		{
-			AddComponent<HStaticMeshComponent>( TEXT( "<Unnamed Static Mesh Component>" ) )
-				->Deserialize( CurrentComponent[StaticMeshKey] );
+			AddComponent<HStaticMeshComponent>( "Unnamed Static Mesh Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( PointLightKey ))
+		else if (ComponentTypeHash == PointLightKey )
 		{
-			AddComponent<HPointLightComponent>( TEXT( "<Unnamed Point Light Component>" ) )
-				->Deserialize( CurrentComponent[PointLightKey] );
+			AddComponent<HPointLightComponent>( "<Unnamed Point Light Component>" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( SceneComponentKey ))
+		else if (ComponentTypeHash == SceneComponentKey )
 		{
-			AddComponent<HSceneComponent>( TEXT( "<Unnamed Scene Component>" ) )
-				->Deserialize( CurrentComponent[SceneComponentKey] );
+			AddComponent<HSceneComponent>( "Unnamed Scene Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( PlaneColliderKey ))
+		else if (ComponentTypeHash == PlaneColliderKey )
 		{
-			AddComponent<HPlaneColliderComponent>( TEXT( "<Unnamed Plane Collider Component>" ) )
-				->Deserialize( CurrentComponent[PlaneColliderKey] );
+			AddComponent<HPlaneColliderComponent>( "Unnamed Plane Collider Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( SphereColliderKey ))
+		else if (ComponentTypeHash == SphereColliderKey )
 		{
-			AddComponent<HSphereColliderComponent>( TEXT( "<Unnamed Sphere Collider Component>" ) )
-				->Deserialize( CurrentComponent[SphereColliderKey] );
+			AddComponent<HSphereColliderComponent>( "Unnamed Sphere Collider Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( CubeColliderKey ))
+		else if (ComponentTypeHash == CubeColliderKey )
 		{
-			AddComponent<HCubeColliderComponent>( TEXT( "<Unnamed Cube Collider Component>" ) )
-				->Deserialize( CurrentComponent[CubeColliderKey] );
+			AddComponent<HCubeColliderComponent>( "Unnamed Cube Collider Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( CapsuleColliderKey ))
+		else if (ComponentTypeHash == CapsuleColliderKey )
 		{
-			AddComponent<HCapsuleColliderComponent>( TEXT( "<Unnamed Capsule Collider Component>" ) )
-				->Deserialize( CurrentComponent[CapsuleColliderKey] );
+			AddComponent<HCapsuleColliderComponent>( "Unnamed Capsule Collider Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( LuaScriptKey ))
+		else if (ComponentTypeHash == LuaScriptKey )
 		{
-			AddComponent<HLuaScriptComponent>( TEXT( "<Unnamed Lua Script Component>" ) )
-				->Deserialize( CurrentComponent[LuaScriptKey] );
+			AddComponent<HLuaScriptComponent>( "Unnamed Lua Script Component" )
+				->Deserialize( CurrentComponent );
 		}
-		else if (CurrentComponent.HasMember( CameraBoomKey ))
+		else if (ComponentTypeHash == CameraBoomKey )
 		{
-			AddComponent<HCameraBoomComponent>( TEXT( "<Unnamed Camera Boom Component>" ) )
-				->Deserialize( CurrentComponent[LuaScriptKey] );
+			AddComponent<HCameraBoomComponent>( "Unnamed Camera Boom Component" )
+				->Deserialize( CurrentComponent );
 		}
 		else
 		{
-			HE_LOG( Error, TEXT( "Unrecognized component type when deserializing actor with name: %s" ), GetObjectName().c_str() );
+			HE_LOG( Error, TEXT( "Unrecognized component type when deserializing actor with name: %s" ), GetObjectName() );
 			HE_ASSERT( false );
 		}
 	}
@@ -206,7 +203,7 @@ void AActor::Render( FCommandContext& GfxContext )
 
 void AActor::OnEditorSelected()
 {
-	HE_LOG( Log, TEXT( "Selected Actor: %s" ), GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "Selected Actor: %s" ), GetObjectName() );
 }
 
 #endif

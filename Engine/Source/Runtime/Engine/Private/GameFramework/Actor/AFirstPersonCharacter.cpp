@@ -11,7 +11,7 @@ AFirstPersonCharacter::AFirstPersonCharacter( FActorInitArgs& InitArgs )
 	: ACharacter( InitArgs )
 	, m_CanRotateCamera( true )
 {
-	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( TEXT( "FirstPersonCameraComponent" ) );
+	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( "FirstPersonCameraComponent" );
 	m_pCameraComponent->AttachTo( m_pRootComponent );
 	m_pCameraComponent->SetPosition( FVector3::Zero );
 }

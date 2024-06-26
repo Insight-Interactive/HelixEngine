@@ -1,23 +1,10 @@
 {
     "World": [
         {
-            "Name": "Physics Test"
+            "Name": "DemoLevel"
         },
         {
-            "GroundFloor.hactor":[
-                {
-                    "PositionX": 0.0,
-                    "PositionY": 0.0,
-                    "PositionZ": 0.0,
-                    "RotationX": 0.0,
-                    "RotationY": 0.0,
-                    "RotationZ": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "ScaleZ": 1.0
-                }
-            ],
-            "PhysicsTestActors/PhysicsCube.hactor": [
+            "BasicActor.hactor": [
                 {
                     "PositionX": 0.0,
                     "PositionY": 40.0,
@@ -28,13 +15,21 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "HObject::m_Name": "ActorInstanceNameOverride",
+                    "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc": [
+                        {
+                            "HObject::m_Name": "InstanceNameOverride"
+                        }
+                    ]
                 }
             ],
-            "PhysicsTestActors/PhysicsSphere.hactor":[
+            "SphereActor.hactor": [
                 {
-                    "PositionX": 50.0,
-                    "PositionY": 40.0,
-                    "PositionZ": 100.0,
+                    "PositionX": -70.0,
+                    "PositionY": 50.0,
+                    "PositionZ": 10.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -42,11 +37,13 @@
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
                 }
-            ],
-            "PhysicsTestActors/PhysicsCapsule.hactor":[
+            ]
+        },
+        {
+            "PointLight":[
                 {
-                    "PositionX": -50.0,
-                    "PositionY": 40.0,
+                    "PositionX": 0.0,
+                    "PositionY": 50.0,
                     "PositionZ": 100.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
@@ -54,6 +51,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "R": 55.0,
+                    "G": 55.0,
+                    "B": 255.0,
+                    "Brightness": 10.0,
+                    "Radius": 50.0
                 }
             ]
         }

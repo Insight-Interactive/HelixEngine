@@ -1,96 +1,69 @@
 {
   "AActor": [
     {
-      "ObjectName": "MaterialStands",
-      "ObjectGUID": "76b2b57a-e199-4032-89f5-cc498feec3cc"
+      "HObject::m_Name": "MaterialStands",
+      "HObject::m_Guid": "76b2b57a-e199-4032-89f5-cc498feec3cc"
     },
     {
       "Components": [
         {
-            "HSceneComponent": [
-                {
-                  "ObjectName": "Root",
-                  "ObjectGUID": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
-                },
-                {
-                  "m_Transform": [
-                    {
-                      "PositionX": 0.0,
-                      "PositionY": 0.0,
-                      "PositionZ": 0.0,
-                      "RotationX": 0.0,
-                      "RotationY": 0.0,
-                      "RotationZ": 0.0,
-                      "ScaleX": 1.0,
-                      "ScaleY": 1.0,
-                      "ScaleZ": 1.0
-                    }
-                  ]
-                }
-              ]
+          "ComponentType": "HSceneComponent",
+          "HSceneComponent::m_Transform": [
+            {
+              "PositionX": 0.0,
+              "PositionY": 0.0,
+              "PositionZ": 0.0,
+              "RotationX": 0.0,
+              "RotationY": 0.0,
+              "RotationZ": 0.0,
+              "ScaleX": 1.0,
+              "ScaleY": 1.0,
+              "ScaleZ": 1.0
+            }
+          ],
+          "HObject::m_Name": "Root",
+          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         },
         {
-          "HStaticMeshComponent": [
+          "ComponentType": "HStaticMeshComponent",
+          "HStaticMeshComponent::m_bIsDrawEnabled": true,
+          "HStaticMeshComponent::m_MeshAsset": "MaterialDemoStand.fbx",
+          "HStaticMeshComponent::m_MaterialAsset": "M_RustedMetal.hmat",
+          "HSceneComponent::m_Transform": [
             {
-              "HSceneComponent": [
-                {
-                  "ObjectName": "RustedMetal_Demo",
-                  "ObjectGUID": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
-                },
-                {
-                  "m_Transform": [
-                    {
-                      "PositionX": 0.0,
-                      "PositionY": 24.0,
-                      "PositionZ": 0.0,
-                      "RotationX": -1.745329,
-                      "RotationY": 3.141593,
-                      "RotationZ": 0.0,
-                      "ScaleX": 15.0,
-                      "ScaleY": 15.0,
-                      "ScaleZ": 15.0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "MaterialDemoStand.fbx",
-              "m_MaterialAsset": "M_RustedMetal.hmat"
+              "PositionX": 0.0,
+              "PositionY": 24.0,
+              "PositionZ": 0.0,
+              "RotationX": -1.745329,
+              "RotationY": 3.141593,
+              "RotationZ": 0.0,
+              "ScaleX": 15.0,
+              "ScaleY": 15.0,
+              "ScaleZ": 15.0
             }
-          ]
+          ],
+          "HObject::m_Name": "RustedMetal_Demo",
+          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         },
         {
-          "HStaticMeshComponent": [
+          "ComponentType": "HStaticMeshComponent",
+          "HStaticMeshComponent::m_bIsDrawEnabled": true,
+          "HStaticMeshComponent::m_MeshAsset": "MaterialDemoStand.fbx",
+          "HStaticMeshComponent::m_MaterialAsset": "M_MaterialBall.hmat",
+          "HSceneComponent::m_Transform": [
             {
-              "HSceneComponent": [
-                {
-                  "ObjectName": "Hardwood_Demo",
-                  "ObjectGUID": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
-                },
-                {
-                  "m_Transform": [
-                    {
-                      "PositionX": 40.0,
-                      "PositionY": 24.0,
-                      "RotationX": -1.745329,
-                      "RotationY": 3.141593,
-                      "RotationZ": 0.0,
-                      "ScaleX": 15.0,
-                      "ScaleY": 15.0,
-                      "ScaleZ": 15.0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "MaterialDemoStand.fbx",
-              "m_MaterialAsset": "M_MaterialBall.hmat"
+              "PositionX": 40.0,
+              "PositionY": 24.0,
+              "RotationX": -1.745329,
+              "RotationY": 3.141593,
+              "RotationZ": 0.0,
+              "ScaleX": 15.0,
+              "ScaleY": 15.0,
+              "ScaleZ": 15.0
             }
-          ]
+          ],
+          "HObject::m_Name": "Hardwood_Demo",
+          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         }
       ]
     }

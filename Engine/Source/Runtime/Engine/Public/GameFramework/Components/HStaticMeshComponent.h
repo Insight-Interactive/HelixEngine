@@ -38,10 +38,12 @@ protected:
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 protected:
-	HStaticMesh							m_MeshAsset;
-	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
-	HMaterial							m_MaterialAsset;
 	bool								m_bIsDrawEnabled;
+	
+	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
+	HStaticMesh							m_MeshAsset;
+	
+	HMaterial							m_MaterialAsset;
 
 };
 

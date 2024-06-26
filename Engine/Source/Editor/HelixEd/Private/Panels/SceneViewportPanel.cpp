@@ -34,7 +34,7 @@ void SceneViewportPanel::Initialize( FViewportContext* pOwningTab )
 	Super::Initialize( pOwningTab );
 
 	m_DescriptorHandle = GTextureHeap.Alloc( 1 );
-	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), TEXT( "Editor Debug Pawn" ), true, true };
+	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), "Editor Debug Pawn", true, true };
 	m_pDebugPawn = new ADebugPawn( InitArgs );
 	m_pDebugPawn->BeginPlay();
 

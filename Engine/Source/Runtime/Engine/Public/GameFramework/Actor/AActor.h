@@ -2,7 +2,6 @@
 #pragma once
 
 #include "GameFramework/HObject.h"
-#include "AssetRegistry/SerializeableInterface.h"
 
 #include "LuaScript.h"
 #include "GameFramework/Components/HActorComponent.h"
@@ -22,13 +21,13 @@ class FCommandContext;
 struct FActorInitArgs
 {
 	const HWorld*	pWorld;
-	const HName&	Name;
+	const char*		Name;
 	const bool		bIsDynamicInstance;
 	const bool		bDisableCollision = false;
 };
 
 HCLASS()
-class AActor : public HObject, public FSerializeableInterface
+class AActor : public HObject
 {
 	friend class HLevel;
 	friend class HWorld;
@@ -48,7 +47,7 @@ public:
 
 	// Add a component to the actor.
 	template <typename ComponentType>
-	ComponentType* AddComponent(const HName& Name);
+	ComponentType* AddComponent(const char* Name);
 	template <typename ComponentType>
 	ComponentType* GetComponent();
 	// Remove all components from the actor.
@@ -91,10 +90,10 @@ protected:
 //
 
 template <typename ComponentType>
-FORCEINLINE ComponentType* AActor::AddComponent( const HName& Name )
+FORCEINLINE ComponentType* AActor::AddComponent( const char* Name )
 {
 	// Create, initialize and attach the component to the actor.
-	FComponentInitArgs InitArgs{ Name, this };
+	FComponentInitArgs InitArgs( Name, this );
 	HActorComponent* pNewComponent = new ComponentType(InitArgs);
 	pNewComponent->OnCreate();
 	pNewComponent->OnAttach();

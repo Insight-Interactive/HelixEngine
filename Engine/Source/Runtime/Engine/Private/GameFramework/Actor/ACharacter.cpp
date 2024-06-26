@@ -14,7 +14,7 @@ ACharacter::ACharacter( FActorInitArgs& InitArgs )
 {
 	if (!InitArgs.bDisableCollision)
 	{
-		m_pCharacterBounds = AddComponent<HCapsuleColliderComponent>( TEXT( "CharacterBounds" ) );
+		m_pCharacterBounds = AddComponent<HCapsuleColliderComponent>( "CharacterBounds" );
 		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
 		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
 		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );

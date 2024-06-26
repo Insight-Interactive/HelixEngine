@@ -72,13 +72,12 @@ void HCapsuleColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HCapsuleColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
 	float Radius = 1.f;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_Radius ), Radius );
 	float HalfHeight = 2.f;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), HalfHeight );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_HalfHeight ), HalfHeight );
 
 	SetRadiusAndHalfHeight( Radius, HalfHeight );
 	

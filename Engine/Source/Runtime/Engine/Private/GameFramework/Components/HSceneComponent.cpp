@@ -56,9 +56,7 @@ void HSceneComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HSceneComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0] );
+	Super::Deserialize( Value );
 
-	const rapidjson::Value& SceneComponent = Value[1];
-
-	JsonUtility::GetTransform( SceneComponent, HE_STRINGIFY( m_Transform ), m_Transform );
+	JsonUtility::GetTransform( Value, HE_STRINGIFY( HSceneComponent::m_Transform ), m_Transform );
 }

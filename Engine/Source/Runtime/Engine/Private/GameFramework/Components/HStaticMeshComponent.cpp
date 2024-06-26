@@ -89,13 +89,13 @@ void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 		// Static mesh properties.
 		Output.StartObject();
 		{
-			Output.Key(HE_STRINGIFY(m_bIsDrawEnabled));
+			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ));
 			Output.Bool(m_bIsDrawEnabled);
 
-			Output.Key(HE_STRINGIFY(m_MeshAsset));
+			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ));
 			Output.String(m_MeshAsset->GetGuid().ToString().CStr());
 
-			Output.Key(HE_STRINGIFY(m_MaterialAsset));
+			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ));
 			Output.String(m_MaterialAsset->GetGuid().ToString().CStr());
 		}
 		Output.EndObject();
@@ -105,18 +105,15 @@ void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value ) 
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY(HSceneComponent)]);
+	Super::Deserialize( Value );
+	
+	Char StringBuffer[64];
 
-	const rapidjson::Value& StaticMesh = Value[1];
+	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ), m_bIsDrawEnabled);
 
+	JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ), StringBuffer, sizeof( StringBuffer ));
+	SetMesh(FAssetDatabase::GetStaticMesh( StringBuffer ));
 
-	JsonUtility::GetBoolean(StaticMesh, HE_STRINGIFY(m_bIsDrawEnabled), m_bIsDrawEnabled);
-
-	Char MeshBuffer[64];
-	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MeshAsset), MeshBuffer, sizeof( MeshBuffer ));
-	SetMesh(FAssetDatabase::GetStaticMesh( MeshBuffer ));
-
-	Char MaterialBuffer[64];
-	JsonUtility::GetString(StaticMesh, HE_STRINGIFY(m_MaterialAsset), MaterialBuffer, sizeof( MaterialBuffer ));
-	SetMaterial( FAssetDatabase::GetMaterial( MaterialBuffer ) );
+	JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ), StringBuffer, sizeof( StringBuffer ));
+	SetMaterial( FAssetDatabase::GetMaterial( StringBuffer ) );
 }

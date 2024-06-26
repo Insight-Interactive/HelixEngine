@@ -9,7 +9,7 @@
 
 
 HScene::HScene( HWorld* pOwner )
-	: Super( TEXT( "Scene" ) )
+	: Super( "Scene" )
 	, m_pOwner( pOwner )
 	, m_DrawColliders( true )
 {

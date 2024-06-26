@@ -131,17 +131,10 @@ void HPointLightComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HPointLightComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	enum
-	{
-		kSuper = 0,
-		kLight = 1,
-	};
-	Super::Deserialize( Value[kSuper][HE_STRINGIFY( HSceneComponent )] );
-
-	const rapidjson::Value& Light = Value[kLight];
+	Super::Deserialize( Value );
 
 	// Color
-	const rapidjson::Value& Color = Light["Color"][0];
+	const rapidjson::Value& Color = Value["Color"][0];
 	FColor LightColor;
 	JsonUtility::GetFloat( Color, "R", LightColor.R );
 	JsonUtility::GetFloat( Color, "G", LightColor.G );
@@ -150,6 +143,6 @@ void HPointLightComponent::Deserialize( const JsonUtility::ReadContext& Value )
 
 	// Brightness
 	float Brightness = 0.f;
-	JsonUtility::GetFloat( Light, "Brightness", Brightness );
+	JsonUtility::GetFloat( Value, "Brightness", Brightness );
 	SetBrightness( Brightness );
 }

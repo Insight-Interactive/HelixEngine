@@ -48,7 +48,7 @@ void DetailsPanel::PreviewActor(AActor* pActor)
 	ImGui::Spacing();
 	ImGui::Text( pActor->GetStaticClassName() );
 	ImGui::Text( "-" );
-	ImGui::Text( TCharToChar( pActor->GetObjectName() ) );
+	ImGui::Text( pActor->GetObjectName() );
 	ImGui::Separator();
 
 	if (pActor->GetRootComponent())
@@ -96,7 +96,7 @@ void DetailsPanel::PreviewActor(AActor* pActor)
 		ImGui::SameLine();
 		ImGui::Text( "-" );
 		ImGui::SameLine();
-		ImGui::Text( TCharToChar( pComponent->GetObjectName() ) );
+		ImGui::Text( pComponent->GetObjectName() );
 		ImGui::Separator();
 	}
 }

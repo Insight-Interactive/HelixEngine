@@ -15,7 +15,7 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_bIsSprinting(false)
 	, m_pController(NULL)
 {
-	m_pController = AddComponent<HControllerComponent>(TEXT("Controller"));
+	m_pController = AddComponent<HControllerComponent>( "Controller" );
 }
 
 APawn::~APawn()

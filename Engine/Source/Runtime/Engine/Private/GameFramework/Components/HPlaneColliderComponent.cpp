@@ -63,12 +63,12 @@ void HPlaneColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HPlaneColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
-	float Width, Height;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Width );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Height );
+	float Width = 1.f;
+	float Height = 1.f;
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HPlaneColliderComponent::m_RigidBody.m_HalfWidth ), Width );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HPlaneColliderComponent::m_RigidBody.m_HalfHeight ), Height );
 	
 	SetWidthAndHeight( Width, Height );
 

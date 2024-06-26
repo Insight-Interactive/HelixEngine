@@ -185,20 +185,19 @@ void HColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HSceneComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
-	JsonUtility::GetBoolean( This, "IsTrigger", m_IsTrigger );
+	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_IsTrigger ), m_IsTrigger);
 	
 	float Density = 1.f;
-	JsonUtility::GetFloat( This, "Density", Density );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HColliderComponent::GetDensity ), Density);
 	GetRigidBody().SetDensity( Density );
 
-	JsonUtility::GetBoolean( This, "IsStatic", m_IsStatic );
+	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_IsStatic ), m_IsStatic);
 
-	JsonUtility::GetBoolean( This, "CollisionBoundsDrawEnabled", m_CollisionBoundsDrawEnabled );
+	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_CollisionBoundsDrawEnabled ), m_CollisionBoundsDrawEnabled);
 
-	JsonUtility::GetBoolean( This, "EnableSimulation", m_SimulationEnabled );
+	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_SimulationEnabled ), m_SimulationEnabled);
 }
 
 void HColliderComponent::OnOwnerDeserializeComplete()

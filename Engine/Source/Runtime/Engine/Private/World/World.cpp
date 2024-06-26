@@ -17,7 +17,8 @@
 
 
 HWorld::HWorld()
-	: m_CameraManager( this )
+	: HObject( "World" )
+	, m_CameraManager( this )
 	, m_Scene( this )
 	, m_Level( this )
 	, m_pPlayerCharacter( NULL )
@@ -39,7 +40,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 
 	bool UseFirstPersonCharacter = false;
 
-	FActorInitArgs PlrCharacterInitArgs{ this, TEXT( "Player Character" ), true };
+	FActorInitArgs PlrCharacterInitArgs{ this, "Player Character", true };
 	if (UseFirstPersonCharacter)
 		m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
 	else
@@ -70,7 +71,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 		// Load the worlds actors.
 		const rapidjson::Value& WorldActors = World[kActors];
 		m_Level.Deserialize( WorldActors );
-		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
 
 		// Load static placed lights
 		const rapidjson::Value& Lights = World[kLights];
@@ -125,11 +126,11 @@ void HWorld::Initialize( const FPath& LevelURL )
 void HWorld::Initialize()
 {
 	m_LevelFilepath.SetPath( "Default (Non-Load)" );
-	SetObjectName( TEXT( "Default World" ) );
+	SetObjectName( "Default World" );
 	RegisterScenes();
 
 
-	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName().c_str() );
+	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
 }
 
 void HWorld::Save()
@@ -207,7 +208,7 @@ void HWorld::Flush()
 		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
 
 		// Cleanup the rendering resources.
-		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName().c_str() );
+		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
 		GEngine->GetRenderingSubsystem().RemoveSceneFromRendering( m_Scene );
@@ -292,7 +293,7 @@ void HWorld::Serialize( const Char* Filename )
 	{
 		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
 		{
-			HE_LOG( Error, TEXT( "Failed to serialize database %s" ), TCharToChar( GetObjectName() ) );
+			HE_LOG( Error, TEXT( "Failed to serialize database %s" ), GetObjectName() );
 			HE_ASSERT( false );
 		}
 	}
@@ -301,14 +302,14 @@ void HWorld::Serialize( const Char* Filename )
 void HWorld::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( "Name" );
-	Output.String( TCharToChar( GetObjectName() ) );
+	Output.String( GetObjectName() );
 }
 
 void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Char WorldName[64];
 	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
-	Super::SetObjectName( CharToTChar( WorldName ) );
+	Super::SetObjectName( WorldName );
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

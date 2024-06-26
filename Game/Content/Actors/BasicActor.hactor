@@ -1,16 +1,21 @@
 {
   "AActor": [
     {
-      "HObject::m_Name": "SphereActor",
-      "HObject::m_Guid": "54640ee4-194b-4bbf-9d78-d9aa5196ae26"
+      "HObject::m_Name": "MyCoolActor",
+      "HObject::m_Guid": "76b2b57a-e199-4032-89f5-cc498feec3cc" 
     },
     {
       "Components": [
         {
-          "ComponentType": "HSphereColliderComponent",
-          "HSphereColliderComponent::m_RigidBody.m_IsStatic": false,
-          "HSphereColliderComponent::m_RigidBody.m_Radius": 10.0,
+          "ComponentType": "HCubeColliderComponent",
+          "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 10.0,
           "HColliderComponent::m_IsTrigger": false,
+          "HColliderComponent::Density": 10,
+          "HColliderComponent::m_IsStatic": false,
+          "HColliderComponent::m_CollisionBoundsDrawEnabled": false,
+          "HColliderComponent::m_SimulationEnabled": true,
           "HSceneComponent::m_Transform": [
             {
               "PositionX": 0.0,
@@ -24,14 +29,14 @@
               "ScaleZ": 1.0
             }
           ],
-          "HObject::m_Name": "SphereCollider",
+          "HObject::m_Name": "CubeCollider",
           "HObject::m_Guid": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
         },
         {
           "ComponentType": "HStaticMeshComponent",
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
-          "HStaticMeshComponent::m_MeshAsset": "Sphere.fbx",
-          "HStaticMeshComponent::m_MaterialAsset": "M_Wood.hmat",
+          "HStaticMeshComponent::m_MeshAsset": "Cube.fbx",
+          "HStaticMeshComponent::m_MaterialAsset": "M_RustedMetal.hmat",
           "HSceneComponent::m_Transform": [
             {
               "PositionX": 0.0,
@@ -45,8 +50,8 @@
               "ScaleZ": 1.0
             }
           ],
-          "HObject::m_Name": "SphereStaticMesh",
-          "HObject::m_Guid": "a05eeb01-f872-42a1-ab36-f8371a7dd3cd"
+          "HObject::m_Name": "CubeStaticMesh",
+          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         }
       ]
     }

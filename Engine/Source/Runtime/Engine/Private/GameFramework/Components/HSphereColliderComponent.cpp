@@ -60,11 +60,10 @@ void HSphereColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HSphereColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
-	float Radius = 0.f;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_Radius ), Radius );
+	float Radius = 1.f;
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HSphereColliderComponent::m_RigidBody.m_Radius ), Radius );
 
 	SetRadius( Radius );
 
