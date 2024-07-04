@@ -10,6 +10,7 @@
 #include "GameFramework/Actor/ACharacter.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "ThreadPool.h"
+#include "AssetRegistry/ActorSerializer.h"
 
 
 HLevel::HLevel( HWorld* pOwner )
@@ -115,51 +116,74 @@ void LoadActorAsyncMain( void* pData )
 void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	m_IsLoading.Set();
-	for (auto Iter = Value.MemberBegin(); Iter != Value.MemberEnd(); Iter++)
+
+
+	for (uint32 i = 0; i < Value.Size(); i++)
 	{
-		FPath ActorPath;
-		sprintf_s( ActorPath.m_Path, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
-
-		// Load the actor
-		//
-		rapidjson::Document JsonDoc;
-		FileRef JsonSource( ActorPath.GetFullPath(), FUM_Read);
-		JsonUtility::LoadDocument( JsonSource, JsonDoc );
-		if (JsonDoc.IsObject())
+		const rapidjson::Value& Actor = Value[i];
+		for (auto Iter = Actor.MemberBegin(); Iter != Actor.MemberEnd(); Iter++)
 		{
-			const Char* kBaseActorType = HE_STRINGIFY( AActor );
-			const Char* kPlayerCharacterType = HE_STRINGIFY( ACharacter );
-			for (auto Itr = JsonDoc.MemberBegin(); Itr != JsonDoc.MemberEnd(); ++Itr)
-			{
-				const String ObjectType = Itr->name.GetString();
-				if (ObjectType == kBaseActorType)
-				{
-					const rapidjson::Value& ActorObject = JsonDoc[kBaseActorType];
+			FPath ActorPath;
+			sprintf_s( ActorPath.m_Path, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
 
-					// Create the actor and deserialize its components.
-					AActor* pNewActor = CreateActor<AActor>( "<Unnamed Actor>" );
-					pNewActor->Deserialize( ActorObject );
-					// TODO: This should be refactored. It messes with the root transform too much!
-					if (HSceneComponent* pRoot = pNewActor->GetRootComponent())
+			// Load the actor
+			//
+			rapidjson::Document JsonDoc;
+			FileRef JsonSource( ActorPath.GetFullPath(), FUM_Read );
+			JsonUtility::LoadDocument( JsonSource, JsonDoc );
+			if (JsonDoc.IsObject())
+			{
+				const Char* kBaseActorType = HE_STRINGIFY( AActor );
+				//const Char* kPlayerCharacterType = HE_STRINGIFY( ACharacter );
+				for (auto Itr = JsonDoc.MemberBegin(); Itr != JsonDoc.MemberEnd(); ++Itr)
+				{
+					const String ObjectType = Itr->name.GetString();
+					if (ObjectType == kBaseActorType)
 					{
-						FTransform Transform;
-						JsonUtility::GetTransform( Value, Iter->name.GetString(), Transform );
-						FVector3 Pos = Transform.GetPosition();
-						pRoot->Translate( Pos.x, Pos.y, Pos.z );
-						/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
-						FVector3 Sca = Transform.GetScale();
-						pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
+						enum
+						{
+							kTransform = 0,
+							kDataOverries = 1,
+						};
+						const char* ActorFileName = Iter->name.GetString();
+						const rapidjson::Value& WorldOverrides = Actor[ActorFileName];
+						const rapidjson::Value& ActorObject = JsonDoc[kBaseActorType];
+						const rapidjson::Value& DataOverrides = WorldOverrides[kDataOverries];
+						const rapidjson::Value& InstanceOverrides = DataOverrides["InstanceOverrides"];
+
+						// Create the actor and deserialize its components.
+						AActor* pNewActor = CreateActor<AActor>( "<Unnamed Actor>" );
+						FActorSerializer::DeserializeActor( *pNewActor, ActorObject );
+
+						// TODO: This should be refactored. It messes with the root transform too much!
+						if (HSceneComponent* pRoot = pNewActor->GetRootComponent())
+						{
+							FTransform Transform;
+							JsonUtility::GetTransform( WorldOverrides[kTransform], Transform);
+							//JsonUtility::GetTransform( Actor, ActorFileName, Transform );
+							FVector3 Pos = Transform.GetPosition();
+							pRoot->Translate( Pos.x, Pos.y, Pos.z );
+							/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
+							pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+							FVector3 Sca = Transform.GetScale();
+							pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
+						}
+
+
+						if (!InstanceOverrides.IsNull())
+						{
+							FActorSerializer::DeserializeActorOverrides( *pNewActor, InstanceOverrides );
+						}
 					}
-					pNewActor->OnDeserializeComplete();
 				}
 			}
-		}
-		else
-		{
-			HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath.GetFullPath() ) );
-			HE_ASSERT( false );
+			else
+			{
+				HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath.GetFullPath() ) );
+				HE_ASSERT( false );
+			}
 		}
 	}
+
 	m_IsLoading.Clear();
 }

@@ -9,7 +9,8 @@
 #define HE_COMPONENT_GENERATED_BODY( Class )													\
 	Class( FComponentInitArgs& InitArgs );														\
 	virtual ~Class();																			\
-	public:																						\
+	friend class FActorSerializer;																\
+public:																							\
 	virtual const char* GetComponenetStaticName() override { return HE_STRINGIFY( Class ); }	\
 
 #define HCOMPONENT()
@@ -40,7 +41,9 @@ struct FComponentInitArgs
 HCOMPONENT()
 class HActorComponent : public HObject
 {
+	friend class HLevel;
 	friend class AActor;
+	friend class FActorSerializer;
 public:
 	// Returns the Actor class this component belongs too.
 	AActor* GetOwner();

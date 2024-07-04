@@ -22,7 +22,7 @@
             }
           ],
           "HObject::m_Name": "Root",
-          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
+          "HObject::m_Guid": "c8c6f178-7ce7-46b8-a451-32e61a13a89b"
         },
         {
           "ComponentType": "HStaticMeshComponent",

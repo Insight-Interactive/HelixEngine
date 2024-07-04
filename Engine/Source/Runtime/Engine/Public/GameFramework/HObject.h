@@ -13,6 +13,7 @@ constexpr uint32 kMaxHObjectNameLength = 64;
 */
 class HObject : public FSerializeableInterface
 {
+	friend class FActorSerializer;
 public:
 	void SetObjectName( const char* Name );
 	const char* GetObjectName() const;
@@ -28,7 +29,7 @@ protected:
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
-private:
+protected:
 	char m_Name[kMaxHObjectNameLength];
 	FGUID m_Guid;
 

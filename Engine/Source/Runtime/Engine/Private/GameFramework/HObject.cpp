@@ -22,17 +22,13 @@ void HObject::Serialize( JsonUtility::WriteContext& Output )
 	Output.String( m_Name );
 
 	Output.Key( HE_STRINGIFY( HObject::m_Guid ) );
-	Output.String( GetGuid().ToString().CStr() );
+	Output.String( m_Guid.ToString().CStr() );
 }
 
 void HObject::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	// Object Name
 	JsonUtility::GetString( Value, HE_STRINGIFY( HObject::m_Name ), m_Name, sizeof( m_Name ));
 
-	// Object GUID
-	Char GuidStr[64];
-	ZeroMemory( GuidStr, sizeof( GuidStr ) );
-	JsonUtility::GetString( Value, HE_STRINGIFY( HObject::m_Guid ), GuidStr, sizeof(GuidStr));
-	SetGuid( FGUID::CreateFromString( GuidStr ) );
+	JsonUtility::GetGuid( Value, HE_STRINGIFY( HObject::m_Guid ), m_Guid );
+	HE_ASSERT( m_Guid.IsValid() );
 }

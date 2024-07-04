@@ -104,7 +104,6 @@ protected:
 	void ReloadAndBeginPlay();
 
 	virtual void Serialize( const Char* Filename ) override;
-	virtual void Serialize( JsonUtility::WriteContext& Value ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 	void RegisterScenes();

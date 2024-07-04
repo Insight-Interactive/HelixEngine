@@ -55,37 +55,23 @@ void HCubeColliderComponent::OnStay( HColliderComponent* Other )
 
 void HCubeColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HCubeColliderComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( m_RigidBody.m_Width ) );
+	Output.Double( m_RigidBody.GetHalfWidth() );
 
-		Output.StartObject();
-		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Width ) );
-			Output.Double( m_RigidBody.GetHalfWidth() );
+	Output.Key( HE_STRINGIFY( m_RigidBody.m_Height ) );
+	Output.Double( m_RigidBody.GetHalfHeight() );
 
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Height ) );
-			Output.Double( m_RigidBody.GetHalfHeight() );
+	Output.Key( HE_STRINGIFY( m_RigidBody.m_Length ) );
+	Output.Double( m_RigidBody.GetHalfDepth() );
 
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Length ) );
-			Output.Double( m_RigidBody.GetHalfDepth() );
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HCubeColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value );
 
-	FVector3 Dimensions;
+	FVector3 Dimensions(m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth());
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfWidth ), Dimensions.x );
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfHeight ), Dimensions.y );
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfDepth ), Dimensions.z );

@@ -363,6 +363,7 @@
     <ClInclude Include="Public\World\World.h">
       <Filter>Public\World</Filter>
     </ClInclude>
+    <ClInclude Include="Public\AssetRegistry\ActorSerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp">
@@ -599,6 +600,7 @@
     <ClCompile Include="Public\Renderer\GeometryGenerator.cpp">
       <Filter>Public\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Private\AssetRegistry\ActorDeserializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine.module.lua" />

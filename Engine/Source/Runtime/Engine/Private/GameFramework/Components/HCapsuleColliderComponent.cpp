@@ -46,37 +46,22 @@ void HCapsuleColliderComponent::Render( FCommandContext& GfxContext )
 
 void HCapsuleColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HCapsuleColliderComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_Radius ) );
+	Output.Double( m_RigidBody.GetRadius() );
 
-		// Static mesh properties.
-		Output.StartObject();
-		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Radius ) );
-			Output.Double( m_RigidBody.GetRadius() );
+	Output.Key( HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_HalfHeight ) );
+	Output.Double( m_RigidBody.GetHalfHeight() );
 
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_HalfHeight ) );
-			Output.Double( m_RigidBody.GetHalfHeight() );
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HCapsuleColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value );
 
-	float Radius = 1.f;
+	float Radius = m_RigidBody.GetRadius();
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_Radius ), Radius );
-	float HalfHeight = 2.f;
+	float HalfHeight = m_RigidBody.GetHalfHeight();
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCapsuleColliderComponent::m_RigidBody.m_HalfHeight ), HalfHeight );
 
 	SetRadiusAndHalfHeight( Radius, HalfHeight );

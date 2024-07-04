@@ -57,24 +57,17 @@ void HWorld::Initialize( const FPath& LevelURL )
 	JsonUtility::LoadDocument( WorldJsonSource, WorldJsonDoc );
 	if (WorldJsonDoc.IsObject())
 	{
-		const rapidjson::Value& World = WorldJsonDoc["World"];
-		enum
-		{
-			kSettings	= 0,
-			kActors		= 1,
-			kLights		= 2
-		};
 		// Load the world's settings
-		const rapidjson::Value& WorldSettings = World[kSettings];
-		Deserialize( WorldSettings );
+		Deserialize( WorldJsonDoc );
 
 		// Load the worlds actors.
-		const rapidjson::Value& WorldActors = World[kActors];
-		m_Level.Deserialize( WorldActors );
+		const rapidjson::Value& Actors = WorldJsonDoc["Actors"];
+		HE_ASSERT( Actors.IsArray() );
+		m_Level.Deserialize( Actors );
 		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
 
 		// Load static placed lights
-		const rapidjson::Value& Lights = World[kLights];
+		/*const rapidjson::Value& Lights = WorldJsonDoc["Lights"];
 		StringHashValue PointLightHash = StringHash( "PointLight" );
 		StringHashValue SpotLightHash = StringHash( "SpotLight" );
 		for (auto Iter = Lights.MemberBegin(); Iter != Lights.MemberEnd(); Iter++)
@@ -104,7 +97,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 			{
 				HE_ASSERT( false );
 			}
-		}
+		}*/
 
 		DirectionalLightCBData* Sun = GLightManager.GetWordSunDirectionalLight();
 		Sun->Direction = FVector4( -0.2f, -1.0f, -0.3f, 0.f );
@@ -247,40 +240,50 @@ void HWorld::Serialize( const Char* Filename )
 
 	Writer.StartObject();
 	{
-		Writer.Key( "World" );
+		Writer.Key( "WorldName" );
+		Writer.String( GetObjectName() );
+
+		Writer.Key( "Actors" );
 		Writer.StartArray();
 		{
-			// Serialize the world settings.
-			Writer.StartObject();
-			{
-				Serialize( Writer );
-			}
-			Writer.EndObject();
 
 			// Serialize the level.
-			Writer.StartObject();
+			std::vector<AActor*>& LevelActors = m_Level.GetAllActors();
+			for (uint32 i = 0; i < LevelActors.size(); i++)
 			{
-				std::vector<AActor*>& LevelActors = m_Level.GetAllActors();
-				for (uint32 i = 0; i < LevelActors.size(); i++)
-				{
-					AActor& Actor = *LevelActors[i];
+				AActor& Actor = *LevelActors[i];
 					
-					Writer.Key( Actor.GetGuid().ToString().CStr() );
-					Writer.StartArray();
+				Writer.Key( Actor.GetGuid().ToString().CStr() );
+				Writer.StartArray();
 
-					Writer.StartObject();
-					if (HSceneComponent* pRootComponenet = Actor.GetRootComponent())
-					{
-						JsonUtility::WriteTransformValues( Writer, pRootComponenet->m_Transform );
-					}
-					Writer.EndObject();
+				Writer.StartObject();
+				if (HSceneComponent* pRootComponenet = Actor.GetRootComponent())
+				{
+					JsonUtility::WriteTransformValues( Writer, pRootComponenet->m_Transform );
+				}
+				Writer.EndObject();
+
+				Writer.StartObject();
+				{
+					Writer.String( "InstanceOverrides" );
+					Writer.StartArray();
 
 					Writer.EndArray();
 				}
+				Writer.EndObject();
 
-				//m_Level.Serialize( Writer );
+				Writer.EndArray();
 			}
+
+			//m_Level.Serialize( Writer );
 			Writer.EndObject();
+
+		}
+		Writer.EndArray();
+
+		Writer.Key( "Lights" );
+		Writer.StartArray();
+		{
 
 		}
 		Writer.EndArray();
@@ -298,18 +301,9 @@ void HWorld::Serialize( const Char* Filename )
 		}
 	}
 }
-
-void HWorld::Serialize( JsonUtility::WriteContext& Output )
-{
-	Output.Key( "Name" );
-	Output.String( GetObjectName() );
-}
-
 void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Char WorldName[64];
-	JsonUtility::GetString( Value, "Name", WorldName, sizeof( WorldName ) );
-	Super::SetObjectName( WorldName );
+	JsonUtility::GetString( Value, "WorldName", m_Name, sizeof( m_Name ) );
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

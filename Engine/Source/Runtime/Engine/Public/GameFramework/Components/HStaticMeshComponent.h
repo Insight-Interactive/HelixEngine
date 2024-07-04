@@ -13,7 +13,7 @@
 HCOMPONENT()
 class HStaticMeshComponent : public HSceneComponent
 {
-	friend class AActor;
+	friend class AActor;	
 	friend class HScene;
 	using Super = HSceneComponent;
 public:

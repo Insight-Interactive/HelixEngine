@@ -11,11 +11,8 @@
           "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 10.0,
           "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
           "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 10.0,
-          "HColliderComponent::m_IsTrigger": false,
           "HColliderComponent::Density": 10,
-          "HColliderComponent::m_IsStatic": false,
           "HColliderComponent::m_CollisionBoundsDrawEnabled": false,
-          "HColliderComponent::m_SimulationEnabled": true,
           "HSceneComponent::m_Transform": [
             {
               "PositionX": 0.0,
@@ -29,7 +26,7 @@
               "ScaleZ": 1.0
             }
           ],
-          "HObject::m_Name": "CubeCollider",
+          "HObject::m_Name": "CubeCollision",
           "HObject::m_Guid": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
         },
         {

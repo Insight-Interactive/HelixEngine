@@ -1,5 +1,5 @@
 {
   "GameName": "3p-WW1",
   "ProjectName":  "Atlas",
-  "DefaultLevel": "Levels/Test/PhysicsTest.hlevel"
+  "DefaultLevel": "Levels/Test/LightingTest.hlevel"
 }

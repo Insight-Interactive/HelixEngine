@@ -76,31 +76,16 @@ void HStaticMeshComponent::OnAttach()
 
 void HStaticMeshComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key(HE_STRINGIFY(HStaticMeshComponent));
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize(Output);
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ) );
+	Output.Bool( m_bIsDrawEnabled );
 
-		// Static mesh properties.
-		Output.StartObject();
-		{
-			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ));
-			Output.Bool(m_bIsDrawEnabled);
+	Output.Key( HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ) );
+	Output.String( m_MeshAsset->GetGuid().ToString().CStr() );
 
-			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ));
-			Output.String(m_MeshAsset->GetGuid().ToString().CStr());
+	Output.Key( HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ) );
+	Output.String( m_MaterialAsset->GetGuid().ToString().CStr() );
 
-			Output.Key(HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ));
-			Output.String(m_MaterialAsset->GetGuid().ToString().CStr());
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value ) 
@@ -108,12 +93,13 @@ void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	Super::Deserialize( Value );
 	
 	Char StringBuffer[64];
+	ZeroMemory( StringBuffer, sizeof( StringBuffer ) );
 
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ), m_bIsDrawEnabled);
 
-	JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ), StringBuffer, sizeof( StringBuffer ));
-	SetMesh(FAssetDatabase::GetStaticMesh( StringBuffer ));
+	if(JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MeshAsset ), StringBuffer, sizeof( StringBuffer )))
+		SetMesh(FAssetDatabase::GetStaticMesh( StringBuffer ));
 
-	JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ), StringBuffer, sizeof( StringBuffer ));
-	SetMaterial( FAssetDatabase::GetMaterial( StringBuffer ) );
+	if(JsonUtility::GetString( Value, HE_STRINGIFY( HStaticMeshComponent::m_MaterialAsset ), StringBuffer, sizeof( StringBuffer )))
+		SetMaterial( FAssetDatabase::GetMaterial( StringBuffer ) );
 }

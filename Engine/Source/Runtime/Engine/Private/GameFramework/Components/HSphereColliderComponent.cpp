@@ -37,34 +37,18 @@ void HSphereColliderComponent::OnDestroy()
 
 void HSphereColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HSphereColliderComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( m_RigidBody.m_Radius ) );
+	Output.Double( m_RigidBody.GetRadius() );
 
-		// Static mesh properties.
-		Output.StartObject();
-		{
-			Output.Key( HE_STRINGIFY( m_RigidBody.m_Radius ) );
-			Output.Double( m_RigidBody.GetRadius() );
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HSphereColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	Super::Deserialize( Value );
 
-	float Radius = 1.f;
+	float Radius = m_RigidBody.GetRadius();
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HSphereColliderComponent::m_RigidBody.m_Radius ), Radius );
-
 	SetRadius( Radius );
 
 	m_RigidBody.DisableSimulation();

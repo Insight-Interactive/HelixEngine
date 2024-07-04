@@ -148,39 +148,22 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 
 void HColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HColliderComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( HColliderComponent::m_IsTrigger ) );
+	Output.Bool( m_IsTrigger );
 
-		// Static mesh properties.
-		Output.StartObject();
-		{
-			Output.Key( "IsTrigger" );
-			Output.Bool( m_IsTrigger );
+	Output.Key( "Density" );
+	Output.Double( GetRigidBody().GetDensity() );
 
-			Output.Key( "Density" );
-			Output.Double( GetRigidBody().GetDensity() );
+	Output.Key( HE_STRINGIFY( HColliderComponent::m_IsStatic ) );
+	Output.Bool( GetRigidBody().GetIsStatic() );
 
-			Output.Key( "IsStatic" );
-			Output.Bool( GetRigidBody().GetIsStatic() );
+	Output.Key( HE_STRINGIFY( HColliderComponent::m_CollisionBoundsDrawEnabled ) );
+	Output.Bool( m_CollisionBoundsDrawEnabled );
 
-			Output.Key( "CollisionBoundsDrawEnabled" );
-			Output.Bool( m_CollisionBoundsDrawEnabled );
+	Output.Key( HE_STRINGIFY( HColliderComponent::m_SimulationEnabled ) );
+	Output.Bool( GetRigidBody().IsSimulationEnabled() );
 
-			Output.Key( "EnableSimulation" );
-			Output.Bool( GetRigidBody().IsSimulationEnabled() );
-
-			// TODO: Save material refernece
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
@@ -190,8 +173,8 @@ void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_IsTrigger ), m_IsTrigger);
 	
 	float Density = 1.f;
-	JsonUtility::GetFloat( Value, HE_STRINGIFY( HColliderComponent::GetDensity ), Density);
-	GetRigidBody().SetDensity( Density );
+	if(JsonUtility::GetFloat( Value, HE_STRINGIFY( HColliderComponent::GetDensity ), Density))
+		GetRigidBody().SetDensity( Density );
 
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_IsStatic ), m_IsStatic);
 

@@ -1266,6 +1266,7 @@
     <ClInclude Include="Private\PCH\EnginePCH.h" />
     <ClInclude Include="Private\Windows\Desktop\Resource\resource.h" />
     <ClInclude Include="Public\App\App.h" />
+    <ClInclude Include="Public\AssetRegistry\ActorSerializer.h" />
     <ClInclude Include="Public\AssetRegistry\Asset.h" />
     <ClInclude Include="Public\AssetRegistry\AssetDatabase.h" />
     <ClInclude Include="Public\AssetRegistry\DatabaseInterface.h" />
@@ -1352,6 +1353,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\App\App.cpp" />
+    <ClCompile Include="Private\AssetRegistry\ActorDeserializer.cpp" />
     <ClCompile Include="Private\AssetRegistry\Asset.cpp" />
     <ClCompile Include="Private\AssetRegistry\AssetDatabase.cpp" />
     <ClCompile Include="Private\AssetRegistry\DatabaseInterface.cpp" />

@@ -33,6 +33,7 @@ class AActor : public HObject
 	friend class HWorld;
 	friend class HActorComponent;
 	friend class DetailsPanel;
+	friend class FActorSerializer;
 	using Super = HObject;
 public:
 	AActor( FActorInitArgs& InitArgs );
@@ -66,8 +67,6 @@ protected:
 	HWorld* GetWorld();
 	void SetOwningWorld( HWorld* pWorld );
 
-	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
-	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 	virtual void OnDeserializeComplete();
 
 #if HE_WITH_EDITOR

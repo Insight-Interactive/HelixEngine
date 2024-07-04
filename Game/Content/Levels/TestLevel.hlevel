@@ -1,8 +1,6 @@
 {
-    "World": [
-        {
-            "Name": "TestLevel"
-        },
+    "WorldName": "TestLevel",
+    "Actors": [
         {
             "MyCoolActor.hactor": [
                 {
@@ -15,8 +13,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "SphereActor.hactor": [
                 {
                     "PositionX": -70.0,
@@ -28,8 +31,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "GroundFloor.hactor":[
                 {
                     "PositionX": 0.0,
@@ -41,8 +49,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "MagicGate.hactor":[
                 {
                     "PositionX": 35.0,
@@ -54,28 +67,9 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
-                }
-            ]
-        },
-        {
-            "PointLight":[
-                {
-                    "PositionX": 0.0,
-                    "PositionY": 50.0,
-                    "PositionZ": 100.0,
-                    "RotationX": 0.0,
-                    "RotationY": 0.0,
-                    "RotationZ": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "ScaleZ": 1.0
                 },
                 {
-                    "R": 55.0,
-                    "G": 55.0,
-                    "B": 255.0,
-                    "Brightness": 10.0,
-                    "Radius": 50.0
+                    "InstanceOverrides": null
                 }
             ]
         }

@@ -34,24 +34,7 @@ void HSceneComponent::Render( FCommandContext& GfxContext )
 
 void HSceneComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HSceneComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
-
-		// Transform properties.
-		Output.StartObject();
-		{
-			JsonUtility::WriteTransform( Output, HE_STRINGIFY( m_Transform ), m_Transform );
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	JsonUtility::WriteTransform( Output, HE_STRINGIFY( m_Transform ), m_Transform );
 }
 
 void HSceneComponent::Deserialize( const JsonUtility::ReadContext& Value )

@@ -1,8 +1,6 @@
 {
-    "World": [
-        {
-            "Name": "Physics Test"
-        },
+    "WorldName": "Physics Test",
+    "Actors": [
         {
             "GroundFloor.hactor":[
                 {
@@ -15,8 +13,14 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
+
             "PhysicsTestActors/PhysicsCube.hactor": [
                 {
                     "PositionX": 0.0,
@@ -28,8 +32,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "PhysicsTestActors/PhysicsSphere.hactor":[
                 {
                     "PositionX": 50.0,
@@ -41,8 +50,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "PhysicsTestActors/PhysicsCapsule.hactor":[
                 {
                     "PositionX": -50.0,
@@ -54,9 +68,14 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
             ]
-        },
+        }
+    ],
+    "Lights":[
         {
             "PointLight":[
                 {
