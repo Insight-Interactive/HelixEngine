@@ -38,37 +38,23 @@ void HPlaneColliderComponent::OnDestroy()
 
 void HPlaneColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key( HE_STRINGIFY( HPlaneColliderComponent ) );
-	Output.StartArray();
-	{
-		// Outer properties.
-		Output.StartObject();
-		{
-			Super::Serialize( Output );
-		}
-		Output.EndObject();
+	Output.Key( HE_STRINGIFY( m_Width ) );
+	Output.Double( m_RigidBody.GetHalfWidth() );
 
-		Output.StartObject();
-		{
-			Output.Key( HE_STRINGIFY( m_Width ) );
-			Output.Double( m_RigidBody.GetHalfWidth() );
+	Output.Key( HE_STRINGIFY( m_Height ) );
+	Output.Double( m_RigidBody.GetHalfHeight() );
 
-			Output.Key( HE_STRINGIFY( m_Height ) );
-			Output.Double( m_RigidBody.GetHalfHeight() );
-		}
-		Output.EndObject();
-	}
-	Output.EndArray();
+	Super::Serialize( Output );
 }
 
 void HPlaneColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0][HE_STRINGIFY( HColliderComponent )] );
+	Super::Deserialize( Value );
 
-	const JsonUtility::ReadContext& This = Value[1];
-	float Width, Height;
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfWidth ), Width );
-	JsonUtility::GetFloat( This, HE_STRINGIFY( m_RigidBody.m_HalfHeight ), Height );
+	float Width = m_RigidBody.GetHalfWidth();
+	float Height = m_RigidBody.GetHalfHeight();
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HPlaneColliderComponent::m_RigidBody.m_HalfWidth ), Width );
+	JsonUtility::GetFloat( Value, HE_STRINGIFY( HPlaneColliderComponent::m_RigidBody.m_HalfHeight ), Height );
 	
 	SetWidthAndHeight( Width, Height );
 

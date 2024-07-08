@@ -47,7 +47,6 @@
 // Lighting
 #define HE_MAX_POINT_LIGHTS			4
 #define HE_MAX_SPOT_LIGHTS			4
-#define HE_MAX_DIRECTIONAL_LIGHTS	4
 #define HE_MAX_NUM_BONES_PER_VERTEX 4 // Note: Keep this in sync with Renderer::SkeletalMesh.h
 // Shader constant buffer registers
 // These register indicies are reserved and constant across all shaders and must NOT be changed!

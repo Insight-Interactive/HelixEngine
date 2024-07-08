@@ -1,0 +1,21 @@
+{
+    "FMaterialInstance":[
+        {
+            "m_GUID": "e971e05f-f6fb-412c-992c-e578547e226a",
+            "ParentMaterial": "M_Wireframe.hmat"
+        },
+        {
+            "TestParam": "TextureGUID"
+        },
+        {
+            "kColor": [
+                {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 1.0
+                }
+            ],
+            "kOpacity": 1.0
+        }
+    ]
+}

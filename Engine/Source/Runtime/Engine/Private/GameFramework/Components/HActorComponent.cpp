@@ -27,26 +27,12 @@ HWorld* HActorComponent::GetWorld()
 
 void HActorComponent::Serialize( JsonUtility::WriteContext& Output )
 {
-	Output.Key("ObjectName");
-	Output.String( TCharToChar(GetObjectName()) );
-
-	Output.Key("ObjectGUID");
-	Output.String(GetGuid().ToString().CStr());
+	HObject::Serialize( Output );
 }
 
 void HActorComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	// Object Name
-	char ObjectNameBuffer[32];
-	JsonUtility::GetString( Value, "ObjectName", ObjectNameBuffer, sizeof( ObjectNameBuffer ) );
-	SetObjectName( CharToTChar( ObjectNameBuffer ) );
-
-	// Object GUID
-	Char GuidStr[64];
-	ZeroMemory(GuidStr, sizeof(GuidStr));
-	JsonUtility::GetString(Value, "ObjectGUID", GuidStr, sizeof(GuidStr));
-	FGUID ObjectGuid = FGUID::CreateFromString(GuidStr);
-	SetGuid(ObjectGuid);
+	HObject::Deserialize( Value );
 }
 
 void HActorComponent::OnOwnerDeserializeComplete()

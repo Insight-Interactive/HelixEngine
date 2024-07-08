@@ -1,5 +1,6 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "../Core/Core.hlsli"
+#include "../Core/Common.hlsli"
 #include "DeferredShadingCommon.hlsli"
 
 
@@ -17,10 +18,9 @@ GP_PSInput main(GP_VSInput Input)
 	
     Result.VertexColor = Input.Color;
     Result.UVs = Input.UVs;
+    Result.Normal = Input.Normal;
 
-    Result.Normal = normalize(mul(float4(Input.Normal, 0), kWorldMat)).xyz;
-    Result.Tangent = normalize(mul( float4(Input.Tangent, 0), kWorldMat )).xyz;
-    Result.BiTangent = normalize(mul( float4(Input.BiTangent, 0), kWorldMat )).xyz;
+    CalculateTangentSpaceNormals( Result.TBN, Input.Normal, Input.Tangent, Input.BiTangent, kWorldMat );
 
     return Result;
 }

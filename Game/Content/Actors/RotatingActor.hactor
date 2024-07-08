@@ -1,53 +1,37 @@
 {
   "AActor": [
     {
-      "ObjectName": "RotatingActor",
-      "ObjectGUID": "b2f8e8de-14fb-4979-b849-1a1236b0d8fa"
+      "HObject::m_Name": "RotatingActor",
+      "HObject::m_Guid": "b2f8e8de-14fb-4979-b849-1a1236b0d8fa"
     },
     {
       "Components": [
         {
-          "HStaticMeshComponent": [
+          "ComponentType": "HStaticMeshComponent",
+          "HStaticMeshComponent::m_bIsDrawEnabled": true,
+          "HStaticMeshComponent::m_MeshAsset": "Cube.fbx",
+          "HStaticMeshComponent::m_MaterialAsset": "M_Wood.hmat",
+          "HSceneComponent::m_Transform": [
             {
-              "HSceneComponent": [
-                {
-                  "ObjectName": "CubeStaticMesh",
-                  "ObjectGUID": "3e571b60-d990-4fb9-8cd0-aac5cbe305a0"
-                },
-                {
-                  "m_Transform": [
-                    {
-                      "PositionX": 0.0,
-                      "PositionY": 0.0,
-                      "PositionZ": 0.0,
-                      "RotationX": 0.0,
-                      "RotationY": 0.0,
-                      "RotationZ": 0.0,
-                      "ScaleX": 10.0,
-                      "ScaleY": 10.0,
-                      "ScaleZ": 10.0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "Cube.fbx",
-              "m_MaterialAsset": "M_RustedMetal.hmat"
+              "PositionX": 0.0,
+              "PositionY": 0.0,
+              "PositionZ": 0.0,
+              "RotationX": 0.0,
+              "RotationY": 0.0,
+              "RotationZ": 0.0,
+              "ScaleX": 10.0,
+              "ScaleY": 10.0,
+              "ScaleZ": 10.0
             }
-          ]
+          ],
+          "HObject::m_Name": "Cube_Mesh",
+          "HObject::m_Guid": "3e571b60-d990-4fb9-8cd0-aac5cbe305a0"
         },
         {
-          "HLuaScriptComponent":[
-            {
-              "ObjectName": "RotatingScript",
-              "ObjectGUID": "c917c76d-bdbc-4753-9011-586213b4e032"
-            },
-            {
-              "m_ScriptAsset": "RotationScript.lua"
-            }
-          ]
+          "ComponentType": "HLuaScriptComponent",
+          "HLuaScriptComponent::m_ScriptAsset": "RotationScript.lua",
+          "HObject::m_Name": "RotatingScript",
+          "HObject::m_Guid": "c917c76d-bdbc-4753-9011-586213b4e032"
         }
       ]
     }

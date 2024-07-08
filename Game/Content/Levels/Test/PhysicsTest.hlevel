@@ -1,0 +1,102 @@
+{
+    "WorldName": "Physics Test",
+    "Actors": [
+        {
+            "GroundFloor.hactor":[
+                {
+                    "PositionX": 0.0,
+                    "PositionY": 0.0,
+                    "PositionZ": 0.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
+                }
+            ]
+        },
+        {
+
+            "PhysicsTestActors/PhysicsCube.hactor": [
+                {
+                    "PositionX": 0.0,
+                    "PositionY": 40.0,
+                    "PositionZ": 100.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
+                }
+            ]
+        },
+        {
+            "PhysicsTestActors/PhysicsSphere.hactor":[
+                {
+                    "PositionX": 50.0,
+                    "PositionY": 40.0,
+                    "PositionZ": 100.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
+                }
+            ]
+        },
+        {
+            "PhysicsTestActors/PhysicsCapsule.hactor":[
+                {
+                    "PositionX": -50.0,
+                    "PositionY": 40.0,
+                    "PositionZ": 100.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
+                }
+            ]
+        }
+    ],
+    "Lights":[
+        {
+            "PointLight":[
+                {
+                    "PositionX": 0.0,
+                    "PositionY": 50.0,
+                    "PositionZ": 100.0,
+                    "RotationX": 0.0,
+                    "RotationY": 0.0,
+                    "RotationZ": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "ScaleZ": 1.0
+                },
+                {
+                    "R": 55.0,
+                    "G": 55.0,
+                    "B": 255.0,
+                    "Brightness": 10.0,
+                    "Radius": 50.0
+                }
+            ]
+        }
+    ]
+}

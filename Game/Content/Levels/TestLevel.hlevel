@@ -1,8 +1,6 @@
 {
-    "World": [
-        {
-            "Name": "TestLevel"
-        },
+    "WorldName": "TestLevel",
+    "Actors": [
         {
             "MyCoolActor.hactor": [
                 {
@@ -15,8 +13,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "SphereActor.hactor": [
                 {
                     "PositionX": -70.0,
@@ -28,8 +31,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "GroundFloor.hactor":[
                 {
                     "PositionX": 0.0,
@@ -41,8 +49,13 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
-            ],
+            ]
+        },
+        {
             "MagicGate.hactor":[
                 {
                     "PositionX": 35.0,
@@ -54,6 +67,9 @@
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
                     "ScaleZ": 1.0
+                },
+                {
+                    "InstanceOverrides": null
                 }
             ]
         }

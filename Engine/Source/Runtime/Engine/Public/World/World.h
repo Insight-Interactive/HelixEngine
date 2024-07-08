@@ -4,7 +4,6 @@
 #include "GameFramework/HObject.h"
 
 #include "World/CameraManager.h"
-#include "AssetRegistry/SerializeableInterface.h"
 #include "World/Scene.h"
 #include "World/Level.h"
 #include "PhysicsScene.h"
@@ -32,7 +31,7 @@ struct FDebugLineRenderInfo;
 	The world contains a level which contains all actors. The name level is used interchangably
 	for ease of use to the user.
 */
-class HWorld : public HObject, public FSerializeableInterface
+class HWorld : public HObject
 {
 	friend class WorldOutlinePanel;
 	friend class HEditorEngine;
@@ -81,9 +80,9 @@ public:
 	float GetWindowWidth();
 	float GetWindowHeight();
 
-	AActor* CreateEmptyActorInstance( const HName& Name );
+	AActor* CreateEmptyActorInstance( const char* Name );
 	template <typename ActorType>
-	ActorType* CreateDynamicActorinstance( const HName& Name );
+	ActorType* CreateDynamicActorinstance( const char* Name );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
@@ -106,13 +105,13 @@ protected:
 	void ReloadAndBeginPlay();
 
 	virtual void Serialize( const Char* Filename ) override;
-	virtual void Serialize( JsonUtility::WriteContext& Value ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 	void RegisterScenes();
 
 	std::vector<FUIPanel*>& GetUIPanels();
 
+	PointLightDataHandle m_TestPointLight;
 
 protected:
 	std::vector<FUIPanel*> m_UIPanels;
@@ -216,13 +215,13 @@ FORCEINLINE ACharacter* HWorld::GetPlayerCharacter( uint32 Index )
 	return m_pPlayerCharacter;
 }
 
-FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const HName& Name )
+FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const char* Name )
 {
 	return m_Level.CreateActor<AActor>( Name );
 }
 
 template <typename ActorType>
-FORCEINLINE ActorType* HWorld::CreateDynamicActorinstance( const HName& Name )
+FORCEINLINE ActorType* HWorld::CreateDynamicActorinstance( const char* Name )
 {
 	return m_Level.CreateActor<ActorType>( Name );
 }

@@ -29,3 +29,11 @@ float LinearizeDepth(float Depth, float CameraNearZ, float CameraFarZ)
     float z = ToNDC(Depth);
     return (2.f * CameraNearZ * CameraFarZ) / (CameraFarZ + CameraNearZ - z * (CameraFarZ - CameraNearZ)) / CameraFarZ;
 }
+
+void CalculateTangentSpaceNormals( out float3x3 TBN, float3 Normal, float3 Tangent, float3 BiTangent, float4x4 WorldMatrix )
+{
+    float3 T = normalize( float3(mul( float4(Tangent, 0.f), WorldMatrix ).xyz) );
+    float3 B = normalize( float3(mul( float4(BiTangent, 0.f), WorldMatrix ).xyz) );
+    float3 N = normalize( float3(mul( float4(Normal, 0.f), WorldMatrix ).xyz) );
+    TBN = float3x3(T, B, N);
+}

@@ -167,7 +167,7 @@ public:
 	FMaterialInstance();
 	virtual ~FMaterialInstance();
 
-	virtual void LoadFromFile( const Char* Filepath );
+	virtual void LoadFromFile( const String& Filepath ) override;
 	void CreateFromParent( const char* ParentMaterial );
 
 

@@ -1,0 +1,15 @@
+{
+    "FMaterialInstance":[
+        {
+            "m_GUID": "da0724e5-eb70-4fbc-aeac-813ae0aade04",
+            "ParentMaterial": "M_Wood.hmat"
+        },
+        {
+            "MaterialAlbedo": "Hardwood/Hardwood_Albedo.dds",
+            "MaterialNormal": "Hardwood/Hardwood_Normal.dds"
+        },
+        {
+            "kOpacity": 0.5
+        }
+    ]
+}

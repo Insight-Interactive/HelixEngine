@@ -29,11 +29,9 @@ void HLuaScriptComponent::Serialize( JsonUtility::WriteContext& Output )
 
 void HLuaScriptComponent::Deserialize( const JsonUtility::ReadContext& Value )
 {
-	Super::Deserialize( Value[0] );
-
-	const rapidjson::Value& ScriptComponent = Value[1];
+	Super::Deserialize( Value );
 
 	Char ScriptBuffer[64];
-	JsonUtility::GetString( ScriptComponent, HE_STRINGIFY( m_ScriptAsset ), ScriptBuffer, sizeof( ScriptBuffer ) );
+	JsonUtility::GetString( Value, HE_STRINGIFY( m_ScriptAsset ), ScriptBuffer, sizeof( ScriptBuffer ) );
 	m_ScriptAsset = FAssetDatabase::GetScript( ScriptBuffer );
 }

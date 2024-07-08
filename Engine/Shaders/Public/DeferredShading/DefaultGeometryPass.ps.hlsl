@@ -23,15 +23,10 @@ GP_PSOutput main(GP_PSInput Input)
     float RoughnessSample	= MaterialRoughness.Sample(LinearWrapSampler, Input.UVs).r;
     float MetallicSample	= MaterialMetallic.Sample(LinearWrapSampler, Input.UVs).r;
 	
-	const float3x3 TBN = float3x3(Input.Tangent,
-											Input.BiTangent,
-											Input.Normal);
-	
-	float3 NormalTangentSpace = normalize(NormalSample);
-	NormalTangentSpace = NormalTangentSpace * 2.0 - 1.0;
-	NormalTangentSpace = normalize( mul( NormalTangentSpace, TBN ) );
+	NormalSample = NormalSample * 2.f - 1.f;
+	Output.Normal = float4(normalize(mul( NormalSample, Input.TBN )), 1.f);
 
-    Output.Normal = float4(NormalTangentSpace, 1);
+	
     Output.Albedo = float4(AlbedoSample, 1) ;
 	
     Output.Roughness = RoughnessSample;

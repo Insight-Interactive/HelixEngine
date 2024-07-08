@@ -91,10 +91,10 @@ void FMaterial::Destroy()
 
 void FMaterial::LoadFromFile( const String& Filepath )
 {
-	SetDebugName( StringHelper::GetFilenameFromDirectoryNoExtension( Filepath ) );
+	SetDebugName( StringHelper::GetFilenameFromDirectoryNoExtension( Filepath) );
 
 	rapidjson::Document JsonDoc;
-	FileRef JsonSource( Filepath.c_str(), FUM_Read, CM_Text );
+	FileRef JsonSource( Filepath.c_str(), FUM_Read, CM_Text);
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{
@@ -307,7 +307,6 @@ void FMaterial::DeserializeTextureReflection( const JsonUtility::ReadContext& Te
 
 void FMaterial::DeserializeBufferReflection( const JsonUtility::ReadContext& BufferJson )
 {
-
 	for (auto itr = BufferJson.MemberBegin(); itr != BufferJson.MemberEnd(); ++itr)
 	{
 		const Char* VarName = itr->name.GetString();
@@ -322,6 +321,7 @@ void FMaterial::DeserializeBufferReflection( const JsonUtility::ReadContext& Buf
 			auto& Array = itr->value.GetArray();
 			auto& Vector = Array[0];
 
+			// All vectors will have r, so find the last character to measure the number of components.
 			if (Vector.FindMember( "a" ) != Vector.MemberEnd())
 			{
 				FVector4 Result;
@@ -329,6 +329,7 @@ void FMaterial::DeserializeBufferReflection( const JsonUtility::ReadContext& Buf
 				JsonUtility::GetFloat( Vector, "g", Result.y );
 				JsonUtility::GetFloat( Vector, "b", Result.z );
 				JsonUtility::GetFloat( Vector, "a", Result.w );
+				SetVector4( VarName, Result );
 			}
 			else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
 			{
@@ -338,15 +339,16 @@ void FMaterial::DeserializeBufferReflection( const JsonUtility::ReadContext& Buf
 				JsonUtility::GetFloat( Vector, "b", Result.z );
 				SetVector3( VarName, Result );
 			}
-			else if (Vector.FindMember( "b" ) != Vector.MemberEnd())
+			else if (Vector.FindMember( "g" ) != Vector.MemberEnd())
 			{
 				FVector2 Result;
 				JsonUtility::GetFloat( Vector, "r", Result.x );
 				JsonUtility::GetFloat( Vector, "g", Result.y );
+				SetVector2( VarName, Result );
 			}
 			else
 			{
-				HE_ASSERT( false ); // Too many values for shader float array!
+				HE_ASSERT( false ); // Too many values for shader float array or improper vector componenet names!
 			}
 		}
 	}
@@ -495,10 +497,10 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 // FMaterialInstance
 //
 
-void FMaterialInstance::LoadFromFile( const Char* Filepath)
+void FMaterialInstance::LoadFromFile( const String& Filepath )
 {
 	rapidjson::Document JsonDoc;
-	FileRef JsonSource( Filepath, FUM_Read, CM_Text );
+	FileRef JsonSource( Filepath.c_str(), FUM_Read, CM_Text);
 	JsonUtility::LoadDocument( JsonSource, JsonDoc );
 	if (JsonDoc.IsObject())
 	{

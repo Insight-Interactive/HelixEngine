@@ -96,6 +96,27 @@ inline bool GetDouble( const rapidjson::Value& Value, const char* PropertyName, 
 	return true;
 }
 
+inline bool JsonUtility::GetGuid( const rapidjson::Value& Value, const char* PropertyName, FGUID& OutGuid )
+{
+	HE_ASSERT( PropertyName != NULL );
+
+	auto Iter = Value.FindMember( PropertyName );
+	if (Iter == Value.MemberEnd())
+	{
+		return false;
+	}
+
+	auto& Property = Iter->value;
+	if (Property.IsString() == false)
+	{
+		return false;
+	}
+
+	FGUID::CreateFromString( Property.GetString(), OutGuid );
+
+	return true;
+}
+
 inline bool JsonUtility::GetString( const rapidjson::Value& Value, const char* PropertyName, String& OutString )
 {
 	HE_ASSERT( PropertyName != NULL );
@@ -177,8 +198,17 @@ inline bool JsonUtility::GetBoolean( const rapidjson::Value& Value, const char* 
 
 inline bool JsonUtility::GetTransform( const rapidjson::Value& OwningObject, const char* PropertyName, FTransform& OutTransform )
 {
+	auto Iter = OwningObject.FindMember( PropertyName );
+	if (Iter == OwningObject.MemberEnd())
+		return false;
+
 	const rapidjson::Value& TransformJson = OwningObject[PropertyName][0];
 
+	return GetTransform(TransformJson, OutTransform);
+}
+
+inline bool JsonUtility::GetTransform( const rapidjson::Value& TransformJson, FTransform& OutTransform )
+{
 	FVector3 Position, EulerRotation, Scale;
 	JsonUtility::GetFloat( TransformJson, "PositionX", Position.x );
 	JsonUtility::GetFloat( TransformJson, "PositionY", Position.y );
@@ -187,11 +217,11 @@ inline bool JsonUtility::GetTransform( const rapidjson::Value& OwningObject, con
 	JsonUtility::GetFloat( TransformJson, "RotationX", EulerRotation.x );
 	JsonUtility::GetFloat( TransformJson, "RotationY", EulerRotation.y );
 	JsonUtility::GetFloat( TransformJson, "RotationZ", EulerRotation.z );
-	
+
 	JsonUtility::GetFloat( TransformJson, "ScaleX", Scale.x );
 	JsonUtility::GetFloat( TransformJson, "ScaleY", Scale.y );
 	JsonUtility::GetFloat( TransformJson, "ScaleZ", Scale.z );
-	
+
 	OutTransform.SetPosition( Position );
 	OutTransform.SetRotation( EulerRotation );
 	OutTransform.SetScale( Scale );

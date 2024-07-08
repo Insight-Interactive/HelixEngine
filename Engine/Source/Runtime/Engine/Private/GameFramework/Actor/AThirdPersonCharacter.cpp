@@ -16,12 +16,12 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_ADSTimeSeconds( 0.1f )
 	, m_ADSFOVDegrees( 50.f )
 {
-	m_pCameraBoom = AddComponent<HCameraBoomComponent>( TEXT( "CameraBoom" ) );
+	m_pCameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
 	m_pCameraBoom->AttachTo( m_pRootComponent );
 	
-	m_pCameraComponent = AddComponent<HCameraComponent>( TEXT( "ThirdPersonCamera" ) );
+	m_pCameraComponent = AddComponent<HCameraComponent>( "ThirdPersonCamera" );
 	m_pCameraComponent->AttachTo( m_pCameraBoom );
-	m_pCameraComponent->SetObjectName( TEXT( "FollowCamera" ) );
+	m_pCameraComponent->SetObjectName( "FollowCamera" );
 	m_CameraFOV = m_pCameraComponent->GetFieldOfView();
 }
 

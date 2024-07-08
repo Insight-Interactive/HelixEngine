@@ -8,6 +8,7 @@
 */
 #pragma once
 
+#include "GUID.h"
 #include "FileSystem.h"
 #include "Transform.h"
 #include "GUID.h"
@@ -59,6 +60,11 @@ namespace JsonUtility
 	bool GetDouble( const rapidjson::Value& Value, const char* PropertyName, double& OutDouble );
 
 	/*
+		Reads and returns a guid property from a json value. Returns true if succeeded false if not.
+	*/
+	bool GetGuid( const rapidjson::Value& Value, const char* PropertyName, FGUID& OutGuid );
+
+	/*
 		Reads and returns a string property from a json value. It's recomended you use 'GetString( const rapidjson::Value& Value, const char* PropertyName, char* OutStringBuffer, uint32 BufferSize )'
 		as it does not allocate heap memory. Returns true if succeeded false if not.
 	*/
@@ -77,7 +83,7 @@ namespace JsonUtility
 	bool GetBoolean( const rapidjson::Value& Value, const char* PropertyName, bool& OutBool );
 	
 	/*
-		Reads and returns a transform property from a json value. Returns true if succeeded false if not.
+		Reads and returns a FTransform property from a json value. Returns true if succeeded false if not.
 		Json Transform properties must be a laid out as follows to be read correctly:
 		<PropertyName>: [
 			{
@@ -94,6 +100,11 @@ namespace JsonUtility
 		]
 	*/
 	bool GetTransform( const rapidjson::Value& OwningObject, const char* PropertyName, FTransform& OutTransform );
+
+	/*
+		Reads the FTransform components of a json structure without assuming an array.
+	*/
+	bool GetTransform( const rapidjson::Value& OwningObject, FTransform& OutTransform );
 
 	/*
 		Writes a Transform in the proper format to be read with JSonUtility::GetTransform()

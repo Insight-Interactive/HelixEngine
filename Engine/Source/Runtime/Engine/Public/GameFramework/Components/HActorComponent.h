@@ -2,7 +2,6 @@
 #pragma once
 
 #include "GameFramework/HObject.h"
-#include "AssetRegistry/SerializeableInterface.h"
 
 /*
 	Autogenerate the required methods needed to derive from HActorComponent.
@@ -10,7 +9,8 @@
 #define HE_COMPONENT_GENERATED_BODY( Class )													\
 	Class( FComponentInitArgs& InitArgs );														\
 	virtual ~Class();																			\
-	public:																						\
+	friend class FActorSerializer;																\
+public:																							\
 	virtual const char* GetComponenetStaticName() override { return HE_STRINGIFY( Class ); }	\
 
 #define HCOMPONENT()
@@ -25,7 +25,12 @@ class FCommandContext;
 */
 struct FComponentInitArgs
 {
-	const HName&	Name;
+	FComponentInitArgs( const char* Name, AActor* pOwner )
+	{
+		strcpy_s( this->Name, Name );
+		this->pOwner = pOwner;
+	}
+	char Name[kMaxHObjectNameLength];
 	const AActor*	pOwner;
 };
 
@@ -34,9 +39,11 @@ struct FComponentInitArgs
 	components which bestow behavior to it.
 */
 HCOMPONENT()
-class HActorComponent : public HObject, public FSerializeableInterface
+class HActorComponent : public HObject
 {
+	friend class HLevel;
 	friend class AActor;
+	friend class FActorSerializer;
 public:
 	// Returns the Actor class this component belongs too.
 	AActor* GetOwner();

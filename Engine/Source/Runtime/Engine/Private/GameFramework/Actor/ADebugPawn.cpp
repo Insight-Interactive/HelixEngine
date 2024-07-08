@@ -12,7 +12,7 @@ ADebugPawn::ADebugPawn( FActorInitArgs& InitArgs )
 	, m_CanRotateCamera( false ) // So camera doesn't spawn without input being down
 	, m_CanMove( true )
 {
-	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( TEXT( "Debug Camera" ) );
+	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( "Debug Camera" );
 	m_pCameraComponent->AttachTo(GetRootComponent());
 }
 

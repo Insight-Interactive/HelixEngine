@@ -47,37 +47,65 @@ StaticMeshGeometryRef FGeometryManager::ProcessMesh( aiMesh* mesh, const aiScene
 	// Walk through each of the mesh's vertices
 	for (uint32 i = 0; i < TotalVerticies; i++)
 	{
-		FVertex3D& vertex = Vertices[i];
+		FVertex3D& Vertex = Vertices[i];
 
 		if (mesh->HasPositions())
 		{
-			vertex.Position.x = mesh->mVertices[i].x;
-			vertex.Position.y = mesh->mVertices[i].y;
-			vertex.Position.z = mesh->mVertices[i].z;
+			Vertex.Position.x = mesh->mVertices[i].x;
+			Vertex.Position.y = mesh->mVertices[i].y;
+			Vertex.Position.z = mesh->mVertices[i].z;
 		}
 		
 		if (mesh->mTextureCoords[0]) 
 		{
-			vertex.UV0.x = (float)mesh->mTextureCoords[0][i].x;
-			vertex.UV0.y = (float)mesh->mTextureCoords[0][i].y;
+			Vertex.UV0.x = (float)mesh->mTextureCoords[0][i].x;
+			Vertex.UV0.y = (float)mesh->mTextureCoords[0][i].y;
 		}
 
 		if (mesh->HasNormals())
 		{
-			vertex.Normal.x = mesh->mNormals[i].x;
-			vertex.Normal.y = mesh->mNormals[i].y;
-			vertex.Normal.z = mesh->mNormals[i].z;
+			Vertex.Normal.x = mesh->mNormals[i].x;
+			Vertex.Normal.y = mesh->mNormals[i].y;
+			Vertex.Normal.z = mesh->mNormals[i].z;
+			
+			
+			Vertex.UV0.x = (float)mesh->mTextureCoords[0]->x;
+			Vertex.UV0.y = (float)mesh->mTextureCoords[0]->y;
+
+			aiVector3D* tans = mesh->mTangents;
+			if (tans)
+			{
+				Vertex.Tangent.x = (float)tans[i].x;
+				Vertex.Tangent.y = (float)tans[i].y;
+				Vertex.Tangent.z = (float)tans[i].z;
+
+				FVector3 TempTangent( (float)tans[i].x, (float)tans[i].y, (float)tans[i].z );
+				FVector3 Normal( Vertex.Normal.x, Vertex.Normal.y, Vertex.Normal.z );
+				FVector3 BiTangent = Normal.Cross( TempTangent );
+
+				Vertex.BiTangent.x = BiTangent.x;
+				Vertex.BiTangent.y = BiTangent.y;
+				Vertex.BiTangent.z = BiTangent.z;
+			}
+			else
+			{
+				HE_ASSERT( false );// Mesh does not have tangents or bitangents!
+
+				Vertex.UV0 = FVector2( 0.0f, 0.0f );
+				Vertex.Tangent = FVector3( 0.0f, 0.0f, 0.0f );
+				Vertex.BiTangent = FVector3( 0.0f, 0.0f, 0.0f );
+			}
 		}
 
 		if (mesh->HasTangentsAndBitangents())
 		{
-			vertex.Tangent.x = mesh->mTangents[i].x;
-			vertex.Tangent.y = mesh->mTangents[i].y;
-			vertex.Tangent.z = mesh->mTangents[i].z;
+			Vertex.Tangent.x = mesh->mTangents[i].x;
+			Vertex.Tangent.y = mesh->mTangents[i].y;
+			Vertex.Tangent.z = mesh->mTangents[i].z;
 
-			vertex.BiTangent.x = mesh->mBitangents[i].x;
-			vertex.BiTangent.y = mesh->mBitangents[i].y;
-			vertex.BiTangent.z = mesh->mBitangents[i].z;
+			Vertex.BiTangent.x = mesh->mBitangents[i].x;
+			Vertex.BiTangent.y = mesh->mBitangents[i].y;
+			Vertex.BiTangent.z = mesh->mBitangents[i].z;
 		}
 	}
 

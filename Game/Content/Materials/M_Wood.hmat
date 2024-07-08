@@ -13,7 +13,7 @@
       "MaterialNormal": "Hardwood/Hardwood_Normal.dds"
     },
     {
-      "kOpacity": 0.7
+      "kOpacity": 1.0
     },
     {
       "VertexShader": "ada4a5fc-7395-4db6-81bc-863c0add8066",

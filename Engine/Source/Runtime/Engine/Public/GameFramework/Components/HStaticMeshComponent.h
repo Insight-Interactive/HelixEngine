@@ -13,7 +13,7 @@
 HCOMPONENT()
 class HStaticMeshComponent : public HRenderableComponenetInterface
 {
-	friend class AActor;
+	friend class AActor;	
 	friend class HScene;
 	using Super = HRenderableComponenetInterface;
 public:
@@ -32,8 +32,12 @@ protected:
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 protected:
-	HStaticMesh							m_MeshAsset;
+	bool								m_bIsDrawEnabled;
+	
 	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;
+	HStaticMesh							m_MeshAsset;
+	
+	HMaterial							m_MaterialAsset;
 
 };
 

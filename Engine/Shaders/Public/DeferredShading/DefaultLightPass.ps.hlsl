@@ -29,19 +29,19 @@ LP_PSOutput main(LP_PSInput Input)
 	float Depth				= SceneDepth.Sample(LinearWrapSampler, Input.UVs).r;
 	float3 WorldPos			= ConstructWorldPosFromDepth(Depth, Input.UVs, kInverseViewMat, kInverseProjMat);
 
-	float3 Albedo = pow( abs( AlbedoSample ), float3(2.2, 2.2, 2.2) );
 	float3 LightLuminance = PBRLightPixel( AlbedoSample, NormalSample, RoughnessSample, MetallicSample, SpecularSample, WorldPos, Input.UVs );
-	
-    float3 Ambient = float3(0.03, 0.03, 0.03) * Albedo;
+	float3 Albedo = pow( abs( AlbedoSample ), float3(2.2, 2.2, 2.2) );
+	float3 Ambient = float3( 0.03, 0.03, 0.03 ) * Albedo;
 	float3 Color = Ambient + LightLuminance;
-    Color = Color / (Color + float3(1, 1, 1));
-    Color = pow(abs(Color), float3(1 / 2.2, 1 / 2.2, 1 / 2.2));
-	Output.Result = float4(Color, 1.f);
+    Color = Color / ( Color + float3(1, 1, 1) ); 
+	Color = pow( abs( Color ), float3(1 / 2.2, 1 / 2.2, 1 / 2.2) );
+	Output.Result = float4(Color, 1.f );
+	
 	
 	// DEBUG
 	//
 	//float LinearDepth = LinearizeDepth(Depth, kCameraNearZ, kCameraFarZ);
-	//Output.Result = float4(AlbedoSample, 1);
+	//Output.Result = float4(AlbedoSample * LightLuminance, 1);
 	
 	return Output;
 }

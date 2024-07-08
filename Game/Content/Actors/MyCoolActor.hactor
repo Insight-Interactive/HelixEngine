@@ -1,95 +1,57 @@
 {
   "AActor": [
     {
-      "ObjectName": "MyCoolActor",
-      "ObjectGUID": "76b2b57a-e199-4032-89f5-cc498feec3cc"
+      "HObject::m_Name": "MyCoolActor",
+      "HObject::m_Guid": "76b2b57a-e199-4032-89f5-cc498feec3cc"
     },
     {
       "Components": [
         {
-          "HCubeColliderComponent":[
+          "ComponentType": "HCubeColliderComponent",
+          "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 10.0,
+          "HColliderComponent::m_IsTrigger": false,
+          "HColliderComponent::Density": 10,
+          "HColliderComponent::m_IsStatic": false,
+          "HColliderComponent::m_CollisionBoundsDrawEnabled": false,
+          "HColliderComponent::m_SimulationEnabled": true,
+          "HSceneComponent::m_Transform": [
             {
-              "HColliderComponent":[
-                {
-                  "HSceneComponent": [
-                    {
-                      "ObjectName": "CubeCollider",
-                      "ObjectGUID": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
-                    },
-                    {
-                      "m_Transform": [
-                        {
-                          "PositionX": 0.0,
-                          "PositionY": 0.0,
-                          "PositionZ": 0.0,
-                          "RotationX": 0.0,
-                          "RotationY": 0.0,
-                          "RotationZ": 0.0,
-                          "ScaleX": 1.0,
-                          "ScaleY": 1.0,
-                          "ScaleZ": 1.0
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "IsTrigger": false,
-                  "Density": 10,
-                  "IsStatic": false,
-                  "EnableSimulation": true
-                }
-              ]
-            },
-            {
-              "m_RigidBody.m_HalfWidth": 10.0,
-              "m_RigidBody.m_HalfHeight": 10.0,
-              "m_RigidBody.m_HalfDepth": 10.0
+              "PositionX": 0.0,
+              "PositionY": 0.0,
+              "PositionZ": 0.0,
+              "RotationX": 0.0,
+              "RotationY": 0.0,
+              "RotationZ": 0.0,
+              "ScaleX": 1.0,
+              "ScaleY": 1.0,
+              "ScaleZ": 1.0
             }
-          ]
+          ],
+          "HObject::m_Name": "CubeCollider",
+          "HObject::m_Guid": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
         },
         {
-          "HStaticMeshComponent": [
+          "ComponentType": "HStaticMeshComponent",
+          "HStaticMeshComponent::m_bIsDrawEnabled": true,
+          "HStaticMeshComponent::m_MeshAsset": "Cube.fbx",
+          "HStaticMeshComponent::m_MaterialAsset": "M_RustedMetal.hmat",
+          "HSceneComponent::m_Transform": [
             {
-              "HSceneComponent": [
-                {
-                  "ObjectName": "CubeStaticMesh",
-                  "ObjectGUID": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
-                },
-                {
-                  "m_Transform": [
-                    {
-                      "PositionX": 0.0,
-                      "PositionY": 0.0,
-                      "PositionZ": 0.0,
-                      "RotationX": 0.0,
-                      "RotationY": 0.0,
-                      "RotationZ": 0.0,
-                      "ScaleX": 1.0,
-                      "ScaleY": 1.0,
-                      "ScaleZ": 1.0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "m_bIsDrawEnabled": true,
-              "m_MeshAsset": "Cube.fbx",
-              "m_MaterialAsset": "M_RustedMetal.hmat"
+              "PositionX": 0.0,
+              "PositionY": 0.0,
+              "PositionZ": 0.0,
+              "RotationX": 0.0,
+              "RotationY": 0.0,
+              "RotationZ": 0.0,
+              "ScaleX": 1.0,
+              "ScaleY": 1.0,
+              "ScaleZ": 1.0
             }
-          ]
-        },
-        {
-          "HLuaScriptComponent":[
-            {
-              "ObjectName": "RotatingScript",
-              "ObjectGUID": "eb305086-b0f8-419b-b0be-ef991211b4a6"
-            },
-            {
-              "m_ScriptAsset": "345a6e8a-4343-4f4c-a237-bc6cdc99f8bb"
-            }
-          ]
+          ],
+          "HObject::m_Name": "CubeStaticMesh",
+          "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         }
       ]
     }

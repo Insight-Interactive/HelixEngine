@@ -1,52 +1,35 @@
 {
   "AActor": [
     {
-      "ObjectName": "Physics Cube",
-      "ObjectGUID": "4a207c51-3a70-4031-892f-4c6f21673240"
+      "HObject::m_Name": "Physics Cube",
+      "HObject::m_Guid": "4a207c51-3a70-4031-892f-4c6f21673240"
     },
     {
       "Components": [
         {
-          "HCubeColliderComponent":[
+          "ComponentType": "HCubeColliderComponent",
+          "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 10.0,
+          "HColliderComponent::m_IsTrigger": false,
+          "HColliderComponent::Density": 10.0,
+          "HColliderComponent::m_IsStatic": false,
+          "HColliderComponent::m_SimulationEnabled": true,
+          "HSceneComponent::m_Transform": [
             {
-              "HColliderComponent":[
-                {
-                  "HSceneComponent": [
-                    {
-                      "ObjectName": "CubeCollider",
-                      "ObjectGUID": "629bbbae-f84b-4dfb-b923-e2a895fa6711"
-                    },
-                    {
-                      "m_Transform": [
-                        {
-                          "PositionX": 0.0,
-                          "PositionY": 0.0,
-                          "PositionZ": 0.0,
-                          "RotationX": 0.0,
-                          "RotationY": 0.0,
-                          "RotationZ": 0.0,
-                          "ScaleX": 1.0,
-                          "ScaleY": 1.0,
-                          "ScaleZ": 1.0
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "IsTrigger": false,
-                  "Density": 10.0,
-                  "IsStatic": false,
-                  "EnableSimulation": true
-                }
-              ]
-            },
-            {
-              "m_RigidBody.m_HalfWidth": 10.0,
-              "m_RigidBody.m_HalfHeight": 10.0,
-              "m_RigidBody.m_HalfDepth": 10.0
+              "PositionX": 0.0,
+              "PositionY": 0.0,
+              "PositionZ": 0.0,
+              "RotationX": 0.0,
+              "RotationY": 0.0,
+              "RotationZ": 0.0,
+              "ScaleX": 1.0,
+              "ScaleY": 1.0,
+              "ScaleZ": 1.0
             }
-          ]
+          ],
+          "HObject::m_Name": "CubeCollider",
+          "HObject::m_Guid": "629bbbae-f84b-4dfb-b923-e2a895fa6711"
         }
       ]
     }

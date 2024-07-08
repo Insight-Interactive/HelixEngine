@@ -1,7 +1,26 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #include "../../../Source/Runtime/Engine/Public/Engine/EngineDefines.h"
-#include "../../../Source/Runtime/Renderer/Public/CommonMacros.h"
-#include "LightsFwd.hlsli"
+
+//
+// Common Light Stuctures.
+//
+
+struct PointLight
+{
+    float3 Position;
+    float Radius;
+    float3 Color;
+    float Brightness;
+    uint Id;
+};
+
+struct DirectionalLight
+{
+    float4 Direction;
+    float4 Color;
+    float Brightness;
+    uint Id;
+};
 
 
 //
@@ -46,19 +65,16 @@ HE_DECLARE_CONSTANT_BUFFER(MeshWorld_CB, kMeshWorldReg)
 {
     float4x4 kWorldMat;
 
-    float MWPad[48];
+    float MWPad[46];
 }
 
 HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 {
     uint kNumPointLights;
     uint kNumDirectionalLights;
-	/* float Unused0[2]; */
 
     PointLight kPointLights[HE_MAX_POINT_LIGHTS];
-	DirectionalLight kDirectionalLights[HE_MAX_DIRECTIONAL_LIGHTS];
- 
-    float LightPad[60];
+	DirectionalLight kWorldSun;
 }
 
 HE_DECLARE_CONSTANT_BUFFER( SkeletonBones_CB, kSkeletonBonesReg )

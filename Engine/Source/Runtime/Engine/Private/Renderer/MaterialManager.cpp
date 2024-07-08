@@ -21,6 +21,7 @@ HMaterial MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 {
 	ManagedMaterial* pMaterial = NULL;
 	
+
 	String Name = StringHelper::GetFilenameFromDirectoryNoExtension( Path );
 	{
 		ScopedCriticalSection Guard( m_MapMutex );
@@ -33,7 +34,15 @@ HMaterial MaterialManager::FindOrLoadMaterialFromFile(const String& Path)
 		}
 		else
 		{
-			pMaterial = new FMaterial();
+
+			String Extention = StringHelper::GetFileExtension( Path );
+			if (Extention == "hmat")
+				pMaterial = new FMaterial();
+			else if (Extention == "hmatinst")
+				pMaterial = new FMaterialInstance();
+			else
+				HE_ASSERT( false ); // Asset that was not a material was trying to be loaded by the material manager!
+
 			pMaterial->SetName( Name );
 			m_MaterialCache[Name].reset(pMaterial);
 			
