@@ -19,6 +19,7 @@ public:
 	FVector3 GetWorldPosition() const;
 
 	FVector3 GetPosition() const;
+	FQuat GetWorldRotation() const;
 	FQuat GetRotation() const;
 	FVector3 GetEulerRotation() const;
 	FVector3 GetScale() const;
@@ -77,15 +78,27 @@ private:
 
 FORCEINLINE FVector3 HSceneComponent::GetWorldPosition() const
 {
-	if (m_pParent)
-		return m_pParent->GetWorldPosition() + GetPosition();
-	else
-		return GetPosition();
+	FVector3 Position;
+	FVector3 Scale;
+	FQuat Rotation;
+	GetWorldMatrix().Decompose( Scale, Rotation, Position );
+	
+	return Position;
 }
 
 FORCEINLINE FVector3 HSceneComponent::GetPosition() const
 {
 	return m_Transform.GetPosition();
+}
+
+FORCEINLINE FQuat HSceneComponent::GetWorldRotation() const
+{
+	FVector3 Position;
+	FVector3 Scale;
+	FQuat Rotation;
+	GetWorldMatrix().Decompose( Scale, Rotation, Position );
+
+	return Rotation;
 }
 
 FORCEINLINE FQuat HSceneComponent::GetRotation() const

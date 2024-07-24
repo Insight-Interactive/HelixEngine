@@ -10,13 +10,12 @@ MaterialManager GMaterialManager;
 LightManager GLightManager;
 
 
-FInputElementDesc GSceneMeshInputElements[6] =
+FInputElementDesc GSceneMeshInputElements[5] =
 {
 	{ "POSITION",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "NORMAL",		0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "TANGENT",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "BITANGENT",	0, F_R32G32B32_Float,		0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
-	{ "COLOR",		0, F_R32G32B32A32_Float,	0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 	{ "UVS",		0, F_R32G32_Float,			0, HE_APPEND_ALIGNED_ELEMENT,	IC_PerVertexData, 0 },
 };
 const uint32 kNumSceneMeshCommonInputElements = HE_ARRAYSIZE(GSceneMeshInputElements);

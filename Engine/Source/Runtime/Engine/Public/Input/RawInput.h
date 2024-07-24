@@ -141,6 +141,8 @@ public:
 	*/
 	void UnacquireKeyboard();
 
+	FVector2 GetMouseScreenPos();
+
 	float GetMouseMoveDeltaX();
 
 	float GetMouseMoveDeltaY();
@@ -239,6 +241,10 @@ inline bool FRawInputSurveyer::GetIsKeyboardAcquired()
 	return m_Keyboard.GetIsAcquired();
 }
 
+inline FVector2 FRawInputSurveyer::GetMouseScreenPos()
+{
+	return m_Mouse.GetPosition();
+}
 
 inline float FRawInputSurveyer::GetMouseMoveDeltaX()
 {

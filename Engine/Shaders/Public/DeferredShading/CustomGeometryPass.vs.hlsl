@@ -16,7 +16,6 @@ GP_PSInput main(GP_VSInput Input)
     Result.Position = mul(float4(Input.Position, 1.f), WorldViewProjection);
     Result.Normal = Input.Normal;
 
-    Result.VertexColor = Input.Color;
     Result.UVs = Input.UVs;
 
     float3 T = normalize( float3(mul( float4(Input.Tangent, 1.f), kWorldMat ).xyz) );

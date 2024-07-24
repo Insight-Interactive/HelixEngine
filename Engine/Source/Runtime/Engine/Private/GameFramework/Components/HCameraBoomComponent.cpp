@@ -11,10 +11,9 @@ HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: Super( InitArgs )
 	, m_UseCameraCollision( true )
 	, m_CameraCollisionTraceDistance( 5.f )
-	, m_CameraDistance( -50.f )
+	, m_CameraDistance( -3.f )
 	, m_ViewOffset( 0.f, 0.f, 0.f ) //20.f, 10.f, 0.f
 {
-	SetPosition( 0.f, 0.f, m_CameraDistance );
 }
 
 HCameraBoomComponent::~HCameraBoomComponent()
@@ -22,109 +21,50 @@ HCameraBoomComponent::~HCameraBoomComponent()
 
 }
 
-void HCameraBoomComponent::Tick( float DeltaTime )
+void HCameraBoomComponent::Update( float DeltaTime )
 {
-	Super::Tick( DeltaTime );
 
-	//// Player-to-camera collision detection
-	////
-	//FVector3 TraceStart = FVector3::Zero;
-	//FVector3 TraceEnd = GetPosition();
-	//FVector3 TraceDir = TraceStart - TraceEnd;
-
-	//FVector3 TraceDirNormal = FVector3::Normalize( TraceDir );
-
-	//// Front trace
-	//{
-	//	FRaycastHitInfo HitInfo = {};
-	//	std::vector<HColliderComponent*> IgnoreColliders;
-	//	//IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
-	//	bool ForwardHit = GetWorld()->Raycast( TraceStart, TraceDirNormal, TraceDir.Length(), &HitInfo, &IgnoreColliders );
-	//	//bool BackwardHit = GetWorld()->Raycast( m_pCameraComponent->GetWorldPosition(), m_pCameraComponent->GetLocalBackward(), TraceDistance );
-
-	//	if ( ForwardHit )
-	//	{
-	//		SetPosition( HitInfo.HitPos );
-
-	//		/*FDebugLineRenderInfo info = {};
-	//		info.Start = TraceStart;
-	//		info.End = HitInfo.HitPos;
-	//		info.Color = FColor::GreenOpaque;
-	//		info.Lifetime = 20.f;
-	//		GetWorld()->DrawDebugLine( info );*/
-	//	}
-	//} 
-
-	/*FVector3 DesiredCameraPos = m_pCameraComponent->GetWorldPosition() + (m_pCameraComponent->GetLocalBackward() * 50);
+	/*if( m_UseCameraCollision )
 	{
-		float TraceDistance = 2.f;
+		FVector3 WorldPos = GetWorldPosition();
+		FVector3 WorldPos = m_Camera->GetWorldPosition();
+		bool TopHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalUp(), m_CameraCollisionTraceDistance );
+		bool BottomHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalDown(), m_CameraCollisionTraceDistance );
 
-		FRaycastHitInfo HitInfo = {};
-		std::vector<HColliderComponent*> IgnoreColliders;
-		IgnoreColliders.push_back( (HColliderComponent*)m_pRootComponent );
-		bool BackwardHit = GetWorld()->Raycast( m_pCameraComponent->GetWorldPosition(), m_pCameraComponent->GetLocalBackward(), TraceDistance, &HitInfo, &IgnoreColliders, FG_WorldGeometry);
+		bool LeftHit = GetWorld()->Raycast( WorldPos, GetLocalLeft(), m_CameraCollisionTraceDistance );
+		bool RightHit = GetWorld()->Raycast( WorldPos, GetLocalRight(), m_CameraCollisionTraceDistance );
 
-		if (!BackwardHit)
-		{
-			float LerpWeight = 1.f;
-			FVector3 LerpedPos = FVector3::Lerp( m_pCameraComponent->GetWorldPosition(), DesiredCameraPos, LerpWeight );
-			m_pCameraComponent->SetPosition( LerpedPos );
-		}
+		if (LeftHit || RightHit)
+			SetPosition( PosPreRotation );
 	}*/
 }
 
 void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 {
-	//float PitchDelta = GetWorld()->GetMouseMoveDeltaY();
-	FVector3 CameraPosPreRotation = GetPosition();
-	const FVector3& LookAtPos = FVector3::Zero;
-
-	float Rotation = -(PitchDelta * 2048.f) * GEngine->GetDeltaTime();
-	Rotation = Math::DegreesToRadians( Rotation );
-	float RotatedY = cosf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.y;
-	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.y - LookAtPos.y) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;
-
-	LookAt( LookAtPos + m_ViewOffset );
-	SetPosition( CameraPosPreRotation.x, RotatedY, RotatedZ );
-
-	HCameraComponent* pCamera = GetOwner()->GetComponent<HCameraComponent>();
-	//pCamera->LookAt( LookAtPos + m_ViewOffset );
-	pCamera->SetRotation( GetRotation() );
-
-	if( m_UseCameraCollision )
-	{
-		bool TopHit = GetWorld()->Raycast( GetWorldPosition(), GetLocalUp(), m_CameraCollisionTraceDistance );
-		bool BottomHit = GetWorld()->Raycast( GetWorldPosition(), GetLocalDown(), m_CameraCollisionTraceDistance );
-
-		if (TopHit || BottomHit)
-			SetPosition( CameraPosPreRotation );
-	}
+	const float kPitchRotationClamp = Math::DegreesToRadians( 50.f );
+	m_Rotation.x += -(PitchDelta * 50.f) * GEngine->GetDeltaTime();
+	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
+	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	SetRotation( RotationQuat );
+	
+	RotationQuat = FQuat::CreateFromYawPitchRoll( -m_Rotation.y, -m_Rotation.x, m_Rotation.z );
+	m_Camera->SetRotation( RotationQuat );
 }
 
 void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
-	//float YawDelta = GetWorld()->GetMouseMoveDeltaX();
-	FVector3 CameraPosPreRotation = GetPosition();
-	const FVector3& LookAtPos = FVector3::Zero;
+	m_Rotation.y += -(YawDelta * 50.f) * GEngine->GetDeltaTime();
+	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	SetRotation( RotationQuat );
+	
+	RotationQuat = FQuat::CreateFromYawPitchRoll( -m_Rotation.y, -m_Rotation.x, m_Rotation.z );
+	m_Camera->SetRotation( RotationQuat );
+}
 
-	float Rotation = (YawDelta * 2048.f) * GEngine->GetDeltaTime();
-	Rotation = Math::DegreesToRadians( Rotation );
-	float RotatedX = cosf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) - sinf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.x;
-	float RotatedZ = sinf( Rotation ) * (CameraPosPreRotation.x - LookAtPos.x) + cosf( Rotation ) * (CameraPosPreRotation.z - LookAtPos.z) + LookAtPos.z;
-
-	LookAt( LookAtPos + m_ViewOffset );
-	SetPosition( RotatedX, CameraPosPreRotation.y, RotatedZ );
-
-	HCameraComponent* pCamera = GetOwner()->GetComponent<HCameraComponent>();
-	//pCamera->LookAt( LookAtPos + m_ViewOffset );
-	pCamera->SetRotation( GetRotation() );
-
-	if( m_UseCameraCollision )
-	{
-		bool LeftHit = GetWorld()->Raycast( GetWorldPosition(), GetLocalLeft(), m_CameraCollisionTraceDistance );
-		bool RightHit = GetWorld()->Raycast( GetWorldPosition(), GetLocalRight(), m_CameraCollisionTraceDistance );
-
-		if (LeftHit || RightHit)
-			SetPosition( CameraPosPreRotation );
-	}
+void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
+{
+	m_Camera = Camera;
+	m_Camera->AttachTo( this );
+	m_Camera->SetPosition( -2.f, -1.f, m_CameraDistance );
+	m_Camera->SetRotation( FVector3::Zero );
 }

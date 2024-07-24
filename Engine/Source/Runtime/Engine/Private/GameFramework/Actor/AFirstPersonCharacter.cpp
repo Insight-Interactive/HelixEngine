@@ -11,9 +11,9 @@ AFirstPersonCharacter::AFirstPersonCharacter( FActorInitArgs& InitArgs )
 	: ACharacter( InitArgs )
 	, m_CanRotateCamera( true )
 {
-	m_pCameraComponent = AddComponent<HFirstPersonCameraComponent>( "FirstPersonCameraComponent" );
-	m_pCameraComponent->AttachTo( m_pRootComponent );
-	m_pCameraComponent->SetPosition( FVector3::Zero );
+	m_CameraComponent = AddComponent<HFirstPersonCameraComponent>( "FirstPersonCameraComponent" );
+	m_CameraComponent->AttachTo( m_RootComponent );
+	m_CameraComponent->SetPosition( FVector3::Zero );
 }
 
 AFirstPersonCharacter::~AFirstPersonCharacter()
@@ -42,7 +42,7 @@ void AFirstPersonCharacter::LookUp( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		SCast<HFirstPersonCameraComponent*>( m_pCameraComponent )->LookUp( Value );
+		SCast<HFirstPersonCameraComponent*>( m_CameraComponent )->LookUp( Value );
 	}
 }
 
@@ -50,7 +50,7 @@ void AFirstPersonCharacter::LookRight( float Value )
 {
 	if (m_CanRotateCamera)
 	{
-		SCast<HFirstPersonCameraComponent*>( m_pCameraComponent )->LookRight( Value );
+		SCast<HFirstPersonCameraComponent*>( m_CameraComponent )->LookRight( Value );
 	}
 }
 
@@ -61,10 +61,10 @@ void AFirstPersonCharacter::TogglePitchYawRotation()
 
 void AFirstPersonCharacter::FirstPersonMoveForward( float Delta )
 {
-	Move( m_pCameraComponent->GetLocalForward(), Delta );
+	Move( m_CameraComponent->GetLocalForward(), Delta );
 }
 
 void AFirstPersonCharacter::FirstPersonMoveRight( float Delta )
 {
-	Move( m_pCameraComponent->GetLocalRight(), Delta );
+	Move( m_CameraComponent->GetLocalRight(), Delta );
 }

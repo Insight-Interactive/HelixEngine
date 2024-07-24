@@ -21,7 +21,6 @@ GP_PSInput main( GP_VSInput Input )
 
     Result.Position = mul( float4(Input.Position, 1.0f), WorldViewProjection );
 
-    Result.VertexColor = Input.Color;
     Result.UVs = Input.UVs;
     Result.Normal = Input.Normal;
 

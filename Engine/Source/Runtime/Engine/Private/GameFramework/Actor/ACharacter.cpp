@@ -14,12 +14,12 @@ ACharacter::ACharacter( FActorInitArgs& InitArgs )
 {
 	if (!InitArgs.bDisableCollision)
 	{
-		m_pCharacterBounds = AddComponent<HCapsuleColliderComponent>( "CharacterBounds" );
-		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
-		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
-		m_pCharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
+		m_CharacterBounds = AddComponent<HCapsuleColliderComponent>( "CharacterBounds" );
+		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
+		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
+		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
 
-		SetRootComponent( m_pCharacterBounds );
+		SetRootComponent( m_CharacterBounds );
 	}
 }
 

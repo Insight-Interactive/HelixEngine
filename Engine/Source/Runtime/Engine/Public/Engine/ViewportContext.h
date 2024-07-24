@@ -64,6 +64,7 @@ public:
 	bool IsFirstPressed( DigitalInput Key );
 	bool IsReleased( DigitalInput Key );
 
+	FVector2 GetMouseScreenPos();
 	float GetMouseMoveDeltaX();
 	float GetMouseMoveDeltaY();
 	// Lock the mouse to the screen center and hide it.
@@ -248,6 +249,11 @@ FORCEINLINE bool FViewportContext::IsFirstPressed( DigitalInput Key )
 FORCEINLINE bool FViewportContext::IsReleased( DigitalInput Key )
 {
 	return GetInputDispatcher()->GetInputSureyor().IsReleased( Key );
+}
+
+FORCEINLINE	FVector2 FViewportContext::GetMouseScreenPos()
+{
+	return GetInputDispatcher()->GetInputSureyor().GetMouseScreenPos();
 }
 
 FORCEINLINE float FViewportContext::GetMouseMoveDeltaX()

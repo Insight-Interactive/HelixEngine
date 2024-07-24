@@ -46,6 +46,7 @@ project ("Renderer")
 		-- Third Party 
 		heGetThirdPartyModule( "WinPixEventRuntime" ) .. "Include/",
 		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
+		heGetThirdPartyModule( "tinygltf" ),
 	}
 
 	links

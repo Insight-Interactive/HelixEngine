@@ -25,39 +25,6 @@ constexpr float HE_PIDIV4 = 0.785398163f;
 constexpr float HE_PIDIV180 = HE_PI / 180.f;
 constexpr float HE_180DIVPI = 180.f / HE_PI;
 
-namespace Math
-{
-    template <typename T>
-    inline T Clamp( const T& Value, const T& Min, const T& Max )
-    {
-        const T Val = Value < Min ? Min : Value;
-        return Val > Max ? Max : Val;
-    }
-
-    template <typename T>
-    inline T DegreesToRadians( const T& Degrees )
-    {
-        return Degrees * HE_PIDIV180;
-    }
-
-    template <typename T>
-    inline T RadiansToDegrees( const T& Radians )
-    {
-        return Radians * HE_180DIVPI;
-    }
-
-    template<typename T>
-    inline T Lerp( const T From, const T To, const T Delta )
-    {
-        return From * (T( 1 ) - Delta) + (To - Delta);
-    }
-
-    template<typename T>
-    T LerpForTime( T From, T To, T CurrentTime, T Time )
-    {
-        return From + ((To - From) * CurrentTime) / Time;
-    }
-}
 
 struct FAngles
 {
@@ -726,5 +693,66 @@ struct Plane : public XMFLOAT4
     static Plane FTransform(const Plane& plane, const FQuat& rotation) noexcept;
     // Input quaternion must be the inverse transpose of the transformation
 };
+
+namespace Math
+{
+    template <typename T>
+    inline T Min( T& Value, T& Min )
+    {
+        return Value < Min ? Value : Min;
+    }
+
+    template <typename T>
+    inline T Max( T& Value, T& Max )
+    {
+        return Value > Max ? Value : Max;
+    }
+
+    template <typename T>
+    inline T Clamp( const T& Value, const T& Min, const T& Max )
+    {
+        const T Val = Value < Min ? Min : Value;
+        return Val > Max ? Max : Val;
+    }
+
+    template <typename T>
+    inline T DegreesToRadians( const T& Degrees )
+    {
+        return Degrees * HE_PIDIV180;
+    }
+
+    template <typename T>
+    inline T RadiansToDegrees( const T& Radians )
+    {
+        return Radians * HE_180DIVPI;
+    }
+
+    template<typename T>
+    inline T Lerp( const T From, const T To, const T Delta )
+    {
+        return From * (T( 1 ) - Delta) + (To - Delta);
+    }
+
+    template<typename T>
+    inline T LerpForTime( T From, T To, T CurrentTime, T Time )
+    {
+        return From + ((To - From) * CurrentTime) / Time;
+    }
+
+    inline FVector3 WorldDirectionFromScreenPos( const FVector2 ScreenPos, const FVector2& WindowDims, const FMatrix& View, const FMatrix& Projection, float NearZ, float FarZ )
+    {
+        FVector3 Result;
+        DirectX::XMVECTOR MouseNear = DirectX::XMVectorSet( ScreenPos.x, ScreenPos.y, 0.f, 0.f );
+        DirectX::XMVECTOR MouseFar = DirectX::XMVectorSet( ScreenPos.x, ScreenPos.y, 1.f, 0.f );
+
+        DirectX::XMVECTOR UnprojectedNear = DirectX::XMVector3Unproject( MouseNear, 0.f, 0.f, WindowDims.x, WindowDims.y, NearZ, FarZ, Projection, View, DirectX::XMMatrixIdentity() );
+        DirectX::XMVECTOR UnprojectedFar = DirectX::XMVector3Unproject( MouseFar, 0.f, 0.f, WindowDims.x, WindowDims.y, NearZ, FarZ, Projection, View, DirectX::XMMatrixIdentity() );
+        DirectX::XMVECTOR Direction = DirectX::XMVector3Normalize( DirectX::XMVectorSubtract( UnprojectedFar, UnprojectedNear ) );
+
+        DirectX::XMStoreFloat3( &Result, Direction );
+
+        return Direction;
+    }
+}
 
 #include "MathCore.inl"

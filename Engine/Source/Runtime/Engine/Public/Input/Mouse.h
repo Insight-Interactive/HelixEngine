@@ -29,6 +29,7 @@ public:
 	float GetMoveDeltaX() const;
 	float GetMoveDeltaY() const;
 	FVector2 GetMoveDelta() const;
+	FVector2 GetPosition() const;
 	float GetVerticalScrollDelta() const;
 	float GetButtonStateByIndex( const uint8& Index ) const;
 
@@ -123,7 +124,7 @@ inline void FMouse::SetToScreenCenter()
 	m_ScreenCenter.x = rcClip.left + (WindowDims.x * 0.5f);
 	m_ScreenCenter.y = rcClip.top + (WindowDims.y * 0.5f);
 	::SetCursorPos( (int)m_ScreenCenter.x, (int)m_ScreenCenter.y );
-
+	
 #endif
 }
 
@@ -152,6 +153,15 @@ inline void FMouse::Hide() const
 inline FVector2 FMouse::GetMoveDelta() const
 {
 	return FVector2( m_MouseState.MoveDelta[kState_Current][kMouseDeltaX], m_MouseState.MoveDelta[kState_Current][kMouseDeltaY] );
+}
+
+inline FVector2 FMouse::GetPosition() const
+{
+#ifdef HE_WINDOWS_DESKTOP
+	POINT CursorPoint = {};
+	::GetCursorPos( &CursorPoint );
+	return FVector2( (float)CursorPoint.x, (float)CursorPoint.y );
+#endif 
 }
 
 inline float FMouse::GetVerticalScrollDelta() const

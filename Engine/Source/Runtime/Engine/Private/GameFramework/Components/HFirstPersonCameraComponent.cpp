@@ -19,10 +19,10 @@ HFirstPersonCameraComponent::~HFirstPersonCameraComponent()
 
 void HFirstPersonCameraComponent::LookUp( float Value )
 {
-	const float kXRotationClamp = Math::DegreesToRadians( 88.f );
+	const float kPitchRotationClamp = Math::DegreesToRadians( 88.f );
 
 	m_Rotation.x += Value * m_CameraPitchSpeedMultiplier * GEngine->GetDeltaTime();
-	m_Rotation.x = Math::Clamp( m_Rotation.x, -kXRotationClamp, kXRotationClamp );
+	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
 	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }
 

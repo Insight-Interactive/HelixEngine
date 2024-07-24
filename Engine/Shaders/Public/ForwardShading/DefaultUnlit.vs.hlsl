@@ -16,7 +16,6 @@ FP_PSInput main(FP_VSInput Input)
     Result.Position = mul(float4(Input.Position, 1.0f), WorldViewProjection);
     Result.WorldPos = mul(float4(Input.Position, 1.0f), kWorldMat).xyz;
 
-    Result.VertexColor = Input.Color;
     Result.UVs = Input.UVs;
 
     Result.Normal = normalize(mul(float4(Input.Normal, 0), kWorldMat)).xyz;

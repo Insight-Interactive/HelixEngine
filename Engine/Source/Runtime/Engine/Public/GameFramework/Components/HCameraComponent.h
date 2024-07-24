@@ -132,7 +132,7 @@ inline void HCameraComponent::SetFieldOfView( float Value )
 
 inline void HCameraComponent::BuildViewMatrix()
 {
-	const FVector3 WorldPos = GetWorldPosition();
+	const FVector3 WorldPos = GetWorldMatrix().Translation();
 	m_ViewProps.ViewMat = XMMatrixLookAtLH(
 		WorldPos, 
 		WorldPos + GetLocalForward(),

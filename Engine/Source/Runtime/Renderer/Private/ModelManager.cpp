@@ -40,33 +40,33 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	//
 	DataBlob FileData = FileSystem::ReadRawData( FilePath.c_str() );
 
-	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
 
 	// Process the mesh as an fbx file.
 	//
 	ofbx::IScene* pScene = ofbx::load(
-		pData,
+		(const ofbx::u8*)FileData.GetBufferPointer(),
 		(int)FileData.GetDataSize(),
 		(ofbx::u64)ofbx::LoadFlags::TRIANGULATE
 	);
 	if (pScene == NULL)
 	{
+		HE_ASSERT( false );
 		R_LOG( Error, TEXT( "An error occured when importing model! Error code: %s" ), ofbx::getError() );
 		return nullptr;
 	}
 
 	const ofbx::Mesh& Mesh = *pScene->getMesh( 0 ); // TODO: What about multiple meshes!?
-	std::vector<FVertex3D> Verticies; Verticies.reserve( Mesh.getGeometry()->getVertexCount() );
-	std::vector<uint32> Indices; Indices.reserve( Mesh.getGeometry()->getIndexCount() );
+	std::vector<FStaticVertex3D> Verticies( Mesh.getGeometry()->getVertexCount() );
+	std::vector<uint32> Indices( Mesh.getGeometry()->getIndexCount() );
 
-	const ofbx::Geometry& Geometry = *(Mesh.getGeometry());
+	const ofbx::Geometry& Geometry = *Mesh.getGeometry();
 
 	const ofbx::Vec3* RawVerticies = Geometry.getVertices();
 	int VertexCount = Geometry.getVertexCount();
 
 	for (int i = 0; i < VertexCount; ++i)
 	{
-		FVertex3D Vertex;
+		FStaticVertex3D& Vertex = Verticies[i];
 
 		Vertex.Position.x = (float)RawVerticies[i].x;
 		Vertex.Position.y = (float)RawVerticies[i].y;
@@ -96,13 +96,7 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 				Vertex.Tangent.y = (float)tans[i].y;
 				Vertex.Tangent.z = (float)tans[i].z;
 
-				FVector3 TempTangent( (float)tans[i].x, (float)tans[i].y, (float)tans[i].z );
-				FVector3 Normal( Vertex.Normal.x, Vertex.Normal.y, Vertex.Normal.z );
-				FVector3 BiTangent = Normal.Cross( TempTangent );
-
-				Vertex.BiTangent.x = BiTangent.x;
-				Vertex.BiTangent.y = BiTangent.y;
-				Vertex.BiTangent.z = BiTangent.z;
+				Vertex.BiTangent = Vertex.Normal.Cross( Vertex.Tangent );
 			}
 			else
 			{
@@ -112,18 +106,8 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 				Vertex.Tangent = FVector3( 0.0f, 0.0f, 0.0f );
 				Vertex.BiTangent = FVector3( 0.0f, 0.0f, 0.0f );
 			}
-
-			if (Geometry.getColors() != NULL)
-			{
-				const ofbx::Vec4* Colors = Geometry.getColors();
-				Vertex.Color.x = (float)Colors[0].x;
-				Vertex.Color.y = (float)Colors[0].y;
-				Vertex.Color.z = (float)Colors[0].z;
-				Vertex.Color.w = (float)Colors[0].w;
-			}
 		}
-
-		Verticies.push_back( Vertex );
+		
 	}
 
 	const int* RawFaceIndicies = Geometry.getFaceIndices();
@@ -137,13 +121,13 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 		if (idx < 0)
 			idx = -(idx + 1);
 
-		Indices.push_back( idx );
+		Indices[i] = idx;
 	}
 	// Create the mesh geometry, register it with the GPU and cache it.
 	StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
 	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
 	pMesh->Create(
-		Verticies.data(), (uint32)Verticies.size(),  sizeof(FVertex3D),
+		Verticies.data(), (uint32)Verticies.size(),  sizeof( FStaticVertex3D ),
 		Indices.data(), (uint32)Indices.size() * sizeof(uint32), (uint32)Indices.size()
 	);
 	pMesh->SetLoadCompleted( true );

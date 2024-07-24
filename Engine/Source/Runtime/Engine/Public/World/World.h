@@ -68,8 +68,9 @@ public:
 	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
-	ACharacter* GetPlayerCharacter( uint32 Index = 0 );
+	ACharacter* GetPlayerCharacter();
 
+	FVector2 GetMouseScreenPos();
 	float GetMouseMoveDeltaX();
 	float GetMouseMoveDeltaY();
 	bool IsPressed( DigitalInput Key );
@@ -209,7 +210,7 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 }
 
-FORCEINLINE ACharacter* HWorld::GetPlayerCharacter( uint32 Index )
+FORCEINLINE ACharacter* HWorld::GetPlayerCharacter()
 {
 	return m_pPlayerCharacter;
 }

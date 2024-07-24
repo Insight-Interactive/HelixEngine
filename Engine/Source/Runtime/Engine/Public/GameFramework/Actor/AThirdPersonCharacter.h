@@ -5,6 +5,7 @@
 
 
 class HCameraBoomComponent;
+class HStaticMeshComponent;
 
 HCLASS()
 class AThirdPersonCharacter : public ACharacter
@@ -21,9 +22,11 @@ private:
 	void ThirdPersonMoveForward( float Delta );
 	void ThirdPersonMoveRight( float Delta );
 	void AimDownSight();
+	void FireWeapon();
 
 private:
-	HCameraBoomComponent* m_pCameraBoom;
+	HCameraBoomComponent* m_CameraBoom;
+	HStaticMeshComponent* m_Body;
 
 	float m_ADSFOVDegrees;
 	float m_CameraFOV;

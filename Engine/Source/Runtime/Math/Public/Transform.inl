@@ -51,8 +51,7 @@ FORCEINLINE void FTransform::Translate(const float& X, const float& Y, const flo
 
 FORCEINLINE void FTransform::Rotate(const FVector3& Euler )
 {
-	FQuat RotationDelta = FQuat::CreateFromYawPitchRoll( Euler.y, Euler.x, Euler.z );
-	m_Rotation *= RotationDelta;
+	m_Rotation *= FQuat::CreateFromYawPitchRoll( Euler.y, Euler.x, Euler.z );
 }
 
 FORCEINLINE void FTransform::Rotate(const float& Pitch, const float& Yaw, const float& Roll)

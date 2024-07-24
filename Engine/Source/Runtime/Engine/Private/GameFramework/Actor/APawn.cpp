@@ -13,9 +13,9 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_SprintSpeed(kDefaultSprintSpeed)
 	, m_Velocity(0.f)
 	, m_bIsSprinting(false)
-	, m_pController(NULL)
+	, m_Controller(NULL)
 {
-	m_pController = AddComponent<HControllerComponent>( "Controller" );
+	m_Controller = AddComponent<HControllerComponent>( "Controller" );
 }
 
 APawn::~APawn()
@@ -24,31 +24,31 @@ APawn::~APawn()
 
 void APawn::Move(const FVector3& Direction, const float Value)
 {
-	if (m_pRootComponent != nullptr)
+	if (m_RootComponent != nullptr)
 	{
 		m_Velocity = m_MovementSpeed * Value * GEngine->GetDeltaTime();
-		FVector3 Pos = m_pRootComponent->GetPosition();
+		FVector3 Pos = m_RootComponent->GetPosition();
 		Pos += Direction * m_Velocity;
-		m_pRootComponent->SetPosition(Pos);
+		m_RootComponent->SetPosition(Pos);
 	}
 }
 
 void APawn::MoveForward(float Value)
 {
-	if (m_pRootComponent != nullptr)
-		Move(m_pRootComponent->GetLocalForward(), Value);
+	if (m_RootComponent != nullptr)
+		Move( m_RootComponent->GetLocalForward(), Value);
 }
 
 void APawn::MoveRight(float Value)
 {
-	if (m_pRootComponent != nullptr)
-		Move(m_pRootComponent->GetLocalRight(), Value);
+	if (m_RootComponent != nullptr)
+		Move( m_RootComponent->GetLocalRight(), Value);
 }
 
 void APawn::MoveUp(float Value)
 {
-	if (m_pRootComponent != nullptr)
-		Move(m_pRootComponent->GetLocalUp(), Value);
+	if (m_RootComponent != nullptr)
+		Move( m_RootComponent->GetLocalUp(), Value);
 }
 
 void APawn::Sprint()

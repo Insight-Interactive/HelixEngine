@@ -3,13 +3,12 @@
 
 #include "MathCore.h"
 
-struct FVertex3D
+struct FStaticVertex3D
 {
 	FVector3 Position;
 	FVector3 Normal;
 	FVector3 Tangent;
 	FVector3 BiTangent;
-	FVector4 Color;
 	FVector2 UV0;
 };
 

@@ -86,7 +86,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 	DataBlob FileData = FileSystem::ReadRawData( Filename );
 
 	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
-	std::vector<FVertex3D> Verticies;
+	std::vector<FStaticVertex3D> Verticies;
 	std::vector<uint32> Indices;
 
 	// Process the mesh as an fbx file.

@@ -17,9 +17,8 @@ public:
 	inline HCameraComponent* GetCameraComponent();
 
 protected:
-	HCameraComponent* m_pCameraComponent;
-	HCapsuleColliderComponent* m_pCharacterBounds;
-
+	HCameraComponent* m_CameraComponent;
+	HCapsuleColliderComponent* m_CharacterBounds;
 };
 
 
@@ -29,5 +28,5 @@ protected:
 
 HCameraComponent* ACharacter::GetCameraComponent()
 {
-	return m_pCameraComponent;
+	return m_CameraComponent;
 }

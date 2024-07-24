@@ -381,13 +381,6 @@ void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )
 
 bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults /*= nullptr*/, std::vector<HColliderComponent*>* IgnoreActors/* = nullptr*/ )
 {
-
-	/*FDebugLineRenderInfo LineInfo = {};
-	LineInfo.Start = Origin;
-	LineInfo.End = Origin + UnitDirection * Distance;
-	LineInfo.Color = FColor::BlueOpaque;
-	LineInfo.Lifetime = 20.f;
-	DrawDebugLine( LineInfo );*/
 	std::vector<HRigidBody*> IgnoreRBs;
 	if (IgnoreActors)
 	{
@@ -401,17 +394,13 @@ bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, flo
 		}
 	}
 
-	bool Hit = m_PhysicsScene.RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
-	/*if (Hit)
-	{
-		FDebugLineRenderInfo HitLineInfo = {};
-		HitLineInfo.Start = HitResults.HitPos;
-		HitLineInfo.End = LineInfo.End;
-		HitLineInfo.Color = FColor::RedOpaque;
-		HitLineInfo.Lifetime = LineInfo.Lifetime;
-		DrawDebugLine( HitLineInfo );
-	}*/
-	return Hit;
+	return m_PhysicsScene.RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
+}
+
+FVector2 HWorld::GetMouseScreenPos()
+{
+	HE_ASSERT( m_pRenderingViewport != nullptr );
+	return m_pRenderingViewport->GetMouseScreenPos();
 }
 
 float HWorld::GetMouseMoveDeltaX()

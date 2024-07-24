@@ -22,7 +22,7 @@ public:
 	{
 		Super::BeginPlay();
 
-		SetupController(*m_pController);
+		SetupController(*m_Controller);
 	}
 
 	void MoveForward(float Value);
@@ -50,7 +50,7 @@ protected:
 	float m_Velocity;
 	bool m_bIsSprinting;
 
-	HControllerComponent* m_pController;
+	HControllerComponent* m_Controller;
 
 };
 

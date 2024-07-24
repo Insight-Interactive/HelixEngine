@@ -75,9 +75,9 @@ protected:
 
 protected:
 	std::vector<HActorComponent*> m_Components;
-	HSceneComponent* m_pRootComponent;
+	HSceneComponent* m_RootComponent;
 
-	HWorld* m_pOwningWorld;
+	HWorld* m_OwningWorld;
 
 	LuaScript m_Script;
 	bool m_IsDynamicInstance;
@@ -125,22 +125,22 @@ FORCEINLINE HActorComponent* AActor::GetComponentByGuid(const FGUID& Guid)
 
 FORCEINLINE HWorld* AActor::GetWorld()
 {
-	return m_pOwningWorld;
+	return m_OwningWorld;
 }
 
 FORCEINLINE void AActor::SetOwningWorld( HWorld* pWorld )
 {
-	m_pOwningWorld = pWorld;
+	m_OwningWorld = pWorld;
 }
 
 FORCEINLINE void AActor::SetRootComponent(HSceneComponent* pRoot)
 {
-	m_pRootComponent = pRoot;
+	m_RootComponent = pRoot;
 }
 
 FORCEINLINE HSceneComponent* AActor::GetRootComponent()
 {
-	return m_pRootComponent;
+	return m_RootComponent;
 }
 
 FORCEINLINE LuaScript& AActor::GetScript()

@@ -76,6 +76,7 @@ project ("Engine")
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),
+		heGetThirdPartyModule( "tinygltf" ),
 	}
 
 	links   
