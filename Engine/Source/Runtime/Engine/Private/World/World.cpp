@@ -49,7 +49,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 
 	HCapsuleColliderComponent* pCapsule = m_pPlayerCharacter->GetComponent<HCapsuleColliderComponent>();
 	pCapsule->SetPosition( m_pPlayerCharacter->GetRootComponent()->GetPosition() + FVector3(0.f, pCapsule->GetHeight(), 0.f));
-	pCapsule->SetRotation( 0.f, 0.f, Math::DegreesToRadians(90.f) );
+	//pCapsule->SetRotation( 0.f, 0.f, Math::DegreesToRadians(90.f) );
 	
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
@@ -167,9 +167,9 @@ void HWorld::Tick( float DeltaTime )
 	SecondTimer += GEngine->GetDeltaTimeUnscaled();
 	if (SecondTimer > 1.f)
 	{
-		WString Label = L"FPS: " + std::to_wstring( (int)FPS );
-		Label += L" (" + std::to_wstring( GEngine->GetDeltaTimeUnscaled() );
-		Label += +L" ms)";
+		WChar Label[64];
+		ZeroMemory( Label, sizeof( Label ) );
+		swprintf_s( Label, L"FPS: %f (%fms)", FPS, GEngine->GetDeltaTimeUnscaled() );
 		m_FPSCounter.SetText( Label );
 		FPS = 0.f;
 		SecondTimer = 0.f;
@@ -360,15 +360,17 @@ void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsSta
 		IsStatic, FG_WorldGeometry );
 }
 
-void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic, bool IsTrigger /*= false*/ )
+void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic /*= false*/, bool IsTrigger /*= false*/, bool IsKinematic /*= false*/ )
 {
+	FQuat DefaultRotation = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::HalfPi );
+
 	m_PhysicsScene.CreateCapsule( 
 		pCapsule->GetWorldPosition(), 
-		pCapsule->GetRotation(),
+		DefaultRotation,
 		(HCapsuleRigidBody&)pCapsule->GetRigidBody(), 
 		IsTrigger, 
 		(PhysicsCallbackHandler*)pCapsule,
-		false,
+		IsKinematic,
 		10.f,
 		IsStatic,
 		FG_Player, FG_WorldGeometry );

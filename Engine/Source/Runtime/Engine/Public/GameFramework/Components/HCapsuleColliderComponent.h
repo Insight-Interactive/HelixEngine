@@ -35,7 +35,6 @@ protected:
 private:
 	void RegisterCollider();
 	void UnRegisterCollider();
-	void UpdateDebugRotation( float AngleOffset = 90.f );
 
 private:
 	HCapsuleRigidBody m_RigidBody;
@@ -59,14 +58,4 @@ FORCEINLINE	HRigidBody& HCapsuleColliderComponent::GetRigidBody()
 FORCEINLINE	const HRigidBody& HCapsuleColliderComponent::GetRigidBody() const
 {
 	return m_RigidBody;
-}
-
-FORCEINLINE void HCapsuleColliderComponent::UpdateDebugRotation( float AngleOffset /*= 90.f*/ )
-{
-#if HE_DEBUG
-	// Physx default the capsule collider 90 degrees around the Z-axis. Add 90 degrees here to update the debug capsule mesh.
-	const FQuat Rot = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::DegreesToRadians( AngleOffset ) );
-	FQuat& RotationOffset = Rot * GetRigidBody().GetSimulatedRotation();
-	HSceneComponent::SetRotation( RotationOffset );
-#endif
 }

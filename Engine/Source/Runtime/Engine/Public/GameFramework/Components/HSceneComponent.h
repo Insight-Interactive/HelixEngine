@@ -64,7 +64,6 @@ protected:
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
-private:
 	HSceneComponent*	m_pParent;
 	FTransform			m_Transform;
 	bool				m_IsStatic;
@@ -78,12 +77,10 @@ private:
 
 FORCEINLINE FVector3 HSceneComponent::GetWorldPosition() const
 {
-	FVector3 Position;
-	FVector3 Scale;
-	FQuat Rotation;
-	GetWorldMatrix().Decompose( Scale, Rotation, Position );
-	
-	return Position;
+	if (m_pParent)
+		return m_pParent->GetWorldPosition() + GetPosition();
+	else
+		return GetPosition();
 }
 
 FORCEINLINE FVector3 HSceneComponent::GetPosition() const

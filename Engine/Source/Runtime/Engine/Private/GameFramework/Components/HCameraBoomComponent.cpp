@@ -47,7 +47,7 @@ void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	SetRotation( RotationQuat );
 	
-	RotationQuat = FQuat::CreateFromYawPitchRoll( -m_Rotation.y, -m_Rotation.x, m_Rotation.z );
+	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	m_Camera->SetRotation( RotationQuat );
 }
 
@@ -57,7 +57,7 @@ void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	SetRotation( RotationQuat );
 	
-	RotationQuat = FQuat::CreateFromYawPitchRoll( -m_Rotation.y, -m_Rotation.x, m_Rotation.z );
+	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	m_Camera->SetRotation( RotationQuat );
 }
 
@@ -65,6 +65,6 @@ void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 {
 	m_Camera = Camera;
 	m_Camera->AttachTo( this );
-	m_Camera->SetPosition( -2.f, -1.f, m_CameraDistance );
+	m_Camera->SetPosition( 2.f, 1.f, m_CameraDistance );
 	m_Camera->SetRotation( FVector3::Zero );
 }

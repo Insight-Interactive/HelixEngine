@@ -2,9 +2,9 @@
 #include "EnginePCH.h"
 
 #include "GameFramework/Actor/APawn.h"
-#include "World/World.h"
-#include "GameFramework/Components/HControllerComponent.h"
+
 #include "Engine/Engine.h"
+#include "GameFramework/Components/HControllerComponent.h"
 
 
 APawn::APawn( FActorInitArgs& InitArgs )

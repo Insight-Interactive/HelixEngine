@@ -25,6 +25,7 @@ public:
 		MA_Z,
 	};
 public:
+	void SetKinematicTarget( FTransform& Target );
 	void SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation );
 	void SetSimulatedPosition( const FVector3& NewPosition );
 	void SetSimulatedRotation( const FQuat& NewRotation );
@@ -47,7 +48,7 @@ public:
 
 	void ToggleConstrainAxis( EMovementAxis Axis, bool Locked );
 
-	FTransform GetSimulationWorldTransform();
+	void GetSimulationWorldTransform( FTransform& Result );
 
 	FVector3 GetLinearVelocity() const;
 	float GetAngularDamping() const;

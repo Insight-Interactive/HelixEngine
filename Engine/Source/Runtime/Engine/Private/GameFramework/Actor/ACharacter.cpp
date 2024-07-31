@@ -4,6 +4,7 @@
 #include "GameFramework/Actor/ACharacter.h"
 
 #include "World/World.h"
+#include "Engine/Engine.h"
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HControllerComponent.h"
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
@@ -15,9 +16,8 @@ ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	if (!InitArgs.bDisableCollision)
 	{
 		m_CharacterBounds = AddComponent<HCapsuleColliderComponent>( "CharacterBounds" );
-		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_X, true );
-		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Y, true );
-		m_CharacterBounds->GetRigidBody().ToggleConstrainAxis( HRigidBody::MA_Z, true );
+		HRigidBody& rb = m_CharacterBounds->GetRigidBody();
+		rb.SetIsKinematic( true );
 
 		SetRootComponent( m_CharacterBounds );
 	}

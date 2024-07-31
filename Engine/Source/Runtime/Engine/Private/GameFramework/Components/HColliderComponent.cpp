@@ -18,13 +18,17 @@ HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
 	, m_IsStatic ( false )
 	, m_SimulationEnabled( true )
 {
+#if HE_DEBUG
 	m_MeshWorldCB.Create( L"[Collider Component] World CB" );
+#endif
 }
 
 HColliderComponent::~HColliderComponent()
 {
+#if HE_DEBUG
 	m_MeshWorldCB.Destroy();
 	HE_SAFE_DELETE_PTR( m_Material );
+#endif
 }
 
 void HColliderComponent::BeginPlay()
@@ -45,21 +49,42 @@ void HColliderComponent::Tick( float DeltaTime )
 		return;
 	
 	// Fetch the results of the simulation and apply them to the game.
-	FTransform SimTransform = rb.GetSimulationWorldTransform();
-	Super::SetPosition( SimTransform.GetPosition() );
-	Super::SetRotation( SimTransform.GetRotation() );
+	rb.GetSimulationWorldTransform( m_Transform );
 }
 
 void HColliderComponent::SetPosition( const FVector3& NewPos )
 {
 	Super::SetPosition( NewPos );
-	GetRigidBody().SetSimulatedPosition( NewPos );
+
+	HRigidBody& rb = GetRigidBody();
+	
+
+	if (rb.GetIsKinematic())
+	{
+		FTransform sim;
+		sim.SetPosition( NewPos );
+		sim.SetRotation( GetRotation() );
+		rb.SetKinematicTarget( sim );
+	}
+	else
+		rb.SetSimulatedPosition( NewPos );
 }
 
 void HColliderComponent::SetRotation( const FQuat& NewRotation )
 {
 	Super::SetRotation( NewRotation );
-	GetRigidBody().SetSimulatedRotation( NewRotation );
+	
+	HRigidBody& rb = GetRigidBody();
+	
+	if (rb.GetIsKinematic())
+	{
+		FTransform sim;
+		sim.SetPosition( GetPosition() );
+		sim.SetRotation( NewRotation );
+		rb.SetKinematicTarget( sim );
+	}
+	else
+		rb.SetSimulatedRotation( NewRotation );
 }
 
 void HColliderComponent::SetScale( const FVector3& NewScale )
@@ -71,7 +96,7 @@ void HColliderComponent::SetScale( const FVector3& NewScale )
 void HColliderComponent::SetPosition( const float& X, const float& Y, const float& Z )
 {
 	Super::SetPosition( X, Y, Z );
-	GetRigidBody().SetSimulatedPosition( { X, Y, Z } );
+	SetPosition( { X, Y, Z } );
 }
 
 void HColliderComponent::SetRotation( const float& Pitch, const float& Yaw, const float& Roll )
@@ -81,7 +106,7 @@ void HColliderComponent::SetRotation( const float& Pitch, const float& Yaw, cons
 	FQuat DeltaYaw = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
 	FQuat DeltaRoll = FQuat::CreateFromAxisAngle( FVector3::Forward, Roll );
 	//FQuat Rotation = FQuat::CreateFromYawPitchRoll( Yaw, Pitch, Roll );
-	GetRigidBody().SetSimulatedRotation( DeltaPitch * DeltaYaw * DeltaRoll );
+	SetRotation( DeltaPitch * DeltaYaw * DeltaRoll );
 }
 
 void HColliderComponent::SetScale( const float& X, const float& Y, const float& Z )
@@ -132,7 +157,6 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	{
 		// Set the world buffer.
 		m_MeshWorldCB->kWorldMat = GetLocalMatrix().Transpose();
-
 		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 

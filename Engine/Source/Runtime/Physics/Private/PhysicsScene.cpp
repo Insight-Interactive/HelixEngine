@@ -307,9 +307,11 @@ void HPhysicsScene::CreateCube( const FVector3& StartPos, const FQuat& StartRota
 void HPhysicsScene::CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 {
 	HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
+	
+	FQuat DefaultRotation = FQuat::CreateFromAxisAngle( FVector3::Forward, PxHalfPi );
 
 	PxCapsuleGeometry CapsuleGeo( outCapsule.GetRadius(), outCapsule.GetHalfHeight() );
-	InitRigidBody( outCapsule, CapsuleGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
+	InitRigidBody( outCapsule, CapsuleGeo, StartPos, DefaultRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
 }
 
 void HPhysicsScene::InitRigidBody( HRigidBody& outRB, const PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )

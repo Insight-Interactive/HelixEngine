@@ -61,7 +61,7 @@ public:
 	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool IsStatic = false, bool IsTrigger = false );
 	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool IsStatic = false, bool IsTrigger = false );
 	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsStatic = false, bool IsTrigger = false );
-	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic = false, bool IsTrigger = false );
+	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic = false, bool IsTrigger = false, bool IsKinematic = false );
 	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
 	FUIPanel& GetDebugUIPanel();

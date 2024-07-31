@@ -16,14 +16,6 @@ struct FQuat;
 struct Plane;
 
 
-constexpr float HE_PI = 3.141592654f;
-constexpr float HE_2PI = 6.283185307f;
-constexpr float HE_1DIVPI = 0.318309886f;
-constexpr float HE_1DIV2PI = 0.159154943f;
-constexpr float HE_PIDIV2 = 1.570796327f;
-constexpr float HE_PIDIV4 = 0.785398163f;
-constexpr float HE_PIDIV180 = HE_PI / 180.f;
-constexpr float HE_180DIVPI = 180.f / HE_PI;
 
 
 struct FAngles
@@ -696,6 +688,15 @@ struct Plane : public XMFLOAT4
 
 namespace Math
 {
+    static const float Pi = float( 3.141592653589793 );
+    static const float HalfPi = float( 1.57079632679489661923 );
+    static const float TwoPi = float( 6.28318530717958647692 );
+    static const float InvPi = float( 0.31830988618379067154 );
+    static const float InvTwoPi = float( 0.15915494309189533577 );
+    static const float PiDivTwo = float( 1.57079632679489661923 );
+    static const float PiDivFour = float( 0.78539816339744830962 );
+
+
     template <typename T>
     inline T Min( T& Value, T& Min )
     {
@@ -718,13 +719,13 @@ namespace Math
     template <typename T>
     inline T DegreesToRadians( const T& Degrees )
     {
-        return Degrees * HE_PIDIV180;
+        return Degrees * (Pi / 180.f);
     }
 
     template <typename T>
     inline T RadiansToDegrees( const T& Radians )
     {
-        return Radians * HE_180DIVPI;
+        return Radians * (180.f / Pi);
     }
 
     template<typename T>

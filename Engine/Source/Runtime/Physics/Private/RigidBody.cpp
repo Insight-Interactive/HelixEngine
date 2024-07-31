@@ -6,7 +6,7 @@
 
 using namespace physx;
 
-
+  
 HRigidBody::HRigidBody()
 	: m_pRigidActor( nullptr )
 	, m_pPhysicsMaterial( nullptr )
@@ -25,6 +25,23 @@ void HRigidBody::Reset()
 		m_pRigidActor = nullptr;
 		m_pPhysicsMaterial->release();
 		m_pPhysicsMaterial = nullptr;
+	}
+}
+
+void HRigidBody::SetKinematicTarget( FTransform& Target )
+{
+	if (!m_pRigidActor)
+		return;
+	
+	if (PxRigidDynamic* pDynamic = m_pRigidActor->is<PxRigidDynamic>())
+	{
+		FVector3 Pos = Target.GetPosition();
+		FQuat Rot = Target.GetRotation();
+		PxTransform Transform(
+			PxVec3( Pos.x, Pos.y, Pos.z ),
+			PxQuat( Rot.x, Rot.y, Rot.z, Rot.w )
+		);
+		pDynamic->setKinematicTarget( Transform );
 	}
 }
 
@@ -77,16 +94,14 @@ FQuat HRigidBody::GetSimulatedRotation() const
 	return FQuat( Transform.q.x, Transform.q.y, Transform.q.z, Transform.q.w );
 }
 
-FTransform HRigidBody::GetSimulationWorldTransform()
+void HRigidBody::GetSimulationWorldTransform( FTransform& Result )
 {
 	if (!m_pRigidActor)
-		return FTransform();
+		return;
 	const PxTransform Transform = m_pRigidActor->getGlobalPose();
 	
-	FTransform Return;
-	Return.SetPosition( Transform.p.x, Transform.p.y, Transform.p.z );
-	Return.SetRotation( FQuat( Transform.q.x, Transform.q.y,Transform.q.z, Transform.q.w ) );
-	return Return;
+	Result.SetPosition( Transform.p.x, Transform.p.y, Transform.p.z );
+	Result.SetRotation( FQuat( Transform.q.x, Transform.q.y,Transform.q.z, Transform.q.w ) );
 }
 
 float HRigidBody::GetDensity() const

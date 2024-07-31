@@ -171,7 +171,7 @@ FORCEINLINE void FTransform::LookAt(const FVector3& Target)
 	if (Direction.x != 0.0f)
 		Yaw = atanf( Direction.x / Direction.z );
 	if (Direction.z > 0)
-		Yaw += HE_PI;
+		Yaw += Math::Pi;
 
 	FQuat PitchDelta = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
 	FQuat YawDelta = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
@@ -201,6 +201,6 @@ FORCEINLINE FMatrix FTransform::GetRotationMatrix() const
 
 FORCEINLINE FMatrix FTransform::GetScaleMatrix() const 
 { 
-	return DirectX::XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
+	return DirectX::XMMatrixScalingFromVector( m_Scale );
 }
 

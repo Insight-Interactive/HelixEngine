@@ -26,10 +26,10 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 
 	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
 	m_Body->AttachTo( m_RootComponent );
-	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule.fbx" ) );
+	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule01.fbx" ) );
 	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
 
-	m_CharacterBounds->SetDrawEnabled( false );
+	m_CharacterBounds->SetDrawEnabled( true );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -60,7 +60,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Super::SetupController( Controller );
 
 	// Setup event callbacks for movement.
-	//
+	
 	// Locamotion
 	Controller.BindAxis( "MoveForward", this, &AThirdPersonCharacter::ThirdPersonMoveForward );
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
@@ -70,6 +70,8 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	// Camera
 	Controller.BindAxis( "LookUp", m_CameraBoom, &HCameraBoomComponent::UpdateCameraPitch );
 	Controller.BindAxis( "LookRight", m_CameraBoom, &HCameraBoomComponent::UpdateCameraYaw );
+
+	// Action
 	Controller.BindAction( "AimDownSight", IE_Pressed, this, &AThirdPersonCharacter::AimDownSight );
 	Controller.BindAction( "AimDownSight", IE_Released, this, &AThirdPersonCharacter::AimDownSight );
 	Controller.BindAction( "FireWeapon", IE_Held, this, &AThirdPersonCharacter::FireWeapon );

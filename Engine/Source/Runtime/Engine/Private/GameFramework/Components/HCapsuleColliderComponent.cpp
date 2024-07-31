@@ -27,7 +27,6 @@ void HCapsuleColliderComponent::OnCreate()
 	SetRadiusAndHalfHeight( 5.f, 5.f );
 
 	m_RigidBody.DisableSimulation();
-	UpdateDebugRotation();
 }
 
 void HCapsuleColliderComponent::OnDestroy()
@@ -39,8 +38,6 @@ void HCapsuleColliderComponent::OnDestroy()
 
 void HCapsuleColliderComponent::Render( FCommandContext& GfxContext ) 
 {
-	UpdateDebugRotation();
-
 	Super::Render( GfxContext );
 }
 
