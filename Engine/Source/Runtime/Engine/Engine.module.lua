@@ -73,6 +73,11 @@ project ("Engine")
 		heGetModulePublicDir( "Scripting" ),
 
 		-- Third Party
+		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/include/",
+		heGetThirdPartyModule( "PhysX-4.1" ) .. "pxshared/include/",
+		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/foundation/include",
+		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/physxextensions/src",
+		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/common/src",
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),

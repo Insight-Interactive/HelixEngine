@@ -28,13 +28,6 @@ void HSphereColliderComponent::OnCreate()
 	m_RigidBody.DisableSimulation();
 }
 
-void HSphereColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnRegisterCollider();
-}
-
 void HSphereColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( m_RigidBody.m_Radius ) );
@@ -64,10 +57,13 @@ void HSphereColliderComponent::SetRadius( float NewRadius )
 
 void HSphereColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddSphereColliderComponent( this, m_IsStatic, GetIsTrigger() );
-}
-
-void HSphereColliderComponent::UnRegisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
+	Physics::CreateSphere(
+		GetWorldPosition(),
+		GetRotation(),
+		(HSphereRigidBody&)GetRigidBody(),
+		GetIsTrigger(),
+		(PhysicsCallbackHandler*)this,
+		false,
+		10.f,
+		m_IsStatic, FG_WorldGeometry );
 }

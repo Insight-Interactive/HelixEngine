@@ -5,83 +5,14 @@
 #include "CriticalSection.h"
 
 
-enum EPhysicsEvent
-{
-	// Invalid event.
-	PE_Invalid,
-	// Pause the entire simulation.
-	PE_PauseSimulation,
-	// Unpause the entire simulation.
-	PE_UnPauseSimulation,
-	// Set the interval at which the scene is steped through time.
-	PE_SetSimulationStepRate,
-	// Request the scene to begin simulating.
-	PE_TickScene,
-	
-	// Add a sphere physics actor to the scene.
-	PE_AddSphereActor,
-	// Add a plane physics actor to the scene.
-	PE_AddPlaneActor,
-	// Add a cube physics actor to the scene.
-	PE_AddCubeActor,
-	// Add a capsule physics actor to the scene.
-	PE_AddCapsuleActor,
-	// Remove a physics actor from the scene.
-	PE_RemoveActor,
-	// Flsuh all actors from the scene.
-	PE_FlushScene,
-};
-
-struct PHYSICS_API PhysicsEventPacket
-{
-	PhysicsEventPacket()
-		: EventType( PE_Invalid )
-		, pUserData( nullptr ) {}
-	EPhysicsEvent EventType;
-	void* pUserData;
-};
-
-class PHYSICS_API PhysicsEventQueue
-{
-public:
-	PhysicsEventQueue() 
-	{
-	}
-	~PhysicsEventQueue() 
-	{
-	}
-
-	FORCEINLINE void PushEvent( PhysicsEventPacket& Event )
-	{
-		m_Queue.push( Event );
-	}
-
-	FORCEINLINE PhysicsEventPacket PopFront()
-	{
-		PhysicsEventPacket Front = m_Queue.front();
-		m_Queue.pop();
-		return Front;
-	}
-
-	FORCEINLINE std::queue<PhysicsEventPacket>& GetQueue()
-	{
-		return m_Queue;
-	}
-
-	FORCEINLINE size_t GetNumEvents() const
-	{
-		return m_Queue.size();
-	}
-
-private:
-	std::queue<PhysicsEventPacket> m_Queue;
-
-};
 
 namespace physx
 {
 	class PxScene;
 	class PxGeometry;
+	class PxMaterial;
+	class PxCapsuleController;
+	class PxControllerDesc;
 }
 
 class HRigidBody;
@@ -113,16 +44,14 @@ enum EFilterGroup
 	FG_World			= FG_Player | FG_Character | FG_WorldGeometry
 };
 
-class PHYSICS_API HPhysicsScene
+namespace Physics
 {
-private:
 	struct DynamicColliderInitParams
 	{
 		FVector3 StartPos;
 		FQuat StartRotation;
 		bool IsKinematic;
 	};
-public:
 	template <typename RigidBodyType>
 	struct RigidActorAddDesc
 	{
@@ -140,20 +69,15 @@ public:
 		bool IsTrigger;
 	};
 
-public:
-	HPhysicsScene();
-	~HPhysicsScene();
+	bool IsValid();
 
-	bool IsValid() const;
-
-	void Setup( HPhysicsContext& PhysicsContext );
-	void Teardown();
+	void Initialize();
+	void UnInitialize();
+	// Steps the physics simulation through time.
 	void Tick( float DeltaTime, float StepRateScale );
 
-	void ProcessEventQueue();
-	// Steps the physics simulation through time.
-	bool IsSimulationFinished() const;
-	bool IsSimulationPaused() const;
+	bool IsSimulationFinished();
+	bool IsSimulationPaused();
 
 	void CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 	void CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
@@ -161,43 +85,20 @@ public:
 	void CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 
 	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors );
-	 
-	void RequestPauseSimulation();
-	void RequestUnPauseSimulation();
-	void RequestSetStepRate( float NewStepRate );
-	void RequestActorRemove( HRigidBody& RigidBody );
-	void RequestSceneFlush();
-	void RequestTick();
+	
+	physx::PxCapsuleController* CreateCapsuleController( const physx::PxControllerDesc& Desc );
+	physx::PxMaterial* CreateDefaultMaterial();
+	physx::PxScene* GetScene();
+
+	void PauseSimulation();
+	void ResumeSimulation();
 
 	// Blocks the thread and waits for the simulation to finish before proceeding.
-	void WaittillSimulationFinished() const;
+	void WaittillSimulationFinished();
 	// Blocks the thread and waits until the simulation is paused next.
-	void WaittillSimulationPaused() const;
+	void WaittillSimulationPaused();
 	void RemoveActor( HRigidBody& Collider );
 
 
-private:
-	void CreateInfinitePlaneInternal( HInfinitePlaneRigidBody& outPlane, bool IsTrigger );
-
-	void InitRigidBody( HRigidBody& outRB, const physx::PxGeometry& Geo, const FVector3& StartPos, const FQuat& StartRotation, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup);
-
-	void FlushInternal();
-	
-protected:
-	HPhysicsContext* m_pOwningContextRef;
-
-	physx::PxScene* m_pScene;
-	float m_SimulationStepRate;
-	FFlag m_IsSimulationPaused;
-	FFlag m_IsSimulating;
-	float m_StepAccumulator;
-
-	PhysicsEventQueue m_EventQueue;
 
 };
-
-// 
-// Inline function implementations
-//
-
-

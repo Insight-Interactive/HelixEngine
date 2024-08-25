@@ -6,7 +6,7 @@
 #include "World/CameraManager.h"
 #include "World/Scene.h"
 #include "World/Level.h"
-#include "PhysicsScene.h"
+#include "Physics.h"
 #include "UI/Panel.h"
 #include "UI/Label.h"
 #include "Input/InputEnums.h"
@@ -58,14 +58,8 @@ public:
 
 	void AddPanel( FUIPanel* pPanel );
 	void RemovePanel( FUIPanel* pPanel );
-	void AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool IsStatic = false, bool IsTrigger = false );
-	void AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool IsStatic = false, bool IsTrigger = false );
-	void AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsStatic = false, bool IsTrigger = false );
-	void AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic = false, bool IsTrigger = false, bool IsKinematic = false );
-	void RemoveColliderComponent( HColliderComponent* pSphere );
 	HScene& GetScene();
 	FUIPanel& GetDebugUIPanel();
-	HPhysicsScene& GetPhysicsScene();
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
 	ACharacter* GetPlayerCharacter();
@@ -85,9 +79,6 @@ public:
 	ActorType* CreateDynamicActorinstance( const char* Name );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
-
-	void PausePhysics();
-	void UnPausePhysics();
 
 	bool Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults = nullptr, std::vector<HColliderComponent*>* IgnoreActors = nullptr );
 
@@ -121,7 +112,6 @@ protected:
 
 	HLevel m_Level;
 	HScene m_Scene;
-	HPhysicsScene m_PhysicsScene;
 
 	ACharacter* m_pPlayerCharacter;
 	FPath m_LevelFilepath;
@@ -136,11 +126,6 @@ protected:
 //
 // Inline function implementations
 //
-
-FORCEINLINE HPhysicsScene& HWorld::GetPhysicsScene()
-{
-	return m_PhysicsScene;
-}
 
 FORCEINLINE HScene& HWorld::GetScene()
 {

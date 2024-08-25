@@ -31,13 +31,6 @@ void HCubeColliderComponent::OnCreate()
 	m_RigidBody.DisableSimulation();
 }
 
-void HCubeColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnregisterCollider();
-}
-
 void HCubeColliderComponent::OnEnter( HColliderComponent* Other )
 {
 	HE_LOG( Log, TEXT(  "------ %s Entered %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
@@ -83,12 +76,15 @@ void HCubeColliderComponent::Deserialize( const JsonUtility::ReadContext& Value 
 
 void HCubeColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddCubeColliderComponent( this, m_IsStatic, GetIsTrigger() );
-}
-
-void HCubeColliderComponent::UnregisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
+	Physics::CreateCube(
+		GetWorldPosition(),
+		GetRotation(),
+		(HCubeRigidBody&)GetRigidBody(),
+		GetIsTrigger(),
+		(PhysicsCallbackHandler*)this,
+		false,
+		10.f,
+		m_IsStatic, FG_WorldGeometry );
 }
 
 void HCubeColliderComponent::SetHalfWidth( float NewHalfWidth )

@@ -3,7 +3,7 @@
 #include "GameFramework/Components/HColliderComponent.h"
 
 #include "World/World.h"
-#include "PhysicsScene.h"
+#include "Physics.h"
 #include "CommandContext.h"
 #include "Renderer/ConstantBufferStructures.h"
 #include "Renderer/ShaderRegisters.h"
@@ -230,5 +230,5 @@ void HColliderComponent::OnDestroy()
 
 	HWorld& World = *GetWorld();
 	World.GetScene().RemoveDebugCollider( this );
-	World.RemoveColliderComponent( this );
+	Physics::RemoveActor( GetRigidBody() );
 }

@@ -9,7 +9,6 @@
 #include "Engine/ViewportContext.h"
 #include "Engine/Timer.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "Engine/Subsystem/RenderingSubsystem.h"
 #include "Engine/Event/EventEmitter.h"
 #include "LuaScriptVM.h"
@@ -136,7 +135,6 @@ protected:
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 
 	FRenderingSubsystem& GetRenderingSubsystem();
-	FPhysicsSubsystem& GetPhysicsSubsystem();
 
 protected:
 	bool					m_IsInitialized;
@@ -159,7 +157,6 @@ protected:
 	FAssetDatabase			m_AssetDatabase;
 
 	// Subsystems
-	FPhysicsSubsystem		m_PhysicsSubsystem;
 	FRenderingSubsystem		m_ReneringSubsystem;
 	LuaScriptVM			m_ScriptSubsystem;
 };
@@ -193,12 +190,12 @@ FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )
 	if (GameIsPaused)
 	{
 		SetDeltaTimeScale( 0.f );
-		m_GameWorld.GetPhysicsScene().RequestPauseSimulation();
+		Physics::PauseSimulation();
 	}
 	else
 	{
 		SetDeltaTimeScale( 1.f );
-		m_GameWorld.GetPhysicsScene().RequestUnPauseSimulation();
+		Physics::ResumeSimulation();
 	}
 }
 
@@ -274,9 +271,3 @@ FORCEINLINE FRenderingSubsystem& HEngine::GetRenderingSubsystem()
 {
 	return m_ReneringSubsystem;
 }
-
-FORCEINLINE FPhysicsSubsystem& HEngine::GetPhysicsSubsystem()
-{
-	return m_PhysicsSubsystem;
-}
-

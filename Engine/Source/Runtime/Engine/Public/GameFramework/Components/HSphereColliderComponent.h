@@ -21,14 +21,12 @@ public:
 
 protected:
 	virtual void OnCreate() override;
-	virtual void OnDestroy() override;
 
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 private:
 	void RegisterCollider();
-	void UnRegisterCollider();
 
 private:
 	HSphereRigidBody m_RigidBody;

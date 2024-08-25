@@ -5,6 +5,7 @@
 
 #include "Engine/Engine.h"
 #include "GameFramework/Components/HControllerComponent.h"
+#include "Physics.h"
 
 
 APawn::APawn( FActorInitArgs& InitArgs )
@@ -16,10 +17,31 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_Controller(NULL)
 {
 	m_Controller = AddComponent<HControllerComponent>( "Controller" );
+
+	float mStandingSize = 20;
+	float mControllerRadius = 10;
+	physx::PxCapsuleControllerDesc cDesc;
+	cDesc.material = Physics::CreateDefaultMaterial();
+	cDesc.position = physx::PxExtendedVec3(0, 30, 0);
+	cDesc.height = mStandingSize;
+	cDesc.radius = mControllerRadius;
+	cDesc.slopeLimit = 0.0f;
+	cDesc.contactOffset = 0.1f;
+	cDesc.stepOffset = 0.02f;
+	cDesc.reportCallback = this;
+	cDesc.behaviorCallback = this;
+	PxController = Physics::CreateCapsuleController( cDesc );
 }
 
 APawn::~APawn()
 {
+	PX_SAFE_RELEASE( PxController );
+}
+
+void APawn::Tick( float DeltaTime ) 
+{
+	Super::Tick( DeltaTime );
+
 }
 
 void APawn::Move(const FVector3& Direction, const float Value)
@@ -30,6 +52,13 @@ void APawn::Move(const FVector3& Direction, const float Value)
 		FVector3 Pos = m_RootComponent->GetPosition();
 		Pos += Direction * m_Velocity;
 		m_RootComponent->SetPosition(Pos);
+		/*physx::PxVec3 TargetDisplacement(0);
+		TargetDisplacement += physx::PxVec3(Direction.x, Direction.y, Direction.z);
+		TargetDisplacement *= 2.5 * Value;
+		TargetDisplacement += physx::PxVec3( 0.f, -9.81f, 0.f );
+		TargetDisplacement *= GEngine->GetDeltaTime();
+		PxController->move( TargetDisplacement, 0.f, GEngine->GetDeltaTime(), physx::PxControllerFilters( 0 ) );*/
+		
 	}
 }
 
@@ -61,5 +90,21 @@ void APawn::Sprint()
 	else
 	{
 		m_MovementSpeed = kDefaultMovementSpeed;
+	}
+}
+
+void APawn::onShapeHit( const physx::PxControllerShapeHit& hit )
+{
+	physx::PxRigidDynamic* actor = hit.shape->getActor()->is<physx::PxRigidDynamic>();
+	if (actor)
+	{
+		// We only allow horizontal pushes. Vertical pushes when we stand on dynamic objects creates
+		// useless stress on the solver. It would be possible to enable/disable vertical pushes on
+		// particular objects, if the gameplay requires it.
+		if (hit.dir.y == 0.0f)
+		{
+			physx::PxReal coeff = actor->getMass() * hit.length;
+			physx::PxRigidBodyExt::addForceAtLocalPos( *actor, hit.dir * coeff, physx::PxVec3( 0, 0, 0 ), physx::PxForceMode::eIMPULSE );
+		}
 	}
 }

@@ -58,7 +58,7 @@ project ("Physics")
 	{
 		"MultiProcessorCompile",
 	}
-
+	
 	filter {"configurations:DebugEditor or Demo or Development"}
 		defines
 		{
@@ -73,7 +73,7 @@ project ("Physics")
 			"P_TRACK_MEMORY_ALLOCATIONS=0",
 		}
 
-	-- Dll Copy commands for each configuration
+	-- Directory overrides for each configuration
 
 	filter {"configurations:DebugEditor", "platforms:Win64"}
 		postbuildcommands
@@ -83,6 +83,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXFoundationx64_debug}",
 			"%{dllCopyCommands.PhysXCookingx64_debug}",
 			"%{dllCopyCommands.PhysXGpux64_debug}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
 		}
 
 	filter {"configurations:DebugEditor", "platforms:Win32"}
@@ -94,6 +98,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXCookingx86_debug}",
 			"%{dllCopyCommands.PhysXGpux86_debug}",
 		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
+		}
 
 	filter {"configurations:Development", "platforms:Win64"}
 		postbuildcommands
@@ -103,6 +111,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXFoundationx64_checked}",
 			"%{dllCopyCommands.PhysXCookingx64_checked}",
 			"%{dllCopyCommands.PhysXGpux64_checked}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/checked/PhysXCharacterKinematic_static_64.lib"
 		}
 
 	filter {"configurations:Development", "platforms:Win32"}
@@ -114,6 +126,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXCookingx86_checked}",
 			"%{dllCopyCommands.PhysXGpux86_checked}",
 		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/checked/PhysXCharacterKinematic_static_64.lib"
+		}
 
 	filter {"configurations:DebugGame or Demo", "platforms:Win64"}
 		postbuildcommands
@@ -123,6 +139,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXFoundationx64_debug}",
 			"%{dllCopyCommands.PhysXCookingx64_debug}",
 			"%{dllCopyCommands.PhysXGpux64_debug}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
 		}
 
 	filter {"configurations:DebugGame or Demo", "platforms:Win32"}
@@ -134,6 +154,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXCookingx86_debug}",
 			"%{dllCopyCommands.PhysXGpux86_debug}",
 		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
+		}
 
 	filter {"configurations:ShippingGame", "platforms:Win64"}
 		postbuildcommands
@@ -144,6 +168,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXCookingx64_release}",
 			"%{dllCopyCommands.PhysXGpux64_release}",
 		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/release/PhysXCharacterKinematic_static_64.lib"
+		}
 
 	filter {"configurations:ShippingGame", "platforms:Win32"}
 		postbuildcommands
@@ -153,6 +181,10 @@ project ("Physics")
 			"%{dllCopyCommands.PhysXFoundationx86_release}",
 			"%{dllCopyCommands.PhysXCookingx86_release}",
 			"%{dllCopyCommands.PhysXGpux86_release}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/release/PhysXCharacterKinematic_static_64.lib"
 		}
 
 	dofile ("Helix/CommonEngineMacros.lua")

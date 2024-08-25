@@ -24,7 +24,6 @@ public:
 
 protected:
 	virtual void OnCreate() override;
-	virtual void OnDestroy() override;
 
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
@@ -35,7 +34,6 @@ protected:
 
 private:
 	void RegisterCollider();
-	void UnregisterCollider();
 
 private:
 	HCubeRigidBody m_RigidBody;

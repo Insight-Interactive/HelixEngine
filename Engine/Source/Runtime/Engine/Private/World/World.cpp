@@ -6,7 +6,6 @@
 #include "Engine/Engine.h"
 #include "Engine/ViewportContext.h"
 #include "Renderer/LightManager.h"
-#include "Engine/Subsystem/PhysicsSubsystem.h"
 #include "GameFramework/Actor/ACharacter.h"
 #include "GameFramework/Actor/AThirdPersonCharacter.h"
 #include "GameFramework/Actor/AFirstPersonCharacter.h"
@@ -139,11 +138,8 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 
 void HWorld::RegisterScenes()
 {
-	FPhysicsSubsystem& PhysicsSubsystem = GEngine->GetPhysicsSubsystem();
 	FRenderingSubsystem& RenderingSubsystem = GEngine->GetRenderingSubsystem();
 	
-	m_PhysicsScene.Setup( PhysicsSubsystem.GetPhysicsContext() );
-	PhysicsSubsystem.AddSceneForSimulation( m_PhysicsScene );
 
 	RenderingSubsystem.PushUIPanelForRendering( m_DebugUI );
 	RenderingSubsystem.PushSceneForRendering( m_Scene );
@@ -158,10 +154,6 @@ void HWorld::BeginPlay()
 
 void HWorld::Tick( float DeltaTime )
 {
-	//m_PhysicsScene.WaittillSimulationFinished(); // Sync the physics thread.
-	
-	m_PhysicsScene.Tick( GEngine->GetDeltaTimeUnscaled(), GEngine->GetDeltaTimeScale());
-
 	static float SecondTimer = 0.f;
 	static float FPS = 0.f;
 	SecondTimer += GEngine->GetDeltaTimeUnscaled();
@@ -183,22 +175,13 @@ void HWorld::Tick( float DeltaTime )
 	{
 		m_Level.Tick( DeltaTime );
 	}
-
-	//m_PhysicsScene.RequestTick();
 }
 
 void HWorld::Flush()
 {
 	if (m_Level.IsValid())
 	{
-		// Unregister the physics scene to stop simulation, but dont destroy 
-		// it yet components need it to be able to realease resources.
-		/*m_PhysicsScene.WaittillSimulationFinished();
-		m_PhysicsScene.RequestSceneFlush();*/
-
 		RemovePanel( &m_DebugUI );
-
-		GEngine->GetPhysicsSubsystem().RemoveSceneFromSimulation( m_PhysicsScene );
 
 		// Cleanup the rendering resources.
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName() );
@@ -208,9 +191,6 @@ void HWorld::Flush()
 
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();
-
-		// Cleanup the physics scene.
-		m_PhysicsScene.Teardown();
 	}
 }
 
@@ -311,76 +291,6 @@ void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
 	GetOwningViewport()->GetSceneRenderer().DrawDebugLine( LineInfo );
 }
 
-void HWorld::PausePhysics()
-{
-	m_PhysicsScene.RequestPauseSimulation();
-}
-
-void HWorld::UnPausePhysics()
-{
-	m_PhysicsScene.RequestUnPauseSimulation();
-}
-
-void HWorld::AddSphereColliderComponent( HSphereColliderComponent* pSphere, bool IsStatic, bool IsTrigger /*= false*/ )
-{
-	m_PhysicsScene.CreateSphere( 
-		pSphere->GetWorldPosition(), 
-		pSphere->GetRotation(), 
-		(HSphereRigidBody&)pSphere->GetRigidBody(), 
-		IsTrigger, 
-		(PhysicsCallbackHandler*)pSphere,
-		false,
-		10.f,
-		IsStatic, FG_WorldGeometry );
-}
-
-void HWorld::AddPlaneColliderComponent( HPlaneColliderComponent* pPlane, bool IsStatic, bool IsTrigger /*= false*/ )
-{
-	m_PhysicsScene.CreatePlane( 
-		pPlane->GetWorldPosition(), 
-		pPlane->GetRotation(), (HPlaneRigidBody&)
-		pPlane->GetRigidBody(), 
-		IsTrigger, 
-		(PhysicsCallbackHandler*)pPlane,
-		false,
-		10.f,
-		IsStatic, FG_WorldGeometry );
-}
-
-void HWorld::AddCubeColliderComponent( HCubeColliderComponent* pCube, bool IsStatic, bool IsTrigger /*= false*/ )
-{
-	m_PhysicsScene.CreateCube( 
-		pCube->GetWorldPosition(), 
-		pCube->GetRotation(), 
-		(HCubeRigidBody&)pCube->GetRigidBody(), 
-		IsTrigger, 
-		(PhysicsCallbackHandler*)pCube,
-		false,
-		10.f,
-		IsStatic, FG_WorldGeometry );
-}
-
-void HWorld::AddCapsuleColliderComponent( HCapsuleColliderComponent* pCapsule, bool IsStatic /*= false*/, bool IsTrigger /*= false*/, bool IsKinematic /*= false*/ )
-{
-	FQuat DefaultRotation = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::HalfPi );
-
-	m_PhysicsScene.CreateCapsule( 
-		pCapsule->GetWorldPosition(), 
-		DefaultRotation,
-		(HCapsuleRigidBody&)pCapsule->GetRigidBody(), 
-		IsTrigger, 
-		(PhysicsCallbackHandler*)pCapsule,
-		IsKinematic,
-		10.f,
-		IsStatic,
-		FG_Player, FG_WorldGeometry );
-}
-
-void HWorld::RemoveColliderComponent( HColliderComponent* pCollider )
-{
-	m_PhysicsScene.RemoveActor( pCollider->GetRigidBody() );
-}
-
 bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults /*= nullptr*/, std::vector<HColliderComponent*>* IgnoreActors/* = nullptr*/ )
 {
 	std::vector<HRigidBody*> IgnoreRBs;
@@ -396,7 +306,7 @@ bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, flo
 		}
 	}
 
-	return m_PhysicsScene.RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
+	return Physics::RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
 }
 
 FVector2 HWorld::GetMouseScreenPos()

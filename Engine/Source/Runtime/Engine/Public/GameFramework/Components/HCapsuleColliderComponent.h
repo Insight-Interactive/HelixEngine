@@ -26,7 +26,6 @@ public:
 
 protected:
 	virtual void OnCreate() override;
-	virtual void OnDestroy() override;
 	virtual void Render( FCommandContext& GfxContext ) override;
 
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
@@ -34,7 +33,6 @@ protected:
 
 private:
 	void RegisterCollider();
-	void UnRegisterCollider();
 
 private:
 	HCapsuleRigidBody m_RigidBody;

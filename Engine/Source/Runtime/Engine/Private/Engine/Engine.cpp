@@ -93,14 +93,13 @@ void HEngine::PreStartup()
 #endif
 
 	// Initialize Subsystems
+	Physics::Initialize();
 	m_ReneringSubsystem.Initialize();
-	m_PhysicsSubsystem.Initialize();
 	m_ScriptSubsystem.Setup();
 	m_ScriptSubsystem.BindLuaFunction( "GetDeltaTime", *this, &HEngine::GetDeltaTime );
 	m_ScriptSubsystem.BindLuaFunction( "GetAppSeconds", *this, &HEngine::GetAppSeconds );
 
 	m_ReneringSubsystem.RunAsync();
-	m_PhysicsSubsystem.RunAsync();
 
 	HE_LOG( Log, TEXT( "Engine pre-startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks(m_AppStartTime, SystemTime::GetCurrentTick() ) );
 }
@@ -206,12 +205,15 @@ void HEngine::Shutdown()
 {
 	HE_LOG( Log, TEXT( "Shutting down engine." ) );
 
+
 	FApp::GetInstance()->Shutdown();
 	m_MainViewPort.Uninitialize();
 	m_GameWorld.Flush();
 
 	FAssetDatabase::Uninitialize();
 	GMaterialManager.FlushMaterialCache();
+
+	Physics::UnInitialize();
 
 	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );
 }
@@ -226,7 +228,6 @@ void HEngine::PostShutdown()
 	HE_SAFE_DELETE_PTR( GGameInstance );
 
 	m_ReneringSubsystem.UnInitialize();
-	m_PhysicsSubsystem.UnInitialize();
 
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
@@ -245,6 +246,8 @@ void HEngine::Tick()
 		EmitEvent( EngineTickEvent( DeltaTime ) );
 
 		m_MainViewPort.Tick( DeltaTime );
+
+		Physics::Tick( m_FrameTime, m_FrameTimeScale );
 
 		GGameInstance->Tick(DeltaTime );
 		m_GameWorld.Tick( DeltaTime );

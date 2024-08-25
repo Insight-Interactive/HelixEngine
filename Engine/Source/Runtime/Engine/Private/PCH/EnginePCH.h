@@ -110,3 +110,5 @@
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/filewritestream.h>
+// PhysX
+#include "PxPhysicsAPI.h"

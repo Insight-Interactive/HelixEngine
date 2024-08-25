@@ -29,13 +29,6 @@ void HCapsuleColliderComponent::OnCreate()
 	m_RigidBody.DisableSimulation();
 }
 
-void HCapsuleColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnRegisterCollider();
-}
-
 void HCapsuleColliderComponent::Render( FCommandContext& GfxContext ) 
 {
 	Super::Render( GfxContext );
@@ -68,12 +61,18 @@ void HCapsuleColliderComponent::Deserialize( const JsonUtility::ReadContext& Val
 
 void HCapsuleColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddCapsuleColliderComponent( this, m_IsStatic, GetIsTrigger() );
-}
-
-void HCapsuleColliderComponent::UnRegisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
+	FQuat DefaultRotation = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::HalfPi );
+	bool IsKinematic = false;
+	Physics::CreateCapsule(
+		GetWorldPosition(),
+		DefaultRotation,
+		(HCapsuleRigidBody&)GetRigidBody(),
+		GetIsTrigger(),
+		(PhysicsCallbackHandler*)this,
+		false,
+		10.f,
+		m_IsStatic,
+		FG_Player, FG_WorldGeometry );
 }
 
 void HCapsuleColliderComponent::SetRadius( float NewRadius )

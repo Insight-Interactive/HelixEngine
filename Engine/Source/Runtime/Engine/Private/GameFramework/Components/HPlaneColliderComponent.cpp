@@ -29,13 +29,6 @@ void HPlaneColliderComponent::OnCreate()
 	SetWidthAndHeight( 1.f, 1.f );
 }
 
-void HPlaneColliderComponent::OnDestroy()
-{
-	Super::OnDestroy();
-
-	UnRegisterCollider();
-}
-
 void HPlaneColliderComponent::Serialize( JsonUtility::WriteContext& Output )
 {
 	Output.Key( HE_STRINGIFY( m_Width ) );
@@ -63,12 +56,15 @@ void HPlaneColliderComponent::Deserialize( const JsonUtility::ReadContext& Value
 
 void HPlaneColliderComponent::RegisterCollider()
 {
-	GetWorld()->AddPlaneColliderComponent( this, m_IsStatic, GetIsTrigger() );
-}
-
-void HPlaneColliderComponent::UnRegisterCollider()
-{
-	GetWorld()->RemoveColliderComponent( this );
+	Physics::CreatePlane(
+		GetWorldPosition(),
+		GetRotation(), (HPlaneRigidBody&)
+		GetRigidBody(),
+		GetIsTrigger(),
+		(PhysicsCallbackHandler*)this,
+		false,
+		10.f,
+		m_IsStatic, FG_WorldGeometry );
 }
 
 void HPlaneColliderComponent::SetWidth( float Width )

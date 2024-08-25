@@ -16,7 +16,6 @@ namespace physx
 */
 class PHYSICS_API HRigidBody
 {
-	friend class HPhysicsScene;
 public:
 	enum EMovementAxis
 	{
@@ -64,11 +63,9 @@ public:
 	bool IsValid() const;
 	void Reset();
 
-protected:
 	HRigidBody();
 	virtual ~HRigidBody();
 
-protected:
 	physx::PxRigidActor* m_pRigidActor;
 	physx::PxMaterial* m_pPhysicsMaterial;
 

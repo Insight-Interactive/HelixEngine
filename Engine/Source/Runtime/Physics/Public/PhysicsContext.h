@@ -15,7 +15,6 @@ namespace physx
 	class PxDefaultAllocator;
 	class PxDefaultCpuDispatcher;
 }
-class HPhysicsScene;
 
 class PHYSICS_API HPhysicsContext : TSingleton<HPhysicsContext>
 {
