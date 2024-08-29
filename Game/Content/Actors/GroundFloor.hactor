@@ -19,9 +19,9 @@
               "RotationX": 0.0,
               "RotationY": 0.0,
               "RotationZ": 0.0,
-              "ScaleX": 200.0,
+              "ScaleX": 900.0,
               "ScaleY": 1.0,
-              "ScaleZ": 200.0
+              "ScaleZ": 900.0
             }
           ],
           "HObject::m_Name": "FloorMesh",
@@ -29,8 +29,8 @@
         },
         {
           "ComponentType": "HPlaneColliderComponent",
-          "HPlaneColliderComponent::m_RigidBody.m_HalfWidth": 200.0,
-          "HPlaneColliderComponent::m_RigidBody.m_HalfHeight": 200.0,
+          "HPlaneColliderComponent::m_RigidBody.m_HalfWidth": 900.0,
+          "HPlaneColliderComponent::m_RigidBody.m_HalfHeight": 900.0,
           "HColliderComponent::m_IsTrigger": false,
           "HColliderComponent::Density": 10.0,
           "HColliderComponent::m_IsStatic": true,

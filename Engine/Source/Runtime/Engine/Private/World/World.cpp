@@ -46,10 +46,8 @@ void HWorld::Initialize( const FPath& LevelURL )
 		m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
 	m_Level.GuardedAddActor( m_pPlayerCharacter );
 
-	HCapsuleColliderComponent* pCapsule = m_pPlayerCharacter->GetComponent<HCapsuleColliderComponent>();
-	pCapsule->SetPosition( m_pPlayerCharacter->GetRootComponent()->GetPosition() + FVector3(0.f, pCapsule->GetHeight(), 0.f));
-	//pCapsule->SetRotation( 0.f, 0.f, Math::DegreesToRadians(90.f) );
-	
+	m_pPlayerCharacter->Teleport( FVector3(0.f, 200.f, 0.f) );
+
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
 	HE_ASSERT( WorldJsonSource->IsOpen() );
@@ -175,6 +173,11 @@ void HWorld::Tick( float DeltaTime )
 	{
 		m_Level.Tick( DeltaTime );
 	}
+}
+
+void HWorld::FixedUpdate(float Time)
+{
+	m_Level.FixedUpdate( Time );
 }
 
 void HWorld::Flush()

@@ -46,10 +46,6 @@ public:
 	void AddGamepadVibration(uint32 PlayerIndex, EGampadRumbleMotor Motor, float Amount);
 
 protected:
-	virtual void Render(FCommandContext& GfxContext) override;
-
-
-protected:
 	GamepadStickSensitivity m_GamepadSensitivity;
 
 };

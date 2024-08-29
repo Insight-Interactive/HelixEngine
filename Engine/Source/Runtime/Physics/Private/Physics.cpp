@@ -130,6 +130,7 @@ namespace Physics
 	PxScene* PhysicsScene = nullptr;
 	physx::PxControllerManager* ControllerManager;
 	constexpr float SimulationStepRate = 1.f / 60.f;
+	float Gravity = -0.981f;
 	float StepAccumulator = 0.f;
 	FFlag IsSimulating;
 	FFlag IsSimulationPause;

@@ -45,6 +45,8 @@ public:
 	virtual void BeginPlay();
 	// Called once per frame.
 	virtual void Tick( float DeltaTime );
+	// Garenteed to be called 60 times in one second.
+	virtual void FixedUpdate( float Time );
 
 	// Add a component to the actor.
 	template <typename ComponentType>

@@ -18,7 +18,7 @@ public:
 
 protected:
 	HCameraComponent* m_CameraComponent;
-	HCapsuleColliderComponent* m_CharacterBounds;
+	
 };
 
 

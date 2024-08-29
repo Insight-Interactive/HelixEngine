@@ -46,6 +46,8 @@ enum EFilterGroup
 
 namespace Physics
 {
+	extern float Gravity;
+
 	struct DynamicColliderInitParams
 	{
 		FVector3 StartPos;

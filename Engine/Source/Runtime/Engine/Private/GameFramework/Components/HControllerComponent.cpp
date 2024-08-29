@@ -18,8 +18,3 @@ void HControllerComponent::AddGamepadVibration(uint32 PlayerIndex, EGampadRumble
 {
 	//FInputDispatcher::Get().AddGamepadVibration(PlayerIndex, Motor, Amount);
 }
-
-void HControllerComponent::Render(FCommandContext& GfxContext)
-{
-
-}

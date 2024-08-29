@@ -3,9 +3,14 @@
 
 #include "GameFramework/Actor/APawn.h"
 
+#include "Physics.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Components/HControllerComponent.h"
-#include "Physics.h"
+
+
+#define UpdateFootPos()																	\
+physx::PxExtendedVec3 FootPos = PxController->getFootPosition();						\
+m_RootComponent->SetPosition( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );	\
 
 
 APawn::APawn( FActorInitArgs& InitArgs )
@@ -14,17 +19,18 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	, m_SprintSpeed(kDefaultSprintSpeed)
 	, m_Velocity(0.f)
 	, m_bIsSprinting(false)
+	, m_bIsCrouched(false)
 	, m_Controller(NULL)
-{
+	, m_GravityScale(50.f)
+	, Displacement( 0 )
+{ 
 	m_Controller = AddComponent<HControllerComponent>( "Controller" );
 
-	float mStandingSize = 20;
-	float mControllerRadius = 10;
 	physx::PxCapsuleControllerDesc cDesc;
 	cDesc.material = Physics::CreateDefaultMaterial();
-	cDesc.position = physx::PxExtendedVec3(0, 30, 0);
-	cDesc.height = mStandingSize;
-	cDesc.radius = mControllerRadius;
+	cDesc.position = physx::PxExtendedVec3( 0, 0, 0 );
+	cDesc.height = 43.f;
+	cDesc.radius = 30.f; // Height + Radius = 6"1' in inches
 	cDesc.slopeLimit = 0.0f;
 	cDesc.contactOffset = 0.1f;
 	cDesc.stepOffset = 0.02f;
@@ -38,46 +44,30 @@ APawn::~APawn()
 	PX_SAFE_RELEASE( PxController );
 }
 
-void APawn::Tick( float DeltaTime ) 
+void APawn::FixedUpdate( float Time ) 
 {
-	Super::Tick( DeltaTime );
+	Super::FixedUpdate( Time );
 
+	// Move the controller through the world
+	Displacement.normalize();
+	Displacement.x *= m_MovementSpeed;
+	Displacement.y = 0;
+	Displacement.y += Physics::Gravity * m_GravityScale;
+	Displacement.z *= m_MovementSpeed;
+	Displacement *= Time;
+	PxController->move( Displacement, 0.f, Time, physx::PxControllerFilters( 0 ) );
+	Displacement *= 0;
+
+	// Copy the results
+	UpdateFootPos();
 }
 
-void APawn::Move(const FVector3& Direction, const float Value)
+void APawn::Move(FVector3 Direction, float Value)
 {
-	if (m_RootComponent != nullptr)
-	{
-		m_Velocity = m_MovementSpeed * Value * GEngine->GetDeltaTime();
-		FVector3 Pos = m_RootComponent->GetPosition();
-		Pos += Direction * m_Velocity;
-		m_RootComponent->SetPosition(Pos);
-		/*physx::PxVec3 TargetDisplacement(0);
-		TargetDisplacement += physx::PxVec3(Direction.x, Direction.y, Direction.z);
-		TargetDisplacement *= 2.5 * Value;
-		TargetDisplacement += physx::PxVec3( 0.f, -9.81f, 0.f );
-		TargetDisplacement *= GEngine->GetDeltaTime();
-		PxController->move( TargetDisplacement, 0.f, GEngine->GetDeltaTime(), physx::PxControllerFilters( 0 ) );*/
-		
-	}
-}
-
-void APawn::MoveForward(float Value)
-{
-	if (m_RootComponent != nullptr)
-		Move( m_RootComponent->GetLocalForward(), Value);
-}
-
-void APawn::MoveRight(float Value)
-{
-	if (m_RootComponent != nullptr)
-		Move( m_RootComponent->GetLocalRight(), Value);
-}
-
-void APawn::MoveUp(float Value)
-{
-	if (m_RootComponent != nullptr)
-		Move( m_RootComponent->GetLocalUp(), Value);
+	Direction *= Value;
+	Displacement.x += Direction.x;
+	Displacement.y += Direction.y;
+	Displacement.z += Direction.z;
 }
 
 void APawn::Sprint()
@@ -91,6 +81,28 @@ void APawn::Sprint()
 	{
 		m_MovementSpeed = kDefaultMovementSpeed;
 	}
+}
+
+FVector3 APawn::GetPawnPosition()
+{
+	physx::PxExtendedVec3 FootPos = PxController->getFootPosition();
+	return FVector3( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );
+}
+
+void APawn::Teleport( FVector3 NewPosition )
+{
+	physx::PxExtendedVec3 NewPos;
+	NewPos.x = NewPosition.x;
+	NewPos.y = NewPosition.y + ( ( PxController->getHeight() * 0.5f ) + PxController->getRadius() ); // So the foot position is always at <NewPosition>
+	NewPos.z = NewPosition.z;
+	PxController->setPosition( NewPos );
+
+	UpdateFootPos();
+}
+
+float APawn::GetPawnHeight()
+{ 
+	return PxController->getHeight() + PxController->getRadius();
 }
 
 void APawn::onShapeHit( const physx::PxControllerShapeHit& hit )

@@ -14,7 +14,7 @@ namespace physx
 }
 class HControllerComponent;
 
-static const float kDefaultMovementSpeed = 32.f;
+static const float kDefaultMovementSpeed = 30.f;
 static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 3.f;
 
 HCLASS()
@@ -31,23 +31,19 @@ public:
 
 		SetupController(*m_Controller);
 	}
+	virtual void FixedUpdate( float Time ) override;
 
-	void Tick( float DeltaTime ) override;
+	float GetPawnHeight();
+	FVector3 GetPawnPosition();
+	void Teleport( FVector3 NewPosition );
 
-	void MoveForward(float Value);
-	void MoveRight(float Value);
-	void MoveUp(float Value);
 	void Sprint();
-
 	void SetMovementSpeed(float Value);
 	float GetMovementSpeed() const;
 
 protected:
 	virtual void SetupController(HControllerComponent& Controller) { /* Override for behavior. */ }
-
-
-protected:
-	void Move(const FVector3& Direction, const float Value);
+	void Move(FVector3 Direction, float Value);
 
 protected:
 	virtual void							onShapeHit( const physx::PxControllerShapeHit& hit );
@@ -59,14 +55,18 @@ protected:
 	virtual physx::PxControllerBehaviorFlags		getBehaviorFlags( const physx::PxObstacle& ) { return physx::PxControllerBehaviorFlags( 0 ); }
 
 protected:
+
 	float m_MovementSpeed;
 	float m_SprintSpeed;
 	float m_Velocity;
 	bool m_bIsSprinting;
+	bool m_bIsCrouched;
+	float m_GravityScale;
 
 	HControllerComponent* m_Controller;
 	
 	physx::PxCapsuleController* PxController;
+	physx::PxVec3 Displacement;
 
 };
 

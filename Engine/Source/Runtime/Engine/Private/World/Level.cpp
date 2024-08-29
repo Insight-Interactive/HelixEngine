@@ -41,6 +41,14 @@ void HLevel::Tick( float DeltaTime )
 	}
 }
 
+void HLevel::FixedUpdate( float Time )
+{
+	for (size_t i = 0; i < m_Actors.size(); ++i)
+	{
+		m_Actors[i]->FixedUpdate( Time );
+	}
+}
+
 void HLevel::Flush()
 {
 	if (IsValid())

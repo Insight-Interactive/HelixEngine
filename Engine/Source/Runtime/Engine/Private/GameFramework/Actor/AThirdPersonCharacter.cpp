@@ -17,19 +17,20 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_ADSFOVDegrees( 50.f )
 {
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
-	m_CameraBoom->AttachTo( m_RootComponent );
+	m_CameraBoom->AttachTo( m_RootComponent, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
 	m_CameraBoom->UseCameraCollision( false );
 
 	m_CameraComponent = AddComponent<HCameraComponent>( "FollowCamera" );
 	m_CameraBoom->SetCamera( m_CameraComponent );
+	m_CameraBoom->SetViewOffset( FVector3( 100.f, 80.f, -140.f ) );
 	m_CameraFOV = m_CameraComponent->GetFieldOfView();
 
 	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
 	m_Body->AttachTo( m_RootComponent );
 	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule01.fbx" ) );
 	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
-
-	m_CharacterBounds->SetDrawEnabled( true );
+	m_Body->SetScale( 60, GetPawnHeight(), 60);
+	m_Body->SetPosition( 0.f, GetPawnHeight(), 0.f );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -109,11 +110,10 @@ void AThirdPersonCharacter::FireWeapon()
 	FVector2 ScreenFirePos = WindowDims / 2;
 
 	FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix(), m_CameraComponent->GetNearZ(), m_CameraComponent->GetFarZ() );
-	CameraPos = GetWorld()->GetCurrentSceneRenderCamera()->GetWorldPosition();
+	CameraPos = m_CameraComponent->GetWorldPosition();
 	
 	FRaycastHitInfo HitInfo = {};
-	std::vector<HColliderComponent*> IgnoreActors; IgnoreActors.push_back( (HColliderComponent*)m_CharacterBounds );
-	GetWorld()->Raycast( CameraPos, Direction, 1000.f, &HitInfo, &IgnoreActors );
+	GetWorld()->Raycast( CameraPos, Direction, 1000.f, &HitInfo );
 
 	if (HitInfo.AnyHit)
 		HitPos = HitInfo.HitPos;

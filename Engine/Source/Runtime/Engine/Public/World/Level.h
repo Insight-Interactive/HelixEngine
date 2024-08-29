@@ -48,6 +48,7 @@ protected:
 
 	void BeginPlay();
 	void Tick(float DeltaTime);
+	void FixedUpdate( float Time );
 	void Render(FCommandContext& CmdContext);
 
 	virtual void Serialize( JsonUtility::WriteContext& Value ) override;

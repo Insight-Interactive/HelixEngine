@@ -55,7 +55,7 @@ public:
 
 	void SetIsStatic( bool IsStatic );
 
-	void AttachTo( HSceneComponent* pParent );
+	void AttachTo( HSceneComponent* pParent, FVector3 Offset = FVector3::Zero );
 
 
 protected:
@@ -236,10 +236,11 @@ FORCEINLINE void HSceneComponent::SetIsStatic( bool IsStatic )
 	m_IsStatic = IsStatic;
 }
 
-FORCEINLINE void HSceneComponent::AttachTo( HSceneComponent* pParent )
+FORCEINLINE void HSceneComponent::AttachTo( HSceneComponent* pParent, FVector3 Offset/* = FVector3::Zero*/ )
 {
 	if (this == pParent)
 		return; // Don't parent ourselves, that doesn't make sense.
 
 	m_pParent = pParent;
+	Translate( Offset.x, Offset.y, Offset.z );
 }

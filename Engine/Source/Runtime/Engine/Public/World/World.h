@@ -49,6 +49,7 @@ public:
 
 	void BeginPlay();
 	void Tick( float DeltaTime );
+	void FixedUpdate( float Time );
 	void Render( FCommandContext& CmdContext );
 
 	HCameraManager* GetCameraManager();

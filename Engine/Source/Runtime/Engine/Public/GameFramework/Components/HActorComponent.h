@@ -63,6 +63,8 @@ protected:
 	virtual void BeginPlay() {}
 	// Called once every frame.
 	virtual void Tick( float DeltaTime ) {}
+	// Garenteed to be called 60 times in one second.
+	virtual void FixedUpdate( float Time ) {}
 
 	// Called when the component is initialy created.
 	virtual void OnCreate() {}

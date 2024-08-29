@@ -11,8 +11,6 @@ HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: Super( InitArgs )
 	, m_UseCameraCollision( true )
 	, m_CameraCollisionTraceDistance( 5.f )
-	, m_CameraDistance( -3.f )
-	, m_ViewOffset( 0.f, 0.f, 0.f ) //20.f, 10.f, 0.f
 {
 }
 
@@ -65,6 +63,11 @@ void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 {
 	m_Camera = Camera;
 	m_Camera->AttachTo( this );
-	m_Camera->SetPosition( 2.f, 1.f, m_CameraDistance );
+	m_Camera->SetPosition( 20.f, 10.f, -70.f );
 	m_Camera->SetRotation( FVector3::Zero );
+}
+
+void HCameraBoomComponent::SetViewOffset( const FVector3& Offset )
+{ 
+	m_Camera->SetPosition( Offset );
 }

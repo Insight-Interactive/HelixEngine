@@ -20,13 +20,11 @@ public:
 	void UpdateCameraPitch( float Value );
 	void UpdateCameraYaw( float Value );
 	void UseCameraCollision( bool UseCollision ) { m_UseCameraCollision = UseCollision; }
-	void SetViewOffset( const FVector3& Offset ) { m_ViewOffset = Offset; }
+	void SetViewOffset( const FVector3& Offset );
 
 private:
 	bool m_UseCameraCollision;
 	float m_CameraCollisionTraceDistance;
-	float m_CameraDistance;
-	FVector3 m_ViewOffset;
 	HCameraComponent* m_Camera;
 
 	FVector3 m_Rotation;

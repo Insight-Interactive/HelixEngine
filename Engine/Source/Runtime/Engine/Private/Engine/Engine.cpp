@@ -237,6 +237,9 @@ void HEngine::Tick()
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 	m_MainViewPort.GetInputDispatcher()->GetInputSureyor().KbmZeroInputs();
 	
+	constexpr float SimulationStepRate = 1.f / 60.f;
+	float StepAccumulator = 0.f;
+	
 	// Main loop.
 	while ( m_Application.IsRunning() )
 	{
@@ -250,7 +253,14 @@ void HEngine::Tick()
 		Physics::Tick( m_FrameTime, m_FrameTimeScale );
 
 		GGameInstance->Tick(DeltaTime );
+
+		StepAccumulator += DeltaTime;
+		if (StepAccumulator > SimulationStepRate)
+			m_GameWorld.FixedUpdate( SimulationStepRate );
+		StepAccumulator -= SimulationStepRate;
+
 		m_GameWorld.Tick( DeltaTime );
+
 
 		EmitEvent( EngineRenderEvent() );
 		RenderClientViewport( DeltaTime );
