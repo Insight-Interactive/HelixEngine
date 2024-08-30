@@ -73,6 +73,40 @@ public:
 		return m_Analogs[AnalogValue];
 	}
 
+	enum
+	{
+		kAnalog_LeftTrigger,
+		kAnalog_RightTrigger,
+		kAnalog_LeftStickX,
+		kAnalog_LeftStickY,
+		kAnalog_RightStickX,
+		kAnalog_RightStickY,
+		kAnalog_TouchpadX,
+		kAnalog_TouchpadY,
+
+		kAnalog_Count,
+	};
+	enum
+	{
+		kButton_A, // Playstation - Cross
+		kButton_B, // Playstation - Circle
+		kButton_X, // Playstation - Square
+		kButton_Y, // Playstation - Triangle
+		kButton_DPadUp,
+		kButton_DPadDown,
+		kButton_DPadLeft,
+		kButton_DPadRight,
+		kButton_Start,
+		kButton_Select,
+		kButton_LeftThumb,
+		kButton_RightThumb,
+		kButton_LeftShoulder,
+		kButton_RightShoulder,
+		kButton_TouchPad,
+
+		kButton_Count,
+	};
+
 protected:
 	/*
 		Updates the gamepad state by quirying the device itself. This should 
@@ -103,47 +137,12 @@ protected:
 
 	float FilterAnalogInput( int Val, int DeadZone );
 
-
 protected:
 	bool m_IsActivated;
 	GamepadHandle m_OwnerIndex;
 	EGamepadConnectionState m_ConnectionState;
 
-	enum
-	{
-		kAnalog_LeftTrigger,
-		kAnalog_RightTrigger,
-		kAnalog_LeftStickX,
-		kAnalog_LeftStickY,
-		kAnalog_RightStickX,
-		kAnalog_RightStickY,
-		kAnalog_TouchpadX,
-		kAnalog_TouchpadY,
-
-		kAnalog_Count,
-	};
 	float m_Analogs[kAnalog_Count];
-
-	enum
-	{
-		kButton_A, // Playstation - Cross
-		kButton_B, // Playstation - Circle
-		kButton_X, // Playstation - Square
-		kButton_Y, // Playstation - Triangle
-		kButton_DPadUp,
-		kButton_DPadDown,
-		kButton_DPadLeft,
-		kButton_DPadRight,
-		kButton_Start,
-		kButton_Select,
-		kButton_LeftThumb,
-		kButton_RightThumb,
-		kButton_LeftShoulder,
-		kButton_RightShoulder,
-		kButton_TouchPad,
-
-		kButton_Count,
-	};
 	bool m_Buttons[kState_Count][kButton_Count];
 
 #if HE_INPUT_USE_XINPUT

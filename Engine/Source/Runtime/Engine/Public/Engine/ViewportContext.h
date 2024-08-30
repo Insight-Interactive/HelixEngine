@@ -57,25 +57,6 @@ public:
 	void Hide();
 	uint32 GetFrameIndex();
 
-	// Input
-	//
-
-	bool IsPressed( DigitalInput Key );
-	bool IsFirstPressed( DigitalInput Key );
-	bool IsReleased( DigitalInput Key );
-
-	FVector2 GetMouseScreenPos();
-	float GetMouseMoveDeltaX();
-	float GetMouseMoveDeltaY();
-	// Lock the mouse to the screen center and hide it.
-	void LockMouseToScreenCenter();
-	// Unlock the mouse from the screen center and show it.
-	void UnlockMouseFromScreenCenter();
-	// Show the mouse if it is hidden.
-	void ShowMouse();
-	// Hide the mouse if it is shown.
-	void HideMouse();
-
 	FSceneRenderer& GetSceneRenderer();
 	FViewPort& GetClientViewport();
 	FRect& GetClientRect();
@@ -156,26 +137,6 @@ FORCEINLINE void FViewportContext::SetWindowMode( const EWindowMode& Mode )
 	m_Window.SetWindowMode( Mode );
 }
 
-FORCEINLINE void FViewportContext::ShowMouse()
-{
-	m_InputDispatcher.GetInputSureyor().ShowMouse();
-}
-
-FORCEINLINE void FViewportContext::HideMouse()
-{
-	m_InputDispatcher.GetInputSureyor().HideMouse();
-}
-
-FORCEINLINE void FViewportContext::LockMouseToScreenCenter()
-{
-	m_InputDispatcher.GetInputSureyor().AcquireMouse();		
-}
-
-FORCEINLINE void FViewportContext::UnlockMouseFromScreenCenter()
-{
-	m_InputDispatcher.GetInputSureyor().UnacquireMouse();
-}
-
 FORCEINLINE void FViewportContext::PresentOneFrame()
 {
 	m_Window.PresentOneFrame();
@@ -234,34 +195,4 @@ FORCEINLINE FViewPort& FViewportContext::GetClientViewport()
 FORCEINLINE FRect& FViewportContext::GetClientRect()
 {
 	return m_ScissorRect;
-}
-
-FORCEINLINE bool FViewportContext::IsPressed( DigitalInput Key )
-{
-	return GetInputDispatcher()->GetInputSureyor().IsPressed( Key );
-}
-
-FORCEINLINE bool FViewportContext::IsFirstPressed( DigitalInput Key )
-{
-	return GetInputDispatcher()->GetInputSureyor().IsFirstPressed( Key );
-}
-
-FORCEINLINE bool FViewportContext::IsReleased( DigitalInput Key )
-{
-	return GetInputDispatcher()->GetInputSureyor().IsReleased( Key );
-}
-
-FORCEINLINE	FVector2 FViewportContext::GetMouseScreenPos()
-{
-	return GetInputDispatcher()->GetInputSureyor().GetMouseScreenPos();
-}
-
-FORCEINLINE float FViewportContext::GetMouseMoveDeltaX()
-{
-	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaX();
-}
-
-FORCEINLINE float FViewportContext::GetMouseMoveDeltaY()
-{
-	return GetInputDispatcher()->GetInputSureyor().GetMouseMoveDeltaY();
 }

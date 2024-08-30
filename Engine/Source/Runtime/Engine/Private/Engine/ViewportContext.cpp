@@ -225,37 +225,37 @@ bool FViewportContext::OnWindowResize( WindowResizeEvent& e )
 
 bool FViewportContext::OnMouseRawPointerMoved( MouseRawPointerMovedEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetMouseMoveDelta( e.GetX(), e.GetY() );
+	Input::SetMouseMoveDelta( e.GetX(), e.GetY() );
 	return false;
 }
 
 bool FViewportContext::OnMouseWheelScrolled( MouseWheelScrolledEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetMouseScrollDelta( e.GetXOffset(), e.GetYOffset() );
+	Input::SetMouseScrollDelta( e.GetXOffset(), e.GetYOffset() );
 	return false;
 }
 
 bool FViewportContext::OnMouseButtonPressed( MouseButtonPressedEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, true );
+	Input::SetMouseButton( e.GetKeyCode() - Mouse0, true );
 	return false;
 }
 
 bool FViewportContext::OnMouseButtonReleased( MouseButtonReleasedEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetMouseButton( e.GetKeyCode() - Mouse0, false );
+	Input::SetMouseButton( e.GetKeyCode() - Mouse0, false );
 	return false;
 }
 
 bool FViewportContext::OnKeyPressed( KeyPressedEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), true );
+	Input::SetKey( (uint8)e.GetPlatformKeycode(), true );
 	return false;
 }
 
 bool FViewportContext::OnKeyReleased( KeyReleasedEvent& e )
 {
-	GetInputDispatcher()->GetInputSureyor().SetKey( (uint8)e.GetPlatformKeycode(), false );
+	Input::SetKey( (uint8)e.GetPlatformKeycode(), false );
 	return false;
 }
 

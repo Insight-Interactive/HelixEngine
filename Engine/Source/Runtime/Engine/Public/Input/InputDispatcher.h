@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Callbacks.h"
-#include "Input/RawInput.h"
+#include "Input/Input.h"
 #include "AssetRegistry/SerializeableInterface.h"
 
 
@@ -107,8 +107,6 @@ public:
 	*/
 	void ProcessInputEvent( Event& e );
 
-	FRawInputSurveyer& GetInputSureyor();
-
 protected:
 	void LoadMappingsFromFile( const Char* Filename );
 	virtual void Serialize( const Char* Filepath ) override;
@@ -186,9 +184,6 @@ private:
 private:
 	// Wether or not registered callbacks can be called.
 	bool m_CanDispatchListeners;
-
-	// Surveys the bound window for input. Driving the callback dispatch algorithm.
-	FRawInputSurveyer m_InputSurveyer;
 
 	// Holds all axis mapping profiles.
 	std::vector<AxisMappingInternal> m_AxisMappings;
@@ -289,9 +284,4 @@ template <typename EventType, typename ... EventInitArgs>
 FORCEINLINE void FInputDispatcher::ProcessInputEventEx( EventInitArgs ... Args )
 {
 	ProcessInputEvent( EventType( Args... ) );
-}
-
-FORCEINLINE FRawInputSurveyer& FInputDispatcher::GetInputSureyor()
-{
-	return m_InputSurveyer;
 }

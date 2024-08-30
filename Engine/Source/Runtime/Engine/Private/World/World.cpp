@@ -312,42 +312,6 @@ bool HWorld::Raycast( const FVector3& Origin, const FVector3& UnitDirection, flo
 	return Physics::RayCast( Origin, UnitDirection, Distance, HitResults, &IgnoreRBs );
 }
 
-FVector2 HWorld::GetMouseScreenPos()
-{
-	HE_ASSERT( m_pRenderingViewport != nullptr );
-	return m_pRenderingViewport->GetMouseScreenPos();
-}
-
-float HWorld::GetMouseMoveDeltaX()
-{
-	HE_ASSERT( m_pRenderingViewport != nullptr );
-	return m_pRenderingViewport->GetMouseMoveDeltaX();
-}
-
-float HWorld::GetMouseMoveDeltaY()
-{
-	HE_ASSERT( m_pRenderingViewport != nullptr );
-	return m_pRenderingViewport->GetMouseMoveDeltaY();
-}
-
-bool HWorld::IsPressed( DigitalInput Key )
-{
-	HE_ASSERT( m_pRenderingViewport != nullptr );
-	return m_pRenderingViewport->IsPressed( Key );
-}
-
-bool HWorld::IsFirstPressed( DigitalInput Key )
-{
-	HE_ASSERT( m_pRenderingViewport != nullptr );
-	return m_pRenderingViewport->IsFirstPressed( Key );
-}
-
-bool HWorld::IsReleased( DigitalInput Key )
-{
-	HE_ASSERT( m_pRenderingViewport!= nullptr );
-	return m_pRenderingViewport->IsReleased( Key );
-}
-
 float HWorld::GetWindowWidth()
 {
 	HE_ASSERT( m_pRenderingViewport != nullptr );

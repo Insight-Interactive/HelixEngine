@@ -16,10 +16,3 @@ FMouse::~FMouse()
 {
 	Destroy();
 }
-
-void FMouse::SetupPlatformHIDProvider(void* pProviderInterface, void* pNativeWindow)
-{
-#if HE_WINDOWS_DESKTOP
-	// Do Nothing ...
-#endif
-}

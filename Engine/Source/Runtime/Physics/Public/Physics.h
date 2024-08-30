@@ -76,7 +76,7 @@ namespace Physics
 	void Initialize();
 	void UnInitialize();
 	// Steps the physics simulation through time.
-	void Tick( float DeltaTime, float StepRateScale );
+	void Update( float DeltaTime, float StepRateScale );
 
 	bool IsSimulationFinished();
 	bool IsSimulationPaused();

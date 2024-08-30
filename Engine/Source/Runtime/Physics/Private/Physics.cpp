@@ -379,7 +379,7 @@ namespace Physics
 		}
 	}
 
-	void Tick( float DeltaTime, float StepRateScale )
+	void Update( float DeltaTime, float StepRateScale )
 	{
 		StepAccumulator += DeltaTime;
 		if (StepAccumulator < SimulationStepRate)

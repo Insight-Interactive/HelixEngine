@@ -23,12 +23,10 @@ FInputDispatcher::~FInputDispatcher()
 void FInputDispatcher::Initialize( FWindow* pNativeWindow )
 {
 	m_CanDispatchListeners = !GEngine->GetIsEditorPresent();
-	m_InputSurveyer.Initialize( pNativeWindow );
 }
 
 void FInputDispatcher::UnInitialize()
 {
-	m_InputSurveyer.UnInitialize();
 }
 
 void FInputDispatcher::Serialize( const Char* Filepath )
@@ -150,11 +148,7 @@ void FInputDispatcher::LoadMappingsFromFile( const Char* Filename )
 
 void FInputDispatcher::UpdateInputs( float DeltaTime )
 {
-	// Update the input devices.
-	//
-	m_InputSurveyer.Update( DeltaTime );
-	
-	if (GetCanDispatchListeners())
+	if (m_CanDispatchListeners)
 	{
 		// Iterate over all the action mappings and determine if any events need to be dispatched.
 		//
@@ -162,15 +156,15 @@ void FInputDispatcher::UpdateInputs( float DeltaTime )
 		{
 			DigitalInput ActionKey = m_ActionMappings[i].MappedKeycode;
 
-			if (m_InputSurveyer.IsFirstPressed( ActionKey ))
+			if (Input::IsFirstPressed( ActionKey ))
 			{
 				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Pressed );
 			}
-			if (m_InputSurveyer.IsPressed( ActionKey ))
+			if (Input::IsPressed( ActionKey ))
 			{
 				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Held );
 			}
-			if (m_InputSurveyer.IsFirstReleased( ActionKey ))
+			if (Input::IsFirstReleased( ActionKey ))
 			{
 				ProcessInputEventEx<ActionEvent>( ActionKey, IE_Released );
 			}
@@ -184,7 +178,7 @@ void FInputDispatcher::UpdateInputs( float DeltaTime )
 
 			if (IsValidAnalogInput( AxisKey ))
 			{
-				float MoveValue = m_InputSurveyer.GetAnalogInput( AxisKey );
+				float MoveValue = Input::GetAnalogInput( AxisKey );
 
 				if (IsAnalogInputMoved( MoveValue ))
 				{
@@ -204,11 +198,11 @@ void FInputDispatcher::UpdateInputs( float DeltaTime )
 			}
 			else
 			{
-				if (m_InputSurveyer.IsPressed( AxisKey ))
+				if (Input::IsPressed( AxisKey ))
 				{
 					ProcessInputEventEx<AxisEvent>( AxisKey, 1.f );
 				}
-				else if (m_InputSurveyer.IsFirstReleased( AxisKey ))
+				else if (Input::IsFirstReleased( AxisKey ))
 				{
 					ProcessInputEventEx<AxisEvent>( AxisKey, 0.f );
 				}

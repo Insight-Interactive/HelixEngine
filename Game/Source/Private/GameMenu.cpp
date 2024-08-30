@@ -46,8 +46,8 @@ void GameMenu::OnMenuPressed()
 
 		m_InGameUI.Hide();
 		m_PauseMenuUI.Show();
-		ClientViewport.ShowMouse();
-		ClientViewport.UnlockMouseFromScreenCenter();
+		Input::ShowMouse();
+		Input::UnacquireMouse();
 	}
 	else
 	{
@@ -55,8 +55,8 @@ void GameMenu::OnMenuPressed()
 
 		m_InGameUI.Show();
 		m_PauseMenuUI.Hide();
-		ClientViewport.HideMouse();
-		ClientViewport.LockMouseToScreenCenter();
+		Input::HideMouse();
+		Input::AcquireMouse();
 	}
 }
 
@@ -75,14 +75,14 @@ void GameMenu::OnGameSetFocus()
 	case MS_InGamePaused:
 		m_InGameUI.Hide();
 		m_PauseMenuUI.Show();
-		ClientViewport.ShowMouse();
-		ClientViewport.UnlockMouseFromScreenCenter();
+		Input::ShowMouse();
+		Input::UnacquireMouse();
 		break;
 	case MS_InGame:
 		m_InGameUI.Show();
 		m_PauseMenuUI.Hide();
-		ClientViewport.HideMouse();
-		ClientViewport.LockMouseToScreenCenter();
+		Input::HideMouse();
+		Input::AcquireMouse();
 		break;
 	}
 }
@@ -100,8 +100,8 @@ void GameMenu::OnGameLostFocus()
 		m_PauseMenuUI.Show();
 		break;
 	case MS_InGame:
-		ClientViewport.ShowMouse();
-		ClientViewport.UnlockMouseFromScreenCenter();
+		Input::ShowMouse();
+		Input::UnacquireMouse();
 		break;
 	}
 }

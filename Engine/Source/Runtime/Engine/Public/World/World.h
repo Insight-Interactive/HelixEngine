@@ -65,13 +65,6 @@ public:
 	HLevel& GetCurrentLevel();
 	ACharacter* GetPlayerCharacter();
 
-	FVector2 GetMouseScreenPos();
-	float GetMouseMoveDeltaX();
-	float GetMouseMoveDeltaY();
-	bool IsPressed( DigitalInput Key );
-	bool IsFirstPressed( DigitalInput Key );
-	bool IsReleased( DigitalInput Key );
-
 	float GetWindowWidth();
 	float GetWindowHeight();
 

@@ -5,7 +5,6 @@
 
 
 FKeyboard::FKeyboard()
-	: m_IsAcquired( false )
 {
 	ZeroMemory( m_KeyBuffer, sizeof( m_KeyBuffer ) );
 
@@ -15,8 +14,4 @@ FKeyboard::FKeyboard()
 FKeyboard::~FKeyboard()
 {
 
-}
-
-void FKeyboard::SetupPlatformHIDProvider( void* pProviderInterface, void* pNativeWindow )
-{
 }

@@ -11,25 +11,18 @@ public:
 	FKeyboard();
 	~FKeyboard();
 
+	void Destroy();
 	bool IsValid() const;
 
-	void Acquire();
-	void Unacquire();
 	void QueryState();
 	void ZeroInput();
 
-	bool GetIsAcquired() const;
 	bool GetKey( uint32 KeyIndex ) const;
 
-private:
 	void BuildKeyBuffer();
 	void SetKey( const uint8& Key, const bool& IsPressed );
-	void SetIsAcquired( const bool& Value );
-	void SetupPlatformHIDProvider( void* pProviderInterface, void* pNativeWindow );
-	void Destroy();
 
 private:
-	bool m_IsAcquired;
 	uint8 m_KeyBuffer[256];
 	uint8 m_KeyMappings[kNumKeys];
 
@@ -42,10 +35,6 @@ private:
 
 inline void FKeyboard::Destroy()
 {
-	if (IsValid())
-	{
-		Unacquire();
-	}
 }
 
 inline bool FKeyboard::IsValid() const
@@ -53,24 +42,9 @@ inline bool FKeyboard::IsValid() const
 	return true;
 }
 
-inline void FKeyboard::Acquire()
-{
-	SetIsAcquired( true );
-}
-
-inline void FKeyboard::Unacquire()
-{
-	SetIsAcquired( false );
-}
-
 inline void FKeyboard::ZeroInput()
 {
 	ZeroMemory( &m_KeyBuffer, sizeof( m_KeyBuffer ) );
-}
-
-inline bool FKeyboard::GetIsAcquired() const
-{
-	return m_IsAcquired;
 }
 
 inline bool FKeyboard::GetKey( uint32 Key ) const
@@ -80,11 +54,6 @@ inline bool FKeyboard::GetKey( uint32 Key ) const
 
 inline void FKeyboard::QueryState()
 {
-}
-
-inline void FKeyboard::SetIsAcquired( const bool& Value )
-{
-	m_IsAcquired = Value;
 }
 
 inline void FKeyboard::SetKey( const uint8& Key, const bool& IsPressed )

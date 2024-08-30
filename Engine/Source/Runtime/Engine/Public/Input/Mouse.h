@@ -13,6 +13,7 @@ public:
 	FMouse();
 	~FMouse();
 
+	void Destroy();
 	bool IsValid() const;
 
 	void Acquire();
@@ -33,15 +34,10 @@ public:
 	float GetVerticalScrollDelta() const;
 	float GetButtonStateByIndex( const uint8& Index ) const;
 
-private:
 	void SetIsAcquired( const bool& Value );
 	void SetMouseMoveDelta( const float& XValue, const float& YValue );
 	void SetMouseScrollDelta( const float& XScrollDelta, const float& YScrollDelta );
 	void SetMouseButton( const uint8& Button, const bool& Pressed );
-	void SetupPlatformHIDProvider( void* pProviderInterface, void* pNativeWindow );
-	void Destroy();
-
-private:
 
 	enum
 	{
@@ -52,6 +48,8 @@ private:
 
 		MouseDeltas_Count,
 	};
+private:
+
 	struct FMouseState
 	{
 		// Mouse left (0), right (1), and middle (2).

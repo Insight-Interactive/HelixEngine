@@ -93,6 +93,7 @@ void HEngine::PreStartup()
 #endif
 
 	// Initialize Subsystems
+	Input::Initialize();
 	Physics::Initialize();
 	m_ReneringSubsystem.Initialize();
 	m_ScriptSubsystem.Setup();
@@ -213,6 +214,7 @@ void HEngine::Shutdown()
 	FAssetDatabase::Uninitialize();
 	GMaterialManager.FlushMaterialCache();
 
+	Input::UnInitialize();
 	Physics::UnInitialize();
 
 	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );
@@ -235,7 +237,7 @@ void HEngine::PostShutdown()
 void HEngine::Tick()
 {
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
-	m_MainViewPort.GetInputDispatcher()->GetInputSureyor().KbmZeroInputs();
+	Input::KbmZeroInputs();
 	
 	constexpr float SimulationStepRate = 1.f / 60.f;
 	float StepAccumulator = 0.f;
@@ -248,10 +250,10 @@ void HEngine::Tick()
 		float DeltaTime = GetDeltaTime();
 		EmitEvent( EngineTickEvent( DeltaTime ) );
 
+		Input::Update( DeltaTime );
+		Physics::Update( m_FrameTime, m_FrameTimeScale );
+
 		m_MainViewPort.Tick( DeltaTime );
-
-		Physics::Tick( m_FrameTime, m_FrameTimeScale );
-
 		GGameInstance->Tick(DeltaTime );
 
 		StepAccumulator += DeltaTime;
