@@ -11,6 +11,7 @@
 #include "GameFramework/Components/HSphereColliderComponent.h"
 #include "GameFramework/Components/HCubeColliderComponent.h"
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
+#include "GameFramework/Components/HMeshColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
 #include "GameFramework/Components/HSceneComponent.h"
@@ -64,6 +65,7 @@
 	static StringHashValue LuaScriptKey;
 	static StringHashValue CameraBoomKey;
 	static StringHashValue CapsuleColliderKey;
+	static StringHashValue MeshColliderKey;
 	static bool Init = false;
 	if (!Init)
 	{
@@ -76,6 +78,7 @@
 		LuaScriptKey = StringHash( HE_STRINGIFY( HLuaScriptComponent ) );
 		CameraBoomKey = StringHash( HE_STRINGIFY( HCameraBoomComponent ) );
 		CapsuleColliderKey = StringHash( HE_STRINGIFY( HCapsuleColliderComponent ) );
+		MeshColliderKey = StringHash( HE_STRINGIFY( HMeshColliderComponent ) );
 		Init = true;
 	}
 
@@ -126,6 +129,11 @@
 		else if (ComponentTypeHash == CapsuleColliderKey)
 		{
 			OutActor.AddComponent<HCapsuleColliderComponent>( "Unnamed Capsule Collider Component" )
+				->Deserialize( CurrentComponent );
+		}
+		else if (ComponentTypeHash == MeshColliderKey)
+		{
+			OutActor.AddComponent<HMeshColliderComponent>( "Unnamed Capsule Collider Component" )
 				->Deserialize( CurrentComponent );
 		}
 		else if (ComponentTypeHash == LuaScriptKey)

@@ -698,13 +698,13 @@ namespace Math
 
 
     template <typename T>
-    inline T Min( T& Value, T& Min )
+    inline T Min( T Value, T Min )
     {
         return Value < Min ? Value : Min;
     }
 
     template <typename T>
-    inline T Max( T& Value, T& Max )
+    inline T Max( T Value, T Max )
     {
         return Value > Max ? Value : Max;
     }
@@ -740,14 +740,14 @@ namespace Math
         return From + ((To - From) * CurrentTime) / Time;
     }
 
-    inline FVector3 WorldDirectionFromScreenPos( const FVector2 ScreenPos, const FVector2& WindowDims, const FMatrix& View, const FMatrix& Projection, float NearZ, float FarZ )
+    inline FVector3 WorldDirectionFromScreenPos( const FVector2 ScreenPos, const FVector2& WindowDims, const FMatrix& View, const FMatrix& Projection )
     {
         FVector3 Result;
         DirectX::XMVECTOR MouseNear = DirectX::XMVectorSet( ScreenPos.x, ScreenPos.y, 0.f, 0.f );
         DirectX::XMVECTOR MouseFar = DirectX::XMVectorSet( ScreenPos.x, ScreenPos.y, 1.f, 0.f );
 
-        DirectX::XMVECTOR UnprojectedNear = DirectX::XMVector3Unproject( MouseNear, 0.f, 0.f, WindowDims.x, WindowDims.y, NearZ, FarZ, Projection, View, DirectX::XMMatrixIdentity() );
-        DirectX::XMVECTOR UnprojectedFar = DirectX::XMVector3Unproject( MouseFar, 0.f, 0.f, WindowDims.x, WindowDims.y, NearZ, FarZ, Projection, View, DirectX::XMMatrixIdentity() );
+        DirectX::XMVECTOR UnprojectedNear = DirectX::XMVector3Unproject( MouseNear, 0.f, 0.f, WindowDims.x, WindowDims.y, 0.f, 1.f, Projection, View, DirectX::XMMatrixIdentity() );
+        DirectX::XMVECTOR UnprojectedFar = DirectX::XMVector3Unproject( MouseFar, 0.f, 0.f, WindowDims.x, WindowDims.y, 0.f, 1.f, Projection, View, DirectX::XMMatrixIdentity() );
         DirectX::XMVECTOR Direction = DirectX::XMVector3Normalize( DirectX::XMVectorSubtract( UnprojectedFar, UnprojectedNear ) );
 
         DirectX::XMStoreFloat3( &Result, Direction );

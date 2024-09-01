@@ -7,6 +7,9 @@
 #include "StaticMeshGeometry.h"
 #include "CriticalSection.h"
 
+#include "VertexLayouts.h"
+#include "Path.h"
+
 
 /*
 	Light wrapper around HStaticMeshGeometry to define higher level loading state and 
@@ -64,6 +67,7 @@ public:
 	}
 
 	StaticMeshGeometryRef LoadHAssetMeshFromFile( const String& FilePath );
+	void LoadGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount );
 
 	/*
 		Destroys a mesh from the cache and returns true if succeeded, false if not.

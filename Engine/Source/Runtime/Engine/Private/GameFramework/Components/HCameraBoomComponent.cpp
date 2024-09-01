@@ -8,7 +8,7 @@
 
 
 HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
-	: Super( InitArgs )
+	: HSceneComponent( InitArgs )
 	, m_UseCameraCollision( true )
 	, m_CameraCollisionTraceDistance( 5.f )
 {
@@ -21,7 +21,6 @@ HCameraBoomComponent::~HCameraBoomComponent()
 
 void HCameraBoomComponent::Update( float DeltaTime )
 {
-
 	/*if( m_UseCameraCollision )
 	{
 		FVector3 WorldPos = GetWorldPosition();
@@ -63,7 +62,7 @@ void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 {
 	m_Camera = Camera;
 	m_Camera->AttachTo( this );
-	m_Camera->SetPosition( 20.f, 10.f, -70.f );
+	SetViewOffset( FVector3( 20.f, 10.f, -70.f ) );
 	m_Camera->SetRotation( FVector3::Zero );
 }
 

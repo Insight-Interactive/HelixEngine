@@ -174,6 +174,21 @@ private:
 	float m_HalfHeight;
 };
 
+class PHYSICS_API HTriangleMeshRigidBody : public HRigidBody
+{
+public:
+	HTriangleMeshRigidBody();
+	virtual ~HTriangleMeshRigidBody();
+
+	void* pTriangleData;
+	uint32 TriCount;
+	uint32 VertexSize;
+
+	void* pIndexData;
+	uint32 IndexCount;
+	uint32 IndexSize;
+};
+
 
 //
 // Inline function implementations

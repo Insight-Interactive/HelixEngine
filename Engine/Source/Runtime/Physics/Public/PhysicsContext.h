@@ -27,6 +27,7 @@ public:
 	void Initialize();
 	void UnInitialize();
 
+	physx::PxFoundation& GetFoundation();
 	physx::PxPhysics& GetPhysics();
 	physx::PxDefaultCpuDispatcher& GetCpuDispatcher();
 
@@ -49,6 +50,11 @@ FORCEINLINE bool HPhysicsContext::IsReady() const
 {
 	return	m_pFoundation != nullptr &&
 			m_pPhysics != nullptr;
+}
+
+FORCEINLINE physx::PxFoundation& HPhysicsContext::GetFoundation()
+{
+	return *m_pFoundation;
 }
 
 FORCEINLINE physx::PxPhysics& HPhysicsContext::GetPhysics()

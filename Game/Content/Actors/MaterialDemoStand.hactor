@@ -46,6 +46,25 @@
           "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
         },
         {
+          "ComponentType": "HMeshColliderComponent",
+          "HMeshColliderComponent::m_MeshAsset": "Cube.fbx",
+          "HSceneComponent::m_Transform": [
+            {
+              "PositionX": 0.0,
+              "PositionY": 58.0,
+              "PositionZ": 200.0,
+              "RotationX": -1.745329,
+              "RotationY": 3.141593,
+              "RotationZ": 0.0,
+              "ScaleX": 36.0,
+              "ScaleY": 36.0,
+              "ScaleZ": 36.0
+            }
+          ],
+          "HObject::m_Name": "RustedMetal_Demo",
+          "HObject::m_Guid": "054aa3a1-be1e-41ee-821d-079d1b96c48b"
+        },
+        {
           "ComponentType": "HStaticMeshComponent",
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
           "HStaticMeshComponent::m_MeshAsset": "MaterialDemoStand.fbx",
@@ -54,6 +73,7 @@
             {
               "PositionX": 100.0,
               "PositionY": 58.0,
+              "PositionZ": 0.0,
               "RotationX": -1.745329,
               "RotationY": 3.141593,
               "RotationZ": 0.0,
@@ -64,6 +84,25 @@
           ],
           "HObject::m_Name": "Hardwood_Demo",
           "HObject::m_Guid": "ee9db4b4-60a4-4183-96d5-0f1aca4f13dc"
+        },
+        {
+          "ComponentType": "HMeshColliderComponent",
+          "HMeshColliderComponent::m_MeshAsset": "Cube.fbx",
+          "HSceneComponent::m_Transform": [
+            {
+              "PositionX": 100.0,
+              "PositionY": 58.0,
+              "PositionZ": 200.0,
+              "RotationX": -1.745329,
+              "RotationY": 3.141593,
+              "RotationZ": 0.0,
+              "ScaleX": 36.0,
+              "ScaleY": 36.0,
+              "ScaleZ": 36.0
+            }
+          ],
+          "HObject::m_Name": "RustedMetal_Demo",
+          "HObject::m_Guid": "054aa3a1-be1e-41ee-821d-079d1b96c48b"
         }
       ]
     }

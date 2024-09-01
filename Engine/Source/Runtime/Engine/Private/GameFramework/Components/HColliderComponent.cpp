@@ -143,7 +143,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 
 	if (m_Material)
 	{
-		FColor Color = FColor::RedOpaque;
+		FColor Color = FColor::BlackOpaque;
 		if (GetIsTrigger())
 			Color = FColor::WhiteOpaque;
 

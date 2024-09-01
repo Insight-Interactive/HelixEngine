@@ -381,3 +381,12 @@ HCapsuleRigidBody::~HCapsuleRigidBody()
 {
 
 }
+
+HTriangleMeshRigidBody::HTriangleMeshRigidBody()
+{
+
+}
+
+HTriangleMeshRigidBody::~HTriangleMeshRigidBody()
+{
+}

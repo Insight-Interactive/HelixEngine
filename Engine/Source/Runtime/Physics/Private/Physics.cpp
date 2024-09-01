@@ -128,7 +128,9 @@ namespace Physics
 {
 	HPhysicsContext PhysicsContext;
 	PxScene* PhysicsScene = nullptr;
-	physx::PxControllerManager* ControllerManager;
+	PxCooking* Cooking = nullptr;
+	PxControllerManager* ControllerManager = nullptr;
+
 	constexpr float SimulationStepRate = 1.f / 60.f;
 	float Gravity = -0.981f;
 	float StepAccumulator = 0.f;
@@ -158,7 +160,9 @@ namespace Physics
 			pPvd->setScenePvdFlag( PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true );
 		}
 		ControllerManager = PxCreateControllerManager( *PhysicsScene );
-
+		
+		Cooking = PxCreateCooking( PX_PHYSICS_VERSION, PhysicsContext.GetFoundation(), PxCookingParams( Physics.getTolerancesScale() ) );
+		HE_ASSERT( Cooking != nullptr );
 	}
 
 	bool IsValid()
@@ -268,6 +272,31 @@ namespace Physics
 		outRB.m_pRigidActor->userData = pUserData;
 	}
 
+	void CreateMesh( const FVector3& StartPos, const FQuat& StartRotation, const FVector3& Scale, HTriangleMeshRigidBody& outMesh, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
+	{
+		HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
+
+		PxTriangleMeshDesc MeshDesc = {};
+		MeshDesc.points.data = outMesh.pTriangleData;
+		MeshDesc.points.count = outMesh.TriCount;
+		MeshDesc.points.stride = outMesh.VertexSize;
+		MeshDesc.triangles.data = outMesh.pIndexData;
+		MeshDesc.triangles.count = outMesh.IndexCount / 3;
+		MeshDesc.triangles.stride = 3 * outMesh.IndexSize;
+		PxDefaultMemoryOutputStream WriteBuffer;
+		PxTriangleMeshCookingResult::Enum Result;
+		bool Success = Cooking->cookTriangleMesh( MeshDesc, WriteBuffer, &Result );
+		HE_ASSERT( Success );
+
+		PxDefaultMemoryInputData ReadBuffer( WriteBuffer.getData(), WriteBuffer.getSize() );
+		PxTriangleMesh* TriangelMesh = Cooking->createTriangleMesh( MeshDesc, PhysicsContext.GetPhysics().getPhysicsInsertionCallback() );
+		HE_ASSERT( TriangelMesh != nullptr );
+
+		PxMeshScale MeshScale( PxVec3( Scale.x, Scale.y, Scale.z ) );
+		PxTriangleMeshGeometry TriangleMeshGeo( TriangelMesh, MeshScale );
+		InitRigidBody( outMesh, TriangleMeshGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
+	}
+
 	void CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 	{
 		HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
@@ -286,12 +315,10 @@ namespace Physics
 
 	void CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )
 	{
-		using namespace physx;
 		HE_ASSERT( IsValid() ); // Trying to add collision actors to scene that has not been initialized yet!
 
 		PxBoxGeometry CubeGeo( outCube.GetHalfWidth(), outCube.GetHalfHeight(), outCube.GetHalfDepth() );
 		InitRigidBody( outCube, CubeGeo, StartPos, StartRotation, IsTrigger, pUserData, IsKinematic, Density, IsStatic, CollisionGroup, FilterGroup );
-
 	}
 
 	void CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCapsule, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup/* = FG_World*/ )

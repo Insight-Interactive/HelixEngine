@@ -103,6 +103,8 @@ public:
 		kButton_LeftShoulder,
 		kButton_RightShoulder,
 		kButton_TouchPad,
+		kButton_LeftTrigger,
+		kButton_RightTrigger,
 
 		kButton_Count,
 	};

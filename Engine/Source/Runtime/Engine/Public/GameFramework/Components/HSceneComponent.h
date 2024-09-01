@@ -77,10 +77,12 @@ protected:
 
 FORCEINLINE FVector3 HSceneComponent::GetWorldPosition() const
 {
-	if (m_pParent)
-		return m_pParent->GetWorldPosition() + GetPosition();
-	else
-		return GetPosition();
+	FVector3 Position;
+	FVector3 Scale;
+	FQuat Rotation;
+	GetWorldMatrix().Decompose( Scale, Rotation, Position );
+
+	return Position;
 }
 
 FORCEINLINE FVector3 HSceneComponent::GetPosition() const

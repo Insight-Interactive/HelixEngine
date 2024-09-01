@@ -87,6 +87,7 @@ void FGamepad::Tick( float DeltaTime )
 		{
 			m_Buttons[kState_Current][kButton_RightThumb] = true;
 		}
+		
 
 		// Update Analog Values
 		//

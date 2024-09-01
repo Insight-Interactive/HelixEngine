@@ -46,7 +46,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 		m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
 	m_Level.GuardedAddActor( m_pPlayerCharacter );
 
-	m_pPlayerCharacter->Teleport( FVector3(0.f, 200.f, 0.f) );
+	m_pPlayerCharacter->Teleport( FVector3(0.f, 0.f, 0.f) );
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);

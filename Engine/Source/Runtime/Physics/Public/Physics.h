@@ -16,6 +16,7 @@ namespace physx
 }
 
 class HRigidBody;
+class HTriangleMeshRigidBody;
 class HInfinitePlaneRigidBody;
 class HPlaneRigidBody;
 class HSphereRigidBody;
@@ -81,6 +82,7 @@ namespace Physics
 	bool IsSimulationFinished();
 	bool IsSimulationPaused();
 
+	void CreateMesh( const FVector3& StartPos, const FQuat& StartRotation, const FVector3& Scale, HTriangleMeshRigidBody& outMesh, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 	void CreateSphere( const FVector3& StartPos, const FQuat& StartRotation, HSphereRigidBody& outSphere, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 	void CreatePlane( const FVector3& StartPos, const FQuat& StartRotation, HPlaneRigidBody& outPlane, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 	void CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );

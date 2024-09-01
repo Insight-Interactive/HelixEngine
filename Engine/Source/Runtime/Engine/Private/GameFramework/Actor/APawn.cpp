@@ -31,7 +31,7 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	cDesc.position = physx::PxExtendedVec3( 0, 0, 0 );
 	cDesc.height = 43.f;
 	cDesc.radius = 30.f; // Height + Radius = 6"1' in inches
-	cDesc.slopeLimit = 0.0f;
+	cDesc.slopeLimit = 60.0f;
 	cDesc.contactOffset = 0.1f;
 	cDesc.stepOffset = 0.02f;
 	cDesc.reportCallback = this;

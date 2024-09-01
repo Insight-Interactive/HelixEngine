@@ -6,7 +6,6 @@
 #include "FileSystem.h"
 #include "StringHelper.h"
 #include "AssetRegistry/Asset.h"
-#include "VertexLayouts.h"
 #include "Hash.h"
 
 #include "miniz.c"
@@ -167,6 +166,60 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	ScopedCriticalSection Guard( m_MapMutex );
 	m_ModelCache[MeshName].reset( pMesh );
 	return m_ModelCache[MeshName];
+}
+
+void FStaticGeometryManager::LoadGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount )
+{
+	// Read the data file from disk.
+	//
+	DataBlob FileData = FileSystem::ReadRawData( FilePath.m_Path );
+
+
+	// Process the mesh as an fbx file.
+	//
+	ofbx::IScene* pScene = ofbx::load(
+		(const ofbx::u8*)FileData.GetBufferPointer(),
+		(int)FileData.GetDataSize(),
+		(ofbx::u64)ofbx::LoadFlags::TRIANGULATE
+	);
+	if (pScene == NULL)
+	{
+		HE_ASSERT( false );
+		R_LOG( Error, TEXT( "An error occured when importing model! Error code: %s" ), ofbx::getError() );
+		return;
+	}
+
+	const ofbx::Mesh& Mesh = *pScene->getMesh( 0 ); // TODO: What about multiple meshes!?
+	outVerticies.resize( Mesh.getGeometry()->getVertexCount() );
+	outIndices.resize( Mesh.getGeometry()->getIndexCount() );
+
+	const ofbx::Geometry& Geometry = *Mesh.getGeometry();
+
+	const ofbx::Vec3* RawVerticies = Geometry.getVertices();
+	outVertexCount = Geometry.getVertexCount();
+
+	for (int i = 0; i < outVertexCount; ++i)
+	{
+		FSimpleVertex3D& Vertex = outVerticies[i];
+
+		Vertex.Position.x = (float)RawVerticies[i].x;
+		Vertex.Position.y = (float)RawVerticies[i].y;
+		Vertex.Position.z = (float)RawVerticies[i].z;
+	}
+
+	const int* RawFaceIndicies = Geometry.getFaceIndices();
+	outIndexCount = Geometry.getIndexCount();
+	for (int i = 0; i < outIndexCount; ++i)
+	{
+		int idx = RawFaceIndicies[i];
+
+		// If the index is negative in fbx that means it is the last index of that polygon.
+		// So, make it positive and subtract one.
+		if (idx < 0)
+			idx = -(idx + 1);
+
+		outIndices[i] = idx;
+	}
 }
 
 StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )

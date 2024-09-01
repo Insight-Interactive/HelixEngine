@@ -64,7 +64,7 @@ void HCubeColliderComponent::Deserialize( const JsonUtility::ReadContext& Value 
 {
 	Super::Deserialize( Value );
 
-	FVector3 Dimensions(m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth());
+	FVector3 Dimensions( m_RigidBody.GetHalfWidth(), m_RigidBody.GetHalfHeight(), m_RigidBody.GetHalfDepth() );
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfWidth ), Dimensions.x );
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfHeight ), Dimensions.y );
 	JsonUtility::GetFloat( Value, HE_STRINGIFY( HCubeColliderComponent::m_RigidBody.m_HalfDepth ), Dimensions.z );
@@ -79,7 +79,7 @@ void HCubeColliderComponent::RegisterCollider()
 	Physics::CreateCube(
 		GetWorldPosition(),
 		GetRotation(),
-		(HCubeRigidBody&)GetRigidBody(),
+		m_RigidBody,
 		GetIsTrigger(),
 		(PhysicsCallbackHandler*)this,
 		false,

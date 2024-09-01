@@ -39,6 +39,7 @@ AThirdPersonCharacter::~AThirdPersonCharacter()
 }
 
 bool Pressed = false;
+FRaycastHitInfo HitInfo = {};
 FVector3 CameraPos;
 FVector3 HitPos;
 void AThirdPersonCharacter::Tick( float DeltaTime )
@@ -50,7 +51,7 @@ void AThirdPersonCharacter::Tick( float DeltaTime )
 		FDebugLineRenderInfo LineInfo;
 		LineInfo.Start = CameraPos;
 		LineInfo.End = HitPos;
-		LineInfo.Color = FColor::GreenOpaque;
+		LineInfo.Color = HitInfo.AnyHit ? FColor::RedOpaque : FColor::GreenOpaque;
 		LineInfo.IgnoreDepth = false;
 		GetWorld()->DrawDebugLine( LineInfo );
 	}
@@ -109,14 +110,14 @@ void AThirdPersonCharacter::FireWeapon()
 	FVector2 WindowDims( GetWorld()->GetWindowWidth(), GetWorld()->GetWindowHeight() );
 	FVector2 ScreenFirePos = WindowDims / 2;
 
-	FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix(), m_CameraComponent->GetNearZ(), m_CameraComponent->GetFarZ() );
+	FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix() );
 	CameraPos = m_CameraComponent->GetWorldPosition();
 	
-	FRaycastHitInfo HitInfo = {};
-	GetWorld()->Raycast( CameraPos, Direction, 1000.f, &HitInfo );
+	float MaxTraceDistance = 10000.f;
+	GetWorld()->Raycast( CameraPos, Direction, MaxTraceDistance, &HitInfo );
 
 	if (HitInfo.AnyHit)
 		HitPos = HitInfo.HitPos;
 	else
-		HitPos = CameraPos + Direction * 1000.f;
+		HitPos = CameraPos + Direction * MaxTraceDistance;
 }
