@@ -5,7 +5,7 @@ class FWeapon
 {
 public:
 
-	void Shoot()
+	void Fire()
 	{
 		if (IsMagazineEmpty())
 			return;

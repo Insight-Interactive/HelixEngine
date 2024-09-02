@@ -89,7 +89,6 @@ project ("Engine")
 		"Core",
 		"Math",
 		"Renderer",
-		"Physics",
 		"Shaders",
 		"Scripting",
 
@@ -124,7 +123,7 @@ project ("Engine")
 	dofile ("Helix/CommonEngineMacros.lua")
 
 
-	filter ("platforms:Win64 or Win32")
+	filter ("platforms:Win64")
 		files
 		{
 			"Private/Launch/LaunchWindowsDesktop.cpp",
@@ -134,21 +133,6 @@ project ("Engine")
 			"Private/Windows/Desktop/**.inl",
 			"Private/Windows/Desktop/**.ico",
 			"Private/Windows/Desktop/**.rc",
-			-- Shared
-			"Private/Windows/*.h",
-			"Private/Windows/*.cpp",
-			"Private/Windows/*.inl",
-		}
-
-	filter ("platforms:Durango or Scorpio")
-		files
-		{
-			"Private/Launch/LaunchWindowsUniversal.cpp",
-			-- Win Universal
-			"Private/Windows/Universal/**.h",
-			"Private/Windows/Universal/**.cpp",
-			"Private/Windows/Universal/**.inl",
-			"Private/Windows/Universal/**.appxmanifest",
 			-- Shared
 			"Private/Windows/*.h",
 			"Private/Windows/*.cpp",
@@ -176,7 +160,7 @@ project ("Engine")
 			"-launchcfg LaunchGame",
 		}
 
-	filter { "configurations:DebugEditor or Development", "platforms:Win64 or Win32" }
+	filter { "configurations:DebugEditor or Development", "platforms:Win64" }
 		links
 		{
 			"HelixEd",
@@ -187,7 +171,7 @@ project ("Engine")
 			heGetEditorModulePublicDir ( "HelixEd" ),
 		}
 
-	filter { "configurations:DebugEditor or Development or Demo", "platforms:Win64 or Win32" }
+	filter { "configurations:DebugEditor or Development or Demo", "platforms:Win64" }
 		links
 		{
 			"%{libraries.PIXWinDesktop}",
@@ -200,34 +184,6 @@ project ("Engine")
 	-- Third Party links
 	
 	-- PhysX
-
-	-- PhysX Win32
-	filter { "platforms:Win32" }
-		links
-		{
-			"%{libraries.PhysXCommon32}",
-			"%{libraries.PhysX32}",
-			"%{libraries.PhysXFoundation32}",
-			"%{libraries.PhysXCooking32}",
-		}
-
-	filter {"configurations:DebugEditor", "platforms:Win32"}
-		libdirs
-		{
-			"%{libraryDirectories.PhysXx86_debug}",
-		}
-
-	filter {"configurations:DebugGame or Demo", "platforms:Win32"}
-		libdirs
-		{
-			"%{libraryDirectories.PhysXx86_debug}",
-		}
-	
-	filter {"configurations:ShippingGame", "platforms:Win32"}
-		libdirs
-		{
-			"%{libraryDirectories.PhysXx86_release}",
-		}
 
 	-- PhysX Win64
 
@@ -247,17 +203,53 @@ project ("Engine")
 		{
 			"%{libraryDirectories.PhysXx64_debug}",
 		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PhysXx64_debug}",
+			"%{dllCopyCommands.PhysXCommonx64_debug}",
+			"%{dllCopyCommands.PhysXFoundationx64_debug}",
+			"%{dllCopyCommands.PhysXCookingx64_debug}",
+			"%{dllCopyCommands.PhysXGpux64_debug}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
+		}
 
 	filter {"configurations:DebugGame or Demo", "platforms:Win64"}
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx64_debug}",
-		}				
-	
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PhysXx64_debug}",
+			"%{dllCopyCommands.PhysXCommonx64_debug}",
+			"%{dllCopyCommands.PhysXFoundationx64_debug}",
+			"%{dllCopyCommands.PhysXCookingx64_debug}",
+			"%{dllCopyCommands.PhysXGpux64_debug}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/debug/PhysXCharacterKinematic_static_64.lib"
+		}
+
 	filter {"configurations:ShippingGame", "platforms:Win64"}
 		libdirs
 		{
 			"%{libraryDirectories.PhysXx64_release}",
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PhysXx64_release}",
+			"%{dllCopyCommands.PhysXCommonx64_release}",
+			"%{dllCopyCommands.PhysXFoundationx64_release}",
+			"%{dllCopyCommands.PhysXCookingx64_release}",
+			"%{dllCopyCommands.PhysXGpux64_release}",
+		}
+		links
+		{
+			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/release/PhysXCharacterKinematic_static_64.lib"
 		}
 	-- End PysX
 

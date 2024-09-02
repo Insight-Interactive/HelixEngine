@@ -89,8 +89,8 @@
 
 #include "CoreFwd.h"
 #include "MathCore.h"
-#include "PhysicsFwd.h"
 #include "ScriptingFwd.h"
+#include "Engine/Physics/PhysicsFwd.h"
 #include "System.h"
 #include "FileSystem.h"
 #include "JsonUtility.h"
@@ -112,3 +112,7 @@
 #include <rapidjson/filewritestream.h>
 // PhysX
 #include "PxPhysicsAPI.h"
+#include "extensions/PxSimpleFactory.h"
+#include "PxSimulationEventCallback.h"
+#include "characterkinematic/PxCapsuleController.h"
+#include "characterkinematic/PxControllerManager.h"

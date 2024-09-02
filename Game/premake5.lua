@@ -40,32 +40,9 @@ workspace ("Game")
 		-- Windows 64-bit desktop environment.
 		"Win64",
 		
-		-- Windows 32-bit desktop environment.
-		"Win32",
-		
-		-- Universal Windows environment targeting the Xbox One console.
-		"Durango",
-		
-		-- Universal Windows environment targeting the Xbox One X console.
-		"Scorpio",
-		
 		-- Sony platform targeting the Playstation 5 console.
 		"Prospero",
 	}
-
---	filter "platforms:Durango"
---		defines "HE_XBOX_ONE"
---		system  ("WindowsUniversal")
---		consumewinrtextension ("false")
---		generatewinmd ("false")
---		architecture ("x64")
---
---	filter "platforms:Scorpio"
---		defines "HE_XBOX_ONE_X"
---		system  ("WindowsUniversal")
---		consumewinrtextension ("false")
---		generatewinmd ("false")
---		architecture ("x64")
 
 	filter "platforms:Win64"
 		defines "HE_WIN64"
@@ -77,11 +54,6 @@ workspace ("Game")
 		system ("Windows")
 		toolset ("clang")
 		architecture ("x64")
-
-	filter "platforms:Win32"
-		defines "HE_WIN32"
-		system ("Windows")
-		architecture ("x86_64")
 
 	macros = {}
 	macros["debug"]		= "HE_DEBUG" -- 1 if the engine or game is running in a non-production state.

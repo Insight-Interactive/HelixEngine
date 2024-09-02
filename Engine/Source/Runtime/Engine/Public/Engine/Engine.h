@@ -13,7 +13,7 @@
 #include "Engine/Event/EventEmitter.h"
 #include "LuaScriptVM.h"
 #include "SystemTime.h"
-#include "Physics.h"
+#include "Engine/Physics/Physics.h"
 
 
 class WindowClosedEvent;

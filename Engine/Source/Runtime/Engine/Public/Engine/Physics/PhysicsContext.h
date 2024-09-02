@@ -16,7 +16,7 @@ namespace physx
 	class PxDefaultCpuDispatcher;
 }
 
-class PHYSICS_API HPhysicsContext : TSingleton<HPhysicsContext>
+class HPhysicsContext : TSingleton<HPhysicsContext>
 {
 public:
 	HPhysicsContext();

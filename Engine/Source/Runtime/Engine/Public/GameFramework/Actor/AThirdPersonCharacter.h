@@ -23,6 +23,7 @@ private:
 	void ThirdPersonMoveRight( float Delta );
 	void AimDownSight();
 	void FireWeapon();
+	void DoMelee();
 
 private:
 	HCameraBoomComponent* m_CameraBoom;

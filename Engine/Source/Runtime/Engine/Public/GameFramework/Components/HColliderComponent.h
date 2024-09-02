@@ -2,9 +2,9 @@
 #pragma once
 
 #include "GameFramework/Components/HSceneComponent.h"
-#include "CollisionHandler.h"
+#include "Engine/Physics/CollisionHandler.h"
 
-#include "RigidBody.h"
+#include "Engine/Physics/RigidBody.h"
 #include "ModelManager.h"
 #include "ConstantBuffer.h"
 #include "Renderer/MaterialManager.h"

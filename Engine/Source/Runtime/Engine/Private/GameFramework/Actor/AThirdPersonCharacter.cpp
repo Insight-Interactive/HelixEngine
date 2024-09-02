@@ -78,6 +78,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAction( "AimDownSight", IE_Pressed, this, &AThirdPersonCharacter::AimDownSight );
 	Controller.BindAction( "AimDownSight", IE_Released, this, &AThirdPersonCharacter::AimDownSight );
 	Controller.BindAction( "FireWeapon", IE_Held, this, &AThirdPersonCharacter::FireWeapon );
+	Controller.BindAction( "Melee", IE_Pressed, this, &AThirdPersonCharacter::DoMelee );
 }
 
 void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
@@ -121,4 +122,14 @@ void AThirdPersonCharacter::FireWeapon()
 		HitPos = HitInfo.HitPos;
 	else
 		HitPos = CameraPos + Direction * MaxTraceDistance;
+}
+
+void AThirdPersonCharacter::DoMelee()
+{
+	FRaycastHitInfo MeleeHitInfo = {};
+	float MeleeDistance = 36.f;
+
+	FVector3 StartPos = m_RootComponent->GetWorldPosition() + FVector3( 0.f, GetPawnHeight(), 0.f );
+	GetWorld()->Raycast( StartPos, m_RootComponent->GetLocalForward(), MeleeDistance, &MeleeHitInfo );
+
 }

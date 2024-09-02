@@ -14,7 +14,7 @@ namespace physx
 /*
 	Base rigid body class in which all rigid body types derived from.
 */
-class PHYSICS_API HRigidBody
+class HRigidBody
 {
 public:
 	enum EMovementAxis
@@ -74,7 +74,7 @@ public:
 /*
 	A plane with infinite width and height that points in a single direction.
 */
-class PHYSICS_API HInfinitePlaneRigidBody : public HRigidBody
+class HInfinitePlaneRigidBody : public HRigidBody
 {
 public:
 	HInfinitePlaneRigidBody();
@@ -94,7 +94,7 @@ private:
 /*
 	A plane with a defined width and height.	
 */
-class PHYSICS_API HPlaneRigidBody : public HRigidBody
+class HPlaneRigidBody : public HRigidBody
 {
 public:
 	static const float kPlaneDepth;
@@ -116,7 +116,7 @@ private:
 /*
 	A sphere with a radius.
 */
-class PHYSICS_API HSphereRigidBody : public HRigidBody
+class HSphereRigidBody : public HRigidBody
 {
 public:
 	HSphereRigidBody();
@@ -133,7 +133,7 @@ private:
 /*
 	A cube with width, height, and depth.
 */
-class PHYSICS_API HCubeRigidBody : public HRigidBody
+class HCubeRigidBody : public HRigidBody
 {
 public:
 	HCubeRigidBody();
@@ -157,7 +157,7 @@ private:
 /*
 	A capsule with a radius and length;
 */
-class PHYSICS_API HCapsuleRigidBody : public HRigidBody
+class HCapsuleRigidBody : public HRigidBody
 {
 public:
 	HCapsuleRigidBody();
@@ -174,7 +174,7 @@ private:
 	float m_HalfHeight;
 };
 
-class PHYSICS_API HTriangleMeshRigidBody : public HRigidBody
+class HTriangleMeshRigidBody : public HRigidBody
 {
 public:
 	HTriangleMeshRigidBody();

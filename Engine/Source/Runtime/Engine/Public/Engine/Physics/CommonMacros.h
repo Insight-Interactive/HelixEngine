@@ -6,3 +6,9 @@
 #define PX_SAFE_RELEASE( PXObject ) if( (PXObject) != nullptr ) { (PXObject)->release(); (PXObject) = nullptr; } 
 
 #define P_MAX_NUM_ACTOR_SHAPES 128
+
+#if HE_DEBUG
+#define P_TRACK_MEMORY_ALLOCATIONS 1
+#else
+#define P_TRACK_MEMORY_ALLOCATIONS 0
+#endif

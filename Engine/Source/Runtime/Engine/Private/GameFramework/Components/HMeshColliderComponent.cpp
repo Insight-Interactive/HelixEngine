@@ -2,7 +2,7 @@
 
 #include "GameFramework/Components/HMeshColliderComponent.h"
 
-#include "Physics.h"
+#include "Engine/Physics/Physics.h"
 #include "GameFramework/Actor/AActor.h"
 #include "AssetRegistry/AssetDatabase.h"
 

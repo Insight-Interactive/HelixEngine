@@ -1,7 +1,7 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
-#include "PhysicsPCH.h"
+#include "EnginePCH.h"
 
-#include "RigidBody.h"
+#include "Engine/Physics/RigidBody.h"
 
 
 using namespace physx;

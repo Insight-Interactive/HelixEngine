@@ -1,14 +1,11 @@
-#include "PhysicsPCH.h"
+#include "EnginePCH.h"
 
-#include "Physics.h"
+#include "Engine/Physics/Physics.h"
 
-#include "PhysicsContext.h"
-#include "RigidBody.h"
-#include "CollisionHandler.h"
+#include "Engine/Physics/PhysicsContext.h"
+#include "Engine/Physics/RigidBody.h"
+#include "Engine/Physics/CollisionHandler.h"
 
-#include "PxSimulationEventCallback.h"
-#include "characterkinematic/PxCapsuleController.h"
-#include "characterkinematic/PxControllerManager.h"
 
 using namespace physx;
 
@@ -138,7 +135,7 @@ namespace Physics
 	void Initialize()
 	{
 		HE_ASSERT( !IsValid() ); // Trying to initialize physics when it has already been initalized.
-
+		
 		PhysicsContext.Initialize();
 		PxPhysics& Physics = PhysicsContext.GetPhysics();
 
