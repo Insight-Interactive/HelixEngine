@@ -20,7 +20,7 @@ HWorld::HWorld()
 	, m_CameraManager( this )
 	, m_Scene( this )
 	, m_Level( this )
-	, m_pPlayerCharacter( NULL )
+	, m_PlayerCharacter( NULL )
 	, m_RenderingCamera( NULL )
 	, m_pRenderingViewport( NULL )
 {
@@ -41,12 +41,12 @@ void HWorld::Initialize( const FPath& LevelURL )
 
 	FActorInitArgs PlrCharacterInitArgs{ this, "Player Character", true };
 	if (UseFirstPersonCharacter)
-		m_pPlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
+		m_PlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
 	else
-		m_pPlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
-	m_Level.GuardedAddActor( m_pPlayerCharacter );
+		m_PlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
+	m_Level.GuardedAddActor( m_PlayerCharacter );
 
-	m_pPlayerCharacter->Teleport( FVector3(0.f, 0.f, 0.f) );
+	m_PlayerCharacter->Teleport( FVector3(0.f, 0.f, 0.f) );
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
@@ -101,9 +101,8 @@ void HWorld::Initialize( const FPath& LevelURL )
 		Sun->Color = FVector4::One * 255.f;
 		Sun->Brightness = 1.f;
 
-		// TEMP
+		m_FPSCounter.SetPosition( FVector2( 0.01f, 0.01f ) );
 		m_DebugUI.AddWidget( m_FPSCounter );
-		m_FPSCounter.SetText( L"FPS: " );
 
 		AddPanel( &m_DebugUI );
 	}
@@ -137,7 +136,6 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 void HWorld::RegisterScenes()
 {
 	FRenderingSubsystem& RenderingSubsystem = GEngine->GetRenderingSubsystem();
-	
 
 	RenderingSubsystem.PushUIPanelForRendering( m_DebugUI );
 	RenderingSubsystem.PushSceneForRendering( m_Scene );
@@ -145,14 +143,14 @@ void HWorld::RegisterScenes()
 
 void HWorld::BeginPlay()
 {
-	SetCurrentSceneRenderCamera( m_pPlayerCharacter->GetCameraComponent() );
+	SetCurrentSceneRenderCamera( m_PlayerCharacter->GetCameraComponent() );
 
 	m_Level.BeginPlay();
 }
 
 void HWorld::Tick( float DeltaTime )
 {
-	static float SecondTimer = 0.f;
+	/*static float SecondTimer = 0.f;
 	static float FPS = 0.f;
 	SecondTimer += GEngine->GetDeltaTimeUnscaled();
 	if (SecondTimer > 1.f)
@@ -165,7 +163,7 @@ void HWorld::Tick( float DeltaTime )
 		SecondTimer = 0.f;
 	}
 	else
-		FPS++;
+		FPS++;*/
 
 	m_CameraManager.Tick( DeltaTime );
 
@@ -173,11 +171,6 @@ void HWorld::Tick( float DeltaTime )
 	{
 		m_Level.Tick( DeltaTime );
 	}
-}
-
-void HWorld::FixedUpdate(float Time)
-{
-	m_Level.FixedUpdate( Time );
 }
 
 void HWorld::Flush()

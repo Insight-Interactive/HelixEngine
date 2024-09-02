@@ -49,7 +49,6 @@ public:
 
 	void BeginPlay();
 	void Tick( float DeltaTime );
-	void FixedUpdate( float Time );
 	void Render( FCommandContext& CmdContext );
 
 	HCameraManager* GetCameraManager();
@@ -61,6 +60,7 @@ public:
 	void RemovePanel( FUIPanel* pPanel );
 	HScene& GetScene();
 	FUIPanel& GetDebugUIPanel();
+	FLabel& GetFPSLabel() { return m_FPSCounter; }
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
 	ACharacter* GetPlayerCharacter();
@@ -107,7 +107,7 @@ protected:
 	HLevel m_Level;
 	HScene m_Scene;
 
-	ACharacter* m_pPlayerCharacter;
+	ACharacter* m_PlayerCharacter;
 	FPath m_LevelFilepath;
 
 	HCameraComponent* m_RenderingCamera;
@@ -191,7 +191,7 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 
 FORCEINLINE ACharacter* HWorld::GetPlayerCharacter()
 {
-	return m_pPlayerCharacter;
+	return m_PlayerCharacter;
 }
 
 FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const char* Name )

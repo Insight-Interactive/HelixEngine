@@ -38,7 +38,7 @@ public:
 
 	virtual void Initialize( const FWindow::Description& WindowDesc );
 	virtual void Uninitialize();
-	virtual void Tick( float DeltaTime );
+	virtual void Update( float DeltaTime );
 	virtual void Render();
 
 	bool IsValid();

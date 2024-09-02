@@ -6,6 +6,55 @@
 #include "characterkinematic/PxController.h" // for PxUserControllerHitReport
 #include "characterkinematic/PxControllerBehavior.h"
 
+struct FJump
+{
+	const float JumpGravity = -500.f;
+
+	FJump()
+		: CurrentHeight( 0.01f )
+		, MaxHeight( 0.f )
+		, JumpTime( 0.f )
+		, Jumping( false )
+	{
+	}
+	void StartJump( float JumpHeight )
+	{
+		if (Jumping)
+			return;
+
+		JumpTime = 0.f;
+		MaxHeight = JumpHeight;
+		Jumping = true;
+	}
+	void StopJump()
+	{
+		if (!Jumping)
+			return;
+
+		Jumping = false;
+	}
+	float GetHeight(float DeltaTime)
+	{
+		if (!Jumping)
+			return 0.f;
+
+		//if (CurrentHeight >= MaxHeight)
+		//	return 0.f;
+		//else
+		//	CurrentHeight = (CurrentHeight + DeltaTime) * 3.f;
+
+		return (300.f * DeltaTime) * 3;
+		/*JumpTime += DeltaTime;
+		const float Height = JumpGravity * JumpTime * JumpTime + MaxHeight * JumpTime;
+		return Height * DeltaTime;*/
+	}
+	float CurrentHeight;
+
+	float MaxHeight;
+	float JumpTime;
+	bool Jumping;
+};
+
 namespace physx
 {
 	class PxControllerManager;
@@ -14,7 +63,7 @@ namespace physx
 }
 class HControllerComponent;
 
-static const float kDefaultMovementSpeed = 30.f;
+static const float kDefaultMovementSpeed = 100.f;
 static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 3.f;
 
 HCLASS()
@@ -31,13 +80,14 @@ public:
 
 		SetupController(*m_Controller);
 	}
-	virtual void FixedUpdate( float Time ) override;
+	virtual void Tick( float Time ) override;
 
 	float GetPawnHeight();
 	FVector3 GetPawnPosition();
 	void Teleport( FVector3 NewPosition );
 
 	void Sprint();
+	void Jump();
 	void SetMovementSpeed(float Value);
 	float GetMovementSpeed() const;
 
@@ -58,10 +108,9 @@ protected:
 
 	float m_MovementSpeed;
 	float m_SprintSpeed;
-	float m_Velocity;
 	bool m_bIsSprinting;
 	bool m_bIsCrouched;
-	float m_GravityScale;
+	FJump m_Jump;
 
 	HControllerComponent* m_Controller;
 	

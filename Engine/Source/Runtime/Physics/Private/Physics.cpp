@@ -131,9 +131,7 @@ namespace Physics
 	PxCooking* Cooking = nullptr;
 	PxControllerManager* ControllerManager = nullptr;
 
-	constexpr float SimulationStepRate = 1.f / 60.f;
 	float Gravity = -0.981f;
-	float StepAccumulator = 0.f;
 	FFlag IsSimulating;
 	FFlag IsSimulationPause;
 
@@ -408,12 +406,6 @@ namespace Physics
 
 	void Update( float DeltaTime, float StepRateScale )
 	{
-		StepAccumulator += DeltaTime;
-		if (StepAccumulator < SimulationStepRate)
-			return;
-
-		StepAccumulator -= SimulationStepRate;
-
 		if (IsSimulationPause.IsSet())
 			return;
 
@@ -421,7 +413,7 @@ namespace Physics
 
 		if (IsValid())
 		{
-			PhysicsScene->simulate( SimulationStepRate * StepRateScale );
+			PhysicsScene->simulate( DeltaTime * StepRateScale );
 			PhysicsScene->fetchResults( true );
 		}
 		else

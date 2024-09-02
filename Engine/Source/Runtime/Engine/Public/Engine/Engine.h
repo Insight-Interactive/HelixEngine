@@ -62,7 +62,7 @@ public:
 	/*
 		Returns the unscaled time between frame buffer flips.
 	*/
-	float GetDeltaTimeUnscaled() const;
+	float GetFrameTime() const;
 
 	/*
 		Returns the scale of delta time.
@@ -146,7 +146,7 @@ protected:
 	float					m_FrameTime;
 	int64					m_FrameStartTick;
 	float					m_FrameTimeScale;
-	int64					m_AppStartTime;
+	double					m_AppSeconds;
 
 	// Game world and main client viewport
 	FViewportContext		m_MainViewPort;
@@ -202,17 +202,18 @@ FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )
 
 FORCEINLINE float HEngine::GetDeltaTime() const
 {
-	return m_FrameTime * m_FrameTimeScale;
-}
-
-FORCEINLINE float HEngine::GetDeltaTimeUnscaled() const
-{
-	return m_FrameTime;
+	const float MaxGameFPS = 100.f;
+	return (1 / MaxGameFPS) * m_FrameTimeScale;
 }
 
 FORCEINLINE float HEngine::GetDeltaTimeScale() const
 {
 	return m_FrameTimeScale;
+}
+
+FORCEINLINE float HEngine::GetFrameTime() const
+{
+	return m_FrameTime;
 }
 
 FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
@@ -222,13 +223,16 @@ FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
 
 FORCEINLINE double HEngine::GetAppSeconds() const
 {
-	return (double)SystemTime::TimeBetweenTicks( m_AppStartTime, SystemTime::GetCurrentTick() );
+	return m_AppSeconds;
 }
 
 FORCEINLINE void HEngine::TickTimers()
 {
 	int64 CurrentTick = SystemTime::GetCurrentTick();
 	m_FrameTime = (float)SystemTime::TimeBetweenTicks( m_FrameStartTick, CurrentTick );
+	if (m_FrameTime > 0.25f) // Clamp the frame time if its anything less than 4 frames
+		m_FrameTime = 0.25f;
+
 	m_FrameStartTick = CurrentTick;
 }
 

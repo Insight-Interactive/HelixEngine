@@ -38,7 +38,7 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	: m_IsInitialized( false )
 	, m_IsEditorPresent( CmdLine.ArgumentEquals( L"-launchcfg", L"LaunchEditor" ) )
 	, m_IsPlayingInEditor( !m_IsEditorPresent )
-	, m_AppStartTime( 0 )
+	, m_AppSeconds( 0.0 )
 	, m_FrameTimeScale( 1.f )
 	, m_FrameTime ( 0.f )
 	, m_FrameStartTick ( 0 )
@@ -78,7 +78,6 @@ void HEngine::PreStartup()
 
 	System::InitializePlatform();
 	SystemTime::Initialize();
-	m_AppStartTime = SystemTime::GetCurrentTick();
 
 	// Initialize the thread pool.
 	GThreadPool = new ThreadPool( System::GetProcessorCount(), NULL );
@@ -102,7 +101,7 @@ void HEngine::PreStartup()
 
 	m_ReneringSubsystem.RunAsync();
 
-	HE_LOG( Log, TEXT( "Engine pre-startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks(m_AppStartTime, SystemTime::GetCurrentTick() ) );
+	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
 }
 
 void HEngine::Startup()
@@ -239,35 +238,51 @@ void HEngine::Tick()
 	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
 	Input::KbmZeroInputs();
 	
-	constexpr float SimulationStepRate = 1.f / 60.f;
-	float StepAccumulator = 0.f;
-	
+	float Accumulator = 0.f;
+
+	float SecondTimer = 0.f;
+	uint32 FPS = 0;
+
 	// Main loop.
 	while ( m_Application.IsRunning() )
 	{
+		TickTimers();
+		Accumulator += m_FrameTime;
+
 		System::ProcessMessages();
-		
+
 		float DeltaTime = GetDeltaTime();
 		EmitEvent( EngineTickEvent( DeltaTime ) );
 
 		Input::Update( DeltaTime );
-		Physics::Update( m_FrameTime, m_FrameTimeScale );
 
-		m_MainViewPort.Tick( DeltaTime );
-		GGameInstance->Tick(DeltaTime );
+		m_MainViewPort.Update( DeltaTime );
+		GGameInstance->Tick( DeltaTime );
 
-		StepAccumulator += DeltaTime;
-		if (StepAccumulator > SimulationStepRate)
-			m_GameWorld.FixedUpdate( SimulationStepRate );
-		StepAccumulator -= SimulationStepRate;
-
-		m_GameWorld.Tick( DeltaTime );
-
+		while (Accumulator >= DeltaTime)
+		{
+			Physics::Update( DeltaTime, m_FrameTimeScale );
+			m_GameWorld.Tick( DeltaTime );
+			m_AppSeconds += DeltaTime;
+			Accumulator -= DeltaTime;
+		}
 
 		EmitEvent( EngineRenderEvent() );
 		RenderClientViewport( DeltaTime );
 
-		TickTimers();
+		SecondTimer += m_FrameTime;
+		if (SecondTimer > 1.f)
+		{
+			WChar Label[64];
+			ZeroMemory( Label, sizeof( Label ) );
+			swprintf_s( Label, L"FPS: %i (%ims) | Time: %is", FPS, int(m_FrameTime * 1000.f), (int)m_AppSeconds );
+			m_GameWorld.GetFPSLabel().SetText( Label );
+			FPS = 0;
+			SecondTimer = 0.f;
+		}
+		else
+			FPS++;
+
 	}
 
 	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );

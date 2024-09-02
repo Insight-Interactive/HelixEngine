@@ -52,7 +52,7 @@ void FViewportContext::Uninitialize()
 	m_Window.Destroy();
 }
 
-void FViewportContext::Tick( float DeltaTime )
+void FViewportContext::Update( float DeltaTime )
 {
 	// Update the world inputs.
 	m_InputDispatcher.UpdateInputs( DeltaTime );

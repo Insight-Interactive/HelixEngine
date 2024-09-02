@@ -51,7 +51,7 @@ void AThirdPersonCharacter::Tick( float DeltaTime )
 		FDebugLineRenderInfo LineInfo;
 		LineInfo.Start = CameraPos;
 		LineInfo.End = HitPos;
-		LineInfo.Color = HitInfo.AnyHit ? FColor::RedOpaque : FColor::GreenOpaque;
+		LineInfo.Color = HitInfo.AnyHit ? FColor::RedOpaque : FColor::WhiteOpaque;
 		LineInfo.IgnoreDepth = false;
 		GetWorld()->DrawDebugLine( LineInfo );
 	}
@@ -68,6 +68,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
+	Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
 	
 	// Camera
 	Controller.BindAxis( "LookUp", m_CameraBoom, &HCameraBoomComponent::UpdateCameraPitch );

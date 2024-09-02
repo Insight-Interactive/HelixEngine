@@ -53,14 +53,6 @@ void AActor::Tick( float DeltaTime )
 	}
 }
 
-void AActor::FixedUpdate( float Time )
-{
-	for (uint64 i = 0; i < m_Components.size(); ++i)
-	{
-		m_Components[i]->FixedUpdate( Time );
-	}
-}
-
 void AActor::Render( FCommandContext& GfxContext )
 {
 	for (size_t i = 0; i < m_Components.size(); ++i)

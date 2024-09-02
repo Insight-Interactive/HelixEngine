@@ -17,11 +17,9 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
 	, m_MovementSpeed(kDefaultMovementSpeed)
 	, m_SprintSpeed(kDefaultSprintSpeed)
-	, m_Velocity(0.f)
 	, m_bIsSprinting(false)
 	, m_bIsCrouched(false)
 	, m_Controller(NULL)
-	, m_GravityScale(50.f)
 	, Displacement( 0 )
 { 
 	m_Controller = AddComponent<HControllerComponent>( "Controller" );
@@ -44,18 +42,28 @@ APawn::~APawn()
 	PX_SAFE_RELEASE( PxController );
 }
 
-void APawn::FixedUpdate( float Time ) 
+void APawn::Tick( float Time ) 
 {
-	Super::FixedUpdate( Time );
+	Super::Tick( Time );
+
+	const float HeightDelta = m_Jump.GetHeight( Time );
+
+	float DeltaY;
+	if (HeightDelta != 0.f)
+		DeltaY = HeightDelta;
+	else
+		DeltaY = Physics::Gravity * Time;
 
 	// Move the controller through the world
 	Displacement.normalize();
 	Displacement.x *= m_MovementSpeed;
-	Displacement.y = 0;
-	Displacement.y += Physics::Gravity * m_GravityScale;
 	Displacement.z *= m_MovementSpeed;
+	Displacement.y = DeltaY;
 	Displacement *= Time;
-	PxController->move( Displacement, 0.f, Time, physx::PxControllerFilters( 0 ) );
+	const physx::PxU32 flags = PxController->move( Displacement, 0.f, Time, physx::PxControllerFilters( 0 ) );
+	if (flags & physx::PxControllerCollisionFlag::eCOLLISION_DOWN)
+		m_Jump.StopJump();
+	
 	Displacement *= 0;
 
 	// Copy the results
@@ -81,6 +89,11 @@ void APawn::Sprint()
 	{
 		m_MovementSpeed = kDefaultMovementSpeed;
 	}
+}
+
+void APawn::Jump()
+{
+	m_Jump.StartJump( 30.f );
 }
 
 FVector3 APawn::GetPawnPosition()
