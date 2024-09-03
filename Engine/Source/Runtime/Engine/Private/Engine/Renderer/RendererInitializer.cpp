@@ -24,8 +24,6 @@
 
 /* static */ void FRendererInitializer::InitializeSwapChain( FSwapChain& OutSwapChain, void* pNativeWindow, uint32 Width, uint32 Height )
 {
-	FRenderContext* Context = FRenderContext::GetInstance();
-
 	FRenderContextFactory Factory;
 	Factory.CreateSwapChain( OutSwapChain, pNativeWindow, Width, Height, GCommandManager, GGraphicsDevice );
 }

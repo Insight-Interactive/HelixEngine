@@ -219,12 +219,12 @@ void HEngine::PostShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
 
-	FRendererInitializer::UnInitializeContext( m_RenderContext );
 
 	HE_SAFE_DELETE_PTR( GThreadPool );
 
 	System::UninitializePlatform();
 	HE_SAFE_DELETE_PTR( GGameInstance );
+	FRendererInitializer::UnInitializeContext( m_RenderContext );
 
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
@@ -255,7 +255,7 @@ void HEngine::Tick()
 		m_MainViewPort.Update( DeltaTime );
 		GGameInstance->Tick( DeltaTime );
 
-		while (Accumulator >= DeltaTime)
+		while ( (DeltaTime > 0.f) && Accumulator >= DeltaTime)
 		{
 			Physics::Update( DeltaTime, m_FrameTimeScale );
 			m_GameWorld.Tick( DeltaTime );

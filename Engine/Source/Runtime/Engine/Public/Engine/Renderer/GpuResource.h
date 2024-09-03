@@ -97,7 +97,9 @@ FORCEINLINE FGpuResource::FGpuResource( EResourceState CurrentState, EResourceSt
 
 FORCEINLINE void FGpuResource::Destroy()
 {
-	GCommandManager.IdleGpu();
+	if ( GCommandManager.IsValid() ) // else app is probably closing
+		GCommandManager.IdleGpu();
+
 #if R_WITH_D3D12
 	m_pID3D12Resource	= nullptr;
 	m_GpuVirtualAddress = HE_D3D12_GPU_VIRTUAL_ADDRESS_NULL;

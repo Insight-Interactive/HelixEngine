@@ -80,6 +80,7 @@ public:
 
 	void Initialize(FRenderDevice& pDevice);
 	void UnInitialize();
+	bool IsValid() { return m_pDeviceRef != nullptr; }
 
 	void CreateNewCommandContext(const ECommandListType& Type, FCommandContext& pContext, void** pCommandAllocator );
 	void WaitForFence(uint64 Value);

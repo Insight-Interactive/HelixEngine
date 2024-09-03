@@ -4,8 +4,6 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-#include "TSingleton.h"
-
 
 class FSwapChain;
 class FRenderDevice;
@@ -15,7 +13,7 @@ extern FRenderDevice GGraphicsDevice;
 /*
 	Responsible for handling rendering related messaged and resource management.
 */
-class RENDER_API FRenderContext : public TSingleton<FRenderContext>
+class RENDER_API FRenderContext
 {
 	friend class FRenderContextFactory;
 	friend class FRenderContextFactoryD3D12;

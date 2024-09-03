@@ -156,8 +156,8 @@ protected:
 	FAssetDatabase			m_AssetDatabase;
 
 	// Subsystems
+	FRenderContext		m_RenderContext;
 	LuaScriptVM			m_ScriptSubsystem;
-	FRenderContext m_RenderContext;
 };
 
 // Global engine reference. Accessible in all engine build configurtions.
