@@ -4,9 +4,9 @@
 
 #include "World/World.h"
 #include "Engine/Physics/Physics.h"
-#include "CommandContext.h"
-#include "Renderer/ConstantBufferStructures.h"
-#include "Renderer/ShaderRegisters.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Graphics/ConstantBufferStructures.h"
+#include "Graphics/ShaderRegisters.h"
 #include "GameFramework/Components/HCameraComponent.h"
 
 

@@ -4,15 +4,15 @@
 #include "GameFramework/Components/HStaticMeshComponent.h"
 
 #include "World/World.h"
-#include "RendererCore.h"
-#include "CommandContext.h"
-#include "Renderer/ShaderRegisters.h"
+#include "Engine/Renderer/RendererCore.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Graphics/ShaderRegisters.h"
 #include "GameFramework/Actor/AActor.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "Renderer/ConstantBufferStructures.h"
+#include "Graphics/ConstantBufferStructures.h"
 #include "GameFramework/Actor/AActor.h"
 #include "World/World.h"
-#include "BatchRenderer.h"
+#include "Engine/Renderer/BatchRenderer.h"
 
 
 HStaticMeshComponent::HStaticMeshComponent(FComponentInitArgs& InitArgs)

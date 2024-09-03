@@ -3,12 +3,12 @@
 
 #include "GameFramework/Components/HSceneComponent.h"
 
-#include "Color.h"
 #include "Transform.h"
-#include "ModelManager.h"
-#include "ConstantBuffer.h"
-#include "Renderer/LightManager.h"
-#include "Renderer/MaterialManager.h"
+#include "Engine/Renderer/Color.h"
+#include "Engine/Renderer/ModelManager.h"
+#include "Engine/Renderer/ConstantBuffer.h"
+#include "Graphics/LightManager.h"
+#include "Graphics/MaterialManager.h"
 
 
 extern LightManager GLightManager;

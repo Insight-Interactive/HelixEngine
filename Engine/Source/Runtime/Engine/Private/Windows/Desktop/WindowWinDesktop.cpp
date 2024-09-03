@@ -6,7 +6,7 @@
 #include "System.h"
 #include "Engine/Engine.h"
 
-#include "RendererInitializer.h"
+#include "Engine/Renderer/RendererInitializer.h"
 #include "Input/InputEnums.h"
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"

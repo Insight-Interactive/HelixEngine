@@ -3,8 +3,8 @@
 
 #include "UI/Widget.h"
 
-#include "Renderer/FontManager.h"
-#include "Color.h"
+#include "Graphics/FontManager.h"
+#include "Engine/Renderer/Color.h"
 
 const uint32 kMaxTextCharacters = 1024;
 

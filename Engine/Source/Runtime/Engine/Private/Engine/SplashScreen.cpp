@@ -3,17 +3,8 @@
 
 #include "Engine/SplashScreen.h"
 
-#include "RenderDevice.h"
-#include "SwapChain.h"
-#include "PixelBuffer.h"
-#include "GpuResource.h"
-#include "RootSignature.h"
-#include "PipelineState.h"
-#include "CommandManager.h"
-#include "CommandContext.h"
-#include "CommonStructHelpers.h"
-#include "Renderer/Common.h"
-#include "Renderer/GeometryGenerator.h"
+#include "Graphics/Common.h"
+#include "Graphics/GeometryGenerator.h"
 
 #include "FileSystem.h"
 #include "DataTypeWrappers.h"

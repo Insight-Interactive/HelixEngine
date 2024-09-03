@@ -40,7 +40,6 @@ project ("HelixEd")
 		"Private/PCH/",
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
-		heGetModulePublicDir( "Renderer" ),
 		heGetModulePublicDir( "Physics" ),
 		heGetModulePublicDir( "Scripting" ),
 

@@ -68,8 +68,6 @@ project ("Engine")
 		"Private/PCH/",
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
-		heGetModulePublicDir( "Renderer" ),
-		heGetModulePublicDir( "Physics" ),
 		heGetModulePublicDir( "Scripting" ),
 
 		-- Third Party
@@ -81,6 +79,8 @@ project ("Engine")
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),
+		heGetThirdPartyModule( "WinPixEventRuntime" )	.. "Include/",
+		heGetThirdPartyModule( "OpenFBX" )				.. "src/",
 		heGetThirdPartyModule( "tinygltf" ),
 	}
 
@@ -88,7 +88,6 @@ project ("Engine")
 	{
 		"Core",
 		"Math",
-		"Renderer",
 		"Shaders",
 		"Scripting",
 
@@ -105,6 +104,8 @@ project ("Engine")
 		"_CRT_SECURE_NO_WARNINGS",
 		"ENGINE_MODULE=1",
 		"R_WITH_D3D12=1",
+		"R_WITH_DXR=1",
+
 	}
 
 	flags
@@ -179,6 +180,16 @@ project ("Engine")
 		libdirs
 		{
 			"%{libraryDirectories.PIXx64}",
+		}
+		defines
+		{
+			"R_TRACK_RENDER_EVENTS=1",
+			"R_DEBUG_GPU_RESOURCES=1",
+			"R_DEBUG=1",
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.PIXWinDesktopx64}" -- Library linked in Engine.module.lua
 		}
 
 	-- Third Party links

@@ -40,7 +40,6 @@ project ("PackageCooker")
 		"Private/PCH/",
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
-		heGetModulePublicDir( "Renderer" ),
 		heGetEngineRuntimeModulePublicDir ( "Engine" ),
 
 		-- Third Party
@@ -53,7 +52,6 @@ project ("PackageCooker")
 		"Core",
 		--"Game",
 		"Math",
-		"Renderer",
 		"Shaders",
 		
 		-- Third Party libs

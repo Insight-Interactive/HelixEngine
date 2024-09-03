@@ -7,7 +7,7 @@
 #include "AssetRegistry/AssetDatabase.h"
 
 #include "Engine/GameProject.h"
-#include "VertexLayouts.h"
+#include "Engine/Renderer/VertexLayouts.h"
 
 
 HMeshColliderComponent::HMeshColliderComponent( FComponentInitArgs& InitArgs )

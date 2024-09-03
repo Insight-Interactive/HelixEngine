@@ -5,10 +5,10 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
-#include "CommandContext.h"
-#include "ConstantBuffer.h"
-#include "Renderer/ShaderRegisters.h"
-#include "Renderer/GeometryGenerator.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Engine/Renderer/ConstantBuffer.h"
+#include "Graphics/ShaderRegisters.h"
+#include "Graphics/GeometryGenerator.h"
 #include "GameFramework/Components/HCameraComponent.h"
 
 

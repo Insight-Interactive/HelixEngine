@@ -4,7 +4,7 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
-#include "Renderer/GeometryGenerator.h"
+#include "Graphics/GeometryGenerator.h"
 
 
 HPlaneColliderComponent::HPlaneColliderComponent( FComponentInitArgs& InitArgs )

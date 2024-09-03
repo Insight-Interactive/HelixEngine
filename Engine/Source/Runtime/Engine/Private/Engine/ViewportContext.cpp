@@ -9,7 +9,6 @@
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "UI/Panel.h"
-#include "CommandContext.h"
 
 
 FViewportContext::FViewportContext()

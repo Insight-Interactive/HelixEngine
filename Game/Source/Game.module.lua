@@ -42,7 +42,6 @@ project ("Game-Core")
 		heGetModulePublicDir( "Engine" ),
 		heGetModulePublicDir( "Core" ),
 		heGetModulePublicDir( "Math" ),
-		heGetModulePublicDir( "Renderer" ),
 		heGetModulePublicDir( "Physics" ),
 		heGetModulePublicDir( "Scripting" ),
 

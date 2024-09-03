@@ -2,8 +2,6 @@
 
 #include "UI/Label.h"
 
-#include "VertexLayouts.h"
-#include "CommandContext.h"
 #include "AssetRegistry/AssetDatabase.h"
 
 

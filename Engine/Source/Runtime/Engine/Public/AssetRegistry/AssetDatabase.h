@@ -5,11 +5,11 @@
 
 #include "AssetRegistry/ShaderDatabase.h"
 
-#include "ModelManager.h"
-#include "TextureManager.h"
+#include "Engine/Renderer/ModelManager.h"
+#include "Engine/Renderer/TextureManager.h"
 #include "Engine/GameProject.h"
-#include "Renderer/MaterialManager.h"
-#include "Renderer/FontManager.h"
+#include "Graphics/MaterialManager.h"
+#include "Graphics/FontManager.h"
 #include "LuaScript.h"
 #include "Engine/ScriptManager.h"
 

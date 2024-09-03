@@ -4,12 +4,11 @@
 #include "App/App.h"
 #include "CommandLine.h"
 #include "World/World.h"
-#include "RenderContext.h"
+#include "Engine/Renderer/RenderContext.h"
 #include "Engine/GameProject.h"
 #include "Engine/ViewportContext.h"
 #include "Engine/Timer.h"
 #include "AssetRegistry/AssetDatabase.h"
-#include "Engine/Subsystem/RenderingSubsystem.h"
 #include "Engine/Event/EventEmitter.h"
 #include "LuaScriptVM.h"
 #include "SystemTime.h"
@@ -135,7 +134,6 @@ protected:
 	bool OnWindowFocus( WindowFocusEvent& e );
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 
-	FRenderingSubsystem& GetRenderingSubsystem();
 
 protected:
 	bool					m_IsInitialized;
@@ -158,8 +156,8 @@ protected:
 	FAssetDatabase			m_AssetDatabase;
 
 	// Subsystems
-	FRenderingSubsystem		m_ReneringSubsystem;
 	LuaScriptVM			m_ScriptSubsystem;
+	FRenderContext m_RenderContext;
 };
 
 // Global engine reference. Accessible in all engine build configurtions.
@@ -270,9 +268,4 @@ FORCEINLINE void HEngine::SetIsPlayingInEditor( bool IsPlaying )
 	{
 		HE_LOG( Log, TEXT( "Ending Play In Editor session." ) );
 	}
-}
-
-FORCEINLINE FRenderingSubsystem& HEngine::GetRenderingSubsystem()
-{
-	return m_ReneringSubsystem;
 }

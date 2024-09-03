@@ -34,8 +34,12 @@
 
 #	if R_WITH_D3D12
 #		include <d3d12.h>
+#		include <d2d1_3.h>
 #		include <D3D12shader.h>
 #		include <d3dcompiler.h>
+#		include <dwrite.h>
+#		include "../Engine/Renderer/Direct3D12/d3dx12.h"
+
 #		pragma comment(lib, "D3DCompiler.lib")
 #		pragma comment(lib, "D3D12.lib")
 #		pragma comment(lib, "DXGI.lib")
@@ -44,6 +48,10 @@
 #			include <dxgi1_6.h>
 #		else
 #			include <dxgi1_5.h>
+#		endif
+
+#		if R_TRACK_RENDER_EVENTS
+#			include "WinPixEventRuntime/pix3.h"
 #		endif
 #endif
 
@@ -87,6 +95,7 @@
 
 #endif // HE_WINDOWS
 
+#include "GUID.h"
 #include "CoreFwd.h"
 #include "MathCore.h"
 #include "ScriptingFwd.h"
@@ -99,6 +108,23 @@
 #include "GUID.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
+
+// Renderer
+#include "Engine/Renderer/SwapChain.h"
+#include "Engine/Renderer/GpuResource.h"
+#include "Engine/Renderer/DepthBuffer.h"
+#include "Engine/Renderer/ColorBuffer.h"
+#include "Engine/Renderer/PixelBuffer.h"
+#include "Engine/Renderer/ModelManager.h"
+#include "Engine/Renderer/RenderDevice.h"
+#include "Engine/Renderer/RendererCore.h"
+#include "Engine/Renderer/PipelineState.h"
+#include "Engine/Renderer/RootSignature.h"
+#include "Engine/Renderer/VertexLayouts.h"
+#include "Engine/Renderer/CommandManager.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Engine/Renderer/ConstantBuffer.h"
+#include "Engine/Renderer/CommonStructHelpers.h"
 
 // Third Party
 //

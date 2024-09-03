@@ -9,13 +9,11 @@
 #include "GameFramework/Game.h"
 #include "GameFramework/GameInstance.h"
 
-#include "GpuResource.h"
-#include "CommandContext.h"
-#include "CommandManager.h"
 #include "Engine/SplashScreen.h"
 #include "Engine/Event/EngineEvent.h"
 //#include "../Script/ScriptCallbacks.h"
-#include "Renderer/FontManager.h"
+#include "Graphics/FontManager.h"
+#include "Engine/Renderer/RendererInitializer.h"
 
 
 Logger GEngineLogger;
@@ -94,12 +92,10 @@ void HEngine::PreStartup()
 	// Initialize Subsystems
 	Input::Initialize();
 	Physics::Initialize();
-	m_ReneringSubsystem.Initialize();
 	m_ScriptSubsystem.Setup();
+	FRendererInitializer::InitializeContext( m_RenderContext );
 	m_ScriptSubsystem.BindLuaFunction( "GetDeltaTime", *this, &HEngine::GetDeltaTime );
 	m_ScriptSubsystem.BindLuaFunction( "GetAppSeconds", *this, &HEngine::GetAppSeconds );
-
-	m_ReneringSubsystem.RunAsync();
 
 	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
 }
@@ -223,12 +219,12 @@ void HEngine::PostShutdown()
 {
 	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
 
+	FRendererInitializer::UnInitializeContext( m_RenderContext );
+
 	HE_SAFE_DELETE_PTR( GThreadPool );
 
 	System::UninitializePlatform();
 	HE_SAFE_DELETE_PTR( GGameInstance );
-
-	m_ReneringSubsystem.UnInitialize();
 
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }

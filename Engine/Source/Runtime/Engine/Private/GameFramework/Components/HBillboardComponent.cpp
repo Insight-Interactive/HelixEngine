@@ -4,7 +4,7 @@
 #include "GameFramework/Components/HBillboardComponent.h"
 
 #include "GameFramework/Components/HCameraComponent.h"
-#include "Renderer/GeometryGenerator.h"
+#include "Graphics/GeometryGenerator.h"
 #include "World/World.h"
 
 

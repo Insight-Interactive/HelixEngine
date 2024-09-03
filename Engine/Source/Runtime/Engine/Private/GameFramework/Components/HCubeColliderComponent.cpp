@@ -4,10 +4,10 @@
 
 #include "World/World.h"
 #include "Engine/Engine.h"
-#include "CommandContext.h"
-#include "Renderer/ConstantBufferStructures.h"
-#include "Renderer/ShaderRegisters.h"
-#include "Renderer/GeometryGenerator.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Graphics/ConstantBufferStructures.h"
+#include "Graphics/ShaderRegisters.h"
+#include "Graphics/GeometryGenerator.h"
 
 
 HCubeColliderComponent::HCubeColliderComponent( FComponentInitArgs& InitArgs )

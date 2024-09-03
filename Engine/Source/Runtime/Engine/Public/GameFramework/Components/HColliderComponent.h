@@ -5,10 +5,10 @@
 #include "Engine/Physics/CollisionHandler.h"
 
 #include "Engine/Physics/RigidBody.h"
-#include "ModelManager.h"
-#include "ConstantBuffer.h"
-#include "Renderer/MaterialManager.h"
-#include "Renderer/ConstantBufferStructures.h"
+#include "Engine/Renderer/ModelManager.h"
+#include "Engine/Renderer/ConstantBuffer.h"
+#include "Graphics/MaterialManager.h"
+#include "Graphics/ConstantBufferStructures.h"
 
 
 HCOMPONENT()

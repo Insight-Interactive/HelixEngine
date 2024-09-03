@@ -1,14 +1,14 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "CommonStructs.h"
+#include "Engine/Renderer/CommonStructs.h"
 
-#include "ModelManager.h"
+#include "Engine/Renderer/ModelManager.h"
 #include "Engine/Window.h"
 
 #include "Input/InputDispatcher.h"
-#include "Renderer/SceneRenderer.h"
-#include "Renderer/UIRenderer.h"
+#include "Graphics/SceneRenderer.h"
+#include "Graphics/UIRenderer.h"
 
 
 class HWorld;

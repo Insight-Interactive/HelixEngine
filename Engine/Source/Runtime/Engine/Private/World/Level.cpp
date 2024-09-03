@@ -4,7 +4,6 @@
 #include "World/Level.h"
 
 #include "World/World.h"
-#include "RendererCore.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Actor/AActor.h"
 #include "GameFramework/Actor/ACharacter.h"

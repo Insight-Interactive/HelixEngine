@@ -5,7 +5,7 @@
 
 #include "Engine/Engine.h"
 #include "Engine/ViewportContext.h"
-#include "Renderer/LightManager.h"
+#include "Graphics/LightManager.h"
 #include "GameFramework/Actor/ACharacter.h"
 #include "GameFramework/Actor/AThirdPersonCharacter.h"
 #include "GameFramework/Actor/AFirstPersonCharacter.h"
@@ -135,10 +135,6 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 
 void HWorld::RegisterScenes()
 {
-	FRenderingSubsystem& RenderingSubsystem = GEngine->GetRenderingSubsystem();
-
-	RenderingSubsystem.PushUIPanelForRendering( m_DebugUI );
-	RenderingSubsystem.PushSceneForRendering( m_Scene );
 }
 
 void HWorld::BeginPlay()
@@ -183,7 +179,6 @@ void HWorld::Flush()
 		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
-		GEngine->GetRenderingSubsystem().RemoveSceneFromRendering( m_Scene );
 
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();

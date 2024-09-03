@@ -15,7 +15,6 @@ class HWorld;
 class HScene : public HObject
 {
 	using Super = HObject;
-	friend class FRenderingSubsystem;
 public:
 	HScene( HWorld* pOwner );
 	virtual ~HScene();
