@@ -19,11 +19,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Math", "Engine\Source\Runti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scripting", "Engine\Source\Runtime\Scripting\Scripting.vcxproj", "{985A7358-04C5-27CF-4D03-D974B9AC0524}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Programs", "Programs", "{B70DBBB7-A3DB-AEBD-8C6F-1FE478DC8A22}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shaders", "Engine\Shaders\Shaders.vcxproj", "{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{DD376B17-49ED-E30C-D2E1-DDE33E96DA10}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PackageCooker", "Engine\Source\Editor\PackageCooker\PackageCooker.vcxproj", "{F4D4E73E-6095-6375-29D0-ACF2954FA851}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shaders", "Engine\Shaders\Shaders.vcxproj", "{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "Engine\Source\UnitTests\UnitTests.vcxproj", "{F8411ACB-64AC-CE41-ADEA-7FE71994AC96}"
 EndProject
@@ -161,26 +161,6 @@ Global
 		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Prospero.Build.0 = ShippingGame Prospero|x64
 		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
 		{985A7358-04C5-27CF-4D03-D974B9AC0524}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Prospero.Build.0 = DebugEditor Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Win64.ActiveCfg = DebugEditor Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Win64.Build.0 = DebugEditor Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Prospero.ActiveCfg = DebugGame Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Prospero.Build.0 = DebugGame Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Win64.ActiveCfg = DebugGame Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Win64.Build.0 = DebugGame Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Prospero.ActiveCfg = Demo Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Prospero.Build.0 = Demo Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Win64.ActiveCfg = Demo Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Win64.Build.0 = Demo Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Prospero.ActiveCfg = Development Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Prospero.Build.0 = Development Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Win64.ActiveCfg = Development Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Win64.Build.0 = Development Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Prospero.ActiveCfg = ShippingGame Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Prospero.Build.0 = ShippingGame Prospero|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.DebugEditor|Prospero.Build.0 = DebugEditor Prospero|x64
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.DebugEditor|Win64.ActiveCfg = DebugEditor Win64|x64
@@ -201,6 +181,26 @@ Global
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.ShippingGame|Prospero.Build.0 = ShippingGame Prospero|x64
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
 		{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Prospero.Build.0 = DebugEditor Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Win64.ActiveCfg = DebugEditor Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugEditor|Win64.Build.0 = DebugEditor Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Prospero.ActiveCfg = DebugGame Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Prospero.Build.0 = DebugGame Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Win64.ActiveCfg = DebugGame Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.DebugGame|Win64.Build.0 = DebugGame Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Prospero.ActiveCfg = Demo Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Prospero.Build.0 = Demo Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Win64.ActiveCfg = Demo Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Demo|Win64.Build.0 = Demo Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Prospero.ActiveCfg = Development Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Prospero.Build.0 = Development Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Win64.ActiveCfg = Development Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.Development|Win64.Build.0 = Development Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Prospero.ActiveCfg = ShippingGame Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Prospero.Build.0 = ShippingGame Prospero|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Win64.ActiveCfg = ShippingGame Win64|x64
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851}.ShippingGame|Win64.Build.0 = ShippingGame Win64|x64
 		{F8411ACB-64AC-CE41-ADEA-7FE71994AC96}.DebugEditor|Prospero.ActiveCfg = DebugEditor Prospero|x64
 		{F8411ACB-64AC-CE41-ADEA-7FE71994AC96}.DebugEditor|Prospero.Build.0 = DebugEditor Prospero|x64
 		{F8411ACB-64AC-CE41-ADEA-7FE71994AC96}.DebugEditor|Win64.ActiveCfg = DebugEditor Win64|x64
@@ -231,6 +231,6 @@ Global
 		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
 		{AFF4887C-9B2B-8A0D-4418-7010302E060F} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
 		{985A7358-04C5-27CF-4D03-D974B9AC0524} = {65CB7E83-D18B-FAB9-9AC6-433706463F96}
-		{F4D4E73E-6095-6375-29D0-ACF2954FA851} = {B70DBBB7-A3DB-AEBD-8C6F-1FE478DC8A22}
+		{F4D4E73E-6095-6375-29D0-ACF2954FA851} = {DD376B17-49ED-E30C-D2E1-DDE33E96DA10}
 	EndGlobalSection
 EndGlobal

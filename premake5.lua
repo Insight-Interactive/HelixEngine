@@ -10,6 +10,7 @@ require ("Modules/winrt");
 
 include ("Helix/BuildUtilities.lua");
 
+gamename = "Our War"
 
 workspace ("HelixEngine")
 
@@ -121,7 +122,7 @@ group ("Editor")
 	include ( "Engine/Source/Editor/HelixEd/HelixEd.module.lua" );
 group ("")
 
-group ("Programs")
+group ("Tools")
 	include ( "Engine/Source/Editor/PackageCooker/PackageCooker.program.lua" );
 group ("")
 

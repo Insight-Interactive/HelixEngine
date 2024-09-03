@@ -10,7 +10,6 @@ project ("Engine")
 	language ("C++")
 	cppdialect ("C++17")
 	staticruntime ("On")
-	targetname ("%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en")
 	locale("en-US")
@@ -18,7 +17,7 @@ project ("Engine")
 	objdir( heGetBuildIntFolder() )
 	pchheader("EnginePCH.h")
 	pchsource("Private/PCH/EnginePCH.cpp")
-
+	targetname ("%{prj.name}")
 
 	files
 	{
@@ -30,9 +29,9 @@ project ("Engine")
 		"Private/GameFramework/**.h",
 		"Private/GameFramework/**.cpp",
 		"Private/GameFramework/**.inl",
-		"Private/Renderer/**.h",
-		"Private/Renderer/**.cpp",
-		"Private/Renderer/**.inl",
+		"Private/Graphics/**.h",
+		"Private/Graphics/**.cpp",
+		"Private/Graphics/**.inl",
 		"Private/Input/**.h",
 		"Private/Input/**.cpp",
 		"Private/Input/**.inl",
@@ -105,7 +104,6 @@ project ("Engine")
 		"ENGINE_MODULE=1",
 		"R_WITH_D3D12=1",
 		"R_WITH_DXR=1",
-
 	}
 
 	flags
@@ -123,6 +121,12 @@ project ("Engine")
 
 	dofile ("Helix/CommonEngineMacros.lua")
 
+
+	filter { "configurations:ShippingGame" }
+		defines
+		{
+			"NDEBUG"
+		}
 
 	filter ("platforms:Win64")
 		files

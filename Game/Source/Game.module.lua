@@ -10,7 +10,7 @@ project ("Game-Core")
     targetname ("%{prj.name}")
     systemversion ("latest")
     defaultlanguage ("en-US")
-    targetdir( heGetBuildFolder() )
+    targetdir( heGetBuildIntFolder() )
     objdir( heGetBuildIntFolder() )
     
     pchheader("GamePCH.h")

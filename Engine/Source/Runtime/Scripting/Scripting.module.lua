@@ -12,7 +12,7 @@ project ("Scripting")
 	targetname ("Helix-%{prj.name}")
 	systemversion ("latest")
 	defaultlanguage ("en")
-	targetdir ( heGetBuildFolder() )
+	targetdir ( heGetBuildIntFolder() )
 	objdir ( heGetBuildIntFolder() )
 	
 --	pchheader("ScriptingPCH.h")

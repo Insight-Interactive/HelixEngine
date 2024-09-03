@@ -21,7 +21,10 @@ FSubsystemInterface::~FSubsystemInterface()
 void FSubsystemInterface::RunAsync()
 {
 	Char ThreadName[256];
+	ZeroMemory( ThreadName, sizeof( ThreadName ) );
+#if HE_DEBUG
 	sprintf_s( ThreadName, "Helix Engine Subsystem Thread: %s", m_DebugName );
+#endif
 	System::CreateAndRunThread( ThreadName, 0, SubsystemRunAsyncHelper, this );
 
 	m_IsRunning = true;

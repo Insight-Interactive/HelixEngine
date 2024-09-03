@@ -11,7 +11,7 @@ project ("Core")
     targetname ("Helix-%{prj.name}")
     systemversion ("10.0.18362.0:latest")
     defaultlanguage ("en")
-    targetdir ( heGetBuildFolder() )
+    targetdir ( heGetBuildIntFolder() )
     objdir ( heGetBuildIntFolder() )
 
     pchheader("CorePCH.h")

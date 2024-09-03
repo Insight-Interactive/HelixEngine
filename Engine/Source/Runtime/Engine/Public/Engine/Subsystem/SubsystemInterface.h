@@ -42,5 +42,9 @@ FORCEINLINE void FSubsystemInterface::TerminateAsyncProcess()
 
 FORCEINLINE const Char* FSubsystemInterface::GetDebugName() const
 {
+#if HE_DEBUG
 	return m_DebugName;
+#else
+	return "";
+#endif
 }

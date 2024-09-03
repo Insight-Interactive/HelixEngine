@@ -104,7 +104,7 @@ FORCEINLINE void FGameProject::SetProjectRootDirectory( const char* ProjectRoot 
 {
 #if HE_STANDALONE && !HE_DEMO_GAME
 	"Data\\";
-	sprintf_s( m_ProjectRoot, sizeof( m_ProjectRoot ), "Data\\" );
+	sprintf_s( m_ProjectRoot.m_Path, sizeof( m_ProjectRoot.m_Path ), "Data\\" );
 #else	
 	m_ProjectRoot.SetPath( ProjectRoot );
 #endif
