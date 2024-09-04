@@ -16,6 +16,7 @@
 */
 class RENDER_API FConstantBufferInterface : public FGpuResource
 {
+	friend class FMaterial;
 public:
 	virtual ~FConstantBufferInterface()
 	{
@@ -31,10 +32,6 @@ public:
 		Returns true if the buffer is ready to be used too, false if not.
 	*/
 	bool IsValid() const;
-	/*
-		Indicate whether the buffer is dirty and needs to be re-uploaded to the Gpu.
-	*/
-	void SetDirty( bool IsDirty );
 	bool GetIsDirty() const;
 	uint32 GetBufferSize() const;
 
@@ -49,11 +46,11 @@ protected:
 	{
 	}
 
-	void CreateAPIBuffer( const WChar* Name );
 #if R_WITH_D3D12
 	D3D12_CPU_DESCRIPTOR_HANDLE CBV() const;
 	void* GetGPUWritePointer();
 #endif
+	void CreateAPIBuffer( const WChar* Name );
 	static uint32 GetAlignedBufferSize( const uint32 BufferSize, const uint32 Alignment );
 
 protected:
@@ -93,10 +90,7 @@ public:
 	virtual void Destroy() override;
 	virtual void UploadBuffer() override;
 
-	uint8* operator->()
-	{
-		return GetBufferPointer();
-	}
+	uint8* operator->() { return GetBufferPointer(); }
 	uint8* GetBufferPointer();
 
 private:
@@ -126,11 +120,7 @@ public:
 	virtual void Create( const WChar* Name, uint32 Size = 0/* Ignored for this buffer type.. */ ) override;
 	virtual void Destroy() override;
 
-	BufferDataType* operator->()
-	{
-		return GetBufferPointer();
-	}
-
+	BufferDataType* operator->() { return GetBufferPointer(); }
 	BufferDataType* GetBufferPointer();
 
 
@@ -172,11 +162,6 @@ FORCEINLINE bool FConstantBufferInterface::IsValid() const
 	return m_BufferSize > 0 && m_UID != HE_INVALID_CONSTANT_BUFFER_HANDLE;
 }
 
-FORCEINLINE void FConstantBufferInterface::SetDirty( bool IsDirty )
-{
-	m_IsDirty = IsDirty;
-}
-
 FORCEINLINE bool FConstantBufferInterface::GetIsDirty() const
 {
 	return m_IsDirty;
@@ -188,7 +173,7 @@ FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer( const WChar* Name )
 	ID3D12Device* pID3D12Device = RCast<ID3D12Device*>( GGraphicsDevice.GetNativeDevice() );
 	
 	D3D12_RESOURCE_DESC ResDesc = { };
-	ResDesc.Width				= GetBufferSize();
+	ResDesc.Width				= m_BufferSize;
 	ResDesc.Flags				= D3D12_RESOURCE_FLAG_NONE;
 	ResDesc.Alignment			= 0;
 	ResDesc.Dimension			= D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -227,7 +212,7 @@ FORCEINLINE void FConstantBufferInterface::CreateAPIBuffer( const WChar* Name )
 	m_CBV = AllocateDescriptor( pID3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC CBVDesc = {};
-	CBVDesc.SizeInBytes		= GetBufferSize();
+	CBVDesc.SizeInBytes		= m_BufferSize;
 	CBVDesc.BufferLocation	= m_pID3D12Resource->GetGPUVirtualAddress();
 	pID3D12Device->CreateConstantBufferView( &CBVDesc, m_CBV );
 #endif // R_WITH_D3D12
@@ -263,6 +248,8 @@ FORCEINLINE void* FConstantBufferInterface::GetGPUWritePointer()
 
 FORCEINLINE void FConstantBuffer::UploadBuffer()
 {
+	HE_ASSERT( IsValid() && m_pData != nullptr ); // Trying to upload a buffer that has not been created! Did you forget to call FConstantBufferInterface::Create()?
+
 	if (!GetIsDirty())
 		return;
 
@@ -270,7 +257,7 @@ FORCEINLINE void FConstantBuffer::UploadBuffer()
 	memcpy( GetGPUWritePointer(), (const void*)m_pData, GetBufferSize() );
 #endif // R_WITH_D3D12
 
-	SetDirty( false );
+	m_IsDirty = false;
 }
 
 FORCEINLINE void FConstantBuffer::Create( const WChar* Name, uint32 Size )
@@ -302,6 +289,7 @@ FORCEINLINE void FConstantBuffer::Destroy()
 
 FORCEINLINE uint8* FConstantBuffer::GetBufferPointer()
 {
+	m_IsDirty = true;
 	return m_pData;
 }
 
@@ -318,6 +306,7 @@ FORCEINLINE void TConstantBuffer<BufferDataType>::Destroy()
 template <typename BufferDataType>
 FORCEINLINE BufferDataType* TConstantBuffer<BufferDataType>::GetBufferPointer()
 {
+	m_IsDirty = true;
 	return RCast<BufferDataType*>( m_Data );
 }
 
@@ -333,7 +322,7 @@ FORCEINLINE void TConstantBuffer<BufferDataType>::UploadBuffer()
 	memcpy( GetGPUWritePointer(), (const void*)m_Data, GetBufferSize() );
 #endif // R_WITH_D3D12
 
-	SetDirty( false );
+	m_IsDirty = false;
 }
 
 template <typename BufferDataType>

@@ -6,7 +6,7 @@
 
 namespace GeometryGenerator
 {
-	StaticMeshGeometryRef GenerateScreenAlignedQuadMesh()
+	HStaticMesh GenerateScreenAlignedQuadMesh()
 	{
 		static const String QuadGeometryName = "ScreenSpaceQuad";
 		if (GStaticGeometryManager.MeshExists(QuadGeometryName))
@@ -39,7 +39,7 @@ namespace GeometryGenerator
 		);
 	}
 
-	/*StaticMeshGeometryRef GenerateCapsule()
+	/*HStaticMesh GenerateCapsule()
 	{
 		String GeometryName = "Capsule";
 		if (GStaticGeometryManager.MeshExists( GeometryName ))
@@ -61,7 +61,7 @@ namespace GeometryGenerator
 		);
 	}*/
 
-	StaticMeshGeometryRef Generate1x1x1CubeMesh()
+	HStaticMesh Generate1x1x1CubeMesh()
 	{
 		String GeometryName = "GenericCube";
 		if (GStaticGeometryManager.MeshExists( GeometryName ))
@@ -114,7 +114,7 @@ namespace GeometryGenerator
 		);
 	}
 
-	StaticMeshGeometryRef GenerateSphere(uint32 Radius, uint32 Slices, uint32 Segments)
+	HStaticMesh GenerateSphere(uint32 Radius, uint32 Slices, uint32 Segments)
 	{
 		Char GeometryInfo[32];
 		sprintf_s(GeometryInfo, "Sphere:R%u-S%u-S%u", Radius, Slices, Segments);

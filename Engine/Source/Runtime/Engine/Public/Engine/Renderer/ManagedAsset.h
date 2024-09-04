@@ -3,6 +3,7 @@
 
 #include "CriticalSection.h"
 
+
 template <typename AssetType>
 class AssetRef;
 
@@ -13,6 +14,7 @@ class ManagedAsset
 	friend class MaterialManager;
 	friend class FTextureManager;
 	friend class FFontManager;
+	friend class FStaticGeometryManager;
 public:
 	ManagedAsset()
 		: m_MapKey( "<Unnamed ManagedAsset>" )

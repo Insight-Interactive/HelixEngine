@@ -1,13 +1,13 @@
 #include "EnginePCH.h"
 
-#include "Engine/Renderer/StaticMeshGeometry.h"
+#include "Engine/Renderer/StaticMesh.h"
 
 #include "Engine/Renderer/RendererCore.h"
 #include "Engine/Renderer/IndexBuffer.h"
 #include "Engine/Renderer/VertexBuffer.h"
 
 
-void HStaticMeshGeometry::Create(void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices)
+void FStaticMesh::Create(void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices)
 {
 	// Create the vertex buffer.
 	m_DrawArgs.NumVerts = NumVerticies;

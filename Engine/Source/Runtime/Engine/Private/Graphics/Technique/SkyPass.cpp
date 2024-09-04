@@ -114,7 +114,7 @@ void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
 	//
 	GfxContext.SetTexture(SPRP_Diffuse, m_SkyDiffuse);
 
-	if (m_SkyGeometry->IsValid())
+	if (m_SkyGeometry.IsValid())
 	{
 		GfxContext.SetPrimitiveTopologyType(PT_TiangleList);
 		GfxContext.BindVertexBuffer(0, m_SkyGeometry->GetVertexBuffer());

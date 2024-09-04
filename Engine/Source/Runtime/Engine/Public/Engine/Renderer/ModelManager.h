@@ -1,57 +1,15 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "RendererFwd.h"
-#include "CoreFwd.h"
+#include "Engine/Renderer/StaticMesh.h"
+#include "Engine/Renderer/VertexLayouts.h"
 
-#include "StaticMeshGeometry.h"
+#include "Path.h"
 #include "CriticalSection.h"
 
-#include "VertexLayouts.h"
-#include "Path.h"
 
-
-/*
-	Light wrapper around HStaticMeshGeometry to define higher level loading state and 
-	cache storage inside FStaticGeometryManager.
-*/
-class RENDER_API HManagedStaticMeshGeometry : public HStaticMeshGeometry
-{
-	friend class FStaticGeometryManager;
-public:
-	virtual ~HManagedStaticMeshGeometry()
-	{
-		m_IsValid = false;
-		m_IsLoading = false;
-	}
-	void WaitForLoad()	const;
-	bool IsValid()		const { return m_IsValid; }
-
-protected:
-	HManagedStaticMeshGeometry( const String& HashName )
-		: m_MapKey( HashName )
-		, m_IsValid( false )
-		, m_IsLoading( true )
-	{
-	}
-
-	void SetLoadCompleted( bool IsCompleted )
-	{
-		m_IsLoading = !IsCompleted;
-		m_IsValid = IsCompleted;
-	}
-
-	void Unload();
-
-private:
-	String m_MapKey; // For deleting from the map later.
-	bool m_IsValid;
-	bool m_IsLoading;
-
-};
-typedef std::shared_ptr<HManagedStaticMeshGeometry> StaticMeshGeometryRef;
-typedef StaticMeshGeometryRef HStaticMesh;
-
+typedef ManagedAsset<FStaticMesh> ManagedStaticMesh;
+typedef AssetRef<FStaticMesh> HStaticMesh;
 
 /*
 	Keeps track of the static mesh geometry currently loaded in the world.
@@ -66,7 +24,7 @@ public:
 	{
 	}
 
-	StaticMeshGeometryRef LoadHAssetMeshFromFile( const String& FilePath );
+	HStaticMesh LoadHAssetMeshFromFile( const String& FilePath );
 	void LoadGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount );
 
 	/*
@@ -84,13 +42,13 @@ public:
 	*/
 	void FlushCache();
 
-	StaticMeshGeometryRef GetStaticMeshByName( const String& Name );
-	StaticMeshGeometryRef RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
+	HStaticMesh GetStaticMeshByName( const String& Name );
+	HStaticMesh RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
 
 
 private:
 	CriticalSection m_MapMutex;
-	std::unordered_map< String, StaticMeshGeometryRef > m_ModelCache;
+	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCache;
 
 };
 
@@ -99,12 +57,12 @@ private:
 // Inline function implementations
 //
 
-inline StaticMeshGeometryRef FStaticGeometryManager::GetStaticMeshByName( const String& Name )
+inline HStaticMesh FStaticGeometryManager::GetStaticMeshByName( const String& Name )
 {
 	auto Iter = m_ModelCache.find( Name );
 	if (Iter != m_ModelCache.end())
 	{
-		return m_ModelCache.at( Name );
+		return m_ModelCache.at( Name ).get();
 	}
 	else
 	{

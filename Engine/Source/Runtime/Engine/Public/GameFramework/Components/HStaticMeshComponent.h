@@ -20,7 +20,7 @@ public:
 	HE_COMPONENT_GENERATED_BODY( HStaticMeshComponent )
 
 
-	void SetMesh( StaticMeshGeometryRef Mesh );
+	void SetMesh( HStaticMesh Mesh );
 	void SetMaterial( HMaterial Material );
 
 	HMaterial& GetMaterial();
@@ -52,7 +52,7 @@ protected:
 // Inline function implementations
 //
 
-FORCEINLINE void HStaticMeshComponent::SetMesh( StaticMeshGeometryRef Mesh ) 
+FORCEINLINE void HStaticMeshComponent::SetMesh( HStaticMesh Mesh )
 { 
 	m_MeshAsset = Mesh;
 }

@@ -50,7 +50,6 @@ void HScene::RenderDebugMeshes( FCommandContext& CmdContext )
 	CmdContext.EndDebugMarker();
 }
 
-
 void HScene::RenderStaticTranslucentAndUnlitObjects(FCommandContext& CmdContext)
 {
 	CmdContext.BeginDebugMarker(L"Render Translucent Lit");

@@ -175,6 +175,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_BatchRenderer.Render( CmdContext );
 	}
 
+	// Render Collision
 	{
 		CmdContext.OMSetRenderTargets( 1, pRTs, &m_DepthBuffer );
 		Scene.RenderDebugMeshes( CmdContext );
@@ -209,25 +210,22 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 	if (UploadSceneConsts)
 	{
 		TConstantBuffer<SceneConstantsCBData>& Buffer = GetSceneConstBufferForCurrentFrame();
-		SceneConstantsCBData& pCBData = *Buffer.GetBufferPointer();
 		{
 			if (m_pRenderingCamera != nullptr)
 			{
-				m_pRenderingCamera->GetViewMatrix().Transpose( pCBData.kViewMat );
-				m_pRenderingCamera->GetProjectionMatrix().Transpose( pCBData.kProjMat );
+				m_pRenderingCamera->GetViewMatrix().Transpose( Buffer->kViewMat );
+				m_pRenderingCamera->GetProjectionMatrix().Transpose( Buffer->kProjMat );
 
-				m_pRenderingCamera->GetViewMatrix().Invert( pCBData.kInverseViewMat );
-				m_pRenderingCamera->GetProjectionMatrix().Invert( pCBData.kInverseProjMat );
-				pCBData.kInverseViewMat = pCBData.kInverseViewMat.Transpose();
-				pCBData.kInverseProjMat = pCBData.kInverseProjMat.Transpose();
+				m_pRenderingCamera->GetViewMatrix().Invert( Buffer->kInverseViewMat );
+				m_pRenderingCamera->GetProjectionMatrix().Invert( Buffer->kInverseProjMat );
+				Buffer->kInverseViewMat = Buffer->kInverseViewMat.Transpose();
+				Buffer->kInverseProjMat = Buffer->kInverseProjMat.Transpose();
 
-				pCBData.kCameraPos		= m_pRenderingCamera->GetWorldPosition();
-				pCBData.kCameraFarZ		= m_pRenderingCamera->GetFarZ();
-				pCBData.kCameraNearZ	= m_pRenderingCamera->GetNearZ();
+				Buffer->kCameraPos = m_pRenderingCamera->GetWorldPosition();
+				Buffer->kCameraFarZ = m_pRenderingCamera->GetFarZ();
+				Buffer->kCameraNearZ	= m_pRenderingCamera->GetNearZ();
 			}
-			pCBData.kWorldTime		= (float)GEngine->GetAppSeconds();
-
-			Buffer.SetDirty(true);
+			Buffer->kWorldTime		= (float)GEngine->GetAppSeconds();
 		}
 		CmdContext.SetGraphicsConstantBuffer( kSceneConstants, Buffer );
 	}
@@ -235,15 +233,12 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 	if (UploadLights)
 	{
 		TConstantBuffer<SceneLightsCBData>& Buffer = GetLightConstBufferForCurrentFrame();
-		SceneLightsCBData& Lights = *Buffer.GetBufferPointer();
 		{
-			CopyMemory( Lights.PointLights, GLightManager.GetPointLighBufferPointer(), sizeof( PointLightData ) * GLightManager.GetScenePointLightCount() );
-			CopyMemory( &Lights.kWorldSun, GLightManager.GetWordSunDirectionalLight(), sizeof( DirectionalLightCBData ) );
+			CopyMemory( Buffer->PointLights, GLightManager.GetPointLighBufferPointer(), sizeof( PointLightData ) * GLightManager.GetScenePointLightCount() );
+			CopyMemory( &Buffer->kWorldSun, GLightManager.GetWordSunDirectionalLight(), sizeof( DirectionalLightCBData ) );
 
 			// TODO: Lights->NumSpotLights = GLightManager.GetSceneSpotLightCount();
-			Lights.NumPointLights = GLightManager.GetScenePointLightCount();
-
-			Buffer.SetDirty(true);
+			Buffer->NumPointLights = GLightManager.GetScenePointLightCount();
 		}
 		CmdContext.SetGraphicsConstantBuffer( kLights, Buffer);
 	}

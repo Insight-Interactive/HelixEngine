@@ -305,7 +305,7 @@ FORCEINLINE bool FMaterial::SetShaderFloatVar( const Char* VariableName, const T
 			memcpy( Iter->second[i].second, &Value, sizeof( T ) );
 
 			// Mark the buffer dirty to indicate a re-upload to the Gpu.
-			Iter->second[i].first->SetDirty( true );
+			Iter->second[i].first->m_IsDirty = true;
 		}
 		return true;
 	}

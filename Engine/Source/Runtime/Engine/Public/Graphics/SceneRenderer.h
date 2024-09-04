@@ -67,7 +67,7 @@ private:
 	FForwardRenderPass m_ForwardRenderPass;
 	FSkyboxPass m_SkyPass;
 	FPostProcessUber m_PostProcessPass;
-	StaticMeshGeometryRef m_pScreenQuadRef;
+	HStaticMesh m_pScreenQuadRef;
 	// Constant buffers
 	// Contains hashed names and lookups for the reserved constant buffers in shaders.
 	std::unordered_map<StringHashValue, std::vector<FConstantBufferInterface*>> m_ReservedConstBuffers;

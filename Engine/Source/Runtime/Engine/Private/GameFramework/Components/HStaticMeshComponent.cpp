@@ -32,7 +32,7 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 
 	if (!m_bIsDrawEnabled) return;
 
-	if (m_MeshAsset->IsValid())
+	if (m_MeshAsset.IsValid())
 	{
 		if (m_MaterialAsset.IsValid())
 		{
@@ -42,7 +42,6 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 
 		// Set the world buffer.
 		m_MeshWorldCB->kWorldMat = GetWorldMatrix().Transpose();
-		m_MeshWorldCB.SetDirty(true);
 		GfxContext.SetGraphicsConstantBuffer(kMeshWorld, m_MeshWorldCB);
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.

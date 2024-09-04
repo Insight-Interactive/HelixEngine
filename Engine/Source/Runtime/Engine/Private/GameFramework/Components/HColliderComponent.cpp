@@ -153,11 +153,10 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 		m_Material->Bind( GfxContext );
 	}
 
-	if (m_MeshAsset.get() && m_MeshAsset->IsValid())
+	if (m_MeshAsset.IsValid())
 	{
 		// Set the world buffer.
 		m_MeshWorldCB->kWorldMat = GetLocalMatrix().Transpose();
-		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.

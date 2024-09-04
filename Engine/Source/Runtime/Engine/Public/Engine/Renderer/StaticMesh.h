@@ -1,6 +1,8 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
+#include "Engine/Renderer/ManagedAsset.h"
+
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
@@ -32,16 +34,16 @@ struct FDrawArgs
 	Base class for all static geometry that exists in the world. That is, a peice of 
 	geometry with static unskinned polygons.
 */
-class RENDER_API HStaticMeshGeometry
+class RENDER_API FStaticMesh : public ManagedAsset<FStaticMesh>
 {
 	friend class FStaticGeometryManager;
 	friend class FAssetDatabase;
 public:
-	HStaticMeshGeometry()
+	FStaticMesh()
 	{
 		Initialize();
 	}
-	virtual ~HStaticMeshGeometry()
+	virtual ~FStaticMesh()
 	{
 		UnInitialize();
 	}
@@ -77,40 +79,40 @@ protected:
 //
 
 
-inline FVertexBuffer& HStaticMeshGeometry::GetVertexBuffer()
+inline FVertexBuffer& FStaticMesh::GetVertexBuffer()
 {
 	return m_DrawArgs.m_VertexBuffer;
 }
 
-inline FIndexBuffer& HStaticMeshGeometry::GetIndexBuffer()
+inline FIndexBuffer& FStaticMesh::GetIndexBuffer()
 {
 	return m_DrawArgs.m_IndexBuffer;
 }
 
-inline uint32 HStaticMeshGeometry::GetNumVerticies() const
+inline uint32 FStaticMesh::GetNumVerticies() const
 {
 	return m_DrawArgs.NumVerts;
 }
 
-inline uint32 HStaticMeshGeometry::GetNumIndices() const
+inline uint32 FStaticMesh::GetNumIndices() const
 {
 	return m_DrawArgs.NumIndices;
 }
 
-inline FGUID HStaticMeshGeometry::GetGuid() const
+inline FGUID FStaticMesh::GetGuid() const
 {
 	return m_Guid;
 }
 
-inline void HStaticMeshGeometry::Initialize()
+inline void FStaticMesh::Initialize()
 {
 }
 
-inline void HStaticMeshGeometry::UnInitialize()
+inline void FStaticMesh::UnInitialize()
 {
 }
 
-inline void HStaticMeshGeometry::SetGuid( const FGUID& NewGUID )
+inline void FStaticMesh::SetGuid( const FGUID& NewGUID )
 {
 	m_Guid = NewGUID;
 }

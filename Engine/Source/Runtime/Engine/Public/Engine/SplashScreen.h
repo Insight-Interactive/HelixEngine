@@ -35,7 +35,7 @@ protected:
 	//
 	FRootSignature m_RootSig;
 	FPipelineState m_Pipeline;
-	StaticMeshGeometryRef m_ScreenQuadRef;
+	HStaticMesh m_ScreenQuadRef;
 	HTexture m_SplashTexture;
 };
 

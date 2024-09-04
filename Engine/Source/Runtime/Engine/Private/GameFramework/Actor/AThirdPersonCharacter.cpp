@@ -68,7 +68,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
-	Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
+	//Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
 	
 	// Camera
 	Controller.BindAxis( "LookUp", m_CameraBoom, &HCameraBoomComponent::UpdateCameraPitch );
@@ -95,15 +95,10 @@ void AThirdPersonCharacter::AimDownSight()
 {
 	m_IsAiming = !m_IsAiming;
 
-	// TODO BUG(Garrett): Zooming out mid-zooom will restart lerp timer!
 	if (m_IsAiming)
-	{
 		m_CameraComponent->LerpFieldOfView( m_ADSFOVDegrees, m_ADSTimeSeconds );
-	}
 	else
-	{
 		m_CameraComponent->LerpFieldOfView( m_CameraFOV, m_ADSTimeSeconds );
-	}
 }
 
 void AThirdPersonCharacter::FireWeapon()

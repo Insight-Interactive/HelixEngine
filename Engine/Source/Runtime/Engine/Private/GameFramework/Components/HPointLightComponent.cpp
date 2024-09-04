@@ -85,7 +85,7 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 	// TODO Draw sphere showing light influence.
 
 	// Draw billboard.
-	if (m_LightDebugMesh && m_LightDebugMesh->IsValid() && GetCanDrawDebugBillboard())
+	if (m_LightDebugMesh.IsValid() && GetCanDrawDebugBillboard())
 	{
 		if (m_MaterialRef.IsValid())
 		{
@@ -106,7 +106,6 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 
 		// Set the world buffer.
 		m_MeshWorldCB->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();
-		m_MeshWorldCB.SetDirty( true );
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.

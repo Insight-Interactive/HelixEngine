@@ -9,6 +9,8 @@
 
 #if HE_DEBUG
 #define P_TRACK_MEMORY_ALLOCATIONS 1
+#define HE_DEBUG_PHYSICS 1
 #else
 #define P_TRACK_MEMORY_ALLOCATIONS 0
+#define HE_DEBUG_PHYSICS 0
 #endif

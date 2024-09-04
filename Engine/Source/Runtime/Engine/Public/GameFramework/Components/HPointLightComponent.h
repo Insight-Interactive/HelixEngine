@@ -52,7 +52,7 @@ protected:
 
 	// Billboard info
 	FTransform m_BillboardTransform;
-	StaticMeshGeometryRef m_LightDebugMesh;
+	HStaticMesh m_LightDebugMesh;
 	TConstantBuffer<MeshWorldCBData> m_MeshWorldCB;
 	HMaterial m_MaterialRef;
 

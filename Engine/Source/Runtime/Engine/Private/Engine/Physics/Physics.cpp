@@ -376,7 +376,7 @@ namespace Physics
 		const PxQueryFilterData filterData( PxFilterData(), QueryFlags );
 
 		bool Hit = PhysicsScene->raycast( Orig, UnitDir, Distance, HitInfo, HitFlags, filterData, &QueryFilter );
-
+		
 		if (outHitInfo != nullptr)
 		{
 			outHitInfo->HitPos = FVector3( HitInfo.block.position.x, HitInfo.block.position.y, HitInfo.block.position.z );

@@ -11,6 +11,7 @@
 #include "UI/Label.h"
 #include "Input/InputEnums.h"
 #include "Path.h"
+#include "Engine/Physics/RigidBody.h"
 
 
 class HLevel;
@@ -114,6 +115,7 @@ protected:
 	FViewportContext* m_pRenderingViewport;
 
 	HCameraManager m_CameraManager;
+	HTriangleMeshRigidBody m_WorldCollision;
 };
 
 

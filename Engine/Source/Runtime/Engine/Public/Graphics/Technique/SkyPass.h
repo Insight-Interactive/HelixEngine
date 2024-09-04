@@ -33,7 +33,7 @@ private:
 	virtual void UnBind( FCommandContext& GfxContext ) {}
 
 private:
-	StaticMeshGeometryRef m_SkyGeometry;
+	HStaticMesh m_SkyGeometry;
 	HTexture m_SkyDiffuse;
 
 	FRootSignature m_RS;

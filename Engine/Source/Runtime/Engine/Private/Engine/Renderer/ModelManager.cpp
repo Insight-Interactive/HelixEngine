@@ -16,18 +16,7 @@
 extern FStaticGeometryManager GStaticGeometryManager;
 
 
-void HManagedStaticMeshGeometry::WaitForLoad() const
-{
-	while ((volatile bool&)m_IsLoading)
-		std::this_thread::yield();
-}
-
-void HManagedStaticMeshGeometry::Unload()
-{
-	GStaticGeometryManager.DestroyMesh( m_MapKey );
-}
-
-StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
+HStaticMesh FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
 {
 	//HE_ASSERT( StringHelper::GetFileExtension( FilePath ) == "hasset" ); // Trying to load a file that is not an hasset.
 
@@ -124,8 +113,9 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 	}
 	// Create the mesh geometry, register it with the GPU and cache it.
 	StringHashValue NameHash = StringHash( MeshName.c_str(), MeshName.size() );
-	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( MeshName );
-	pMesh->Create(
+	ManagedStaticMesh* pMesh = new FStaticMesh();
+	pMesh->SetName( MeshName );
+	pMesh->GetAsset().Create(
 		Verticies.data(), (uint32)Verticies.size(),  sizeof( FStaticVertex3D ),
 		Indices.data(), (uint32)Indices.size() * sizeof(uint32), (uint32)Indices.size()
 	);
@@ -165,7 +155,7 @@ StaticMeshGeometryRef FStaticGeometryManager::LoadHAssetMeshFromFile( const Stri
 
 	ScopedCriticalSection Guard( m_MapMutex );
 	m_ModelCache[MeshName].reset( pMesh );
-	return m_ModelCache[MeshName];
+	return m_ModelCache[MeshName].get();
 }
 
 void FStaticGeometryManager::LoadGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount )
@@ -189,51 +179,55 @@ void FStaticGeometryManager::LoadGometry( FPath& FilePath, std::vector<FSimpleVe
 		return;
 	}
 
-	const ofbx::Mesh& Mesh = *pScene->getMesh( 0 ); // TODO: What about multiple meshes!?
-	outVerticies.resize( Mesh.getGeometry()->getVertexCount() );
-	outIndices.resize( Mesh.getGeometry()->getIndexCount() );
-
-	const ofbx::Geometry& Geometry = *Mesh.getGeometry();
-
-	const ofbx::Vec3* RawVerticies = Geometry.getVertices();
-	outVertexCount = Geometry.getVertexCount();
-
-	for (uint32 i = 0; i < outVertexCount; ++i)
+	int MeshCount = pScene->getMeshCount();
+	for (int i = 0; i < MeshCount; i++)
 	{
-		FSimpleVertex3D& Vertex = outVerticies[i];
+		const ofbx::Mesh& Mesh = *pScene->getMesh( 0 ); // TODO: What about multiple meshes!?
+		outVerticies.resize( Mesh.getGeometry()->getVertexCount() );
+		outIndices.resize( Mesh.getGeometry()->getIndexCount() );
 
-		Vertex.Position.x = (float)RawVerticies[i].x;
-		Vertex.Position.y = (float)RawVerticies[i].y;
-		Vertex.Position.z = (float)RawVerticies[i].z;
-	}
+		const ofbx::Geometry& Geometry = *Mesh.getGeometry();
 
-	const int* RawFaceIndicies = Geometry.getFaceIndices();
-	outIndexCount = Geometry.getIndexCount();
-	for (uint32 i = 0; i < outIndexCount; ++i)
-	{
-		int idx = RawFaceIndicies[i];
+		const ofbx::Vec3* RawVerticies = Geometry.getVertices();
+		outVertexCount = Geometry.getVertexCount();
+		for (uint32 j = 0; j < outVertexCount; ++j)
+		{
+			FSimpleVertex3D& Vertex = outVerticies[j];
 
-		// If the index is negative in fbx that means it is the last index of that polygon.
-		// So, make it positive and subtract one.
-		if (idx < 0)
-			idx = -(idx + 1);
+			Vertex.Position.x = (float)RawVerticies[j].x;
+			Vertex.Position.y = (float)RawVerticies[j].y;
+			Vertex.Position.z = (float)RawVerticies[j].z;
+		}
 
-		outIndices[i] = idx;
+		const int* RawFaceIndicies = Geometry.getFaceIndices();
+		outIndexCount = Geometry.getIndexCount();
+		for (uint32 k = 0; k < outIndexCount; ++k)
+		{
+			int idx = RawFaceIndicies[k];
+
+			// If the index is negative in fbx that means it is the last index of that polygon.
+			// So, make it positive and subtract one.
+			if (idx < 0)
+				idx = -(idx + 1);
+
+			outIndices[k] = idx;
+		}
 	}
 }
 
-StaticMeshGeometryRef FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
+HStaticMesh FStaticGeometryManager::RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
 {
 #if HE_WITH_EDITOR
 	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
 #endif
 
 	StringHashValue HashName = StringHash( Name.c_str(), Name.size() );
-	HManagedStaticMeshGeometry* pMesh = new HManagedStaticMeshGeometry( Name );
-	pMesh->Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
+	ManagedStaticMesh* pMesh = new FStaticMesh();
+	pMesh->SetName( Name );
+	pMesh->GetAsset().Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
 	pMesh->SetLoadCompleted( true );
 
 	ScopedCriticalSection Guard( m_MapMutex );
 	m_ModelCache[Name].reset( pMesh );
-	return m_ModelCache[Name];
+	return m_ModelCache[Name].get();
 }
