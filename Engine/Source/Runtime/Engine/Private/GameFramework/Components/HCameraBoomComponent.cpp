@@ -19,21 +19,38 @@ HCameraBoomComponent::~HCameraBoomComponent()
 
 }
 
-void HCameraBoomComponent::Update( float DeltaTime )
+void HCameraBoomComponent::Tick( float DeltaTime )
 {
-	/*if( m_UseCameraCollision )
+	Super::Tick( DeltaTime );
+
+	if( m_UseCameraCollision )
 	{
-		FVector3 WorldPos = GetWorldPosition();
-		FVector3 WorldPos = m_Camera->GetWorldPosition();
-		bool TopHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalUp(), m_CameraCollisionTraceDistance );
+		
+
+		/*FVector3 WorldPos = GetWorldPosition();
+		FVector3 CameraPos = m_Camera->GetWorldPosition();
+		FVector3 Direction = WorldPos - CameraPos;
+		Direction.Normalize();
+		FRaycastHitInfo HitInfo = {};
+		GetWorld()->Raycast( WorldPos, Direction, Direction.Length(), &HitInfo );
+
+		FDebugLineRenderInfo LineInfo;
+		LineInfo.Start = GetWorldPosition();
+		LineInfo.End = HitInfo.HitPos;
+		LineInfo.Color = FColor::BlueOpaque;
+		LineInfo.IgnoreDepth = false;
+		GetWorld()->DrawDebugLine( LineInfo );*/
+
+
+		/*bool TopHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalUp(), m_CameraCollisionTraceDistance );
 		bool BottomHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalDown(), m_CameraCollisionTraceDistance );
 
 		bool LeftHit = GetWorld()->Raycast( WorldPos, GetLocalLeft(), m_CameraCollisionTraceDistance );
 		bool RightHit = GetWorld()->Raycast( WorldPos, GetLocalRight(), m_CameraCollisionTraceDistance );
 
 		if (LeftHit || RightHit)
-			SetPosition( PosPreRotation );
-	}*/
+			SetPosition( PosPreRotation );*/
+	}
 }
 
 void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
@@ -69,4 +86,5 @@ void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 void HCameraBoomComponent::SetViewOffset( const FVector3& Offset )
 { 
 	m_Camera->SetPosition( Offset );
+	m_ViewOffset = Offset;
 }

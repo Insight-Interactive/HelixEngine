@@ -13,7 +13,7 @@
 
 enum EFormat;
 
-class RENDER_API FTexture : public FGpuResource, public ManagedAsset<FTexture>
+class FTexture : public FGpuResource, public ManagedAsset<FTexture>
 {
 	friend class FTextureManager;
 public:

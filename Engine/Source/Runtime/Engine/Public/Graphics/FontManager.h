@@ -6,10 +6,6 @@
 #include "Font.h"
 
 
-
-typedef ManagedAsset<FFont> ManagedFont;
-typedef AssetRef<FFont> HFont;
-
 class FFontManager
 {
 	friend class FRenderingSubsystem;

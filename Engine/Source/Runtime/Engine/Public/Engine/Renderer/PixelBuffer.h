@@ -13,7 +13,7 @@
 
 class FRenderDevice;
 
-class RENDER_API FPixelBuffer : public FGpuResource
+class FPixelBuffer : public FGpuResource
 {
 public:
 	FPixelBuffer()

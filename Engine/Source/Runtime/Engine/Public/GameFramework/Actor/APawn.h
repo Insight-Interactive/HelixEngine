@@ -33,7 +33,7 @@ struct FJump
 
 		Jumping = false;
 	}
-	float GetHeight(float DeltaTime)
+	float GetHeight(float DeltaTime, float GravityScale = 1.f )
 	{
 		if (!Jumping)
 			return 0.f;
@@ -43,10 +43,9 @@ struct FJump
 		//else
 		//	CurrentHeight = (CurrentHeight + DeltaTime) * 3.f;
 
-		return (300.f * DeltaTime) * 3;
-		/*JumpTime += DeltaTime;
+		JumpTime += DeltaTime;
 		const float Height = JumpGravity * JumpTime * JumpTime + MaxHeight * JumpTime;
-		return Height * DeltaTime;*/
+		return (Height * DeltaTime) * GravityScale;
 	}
 	float CurrentHeight;
 
@@ -63,8 +62,6 @@ namespace physx
 }
 class HControllerComponent;
 
-static const float kDefaultMovementSpeed = 100.f;
-static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 3.f;
 
 HCLASS()
 class APawn : public AActor, public physx::PxUserControllerHitReport, public physx::PxControllerBehaviorCallback
@@ -106,6 +103,7 @@ protected:
 
 protected:
 
+	float m_GravityScale;
 	float m_MovementSpeed;
 	float m_SprintSpeed;
 	bool m_bIsSprinting;

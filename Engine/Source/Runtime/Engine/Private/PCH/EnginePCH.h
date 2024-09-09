@@ -128,6 +128,11 @@
 
 // Third Party
 //
+// 		   
+// Assimp
+#include <assimp\Importer.hpp>
+#include <assimp\scene.h>
+#include <assimp\postprocess.h>
 // Rapid Json
 #include <rapidjson/writer.h>
 #include <rapidjson/document.h>

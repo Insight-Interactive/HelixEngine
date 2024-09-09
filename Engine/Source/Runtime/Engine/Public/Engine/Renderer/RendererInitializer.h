@@ -8,7 +8,7 @@
 class FRenderContext;
 class FSwapChain;
 
-class RENDER_API FRendererInitializer
+class FRendererInitializer
 {
 	friend class HEngine;
 public:

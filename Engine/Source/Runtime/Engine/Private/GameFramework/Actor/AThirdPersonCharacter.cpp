@@ -18,11 +18,11 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 {
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
 	m_CameraBoom->AttachTo( m_RootComponent, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
-	m_CameraBoom->UseCameraCollision( false );
+	m_CameraBoom->UseCameraCollision( true );
 
 	m_CameraComponent = AddComponent<HCameraComponent>( "FollowCamera" );
 	m_CameraBoom->SetCamera( m_CameraComponent );
-	m_CameraBoom->SetViewOffset( FVector3( 100.f, 80.f, -140.f ) );
+	m_CameraBoom->SetViewOffset( FVector3( 60.f, 70.f, -150.f ) );
 	m_CameraFOV = m_CameraComponent->GetFieldOfView();
 
 	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
@@ -68,7 +68,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
 	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
 	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
-	//Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
+	Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
 	
 	// Camera
 	Controller.BindAxis( "LookUp", m_CameraBoom, &HCameraBoomComponent::UpdateCameraPitch );

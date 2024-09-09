@@ -1,0 +1,564 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake:211 (message)"
+      - "CMakeLists.txt:74 (PROJECT)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:74 (PROJECT)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+      Copyright (C) Microsoft Corporation. All rights reserved.
+      
+      Build started 9/6/2024 8:56:24 AM.
+      Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc142.pdb" /external:W0 /Gd /TC /analyze- /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X86 /SAFESEH Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\Hostx64\\x86\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:00.98
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/3.27.0-rc3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:74 (PROJECT)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+      Copyright (C) Microsoft Corporation. All rights reserved.
+      
+      Build started 9/6/2024 8:56:26 AM.
+      Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc142.pdb" /external:W0 /Gd /TP /analyze- /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X86 /SAFESEH Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\Hostx64\\x86\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\3.27.0-rc3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:00.69
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/3.27.0-rc3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:74 (PROJECT)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-hfybke"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-hfybke"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-hfybke'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_fc60a.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:27 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-hfybke\\cmTC_fc60a.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_fc60a.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-hfybke\\Debug\\".
+          Creating directory "cmTC_fc60a.dir\\Debug\\cmTC_fc60a.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_fc60a.dir\\Debug\\cmTC_fc60a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fc60a.dir\\Debug\\\\" /Fd"cmTC_fc60a.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.27\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CMakeCCompilerABI.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fc60a.dir\\Debug\\\\" /Fd"cmTC_fc60a.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.27\\Modules\\CMakeCCompilerABI.c"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-hfybke\\Debug\\cmTC_fc60a.exe" /INCREMENTAL /ILK:"cmTC_fc60a.dir\\Debug\\cmTC_fc60a.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-hfybke/Debug/cmTC_fc60a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-hfybke/Debug/cmTC_fc60a.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_fc60a.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_fc60a.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-hfybke\\Debug\\cmTC_fc60a.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_fc60a.dir\\Debug\\cmTC_fc60a.tlog\\unsuccessfulbuild".
+          Touching "cmTC_fc60a.dir\\Debug\\cmTC_fc60a.tlog\\cmTC_fc60a.lastbuildstate".
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-hfybke\\cmTC_fc60a.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.66
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:74 (PROJECT)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-bvw7v6"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-bvw7v6"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-bvw7v6'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_08be7.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:28 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-bvw7v6\\cmTC_08be7.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_08be7.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-bvw7v6\\Debug\\".
+          Creating directory "cmTC_08be7.dir\\Debug\\cmTC_08be7.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_08be7.dir\\Debug\\cmTC_08be7.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_08be7.dir\\Debug\\\\" /Fd"cmTC_08be7.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TP /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.27\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CMakeCXXCompilerABI.cpp
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_08be7.dir\\Debug\\\\" /Fd"cmTC_08be7.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TP /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.27\\Modules\\CMakeCXXCompilerABI.cpp"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-bvw7v6\\Debug\\cmTC_08be7.exe" /INCREMENTAL /ILK:"cmTC_08be7.dir\\Debug\\cmTC_08be7.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-bvw7v6/Debug/cmTC_08be7.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-bvw7v6/Debug/cmTC_08be7.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_08be7.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_08be7.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-bvw7v6\\Debug\\cmTC_08be7.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_08be7.dir\\Debug\\cmTC_08be7.tlog\\unsuccessfulbuild".
+          Touching "cmTC_08be7.dir\\Debug\\cmTC_08be7.tlog\\cmTC_08be7.lastbuildstate".
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-bvw7v6\\cmTC_08be7.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.60
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:35 (check_include_file)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-r03lq2"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-r03lq2"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-r03lq2'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_8a36e.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:29 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\cmTC_8a36e.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_8a36e.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\Debug\\".
+          Creating directory "cmTC_8a36e.dir\\Debug\\cmTC_8a36e.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_8a36e.dir\\Debug\\cmTC_8a36e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a36e.dir\\Debug\\\\" /Fd"cmTC_8a36e.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckIncludeFile.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a36e.dir\\Debug\\\\" /Fd"cmTC_8a36e.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\Debug\\cmTC_8a36e.exe" /INCREMENTAL /ILK:"cmTC_8a36e.dir\\Debug\\cmTC_8a36e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-r03lq2/Debug/cmTC_8a36e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-r03lq2/Debug/cmTC_8a36e.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_8a36e.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_8a36e.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\Debug\\cmTC_8a36e.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_8a36e.dir\\Debug\\cmTC_8a36e.tlog\\unsuccessfulbuild".
+          Touching "cmTC_8a36e.dir\\Debug\\cmTC_8a36e.tlog\\cmTC_8a36e.lastbuildstate".
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-r03lq2\\cmTC_8a36e.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.68
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:36 (check_include_file)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mi7khc"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mi7khc"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mi7khc'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_e1e29.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:30 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\cmTC_e1e29.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_e1e29.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\Debug\\".
+          Creating directory "cmTC_e1e29.dir\\Debug\\cmTC_e1e29.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_e1e29.dir\\Debug\\cmTC_e1e29.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1e29.dir\\Debug\\\\" /Fd"cmTC_e1e29.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckIncludeFile.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1e29.dir\\Debug\\\\" /Fd"cmTC_e1e29.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\Debug\\cmTC_e1e29.exe" /INCREMENTAL /ILK:"cmTC_e1e29.dir\\Debug\\cmTC_e1e29.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mi7khc/Debug/cmTC_e1e29.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mi7khc/Debug/cmTC_e1e29.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_e1e29.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_e1e29.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\Debug\\cmTC_e1e29.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_e1e29.dir\\Debug\\cmTC_e1e29.tlog\\unsuccessfulbuild".
+          Touching "cmTC_e1e29.dir\\Debug\\cmTC_e1e29.tlog\\cmTC_e1e29.lastbuildstate".
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mi7khc\\cmTC_e1e29.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.65
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:37 (check_include_file)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-dvkd0s"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-dvkd0s"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-dvkd0s'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_685ce.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:31 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\cmTC_685ce.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_685ce.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\Debug\\".
+          Creating directory "cmTC_685ce.dir\\Debug\\cmTC_685ce.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_685ce.dir\\Debug\\cmTC_685ce.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_685ce.dir\\Debug\\\\" /Fd"cmTC_685ce.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckIncludeFile.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_685ce.dir\\Debug\\\\" /Fd"cmTC_685ce.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\Debug\\cmTC_685ce.exe" /INCREMENTAL /ILK:"cmTC_685ce.dir\\Debug\\cmTC_685ce.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-dvkd0s/Debug/cmTC_685ce.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-dvkd0s/Debug/cmTC_685ce.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_685ce.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_685ce.vcxproj -> C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\Debug\\cmTC_685ce.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_685ce.dir\\Debug\\cmTC_685ce.tlog\\unsuccessfulbuild".
+          Touching "cmTC_685ce.dir\\Debug\\cmTC_685ce.tlog\\cmTC_685ce.lastbuildstate".
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-dvkd0s\\cmTC_685ce.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.65
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "contrib/zlib/CMakeLists.txt:55 (check_type_size)"
+    checks:
+      - "Check size of off64_t"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-gl0p96"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-gl0p96"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "HAVE_OFF64_T"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-gl0p96'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_1b2de.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:32 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_1b2de.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\Debug\\".
+          Creating directory "cmTC_1b2de.dir\\Debug\\cmTC_1b2de.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_1b2de.dir\\Debug\\cmTC_1b2de.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1b2de.dir\\Debug\\\\" /Fd"cmTC_1b2de.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          OFF64_T.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1b2de.dir\\Debug\\\\" /Fd"cmTC_1b2de.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c"
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-gl0p96\\cmTC_1b2de.vcxproj]
+        
+            0 Warning(s)
+            5 Error(s)
+        
+        Time Elapsed 00:00:00.39
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:64 (check_function_exists)"
+    checks:
+      - "Looking for fseeko"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mwdp5a"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mwdp5a"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "HAVE_FSEEKO"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mwdp5a'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_665f8.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:33 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_665f8.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\Debug\\".
+          Creating directory "cmTC_665f8.dir\\Debug\\cmTC_665f8.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_665f8.dir\\Debug\\cmTC_665f8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_665f8.dir\\Debug\\\\" /Fd"cmTC_665f8.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckFunctionExists.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_665f8.dir\\Debug\\\\" /Fd"cmTC_665f8.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\Debug\\cmTC_665f8.exe" /INCREMENTAL /ILK:"cmTC_665f8.dir\\Debug\\cmTC_665f8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mwdp5a/Debug/cmTC_665f8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-mwdp5a/Debug/cmTC_665f8.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_665f8.dir\\Debug\\CheckFunctionExists.obj
+        CheckFunctionExists.obj : error LNK2019: unresolved external symbol _fseeko referenced in function _main [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj]
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\Debug\\cmTC_665f8.exe : fatal error LNK1120: 1 unresolved externals [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj]
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          CheckFunctionExists.obj : error LNK2019: unresolved external symbol _fseeko referenced in function _main [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj]
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\Debug\\cmTC_665f8.exe : fatal error LNK1120: 1 unresolved externals [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-mwdp5a\\cmTC_665f8.vcxproj]
+        
+            0 Warning(s)
+            2 Error(s)
+        
+        Time Elapsed 00:00:00.60
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:72 (check_include_file)"
+    checks:
+      - "Looking for unistd.h"
+    directories:
+      source: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-e1kut4"
+      binary: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-e1kut4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules"
+    buildResult:
+      variable: "Z_HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/CMakeScratch/TryCompile-e1kut4'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe" cmTC_e1f6e.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=16.0 /v:n
+        Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET Framework
+        Copyright (C) Microsoft Corporation. All rights reserved.
+        
+        Build started 9/6/2024 8:56:34 AM.
+        Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\cmTC_e1f6e.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_e1f6e.dir\\Debug\\".
+          Creating directory "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\Debug\\".
+          Creating directory "cmTC_e1f6e.dir\\Debug\\cmTC_e1f6e.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_e1f6e.dir\\Debug\\cmTC_e1f6e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1f6e.dir\\Debug\\\\" /Fd"cmTC_e1f6e.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30138 for x86
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckIncludeFile.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /Oy- /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1f6e.dir\\Debug\\\\" /Fd"cmTC_e1f6e.dir\\Debug\\vc142.pdb" /external:W1 /Gd /TC /analyze- /errorReport:queue "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\CheckIncludeFile.c"
+        C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\CheckIncludeFile.c(1,10): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\cmTC_e1f6e.vcxproj]
+        Done Building Project "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\cmTC_e1f6e.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\cmTC_e1f6e.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\CheckIncludeFile.c(1,10): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\Dev\\InsightInteractive\\HelixEngine\\Engine\\ThirdParty\\assimp-5.4.3\\build\\Win32\\CMakeFiles\\CMakeScratch\\TryCompile-e1kut4\\cmTC_e1f6e.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.44
+        
+      exitCode: 1
+...

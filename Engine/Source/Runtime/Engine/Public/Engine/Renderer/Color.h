@@ -4,7 +4,7 @@
 #include "RendererFwd.h"
 #include "CoreFwd.h"
 
-class RENDER_API FColor
+class FColor
 {
 public:
 	FORCEINLINE FColor()

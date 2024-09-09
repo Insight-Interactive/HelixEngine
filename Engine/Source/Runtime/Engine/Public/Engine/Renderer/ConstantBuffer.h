@@ -14,7 +14,7 @@
 /*
 	Base class all constant buffers should derive from.
 */
-class RENDER_API FConstantBufferInterface : public FGpuResource
+class FConstantBufferInterface : public FGpuResource
 {
 	friend class FMaterial;
 public:
@@ -75,7 +75,7 @@ private:
 /*
 	GPU constant buffer whose data is heap allocated.
 */
-class RENDER_API FConstantBuffer : public FConstantBufferInterface
+class FConstantBuffer : public FConstantBufferInterface
 {
 public:
 	FConstantBuffer()
@@ -103,7 +103,7 @@ private:
 	GPU constant buffer whose size is known at compile time and cannot change.
 */
 template <typename BufferDataType>
-class RENDER_API TConstantBuffer : public FConstantBufferInterface
+class TConstantBuffer : public FConstantBufferInterface
 {
 	friend class TConstantBufferManager;
 	friend class FCommandContext;

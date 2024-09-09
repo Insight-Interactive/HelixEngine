@@ -6,9 +6,6 @@
 #include "Engine/Renderer/ManagedAsset.h"
 
 
-typedef ManagedAsset<FMaterial> ManagedMaterial;
-typedef AssetRef<FMaterial> HMaterial;
-
 class MaterialManager
 {
 	friend class HEngine;

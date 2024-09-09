@@ -5,7 +5,7 @@
 
 struct FPipelineStateDesc;
 
-class RENDER_API FPipelineState
+class FPipelineState
 {
 public:
 	FPipelineState();

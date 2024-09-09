@@ -10,7 +10,7 @@
 
 extern FCommandManager GCommandManager;
 
-class RENDER_API FGpuResource
+class FGpuResource
 {
 	friend class FCommandContext;
 public:

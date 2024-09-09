@@ -21,7 +21,7 @@ class FColor;
 /*
 	Manages command context lifetime and creation.
 */
-class RENDER_API FContextManager
+class FContextManager
 {
 	friend class FRenderContext;
 public:
@@ -42,7 +42,7 @@ protected:
 /*
 	Command reciever that executes graphics commands. Draw, texture binds, etc.
 */
-class RENDER_API FCommandContext
+class FCommandContext
 {
 	friend FContextManager;
 public:

@@ -1,0 +1,13 @@
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/uninstall.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/ALL_BUILD.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/CMakeFiles/ZERO_CHECK.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/contrib/zlib/CMakeFiles/zlibstatic.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/contrib/zlib/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/code/CMakeFiles/assimp.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/code/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/test/CMakeFiles/unit.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/test/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/build/Win32/test/headercheck/CMakeFiles/INSTALL.dir

@@ -9,7 +9,7 @@
 
 class FRenderDevice;
 
-class RENDER_API FCommandAllocatorPool
+class FCommandAllocatorPool
 {
 public:
 	FCommandAllocatorPool(const D3D12_COMMAND_LIST_TYPE& Type);

@@ -11,7 +11,7 @@
 
 class FCommandContext;
 
-class RENDER_API FIndexBuffer : public FGpuResource
+class FIndexBuffer : public FGpuResource
 {
 public:
 	FIndexBuffer()

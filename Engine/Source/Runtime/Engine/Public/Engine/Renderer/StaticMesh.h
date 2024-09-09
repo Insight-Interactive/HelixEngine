@@ -34,7 +34,7 @@ struct FDrawArgs
 	Base class for all static geometry that exists in the world. That is, a peice of 
 	geometry with static unskinned polygons.
 */
-class RENDER_API FStaticMesh : public ManagedAsset<FStaticMesh>
+class FStaticMesh : public ManagedAsset<FStaticMesh>
 {
 	friend class FStaticGeometryManager;
 	friend class FAssetDatabase;
@@ -65,13 +65,15 @@ private:
 
 	void SetGuid( const FGUID& NewUID );
 
-
 protected:
 	FDrawArgs m_DrawArgs;
 
 	FGUID m_Guid;
 	// TODO AABB for culling
 };
+
+typedef ManagedAsset<FStaticMesh> ManagedStaticMesh;
+typedef AssetRef<FStaticMesh> HStaticMesh;
 
 
 //

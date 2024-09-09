@@ -60,7 +60,7 @@ private:
 };
 
 
-class RENDER_API FDescriptorHeap
+class FDescriptorHeap
 {
 public:
     FDescriptorHeap()

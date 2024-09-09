@@ -9,7 +9,7 @@
 
 enum EFormat;
 
-class RENDER_API FDepthBuffer : public FPixelBuffer
+class FDepthBuffer : public FPixelBuffer
 {
 	friend class FCommandContext;
 public:

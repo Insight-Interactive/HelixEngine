@@ -34,8 +34,7 @@ protected:
 	FDynamicVertexBuffer& GetVertexBuffer();
 
 private:
-	void DrawLabel();
-
+	void BuildString();
 
 private:
 	WString m_Text;

@@ -122,6 +122,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		SetCommonRenderState( CmdContext, false, true );
 
 		// Draw 
+		Scene.RenderWorldGeo( CmdContext );
 		Scene.RenderStaticLitOpaqueObjects( CmdContext );
 
 		m_DeferredShader.UnBindGeometryPass( CmdContext );

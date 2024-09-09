@@ -14,7 +14,7 @@
 typedef ManagedAsset<FTexture> ManagedTexture;
 typedef AssetRef<FTexture> HTexture;
 
-class RENDER_API FTextureManager
+class FTextureManager
 {
 	friend class FRenderContextFactory;
 	friend class D3D12RenderContextFactory;

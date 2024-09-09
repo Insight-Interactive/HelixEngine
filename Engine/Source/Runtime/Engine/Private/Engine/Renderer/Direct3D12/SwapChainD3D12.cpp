@@ -4,9 +4,6 @@
 
 #include "Engine/Renderer/SwapChain.h"
 
-#include "Engine/Renderer/ColorBuffer.h"
-#include "Engine/Renderer/RendererCore.h"
-#include "Engine/Renderer/CommandManager.h"
 #include "Engine/Renderer/APIBridge/CommonFunctions.h"
 
 
@@ -186,7 +183,7 @@ void FSwapChain::ResizeDXGIBuffers()
 // (bx1, by1) = left-top coordinates of B; (bx2, by2) = right-bottom coordinates of B
 inline int ComputeIntersectionArea( int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2 )
 {
-	return max( 0, min( ax2, bx2 ) - max( ax1, bx1 ) ) * max( 0, min( ay2, by2 ) - max( ay1, by1 ) );
+	return HE_MAX( 0, HE_MIN( ax2, bx2 ) - HE_MAX( ax1, bx1 ) ) * HE_MAX( 0, HE_MIN( ay2, by2 ) - HE_MAX( ay1, by1 ) );
 }
 
 void FSwapChain::CheckDisplayHDRSupport()

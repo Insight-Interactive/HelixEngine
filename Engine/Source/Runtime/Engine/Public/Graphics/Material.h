@@ -174,6 +174,9 @@ protected:
 
 };
 
+typedef ManagedAsset<FMaterial> ManagedMaterial;
+typedef AssetRef<FMaterial> HMaterial;
+
 
 //
 // Inline function implementations

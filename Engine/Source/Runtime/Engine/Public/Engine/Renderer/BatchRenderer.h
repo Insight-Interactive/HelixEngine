@@ -37,7 +37,7 @@ class FColorBuffer;
 class FDepthBuffer;
 class FCommandContext;
 
-class RENDER_API FBatchRenderer
+class FBatchRenderer
 {
 public:
 	FBatchRenderer();

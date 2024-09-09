@@ -128,7 +128,7 @@ namespace Physics
 	PxCooking* Cooking = nullptr;
 	PxControllerManager* ControllerManager = nullptr;
 
-	float Gravity = -0.981f;
+	float Gravity = -9.81f;
 	FFlag IsSimulating;
 	FFlag IsSimulationPause;
 
