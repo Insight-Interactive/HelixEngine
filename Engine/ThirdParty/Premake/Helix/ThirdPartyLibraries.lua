@@ -20,6 +20,9 @@ libraryDirectories["PhysXx86_profile"]  = heGetThirdPartyModule( "PhysX-4.1" ) .
 libraryDirectories["PhysXx86_release"]  = heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/"
 -- Lua 
 libraryDirectories["LuaCore"]		    = heGetThirdPartyModule( "lua-5.4.4" ) .. "Build/"
+-- Assimp
+libraryDirectories["Assimp_debug"]      = heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/lib/Debug/"
+libraryDirectories["Assimp_release"]    = heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/lib/Release/"
 
 libraries = {}
 -- PIX
@@ -42,3 +45,6 @@ libraries["Lua64_Debug"]     = "LuaCore-Debug-x64.lib"
 libraries["Lua64_Release"]   = "LuaCore-Release-x64.lib"
 libraries["Lua32_Debug"]     = "LuaCore-Debug-Win32.lib"
 libraries["Lua32_Release"]   = "LuaCore-Release-Win32.lib"
+-- Assimp
+libraries["Assimp_Debug"]       = "assimp-vc142-mtd.lib"
+libraries["Assimp_Release"]     = "assimp-vc142-mt.lib"

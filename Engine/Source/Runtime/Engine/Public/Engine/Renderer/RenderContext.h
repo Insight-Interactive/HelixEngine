@@ -13,7 +13,7 @@ extern FRenderDevice GGraphicsDevice;
 /*
 	Responsible for handling rendering related messaged and resource management.
 */
-class RENDER_API FRenderContext
+class FRenderContext
 {
 	friend class FRenderContextFactory;
 	friend class FRenderContextFactoryD3D12;

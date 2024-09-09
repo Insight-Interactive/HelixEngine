@@ -55,3 +55,6 @@ dllCopyCommands["PhysXCommonx86_release"]      = "{COPY} " .. heGetThirdPartyMod
 dllCopyCommands["PhysXFoundationx86_release"]  = "{COPY} " .. heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/" .. "PhysXFoundation_32.dll %{cfg.targetdir}"
 dllCopyCommands["PhysXCookingx86_release"]     = "{COPY} " .. heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/" .. "PhysXCooking_32.dll %{cfg.targetdir}"
 dllCopyCommands["PhysXGPUx86_release"]         = "{COPY} " .. heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_32.vc142.mt/release/" .. "PhysXGPU_32.dll %{cfg.targetdir}"
+-- Assimp
+dllCopyCommands["Assimpx64_debug"]              = "{COPY} " .. heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/bin/Debug/assimp-vc142-mtd.dll %{cfg.targetdir}"
+dllCopyCommands["Assimpx64_release"]            = "{COPY} " .. heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/bin/Release/assimp-vc142-mt.dll %{cfg.targetdir}"

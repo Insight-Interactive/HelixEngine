@@ -6,6 +6,7 @@
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HColliderComponent.h"
+#include "Graphics/StaticWorldMesh.h"
 
 
 class FCommandContext;
@@ -40,11 +41,15 @@ public:
 	bool GetDrawColliders() const;
 	void SetDrawColliders( const bool& DrawColliders );
 
+	void RenderWorldGeo( FCommandContext& CmdContext );
+	std::vector<FWorldMesh*> m_WorldGeo;
+
 protected:
 	HWorld* GetWorld();
 
 private:
 	bool m_DrawColliders;
+
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
 	std::vector<HColliderComponent*> m_DebugColliderMeshs;

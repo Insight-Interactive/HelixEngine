@@ -40,6 +40,7 @@ protected:
 	{
 	}
 
+	const String& GetName() const;
 	void SetName( const String& Name );
 	void SetLoadCompleted( bool Completed );
 
@@ -111,6 +112,12 @@ template <typename AssetType>
 FORCEINLINE const AssetType& ManagedAsset<AssetType>::GetAsset() const
 {
 	return SCast<const AssetType&>( *this );
+}
+
+template <typename AssetType>
+FORCEINLINE const String& ManagedAsset<AssetType>::GetName() const
+{
+	return m_MapKey;
 }
 
 template <typename AssetType>

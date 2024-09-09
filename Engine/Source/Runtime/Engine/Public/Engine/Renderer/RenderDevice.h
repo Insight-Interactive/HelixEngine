@@ -28,7 +28,7 @@ struct DeviceQueryResult
 	bool IsRealtimeRTSupported;
 };
 
-class RENDER_API FRenderDevice
+class FRenderDevice
 {
 	friend class FRenderContext;
 	friend class FRenderContextFactory;

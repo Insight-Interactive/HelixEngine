@@ -4,15 +4,11 @@
 #include "World/World.h"
 
 #include "Engine/Engine.h"
-#include "Engine/ViewportContext.h"
 #include "Graphics/LightManager.h"
-#include "GameFramework/Actor/ACharacter.h"
+#include "Engine/ViewportContext.h"
 #include "GameFramework/Actor/AThirdPersonCharacter.h"
 #include "GameFramework/Actor/AFirstPersonCharacter.h"
-#include "GameFramework/Components/HPlaneColliderComponent.h"
-#include "GameFramework/Components/HSphereColliderComponent.h"
-#include "GameFramework/Components/HCubeColliderComponent.h"
-#include "GameFramework/Components/HCapsuleColliderComponent.h"
+#include "GameFramework/Components/HCameraBoomComponenet.h"
 
 
 HWorld::HWorld()
@@ -46,7 +42,6 @@ void HWorld::Initialize( const FPath& LevelURL )
 		m_PlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
 	m_Level.GuardedAddActor( m_PlayerCharacter );
 
-	m_PlayerCharacter->Teleport( FVector3(0.f, 0.f, 0.f) );
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
@@ -278,35 +273,23 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 	JsonUtility::GetString( Value, "WorldName", m_Name, sizeof( m_Name ) );
 
 	char MeshName[64];
-	JsonUtility::GetString( Value, "WorldGeo", MeshName, sizeof( MeshName ) );
-
-	FPath WorldGeoPath;
-	sprintf_s( WorldGeoPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+	if (JsonUtility::GetString( Value, "WorldGeo", MeshName, sizeof( MeshName ) ))
+	{
+		FPath WorldGeoPath;
+		sprintf_s( WorldGeoPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
 	
-	// Load the level geo and collision
-	std::vector<FSimpleVertex3D> Verticies;
-	uint32 VertexCount;
-	std::vector<uint32> Indices;
-	uint32 IndexCount;
-	GStaticGeometryManager.LoadGometry( WorldGeoPath, Verticies, VertexCount, Indices, IndexCount );
-	m_WorldCollision.pTriangleData = Verticies.data();
-	m_WorldCollision.TriCount = VertexCount;
-	m_WorldCollision.VertexSize = sizeof( FSimpleVertex3D );
-	m_WorldCollision.pIndexData = Indices.data();
-	m_WorldCollision.IndexCount = IndexCount;
-	m_WorldCollision.IndexSize = sizeof( uint32 );
-	
-	Physics::CreateMesh(
-		FVector3::Zero,
-		FQuat::Identity,
-		FVector3::One,
-		m_WorldCollision,
-		false,
-		nullptr,
-		false,
-		10.f,
-		true, FG_WorldGeometry );
+		GStaticGeometryManager.LoadLevelGeo( WorldGeoPath.m_Path, m_Scene.m_WorldGeo );
+	}
+	else
+	{
+		HE_LOG( Warning, TEXT( "Level has no geo associated with it! Relying on actor collision, this is not recomended." ) );
+	}
 
+	FTransform PlayerStart;
+	JsonUtility::GetTransform( Value, "PlayerStart", PlayerStart);
+	m_PlayerCharacter->Teleport( PlayerStart.GetPosition() );
+	HCameraBoomComponent* CameraBoom = m_PlayerCharacter->GetComponent<HCameraBoomComponent>();
+	CameraBoom->SetBoomRotationAngles( PlayerStart.GetEulerRotation() );
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

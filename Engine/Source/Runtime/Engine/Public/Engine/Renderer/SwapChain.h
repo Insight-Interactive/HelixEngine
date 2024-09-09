@@ -12,7 +12,7 @@
 class FColorBuffer;
 class FRenderDevice;
 
-class RENDER_API FSwapChain
+class FSwapChain
 {
 	friend class FWindow;
 	friend class FRenderContext;

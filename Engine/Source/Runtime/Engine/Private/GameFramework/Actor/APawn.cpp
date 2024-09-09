@@ -13,8 +13,12 @@ physx::PxExtendedVec3 FootPos = PxController->getFootPosition();						\
 m_RootComponent->SetPosition( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );	\
 
 
+static const float kDefaultMovementSpeed = 135.f;
+static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 1.7f;
+
 APawn::APawn( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
+	, m_GravityScale( 35.f )
 	, m_MovementSpeed(kDefaultMovementSpeed)
 	, m_SprintSpeed(kDefaultSprintSpeed)
 	, m_bIsSprinting(false)
@@ -29,7 +33,7 @@ APawn::APawn( FActorInitArgs& InitArgs )
 	cDesc.position = physx::PxExtendedVec3( 0, 0, 0 );
 	cDesc.height = 43.f;
 	cDesc.radius = 30.f; // Height + Radius = 6"1' in inches
-	cDesc.slopeLimit = 60.0f;
+	cDesc.slopeLimit = 0.0f;
 	cDesc.contactOffset = 0.1f;
 	cDesc.stepOffset = 0.02f;
 	cDesc.reportCallback = this;
@@ -46,20 +50,24 @@ void APawn::Tick( float Time )
 {
 	Super::Tick( Time );
 
-	const float HeightDelta = m_Jump.GetHeight( Time );
+	const float HeightDelta = m_Jump.GetHeight( Time, 20.f );
 
 	float DeltaY;
 	if (HeightDelta != 0.f)
 		DeltaY = HeightDelta;
 	else
-		DeltaY = Physics::Gravity * Time;
+		DeltaY = (Physics::Gravity * Time) * m_GravityScale;
 
+	physx::PxVec3 VerticalDisp(0, 1, 0);
+	VerticalDisp *= DeltaY;
 	// Move the controller through the world
 	Displacement.normalize();
 	Displacement.x *= m_MovementSpeed;
 	Displacement.z *= m_MovementSpeed;
-	Displacement.y = DeltaY;
+	Displacement.y = 0.f;
 	Displacement *= Time;
+	Displacement += VerticalDisp;
+
 	const physx::PxU32 flags = PxController->move( Displacement, 0.f, Time, physx::PxControllerFilters( 0 ) );
 	if (flags & physx::PxControllerCollisionFlag::eCOLLISION_DOWN)
 		m_Jump.StopJump();
@@ -93,7 +101,7 @@ void APawn::Sprint()
 
 void APawn::Jump()
 {
-	m_Jump.StartJump( 30.f );
+	m_Jump.StartJump( 150.f );
 }
 
 FVector3 APawn::GetPawnPosition()

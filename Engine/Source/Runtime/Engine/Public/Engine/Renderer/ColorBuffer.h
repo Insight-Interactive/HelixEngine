@@ -7,7 +7,7 @@
 
 class FRenderDevice;
 
-class RENDER_API FColorBuffer : public FPixelBuffer
+class FColorBuffer : public FPixelBuffer
 {
 	friend class FSwapChain;
 public:

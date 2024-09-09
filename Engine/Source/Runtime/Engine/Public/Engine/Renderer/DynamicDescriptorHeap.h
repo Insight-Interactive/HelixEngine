@@ -11,7 +11,7 @@
 
 class FCommandContext;
 
-class RENDER_API FDynamicDescriptorHeap 
+class FDynamicDescriptorHeap 
 {
 public:
     FDynamicDescriptorHeap(FCommandContext& OwningContext, EResourceHeapType HeapType);

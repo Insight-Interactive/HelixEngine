@@ -47,11 +47,11 @@ void FLabel::Render( FCommandContext& UIContext )
 	UIContext.BindVertexBuffer( 0, m_VertexBuffer );
 	UIContext.SetTexture( 0, m_Font->GetFontTexture() );
 
-	DrawLabel();
+	BuildString();
 	UIContext.DrawInstanced( 4, (uint32)m_Text.size(), 0, 0);
 }
 
-void FLabel::DrawLabel()
+void FLabel::BuildString()
 {
 	float topLeftScreenX = (m_Position.x * 2.0f) - 1.0f;
 	float topLeftScreenY = ((1.0f - m_Position.y) * 2.0f) - 1.0f;

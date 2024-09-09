@@ -7,7 +7,7 @@
 #include "DataTypeWrappers.h"
 
 
-class RENDER_API FShader
+class FShader
 {
 public:
 	FShader();

@@ -11,7 +11,7 @@
 // This is an unbounded resource descriptor allocator.  It is intended to provide space for CPU-visible
 // resource descriptors as resources are created.  For those that need to be made shader-visible, they
 // will need to be copied to a DescriptorHeap or a DynamicDescriptorHeap.
-class RENDER_API FDescriptorAllocator
+class FDescriptorAllocator
 {
 public:
 	FDescriptorAllocator(EResourceHeapType Type)

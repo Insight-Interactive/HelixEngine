@@ -17,6 +17,17 @@ HRigidBody::~HRigidBody()
 {
 }
 
+void HRigidBody::SetDebugName( const char* Name )
+{
+#if HE_DEBUG
+	if (m_pRigidActor)
+	{
+		strcpy( m_DebugName, Name );
+		m_pRigidActor->setName( m_DebugName );
+	}
+#endif
+}
+
 void HRigidBody::Reset()
 {
 	if (m_pRigidActor)

@@ -15,7 +15,7 @@ class FConstantBufferManager;
 class FTextureManager;
 class FFontManager;
 
-class RENDER_API FRenderContextFactory
+class FRenderContextFactory
 {
 public:
 	FRenderContextFactory();

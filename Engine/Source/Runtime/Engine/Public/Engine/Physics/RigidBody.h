@@ -24,6 +24,7 @@ public:
 		MA_Z,
 	};
 public:
+	void SetDebugName( const char* Name );
 	void SetKinematicTarget( FTransform& Target );
 	void SetGlobalPositionOrientation( const FVector3& NewPosition, const FQuat& NewRotation );
 	void SetSimulatedPosition( const FVector3& NewPosition );
@@ -66,6 +67,9 @@ public:
 	HRigidBody();
 	virtual ~HRigidBody();
 
+#if HE_DEBUG
+	char m_DebugName[64];
+#endif
 	physx::PxRigidActor* m_pRigidActor;
 	physx::PxMaterial* m_pPhysicsMaterial;
 

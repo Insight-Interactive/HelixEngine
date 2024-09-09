@@ -5,6 +5,7 @@
 
 #include "GameFramework/Components/HCameraComponent.h"
 #include "World/World.h"
+#include "Graphics/ShaderRegisters.h"
 
 
 HScene::HScene( HWorld* pOwner )
@@ -18,6 +19,26 @@ HScene::HScene( HWorld* pOwner )
 HScene::~HScene()
 {
 
+}
+
+void HScene::RenderWorldGeo( FCommandContext& CmdContext )
+{
+	CmdContext.BeginDebugMarker( L"Render World Geo" );
+	{
+		for (uint32 i = 0; i < m_WorldGeo.size(); i++)
+		{
+			FWorldMesh& Mesh = *m_WorldGeo[i];
+
+			Mesh.m_Material->Bind( CmdContext );
+
+			CmdContext.SetGraphicsConstantBuffer( kMeshWorld, Mesh.m_MeshWorldCB );
+			CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
+			CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetVertexBuffer() );
+			CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetIndexBuffer() );
+			CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetNumIndices(), 1, 0, 0, 0 );
+		}
+	}
+	CmdContext.EndDebugMarker();
 }
 
 void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)

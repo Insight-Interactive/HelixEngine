@@ -89,3 +89,6 @@ protected:
 
 	uint32 m_NumCharacters;
 };
+
+typedef ManagedAsset<FFont> ManagedFont;
+typedef AssetRef<FFont> HFont;

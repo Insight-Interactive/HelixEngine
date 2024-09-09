@@ -26,7 +26,7 @@ OutputBuffer Logger::SOutputBuffer;
 CriticalSection GStreamGuard;
 
 Logger::Logger()
-	: m_UseConsole( false )
+	: m_UseConsole( true )
 {
 }
 

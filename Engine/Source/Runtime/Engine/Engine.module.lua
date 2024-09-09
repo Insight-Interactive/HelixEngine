@@ -81,6 +81,7 @@ project ("Engine")
 		heGetThirdPartyModule( "WinPixEventRuntime" )	.. "Include/",
 		heGetThirdPartyModule( "OpenFBX" )				.. "src/",
 		heGetThirdPartyModule( "tinygltf" ),
+		heGetThirdPartyModule( "assimp-5.4.3" )			.. "include/",
 	}
 
 	links   
@@ -198,6 +199,36 @@ project ("Engine")
 
 	-- Third Party links
 	
+	-- Assimp
+
+	filter {"configurations:DebugEditor or DebugGame or Demo"}
+		libdirs
+		{
+			"%{libraryDirectories.Assimp_debug}",
+		}
+		links
+		{
+			"%{libraries.Assimp_Debug}",
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.Assimpx64_debug}" -- Library linked in Engine.module.lua
+		}
+
+	filter {"configurations:Development or ShippingGame"}
+		libdirs
+		{
+			"%{libraryDirectories.Assimp_release}",
+		}
+		links
+		{
+			"%{libraries.Assimp_Release}",
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.Assimpx64_release}" -- Library linked in Engine.module.lua
+		}
+
 	-- PhysX
 
 	-- PhysX Win64

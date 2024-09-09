@@ -2,19 +2,17 @@
 #pragma once
 
 #include "Engine/Renderer/StaticMesh.h"
+#include "Graphics/StaticWorldMesh.h"
 #include "Engine/Renderer/VertexLayouts.h"
-
+#include "Engine/Renderer/ConstantBuffer.h"
+#include "Graphics/ConstantBufferStructures.h"
 #include "Path.h"
 #include "CriticalSection.h"
-
-
-typedef ManagedAsset<FStaticMesh> ManagedStaticMesh;
-typedef AssetRef<FStaticMesh> HStaticMesh;
 
 /*
 	Keeps track of the static mesh geometry currently loaded in the world.
 */
-class RENDER_API FStaticGeometryManager
+class FStaticGeometryManager
 {
 public:
 	FStaticGeometryManager()
@@ -43,13 +41,20 @@ public:
 	void FlushCache();
 
 	HStaticMesh GetStaticMeshByName( const String& Name );
-	HStaticMesh RegisterGeometry( const std::string& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
+	HStaticMesh RegisterGeometry( const String& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
+
+	void LoadLevelGeo( const String& FilePath, std::vector<FWorldMesh*>& OutWorld );
+
+private:
+	void ProcessMesh( struct aiMesh* mesh, const struct aiScene* scene, FWorldMesh& OutWorldMesh );
+	HStaticMesh ProcessNode( struct aiNode* node, aiNode* Parent, const struct aiScene* scene, std::vector<FWorldMesh*>& OutWorld );
 
 
 private:
 	CriticalSection m_MapMutex;
 	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCache;
 
+	//std::map< String, std::pair< std::unique_ptr<ManagedStaticMesh>, std::vector<TConstantBuffer<MeshWorldCBData>> > > m_NewModelCache;
 };
 
 
@@ -69,7 +74,7 @@ inline HStaticMesh FStaticGeometryManager::GetStaticMeshByName( const String& Na
 		HE_ASSERT( false );
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 inline bool FStaticGeometryManager::DestroyMesh( const String& Key )

@@ -12,7 +12,7 @@ class FCommandContext;
 class ICommandAllocator;
 
 
-class RENDER_API FCommandQueue
+class FCommandQueue
 {
 	friend class FCommandManager;
 public:
@@ -61,7 +61,7 @@ private:
 
 };
 
-class RENDER_API FCommandManager
+class FCommandManager
 {
 	friend class FRenderContextFactory;
 	friend class FCommandManager;
