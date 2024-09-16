@@ -23,7 +23,7 @@ public:
 	}
 
 	HStaticMesh LoadHAssetMeshFromFile( const String& FilePath );
-	void LoadGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount );
+	void LoadBasicGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount );
 
 	/*
 		Destroys a mesh from the cache and returns true if succeeded, false if not.
@@ -46,7 +46,7 @@ public:
 	void LoadLevelGeo( const String& FilePath, std::vector<FWorldMesh*>& OutWorld );
 
 private:
-	void ProcessMesh( struct aiMesh* mesh, const struct aiScene* scene, FWorldMesh& OutWorldMesh );
+	void ProcessMesh( struct aiMesh* mesh, const struct aiScene* scene, HStaticMesh& OutMesh );
 	HStaticMesh ProcessNode( struct aiNode* node, aiNode* Parent, const struct aiScene* scene, std::vector<FWorldMesh*>& OutWorld );
 
 

@@ -31,17 +31,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 {
 	m_LevelFilepath = LevelURL;
 
-	RegisterScenes();
-
-	bool UseFirstPersonCharacter = false;
-
-	FActorInitArgs PlrCharacterInitArgs{ this, "Player Character", true };
-	if (UseFirstPersonCharacter)
-		m_PlayerCharacter = new AFirstPersonCharacter( PlrCharacterInitArgs );
-	else
-		m_PlayerCharacter = new AThirdPersonCharacter( PlrCharacterInitArgs );
-	m_Level.GuardedAddActor( m_PlayerCharacter );
-
+	m_PlayerCharacter = m_Level.CreateActor<AThirdPersonCharacter>( "PlayerCharacter" );
 
 	rapidjson::Document WorldJsonDoc;
 	FileRef WorldJsonSource( LevelURL.GetFullPath(), FUM_Read);
@@ -111,7 +101,6 @@ void HWorld::Initialize()
 {
 	m_LevelFilepath.SetPath( "Default (Non-Load)" );
 	SetObjectName( "Default World" );
-	RegisterScenes();
 
 
 	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
@@ -126,10 +115,6 @@ void HWorld::SetViewport( FViewportContext* pViewport )
 {
 	m_pRenderingViewport = pViewport;
 	m_pRenderingViewport->SetWorld( this );
-}
-
-void HWorld::RegisterScenes()
-{
 }
 
 void HWorld::BeginPlay()
@@ -290,6 +275,8 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 	m_PlayerCharacter->Teleport( PlayerStart.GetPosition() );
 	HCameraBoomComponent* CameraBoom = m_PlayerCharacter->GetComponent<HCameraBoomComponent>();
 	CameraBoom->SetBoomRotationAngles( PlayerStart.GetEulerRotation() );
+
+	m_NavMesh.Init();
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

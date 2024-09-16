@@ -56,6 +56,9 @@ project ("Engine")
 		"Private/UI/**.h",
 		"Private/UI/**.cpp",
 		"Private/UI/**.inl",
+		"Private/AI/**.h",
+		"Private/AI/**.cpp",
+		"Private/AI/**.inl",
 		"Private/PCH/**.h",
 		"Private/PCH/**.cpp",
 		"Private/PCH/**.inl",
@@ -70,18 +73,16 @@ project ("Engine")
 		heGetModulePublicDir( "Scripting" ),
 
 		-- Third Party
-		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/include/",
-		heGetThirdPartyModule( "PhysX-4.1" ) .. "pxshared/include/",
-		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/foundation/include",
-		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/physxextensions/src",
-		heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/source/common/src",
-		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
-		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),
-		heGetThirdPartyModule( "WinPixEventRuntime" )	.. "Include/",
-		heGetThirdPartyModule( "OpenFBX" )				.. "src/",
-		heGetThirdPartyModule( "tinygltf" ),
-		heGetThirdPartyModule( "assimp-5.4.3" )			.. "include/",
+		heGetThirdPartyModule( "WinPixEventRuntime" )		.. "Include/",
+		heGetThirdPartyModule( "assimp-5.4.3" )				.. "include/",
+		heGetThirdPartyModule( "Rapidjson" )				.. "include/",
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "Detour/Include/",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/include/",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "pxshared/include/",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/foundation/include",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/common/src",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/physxextensions/src",
 	}
 
 	links   
@@ -92,6 +93,9 @@ project ("Engine")
 		"Scripting",
 
 		"Game-Core",
+
+		"Detour",
+
 	}
 
 	libdirs
@@ -103,6 +107,7 @@ project ("Engine")
 	{
 		"_CRT_SECURE_NO_WARNINGS",
 		"ENGINE_MODULE=1",
+		"HELIX_ENGINE=1",
 		"R_WITH_D3D12=1",
 		"R_WITH_DXR=1",
 	}

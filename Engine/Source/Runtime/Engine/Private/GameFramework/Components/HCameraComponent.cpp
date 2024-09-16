@@ -53,7 +53,7 @@ void HCameraComponent::Tick(float DeltaTime)
 void HCameraComponent::OnCreate()
 {
 	BuildViewMatrix();
-	SetProjectionValues( kDefaultFOV, kDefaultNearZ, kDefaultFarZ );
+	SetProjectionValues( m_FieldOfView, m_ViewProps.NearZ, m_ViewProps .FarZ );
 
 	GetWorld()->GetCameraManager()->CacheCamera( this );
 }

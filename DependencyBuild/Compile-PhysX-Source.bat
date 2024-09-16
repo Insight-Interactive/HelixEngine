@@ -21,17 +21,4 @@ echo Configuration Release -> x64
 "%DEVENV_EXE_LOCATION%" /build "release|x64" /project ALL_BUILD %PHYSX_SDK_ROOT%\physx\compiler\vc16win64\PhysXSDK.sln
 echo Done.
 
-echo Configuration Debug -> Win32
-"%DEVENV_EXE_LOCATION%" /build "debug|Win32" /project ALL_BUILD %PHYSX_SDK_ROOT%\physx\compiler\vc16win64\PhysXSDK.sln
-echo Done.
-echo Configuration Checked -> Win32
-"%DEVENV_EXE_LOCATION%" /build "checked|Win32" /project ALL_BUILD %PHYSX_SDK_ROOT%\physx\compiler\vc16win64\PhysXSDK.sln
-echo Done.
-echo Configuration Profile -> Win32
-"%DEVENV_EXE_LOCATION%" /build "profile|Win32" /project ALL_BUILD %PHYSX_SDK_ROOT%\physx\compiler\vc16win64\PhysXSDK.sln
-echo Done.
-echo Configuration Release -> Win32
-"%DEVENV_EXE_LOCATION%" /build "release|Win32" /project ALL_BUILD %PHYSX_SDK_ROOT%\physx\compiler\vc16win64\PhysXSDK.sln
-echo Done.
-
 echo PhysX library compilation completed!

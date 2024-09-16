@@ -24,6 +24,7 @@ FMaterial::FMaterial()
 	, m_ShadingModel( SM_DefaultLit )
 	, m_IsTwoSided( false )
 	, m_FillMode ( FM_Solid )
+	, m_DepthEnabled( true )
 {
 }
 
@@ -117,6 +118,7 @@ void FMaterial::LoadFromFile( const String& Filepath )
 		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EShadingModel ), (int32&)m_ShadingModel );
 		JsonUtility::GetInteger( Parameters, HE_STRINGIFY( EFillMode ), (int32&)m_FillMode );
 		JsonUtility::GetBoolean( Parameters, HE_STRINGIFY( IsTwoSided ), m_IsTwoSided );
+		JsonUtility::GetBoolean( Parameters, HE_STRINGIFY( DepthEnabled ), m_DepthEnabled );
 
 		// Load the material's shaders.
 		const rapidjson::Value& Shaders = MaterialRoot[kShaders];
@@ -225,9 +227,10 @@ void FMaterial::BuildPipelineState()
 	FRasterizerDesc RasterDesc	= CRasterizerDesc();
 	if (GetIsTwoSided())
 		RasterDesc.CullMode = CM_None;
+	
+	PSODesc.DepthStencilState.DepthEnable	= m_DepthEnabled;
 	if (GetIsWireframe())
 	{
-		PSODesc.DepthStencilState.DepthEnable	= false;
 		RasterDesc.FillMode						= FM_WireFrame;
 	}
 	PSODesc.RasterizerDesc			= RasterDesc;

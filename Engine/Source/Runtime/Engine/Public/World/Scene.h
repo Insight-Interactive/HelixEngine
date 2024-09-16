@@ -38,8 +38,7 @@ public:
 	void AddPointLight(HPointLightComponent* pPointLight);
 	bool RemovePointLight(HPointLightComponent* pPointLight);
 
-	bool GetDrawColliders() const;
-	void SetDrawColliders( const bool& DrawColliders );
+	void SetDrawCollision( const bool& DrawColliders );
 
 	void RenderWorldGeo( FCommandContext& CmdContext );
 	std::vector<FWorldMesh*> m_WorldGeo;
@@ -48,7 +47,7 @@ protected:
 	HWorld* GetWorld();
 
 private:
-	bool m_DrawColliders;
+	bool m_DrawCollision;
 
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
@@ -150,12 +149,7 @@ FORCEINLINE bool HScene::DoesContainAnyTranslucentObjects()
 	return m_FirstTranslucentOrUnlit != m_StaticMeshs.end();
 }
 
-FORCEINLINE bool HScene::GetDrawColliders() const
+FORCEINLINE void HScene::SetDrawCollision( const bool& DrawColliders )
 {
-	return m_DrawColliders;
-}
-
-FORCEINLINE void HScene::SetDrawColliders( const bool& DrawColliders )
-{
-	m_DrawColliders = DrawColliders;
+	m_DrawCollision = DrawColliders;
 }

@@ -9,6 +9,7 @@ pushd %~dp0
 
 call DependencyBuild\Compile-PhysX-Source.bat
 call DependencyBuild\Compile-Lua-Source.bat
+call DependencyBuild\Compile-Assimp-Source.bat
 
 
 echo Finished compiling third-party libraries

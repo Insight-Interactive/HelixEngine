@@ -18,7 +18,6 @@ class ManagedAsset
 public:
 	ManagedAsset()
 		: m_MapKey( "<Unnamed ManagedAsset>" )
-		, m_IsValid( false )
 		, m_IsLoading( true )
 		, m_ReferenceCount( 1 )
 	{
@@ -34,7 +33,6 @@ public:
 protected:
 	ManagedAsset( const String& HashName )
 		: m_MapKey( HashName )
-		, m_IsValid( false )
 		, m_IsLoading( true )
 		, m_ReferenceCount( 1 )
 	{
@@ -49,7 +47,6 @@ protected:
 	void Unload();
 
 	String m_MapKey; // For deleting from the map later.
-	bool m_IsValid;
 	bool m_IsLoading;
 	uint64 m_ReferenceCount;
 };
@@ -70,8 +67,10 @@ public:
 	void operator= ( std::nullptr_t );
 	void operator= ( AssetRef& rhs );
 
-	// Check that this points to a valid texture (which loaded successfully)
+	// Check that this points to a valid asset (which loaded successfully)
 	bool IsValid() const;
+
+	ManagedAsset<AssetType>* GetManagedAsset();
 
 	// Get the Asset.
 	AssetType& GetAsset();
@@ -130,13 +129,12 @@ template <typename AssetType>
 FORCEINLINE void ManagedAsset<AssetType>::SetLoadCompleted( bool Completed )
 {
 	m_IsLoading = !Completed;
-	m_IsValid = Completed;
 }
 
 template <typename AssetType>
 FORCEINLINE bool ManagedAsset<AssetType>::IsValid() const
 { 
-	return m_IsValid; 
+	return !m_IsLoading; 
 }
 
 
@@ -191,6 +189,12 @@ template <typename AssetType>
 FORCEINLINE bool AssetRef<AssetType>::IsValid() const
 {
 	return m_Ref && m_Ref->IsValid();
+}
+
+template <typename AssetType>
+ManagedAsset<AssetType>* AssetRef<AssetType>::GetManagedAsset()
+{
+	return m_Ref;
 }
 
 template <typename AssetType>

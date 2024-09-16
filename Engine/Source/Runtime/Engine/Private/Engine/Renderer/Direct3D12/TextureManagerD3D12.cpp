@@ -113,7 +113,7 @@ void FTextureManager::CreateTextureFromMemory( ManagedTexture** pOutTexture, Dat
             TextureAsset.m_Height = Desc.Height;
             TextureAsset.m_Depth = Desc.DepthOrArraySize;
 
-            TextureAsset.m_IsValid = true;
+            TextureAsset.m_IsLoading = false;
         }
         else
         {

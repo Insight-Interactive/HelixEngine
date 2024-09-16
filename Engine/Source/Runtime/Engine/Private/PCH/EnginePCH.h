@@ -105,6 +105,7 @@
 #include "JsonUtility.h"
 #include "StringHelper.h"
 #include "Path.h"
+#include "ThreadPool.h"
 #include "GUID.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"

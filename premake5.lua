@@ -126,4 +126,12 @@ group ("Tools")
 	include ( "Engine/Source/Editor/PackageCooker/PackageCooker.program.lua" );
 group ("")
 
+group ("ThirdParty/RecastNav")
+		include ( "Engine/ThirdParty/recastnavigation-1.6.0/Detour/premake5.lua" );
+		include ( "Engine/ThirdParty/recastnavigation-1.6.0/DetourCrowd/premake5.lua" );
+		include ( "Engine/ThirdParty/recastnavigation-1.6.0/DetourTileCache/premake5.lua" );
+		include ( "Engine/ThirdParty/recastnavigation-1.6.0/Recast/premake5.lua" );
+group ("")
+
+
 --Third Party

@@ -7,7 +7,6 @@
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
 #include "GameFramework/Components/HControllerComponent.h"
-#include "GameFramework/Components/HCapsuleColliderComponent.h"
 
 
 AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
@@ -16,17 +15,17 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_ADSTimeSeconds( 0.1f )
 	, m_ADSFOVDegrees( 50.f )
 {
+
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
 	m_CameraBoom->AttachTo( m_RootComponent, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
 	m_CameraBoom->UseCameraCollision( true );
 
 	m_CameraComponent = AddComponent<HCameraComponent>( "FollowCamera" );
 	m_CameraBoom->SetCamera( m_CameraComponent );
-	m_CameraBoom->SetViewOffset( FVector3( 60.f, 70.f, -150.f ) );
+	m_CameraComponent->SetFieldOfView( 80.f );
+	m_CameraBoom->SetViewOffset( FVector3( 60.f, 70.f, -180.f ) );
 	m_CameraFOV = m_CameraComponent->GetFieldOfView();
 
-	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
-	m_Body->AttachTo( m_RootComponent );
 	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule01.fbx" ) );
 	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
 	m_Body->SetScale( 60, GetPawnHeight(), 60);

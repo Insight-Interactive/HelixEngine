@@ -88,6 +88,7 @@ protected:
 	HStaticMesh								m_MeshAsset;
 	TConstantBuffer<MeshWorldCBData>		m_MeshWorldCB;
 	FMaterialInstance*						m_Material;
+
 	// Internal
 	bool m_IsStatic;
 

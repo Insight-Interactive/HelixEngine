@@ -5,6 +5,7 @@
 #include "World/World.h"
 #include "GameFramework/Components/HFirstPersonCameraComponent.h"
 #include "GameFramework/Components/HControllerComponent.h"
+#include "GameFramework/Components/HFirstPersonCameraComponent.h"
 
 
 AFirstPersonCharacter::AFirstPersonCharacter( FActorInitArgs& InitArgs )

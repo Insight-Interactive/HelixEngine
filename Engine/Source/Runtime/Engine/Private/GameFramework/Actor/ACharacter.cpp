@@ -4,15 +4,17 @@
 #include "GameFramework/Actor/ACharacter.h"
 
 #include "World/World.h"
-#include "GameFramework/Components/HCameraComponent.h"
-#include "GameFramework/Components/HControllerComponent.h"
-#include "GameFramework/Components/HCapsuleColliderComponent.h"
+#include "GameFramework/Components/HStaticMeshComponent.h"
 
 
 ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	: APawn( InitArgs )
 {
 	m_RootComponent = AddComponent<HSceneComponent>( "CharacterRoot" );
+	
+	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
+	m_Body->AttachTo( m_RootComponent );
+
 }
 
 ACharacter::~ACharacter()

@@ -17,14 +17,14 @@ function heGetBuildFolder()
 	return "%{wks.location}/" .. buildFolder .. "/%{cfg.buildcfg}-%{cfg.platform}/";
 end
 
--- Returns the absolute path to the tools executable build directoy. 
-function heGetToolsBuildFolder()
-	return "%{wks.location}/" .. buildFolder .. "Tools/%{cfg.buildcfg}-%{cfg.platform}/";
-end
-
 -- Returns the absolute path to the intermediate build directoy. 
 function heGetBuildIntFolder()
 	return "%{wks.location}/" .. intermediateFolder .. "/%{cfg.buildcfg}-%{cfg.platform}/";
+end
+
+-- Returns the absolute path to the tools executable build directoy. 
+function heGetToolsBuildFolder()
+	return "%{wks.location}/" .. buildFolder .. "Tools/%{cfg.buildcfg}-%{cfg.platform}/";
 end
 
 -- Returns the absolute path to the tools intermediate build directoy. 

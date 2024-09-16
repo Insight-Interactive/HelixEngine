@@ -6,6 +6,7 @@
 
 class HCameraComponent;
 class HCapsuleColliderComponent;
+class HStaticMeshComponent;
 
 HCLASS()
 class ACharacter : public APawn
@@ -14,19 +15,8 @@ class ACharacter : public APawn
 public:
 	HE_GENERATED_BODY( ACharacter );
 
-	inline HCameraComponent* GetCameraComponent();
 
 protected:
-	HCameraComponent* m_CameraComponent;
-	
+	HStaticMeshComponent* m_Body;
+
 };
-
-
-//
-// Inline function implementations
-//
-
-HCameraComponent* ACharacter::GetCameraComponent()
-{
-	return m_CameraComponent;
-}

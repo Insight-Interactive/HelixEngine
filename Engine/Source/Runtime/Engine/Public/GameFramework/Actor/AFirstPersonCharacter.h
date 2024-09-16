@@ -20,8 +20,21 @@ private:
 	void LookRight( float Value );
 
 	void TogglePitchYawRotation();
+	inline HCameraComponent* GetCameraComponent();
 
 private:
+	HCameraComponent* m_CameraComponent;
+
 	bool m_CanRotateCamera;
 
 };
+
+
+//
+// Inline function implementations
+//
+
+HCameraComponent* AFirstPersonCharacter::GetCameraComponent()
+{
+	return m_CameraComponent;
+}

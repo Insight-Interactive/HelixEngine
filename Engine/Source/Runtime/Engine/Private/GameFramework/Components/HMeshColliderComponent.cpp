@@ -41,7 +41,7 @@ void HMeshColliderComponent::Deserialize( const JsonUtility::ReadContext& Value 
 	uint32 VertexCount;
 	std::vector<uint32> Indices;
 	uint32 IndexCount;
-	GStaticGeometryManager.LoadGometry( Path, Verticies, VertexCount, Indices, IndexCount );
+	GStaticGeometryManager.LoadBasicGometry( Path, Verticies, VertexCount, Indices, IndexCount );
 	m_RigidBody.pTriangleData = Verticies.data();
 	m_RigidBody.TriCount = VertexCount;
 	m_RigidBody.VertexSize = sizeof( FSimpleVertex3D );

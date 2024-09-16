@@ -139,6 +139,7 @@ protected:
 	EMaterialDomain		m_Domain;
 	EShadingModel		m_ShadingModel;
 	bool				m_IsTwoSided;
+	bool				m_DepthEnabled;
 
 	FPipelineState m_Pipeline;
 	FRootSignature m_RootSig;

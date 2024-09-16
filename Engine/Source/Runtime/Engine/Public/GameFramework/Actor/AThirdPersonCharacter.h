@@ -15,6 +15,7 @@ public:
 	HE_GENERATED_BODY( AThirdPersonCharacter );
 
 	virtual void Tick( float DeltaTime ) override;
+	inline HCameraComponent* GetCameraComponent();
 
 private:
 	virtual void SetupController( HControllerComponent& Controller ) override;
@@ -26,8 +27,8 @@ private:
 	void DoMelee();
 
 private:
-	HCameraBoomComponent* m_CameraBoom;
-	HStaticMeshComponent* m_Body;
+	HCameraComponent*		m_CameraComponent;
+	HCameraBoomComponent*	m_CameraBoom;
 
 	float m_ADSFOVDegrees;
 	float m_CameraFOV;
@@ -35,3 +36,13 @@ private:
 	float m_ADSTimeSeconds;
 
 };
+
+
+//
+// Inline function implementations
+//
+
+HCameraComponent* AThirdPersonCharacter::GetCameraComponent()
+{
+	return m_CameraComponent;
+}

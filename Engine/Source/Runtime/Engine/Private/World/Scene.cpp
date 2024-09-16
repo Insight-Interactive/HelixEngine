@@ -6,12 +6,14 @@
 #include "GameFramework/Components/HCameraComponent.h"
 #include "World/World.h"
 #include "Graphics/ShaderRegisters.h"
+#include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Actor/ACharacter.h"
 
 
 HScene::HScene( HWorld* pOwner )
 	: Super( "Scene" )
 	, m_pOwner( pOwner )
-	, m_DrawColliders( true )
+	, m_DrawCollision( true )
 {
 
 }
@@ -59,13 +61,55 @@ void HScene::RenderDebugMeshes( FCommandContext& CmdContext )
 {
 	CmdContext.BeginDebugMarker( L"Render Debug Meshes" );
 	{
-		if (m_DrawColliders)
+		if (m_DrawCollision)
 		{
-			for (auto Iter = m_DebugColliderMeshs.begin(); Iter != m_DebugColliderMeshs.end(); ++Iter)
+
+			CmdContext.BeginDebugMarker( L"World Collision" );
 			{
-				HColliderComponent& Collider = (**Iter);
-				Collider.Render( CmdContext );
+				for (uint32 i = 0; i < m_WorldGeo.size(); i++)
+				{
+					FWorldMesh& Mesh = *m_WorldGeo[i];
+					if (Mesh.m_Collision.IsValid())
+					{
+						/*ACharacter* Player = GetWorld()->GetPlayerCharacter();
+						if (Player)
+						{
+							FVector3 Scale, Position;
+							FQuat Rotation;
+							Mesh.m_MeshWorldCB->kWorldMat.Decompose( Scale, Rotation, Position );
+							float DistSquared = FVector3::DistanceSquared( Player->GetRootComponent()->GetWorldPosition(), Position);
+							if (DistSquared > (150.f * 150.f))
+								continue;
+						}*/
+
+						if (Mesh.m_CollisionWireframeMaterial)
+						{
+							FColor Color = FColor::BlackOpaque;
+							Mesh.m_CollisionWireframeMaterial->SetVector3( "kColor", Color.ToVector3() );
+
+							// Set the material information.
+							Mesh.m_CollisionWireframeMaterial->Bind( CmdContext );
+
+							CmdContext.SetGraphicsConstantBuffer( kMeshWorld, Mesh.m_MeshWorldCB );
+							CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
+							CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetVertexBuffer() );
+							CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetIndexBuffer() );
+							CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetNumIndices(), 1, 0, 0, 0 );
+						}
+					}
+				}
 			}
+			CmdContext.EndDebugMarker();
+
+			CmdContext.BeginDebugMarker( L"Collider components" );
+			{
+				for (auto Iter = m_DebugColliderMeshs.begin(); Iter != m_DebugColliderMeshs.end(); ++Iter)
+				{
+					HColliderComponent& Collider = (**Iter);
+					Collider.Render( CmdContext );
+				}
+			}
+			CmdContext.EndDebugMarker();
 		}
 	}
 	CmdContext.EndDebugMarker();

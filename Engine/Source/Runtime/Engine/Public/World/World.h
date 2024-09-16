@@ -12,6 +12,7 @@
 #include "Input/InputEnums.h"
 #include "Path.h"
 #include "Engine/Physics/RigidBody.h"
+#include "AI/NavMesh.h"
 
 
 class HLevel;
@@ -24,6 +25,7 @@ class HPlaneColliderComponent;
 class HCubeColliderComponent;
 class HSphereColliderComponent;
 class HCapsuleColliderComponent;
+class AThirdPersonCharacter;
 struct FDebugLineRenderInfo;
 
 /*
@@ -64,7 +66,7 @@ public:
 	FLabel& GetFPSLabel() { return m_FPSCounter; }
 	bool IsLevelLoaded() const;
 	HLevel& GetCurrentLevel();
-	ACharacter* GetPlayerCharacter();
+	AThirdPersonCharacter* GetPlayerCharacter();
 
 	float GetWindowWidth();
 	float GetWindowHeight();
@@ -93,8 +95,6 @@ protected:
 	virtual void Serialize( const Char* Filename ) override;
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
-	void RegisterScenes();
-
 	std::vector<FUIPanel*>& GetUIPanels();
 
 	PointLightDataHandle m_TestPointLight;
@@ -107,8 +107,9 @@ protected:
 
 	HLevel m_Level;
 	HScene m_Scene;
+	HNavMesh m_NavMesh;
 
-	ACharacter* m_PlayerCharacter;
+	AThirdPersonCharacter* m_PlayerCharacter;
 	FPath m_LevelFilepath;
 
 	HCameraComponent* m_RenderingCamera;
@@ -191,7 +192,7 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 }
 
-FORCEINLINE ACharacter* HWorld::GetPlayerCharacter()
+FORCEINLINE AThirdPersonCharacter* HWorld::GetPlayerCharacter()
 {
 	return m_PlayerCharacter;
 }
