@@ -1,7 +1,7 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Components/HActorComponent.h"
 
 #include "Transform.h"
 #include "Graphics/MaterialManager.h"
@@ -11,11 +11,11 @@
 
 
 HCOMPONENT()
-class HStaticMeshComponent : public HSceneComponent
+class HStaticMeshComponent : public HActorComponent
 {
 	friend class AActor;	
 	friend class HScene;
-	using Super = HSceneComponent;
+	using Super = HActorComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HStaticMeshComponent )
 
@@ -28,6 +28,8 @@ public:
 	void SetIsDrawEnabled(bool bVisible);
 	bool IsOpaque() const;
 
+	FTransform& GetTransform() { return m_Transform; }
+
 protected:
 	virtual void OnCreate() override;
 	virtual void OnDestroy() override;
@@ -38,6 +40,7 @@ protected:
 	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
 
 protected:
+	FTransform m_Transform;
 	bool								m_bIsDrawEnabled;
 	
 	TConstantBuffer<MeshWorldCBData>	m_MeshWorldCB;

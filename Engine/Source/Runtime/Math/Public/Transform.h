@@ -23,6 +23,39 @@ public:
 	FVector3 GetEulerRotation() const { return m_Rotation.ToEulerAngles(); }
 	FVector3 GetScale()			const { return m_Scale; }
 
+	FMatrix GetWorldMatrix()
+	{
+		if (m_Parent)
+			return GetLocalMatrix() * m_Parent->GetWorldMatrix();
+		else
+			return GetLocalMatrix();
+	}
+
+	FVector3 GetWorldPosition()
+	{
+		FVector3 Position;
+		FVector3 Scale;
+		FQuat Rotation;
+		GetWorldMatrix().Decompose( Scale, Rotation, Position );
+		return Position;
+	}
+
+	FQuat GetWorldScale()
+	{
+		FVector3 Position;
+		FVector3 Scale;
+		FQuat Rotation;
+		GetWorldMatrix().Decompose( Scale, Rotation, Position );
+		return Rotation;
+	}
+
+	void LinkTo( FTransform& Parent, FVector3 Offset = FVector3::Zero ) 
+	{ 
+		m_Parent = &Parent;
+		Translate( Offset.x, Offset.y, Offset.z );
+	}
+	void Unlink() { m_Parent = nullptr; }
+
 	void SetPosition( const float& X, const float& Y, const float& Z );
 	void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
 	void SetScale( const float& X, const float& Y, const float& Z );
@@ -87,6 +120,8 @@ protected:
 	FVector3 m_Position;
 	FQuat m_Rotation;
 	FVector3 m_Scale;
+
+	FTransform* m_Parent;
 
 };
 

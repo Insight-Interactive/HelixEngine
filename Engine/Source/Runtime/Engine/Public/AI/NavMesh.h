@@ -1,8 +1,8 @@
 #pragma once
 
+#include "DetourNavMesh.h"
+#include "DetourNavMeshQuery.h"
 
-class dtNavMesh;
-class dtNavMeshQuery;
 
 class HNavMesh
 {

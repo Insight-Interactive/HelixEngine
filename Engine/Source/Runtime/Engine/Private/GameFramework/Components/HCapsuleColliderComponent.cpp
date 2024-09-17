@@ -64,7 +64,7 @@ void HCapsuleColliderComponent::RegisterCollider()
 	FQuat DefaultRotation = FQuat::CreateFromAxisAngle( FVector3::Forward, Math::HalfPi );
 	bool IsKinematic = false;
 	Physics::CreateCapsule(
-		GetWorldPosition(),
+		m_Transform.GetWorldPosition(),
 		DefaultRotation,
 		(HCapsuleRigidBody&)GetRigidBody(),
 		GetIsTrigger(),

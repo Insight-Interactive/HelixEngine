@@ -25,7 +25,6 @@ class HEngine : public EventEmitter<void, EngineEvent&>
 {
 	friend class HEngineLaunchBootstraper;
 	friend class HWorld;
-	friend class HSceneComponent;
 public:
 	/*
 		Requests a global shutdown from the engine. Cleaning up and shutting down everything.

@@ -77,8 +77,8 @@ void HCubeColliderComponent::Deserialize( const JsonUtility::ReadContext& Value 
 void HCubeColliderComponent::RegisterCollider()
 {
 	Physics::CreateCube(
-		GetWorldPosition(),
-		GetRotation(),
+		m_Transform.GetWorldPosition(),
+		m_Transform.GetRotation(),
 		m_RigidBody,
 		GetIsTrigger(),
 		(PhysicsCallbackHandler*)this,

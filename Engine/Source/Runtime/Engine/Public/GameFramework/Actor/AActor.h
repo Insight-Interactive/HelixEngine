@@ -15,7 +15,6 @@
 #define HCLASS()
 
 class HWorld;
-class HSceneComponent;
 class FCommandContext;
 
 struct FActorInitArgs
@@ -56,9 +55,8 @@ public:
 	// Finds and returns a component by its unique id. nullptr if the component is not found.
 	HActorComponent* GetComponentByGuid(const FGUID& Guid);
 
-	void SetRootComponent(HSceneComponent* pRoot);
-	HSceneComponent* GetRootComponent();
 
+	FTransform& GetTransform() { return m_Transform; }
 	LuaScript& GetScript();
 
 
@@ -75,7 +73,7 @@ protected:
 
 protected:
 	std::vector<HActorComponent*> m_Components;
-	HSceneComponent* m_RootComponent;
+	FTransform m_Transform;
 
 	HWorld* m_OwningWorld;
 
@@ -131,16 +129,6 @@ FORCEINLINE HWorld* AActor::GetWorld()
 FORCEINLINE void AActor::SetOwningWorld( HWorld* pWorld )
 {
 	m_OwningWorld = pWorld;
-}
-
-FORCEINLINE void AActor::SetRootComponent(HSceneComponent* pRoot)
-{
-	m_RootComponent = pRoot;
-}
-
-FORCEINLINE HSceneComponent* AActor::GetRootComponent()
-{
-	return m_RootComponent;
 }
 
 FORCEINLINE LuaScript& AActor::GetScript()

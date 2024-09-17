@@ -1,7 +1,7 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Components/HActorComponent.h"
 
 #include "Transform.h"
 #include "Engine/Renderer/Color.h"
@@ -17,11 +17,11 @@ extern LightManager GLightManager;
 	A light that emits energy from a single point in space in all directions.
 */
 HCOMPONENT()
-class HPointLightComponent : public HSceneComponent
+class HPointLightComponent : public HActorComponent
 {
 	friend class AActor;
 	friend class HScene;
-	using Super = HSceneComponent;
+	using Super = HActorComponent;
 public:
 	HE_COMPONENT_GENERATED_BODY( HPointLightComponent )
 
@@ -36,8 +36,8 @@ public:
 	void SetColor( const FColor& NewColor );
 	void SetBrightness( float NewBrightness );
 
-	virtual void SetPosition( const FVector3& NewPos );
-	virtual void SetPosition( const float& X, const float& Y, const float& Z );
+	void SetPosition( const FVector3& NewPos );
+	void SetPosition( const float& X, const float& Y, const float& Z );
 
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
@@ -48,6 +48,8 @@ protected:
 	bool GetCanDrawDebugBillboard() const;
 
 protected:
+
+
 	PointLightDataHandle m_PointLightHandle;
 
 	// Billboard info

@@ -73,33 +73,30 @@ void HLevel::Serialize( JsonUtility::WriteContext& Output )
 		{
 			Output.StartObject();
 			{
-				if (HSceneComponent* pRoot = CurrentActor.GetRootComponent())
-				{
-					// Position
-					Output.Key( "PositionX" );
-					Output.Double( pRoot->GetPosition().x );
-					Output.Key( "PositionY" );
-					Output.Double( pRoot->GetPosition().y );
-					Output.Key( "PositionZ" );
-					Output.Double( pRoot->GetPosition().z );
+				FTransform& Transform = CurrentActor.GetTransform();
+				// Position
+				Output.Key( "PositionX" );
+				Output.Double( Transform.GetPosition().x );
+				Output.Key( "PositionY" );
+				Output.Double( Transform.GetPosition().y );
+				Output.Key( "PositionZ" );
+				Output.Double( Transform.GetPosition().z );
 
-					// Rotation
-					Output.Key( "RotationX" );
-					Output.Double( pRoot->GetRotation().x );
-					Output.Key( "RotationY" );
-					Output.Double( pRoot->GetRotation().y );
-					Output.Key( "RotationZ" );
-					Output.Double( pRoot->GetRotation().z );
+				// Rotation
+				Output.Key( "RotationX" );
+				Output.Double( Transform.GetRotation().x );
+				Output.Key( "RotationY" );
+				Output.Double( Transform.GetRotation().y );
+				Output.Key( "RotationZ" );
+				Output.Double( Transform.GetRotation().z );
 
-					// Scale
-					Output.Key( "ScaleX" );
-					Output.Double( pRoot->GetScale().x );
-					Output.Key( "ScaleY" );
-					Output.Double( pRoot->GetScale().y );
-					Output.Key( "ScaleZ" );
-					Output.Double( pRoot->GetScale().z );
-				}
-
+				// Scale
+				Output.Key( "ScaleX" );
+				Output.Double( Transform.GetScale().x );
+				Output.Key( "ScaleY" );
+				Output.Double( Transform.GetScale().y );
+				Output.Key( "ScaleZ" );
+				Output.Double( Transform.GetScale().z );
 			}
 			Output.EndObject();
 		}
@@ -155,18 +152,15 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 						FActorSerializer::DeserializeActor( *pNewActor, ActorObject );
 
 						// TODO: This should be refactored. It messes with the root transform too much!
-						if (HSceneComponent* pRoot = pNewActor->GetRootComponent())
-						{
-							FTransform Transform;
-							JsonUtility::GetTransform( WorldOverrides[kTransform], Transform);
-							//JsonUtility::GetTransform( Actor, ActorFileName, Transform );
-							FVector3 Pos = Transform.GetPosition();
-							pRoot->Translate( Pos.x, Pos.y, Pos.z );
-							/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-							pRoot->Rotate( Rot.x, Rot.y, Rot.z );
-							FVector3 Sca = Transform.GetScale();
-							pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
-						}
+						FTransform& Transform = pNewActor->GetTransform();
+						JsonUtility::GetTransform( WorldOverrides[kTransform], Transform);
+						//JsonUtility::GetTransform( Actor, ActorFileName, Transform );
+						FVector3 Pos = Transform.GetPosition();
+						Transform.Translate( Pos.x, Pos.y, Pos.z );
+						/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
+						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
+						FVector3 Sca = Transform.GetScale();
+						pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
 
 
 						if (!InstanceOverrides.IsNull())

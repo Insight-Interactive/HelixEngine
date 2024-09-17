@@ -208,10 +208,8 @@ void HWorld::Serialize( const Char* Filename )
 				Writer.StartArray();
 
 				Writer.StartObject();
-				if (HSceneComponent* pRootComponenet = Actor.GetRootComponent())
-				{
-					JsonUtility::WriteTransformValues( Writer, pRootComponenet->m_Transform );
-				}
+				FTransform& Transform = Actor.GetTransform();
+				JsonUtility::WriteTransformValues( Writer, Transform );
 				Writer.EndObject();
 
 				Writer.StartObject();

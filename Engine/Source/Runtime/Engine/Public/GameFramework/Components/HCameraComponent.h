@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Transform.h"
-#include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Components/HActorComponent.h"
 
 const float kDefaultFOV = 75.f;
 const float kDefaultNearZ = 0.1f;
@@ -42,7 +42,7 @@ struct FOVLerpParams
 };
 
 HCOMPONENT()
-class HCameraComponent : public HSceneComponent
+class HCameraComponent : public HActorComponent
 {
 	friend class HCameraManager;
 public:
@@ -66,6 +66,9 @@ public:
 	void SetFieldOfView( float Value );
 	void LerpFieldOfView( float NewFOV, float TimeSeconds );
 
+	FTransform& GetTransform() { return m_Transform; }
+
+
 protected:
 	virtual void Render( FCommandContext& GfxContext ) override;
 
@@ -74,6 +77,8 @@ private:
 
 
 protected:
+	FTransform m_Transform;
+
 	ProjectionProperties m_ViewProps;
 	float m_FieldOfView;
 
@@ -132,10 +137,10 @@ inline void HCameraComponent::SetFieldOfView( float Value )
 
 inline void HCameraComponent::BuildViewMatrix()
 {
-	const FVector3 WorldPos = GetWorldMatrix().Translation();
+	const FVector3 WorldPos = m_Transform.GetWorldMatrix().Translation();
 	m_ViewProps.ViewMat = XMMatrixLookAtLH(
 		WorldPos, 
-		WorldPos + GetLocalForward(),
-		GetLocalUp()
+		WorldPos + m_Transform.GetLocalForward(),
+		m_Transform.GetLocalUp()
 	);
 }

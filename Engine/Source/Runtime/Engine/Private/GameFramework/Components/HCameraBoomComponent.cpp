@@ -8,7 +8,7 @@
 
 
 HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
-	: HSceneComponent( InitArgs )
+	: HActorComponent( InitArgs )
 	, m_UseCameraCollision( true )
 	, m_CameraCollisionTraceDistance( 5.f )
 {
@@ -59,32 +59,32 @@ void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 	m_Rotation.x += -(PitchDelta * 25.f) * GEngine->GetDeltaTime();
 	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
-	SetRotation( RotationQuat );
+	m_Transform.SetRotation( RotationQuat );
 	
 	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
-	m_Camera->SetRotation( RotationQuat );
+	m_Camera->GetTransform().SetRotation( RotationQuat );
 }
 
 void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
 	m_Rotation.y += -(YawDelta * 25.f) * GEngine->GetDeltaTime();
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
-	SetRotation( RotationQuat );
+	m_Transform.SetRotation( RotationQuat );
 	
 	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
-	m_Camera->SetRotation( RotationQuat );
+	m_Camera->GetTransform().SetRotation( RotationQuat );
 }
 
 void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 {
 	m_Camera = Camera;
-	m_Camera->AttachTo( this );
+	m_Camera->GetTransform().LinkTo( m_Transform );
 	SetViewOffset( FVector3( 20.f, 10.f, -70.f ) );
-	m_Camera->SetRotation( FVector3::Zero );
+	m_Camera->GetTransform().SetRotation( FVector3::Zero );
 }
 
 void HCameraBoomComponent::SetViewOffset( const FVector3& Offset )
 { 
-	m_Camera->SetPosition( Offset );
+	m_Camera->GetTransform().SetPosition( Offset );
 	m_ViewOffset = Offset;
 }

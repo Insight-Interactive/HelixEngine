@@ -46,6 +46,7 @@ project ("Game-Core")
 		heGetModulePublicDir( "Scripting" ),
 
 		-- Third Party
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "Detour/Include/",
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),

@@ -4,8 +4,6 @@
 
 #include "Engine/GameProject.h"
 
-#include "DetourNavMesh.h"
-#include "DetourNavMeshQuery.h"
 
 
 HNavMesh::HNavMesh() 

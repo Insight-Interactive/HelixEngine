@@ -11,7 +11,7 @@
 
 
 HColliderComponent::HColliderComponent( FComponentInitArgs& InitArgs )
-	: HSceneComponent( InitArgs )
+	: HActorComponent( InitArgs )
 	, m_IsTrigger( false )
 	, m_CollisionBoundsDrawEnabled( true )
 	, m_Material( nullptr )
@@ -54,17 +54,13 @@ void HColliderComponent::Tick( float DeltaTime )
 
 void HColliderComponent::SetPosition( const FVector3& NewPos )
 {
-	Super::SetPosition( NewPos );
-
 	HRigidBody& rb = GetRigidBody();
 	
+	m_Transform.SetPosition( NewPos );
 
 	if (rb.GetIsKinematic())
 	{
-		FTransform sim;
-		sim.SetPosition( NewPos );
-		sim.SetRotation( GetRotation() );
-		rb.SetKinematicTarget( sim );
+		rb.SetKinematicTarget( m_Transform );
 	}
 	else
 		rb.SetSimulatedPosition( NewPos );
@@ -72,16 +68,13 @@ void HColliderComponent::SetPosition( const FVector3& NewPos )
 
 void HColliderComponent::SetRotation( const FQuat& NewRotation )
 {
-	Super::SetRotation( NewRotation );
-	
 	HRigidBody& rb = GetRigidBody();
+
+	m_Transform.SetRotation( NewRotation );
 	
 	if (rb.GetIsKinematic())
 	{
-		FTransform sim;
-		sim.SetPosition( GetPosition() );
-		sim.SetRotation( NewRotation );
-		rb.SetKinematicTarget( sim );
+		rb.SetKinematicTarget( m_Transform );
 	}
 	else
 		rb.SetSimulatedRotation( NewRotation );
@@ -89,19 +82,17 @@ void HColliderComponent::SetRotation( const FQuat& NewRotation )
 
 void HColliderComponent::SetScale( const FVector3& NewScale )
 {
-	Super::SetScale( NewScale );
+	m_Transform.SetScale( NewScale );
 	// TODO GetRigidBody().SetColliderScale(); 
 }
 
 void HColliderComponent::SetPosition( const float& X, const float& Y, const float& Z )
 {
-	Super::SetPosition( X, Y, Z );
 	SetPosition( { X, Y, Z } );
 }
 
 void HColliderComponent::SetRotation( const float& Pitch, const float& Yaw, const float& Roll )
 {
-	Super::SetRotation( Pitch, Yaw, Roll );
 	FQuat DeltaPitch = FQuat::CreateFromAxisAngle( FVector3::Right, Pitch );
 	FQuat DeltaYaw = FQuat::CreateFromAxisAngle( FVector3::Up, Yaw );
 	FQuat DeltaRoll = FQuat::CreateFromAxisAngle( FVector3::Forward, Roll );
@@ -111,18 +102,18 @@ void HColliderComponent::SetRotation( const float& Pitch, const float& Yaw, cons
 
 void HColliderComponent::SetScale( const float& X, const float& Y, const float& Z )
 {
-	Super::SetScale( X, Y, Z );
+	m_Transform.SetScale( X, Y, Z );
 }
 
 void HColliderComponent::Translate( const float& X, const float& Y, const float& Z )
 {
-	Super::Translate( X, Y, Z );
+	m_Transform.Translate( X, Y, Z );
 	GetRigidBody().SetSimulatedPosition( { X, Y, Z } );
 }
 
 void HColliderComponent::Scale( const float& X, const float& Y, const float& Z )
 {
-	Super::Scale( X, Y, Z );
+	m_Transform.Scale( X, Y, Z );
 }
 
 void HColliderComponent::Render( FCommandContext& GfxContext )
@@ -156,7 +147,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (m_MeshAsset.IsValid())
 	{
 		// Set the world buffer.
-		m_MeshWorldCB->kWorldMat = GetLocalMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = m_Transform.GetLocalMatrix().Transpose();
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.
@@ -208,7 +199,7 @@ void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 
 void HColliderComponent::OnOwnerDeserializeComplete()
 {
-	GetRigidBody().SetGlobalPositionOrientation( GetWorldPosition(), GetRotation() );
+	GetRigidBody().SetGlobalPositionOrientation( m_Transform.GetWorldPosition(), m_Transform.GetRotation() );
 }
 
 void HColliderComponent::OnCreate()

@@ -23,17 +23,17 @@ void HFirstPersonCameraComponent::LookUp( float Value )
 
 	m_Rotation.x += Value * m_CameraPitchSpeedMultiplier * GEngine->GetDeltaTime();
 	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
-	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
+	m_Transform.SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }
 
 void HFirstPersonCameraComponent::LookRight( float Value )
 {
 	m_Rotation.y += Value * m_CameraYawSpeedMultiplier * GEngine->GetDeltaTime();
-	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
+	m_Transform.SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }
 
 void HFirstPersonCameraComponent::Roll( float Value )
 {
 	m_Rotation.z += Value * m_CameraRollSpeedMultiplier * GEngine->GetDeltaTime();
-	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
+	m_Transform.SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }

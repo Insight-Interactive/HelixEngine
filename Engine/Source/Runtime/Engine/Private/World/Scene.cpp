@@ -6,7 +6,6 @@
 #include "GameFramework/Components/HCameraComponent.h"
 #include "World/World.h"
 #include "Graphics/ShaderRegisters.h"
-#include "GameFramework/Components/HSceneComponent.h"
 #include "GameFramework/Actor/ACharacter.h"
 
 

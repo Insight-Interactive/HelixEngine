@@ -16,7 +16,7 @@
 
 
 HStaticMeshComponent::HStaticMeshComponent(FComponentInitArgs& InitArgs)
-	: HSceneComponent(InitArgs)
+	: HActorComponent(InitArgs)
 {
 	m_MeshWorldCB.Create( L"[Static Mesh Component] World CB" );
 }
@@ -41,7 +41,7 @@ void HStaticMeshComponent::Render(FCommandContext& GfxContext)
 		}
 
 		// Set the world buffer.
-		m_MeshWorldCB->kWorldMat = GetWorldMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
 		GfxContext.SetGraphicsConstantBuffer(kMeshWorld, m_MeshWorldCB);
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.

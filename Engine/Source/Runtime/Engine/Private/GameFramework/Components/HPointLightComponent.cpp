@@ -13,7 +13,7 @@
 
 
 HPointLightComponent::HPointLightComponent( FComponentInitArgs& InitArgs )
-	: HSceneComponent( InitArgs )
+	: HActorComponent( InitArgs )
 {
 	GLightManager.AllocatePointLightData( m_PointLightHandle, nullptr );
 
@@ -35,23 +35,19 @@ HPointLightComponent::~HPointLightComponent()
 
 void HPointLightComponent::SetPosition( const FVector3& NewPos )
 {
-	Super::SetPosition( NewPos );
-	
 	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
-		pData->Position = GetWorldPosition();
+		pData->Position = NewPos;
 	}
 }
 
 void HPointLightComponent::SetPosition( const float& X, const float& Y, const float& Z )
 {
-	Super::SetPosition( X, Y, Z );
-
 	PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
 	if (pData != nullptr)
 	{
-		pData->Position = GetWorldPosition();
+		pData->Position = FVector3(X, Y, Z);
 	}
 }
 
@@ -97,12 +93,13 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 		const float kBillboardMaxScale = 5.f;
 		HCameraComponent* Camera = GetWorld()->GetCurrentSceneRenderCamera();
 		const float CameraDistance =
-			(Camera->GetWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a square root is inevitable.
+			(Camera->GetTransform().GetWorldPosition() - m_BillboardTransform.GetPosition()).Length() * 0.2f; // Scale factor relies on the raw distance, so a square root is inevitable.
 		const float ScaleFactor = HE_MIN( CameraDistance, kBillboardMaxScale );
 		m_BillboardTransform.SetScale( FVector3( ScaleFactor ) );
 
-		m_BillboardTransform.SetPosition( GetWorldPosition() );
-		m_BillboardTransform.LookAt( Camera->GetWorldPosition() );
+		PointLightData* pData = GLightManager.GetPointLightData( m_PointLightHandle );
+		m_BillboardTransform.SetPosition( pData->Position );
+		m_BillboardTransform.LookAt( Camera->GetTransform().GetWorldPosition() );
 
 		// Set the world buffer.
 		m_MeshWorldCB->kWorldMat = m_BillboardTransform.GetLocalMatrix().Transpose();

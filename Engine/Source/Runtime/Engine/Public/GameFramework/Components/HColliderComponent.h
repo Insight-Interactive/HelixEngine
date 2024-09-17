@@ -1,7 +1,7 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "GameFramework/Components/HSceneComponent.h"
+#include "GameFramework/Components/HActorComponent.h"
 #include "Engine/Physics/CollisionHandler.h"
 
 #include "Engine/Physics/RigidBody.h"
@@ -12,12 +12,12 @@
 
 
 HCOMPONENT()
-class HColliderComponent : public HSceneComponent, public PhysicsCallbackHandler
+class HColliderComponent : public HActorComponent, public PhysicsCallbackHandler
 {
 	friend class AActor;
 	friend class HWorld;
 	friend class HScene;
-	using Super = HSceneComponent;
+	using Super = HActorComponent;
 public:
 	virtual bool IsStatic() const = 0;
 
@@ -39,12 +39,12 @@ public:
 	void AddForce( const FVector3& Force );
 	void AddImpulse( const FVector3& Impulse );
 
-	virtual void SetPosition( const FVector3& NewPos ) override;
-	virtual void SetRotation( const FQuat& NewRotation ) override;
-	virtual void SetScale( const FVector3& NewScale ) override;
-	virtual void SetPosition( const float& X, const float& Y, const float& Z ) override;
-	virtual void SetRotation( const float& Pitch, const float& Yaw, const float& Roll ) override;
-	virtual void SetScale( const float& X, const float& Y, const float& Z ) override;
+	void SetPosition( const FVector3& NewPos );
+	void SetRotation( const FQuat& NewRotation );
+	void SetScale( const FVector3& NewScale );
+	void SetPosition( const float& X, const float& Y, const float& Z );
+	void SetRotation( const float& Pitch, const float& Yaw, const float& Roll );
+	void SetScale( const float& X, const float& Y, const float& Z );
 
 	virtual void Translate( const float& X, const float& Y, const float& Z );
 	virtual void Scale( const float& X, const float& Y, const float& Z );
@@ -89,18 +89,21 @@ protected:
 	TConstantBuffer<MeshWorldCBData>		m_MeshWorldCB;
 	FMaterialInstance*						m_Material;
 
+	/*
+		Whether this collider is a trigger or not. If true no physics are applied to this collider.
+	*/
+	bool m_IsTrigger;
+
 	// Internal
 	bool m_IsStatic;
+
+	FTransform m_Transform;
 
 private:
 
 	// Each collier type overrides this to return their rigid body subclass.
 	virtual HRigidBody& GetRigidBody() = 0;
 	virtual const HRigidBody& GetRigidBody() const = 0;
-	/*
-		Whether this collider is a trigger or not. If true no physics are applied to this collider.
-	*/
-	bool m_IsTrigger;
 
 	bool m_SimulationEnabled;
 };

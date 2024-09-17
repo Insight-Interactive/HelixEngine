@@ -10,7 +10,7 @@
 
 #define UpdateFootPos()																	\
 physx::PxExtendedVec3 FootPos = PxController->getFootPosition();						\
-m_RootComponent->SetPosition( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );	\
+m_Transform.SetPosition( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );	\
 
 
 static const float kDefaultMovementSpeed = 135.f;

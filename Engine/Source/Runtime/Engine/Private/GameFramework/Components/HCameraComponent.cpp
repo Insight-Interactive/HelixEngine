@@ -12,7 +12,7 @@
 
 
 HCameraComponent::HCameraComponent(FComponentInitArgs& InitArgs)
-	: HSceneComponent(InitArgs)
+	: HActorComponent(InitArgs)
 	, m_FieldOfView( kDefaultFOV )
 	, m_ShouldLerpFOV( false )
 {

@@ -7,7 +7,6 @@
 
 AActor::AActor( FActorInitArgs& InitArgs )
 	: HObject( InitArgs.Name )
-	, m_RootComponent( nullptr )
 	, m_OwningWorld( CCast<HWorld*>( InitArgs.pWorld ) )
 	, m_IsDynamicInstance( InitArgs.bIsDynamicInstance )
 {

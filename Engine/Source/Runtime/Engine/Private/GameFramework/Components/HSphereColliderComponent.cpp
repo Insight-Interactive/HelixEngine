@@ -58,10 +58,10 @@ void HSphereColliderComponent::SetRadius( float NewRadius )
 void HSphereColliderComponent::RegisterCollider()
 {
 	Physics::CreateSphere(
-		GetWorldPosition(),
-		GetRotation(),
-		(HSphereRigidBody&)GetRigidBody(),
-		GetIsTrigger(),
+		m_Transform.GetWorldPosition(),
+		m_Transform.GetRotation(),
+		m_RigidBody,
+		m_IsTrigger,
 		(PhysicsCallbackHandler*)this,
 		false,
 		10.f,

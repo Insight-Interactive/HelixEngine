@@ -17,7 +17,7 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 {
 
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
-	m_CameraBoom->AttachTo( m_RootComponent, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
+	m_CameraBoom->GetTransform().LinkTo( m_Transform, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
 	m_CameraBoom->UseCameraCollision( true );
 
 	m_CameraComponent = AddComponent<HCameraComponent>( "FollowCamera" );
@@ -28,8 +28,8 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 
 	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule01.fbx" ) );
 	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
-	m_Body->SetScale( 60, GetPawnHeight(), 60);
-	m_Body->SetPosition( 0.f, GetPawnHeight(), 0.f );
+	m_Body->GetTransform().SetScale( 60, GetPawnHeight(), 60);
+	m_Body->GetTransform().SetPosition( 0.f, GetPawnHeight(), 0.f );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -82,12 +82,12 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 
 void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
 {
-	Move( m_CameraComponent->GetLocalForward(), Delta );
+	Move( m_CameraComponent->GetTransform().GetLocalForward(), Delta );
 }
 
 void AThirdPersonCharacter::ThirdPersonMoveRight( float Delta )
 {
-	Move( m_CameraComponent->GetLocalRight(), Delta );
+	Move( m_CameraComponent->GetTransform().GetLocalRight(), Delta );
 }
 
 void AThirdPersonCharacter::AimDownSight()
@@ -107,7 +107,7 @@ void AThirdPersonCharacter::FireWeapon()
 	FVector2 ScreenFirePos = WindowDims / 2;
 
 	FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix() );
-	CameraPos = m_CameraComponent->GetWorldPosition();
+	CameraPos = m_CameraComponent->GetTransform().GetWorldPosition();
 	
 	float MaxTraceDistance = 10000.f;
 	GetWorld()->Raycast( CameraPos, Direction, MaxTraceDistance, &HitInfo );
@@ -123,7 +123,7 @@ void AThirdPersonCharacter::DoMelee()
 	FRaycastHitInfo MeleeHitInfo = {};
 	float MeleeDistance = 36.f;
 
-	FVector3 StartPos = m_RootComponent->GetWorldPosition() + FVector3( 0.f, GetPawnHeight(), 0.f );
-	GetWorld()->Raycast( StartPos, m_RootComponent->GetLocalForward(), MeleeDistance, &MeleeHitInfo );
+	FVector3 StartPos = GetTransform().GetWorldPosition() + FVector3( 0.f, GetPawnHeight(), 0.f );
+	GetWorld()->Raycast( StartPos, GetTransform().GetLocalForward(), MeleeDistance, &MeleeHitInfo );
 
 }

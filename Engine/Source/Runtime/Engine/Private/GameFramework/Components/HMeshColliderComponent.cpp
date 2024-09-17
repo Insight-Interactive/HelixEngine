@@ -50,9 +50,9 @@ void HMeshColliderComponent::Deserialize( const JsonUtility::ReadContext& Value 
 	m_RigidBody.IndexSize = sizeof( uint32 );
 	m_IsStatic = true;
 	Physics::CreateMesh(
-		GetWorldPosition(),
-		GetRotation(),
-		GetScale(),
+		m_Transform.GetWorldPosition(),
+		m_Transform.GetRotation(),
+		m_Transform.GetScale(),
 		m_RigidBody,
 		GetIsTrigger(),
 		(PhysicsCallbackHandler*)this,

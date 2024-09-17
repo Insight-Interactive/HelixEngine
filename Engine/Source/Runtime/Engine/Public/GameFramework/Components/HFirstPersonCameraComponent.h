@@ -67,5 +67,5 @@ inline FVector3 HFirstPersonCameraComponent::GetCameraAngles()
 inline void HFirstPersonCameraComponent::SetCameraAngles( FVector3& Angles )
 {
 	m_Rotation = Angles;
-	SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
+	m_Transform.SetRotation( FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z ) );
 }

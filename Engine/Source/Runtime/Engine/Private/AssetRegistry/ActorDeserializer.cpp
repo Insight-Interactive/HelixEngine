@@ -14,7 +14,6 @@
 #include "GameFramework/Components/HMeshColliderComponent.h"
 #include "GameFramework/Components/HLuaScriptComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
-#include "GameFramework/Components/HSceneComponent.h"
 
 
 /*static*/ void FActorSerializer::DeserializeActorOverrides( AActor& OutActor, const JsonUtility::ReadContext& InstanceOverrides )
@@ -58,7 +57,6 @@
 
 	static StringHashValue StaticMeshKey;
 	static StringHashValue PointLightKey;
-	static StringHashValue SceneComponentKey;
 	static StringHashValue PlaneColliderKey;
 	static StringHashValue SphereColliderKey;
 	static StringHashValue CubeColliderKey;
@@ -71,7 +69,6 @@
 	{
 		StaticMeshKey = StringHash( HE_STRINGIFY( HStaticMeshComponent ) );
 		PointLightKey = StringHash( HE_STRINGIFY( HPointLightComponent ) );
-		SceneComponentKey = StringHash( HE_STRINGIFY( HSceneComponent ) );
 		PlaneColliderKey = StringHash( HE_STRINGIFY( HPlaneColliderComponent ) );
 		SphereColliderKey = StringHash( HE_STRINGIFY( HSphereColliderComponent ) );
 		CubeColliderKey = StringHash( HE_STRINGIFY( HCubeColliderComponent ) );
@@ -104,11 +101,6 @@
 		else if (ComponentTypeHash == PointLightKey)
 		{
 			OutActor.AddComponent<HPointLightComponent>( "Unnamed Point Light Component" )
-				->Deserialize( CurrentComponent );
-		}
-		else if (ComponentTypeHash == SceneComponentKey)
-		{
-			OutActor.AddComponent<HSceneComponent>( "Unnamed Scene Component" )
 				->Deserialize( CurrentComponent );
 		}
 		else if (ComponentTypeHash == PlaneColliderKey)

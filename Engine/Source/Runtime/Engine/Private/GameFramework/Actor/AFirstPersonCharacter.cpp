@@ -13,8 +13,8 @@ AFirstPersonCharacter::AFirstPersonCharacter( FActorInitArgs& InitArgs )
 	, m_CanRotateCamera( true )
 {
 	m_CameraComponent = AddComponent<HFirstPersonCameraComponent>( "FirstPersonCameraComponent" );
-	m_CameraComponent->AttachTo( m_RootComponent );
-	m_CameraComponent->SetPosition( FVector3::Zero );
+	m_CameraComponent->GetTransform().LinkTo( m_Transform );
+	m_CameraComponent->GetTransform().SetPosition( FVector3::Zero );
 }
 
 AFirstPersonCharacter::~AFirstPersonCharacter()
@@ -62,10 +62,10 @@ void AFirstPersonCharacter::TogglePitchYawRotation()
 
 void AFirstPersonCharacter::FirstPersonMoveForward( float Delta )
 {
-	Move( m_CameraComponent->GetLocalForward(), Delta );
+	Move( m_CameraComponent->GetTransform().GetLocalForward(), Delta );
 }
 
 void AFirstPersonCharacter::FirstPersonMoveRight( float Delta )
 {
-	Move( m_CameraComponent->GetLocalRight(), Delta );
+	Move( m_CameraComponent->GetTransform().GetLocalRight(), Delta );
 }

@@ -222,7 +222,7 @@ void FSceneRenderer::SetCommonRenderState( FCommandContext& CmdContext, bool Upl
 				Buffer->kInverseViewMat = Buffer->kInverseViewMat.Transpose();
 				Buffer->kInverseProjMat = Buffer->kInverseProjMat.Transpose();
 
-				Buffer->kCameraPos = m_pRenderingCamera->GetWorldPosition();
+				Buffer->kCameraPos = m_pRenderingCamera->GetTransform().GetWorldPosition();
 				Buffer->kCameraFarZ = m_pRenderingCamera->GetFarZ();
 				Buffer->kCameraNearZ	= m_pRenderingCamera->GetNearZ();
 			}

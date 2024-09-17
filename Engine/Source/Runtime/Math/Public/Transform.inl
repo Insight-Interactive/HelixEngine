@@ -7,6 +7,7 @@ FORCEINLINE FTransform::FTransform()
 	: m_Position( FVector3::Zero )
 	, m_Rotation( FQuat::Identity )
 	, m_Scale( FVector3::One )
+	, m_Parent( nullptr )
 {
 }
 

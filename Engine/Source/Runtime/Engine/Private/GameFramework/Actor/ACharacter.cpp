@@ -10,10 +10,8 @@
 ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	: APawn( InitArgs )
 {
-	m_RootComponent = AddComponent<HSceneComponent>( "CharacterRoot" );
-	
 	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
-	m_Body->AttachTo( m_RootComponent );
+	m_Body->GetTransform().LinkTo( m_Transform );
 
 }
 

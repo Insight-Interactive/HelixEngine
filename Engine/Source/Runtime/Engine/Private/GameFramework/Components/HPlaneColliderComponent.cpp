@@ -57,9 +57,9 @@ void HPlaneColliderComponent::Deserialize( const JsonUtility::ReadContext& Value
 void HPlaneColliderComponent::RegisterCollider()
 {
 	Physics::CreatePlane(
-		GetWorldPosition(),
-		GetRotation(), (HPlaneRigidBody&)
-		GetRigidBody(),
+		m_Transform.GetWorldPosition(),
+		m_Transform.GetRotation(), 
+		m_RigidBody,
 		GetIsTrigger(),
 		(PhysicsCallbackHandler*)this,
 		false,
