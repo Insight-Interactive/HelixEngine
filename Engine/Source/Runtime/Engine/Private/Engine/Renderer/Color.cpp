@@ -8,3 +8,4 @@
 /*static*/ FColor FColor::RedOpaque		( 1.f, 0.f, 0.f, 1.f );
 /*static*/ FColor FColor::GreenOpaque	( 0.f, 1.f, 0.f, 1.f );
 /*static*/ FColor FColor::BlueOpaque	( 0.f, 0.f, 1.f, 1.f );
+/*static*/ FColor FColor::PurpleOpaque	( 0.5f, 0.f, 0.5f, 1.f );

@@ -36,6 +36,7 @@ HEngine::HEngine( FCommandLine& CmdLine )
 	, m_FrameTimeScale( 1.f )
 	, m_FrameTime ( 0.f )
 	, m_FrameStartTick ( 0 )
+	, m_FPS( 0 )
 {
 }
 
@@ -224,6 +225,7 @@ void HEngine::PostShutdown()
 
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
+#include "GameFramework/Actor/AThirdPersonCharacter.h"
 
 void HEngine::Tick()
 {
@@ -231,9 +233,9 @@ void HEngine::Tick()
 	Input::KbmZeroInputs();
 	
 	float Accumulator = 0.f;
-
 	float SecondTimer = 0.f;
-	uint32 FPS = 0;
+
+	//m_MainViewPort.GetWindow().EnableVSync( true ); // TODO: Fixes debug line flicker because display is synced with game update time
 
 	// Main loop.
 	while ( m_Application.IsRunning() )
@@ -251,7 +253,7 @@ void HEngine::Tick()
 		m_MainViewPort.Update( DeltaTime );
 		GGameInstance->Tick( DeltaTime );
 
-		while ( (DeltaTime > 0.f) && Accumulator >= DeltaTime)
+		if ((DeltaTime > 0.f) && (Accumulator >= DeltaTime))
 		{
 			Physics::Update( DeltaTime, m_FrameTimeScale );
 			m_GameWorld.Tick( DeltaTime );
@@ -265,15 +267,12 @@ void HEngine::Tick()
 		SecondTimer += m_FrameTime;
 		if (SecondTimer > 1.f)
 		{
-			WChar Label[64];
-			ZeroMemory( Label, sizeof( Label ) );
-			swprintf_s( Label, L"FPS: %i (%ims) | Time: %is", FPS, int(m_FrameTime * 1000.f), (int)m_AppSeconds );
-			m_GameWorld.GetFPSLabel().SetText( Label );
-			FPS = 0;
+			m_GameWorld.GetFPSLabel().SetText( L"FPS: %i (%ims) | Time: %is", m_FPS, int( m_FrameTime * 1000.f ), (int)m_AppSeconds );
+			m_FPS = 0;
 			SecondTimer = 0.f;
 		}
 		else
-			FPS++;
+			m_FPS++;
 
 	}
 
@@ -283,6 +282,7 @@ void HEngine::Tick()
 void HEngine::RenderClientViewport( float DeltaTime )
 {
 	m_MainViewPort.Render();
+	m_MainViewPort.GetSceneRenderer().ClearDebugShapes();
 }
 
 void HEngine::BackgroundUpdate( float DeltaTime )

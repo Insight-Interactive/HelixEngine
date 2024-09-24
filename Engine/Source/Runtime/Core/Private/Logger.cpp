@@ -25,9 +25,12 @@ HName OutputBuffer::GetStringBuffer()
 OutputBuffer Logger::SOutputBuffer;
 CriticalSection GStreamGuard;
 
+bool Logger::s_UseConsole = true;
+ConsoleWindow Logger::s_ConsoleWindow;
+
 Logger::Logger()
-	: m_UseConsole( true )
 {
+	ZeroMemory( m_LoggerName, sizeof( m_LoggerName ) );
 }
 
 Logger::~Logger()
@@ -38,6 +41,17 @@ void Logger::Initialize(TChar* Name)
 {
 	SetLoggerName(Name);
 	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: %s"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
+
+	if (s_UseConsole && !s_ConsoleWindow.IsValid())
+	{
+		ConsoleWindowDesc WindowDesc;
+		WindowDesc.CanClose = false;
+		WindowDesc.BufferDimsX = 700;
+		WindowDesc.BufferDimsY = 320;
+		WindowDesc.WindowDimsX = 170;
+		WindowDesc.WindowDimsY = 42;
+		s_ConsoleWindow.Create( WindowDesc );
+	}
 }
 
 void Logger::SetLoggerName(TChar* Name)
@@ -97,14 +111,14 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		SOutputBuffer << OutputBuffer;
 		SOutputBuffer << TEXT( "\n" );
 	}
-	if (m_UseConsole)
+	if (s_UseConsole)
 	{
 		Printf( TraceBuffer );
 		Printf( OutputBuffer );
 		Printf( TEXT("\n") );
 	}
 #if HE_COMPILE_MSVC
-	if ( IsDebuggerPresent() )
+	else if ( IsDebuggerPresent() )
 	{
 		OutputDebugString(TraceBuffer);
 		OutputDebugString(OutputBuffer);

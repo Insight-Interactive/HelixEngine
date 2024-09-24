@@ -53,6 +53,7 @@ public:
 	void Render( FCommandContext& CmdContext );
 
 	void SubmitLineRenderRequest( const FDebugLineRenderInfo& LineInfo );
+	void ClearLines();
 
 protected:
 	struct LineBatchInfo
@@ -63,6 +64,8 @@ protected:
 		void Initialize();
 		void RenderLines( FCommandContext& CmdContext );
 		void AddLine( const FDebugLineRenderInfo& LineInfo );
+		bool AnyLines() { return m_NumPendingLines > 0; }
+		void ClearLines();
 
 		FDynamicVertexBuffer m_LinesVB;
 		FDebugLineVertex m_LineVertexPool[kMaxNumLineVerts];

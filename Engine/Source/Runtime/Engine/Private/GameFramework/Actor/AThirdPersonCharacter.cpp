@@ -45,6 +45,10 @@ void AThirdPersonCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+
+	//FVector3 Pos = m_Transform.GetPosition();
+	//HE_LOG( Log, TEXT( "%f, %f, %f" ), Pos.x, Pos.y, Pos.z );
+
 	if (Pressed)
 	{
 		FDebugLineRenderInfo LineInfo;
@@ -102,6 +106,9 @@ void AThirdPersonCharacter::AimDownSight()
 
 void AThirdPersonCharacter::FireWeapon()
 {
+	if (Pressed)
+		return;
+
 	Pressed = true;
 	FVector2 WindowDims( GetWorld()->GetWindowWidth(), GetWorld()->GetWindowHeight() );
 	FVector2 ScreenFirePos = WindowDims / 2;

@@ -6,12 +6,11 @@
 
 
 FLabel::FLabel()
-	: m_Text( L"<New Label>" )
-	, m_Scale(1.f, 1.f)
+	: m_Scale(1.f, 1.f)
 	, m_Padding(0.f, 0.f)
 	, m_Color(1.f, 1.f, 1.f, 1.f)
 {
-	
+	ZeroMemory( m_Text, sizeof( m_Text ) );
 }
 
 FLabel::~FLabel()
@@ -47,11 +46,11 @@ void FLabel::Render( FCommandContext& UIContext )
 	UIContext.BindVertexBuffer( 0, m_VertexBuffer );
 	UIContext.SetTexture( 0, m_Font->GetFontTexture() );
 
-	BuildString();
-	UIContext.DrawInstanced( 4, (uint32)m_Text.size(), 0, 0);
+	BuildStringVerts();
+	UIContext.DrawInstanced( 4, GetTextLength(), 0, 0);
 }
 
-void FLabel::BuildString()
+void FLabel::BuildStringVerts()
 {
 	float topLeftScreenX = (m_Position.x * 2.0f) - 1.0f;
 	float topLeftScreenY = ((1.0f - m_Position.y) * 2.0f) - 1.0f;
@@ -67,7 +66,8 @@ void FLabel::BuildString()
 
 	wchar_t lastChar = -1; // no last character to start with
 
-	for (int i = 0; i < m_Text.size(); ++i)
+	int TextLength = (int)GetTextLength();
+	for (int i = 0; i < TextLength; ++i)
 	{
 		wchar_t c = m_Text[i];
 

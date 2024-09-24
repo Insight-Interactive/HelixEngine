@@ -126,20 +126,17 @@ void HWorld::BeginPlay()
 
 void HWorld::Tick( float DeltaTime )
 {
-	/*static float SecondTimer = 0.f;
-	static float FPS = 0.f;
-	SecondTimer += GEngine->GetDeltaTimeUnscaled();
-	if (SecondTimer > 1.f)
+
+	FVector3 PathStart( -4.5f, 0.f, 4.5f );
+	FVector3 PathEnd( 0.f, 1.f, -3.0f );
+	//FVector3 PathStart( 7.8f, 113.7f, 419.0f );
+	//FVector3 PathEnd( 100.0f, 6.7f, -50.0f );
+	m_NavMesh.FindPath( PathStart, PathEnd );
+
+	/*for (uint32 i = 0; i < m_NavMesh.m_nstraightPath; i+=6)
 	{
-		WChar Label[64];
-		ZeroMemory( Label, sizeof( Label ) );
-		swprintf_s( Label, L"FPS: %f (%fms)", FPS, GEngine->GetDeltaTimeUnscaled() );
-		m_FPSCounter.SetText( Label );
-		FPS = 0.f;
-		SecondTimer = 0.f;
-	}
-	else
-		FPS++;*/
+		FVector3 LineStart( i, i + 1, i + 2 );
+	}*/
 
 	m_CameraManager.Tick( DeltaTime );
 
@@ -160,8 +157,13 @@ void HWorld::Flush()
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
 
+		m_Scene.UnloadWorldGeo();
+		GStaticGeometryManager.FlushCache();
+
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();
+
+		m_NavMesh.UnInit();
 	}
 }
 
@@ -255,26 +257,32 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 {
 	JsonUtility::GetString( Value, "WorldName", m_Name, sizeof( m_Name ) );
 
-	char MeshName[64];
-	if (JsonUtility::GetString( Value, "WorldGeo", MeshName, sizeof( MeshName ) ))
+	char StringBuff[64];
+	if (JsonUtility::GetString( Value, "WorldGeo", StringBuff, sizeof( StringBuff ) ))
 	{
 		FPath WorldGeoPath;
-		sprintf_s( WorldGeoPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
-	
-		GStaticGeometryManager.LoadLevelGeo( WorldGeoPath.m_Path, m_Scene.m_WorldGeo );
+		sprintf_s( WorldGeoPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), StringBuff );
+		m_Scene.LoadWorldGeo( WorldGeoPath );
 	}
 	else
 	{
 		HE_LOG( Warning, TEXT( "Level has no geo associated with it! Relying on actor collision, this is not recomended." ) );
 	}
 
+	ZeroMemory( StringBuff, sizeof( StringBuff ) );
+	if (JsonUtility::GetString( Value, "NavMesh", StringBuff, sizeof( StringBuff ) ))
+	{
+		FPath NavPath;
+		sprintf_s( NavPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), StringBuff );
+		m_NavMesh.Init( NavPath );
+	}
+
+
 	FTransform PlayerStart;
-	JsonUtility::GetTransform( Value, "PlayerStart", PlayerStart);
+	JsonUtility::GetTransform( Value, "PlayerStart", PlayerStart );
 	m_PlayerCharacter->Teleport( PlayerStart.GetPosition() );
 	HCameraBoomComponent* CameraBoom = m_PlayerCharacter->GetComponent<HCameraBoomComponent>();
 	CameraBoom->SetBoomRotationAngles( PlayerStart.GetEulerRotation() );
-
-	m_NavMesh.Init();
 }
 
 void HWorld::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )

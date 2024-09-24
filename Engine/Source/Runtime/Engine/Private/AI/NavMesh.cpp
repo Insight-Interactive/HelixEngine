@@ -4,7 +4,26 @@
 
 #include "Engine/GameProject.h"
 
-
+/// These are just sample areas to use consistent values across the samples.
+/// The use should specify these base on his needs.
+enum SamplePolyAreas
+{
+	SAMPLE_POLYAREA_GROUND,
+	SAMPLE_POLYAREA_WATER,
+	SAMPLE_POLYAREA_ROAD,
+	SAMPLE_POLYAREA_DOOR,
+	SAMPLE_POLYAREA_GRASS,
+	SAMPLE_POLYAREA_JUMP
+};
+enum SamplePolyFlags
+{
+	SAMPLE_POLYFLAGS_WALK = 0x01,		// Ability to walk (ground, grass, road)
+	SAMPLE_POLYFLAGS_SWIM = 0x02,		// Ability to swim (water).
+	SAMPLE_POLYFLAGS_DOOR = 0x04,		// Ability to move through doors.
+	SAMPLE_POLYFLAGS_JUMP = 0x08,		// Ability to jump.
+	SAMPLE_POLYFLAGS_DISABLED = 0x10,		// Disabled polygon
+	SAMPLE_POLYFLAGS_ALL = 0xffff	// All abilities.
+};
 
 HNavMesh::HNavMesh() 
 	: m_NavMesh( nullptr )
@@ -13,6 +32,8 @@ HNavMesh::HNavMesh()
 	, m_nstraightPath(0)
 	, m_straightPathOptions(0)
 {
+	m_Filter.setIncludeFlags( SAMPLE_POLYFLAGS_ALL ^ SAMPLE_POLYFLAGS_DISABLED );
+	m_Filter.setExcludeFlags( 0 );
 }
 
 HNavMesh::~HNavMesh() 
@@ -34,13 +55,17 @@ struct NavMeshTileHeader
 	int dataSize;
 };
 
-void HNavMesh::Init()
+void HNavMesh::Init( const FPath& Path )
 {
 	HE_ASSERT( m_NavMesh == nullptr && m_NavQuery == nullptr );
 
-	FPath Path;
-	sprintf_s( Path.m_Path, "%sLevels\\%s", FGameProject::GetInstance()->GetContentFolder(), "DefaultLevel.bin");
 	m_NavMesh = LoadNavmesh(Path);
+	if (m_NavMesh == nullptr)
+	{
+		HE_LOG( Error, TEXT( "Failed to load navmesh for level with path %s! AI will no navigate" ), Path.m_Path );
+		HE_ASSERT( false );
+		return;
+	}
 	m_NavQuery = dtAllocNavMeshQuery();
 	m_NavQuery->init( m_NavMesh, 2048 );
 }
@@ -63,21 +88,30 @@ FVector3 HNavMesh::ClosestPointOnNavmesh( const FVector3 Point )
 
 void HNavMesh::FindPath( const FVector3& StartPos, const FVector3& EndPos )
 {
-	float Extents[3] = { 100, 100, 100 };
+	float Extents[3] = { 2, 4, 2 };
 	dtPolyRef StartRef, EndRef;
 	m_NavQuery->findNearestPoly( &StartPos.x, Extents, &m_Filter, &StartRef, nullptr );
 	m_NavQuery->findNearestPoly( &EndPos.x, Extents, &m_Filter, &EndRef, nullptr );
 	
-	m_NavQuery->findPath( StartRef,EndRef, &StartPos.x, &EndPos.x, &m_Filter, m_Polys, &m_npolys, MAX_POLYS );
+	m_NavQuery->findPath( StartRef, EndRef, &StartPos.x, &EndPos.x, &m_Filter, m_Polys, &m_npolys, MAX_POLYS );
+	m_nstraightPath = 0;
 	if (m_npolys)
 	{
 		FVector3 epos = EndPos;
 		if (m_Polys[m_npolys - 1] != EndRef)
 			m_NavQuery->closestPointOnPoly( m_Polys[m_npolys - 1], &EndPos.x, &epos.x, 0 );
 
-		m_NavQuery->findStraightPath( &StartPos.x, &epos.x, m_Polys, m_npolys,
-			m_straightPath, m_straightPathFlags,
-			m_straightPathPolys, &m_nstraightPath, MAX_POLYS, m_straightPathOptions );
+		m_NavQuery->findStraightPath( 
+			&StartPos.x, 
+			&epos.x, 
+			m_Polys, 
+			m_npolys, 
+			m_straightPath, 
+			m_straightPathFlags, 
+			m_straightPathPolys, 
+			&m_nstraightPath, 
+			MAX_POLYS, 
+			m_straightPathOptions );
 	}
 }
 
@@ -149,4 +183,48 @@ dtNavMesh* HNavMesh::LoadNavmesh( const FPath& Path )
 	fclose( fp );
 
 	return mesh;
+}
+
+
+// NavMeshDebugDraw
+// 
+
+void NavMeshDebugDraw::depthMask( bool state )
+{
+
+}
+
+void NavMeshDebugDraw::texture( bool state )
+{
+
+}
+
+void NavMeshDebugDraw::begin( duDebugDrawPrimitives prim, float size /*= 1.0f*/ )
+{
+
+}
+
+void NavMeshDebugDraw::vertex( const float* pos, unsigned int color )
+{
+
+}
+
+void NavMeshDebugDraw::vertex( const float x, const float y, const float z, unsigned int color )
+{
+
+}
+
+void NavMeshDebugDraw::vertex( const float* pos, unsigned int color, const float* uv )
+{
+
+}
+
+void NavMeshDebugDraw::vertex( const float x, const float y, const float z, unsigned int color, const float u, const float v )
+{
+
+}
+
+void NavMeshDebugDraw::end()
+{
+
 }

@@ -47,6 +47,7 @@ project ("Game-Core")
 
 		-- Third Party
 		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "Detour/Include/",
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "DebugUtils/Include/",
 		heGetThirdPartyModule( "rapidxml-1.13" )	.. "Include/",
 		heGetThirdPartyModule( "Rapidjson" )		.. "include/",
 		heGetThirdPartyModule( "LuaPlus" ),

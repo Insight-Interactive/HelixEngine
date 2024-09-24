@@ -22,7 +22,6 @@ static const char* kOutputKey	= "-o";
 int main( int32 argc, Char* argv[] )
 {
 	CreateLogger( GLogger, "PackageCooker" );
-	GLogger.SetUseConsole( true );
 
 	ThreadPool ThreadPool( System::GetProcessorCount(), NULL );
 

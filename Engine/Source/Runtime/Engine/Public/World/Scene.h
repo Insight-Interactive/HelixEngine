@@ -20,6 +20,10 @@ public:
 	HScene( HWorld* pOwner );
 	virtual ~HScene();
 
+	void LoadWorldGeo( const FPath& Path );
+	void UnloadWorldGeo();
+
+
 	/*
 		Sorts the scene opaque objects first transparent last.
 		Turns: ottooto into: oooottt
@@ -41,7 +45,6 @@ public:
 	void SetDrawCollision( const bool& DrawColliders );
 
 	void RenderWorldGeo( FCommandContext& CmdContext );
-	std::vector<FWorldMesh*> m_WorldGeo;
 
 protected:
 	HWorld* GetWorld();
@@ -49,6 +52,7 @@ protected:
 private:
 	bool m_DrawCollision;
 
+	std::vector<FWorldMesh*> m_WorldGeo;
 
 	std::vector<HStaticMeshComponent*> m_StaticMeshs;
 	std::vector<HColliderComponent*> m_DebugColliderMeshs;

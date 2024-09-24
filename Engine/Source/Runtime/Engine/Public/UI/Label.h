@@ -15,12 +15,23 @@ public:
 	FLabel();
 	~FLabel();
 
-	void SetText( const WString& NewText ) { m_Text = NewText; }
+	void SetText( const WChar* Fmt, ... ) 
+	{
+		ZeroMemory( m_Text, sizeof( m_Text ) );
+
+		va_list args;
+		va_start( args, Fmt ); // Start capturing arguments after the 'Line' parameter in the method.
+		{
+			VSPrintBuffer( m_Text, sizeof( m_Text ), Fmt, args );
+		}
+		va_end( args );
+	}
 	void SetScale( const FVector2& NewScale ) { m_Scale = NewScale; }
 	void SetPadding( const FVector2& NewPadding ) { m_Padding = NewPadding; }
 	void SetColor( const FColor& NewColor ) { m_Color = NewColor; }
 
-	const WString& GetText() const { return m_Text; }
+	const WChar* GetText() const { return m_Text; }
+	uint32 GetTextLength() const { return lstrlenW( m_Text ); }
 	const FVector2& GetScale() const { return m_Scale; }
 	const FVector2& GetPadding() const { return m_Padding; }
 	const FColor& GetColor() const { return m_Color; }
@@ -34,10 +45,10 @@ protected:
 	FDynamicVertexBuffer& GetVertexBuffer();
 
 private:
-	void BuildString();
+	void BuildStringVerts();
 
 private:
-	WString m_Text;
+	WChar m_Text[kMaxTextCharacters];
 	HFont m_Font;
 
 	FVector2 m_Scale;

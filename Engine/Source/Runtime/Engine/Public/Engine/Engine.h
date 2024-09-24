@@ -78,6 +78,11 @@ public:
 	double GetAppSeconds() const;
 
 	/*
+		Returns the frames per second of the application.
+	*/
+	uint32 GetFrameRate() const;
+
+	/*
 		Returns true if the editor is present, false if not. Editor is present if "-launchcfg LaunchEditor" is 
 		passed in the command line or in standalone game builds.
 	*/
@@ -133,6 +138,8 @@ protected:
 	bool OnWindowFocus( WindowFocusEvent& e );
 	bool OnWindowLostFocus( WindowLostFocusEvent& e );
 
+	void GameThread();
+
 
 protected:
 	bool					m_IsInitialized;
@@ -144,6 +151,7 @@ protected:
 	int64					m_FrameStartTick;
 	float					m_FrameTimeScale;
 	double					m_AppSeconds;
+	uint32					m_FPS;
 
 	// Game world and main client viewport
 	FViewportContext		m_MainViewPort;
@@ -199,7 +207,8 @@ FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )
 
 FORCEINLINE float HEngine::GetDeltaTime() const
 {
-	const float MaxGameFPS = 100.f;
+	const float MaxGameFPS = HE_MAX( 100.f, m_FPS );
+
 	return (1 / MaxGameFPS) * m_FrameTimeScale;
 }
 
@@ -221,6 +230,11 @@ FORCEINLINE	void HEngine::SetDeltaTimeScale( float Scale )
 FORCEINLINE double HEngine::GetAppSeconds() const
 {
 	return m_AppSeconds;
+}
+
+FORCEINLINE uint32 HEngine::GetFrameRate() const
+{
+	return m_FPS;
 }
 
 FORCEINLINE void HEngine::TickTimers()

@@ -1,12 +1,13 @@
 {
     "WorldName": "DefaultLevel",
     "WorldGeo": "Levels/DefaultLevel.fbx",
-    "WorldCollision": "Levels/DefaultLevel.hcoll",
+    "TODO:WorldCollision": "Level/DefaultLevel.coll",
+    "NavMesh": "Levels/DefaultLevel.bin",
     "PlayerStart": [
         {
           "PositionX": 100.0,
           "PositionY": 0.0,
-          "PositionZ": -50.0,
+          "PositionZ": -300.0,
           "RotationX": 0.0,
           "RotationY": 0.0,
           "RotationZ": 0.0,

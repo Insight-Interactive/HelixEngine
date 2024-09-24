@@ -22,6 +22,19 @@ HScene::~HScene()
 
 }
 
+void HScene::LoadWorldGeo( const FPath& Path )
+{
+	GStaticGeometryManager.LoadLevelGeo( Path.m_Path, m_WorldGeo );
+}
+
+void HScene::UnloadWorldGeo()
+{
+	for (uint32 i = 0; i < m_WorldGeo.size(); i++)
+	{
+		delete m_WorldGeo[i];
+	}
+}
+
 void HScene::RenderWorldGeo( FCommandContext& CmdContext )
 {
 	CmdContext.BeginDebugMarker( L"Render World Geo" );

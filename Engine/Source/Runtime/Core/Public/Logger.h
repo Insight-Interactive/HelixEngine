@@ -5,6 +5,8 @@
 #include "Cast.h"
 #include "CoreFwd.h"
 
+#include "ConsoleWindow.h"
+
 
 class OutputBuffer final
 {
@@ -73,17 +75,6 @@ public:
 	void SetLoggerName(TChar* Name);
 
 	/*
-		Weather to use a on screen console window. More useful for unit tests. (Does not launch a console window)
-		@param [in] bUse - Weather to print to a onscreen console window or not.
-	*/
-	FORCEINLINE void SetUseConsole(bool bUse);
-
-	/*
-		Returns true if the logger is currently allowed to print to a windowed console using printf().
-	*/
-	FORCEINLINE bool GetShouldUseConsole();
-
-	/*
 		Returns the name of the logger.
 		@returns A constant pointer to the name of the logger.
 	*/
@@ -95,20 +86,11 @@ public:
 
 private:
 	TChar m_LoggerName[kMakLoggerNameLength];
-	bool m_UseConsole;
 
+	static ConsoleWindow s_ConsoleWindow;
+	static bool s_UseConsole;
 	static OutputBuffer SOutputBuffer;
 };
-
-bool Logger::GetShouldUseConsole()
-{
-	return m_UseConsole;
-}
-
-void Logger::SetUseConsole(bool bUse)
-{
-	m_UseConsole = bUse;
-}
 
 const TChar* Logger::GetLoggerName()
 {

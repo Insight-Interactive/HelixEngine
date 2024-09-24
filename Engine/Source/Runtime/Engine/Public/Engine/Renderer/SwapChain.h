@@ -168,10 +168,7 @@ FORCEINLINE void FSwapChain::SetCurrentFrameIndex( uint32 Index )
 
 FORCEINLINE void FSwapChain::SetIsVSyncEnabled( bool bEnabled )
 {
-	if (m_bFullScreenEnabled)
-		m_bVSyncEnabled = bEnabled;
-	else
-		R_LOG( Error, TEXT( "Trying to enable VSync while in windowed mode! This is not allowed." ) );
+	m_bVSyncEnabled = bEnabled;
 }
 
 FORCEINLINE void FSwapChain::SetIsTearingSupported( bool bSupported )

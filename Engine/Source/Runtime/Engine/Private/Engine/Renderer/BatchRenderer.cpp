@@ -93,11 +93,17 @@ void FBatchRenderer::Render( FCommandContext& CmdContext )
 	if (m_pRenderTarget == nullptr)
 		return;
 
-	CmdContext.SetPipelineState( m_DepthPSO );
-	m_DepthLines.RenderLines( CmdContext );
+	if (m_NoDepthLines.AnyLines())
+	{
+		CmdContext.SetPipelineState( m_NoDepthPSO );
+		m_NoDepthLines.RenderLines( CmdContext );
+	}
 
-	CmdContext.SetPipelineState( m_NoDepthPSO );
-	m_NoDepthLines.RenderLines( CmdContext );
+	if (m_DepthLines.AnyLines())
+	{
+		CmdContext.SetPipelineState( m_DepthPSO );
+		m_DepthLines.RenderLines( CmdContext );
+	}
 }
 
 void FBatchRenderer::SubmitLineRenderRequest( const FDebugLineRenderInfo& LineInfo )
@@ -106,6 +112,12 @@ void FBatchRenderer::SubmitLineRenderRequest( const FDebugLineRenderInfo& LineIn
 		m_NoDepthLines.AddLine( LineInfo );
 	else
 		m_DepthLines.AddLine( LineInfo );
+}
+
+void FBatchRenderer::ClearLines()
+{
+	m_NoDepthLines.ClearLines();
+	m_DepthLines.ClearLines();
 }
 
 
@@ -142,6 +154,14 @@ void FBatchRenderer::LineBatchInfo::AddLine( const FDebugLineRenderInfo& LineInf
 	m_FreeVertexPos += 2;
 }
 
+void FBatchRenderer::LineBatchInfo::ClearLines()
+{
+	// Reset the line buffer. Only draw lines for one frame.
+	ZeroMemory( &m_LineVertexPool, sizeof( m_LineVertexPool ) );
+	m_NumPendingLines = 0;
+	m_FreeVertexPos = 0;
+}
+
 void FBatchRenderer::LineBatchInfo::RenderLines( FCommandContext& CmdContext )
 {
 	m_LinesVB.Upload();
@@ -149,9 +169,4 @@ void FBatchRenderer::LineBatchInfo::RenderLines( FCommandContext& CmdContext )
 	CmdContext.BindVertexBuffer( 0, m_LinesVB );
 	CmdContext.DrawInstanced( m_NumPendingLines * 2, 1, 0, 0 );
 	CmdContext.EndDebugMarker();
-
-	// Reset the line buffer. Only draw lines for one frame.
-	ZeroMemory( &m_LineVertexPool, sizeof( m_LineVertexPool ) );
-	m_NumPendingLines = 0;
-	m_FreeVertexPos = 0;
 }

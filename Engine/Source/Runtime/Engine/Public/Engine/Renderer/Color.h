@@ -54,5 +54,6 @@ public: // statics
 	static FColor RedOpaque;
 	static FColor GreenOpaque;
 	static FColor BlueOpaque;
+	static FColor PurpleOpaque;
 };
 

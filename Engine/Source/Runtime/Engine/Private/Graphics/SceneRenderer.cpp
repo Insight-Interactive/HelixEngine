@@ -249,3 +249,8 @@ void FSceneRenderer::DrawDebugLine( const FDebugLineRenderInfo& LineInfo )
 {
 	m_BatchRenderer.SubmitLineRenderRequest( LineInfo );
 }
+
+void FSceneRenderer::ClearDebugShapes()
+{
+	m_BatchRenderer.ClearLines();
+}

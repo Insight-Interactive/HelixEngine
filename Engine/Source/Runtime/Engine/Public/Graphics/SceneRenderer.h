@@ -53,6 +53,7 @@ public:
 	FConstantBufferInterface* GetReservedConstantBufferByHashNameForFrame( StringHashValue NameHash, uint32 FrameIndex );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
+	void ClearDebugShapes();
 
 private:
 	void SetCommonRenderState( FCommandContext& CmdContext, bool UploadLights, bool UploadSceneConsts );

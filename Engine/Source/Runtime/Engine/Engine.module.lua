@@ -78,6 +78,7 @@ project ("Engine")
 		heGetThirdPartyModule( "assimp-5.4.3" )				.. "include/",
 		heGetThirdPartyModule( "Rapidjson" )				.. "include/",
 		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "Detour/Include/",
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "DebugUtils/Include/",
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/include/",
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "pxshared/include/",
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/foundation/include",
