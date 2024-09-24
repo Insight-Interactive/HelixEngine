@@ -41,80 +41,29 @@ class FStaticMesh : public ManagedAsset<FStaticMesh>
 public:
 	FStaticMesh()
 	{
-		Initialize();
 	}
 	virtual ~FStaticMesh()
 	{
-		UnInitialize();
 	}
 
 	//
 	// Getters and Setters
 	//
-	FVertexBuffer& GetVertexBuffer();
-	FIndexBuffer& GetIndexBuffer();
-	uint32 GetNumVerticies() const;
-	uint32 GetNumIndices() const;
-	FGUID GetGuid() const;
+	FVertexBuffer& GetVertexBuffer() { return m_DrawArgs.m_VertexBuffer; }
+	FIndexBuffer& GetIndexBuffer() { return m_DrawArgs.m_IndexBuffer; }
+	uint32 GetNumVerticies() const { return m_DrawArgs.NumVerts; }
+	uint32 GetNumIndices() const { return m_DrawArgs.NumIndices; }
+	FGUID GetGuid() const { return m_Guid; }
 
 	void Create( void* pVertexData, uint32 NumVerticies, uint32 VertexSize, void* pIndexData, uint32 IndexDataSize, uint32 NumIndices );
 
 private:
-	void Initialize();
-	void UnInitialize();
+	void SetGuid( const FGUID& NewGUID ) { m_Guid = NewGUID; }
 
-	void SetGuid( const FGUID& NewUID );
-
-protected:
 	FDrawArgs m_DrawArgs;
-
 	FGUID m_Guid;
 	// TODO AABB for culling
 };
 
 typedef ManagedAsset<FStaticMesh> ManagedStaticMesh;
 typedef AssetRef<FStaticMesh> HStaticMesh;
-
-
-//
-// Inline function definitions
-//
-
-
-inline FVertexBuffer& FStaticMesh::GetVertexBuffer()
-{
-	return m_DrawArgs.m_VertexBuffer;
-}
-
-inline FIndexBuffer& FStaticMesh::GetIndexBuffer()
-{
-	return m_DrawArgs.m_IndexBuffer;
-}
-
-inline uint32 FStaticMesh::GetNumVerticies() const
-{
-	return m_DrawArgs.NumVerts;
-}
-
-inline uint32 FStaticMesh::GetNumIndices() const
-{
-	return m_DrawArgs.NumIndices;
-}
-
-inline FGUID FStaticMesh::GetGuid() const
-{
-	return m_Guid;
-}
-
-inline void FStaticMesh::Initialize()
-{
-}
-
-inline void FStaticMesh::UnInitialize()
-{
-}
-
-inline void FStaticMesh::SetGuid( const FGUID& NewGUID )
-{
-	m_Guid = NewGUID;
-}

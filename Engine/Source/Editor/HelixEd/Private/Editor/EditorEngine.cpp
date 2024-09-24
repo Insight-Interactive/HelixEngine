@@ -6,18 +6,18 @@
 #include "Input/KeyEvent.h"
 #include "Input/MouseEvent.h"
 #include "Tools/PackageMaker.h"
-#include "Developer/ADebugPawn.h"
+#include "Developer/ADebugActor.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Engine/FileExplorerWindow.h"
 #include "GameFramework/GameInstance.h"
 #include "GameFramework/Components/HFirstPersonCameraComponent.h"
-#include "Texture.h"
-#include "ColorBuffer.h"
-#include "GpuResource.h"
-#include "RenderDevice.h"
-#include "CommandContext.h"
-#include "TextureManager.h"
-#include "CommandManager.h"
+#include "Engine/Renderer/Texture.h"
+#include "Engine/Renderer/ColorBuffer.h"
+#include "Engine/Renderer/GpuResource.h"
+#include "Engine/Renderer/RenderDevice.h"
+#include "Engine/Renderer/CommandContext.h"
+#include "Engine/Renderer/TextureManager.h"
+#include "Engine/Renderer/CommandManager.h"
 #include "Editor/Event/EditorEvent.h"
 
 
@@ -132,7 +132,7 @@ void HEditorEngine::SaveEditorPreferences()
 		{
 			Writer.StartObject();
 			{
-				FVector3 DebugCameraPos = m_HomeUI.GetDebugPawn()->GetRootComponent()->GetPosition();
+				FVector3 DebugCameraPos = m_HomeUI.GetDebugPawn()->GetTransform().GetPosition();
 				Writer.Key( "X" );
 				Writer.Double( DebugCameraPos.x );
 				Writer.Key( "Y" );

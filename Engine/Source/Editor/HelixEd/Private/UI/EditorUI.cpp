@@ -3,9 +3,9 @@
 #include "UI/EditorUI.h"
 
 #include "Engine/GameProject.h"
-#include "SwapChain.h"
+#include "Engine/Renderer/SwapChain.h"
 #include "Engine/ViewportContext.h"
-#include "CommandContext.h"
+#include "Engine/Renderer/CommandContext.h"
 
 
 EditorUIContext::EditorUIContext( FViewportContext& Owner )

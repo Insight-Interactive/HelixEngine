@@ -42,8 +42,8 @@
 //  2018-02-22: Merged into master with all Win32 code synchronized to other examples.
 
 #include "HelixEdPCH.h"
-#include "RendererCore.h"
-#include "DescriptorHeap.h"
+#include "Engine/Renderer/RendererCore.h"
+#include "Engine/Renderer/DescriptorHeap.h"
 
 #include "imgui.h"
 #include "HelixEdImGuiImplD3D12.h"

@@ -35,7 +35,7 @@ public:
 	void SetSelectedObject( HObject* pSelectedObject );
 	void DeactivateDebugCamera();
 	void ActivateDebugCamera();
-	ADebugPawn* GetDebugPawn();
+	ADebugActor* GetDebugPawn();
 
 private:
 	bool OnAppBeginPlay( EngineBeginPlayEvent& e );
@@ -95,7 +95,7 @@ inline void HelixEdHomeUI::ActivateDebugCamera()
 	m_SceneViewport.ActivateDebugCamera();
 }
 
-inline ADebugPawn* HelixEdHomeUI::GetDebugPawn()
+inline ADebugActor* HelixEdHomeUI::GetDebugPawn()
 {
 	return m_SceneViewport.GetDebugPawn();
 }

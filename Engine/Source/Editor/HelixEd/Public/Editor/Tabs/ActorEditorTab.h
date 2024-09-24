@@ -7,7 +7,7 @@
 #include "Panels/SceneViewportPanel.h"
 
 
-class ADebugPawn;
+class ADebugActor;
 
 class ActorEditorTab : public ContentEditorInterface
 {

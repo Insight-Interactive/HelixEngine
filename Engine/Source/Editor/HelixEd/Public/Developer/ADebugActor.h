@@ -1,16 +1,16 @@
 // Copyright 2024 Insight Interactive. All Rights Reserved.
 #pragma once
 
-#include "GameFramework/Actor/APawn.h"
+#include "GameFramework/Actor/AActor.h"
 
 
 class HFirstPersonCameraComponent;
 
-class ADebugPawn : public APawn
+class ADebugActor : public AActor
 {
-	using Super = APawn;
+	using Super = AActor;
 public:
-	HE_GENERATED_BODY( ADebugPawn );
+	HE_GENERATED_BODY( ADebugActor );
 
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaMs ) override;
@@ -24,9 +24,9 @@ protected:
 	void TogglePitchYawRotation();
 
 	void UpdateMovement( float DeltaTime );
-
+	void MoveManual( FVector3& Direction, float Value );
 private:
-	HFirstPersonCameraComponent* m_pCameraComponent;
+	HFirstPersonCameraComponent* m_CameraComponent;
 	bool m_CanRotateCamera;
 	bool m_CanMove;
 
@@ -37,17 +37,17 @@ private:
 // Inline function implementations
 //
 
-inline HFirstPersonCameraComponent* ADebugPawn::GetCameraComponent()
+inline HFirstPersonCameraComponent* ADebugActor::GetCameraComponent()
 {
-	return m_pCameraComponent;
+	return m_CameraComponent;
 }
 
-inline void ADebugPawn::SetCanMove( bool CanMove )
+inline void ADebugActor::SetCanMove( bool CanMove )
 {
 	m_CanMove = CanMove;
 }
 
-inline void ADebugPawn::SetCanRotateCamera( bool CanRotate )
+inline void ADebugActor::SetCanRotateCamera( bool CanRotate )
 {
 	m_CanRotateCamera = CanRotate;
 }

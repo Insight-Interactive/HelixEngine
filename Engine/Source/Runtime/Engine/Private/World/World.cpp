@@ -31,6 +31,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 {
 	m_LevelFilepath = LevelURL;
 
+
 	m_PlayerCharacter = m_Level.CreateActor<AThirdPersonCharacter>( "PlayerCharacter" );
 
 	rapidjson::Document WorldJsonDoc;

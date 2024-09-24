@@ -3,7 +3,7 @@
 
 #include "Panels/Panel.h"
 
-#include "Color.h"
+#include "Engine/Renderer/Color.h"
 
 
 class ConsoleOutputPanel : public Panel

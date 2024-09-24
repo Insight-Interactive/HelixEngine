@@ -2,7 +2,6 @@
 
 #include "Tools/PackageMaker.h"
 #include "FileSystem.h"
-#include "Developer/ConsoleWindow.h"
 #include "StringHelper.h"
 
 

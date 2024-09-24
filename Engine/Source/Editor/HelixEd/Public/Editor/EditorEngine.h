@@ -8,10 +8,9 @@
 #include "Editor/Tabs/HelixEdHomeUI.h"
 #include "Editor/Tabs/PreferencesTab.h"
 #include "Tools/AssetImporter.h"
-#include "Developer/ConsoleWindow.h"
 
 
-class ADebugPawn;
+class ADebugActor;
 class KeyPressedEvent;
 class KeyReleasedEvent;
 class MousePositionMovedEvent;

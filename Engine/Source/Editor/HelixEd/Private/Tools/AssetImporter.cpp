@@ -4,12 +4,12 @@
 
 #include "FileSystem.h"
 #include "StringHelper.h"
-#include "VertexLayouts.h"
+#include "Engine/Renderer/VertexLayouts.h"
 #include "AssetRegistry/Asset.h"
 #include "AssetRegistry/AssetDatabase.h"
 
 //#include "miniz.c"
-#include "ofbx.h"
+//#include "ofbx.h"
 //#include "ofbx.cpp"
 
 
@@ -85,7 +85,7 @@ void MeshImporter::ImportFbx( const Char* Filename )
 	//
 	DataBlob FileData = FileSystem::ReadRawData( Filename );
 
-	const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
+	//const ofbx::u8* pData = (const ofbx::u8*)FileData.GetBufferPointer();
 	std::vector<FStaticVertex3D> Verticies;
 	std::vector<uint32> Indices;
 

@@ -83,21 +83,6 @@ extern FStaticGeometryManager GStaticGeometryManager;
 extern const FResolution GCommonResolutions[];
 
 
-// ----------
-//	Typedefs
-// ----------
-
-// UIDs
-//
-
-// Handle to vertex buffer instance in the FGeometryBufferManager.
-typedef uint32 VertexBufferUID;
-// Handle to index buffer instance in the FGeometryBufferManager.
-typedef uint32 IndexBufferUID;
-// Handle to constant buffer instance in the FConstantBufferManager.
-typedef uint32 ConstantBufferUID;
-
-
 // -----------------
 //	Utility Methods
 // -----------------

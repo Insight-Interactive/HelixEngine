@@ -38,11 +38,6 @@ public:
 
 
 protected:
-	void SetUID(VertexBufferUID& NewUID) { m_UID = NewUID; }
-
-	VertexBufferUID m_UID;
-
-protected:
 #if R_WITH_D3D12
 	D3D12_VERTEX_BUFFER_VIEW m_D3D12VertexBufferView;
 

@@ -9,7 +9,6 @@
 const uint32 kMaxTabNameLength = 128;
 
 class Event;
-class FViewportContext;
 class FCommandContext;
 
 class ContentEditorInterface : public FViewportContext

@@ -24,11 +24,6 @@ public:
 	void* GetNativeBufferView();
 	void Create(const WChar* Name, uint32 IndexDataSize, void* pIndices);
 
-protected:
-
-	void SetUID(IndexBufferUID& NewUID) { m_UID = NewUID; }
-
-	IndexBufferUID m_UID;
 
 protected:
 #if R_WITH_D3D12

@@ -2,13 +2,13 @@
 
 #include "Panels/SceneViewportPanel.h"
 
-#include "ColorBuffer.h"
-#include "RenderDevice.h"
+#include "Engine/Renderer/ColorBuffer.h"
+#include "Engine/Renderer/RenderDevice.h"
 #include "Engine/Engine.h"
-#include "Input/RawInput.h"
+#include "Input/Input.h"
 #include "World/Level.h"
 #include "Engine/ViewportContext.h"
-#include "Developer/ADebugPawn.h"
+#include "Developer/ADebugActor.h"
 #include "GameFramework/GameInstance.h"
 #include "GameFramework/Actor/ACharacter.h"
 #include "GameFramework/Components/HFirstPersonCameraComponent.h"
@@ -35,7 +35,7 @@ void SceneViewportPanel::Initialize( FViewportContext* pOwningTab )
 
 	m_DescriptorHandle = GTextureHeap.Alloc( 1 );
 	FActorInitArgs InitArgs{ &GetOwningViewport().GetWorld(), "Editor Debug Pawn", true, true };
-	m_pDebugPawn = new ADebugPawn( InitArgs );
+	m_pDebugPawn = new ADebugActor( InitArgs );
 	m_pDebugPawn->BeginPlay();
 
 	ActivateDebugCamera();
@@ -53,7 +53,7 @@ void SceneViewportPanel::Tick( float DeltaTime )
 
 	if (GEngine->IsPlayingInEditor())
 	{
-		if (GetOwningViewport().IsPressed( Key_LShift ) && GetOwningViewport().IsFirstPressed( Key_Escape ))
+		if (Input::IsPressed( Key_LShift ) && Input::IsFirstPressed( Key_Escape ))
 		{
 			// Notify the game the "window"(the scene viewport) lost focus.
 			//GGameInstance->OnGameLostFocus();
@@ -61,8 +61,7 @@ void SceneViewportPanel::Tick( float DeltaTime )
 			UnFreezeDebugCamera();
 
 			// Unlock the mouse if the game locked it.
-			GetOwningViewport().ShowMouse();
-			GetOwningViewport().UnlockMouseFromScreenCenter();
+			Input::UnacquireMouse();
 			GetOwningViewport().GetInputDispatcher()->SetCanDispatchListeners( false );
 		}
 	}
@@ -80,8 +79,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 			if (!m_IsCameraRotating)
 			{
 				m_IsCameraRotating = true;
-				GetOwningViewport().HideMouse();
-				GetOwningViewport().LockMouseToScreenCenter();
+				Input::AcquireMouse();
 
 				m_pDebugPawn->SetCanRotateCamera( true );
 			}
@@ -93,8 +91,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 				if (m_IsCameraRotating)
 				{
 					m_IsCameraRotating = false;
-					GetOwningViewport().ShowMouse();
-					GetOwningViewport().UnlockMouseFromScreenCenter();
+					Input::UnacquireMouse();
 
 					m_pDebugPawn->SetCanRotateCamera( false );
 				}

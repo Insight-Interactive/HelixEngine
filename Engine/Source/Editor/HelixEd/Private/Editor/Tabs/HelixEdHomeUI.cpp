@@ -3,7 +3,7 @@
 #include "Editor/Tabs/HelixEdHomeUI.h"
 
 #include "Editor/EditorEngine.h"
-#include "Developer/ADebugPawn.h"
+#include "Developer/ADebugActor.h"
 #include "Engine/Event/EngineEvent.h"
 #include "Editor/Event/EditorEvent.h"
 #include "GameFramework/Components/HFirstPersonCameraComponent.h"
@@ -37,9 +37,9 @@ void HelixEdHomeUI::SetupPanels()
 	m_MenuBar.AddMenuItem( "Editor", "Launch Standalone Instance", this, &HelixEdHomeUI::OnLaunchStandalone );
 
 	m_ToolbarPanel.AddListener( this, &HelixEdHomeUI::OnEvent );
-	ADebugPawn* pDebugPawn = m_SceneViewport.GetDebugPawn();
+	ADebugActor* pDebugPawn = m_SceneViewport.GetDebugPawn();
 	HFirstPersonCameraComponent* pDebugCamera = pDebugPawn->GetCameraComponent();
-	pDebugPawn->GetRootComponent()->SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
+	pDebugPawn->GetTransform().SetPosition( GEditorEngine->GetPreferences().DebugCameraPosition );
 	pDebugCamera->SetCameraAngles( GEditorEngine->GetPreferences().DebugCameraRotation );
 
 	m_WorldOutline.AddListener( this, &HelixEdHomeUI::OnEvent );

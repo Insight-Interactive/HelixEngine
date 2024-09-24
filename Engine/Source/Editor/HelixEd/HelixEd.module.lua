@@ -50,10 +50,12 @@ project ("HelixEd")
 
 		-- Third Party 
 		heGetThirdPartyModule( "ImGui" ),
-		heGetThirdPartyModule( "OpenFBX" )		.. "src/",
-		heGetThirdPartyModule( "Rapidjson" )	.. "include/",
-		heGetThirdPartyModule( "PhysX-4.1" )	.. "physx/include/",
-		heGetThirdPartyModule( "PhysX-4.1" )	.. "pxshared/include/",
+		heGetThirdPartyModule( "OpenFBX" )					.. "src/",
+		heGetThirdPartyModule( "Rapidjson" )				.. "include/",
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "Detour/Include/",
+		heGetThirdPartyModule( "recastnavigation-1.6.0" )	.. "DebugUtils/Include/",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/include/",
+		heGetThirdPartyModule( "PhysX-4.1" )				.. "pxshared/include/",
 		heGetThirdPartyModule( "LuaPlus" ),
 		heGetThirdPartyModule( "Lua535" ),
 	}

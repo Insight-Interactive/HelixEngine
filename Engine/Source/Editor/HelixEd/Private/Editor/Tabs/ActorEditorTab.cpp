@@ -3,8 +3,8 @@
 #include "Editor/Tabs/ActorEditorTab.h"
 
 #include "Engine/GameProject.h"
-#include "Developer/ADebugPawn.h"
-#include "CommandContext.h"
+#include "Developer/ADebugActor.h"
+#include "Engine/Renderer/CommandContext.h"
 #include "Engine/ViewportContext.h"
 #include "AssetRegistry/AssetDatabase.h"
 
@@ -36,10 +36,8 @@ private:
 ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )
 {
-	m_pRootComponent = AddComponent<HSceneComponent>( "Root" );
-
-	m_pRootComponent->SetPosition( FVector3( -40.f, 0.f, 0.f ) );
-	m_pRootComponent->SetScale( FVector3( 10.f, 10.f, 10.f ) );
+	m_Transform.SetPosition( FVector3( -40.f, 0.f, 0.f ) );
+	m_Transform.SetScale( FVector3( 10.f, 10.f, 10.f ) );
 
 	Mesh = AddComponent<HStaticMeshComponent>( "CubeMesh" );
 	Mesh->SetMesh( FAssetDatabase::GetStaticMesh( "Cube.fbx" ) );
@@ -50,8 +48,8 @@ ARotatingActor::ARotatingActor( FActorInitArgs& InitArgs )
 	Light->SetColor( FColor( 0.f, 255.f, 0.f ) );
 	Light->SetPosition( 8.f, 12.f, 0.f );
 
-	Light->AttachTo( m_pRootComponent );
-	Mesh->AttachTo( m_pRootComponent );
+	//Light->GetTransform().LinkTo( m_Transform );
+	Mesh->GetTransform().LinkTo( m_Transform );
 }
 ARotatingActor::~ARotatingActor()
 {
@@ -61,7 +59,7 @@ void ARotatingActor::BeginPlay()
 }
 void ARotatingActor::Tick( float DeltaTime )
 {
-	Mesh->Rotate( 0.f, 0.005f, 0.f );
+	Mesh->GetTransform().Rotate( 0.f, 0.005f, 0.f );
 }
 
 void ActorEditorTab::OnActivated()
@@ -70,7 +68,7 @@ void ActorEditorTab::OnActivated()
 
 	m_ActorWorld.Initialize();
 
-	m_SceneViewport.GetDebugPawn()->GetRootComponent()->SetPosition( 0.f, 0.f, 20.f );
+	m_SceneViewport.GetDebugPawn()->GetTransform().SetPosition( 0.f, 0.f, 20.f );
 	m_ActorWorld.CreateDynamicActorinstance<ARotatingActor>( "Actor Editor Pawn" );
 }
 

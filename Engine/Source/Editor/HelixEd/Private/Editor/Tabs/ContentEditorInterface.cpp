@@ -48,7 +48,7 @@ void ContentEditorInterface::CreateUIContext()
 
 void ContentEditorInterface::Tick( float DeltaTime )
 {
-	Super::Tick( DeltaTime );
+	Super::Update( DeltaTime );
 }
 
 void ContentEditorInterface::Render( FCommandContext& CmdContext )

@@ -37,7 +37,7 @@ void ToolbarPanel::Render( FCommandContext& CmdCtx )
 			PlayButtonText = "Play";
 		}
 
-		if (ImGui::Button( PlayButtonText ) || GetOwningViewport().IsFirstPressed( Key_F5 ))
+		if (ImGui::Button( PlayButtonText ) || Input::IsFirstPressed( Key_F5 ))
 		{
 			if (GEngine->IsPlayingInEditor())
 			{

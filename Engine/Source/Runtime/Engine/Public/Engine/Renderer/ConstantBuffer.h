@@ -22,8 +22,6 @@ public:
 	{
 	}
 
-	ConstantBufferUID GetUID() const;
-
 	virtual void Create( const WChar* Name, uint32 Size ) = 0;
 	virtual void Destroy() = 0;
 	virtual void UploadBuffer() = 0;
@@ -38,7 +36,6 @@ public:
 protected:
 	FConstantBufferInterface()
 		: m_BufferSize( 0 )
-		, m_UID( HE_INVALID_CONSTANT_BUFFER_HANDLE )
 		, m_IsDirty( true )
 #if R_WITH_D3D12
 		, m_pWritePointer( nullptr )
@@ -58,16 +55,8 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE m_CBV;
 	void* m_pWritePointer;
 #endif
-	ConstantBufferUID m_UID;
 	uint32 m_BufferSize;
 	bool m_IsDirty;
-
-	void SetUID( const ConstantBufferUID& UID );
-	static ConstantBufferUID AllocBufferUID();
-
-private:
-	static CriticalSection SBufferIdGuard;
-	static ConstantBufferUID SNextAvailableBufferID;
 
 };
 
@@ -141,17 +130,6 @@ protected:
 // FConstantBufferInterface
 //
 
-FORCEINLINE ConstantBufferUID FConstantBufferInterface::GetUID() const
-{
-	return m_UID;
-}
-
-FORCEINLINE void FConstantBufferInterface::SetUID( const ConstantBufferUID& UID )
-{
-	if (m_UID == HE_INVALID_CONSTANT_BUFFER_HANDLE)
-		m_UID = UID;
-}
-
 FORCEINLINE uint32 FConstantBufferInterface::GetBufferSize() const
 {
 	return m_BufferSize;
@@ -159,7 +137,7 @@ FORCEINLINE uint32 FConstantBufferInterface::GetBufferSize() const
 
 FORCEINLINE bool FConstantBufferInterface::IsValid() const
 {
-	return m_BufferSize > 0 && m_UID != HE_INVALID_CONSTANT_BUFFER_HANDLE;
+	return m_BufferSize > 0;
 }
 
 FORCEINLINE bool FConstantBufferInterface::GetIsDirty() const
@@ -230,13 +208,6 @@ FORCEINLINE void* FConstantBufferInterface::GetGPUWritePointer()
 }
 #endif // R_WITH_D3D12
 
-/* static */ FORCEINLINE ConstantBufferUID FConstantBufferInterface::AllocBufferUID()
-{
-	ScopedCriticalSection Guard( SBufferIdGuard );
-	SNextAvailableBufferID++;
-	return SNextAvailableBufferID;
-}
-
 /* static */ FORCEINLINE uint32 FConstantBufferInterface::GetAlignedBufferSize( const uint32 BufferSize, const uint32 Alignment )
 {
 	return (BufferSize + (Alignment - 1)) & ~(Alignment - 1);
@@ -262,13 +233,12 @@ FORCEINLINE void FConstantBuffer::UploadBuffer()
 
 FORCEINLINE void FConstantBuffer::Create( const WChar* Name, uint32 Size )
 {
-	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
+	if (m_pData != nullptr)
 	{
 		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
 		HE_ASSERT( false );
 		return;
 	}
-	SetUID( AllocBufferUID() );
 
 	m_BufferSize = GetAlignedBufferSize( Size, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT );
 
@@ -328,13 +298,12 @@ FORCEINLINE void TConstantBuffer<BufferDataType>::UploadBuffer()
 template <typename BufferDataType>
 FORCEINLINE void TConstantBuffer<BufferDataType>::Create( const WChar* Name, uint32 Size/*Ignored*/ )
 {
-	if (GetUID() != HE_INVALID_CONSTANT_BUFFER_HANDLE)
+	if (m_pWritePointer != nullptr)
 	{
 		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
 		HE_ASSERT( false );
 		return;
 	}
-	SetUID( AllocBufferUID() );
 
 	m_BufferSize = GetAlignedBufferSize( sizeof( BufferDataType ), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT );
 

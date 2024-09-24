@@ -3,10 +3,10 @@
 
 #include "Panels/Panel.h"
 
-#include "DescriptorHeap.h"
+#include "Engine/Renderer/DescriptorHeap.h"
 
 
-class ADebugPawn;
+class ADebugActor;
 class EngineBeginPlayEvent;
 class EngineEndPlayEvent;
 class MouseButtonPressedEvent;
@@ -38,7 +38,7 @@ public:
 	*/
 	void DeactivateDebugCamera();
 
-	ADebugPawn* GetDebugPawn();
+	ADebugActor* GetDebugPawn();
 
 protected:
 	void FreezeDebugCamera();
@@ -55,7 +55,7 @@ protected:
 private:
 	FDescriptorHandle m_DescriptorHandle;
 
-	ADebugPawn* m_pDebugPawn;
+	ADebugActor* m_pDebugPawn;
 
 	bool m_IsCameraRotating;
 };
@@ -64,7 +64,7 @@ private:
 // Inline function implementations
 //
 
-inline ADebugPawn* SceneViewportPanel::GetDebugPawn()
+inline ADebugActor* SceneViewportPanel::GetDebugPawn()
 {
 	return m_pDebugPawn;
 }
