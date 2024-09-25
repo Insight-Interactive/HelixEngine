@@ -56,7 +56,7 @@ void SceneViewportPanel::Tick( float DeltaTime )
 		if (Input::IsPressed( Key_LShift ) && Input::IsFirstPressed( Key_Escape ))
 		{
 			// Notify the game the "window"(the scene viewport) lost focus.
-			//GGameInstance->OnGameLostFocus();
+			GGameInstance->OnGameLostFocus();
 
 			UnFreezeDebugCamera();
 

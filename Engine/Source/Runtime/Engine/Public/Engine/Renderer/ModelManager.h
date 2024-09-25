@@ -42,6 +42,10 @@ public:
 
 	HStaticMesh GetStaticMeshByName( const String& Name );
 	HStaticMesh RegisterGeometry( const String& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
+	/*
+		Register geometry that is not cleared on level reloads or level switches.
+	*/
+	HStaticMesh RegisterAllwaysLoadedGeometry( const String& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices );
 
 	void LoadLevelGeo( const String& FilePath, std::vector<FWorldMesh*>& OutWorld );
 
@@ -53,6 +57,8 @@ private:
 private:
 	CriticalSection m_MapMutex;
 	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCache;
+	CriticalSection m_AllwaysLoadedMapMutex;
+	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCacheAllwysLoaded;
 
 	//std::map< String, std::pair< std::unique_ptr<ManagedStaticMesh>, std::vector<TConstantBuffer<MeshWorldCBData>> > > m_NewModelCache;
 };

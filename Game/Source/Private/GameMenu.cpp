@@ -46,7 +46,6 @@ void GameMenu::OnMenuPressed()
 
 		m_InGameUI.Hide();
 		m_PauseMenuUI.Show();
-		Input::ShowMouse();
 		Input::UnacquireMouse();
 	}
 	else
@@ -55,7 +54,6 @@ void GameMenu::OnMenuPressed()
 
 		m_InGameUI.Show();
 		m_PauseMenuUI.Hide();
-		Input::HideMouse();
 		Input::AcquireMouse();
 	}
 }
@@ -75,13 +73,11 @@ void GameMenu::OnGameSetFocus()
 	case MS_InGamePaused:
 		m_InGameUI.Hide();
 		m_PauseMenuUI.Show();
-		Input::ShowMouse();
 		Input::UnacquireMouse();
 		break;
 	case MS_InGame:
 		m_InGameUI.Show();
 		m_PauseMenuUI.Hide();
-		Input::HideMouse();
 		Input::AcquireMouse();
 		break;
 	}
@@ -100,7 +96,6 @@ void GameMenu::OnGameLostFocus()
 		m_PauseMenuUI.Show();
 		break;
 	case MS_InGame:
-		Input::ShowMouse();
 		Input::UnacquireMouse();
 		break;
 	}

@@ -33,6 +33,7 @@ void HScene::UnloadWorldGeo()
 	{
 		delete m_WorldGeo[i];
 	}
+	m_WorldGeo.clear();
 }
 
 void HScene::RenderWorldGeo( FCommandContext& CmdContext )

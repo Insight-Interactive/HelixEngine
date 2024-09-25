@@ -91,6 +91,23 @@ HStaticMesh FStaticGeometryManager::RegisterGeometry( const String& Name, void* 
 	return m_ModelCache[Name].get();
 }
 
+HStaticMesh FStaticGeometryManager::RegisterAllwaysLoadedGeometry( const String& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
+{
+#if HE_WITH_EDITOR
+	HE_ASSERT( MeshExists( Name ) == false ); // Trying to register a mesh that already exist or has the same name as a mesh that is already registered.
+#endif
+
+	StringHashValue HashName = StringHash( Name.c_str(), Name.size() );
+	ManagedStaticMesh* pMesh = new FStaticMesh();
+	pMesh->SetName( Name );
+	pMesh->GetAsset().Create( VertexData, NumVerticies, VertexSizeInBytes, IndexData, IndexDataSizeInBytes, NumIndices );
+	pMesh->SetLoadCompleted( true );
+
+	ScopedCriticalSection Guard( m_AllwaysLoadedMapMutex );
+	m_ModelCacheAllwysLoaded[Name].reset( pMesh );
+	return m_ModelCacheAllwysLoaded[Name].get();
+}
+
 void FStaticGeometryManager::LoadLevelGeo( const String& FilePath, std::vector<FWorldMesh*>& OutWorld )
 {
 	Assimp::Importer Importer;

@@ -169,7 +169,7 @@ inline float FMouse::GetVerticalScrollDelta() const
 
 inline void FMouse::Acquire()
 {
-	if (!GetIsAcquired())
+	if (!m_IsAcquired)
 	{
 		SetIsAcquired( true );
 		Hide();
@@ -178,7 +178,7 @@ inline void FMouse::Acquire()
 
 inline void FMouse::Unacquire()
 {
-	if (GetIsAcquired())
+	if (m_IsAcquired)
 	{
 		SetIsAcquired( false );
 		Show();

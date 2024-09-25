@@ -32,7 +32,7 @@ namespace GeometryGenerator
 		const uint32 NumVerts			= HE_ARRAYSIZE(Verts);
 		const uint32 VertexBufferSize	= NumVerts * sizeof(FVertex2D);
 
-		return GStaticGeometryManager.RegisterGeometry(
+		return GStaticGeometryManager.RegisterAllwaysLoadedGeometry(
 			QuadGeometryName,
 			Verts, NumVerts, sizeof(FVertex2D),
 			Indices, IndexBufferSize, NumIndices
@@ -107,7 +107,7 @@ namespace GeometryGenerator
 		const uint32 NumIndices = HE_ARRAYSIZE( Indices );
 		const uint32 IndexBufferSize = NumIndices * sizeof( uint32 );
 
-		return GStaticGeometryManager.RegisterGeometry(
+		return GStaticGeometryManager.RegisterAllwaysLoadedGeometry(
 			GeometryName,
 			Verts, NumVerts, sizeof( FSimpleVertex3D ),
 			Indices, IndexBufferSize, NumIndices
@@ -192,7 +192,7 @@ namespace GeometryGenerator
 		int TriCount = (int)Verts.size();
 		int IndicesCount = (int)Triangles.size();
 
-		return GStaticGeometryManager.RegisterGeometry(
+		return GStaticGeometryManager.RegisterAllwaysLoadedGeometry(
 			GeometryName,
 			Verts.data(), TriCount, sizeof(FSimpleVertex3D),
 			Triangles.data(), IndicesCount * sizeof(int), IndicesCount
