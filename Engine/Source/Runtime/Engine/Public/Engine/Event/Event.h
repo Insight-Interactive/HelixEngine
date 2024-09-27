@@ -27,6 +27,8 @@ enum class EEventType
 	ET_GamepadThumbstickMoved,
 	// Editor
 	ET_ContentItemDoubleClicked, ET_EditorTabOpened, ET_EditorTabClosed,
+	//Platform,
+	ET_PlatformWindowsProcEvent,
 
 	ET_EventCount,
 };

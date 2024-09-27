@@ -71,9 +71,8 @@ public:
 	float GetWindowWidth();
 	float GetWindowHeight();
 
-	AActor* CreateEmptyActorInstance( const char* Name );
-	template <typename ActorType>
-	ActorType* CreateDynamicActorinstance( const char* Name );
+	template <typename ActorType = AActor>
+	ActorType* CreateActor( const char* Name );
 
 	void DrawDebugLine( const FDebugLineRenderInfo& LineInfo );
 
@@ -197,13 +196,8 @@ FORCEINLINE AThirdPersonCharacter* HWorld::GetPlayerCharacter()
 	return m_PlayerCharacter;
 }
 
-FORCEINLINE AActor* HWorld::CreateEmptyActorInstance( const char* Name )
-{
-	return m_Level.CreateActor<AActor>( Name );
-}
-
 template <typename ActorType>
-FORCEINLINE ActorType* HWorld::CreateDynamicActorinstance( const char* Name )
+FORCEINLINE ActorType* HWorld::CreateActor( const char* Name )
 {
 	return m_Level.CreateActor<ActorType>( Name );
 }

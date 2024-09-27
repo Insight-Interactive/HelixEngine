@@ -14,6 +14,7 @@ constexpr uint32 kMaxHObjectNameLength = 64;
 class HObject : public FSerializeableInterface
 {
 	friend class FActorSerializer;
+	friend class DetailsPanel; // Editor
 public:
 	void SetObjectName( const char* Name );
 	const char* GetObjectName() const;

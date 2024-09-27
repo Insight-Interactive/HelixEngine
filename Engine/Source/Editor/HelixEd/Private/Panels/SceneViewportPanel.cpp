@@ -48,7 +48,7 @@ void SceneViewportPanel::UnInitialize()
 
 void SceneViewportPanel::Tick( float DeltaTime ) 
 {
-	//if(m_IsCameraRotating)
+	if( Input::IsPressed( Mouse_Right ) ) // So typing doesn't move the camera
 		m_pDebugPawn->Tick( DeltaTime );
 
 	if (GEngine->IsPlayingInEditor())
@@ -74,7 +74,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		// Handle debug camera controls
 		// Only rotate the camera if the mouse is over the scene viewport.
 		//
-		if (!GEngine->IsPlayingInEditor() && ImGui::IsWindowHovered() && ImGui::IsMouseDown( ImGuiMouseButton_Right ))
+		if (!GEngine->IsPlayingInEditor() && ImGui::IsWindowHovered() && Input::IsPressed( Mouse_Right ))
 		{
 			if (!m_IsCameraRotating)
 			{
@@ -86,7 +86,7 @@ void SceneViewportPanel::Render( FCommandContext& CmdCtx )
 		}
 		else
 		{
-			if (!GEngine->IsPlayingInEditor() && !ImGui::IsMouseDown( ImGuiMouseButton_Right ))
+			if (!GEngine->IsPlayingInEditor() && !Input::IsPressed( Mouse_Right ))
 			{
 				if (m_IsCameraRotating)
 				{

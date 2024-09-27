@@ -21,6 +21,7 @@ class WindowResizeEvent;
 class WindowLostFocusEvent;
 class WindowFocusEvent;
 class WindowFileDropEvent;
+class PlatformWindowsProcEvent;
 class EngineBeginPlayEvent;
 class EngineEndPlayEvent;
 class ObjectSelectedEvent;
@@ -79,6 +80,7 @@ protected:
 	bool OnAppEndPlay( EngineEndPlayEvent& e );
 	bool OnObjectSelected( ObjectSelectedEvent& e );
 	bool OnContentItemClicked( ContentItemDoubleClicked& e );
+	bool OnWindowProcEvent( PlatformWindowsProcEvent& e );
 
 	void OnExitMenuItem();
 	void OnSaveMenuItem();

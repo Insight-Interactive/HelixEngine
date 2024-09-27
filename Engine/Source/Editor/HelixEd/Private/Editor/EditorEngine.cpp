@@ -331,6 +331,7 @@ void HEditorEngine::OnEvent( Event& e )
 	Dispatcher.Dispatch<WindowLostFocusEvent>( this, &HEditorEngine::OnWindowLostFocus );
 	Dispatcher.Dispatch<WindowClosedEvent>( this, &HEditorEngine::OnClientWindowClosed );
 	Dispatcher.Dispatch<WindowFileDropEvent>( this, &HEditorEngine::OnClientWindowDropFile );
+	Dispatcher.Dispatch<PlatformWindowsProcEvent>( this, &HEditorEngine::OnWindowProcEvent );
 
 	// Application/Engine
 	Dispatcher.Dispatch<EngineBeginPlayEvent>( this, &HEditorEngine::OnAppBeginPlay );
@@ -356,7 +357,7 @@ void HEditorEngine::OnEvent( Event& e )
 bool HEditorEngine::OnKeyPressed( KeyPressedEvent& e )
 {
 	ImGuiIO& io = ImGui::GetIO();
-	io.KeysDown[e.GetKeyCode()] = true;
+	io.KeysDown[e.GetPlatformKeycode()] = true;
 
 	return false;
 }
@@ -364,7 +365,7 @@ bool HEditorEngine::OnKeyPressed( KeyPressedEvent& e )
 bool HEditorEngine::OnKeyReleased( KeyReleasedEvent& e )
 {
 	ImGuiIO& io = ImGui::GetIO();
-	io.KeysDown[e.GetKeyCode()] = false;
+	io.KeysDown[e.GetPlatformKeycode()] = false;
 
 	return false;
 }
@@ -450,19 +451,22 @@ void HEditorEngine::RegisterEditorOnlyAssets()
 
 bool HEditorEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
 {
+	HEngine::OnWindowLostFocus( e );
 
 	return false;
 }
 
 bool HEditorEngine::OnWindowFocus( WindowFocusEvent& e )
 {
+	HEngine::OnWindowFocus( e );
 
 	return false;
 }
 
 bool HEditorEngine::OnClientWindowClosed( WindowClosedEvent& e )
 {
-	RequestShutdown();
+	HEngine::OnClientWindowClosed( e );
+
 	return false;
 }
 
@@ -470,6 +474,14 @@ bool HEditorEngine::OnClientWindowDropFile( WindowFileDropEvent& e )
 {
 	m_AssetImporter.Import( StringHelper::UTF16ToUTF8( e.GetFileName() ).c_str() );
 	return true;
+}
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
+bool HEditorEngine::OnWindowProcEvent( PlatformWindowsProcEvent& e )
+{
+	ImGui_ImplWin32_WndProcHandler( e.hWnd, e.uMsg, e.wParam, e.lParam );
+
+	return false;
 }
 
 bool HEditorEngine::OnAppBeginPlay( EngineBeginPlayEvent& e )

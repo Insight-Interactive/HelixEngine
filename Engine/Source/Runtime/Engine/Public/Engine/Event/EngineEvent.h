@@ -8,6 +8,35 @@
 //	FWindow Events
 // -----------------
 
+#if HE_WINDOWS_DESKTOP
+class PlatformWindowsProcEvent : public Event
+{
+public:
+	PlatformWindowsProcEvent( HWND _hWnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam )
+		: hWnd( _hWnd ), uMsg( _uMsg ), wParam( _wParam ), lParam( _lParam )
+	{
+	}
+	PlatformWindowsProcEvent()
+		: hWnd( NULL )
+		, uMsg( 0 )
+		, wParam( 0 )
+		, lParam( 0 )
+	{
+	}
+	virtual ~PlatformWindowsProcEvent()
+	{
+	}
+
+	HWND hWnd;
+	UINT uMsg;
+	WPARAM wParam;
+	LPARAM lParam;
+
+	EVENT_CLASS_TYPE( ET_PlatformWindowsProcEvent )
+		EVENT_CLASS_CATEGORY( EC_None )
+};
+#endif
+
 class WindowClosedEvent : public Event
 {
 public:
@@ -250,6 +279,10 @@ class HObject;
 class ObjectSelectedEvent : public Event
 {
 public:
+	ObjectSelectedEvent( HObject* Actor)
+		: m_pSelectedActor( Actor )
+	{
+	}
 	ObjectSelectedEvent()
 	{
 	}

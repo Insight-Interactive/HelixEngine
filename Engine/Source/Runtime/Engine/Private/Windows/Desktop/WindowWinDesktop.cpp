@@ -446,6 +446,12 @@ WPARAM MapLeftRightKeys( WPARAM vk, LPARAM lParam )
 LRESULT CALLBACK WindowProceedure( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	FWindow* pWindow = (FWindow*)GetWindowLongPtr( hWnd, GWLP_USERDATA );
+	
+	if (pWindow)
+	{
+		PlatformWindowsProcEvent e( hWnd, uMsg, wParam, lParam );
+		pWindow->EmitEvent( e );
+	}
 
 	switch (uMsg)
 	{

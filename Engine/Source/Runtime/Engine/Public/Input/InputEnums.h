@@ -152,8 +152,11 @@ enum DigitalInput
 
 	// Mouse
 	Mouse0,
+	Mouse_Left = Mouse0,
 	Mouse1,
+	Mouse_Right = Mouse1,
 	Mouse2,
+	Mouse_Middle = Mouse2,
 	Mouse3,
 	Mouse4,
 	Mouse5,

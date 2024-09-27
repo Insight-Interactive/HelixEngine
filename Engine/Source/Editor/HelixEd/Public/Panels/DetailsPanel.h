@@ -3,6 +3,9 @@
 
 #include "Panels/Panel.h"
 
+#include "GameFramework/HObject.h"
+
+
 class HObject;
 class AActor;
 

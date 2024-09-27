@@ -44,10 +44,13 @@ void DetailsPanel::PreviewActor(AActor* pActor)
 	if (pActor == nullptr)
 		return;
 
+	ImGui::PushID( "Name" );
 	ImGui::Spacing();
 	ImGui::Text( pActor->GetStaticClassName() );
 	ImGui::Text( "-" );
-	ImGui::Text( pActor->GetObjectName() );
+	ImGui::InputText( "", pActor->m_Name, kMaxHObjectNameLength, ImGuiInputTextFlags_AutoSelectAll );
+	ImGui::PopID();
+
 	ImGui::Separator();
 
 	ImGui::PushID( "Pos" );

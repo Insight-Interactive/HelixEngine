@@ -311,14 +311,20 @@ bool HEngine::OnClientWindowClosed( WindowClosedEvent& e )
 
 bool HEngine::OnWindowFocus( WindowFocusEvent& e )
 {
-	GGameInstance->OnGameSetFocus();
+	if (IsPlayingInEditor())
+	{
+		GGameInstance->OnGameSetFocus();
+	}
 
 	return false;
 }
 
 bool HEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
 {
-	GGameInstance->OnGameLostFocus();
+	if (IsPlayingInEditor())
+	{
+		GGameInstance->OnGameLostFocus();
+	}
 
 	return false;
 }

@@ -69,7 +69,7 @@ void ActorEditorTab::OnActivated()
 	m_ActorWorld.Initialize();
 
 	m_SceneViewport.GetDebugPawn()->GetTransform().SetPosition( 0.f, 0.f, 20.f );
-	m_ActorWorld.CreateDynamicActorinstance<ARotatingActor>( "Actor Editor Pawn" );
+	m_ActorWorld.CreateActor<ARotatingActor>( "Actor Editor Pawn" );
 }
 
 void ActorEditorTab::OnDeactivated()

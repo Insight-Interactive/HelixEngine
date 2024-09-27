@@ -30,6 +30,12 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 {
 	ImGui::Begin( "World Outliner" );
 	{
+		if (ImGui::Button( "Add Actor" ))
+		{
+			GetWorld()->CreateActor( "NewActor" );
+		}
+		ImGui::Separator();
+
 		if (m_pWorld)
 		{
 			HLevel& Level = m_pWorld->GetCurrentLevel();
@@ -42,9 +48,7 @@ void WorldOutlinePanel::Render( FCommandContext& CmdCtx )
 				{
 					if (ImGui::IsItemClicked())
 					{
-						ObjectSelectedEvent e;
-						e.SetSelectedObject( pCurrentActor );
-						EmitEvent( e );
+						EmitEvent( ObjectSelectedEvent( pCurrentActor ) );
 					}
 
 					ImGui::TreePop();

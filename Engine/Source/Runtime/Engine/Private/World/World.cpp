@@ -132,7 +132,7 @@ void HWorld::Tick( float DeltaTime )
 	FVector3 PathEnd( 0.f, 1.f, -3.0f );
 	//FVector3 PathStart( 7.8f, 113.7f, 419.0f );
 	//FVector3 PathEnd( 100.0f, 6.7f, -50.0f );
-	m_NavMesh.FindPath( PathStart, PathEnd );
+	//m_NavMesh.FindPath( PathStart, PathEnd );
 
 	/*for (uint32 i = 0; i < m_NavMesh.m_nstraightPath; i+=6)
 	{
@@ -276,6 +276,10 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 		FPath NavPath;
 		sprintf_s( NavPath.m_Path, "%s%s", FGameProject::GetInstance()->GetContentFolder(), StringBuff );
 		m_NavMesh.Init( NavPath );
+	}
+	else
+	{
+		HE_LOG( Warning, TEXT( "Level has no nav mesh associated with it!" ) );
 	}
 
 
