@@ -51,6 +51,9 @@ void ADebugActor::UpdateMovement( float DeltaTime )
 
 	if (m_CanMove)
 	{
+		float MouseScroll = Input::GetAnalogInput( AnalogMouseScroll );
+		MoveManual( m_CameraComponent->GetTransform().GetLocalForward(), MouseScroll * 10.f );
+
 		HWorld* pWorld = GetWorld();
 		if (Input::IsPressed( Key_W ))
 		{

@@ -147,7 +147,7 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 	if (m_MeshAsset.IsValid())
 	{
 		// Set the world buffer.
-		m_MeshWorldCB->kWorldMat = m_Transform.GetLocalMatrix().Transpose();
+		m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
 		GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.
@@ -190,6 +190,8 @@ void HColliderComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	if(JsonUtility::GetFloat( Value, HE_STRINGIFY( HColliderComponent::GetDensity ), Density))
 		GetRigidBody().SetDensity( Density );
 
+	JsonUtility::GetTransform( Value, HE_STRINGIFY( HColliderComponent::m_Transform ), m_Transform );
+
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_IsStatic ), m_IsStatic);
 
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HColliderComponent::m_CollisionBoundsDrawEnabled ), m_CollisionBoundsDrawEnabled);
@@ -205,6 +207,8 @@ void HColliderComponent::OnOwnerDeserializeComplete()
 void HColliderComponent::OnCreate()
 {
 	Super::OnCreate(); 
+
+	m_Transform.LinkTo( m_Owner->GetTransform() );
 
 	m_Material = new FMaterialInstance();
 	m_Material->CreateFromParent( "M_Wireframe.hmat" );

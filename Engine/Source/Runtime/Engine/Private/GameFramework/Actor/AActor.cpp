@@ -52,6 +52,18 @@ void AActor::Tick( float DeltaTime )
 	}
 }
 
+void AActor::Serialize( JsonUtility::WriteContext& Output )
+{
+	HObject::Serialize( Output );
+
+}
+
+void AActor::Deserialize( const JsonUtility::ReadContext& Value )
+{
+	HObject::Deserialize( Value );
+
+}
+
 void AActor::Render( FCommandContext& GfxContext )
 {
 	for (size_t i = 0; i < m_Components.size(); ++i)

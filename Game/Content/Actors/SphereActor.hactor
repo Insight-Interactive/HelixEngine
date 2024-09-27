@@ -11,19 +11,6 @@
           "HSphereColliderComponent::m_RigidBody.m_IsStatic": false,
           "HSphereColliderComponent::m_RigidBody.m_Radius": 10.0,
           "HColliderComponent::m_IsTrigger": false,
-          "HSceneComponent::m_Transform": [
-            {
-              "PositionX": 0.0,
-              "PositionY": 0.0,
-              "PositionZ": 0.0,
-              "RotationX": 0.0,
-              "RotationY": 0.0,
-              "RotationZ": 0.0,
-              "ScaleX": 1.0,
-              "ScaleY": 1.0,
-              "ScaleZ": 1.0
-            }
-          ],
           "HObject::m_Name": "SphereCollider",
           "HObject::m_Guid": "d3e7328e-4392-451a-946b-6bad0c0c2caf"
         },
@@ -32,19 +19,6 @@
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
           "HStaticMeshComponent::m_MeshAsset": "Sphere.fbx",
           "HStaticMeshComponent::m_MaterialAsset": "M_Wood.hmat",
-          "HSceneComponent::m_Transform": [
-            {
-              "PositionX": 0.0,
-              "PositionY": 0.0,
-              "PositionZ": 0.0,
-              "RotationX": 0.0,
-              "RotationY": 0.0,
-              "RotationZ": 0.0,
-              "ScaleX": 1.0,
-              "ScaleY": 1.0,
-              "ScaleZ": 1.0
-            }
-          ],
           "HObject::m_Name": "SphereStaticMesh",
           "HObject::m_Guid": "a05eeb01-f872-42a1-ab36-f8371a7dd3cd"
         }

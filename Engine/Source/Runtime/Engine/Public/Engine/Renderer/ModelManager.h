@@ -56,9 +56,9 @@ private:
 
 private:
 	CriticalSection m_MapMutex;
-	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCache;
+	std::unordered_map< String, HStaticMesh > m_ModelCache;
 	CriticalSection m_AllwaysLoadedMapMutex;
-	std::unordered_map< String, std::unique_ptr<ManagedStaticMesh> > m_ModelCacheAllwysLoaded;
+	std::unordered_map< String, HStaticMesh > m_ModelCacheAllwysLoaded;
 
 	//std::map< String, std::pair< std::unique_ptr<ManagedStaticMesh>, std::vector<TConstantBuffer<MeshWorldCBData>> > > m_NewModelCache;
 };
@@ -73,7 +73,7 @@ inline HStaticMesh FStaticGeometryManager::GetStaticMeshByName( const String& Na
 	auto Iter = m_ModelCache.find( Name );
 	if (Iter != m_ModelCache.end())
 	{
-		return m_ModelCache.at( Name ).get();
+		return m_ModelCache.at( Name );
 	}
 	else
 	{
@@ -109,7 +109,7 @@ inline void FStaticGeometryManager::FlushCache()
 
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
 	{
-		Iter->second.reset();
+		Iter->second.Reset();
 	}
 	m_ModelCache.clear();
 }

@@ -149,19 +149,8 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 
 						// Create the actor and deserialize its components.
 						AActor* pNewActor = CreateActor<AActor>( "<Unnamed Actor>" );
+						JsonUtility::GetTransform( WorldOverrides[kTransform], pNewActor->GetTransform() );
 						FActorSerializer::DeserializeActor( *pNewActor, ActorObject );
-
-						// TODO: This should be refactored. It messes with the root transform too much!
-						FTransform& Transform = pNewActor->GetTransform();
-						JsonUtility::GetTransform( WorldOverrides[kTransform], Transform);
-						//JsonUtility::GetTransform( Actor, ActorFileName, Transform );
-						FVector3 Pos = Transform.GetPosition();
-						Transform.Translate( Pos.x, Pos.y, Pos.z );
-						/*FVector3 Rot = Transform.GetRotation().ToEulerAngles();
-						pRoot->Rotate( Rot.x, Rot.y, Rot.z );
-						FVector3 Sca = Transform.GetScale();
-						pRoot->Scale( Sca.x, Sca.y, Sca.z );*/
-
 
 						if (!InstanceOverrides.IsNull())
 						{

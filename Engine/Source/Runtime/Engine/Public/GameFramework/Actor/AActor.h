@@ -61,6 +61,9 @@ public:
 
 
 protected:
+	virtual void Serialize( JsonUtility::WriteContext& Output ) override;
+	virtual void Deserialize( const JsonUtility::ReadContext& Value ) override;
+
 	void Render( FCommandContext& GfxContext );
 	HWorld* GetWorld();
 	void SetOwningWorld( HWorld* pWorld );

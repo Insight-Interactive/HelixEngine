@@ -15,19 +15,6 @@
           "HColliderComponent::Density": 10.0,
           "HColliderComponent::m_IsStatic": true,
           "HColliderComponent::m_SimulationEnabled": true,
-          "HSceneComponent::m_Transform": [
-            {
-              "PositionX": 0.0,
-              "PositionY": 0.0,
-              "PositionZ": 0.0,
-              "RotationX": 0.0,
-              "RotationY": 0.0,
-              "RotationZ": 0.0,
-              "ScaleX": 1.0,
-              "ScaleY": 1.0,
-              "ScaleZ": 1.0
-            }
-          ],
           "HObject::m_Name": "PlayerTrigger",
           "HObject::m_Guid": "121c2e9c-3d2d-4989-95a2-143d0118e255"
         }

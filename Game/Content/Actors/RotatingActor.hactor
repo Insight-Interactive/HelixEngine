@@ -11,7 +11,7 @@
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
           "HStaticMeshComponent::m_MeshAsset": "Cube.fbx",
           "HStaticMeshComponent::m_MaterialAsset": "M_Wood.hmat",
-          "HSceneComponent::m_Transform": [
+          "HStaticMeshComponent::m_Transform": [
             {
               "PositionX": 0.0,
               "PositionY": 0.0,

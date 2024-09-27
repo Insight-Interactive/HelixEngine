@@ -1,5 +1,5 @@
 {
   "GameName": "ii1",
   "ProjectName":  "Atlas",
-  "DefaultLevel": "Levels/DefaultLevel.hlevel"
+  "DefaultLevel": "Levels/Test/PhysicsTest.hlevel"
 }

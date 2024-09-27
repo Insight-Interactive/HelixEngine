@@ -24,6 +24,7 @@ public:
 	}
 	virtual ~ManagedAsset()
 	{
+		m_ReferenceCount = 0;
 	}
 
 	void WaitForLoad() const;
@@ -69,6 +70,16 @@ public:
 
 	// Check that this points to a valid asset (which loaded successfully)
 	bool IsValid() const;
+
+	void Reset( ManagedAsset<AssetType>* New = nullptr )
+	{
+		ManagedAsset<AssetType>* Old = m_Ref;
+		m_Ref = New;
+		if (Old)
+		{
+			delete Old;
+		}
+	}
 
 	ManagedAsset<AssetType>* GetManagedAsset();
 

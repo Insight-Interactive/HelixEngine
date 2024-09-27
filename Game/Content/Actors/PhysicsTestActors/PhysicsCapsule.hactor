@@ -8,13 +8,13 @@
       "Components": [
         {
           "ComponentType": "HCapsuleColliderComponent",
-          "HCapsuleColliderComponent::m_RigidBody.m_Radius": 10.0,
-          "HCapsuleColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
+          "HCapsuleColliderComponent::m_RigidBody.m_Radius": 50.0,
+          "HCapsuleColliderComponent::m_RigidBody.m_HalfHeight": 70.0,
           "HColliderComponent::m_IsTrigger": false,
           "HColliderComponent::Density": 10.0,
           "HColliderComponent::m_IsStatic": false,
           "HColliderComponent::m_SimulationEnabled": true,
-          "HSceneComponent::m_Transform": [
+          "HColliderComponent::m_Transform": [
             {
               "PositionX": 0.0,
               "PositionY": 0.0,

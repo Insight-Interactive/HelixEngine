@@ -32,8 +32,8 @@ HStaticMesh FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePa
 	ProcessMesh( aiMesh, Scene, Mesh );
 
 	ScopedCriticalSection Guard( m_MapMutex );
-	m_ModelCache[MeshName].reset( Mesh.GetManagedAsset() );
-	return m_ModelCache[MeshName].get();
+	m_ModelCache[MeshName] =Mesh;
+	return m_ModelCache[MeshName];
 }
 
 void FStaticGeometryManager::LoadBasicGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount )
@@ -87,8 +87,8 @@ HStaticMesh FStaticGeometryManager::RegisterGeometry( const String& Name, void* 
 	pMesh->SetLoadCompleted( true );
 
 	ScopedCriticalSection Guard( m_MapMutex );
-	m_ModelCache[Name].reset( pMesh );
-	return m_ModelCache[Name].get();
+	m_ModelCache[Name] = pMesh;
+	return m_ModelCache[Name];
 }
 
 HStaticMesh FStaticGeometryManager::RegisterAllwaysLoadedGeometry( const String& Name, void* VertexData, uint32 NumVerticies, uint32 VertexSizeInBytes, void* IndexData, uint32 IndexDataSizeInBytes, uint32 NumIndices )
@@ -104,8 +104,8 @@ HStaticMesh FStaticGeometryManager::RegisterAllwaysLoadedGeometry( const String&
 	pMesh->SetLoadCompleted( true );
 
 	ScopedCriticalSection Guard( m_AllwaysLoadedMapMutex );
-	m_ModelCacheAllwysLoaded[Name].reset( pMesh );
-	return m_ModelCacheAllwysLoaded[Name].get();
+	m_ModelCacheAllwysLoaded[Name] = pMesh;
+	return m_ModelCacheAllwysLoaded[Name];
 }
 
 void FStaticGeometryManager::LoadLevelGeo( const String& FilePath, std::vector<FWorldMesh*>& OutWorld )

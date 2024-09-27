@@ -85,11 +85,6 @@ namespace Input
 	*/
 	void UnacquireMouse();
 
-	/*
-		Unaquire the keyboard. Disallowing any key presses to be polled.
-	*/
-	void UnacquireKeyboard();
-
 	void SetAnalogValue( DigitalInput Input, float Value );
 	void SetMouseMoveDelta( float XValue, float YValue );
 	void SetMouseScrollDelta( float XScrollDelta, float YScrollDelta );

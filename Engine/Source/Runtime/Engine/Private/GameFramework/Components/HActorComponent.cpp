@@ -9,7 +9,7 @@
 
 HActorComponent::HActorComponent(FComponentInitArgs& InitArgs)
 	: HObject( InitArgs.Name )
-	, m_pOwner( CCast<AActor*>(InitArgs.pOwner) )
+	, m_Owner( CCast<AActor*>(InitArgs.pOwner) )
 {
 
 }
@@ -21,8 +21,8 @@ HActorComponent::~HActorComponent()
 
 HWorld* HActorComponent::GetWorld()
 {
-	HE_ASSERT( m_pOwner != NULL ); // Cannot get the world using a null actor. Are you trying to get the world from a component constructur?
-	return m_pOwner->GetWorld();
+	HE_ASSERT( m_Owner != NULL ); // Cannot get the world using a null actor. Are you trying to get the world from a component constructur?
+	return m_Owner->GetWorld();
 }
 
 void HActorComponent::Serialize( JsonUtility::WriteContext& Output )

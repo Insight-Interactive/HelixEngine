@@ -81,7 +81,7 @@ protected:
 
 
 protected:
-	AActor* m_pOwner;
+	AActor* m_Owner;
 
 };
 
@@ -93,5 +93,5 @@ protected:
 
 FORCEINLINE AActor* HActorComponent::GetOwner()
 {
-	return m_pOwner;
+	return m_Owner;
 }

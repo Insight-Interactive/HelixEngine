@@ -164,7 +164,7 @@ inline FVector2 FMouse::GetPosition() const
 
 inline float FMouse::GetVerticalScrollDelta() const
 {
-	return m_MouseState.MoveDelta[kState_Current][kMouseDeltaScrollX];
+	return m_MouseState.MoveDelta[kState_Current][kMouseDeltaScrollY];
 }
 
 inline void FMouse::Acquire()

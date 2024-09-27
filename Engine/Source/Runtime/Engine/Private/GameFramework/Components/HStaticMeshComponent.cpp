@@ -57,6 +57,7 @@ void HStaticMeshComponent::OnCreate()
 {
 	Super::OnCreate();
 
+	m_Transform.LinkTo( GetOwner()->GetTransform() );
 	GetWorld()->GetScene().AddStaticMesh( this );
 }
 
@@ -93,6 +94,8 @@ void HStaticMeshComponent::Deserialize( const JsonUtility::ReadContext& Value )
 	
 	Char StringBuffer[64];
 	ZeroMemory( StringBuffer, sizeof( StringBuffer ) );
+
+	JsonUtility::GetTransform( Value, HE_STRINGIFY( HStaticMeshComponent::m_Transform ), m_Transform );
 
 	JsonUtility::GetBoolean( Value, HE_STRINGIFY( HStaticMeshComponent::m_bIsDrawEnabled ), m_bIsDrawEnabled);
 

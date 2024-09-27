@@ -24,8 +24,8 @@
             "PhysicsTestActors/PhysicsCube.hactor": [
                 {
                     "PositionX": 0.0,
-                    "PositionY": 40.0,
-                    "PositionZ": 100.0,
+                    "PositionY": 300.0,
+                    "PositionZ": 500.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -41,9 +41,9 @@
         {
             "PhysicsTestActors/PhysicsSphere.hactor":[
                 {
-                    "PositionX": 50.0,
-                    "PositionY": 40.0,
-                    "PositionZ": 100.0,
+                    "PositionX": 500.0,
+                    "PositionY": 300.0,
+                    "PositionZ": 500.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -59,9 +59,9 @@
         {
             "PhysicsTestActors/PhysicsCapsule.hactor":[
                 {
-                    "PositionX": -50.0,
-                    "PositionY": 40.0,
-                    "PositionZ": 100.0,
+                    "PositionX": -500.0,
+                    "PositionY": 300.0,
+                    "PositionZ": 500.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,

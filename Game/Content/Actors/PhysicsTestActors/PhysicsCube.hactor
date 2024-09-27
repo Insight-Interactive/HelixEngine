@@ -8,26 +8,13 @@
       "Components": [
         {
           "ComponentType": "HCubeColliderComponent",
-          "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 10.0,
-          "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 10.0,
-          "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 10.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfWidth": 70.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfHeight": 70.0,
+          "HCubeColliderComponent::m_RigidBody.m_HalfDepth": 70.0,
           "HColliderComponent::m_IsTrigger": false,
           "HColliderComponent::Density": 10.0,
           "HColliderComponent::m_IsStatic": false,
           "HColliderComponent::m_SimulationEnabled": true,
-          "HSceneComponent::m_Transform": [
-            {
-              "PositionX": 0.0,
-              "PositionY": 0.0,
-              "PositionZ": 0.0,
-              "RotationX": 0.0,
-              "RotationY": 0.0,
-              "RotationZ": 0.0,
-              "ScaleX": 1.0,
-              "ScaleY": 1.0,
-              "ScaleZ": 1.0
-            }
-          ],
           "HObject::m_Name": "CubeCollider",
           "HObject::m_Guid": "629bbbae-f84b-4dfb-b923-e2a895fa6711"
         }

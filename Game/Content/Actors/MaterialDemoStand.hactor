@@ -7,29 +7,11 @@
     {
       "Components": [
         {
-          "ComponentType": "HSceneComponent",
-          "HSceneComponent::m_Transform": [
-            {
-              "PositionX": 0.0,
-              "PositionY": 0.0,
-              "PositionZ": 0.0,
-              "RotationX": 0.0,
-              "RotationY": 0.0,
-              "RotationZ": 0.0,
-              "ScaleX": 1.0,
-              "ScaleY": 1.0,
-              "ScaleZ": 1.0
-            }
-          ],
-          "HObject::m_Name": "Root",
-          "HObject::m_Guid": "c8c6f178-7ce7-46b8-a451-32e61a13a89b"
-        },
-        {
           "ComponentType": "HStaticMeshComponent",
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
           "HStaticMeshComponent::m_MeshAsset": "MaterialDemoStand.fbx",
           "HStaticMeshComponent::m_MaterialAsset": "M_RustedMetal.hmat",
-          "HSceneComponent::m_Transform": [
+          "HStaticMeshComponent::m_Transform": [
             {
               "PositionX": 0.0,
               "PositionY": 58.0,
@@ -48,7 +30,7 @@
         {
           "ComponentType": "HMeshColliderComponent",
           "HMeshColliderComponent::m_MeshAsset": "Cube.fbx",
-          "HSceneComponent::m_Transform": [
+          "HColliderComponent::m_Transform": [
             {
               "PositionX": 0.0,
               "PositionY": 58.0,
@@ -69,7 +51,7 @@
           "HStaticMeshComponent::m_bIsDrawEnabled": true,
           "HStaticMeshComponent::m_MeshAsset": "MaterialDemoStand.fbx",
           "HStaticMeshComponent::m_MaterialAsset": "M_MaterialBall.hmat",
-          "HSceneComponent::m_Transform": [
+          "HStaticMeshComponent::m_Transform": [
             {
               "PositionX": 100.0,
               "PositionY": 58.0,
@@ -88,7 +70,7 @@
         {
           "ComponentType": "HMeshColliderComponent",
           "HMeshColliderComponent::m_MeshAsset": "Cube.fbx",
-          "HSceneComponent::m_Transform": [
+          "HColliderComponent::m_Transform": [
             {
               "PositionX": 100.0,
               "PositionY": 58.0,
