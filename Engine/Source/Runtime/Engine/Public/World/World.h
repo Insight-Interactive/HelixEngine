@@ -78,13 +78,14 @@ public:
 
 	bool Raycast( const FVector3& Origin, const FVector3& UnitDirection, float Distance, FRaycastHitInfo* HitResults = nullptr, std::vector<HColliderComponent*>* IgnoreActors = nullptr );
 
-protected:
-	FViewportContext* GetOwningViewport();
-
 	/*
 		Reload the world.
 	*/
 	void Reload();
+
+protected:
+	FViewportContext* GetOwningViewport();
+
 
 	/*
 		Reload the world and call begin play on all actors.

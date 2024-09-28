@@ -5,8 +5,8 @@
             "BasicActor.hactor": [
                 {
                     "PositionX": 0.0,
-                    "PositionY": 40.0,
-                    "PositionZ": 100.0,
+                    "PositionY": 50.0,
+                    "PositionZ": 150.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -33,9 +33,9 @@
         {
             "SphereActor.hactor": [
                 {
-                    "PositionX": -70.0,
+                    "PositionX": -150.0,
                     "PositionY": 50.0,
-                    "PositionZ": 10.0,
+                    "PositionZ": 150.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,
@@ -51,9 +51,9 @@
         {
             "SphereActor.hactor": [
                 {
-                    "PositionX": 70.0,
+                    "PositionX": 150.0,
                     "PositionY": 50.0,
-                    "PositionZ": 10.0,
+                    "PositionZ": 150.0,
                     "RotationX": 0.0,
                     "RotationY": 0.0,
                     "RotationZ": 0.0,

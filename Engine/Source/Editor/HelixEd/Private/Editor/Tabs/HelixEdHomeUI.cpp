@@ -30,11 +30,12 @@ void HelixEdHomeUI::SetupPanels()
 	m_DetailsPanel.Initialize( &m_OwningViewport );
 
 	m_MenuBar.AddMenuItem( "File", "Exit", this, &HelixEdHomeUI::OnExitMenuItem );
-	//m_MenuBar.AddMenuItem( "File", "Save", this, &HelixEdHomeUI::OnSaveMenuItem );
+	m_MenuBar.AddMenuItem( "File", "Save", this, &HelixEdHomeUI::OnSaveMenuItem );
 	m_MenuBar.AddMenuItem( "File", "Package Game", GEditorEngine, &HEditorEngine::PackageGame );
 	m_MenuBar.AddMenuItem( "Edit", "Preferences", GEditorEngine, &HEditorEngine::OnEditorPreferencesMenuItem );
 	//m_MenuBar.AddMenuItem( "Developer", "Reload Pipeline Shaders", this, &HelixEdHomeUI::OnReloadPipelineShaders );
-	m_MenuBar.AddMenuItem( "Editor", "Launch Standalone Instance", this, &HelixEdHomeUI::OnLaunchStandalone );
+	m_MenuBar.AddMenuItem( "Developer", "Map Reload", &GEditorEngine->GetGameWorld(), &HWorld::Reload );
+	//m_MenuBar.AddMenuItem( "Editor", "Launch Standalone Instance", this, &HelixEdHomeUI::OnLaunchStandalone );
 
 	m_ToolbarPanel.AddListener( this, &HelixEdHomeUI::OnEvent );
 	ADebugActor* pDebugPawn = m_SceneViewport.GetDebugPawn();
