@@ -197,33 +197,47 @@ void HWorld::Serialize( const Char* Filename )
 		Writer.Key( "WorldName" );
 		Writer.String( GetObjectName() );
 
+		Writer.Key( "WorldGeo" ); 
+		Writer.String( "");
+
+		Writer.Key( "WorldCollision" );
+		Writer.String( "" );
+
+		Writer.Key( "NavMesh" );
+		Writer.String( "" );
+
+		JsonUtility::WriteTransform( Writer, "PlayerStart", m_PlayerCharacter->GetTransform() );
+		
 		Writer.Key( "Actors" );
 		Writer.StartArray();
 		{
-
-			// Serialize the level.
+			// Serialize the level actors
 			std::vector<AActor*>& LevelActors = m_Level.GetAllActors();
 			for (uint32 i = 0; i < LevelActors.size(); i++)
 			{
 				AActor& Actor = *LevelActors[i];
 					
-				Writer.Key( Actor.GetGuid().ToString().CStr() );
+				Writer.Key( Actor.GetObjectName() );
 				Writer.StartArray();
-
-				Writer.StartObject();
-				FTransform& Transform = Actor.GetTransform();
-				JsonUtility::WriteTransformValues( Writer, Transform );
-				Writer.EndObject();
-
-				Writer.StartObject();
 				{
-					Writer.String( "InstanceOverrides" );
-					Writer.StartArray();
+					Writer.StartObject();
+					{
+						FTransform& Transform = Actor.GetTransform();
+						JsonUtility::WriteTransformValues( Writer, Transform );
+					}
+					Writer.EndObject();
 
-					Writer.EndArray();
+					Writer.StartObject();
+					{
+						Writer.String( "InstanceOverrides" );
+						Writer.StartArray();
+						{
+
+						}
+						Writer.EndArray();
+					}
+					Writer.EndObject();
 				}
-				Writer.EndObject();
-
 				Writer.EndArray();
 			}
 

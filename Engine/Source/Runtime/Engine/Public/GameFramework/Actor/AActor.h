@@ -6,7 +6,6 @@
 #include "LuaScript.h"
 #include "GameFramework/Components/HActorComponent.h"
 
-
 #define HE_GENERATED_BODY( Class )															\
 	Class( FActorInitArgs& InitArgs );														\
 	virtual ~Class();																		\
@@ -55,10 +54,8 @@ public:
 	// Finds and returns a component by its unique id. nullptr if the component is not found.
 	HActorComponent* GetComponentByGuid(const FGUID& Guid);
 
-
 	FTransform& GetTransform() { return m_Transform; }
 	LuaScript& GetScript();
-
 
 protected:
 	virtual void Serialize( JsonUtility::WriteContext& Output ) override;

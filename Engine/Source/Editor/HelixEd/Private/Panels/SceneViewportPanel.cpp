@@ -43,7 +43,7 @@ void SceneViewportPanel::Initialize( FViewportContext* pOwningTab )
 
 void SceneViewportPanel::UnInitialize()
 {
-
+	delete m_pDebugPawn;
 }
 
 void SceneViewportPanel::Tick( float DeltaTime ) 

@@ -33,6 +33,7 @@ void HelixEdHomeUI::SetupPanels()
 	m_MenuBar.AddMenuItem( "File", "Save", this, &HelixEdHomeUI::OnSaveMenuItem );
 	m_MenuBar.AddMenuItem( "File", "Package Game", GEditorEngine, &HEditorEngine::PackageGame );
 	m_MenuBar.AddMenuItem( "Edit", "Preferences", GEditorEngine, &HEditorEngine::OnEditorPreferencesMenuItem );
+	m_MenuBar.AddMenuItem( "Edit", "Save", &GEditorEngine->GetGameWorld(), &HWorld::Save );
 	//m_MenuBar.AddMenuItem( "Developer", "Reload Pipeline Shaders", this, &HelixEdHomeUI::OnReloadPipelineShaders );
 	m_MenuBar.AddMenuItem( "Developer", "Map Reload", &GEditorEngine->GetGameWorld(), &HWorld::Reload );
 	//m_MenuBar.AddMenuItem( "Editor", "Launch Standalone Instance", this, &HelixEdHomeUI::OnLaunchStandalone );

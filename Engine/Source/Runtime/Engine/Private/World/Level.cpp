@@ -119,8 +119,9 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 		const rapidjson::Value& Actor = Value[i];
 		for (auto Iter = Actor.MemberBegin(); Iter != Actor.MemberEnd(); Iter++)
 		{
+			const char* ActorFileName = Iter->name.GetString();
 			FPath ActorPath;
-			sprintf_s( ActorPath.m_Path, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), Iter->name.GetString() );
+			sprintf_s( ActorPath.m_Path, "%sActors\\%s", FGameProject::GetInstance()->GetContentFolder(), ActorFileName );
 
 			// Load the actor
 			//
