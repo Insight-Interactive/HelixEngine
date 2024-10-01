@@ -1,0 +1,26 @@
+{
+    "FMaterial": [
+      {
+        "m_GUID": "0d68e992-aa25-4aa4-9f81-0eb775320c1e",
+        "EMaterialBlendMode": 0,
+        "EMaterialDomain": 0,
+        "EShadingModel": 0,
+        "EFillMode": 3,
+        "IsTwoSided": false
+      },
+      {
+        "MaterialAlbedo": "Hardwood/Hardwood_Albedo.dds",
+        "MaterialNormal": "RustedIron/RustedIron_Normal.dds",
+        "MaterialRoughness": "RustedIron/RustedIron_Roughness.dds",
+        "MaterialMetallic": "RustedIron/RustedIron_Metallic.dds"
+      },
+      {
+  
+      },
+      {
+        "VertexShader": "cd635ce4-8e10-4f50-8cfe-2f40dfc5f27e",
+        "PixelShader": "d7b84cd6-7942-4247-b55e-a36f1c1660a4"
+      }
+    ]
+  }
+  

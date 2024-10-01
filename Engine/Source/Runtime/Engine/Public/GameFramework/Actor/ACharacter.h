@@ -6,7 +6,7 @@
 
 class HCameraComponent;
 class HCapsuleColliderComponent;
-class HStaticMeshComponent;
+class HSkeletalMeshComponent;
 
 HCLASS()
 class ACharacter : public APawn
@@ -17,6 +17,6 @@ public:
 
 
 protected:
-	HStaticMeshComponent* m_Body;
+	HSkeletalMeshComponent* m_Body;
 
 };

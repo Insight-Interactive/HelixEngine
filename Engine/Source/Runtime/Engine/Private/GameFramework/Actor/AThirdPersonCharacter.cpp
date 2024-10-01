@@ -26,10 +26,9 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	m_CameraBoom->SetViewOffset( FVector3( 60.f, 70.f, -180.f ) );
 	m_CameraFOV = m_CameraComponent->GetFieldOfView();
 
-	m_Body->SetMesh( FAssetDatabase::GetStaticMesh( "Capsule01.fbx" ) );
-	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_RustedMetal.hmat" ) );
-	m_Body->GetTransform().SetScale( 60, GetPawnHeight(), 60);
-	m_Body->GetTransform().SetPosition( 0.f, GetPawnHeight(), 0.f );
+	m_Body->SetMesh( FAssetDatabase::GetSkeletalMesh( "SK_Bot.fbx" ) );
+	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_Animated.hmat" ) );
+	m_Body->SetAnimation( FAssetDatabase::GetAnimation( "BipedalLocamotion/Walk_Relaxed.fbx" ) );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()

@@ -12,8 +12,11 @@
             "3c5f2a9f-ff5b-4eac-a311-b78d1f0aeca4": "Shaders/Core/Wireframe.ps.cso",
             "41c75002-f4b1-4030-adec-7a5088a4e65b": "Shaders/Core/Text.vs.cso",
             "c7f15311-d769-4753-b311-db6a33c2b9b0": "Shaders/Core/Text.ps.cso",
+            "e6d7b6e3-a012-424f-a1fe-486aee8b60ca": "Shaders/Core/SolidColor.ps.cso",
             "3e5d14f5-da55-4e50-b69f-622dd69ef93e": "Shaders/Core/MaterialBall.vs.cso",
-            "9357df8a-a1b9-41ef-8476-7e1f5bab0be3": "Shaders/Core/RustedMetal.vs.cso"
+            "9357df8a-a1b9-41ef-8476-7e1f5bab0be3": "Shaders/Core/RustedMetal.vs.cso",
+            "d7b84cd6-7942-4247-b55e-a36f1c1660a4": "Shaders/Core/DefaultSkeletalMeshGeometryPass.ps.cso",
+            "cd635ce4-8e10-4f50-8cfe-2f40dfc5f27e": "Shaders/Core/DefaultSkeletalMeshGeometryPass.vs.cso"
         }
     ]
 }

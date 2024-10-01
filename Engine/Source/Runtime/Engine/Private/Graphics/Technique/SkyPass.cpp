@@ -33,12 +33,13 @@ void FSkyboxPass::Initialize(EFormat RenderTargetFormat, EFormat DepthBufferForm
 
 	// Create the pipeline state.
 	//
-	m_RS.Reset(4, 1);
+	m_RS.Reset(5, 1);
 	m_RS.InitStaticSampler(0, GLinearWrapSamplerDesc, SV_Pixel);
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer(kSceneConstants, SV_All);
 	m_RS[kMeshWorld].InitAsConstantBuffer(kMeshWorld, SV_Vertex);
 	m_RS[kLights].InitAsConstantBuffer(kLights, SV_Pixel);
+	m_RS[kSkeletonJoints].InitAsConstantBuffer( kSkeletonJoints, SV_Vertex );
 	// Pipeline
 	// Sky Cubemap
 	m_RS[SPRP_Diffuse].InitAsDescriptorTable(1, SV_Pixel);
@@ -117,9 +118,9 @@ void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
 	if (m_SkyGeometry.IsValid())
 	{
 		GfxContext.SetPrimitiveTopologyType(PT_TiangleList);
-		GfxContext.BindVertexBuffer(0, m_SkyGeometry->GetVertexBuffer());
-		GfxContext.BindIndexBuffer(m_SkyGeometry->GetIndexBuffer());
-		GfxContext.DrawIndexedInstanced(m_SkyGeometry->GetNumIndices(), 1, 0, 0, 0);
+		GfxContext.BindVertexBuffer(0, m_SkyGeometry->GetMesh().GetVertexBuffer());
+		GfxContext.BindIndexBuffer(m_SkyGeometry->GetMesh().GetIndexBuffer());
+		GfxContext.DrawIndexedInstanced(m_SkyGeometry->GetMesh().GetNumIndices(), 1, 0, 0, 0);
 	}
 	else
 		HE_LOG(Warning, TEXT("Trying to render a skybox with invalid geometry!"));

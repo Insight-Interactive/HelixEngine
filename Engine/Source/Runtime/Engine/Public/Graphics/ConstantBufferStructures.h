@@ -42,6 +42,13 @@ struct MeshWorldCBData
 };
 static_assert((sizeof( MeshWorldCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
 
+struct JointCBData
+{
+	// Skeleton Joints.
+	FMatrix kJoints[R_MAX_JOINTS_PER_MODEL];
+};
+static_assert((sizeof( JointCBData ) % 256) == 0, "Constant Buffer size must be 256-byte aligned");
+
 struct MaterialConstantsCBData
 {
 	// Color override.

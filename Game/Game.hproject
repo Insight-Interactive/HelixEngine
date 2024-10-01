@@ -1,5 +1,5 @@
 {
   "GameName": "ii1",
   "ProjectName":  "Atlas",
-  "DefaultLevel": "Levels/Test/BasicActorLoading.hlevel"
+  "DefaultLevel": "Levels/DefaultLevel.hlevel"
 }

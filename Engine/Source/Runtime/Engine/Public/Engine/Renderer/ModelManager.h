@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Engine/Renderer/StaticMesh.h"
+#include "Engine/Renderer/SkeletalMesh.h"
 #include "Graphics/StaticWorldMesh.h"
 #include "Engine/Renderer/VertexLayouts.h"
 #include "Engine/Renderer/ConstantBuffer.h"
@@ -15,12 +16,8 @@
 class FStaticGeometryManager
 {
 public:
-	FStaticGeometryManager()
-	{
-	}
-	~FStaticGeometryManager()
-	{
-	}
+	FStaticGeometryManager() = default;
+	~FStaticGeometryManager() = default;
 
 	HStaticMesh LoadHAssetMeshFromFile( const String& FilePath );
 	void LoadBasicGometry( FPath& FilePath, std::vector<FSimpleVertex3D>& outVerticies, uint32& outVertexCount, std::vector<uint32>& outIndices, uint32& outIndexCount );
@@ -53,20 +50,79 @@ private:
 	void ProcessMesh( struct aiMesh* mesh, const struct aiScene* scene, HStaticMesh& OutMesh );
 	HStaticMesh ProcessNode( struct aiNode* node, aiNode* Parent, const struct aiScene* scene, std::vector<FWorldMesh*>& OutWorld );
 
-
 private:
 	CriticalSection m_MapMutex;
 	std::unordered_map< String, HStaticMesh > m_ModelCache;
 	CriticalSection m_AllwaysLoadedMapMutex;
 	std::unordered_map< String, HStaticMesh > m_ModelCacheAllwysLoaded;
 
-	//std::map< String, std::pair< std::unique_ptr<ManagedStaticMesh>, std::vector<TConstantBuffer<MeshWorldCBData>> > > m_NewModelCache;
+};
+
+
+class FSkeletalGeometryManager
+{
+public:
+	FSkeletalGeometryManager() = default;
+	~FSkeletalGeometryManager() = default;
+
+	HSkeletalMesh LoadSkeletalMesh( FPath& Path );
+
+
+	bool MeshExists( const String& Name ) const;
+	void FlushCache();
+	HSkeletalMesh GetSkeletalMeshByName( const String& Name );
+
+private:
+	//HSkeletalMesh ProcessNode( aiNode* node, const aiScene* scene );
+	//HSkeletalMesh ProcessMesh( aiMesh* mesh, const aiScene* scene );
+
+	HSkeletalMesh  SK_ParseMeshes( const struct aiScene* pScene );
+	HSkeletalMesh  SK_ParseScene( const struct aiScene* pScene );
+
+private:
+	CriticalSection m_MapMutex;
+	std::unordered_map< String, HSkeletalMesh > m_ModelCache;
+
 };
 
 
 //
 // Inline function implementations
 //
+
+
+inline void FSkeletalGeometryManager::FlushCache()
+{
+	R_LOG( Warning, TEXT( "Skeletal model cache being flushed!" ) );
+	ScopedCriticalSection Guard( m_MapMutex );
+
+	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
+	{
+		Iter->second.Reset();
+	}
+	m_ModelCache.clear();
+}
+
+inline bool FSkeletalGeometryManager::MeshExists( const String& Name ) const
+{
+	auto Iter = m_ModelCache.find( Name );
+	return Iter != m_ModelCache.end();
+}
+
+inline HSkeletalMesh FSkeletalGeometryManager::GetSkeletalMeshByName( const String& Name )
+{
+	auto Iter = m_ModelCache.find( Name );
+	if (Iter != m_ModelCache.end())
+	{
+		return m_ModelCache.at( Name );
+	}
+	else
+	{
+		HE_ASSERT( false );
+	}
+
+	return nullptr;
+}
 
 inline HStaticMesh FStaticGeometryManager::GetStaticMeshByName( const String& Name )
 {
@@ -104,7 +160,7 @@ inline bool FStaticGeometryManager::MeshExists( const String& Name ) const
 
 inline void FStaticGeometryManager::FlushCache()
 {
-	R_LOG( Warning, TEXT( "Model cache being flushed!" ) );
+	R_LOG( Warning, TEXT( "Static model cache being flushed!" ) );
 	ScopedCriticalSection Guard( m_MapMutex );
 
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)

@@ -48,9 +48,28 @@ void HScene::RenderWorldGeo( FCommandContext& CmdContext )
 
 			CmdContext.SetGraphicsConstantBuffer( kMeshWorld, Mesh.m_MeshWorldCB );
 			CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-			CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetVertexBuffer() );
-			CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetIndexBuffer() );
-			CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetNumIndices(), 1, 0, 0, 0 );
+			CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetMesh().GetVertexBuffer() );
+			CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetMesh().GetIndexBuffer() );
+			CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
+		}
+	}
+	CmdContext.EndDebugMarker();
+}
+
+void HScene::RenderSkeletalLitOpaqueObjects( FCommandContext& CmdContext )
+{
+	CmdContext.BeginDebugMarker( L"Render Skeletal Opaque Lit" );
+	{
+		for (auto Iter = m_Renderables.begin(); Iter != m_FirstTranslucentOrUnlit; ++Iter)
+		{
+			if (HSkeletalMeshComponent* pMesh = DCast<HSkeletalMeshComponent*>( *Iter ))
+			{
+				if (!pMesh->GetMaterial().IsValid())
+					continue;
+
+				if (pMesh->GetMaterial()->GetShadingModel() == SM_DefaultLit)
+					pMesh->Render( CmdContext );
+			}
 		}
 	}
 	CmdContext.EndDebugMarker();
@@ -60,11 +79,13 @@ void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)
 {
 	CmdContext.BeginDebugMarker(L"Render Opaque Lit");
 	{
-		for (auto Iter = m_StaticMeshs.begin(); Iter != m_FirstTranslucentOrUnlit; ++Iter)
+		for (auto Iter = m_Renderables.begin(); Iter != m_FirstTranslucentOrUnlit; ++Iter)
 		{
-			HStaticMeshComponent& StaticMesh = (**Iter);
-			if (StaticMesh.GetMaterial()->GetShadingModel() == SM_DefaultLit)
-				StaticMesh.Render(CmdContext);
+			if (HStaticMeshComponent* pMesh = DCast<HStaticMeshComponent*>( *Iter ))
+			{
+				if (pMesh->GetMaterial()->GetShadingModel() == SM_DefaultLit)
+					pMesh->Render(CmdContext);
+			}
 		}
 	}
 	CmdContext.EndDebugMarker();
@@ -105,9 +126,9 @@ void HScene::RenderDebugMeshes( FCommandContext& CmdContext )
 
 							CmdContext.SetGraphicsConstantBuffer( kMeshWorld, Mesh.m_MeshWorldCB );
 							CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-							CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetVertexBuffer() );
-							CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetIndexBuffer() );
-							CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetNumIndices(), 1, 0, 0, 0 );
+							CmdContext.BindVertexBuffer( 0, Mesh.m_Mesh->GetMesh().GetVertexBuffer() );
+							CmdContext.BindIndexBuffer( Mesh.m_Mesh->GetMesh().GetIndexBuffer() );
+							CmdContext.DrawIndexedInstanced( Mesh.m_Mesh->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
 						}
 					}
 				}
@@ -132,12 +153,13 @@ void HScene::RenderStaticTranslucentAndUnlitObjects(FCommandContext& CmdContext)
 {
 	CmdContext.BeginDebugMarker(L"Render Translucent Lit");
 	{
-		for (auto Iter = m_FirstTranslucentOrUnlit; Iter != m_StaticMeshs.end(); ++Iter)
+		for (auto Iter = m_FirstTranslucentOrUnlit; Iter != m_Renderables.end(); ++Iter)
 		{
-			HStaticMeshComponent& StaticMesh = (**Iter);
-
-			EShadingModel ShadingMod = StaticMesh.GetMaterial()->GetShadingModel();
-			StaticMesh.Render(CmdContext);
+			if (HStaticMeshComponent* pStaticMesh = DCast<HStaticMeshComponent*>( *Iter ))
+			{
+				EShadingModel ShadingMod = pStaticMesh->GetMaterial()->GetShadingModel();
+				pStaticMesh->Render(CmdContext);
+			}
 		}
 	}
 	CmdContext.EndDebugMarker();

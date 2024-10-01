@@ -21,6 +21,28 @@ struct GP_PSInput // VS Output
 
 	float3x3 TBN : TBN;
 };
+struct GP_VSInputSkinned
+{
+	float3 Position		: POSITION;
+	float3 Normal		: NORMAL;
+	float3 Tangent		: TANGENT;
+	float3 BiTangent	: BITANGENT;
+	float4 Color		: COLOR;
+	float2 UVs			: UVS;
+	uint4 JointIDs		: JOINTIDS;
+	float4 Weights		: WEIGHTS;
+};
+struct GP_PSInputSkinned // VS Output
+{
+	float4 Position		: SV_POSITION;
+	float3 Normal		: NORMAL;
+	float3 Tangent		: TANGENT;
+	float3 BiTangent	: BITANGENT;
+	float4 VertexColor	: COLOR;
+	float2 UVs			: UVS;
+	int4 JointIDs		: JOINTIDS;
+	float4 Weights		: WEIGHTS;
+};
 
 // Pixel Stage
 struct GP_PSOutput

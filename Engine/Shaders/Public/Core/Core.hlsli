@@ -77,6 +77,10 @@ HE_DECLARE_CONSTANT_BUFFER(SceneLights_CB, kLightsReg)
 	DirectionalLight kWorldSun;
 }
 
+HE_DECLARE_CONSTANT_BUFFER( SkeletonJoints_CB, kSkeletonJointsReg )
+{
+    float4x4 Joints[HE_MAX_JOINTS_PER_MODEL];
+}
 
 //
 // Samplers

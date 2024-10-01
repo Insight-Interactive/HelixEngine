@@ -57,12 +57,13 @@ void FDeferredShadingTech::GeometryPass::Initialize( const FVector2& RenderResol
 {
 	HE_ASSERT( m_pSceneDepthBufferRef != NULL ); // Trying to initialize geometry pass with no scene depth buffer! Call 'GeometryPass::SetDepthBuffer' before initilializing.
 
-	m_RS.Reset( 7, 1 );
+	m_RS.Reset( 8, 1 );
 	m_RS.InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer( kSceneConstants, SV_All );
 	m_RS[kMeshWorld].InitAsConstantBuffer( kMeshWorld, SV_Vertex );
 	m_RS[kLights].InitAsConstantBuffer( kLights, SV_Pixel );
+	m_RS[kSkeletonJoints].InitAsConstantBuffer( kSkeletonJoints, SV_Vertex );
 	// Pipeline
 	// Albedo
 	m_RS[GRP_MaterialTextureAlbedo].InitAsDescriptorTable( 1, SV_Pixel );
@@ -92,8 +93,8 @@ void FDeferredShadingTech::GeometryPass::Initialize( const FVector2& RenderResol
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
-	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
-	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
+	PSODesc.InputLayout.pInputElementDescs = GStaticMeshInputElements;
+	PSODesc.InputLayout.NumElements = kNumStaticMeshCommonInputElements;
 	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = CDepthStencilStateDesc();
 	PSODesc.BlendState = CBlendDesc();
@@ -163,8 +164,8 @@ void FDeferredShadingTech::GeometryPass::ReloadPipeline()
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader = { VSShader.GetBufferPointer(), VSShader.GetDataSize() };
 	PSODesc.PixelShader = { PSShader.GetBufferPointer(), PSShader.GetDataSize() };
-	PSODesc.InputLayout.pInputElementDescs = GSceneMeshInputElements;
-	PSODesc.InputLayout.NumElements = kNumSceneMeshCommonInputElements;
+	PSODesc.InputLayout.pInputElementDescs = GStaticMeshInputElements;
+	PSODesc.InputLayout.NumElements = kNumStaticMeshCommonInputElements;
 	PSODesc.pRootSignature = &m_RS;
 	PSODesc.DepthStencilState = CDepthStencilStateDesc();
 	//PSODesc.DepthStencilState.DepthFunc = CF_GreaterEqual;
@@ -213,12 +214,13 @@ void FDeferredShadingTech::LightPass::Initialize( const FVector2& RenderResoluti
 {
 	m_RenderTargetFormat = SwapchainFormatTEMP;
 
-	m_RS.Reset( 9, 1 );
+	m_RS.Reset( 10, 1 );
 	m_RS.InitStaticSampler( 0, GLinearWrapSamplerDesc, SV_Pixel );
 	// Common
 	m_RS[kSceneConstants].InitAsConstantBuffer( kSceneConstants, SV_All );
 	m_RS[kMeshWorld].InitAsConstantBuffer( kMeshWorld, SV_Vertex );
 	m_RS[kLights].InitAsConstantBuffer( kLights, SV_Pixel );
+	m_RS[kSkeletonJoints].InitAsConstantBuffer( kSkeletonJoints, SV_Vertex );
 	// Pipeline
 	// Scene Depth
 	m_RS[LRP_GBufferTextureSceneDepth].InitAsDescriptorTable( 1, SV_Pixel );

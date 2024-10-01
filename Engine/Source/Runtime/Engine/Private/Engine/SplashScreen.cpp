@@ -85,9 +85,9 @@ void FSplashScreen::Render( FCommandContext& CmdContext )
 	CmdContext.SetTexture( kSplashTextureRootIndex, m_SplashTexture );
 	
 	CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-	CmdContext.BindVertexBuffer( 0, m_ScreenQuadRef->GetVertexBuffer() );
-	CmdContext.BindIndexBuffer( m_ScreenQuadRef->GetIndexBuffer() );
-	CmdContext.DrawIndexedInstanced( m_ScreenQuadRef->GetNumIndices(), 1, 0, 0, 0 );
+	CmdContext.BindVertexBuffer( 0, m_ScreenQuadRef->GetMesh().GetVertexBuffer() );
+	CmdContext.BindIndexBuffer( m_ScreenQuadRef->GetMesh().GetIndexBuffer() );
+	CmdContext.DrawIndexedInstanced( m_ScreenQuadRef->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
 
 	CmdContext.TransitionResource( CurrentBackBuffer, RS_Present );
 

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "MathCore.h"
+#include "RendererCore.h"
 
 struct FStaticVertex3D
 {
@@ -10,6 +11,23 @@ struct FStaticVertex3D
 	FVector3 Tangent;
 	FVector3 BiTangent;
 	FVector2 UV0;
+};
+
+struct FSkinnedVertex3D
+{
+	FSkinnedVertex3D()
+	{
+		ZeroMemory( this, sizeof( FSkinnedVertex3D ) );
+	}
+
+	FVector3 Position;
+	FVector3 Normal;
+	FVector3 Tangent;
+	FVector3 BiTangent;
+	FVector4 Color;
+	FVector2 UV0;
+	uint32 Joints[R_MAX_JOINTS_PER_VERTEX]; // Note: Keep this in sync with GP_VSInputSkinned in DeferedShadingCommon.hlsli
+	float Weights[R_MAX_JOINTS_PER_VERTEX];
 };
 
 struct FVertex2D

@@ -3,6 +3,7 @@
 
 #include "GameFramework/HObject.h"
 
+#include "GameFramework/Components/HSkeletalMeshComponent.h"
 #include "GameFramework/Components/HStaticMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HColliderComponent.h"
@@ -32,9 +33,12 @@ public:
 	bool DoesContainAnyTranslucentObjects();
 
 	void RenderStaticLitOpaqueObjects( FCommandContext& CmdContext );
+	void RenderSkeletalLitOpaqueObjects( FCommandContext& CmdContext );
 	void RenderDebugMeshes( FCommandContext& CmdContext );
 	void RenderStaticTranslucentAndUnlitObjects( FCommandContext& CmdContext );
 
+	void AddSkeletalMesh( HSkeletalMeshComponent* pSkeletalMesh );
+	bool RemoveSkeletalMesh( HSkeletalMeshComponent* pSkeletalMesh );
 	void AddStaticMesh( HStaticMeshComponent* pStaticMesh );
 	bool RemoveStaticMesh( HStaticMeshComponent* pStaticMesh );
 	void AddDebugCollider( HColliderComponent* pCollider );
@@ -54,9 +58,12 @@ private:
 
 	std::vector<FWorldMesh*> m_WorldGeo;
 
-	std::vector<HStaticMeshComponent*> m_StaticMeshs;
+	//std::vector<HSkeletalMeshComponent*> m_SkeletalMeshs;
+	//std::vector<HStaticMeshComponent*> m_StaticMeshs;
+	std::vector<HRenderableComponentInterface*> m_Renderables;
+
 	std::vector<HColliderComponent*> m_DebugColliderMeshs;
-	std::vector<HStaticMeshComponent*>::iterator m_FirstTranslucentOrUnlit;
+	std::vector<HRenderableComponentInterface*>::iterator m_FirstTranslucentOrUnlit;
 
 	std::vector<HPointLightComponent*> m_PointLights;
 	HWorld* m_pOwner;
@@ -68,21 +75,41 @@ private:
 // Inline function implementations
 //
 
+FORCEINLINE void HScene::AddSkeletalMesh( HSkeletalMeshComponent* pSkeletalMesh )
+{
+	HE_ASSERT( pSkeletalMesh != nullptr );
+
+	m_Renderables.push_back( pSkeletalMesh );
+}
+
+FORCEINLINE bool HScene::RemoveSkeletalMesh( HSkeletalMeshComponent* pSkeletalMesh )
+{
+	HE_ASSERT( pSkeletalMesh != nullptr );
+
+	auto Iter = std::find( m_Renderables.begin(), m_Renderables.end(), pSkeletalMesh );
+	if (Iter != m_Renderables.end())
+	{
+		m_Renderables.erase( Iter );
+		return true;
+	}
+	return false;
+}
+
 FORCEINLINE void HScene::AddStaticMesh( HStaticMeshComponent* pStaticMesh )
 {
 	HE_ASSERT( pStaticMesh != nullptr );
 
-	m_StaticMeshs.push_back( pStaticMesh );
+	m_Renderables.push_back( pStaticMesh );
 }
 
 FORCEINLINE bool HScene::RemoveStaticMesh( HStaticMeshComponent* pStaticMesh )
 {
 	HE_ASSERT( pStaticMesh != nullptr );
 	
-	auto Iter = std::find( m_StaticMeshs.begin(), m_StaticMeshs.end(), pStaticMesh );
-	if (Iter != m_StaticMeshs.end())
+	auto Iter = std::find( m_Renderables.begin(), m_Renderables.end(), pStaticMesh );
+	if (Iter != m_Renderables.end())
 	{
-		m_StaticMeshs.erase( Iter );
+		m_Renderables.erase( Iter );
 		return true;
 	}
 	return false;
@@ -131,8 +158,8 @@ FORCEINLINE HWorld* HScene::GetWorld()
 
 FORCEINLINE void HScene::SortStaticTransparentObjects()
 {
-	std::sort( m_StaticMeshs.begin(), m_StaticMeshs.end(),
-		[]( HStaticMeshComponent* Mesh1, HStaticMeshComponent* Mesh2 )
+	std::sort( m_Renderables.begin(), m_Renderables.end(),
+		[]( HRenderableComponentInterface* Mesh1, HRenderableComponentInterface* Mesh2 )
 		{
 			return Mesh1->IsOpaque() > Mesh2->IsOpaque();
 		} );
@@ -140,9 +167,12 @@ FORCEINLINE void HScene::SortStaticTransparentObjects()
 	// Get the first transparent object in the mesh list. This will be our 
 	// starting point for the translucent pass.
 	// TODO: This is O(n) will not scale well for a large number of meshes!
-	m_FirstTranslucentOrUnlit = std::find_if(m_StaticMeshs.begin(), m_StaticMeshs.end(),
-		[](HStaticMeshComponent* Mesh)
+	m_FirstTranslucentOrUnlit = std::find_if( m_Renderables.begin(), m_Renderables.end(),
+		[]( HRenderableComponentInterface* Mesh)
 		{
+			if (!Mesh->GetMaterial().IsValid())
+				return false;
+
 			EShadingModel ShadingMode = Mesh->GetMaterial()->GetShadingModel();
 			return ShadingMode == SM_Foliage || ShadingMode == SM_Unlit;
 		});
@@ -150,7 +180,7 @@ FORCEINLINE void HScene::SortStaticTransparentObjects()
 
 FORCEINLINE bool HScene::DoesContainAnyTranslucentObjects()
 {
-	return m_FirstTranslucentOrUnlit != m_StaticMeshs.end();
+	return m_FirstTranslucentOrUnlit != m_Renderables.end();
 }
 
 FORCEINLINE void HScene::SetDrawCollision( const bool& DrawColliders )

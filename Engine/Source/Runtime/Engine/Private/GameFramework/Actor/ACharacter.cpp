@@ -4,13 +4,13 @@
 #include "GameFramework/Actor/ACharacter.h"
 
 #include "World/World.h"
-#include "GameFramework/Components/HStaticMeshComponent.h"
+#include "GameFramework/Components/HSkeletalMeshComponent.h"
 
 
 ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	: APawn( InitArgs )
 {
-	m_Body = AddComponent<HStaticMeshComponent>( "CharacterBody" );
+	m_Body = AddComponent<HSkeletalMeshComponent>( "Body" );
 	m_Body->GetTransform().LinkTo( m_Transform );
 
 }

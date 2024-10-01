@@ -7,7 +7,7 @@
 /*
 	Common root parameters that each root signature MUST use.
 	If a pass requeres additional root parameters (textures, buffers, etc.)
-	their first element must be equal to `kLights + 1`. The order after
+	their first element must be equal to `kSkeletonBonesReg + 1`. The order after
 	that does not matter and is up to the user.
 */
 enum ECommonRootParamsBuffers
@@ -15,6 +15,7 @@ enum ECommonRootParamsBuffers
 	kSceneConstants = kSceneConstantsReg,
 	kMeshWorld		= kMeshWorldReg,
 	kLights			= kLightsReg,
+	kSkeletonJoints	= kSkeletonJointsReg,
 
 	kNumCommonRootParams,
 };

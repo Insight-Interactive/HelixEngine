@@ -6,6 +6,7 @@
 #include "GameFramework/Actor/AActor.h"
 #include "GameFramework/Components/HActorComponent.h"
 #include "GameFramework/Components/HStaticMeshComponent.h"
+#include "GameFramework/Components/HSkeletalMeshComponent.h"
 #include "GameFramework/Components/HPointLightComponent.h"
 #include "GameFramework/Components/HPlaneColliderComponent.h"
 #include "GameFramework/Components/HSphereColliderComponent.h"
@@ -55,6 +56,7 @@
 
 	OutActor.Deserialize( HObjectProps );
 
+	static StringHashValue SkeletalMeshKey;
 	static StringHashValue StaticMeshKey;
 	static StringHashValue PointLightKey;
 	static StringHashValue PlaneColliderKey;
@@ -67,6 +69,7 @@
 	static bool Init = false;
 	if (!Init)
 	{
+		SkeletalMeshKey = StringHash( HE_STRINGIFY( HSkeletalMeshComponent ) );
 		StaticMeshKey = StringHash( HE_STRINGIFY( HStaticMeshComponent ) );
 		PointLightKey = StringHash( HE_STRINGIFY( HPointLightComponent ) );
 		PlaneColliderKey = StringHash( HE_STRINGIFY( HPlaneColliderComponent ) );
@@ -93,7 +96,12 @@
 		JsonUtility::GetString( CurrentComponent, "ComponentType", StrBuffer, sizeof( StrBuffer ) );
 		HE_ASSERT( strcmp( StrBuffer, "" ) != 0 ); // All components MUST have "ComponentType" KVP!
 		StringHashValue ComponentTypeHash = StringHash( StrBuffer );
-		if (ComponentTypeHash == StaticMeshKey)
+		if (ComponentTypeHash == SkeletalMeshKey)
+		{
+			OutActor.AddComponent<HSkeletalMeshComponent>( "Unnamed Skeletal Mesh Component" )
+				->Deserialize( CurrentComponent );
+		}
+		else if (ComponentTypeHash == SkeletalMeshKey)
 		{
 			OutActor.AddComponent<HStaticMeshComponent>( "Unnamed Static Mesh Component" )
 				->Deserialize( CurrentComponent );

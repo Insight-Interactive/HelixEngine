@@ -13,7 +13,9 @@ FRenderDevice GGraphicsDevice;
 FTextureManager GTextureManager;
 FTexture GDefaultTextures[DT_NumDefaultTextures];
 FDescriptorHeap GTextureHeap;
+FAnimationManager GAnimationManager;
 FStaticGeometryManager GStaticGeometryManager;
+FSkeletalGeometryManager GSkeletalGeometryManager;
 const FResolution GCommonResolutions[9] =
 {
     { 800,  600  },

@@ -160,6 +160,7 @@ void HWorld::Flush()
 
 		m_Scene.UnloadWorldGeo();
 		GStaticGeometryManager.FlushCache();
+		GSkeletalGeometryManager.FlushCache();
 
 		// Cleanup the level and destroy all actors and components.
 		m_Level.Flush();

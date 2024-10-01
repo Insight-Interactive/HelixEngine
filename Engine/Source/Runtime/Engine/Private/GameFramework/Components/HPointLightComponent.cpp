@@ -108,9 +108,9 @@ void HPointLightComponent::Render( FCommandContext& GfxContext )
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.
 		// Render the geometry.
 		GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
-		GfxContext.BindVertexBuffer( 0, m_LightDebugMesh->GetVertexBuffer() );
-		GfxContext.BindIndexBuffer( m_LightDebugMesh->GetIndexBuffer() );
-		GfxContext.DrawIndexedInstanced( m_LightDebugMesh->GetNumIndices(), 1, 0, 0, 0 );
+		GfxContext.BindVertexBuffer( 0, m_LightDebugMesh->GetMesh().GetVertexBuffer() );
+		GfxContext.BindIndexBuffer( m_LightDebugMesh->GetMesh().GetIndexBuffer() );
+		GfxContext.DrawIndexedInstanced( m_LightDebugMesh->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
 	}
 }
 

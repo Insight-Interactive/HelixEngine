@@ -124,6 +124,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		// Draw 
 		Scene.RenderWorldGeo( CmdContext );
 		Scene.RenderStaticLitOpaqueObjects( CmdContext );
+		Scene.RenderSkeletalLitOpaqueObjects( CmdContext );
 
 		m_DeferredShader.UnBindGeometryPass( CmdContext );
 	}
@@ -139,9 +140,9 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 		m_DeferredShader.BindLightPass( CmdContext, Scissor );
 		SetCommonRenderState( CmdContext, true, true );
 		CmdContext.SetPrimitiveTopologyType( PT_TiangleList );
-		CmdContext.BindVertexBuffer( 0, m_pScreenQuadRef->GetVertexBuffer() );
-		CmdContext.BindIndexBuffer( m_pScreenQuadRef->GetIndexBuffer() );
-		CmdContext.DrawIndexedInstanced( m_pScreenQuadRef->GetNumIndices(), 1, 0, 0, 0 );
+		CmdContext.BindVertexBuffer( 0, m_pScreenQuadRef->GetMesh().GetVertexBuffer() );
+		CmdContext.BindIndexBuffer( m_pScreenQuadRef->GetMesh().GetIndexBuffer() );
+		CmdContext.DrawIndexedInstanced( m_pScreenQuadRef->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
 		m_DeferredShader.UnBindLightPass( CmdContext );
 	}
 

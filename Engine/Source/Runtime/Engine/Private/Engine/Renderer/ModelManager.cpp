@@ -11,6 +11,7 @@
 #include "Hash.h"
 
 extern FStaticGeometryManager GStaticGeometryManager;
+extern FSkeletalGeometryManager GSkeletalGeometryManager;
 
 
 HStaticMesh FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePath )
@@ -32,7 +33,7 @@ HStaticMesh FStaticGeometryManager::LoadHAssetMeshFromFile( const String& FilePa
 	ProcessMesh( aiMesh, Scene, Mesh );
 
 	ScopedCriticalSection Guard( m_MapMutex );
-	m_ModelCache[MeshName] =Mesh;
+	m_ModelCache[MeshName] = Mesh;
 	return m_ModelCache[MeshName];
 }
 
@@ -265,4 +266,255 @@ void FStaticGeometryManager::ProcessMesh( aiMesh* mesh, const aiScene* scene, HS
 		Indices.data(), (uint32)Indices.size() * sizeof( uint32 ), (uint32)Indices.size()
 	);
 	OutMesh->SetLoadCompleted( true );
+}
+
+void ConvertAssimp4x4Matrix( const aiMatrix4x4& Source, FMatrix& Destination )
+{
+	Destination._11 = Source.a1;
+	Destination._12 = Source.a2;
+	Destination._13 = Source.a3;
+	Destination._14 = Source.a4;
+
+	Destination._21 = Source.b1;
+	Destination._22 = Source.b2;
+	Destination._23 = Source.b3;
+	Destination._24 = Source.b4;
+
+	Destination._31 = Source.c1;
+	Destination._32 = Source.c2;
+	Destination._33 = Source.c3;
+	Destination._34 = Source.c4;
+
+	Destination._41 = Source.d1;
+	Destination._42 = Source.d2;
+	Destination._43 = Source.d3;
+	Destination._44 = Source.d4;
+}
+
+void ProcessJoints( std::vector<FJoint>& Joints, const aiNode* pNode, const uint32& ParentIndex, const aiMesh* pMesh )
+{
+	FJoint& joint = Joints.emplace_back();
+	strcpy_s( joint.m_Name, sizeof( joint.m_Name ), pNode->mName.C_Str() );
+	joint.m_NameHash = StringHash( joint.m_Name );
+	joint.m_ParentIndex = ParentIndex;
+	ConvertAssimp4x4Matrix( pNode->mTransformation, joint.m_LocalMatrix );
+
+	for (uint32 i = 0; i < pMesh->mNumBones; i++)
+	{
+		if (pNode->mName == pMesh->mBones[i]->mName)
+		{
+			ConvertAssimp4x4Matrix( pMesh->mBones[i]->mOffsetMatrix, joint.m_OffsetMatrix );
+			break;
+		}
+	}
+
+	uint32 NewParentIndex = (uint32)Joints.size() - 1u;
+	for (uint32 i = 0; i < pNode->mNumChildren; i++)
+	{
+		ProcessJoints( Joints, pNode->mChildren[i], NewParentIndex, pMesh );
+	}
+}
+
+uint8 GetJointIndexFromName( const std::vector<FJoint>& Joints, const Char* Name )
+{
+	StringHashValue NameHash = StringHash( Name );
+	for (uint8 i = 0; i < Joints.size(); i++)
+	{
+		if (Joints[i].m_NameHash == NameHash)
+			return i;
+	}
+
+	HE_ASSERT( false ); // Joint not found
+	return -1;
+}
+
+void ParseBoneWeights( const std::vector<FJoint>& Joints, const aiMesh* pMesh, std::vector<FSkinnedVertex3D>& Vertices, const uint32& BaseVertexIndex )
+{
+	for (uint32 i = 0; i < pMesh->mNumBones; i++)
+	{
+		const aiBone* pBone = pMesh->mBones[i];
+		const uint8 JointIndex = GetJointIndexFromName( Joints, pBone->mName.C_Str() );
+
+		for (uint32 j = 0; j < pBone->mNumWeights; j++)
+		{
+			const aiVertexWeight& VertWeight = pBone->mWeights[j];
+			const uint32& VertexId = BaseVertexIndex + VertWeight.mVertexId;
+
+			HE_ASSERT( VertexId < Vertices.size() ); // Vertex is out of bounds
+
+			for (uint32 k = 0; k < R_MAX_JOINTS_PER_VERTEX; k++) // Find a free index in the array
+			{
+				if (Vertices[VertexId].Joints[k] == 0u)
+				{
+					Vertices[VertexId].Joints[k] = JointIndex;
+					Vertices[VertexId].Weights[k] = VertWeight.mWeight;
+					break;
+				}
+			}
+		}
+	}
+}
+
+HSkeletalMesh FSkeletalGeometryManager::LoadSkeletalMesh( FPath& Path )
+{
+	String MeshName = StringHelper::GetFilenameFromDirectoryNoExtension( Path.m_Path );
+	if (MeshExists( MeshName ))
+		return GetSkeletalMeshByName( MeshName );
+
+
+	Assimp::Importer Importer;
+	Importer.SetPropertyBool( "AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS", true );
+	const aiScene* Scene = Importer.ReadFile( Path.m_Path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_PopulateArmatureData );
+	if (Scene == nullptr)
+	{
+		HE_LOG( Error, TEXT( "Failed to Load assimp model! Assimp: %s" ), Importer.GetErrorString() );
+		HE_ASSERT( false );
+	}
+
+	HSkeletalMesh Mesh = SK_ParseMeshes( Scene );
+
+	ScopedCriticalSection Guard( m_MapMutex );
+	m_ModelCache[MeshName] = Mesh;
+	return m_ModelCache[MeshName];
+}
+
+
+HSkeletalMesh FSkeletalGeometryManager::SK_ParseMeshes( const aiScene* pScene )
+{
+	HSkeletalMesh Mesh = new FSkeletalMesh();
+	Mesh->m_Meshes.resize( pScene->mNumMeshes );
+
+
+	// Data to fill
+	uint32 TotalVerts = 0;
+	uint32 TotalIndices = 0;
+	for (uint32 i = 0; i < pScene->mNumMeshes; i++)
+	{
+		const aiMesh* pMesh = pScene->mMeshes[i];
+
+		TotalVerts += pMesh->mNumVertices;
+
+		for (uint32 j = 0; j < pMesh->mNumFaces; j++)
+		{
+			const aiFace& face = pMesh->mFaces[j];
+			TotalIndices += face.mNumIndices;
+		}
+	}
+
+	std::vector<FSkinnedVertex3D> Vertices( TotalVerts );
+	std::vector<uint32> Indices( TotalIndices );
+
+	uint32 BaseVertexIndex = 0;
+	uint32 IndexGroupOffset = 0;
+	uint32 TotalGroupIndicies = 0;
+	for (uint32 i = 0; i < pScene->mNumMeshes; i++)
+	{
+		const aiMesh* pMesh = pScene->mMeshes[i];
+
+
+		// Walk through each of the mesh's vertices
+		for (uint32 j = 0; j < pMesh->mNumVertices; j++)
+		{
+			FSkinnedVertex3D& Vertex = Vertices[BaseVertexIndex + j];
+
+			if (pMesh->HasPositions())
+			{
+				Vertex.Position.x = pMesh->mVertices[j].x;
+				Vertex.Position.y = pMesh->mVertices[j].y;
+				Vertex.Position.z = pMesh->mVertices[j].z;
+			}
+
+			if (pMesh->HasTextureCoords( 0 ))
+			{
+				Vertex.UV0.x = pMesh->mTextureCoords[0][j].x;
+				Vertex.UV0.y = pMesh->mTextureCoords[0][j].y;
+			}
+
+			if (pMesh->HasNormals())
+			{
+				Vertex.Normal.x = pMesh->mNormals[j].x;
+				Vertex.Normal.y = pMesh->mNormals[j].y;
+				Vertex.Normal.z = pMesh->mNormals[j].z;
+			}
+
+			if (pMesh->HasTangentsAndBitangents())
+			{
+				Vertex.Tangent.x = pMesh->mTangents[j].x;
+				Vertex.Tangent.y = pMesh->mTangents[j].y;
+				Vertex.Tangent.z = pMesh->mTangents[j].z;
+
+				Vertex.BiTangent.x = pMesh->mBitangents[j].x;
+				Vertex.BiTangent.y = pMesh->mBitangents[j].y;
+				Vertex.BiTangent.z = pMesh->mBitangents[j].z;
+			}
+		}
+
+		// Walk the indices
+		uint32 FaceOffset = 0;
+		for (uint32 k = 0; k < pMesh->mNumFaces; k++)
+		{
+			const aiFace& face = pMesh->mFaces[k];
+
+			for (uint32 l = 0; l < face.mNumIndices; l++)
+			{
+				Indices[IndexGroupOffset + (FaceOffset + l)] = face.mIndices[l];
+				TotalGroupIndicies++;
+			}
+			FaceOffset += face.mNumIndices;
+		}
+
+		// Parse the bones
+		if (pMesh->HasBones())
+		{
+			if (!Mesh->Joints.size())
+			{
+				aiNode* pArmatureRoot = pMesh->mBones[0]->mNode;
+
+				//for (uint32 z = 0; z < pMesh->mNumBones; z++)
+				//{
+				//	aiBone* pBone = pMesh->mBones[z];
+				//	//uint32 ParentIndex = GetParentIndexFromArmature( pArmatureRoot, pBone->mName.C_Str(), R_JOINT_INVALID_INDEX );
+				//	//R_LOG( Log, TEXT( "Bone: %s | ParentIndex: %i" ), CharToTChar( pBone->mName.C_Str() ), ParentIndex );
+				//	R_LOG( Log, TEXT( "Bone: %s | NodeName: %s" ), CharToTChar( pBone->mName.C_Str() ), CharToTChar( pBone->mNode->mName.C_Str() ) );
+				//}
+
+				//memcpy( &pSkeletalMesh->m_GlobalInverseTransform, &pArmatureRoot->mTransformation, sizeof( FMatrix ) );
+				//ConvertAssimp4x4Matrix( pArmatureRoot->mTransformation, pSkeletalMesh->m_GlobalInverseTransform );
+				//pSkeletalMesh->m_GlobalInverseTransform = pSkeletalMesh->m_GlobalInverseTransform.Invert();
+
+				//aiNode* pNode = pMesh->mBones[0]->mNode;
+				//pSkeletalMesh->Joints.reserve( pMesh->mNumBones );
+
+				ProcessJoints( Mesh->Joints, pArmatureRoot, R_JOINT_INVALID_INDEX, pMesh );
+				HE_ASSERT( Mesh->Joints.size() > 0 );
+				Mesh->m_GlobalInverseTransform = Mesh->Joints[0].m_LocalMatrix.Invert();
+			}
+
+			ParseBoneWeights( Mesh->Joints, pMesh, Vertices, BaseVertexIndex );
+		}
+
+		// Assemble and create the mesh
+		FSkinnedVertex3D* pVertData = Vertices.data() + BaseVertexIndex;
+		uint32* pIndexData = Indices.data() + IndexGroupOffset;
+
+		const char* Name = pMesh->mName.C_Str();
+		StringHashValue NameHash = StringHash( Name, strlen( Name ) );
+		Mesh->m_Meshes[i].Create(
+			pVertData, pMesh->mNumVertices, sizeof( FSkinnedVertex3D ),
+			pIndexData, TotalGroupIndicies * sizeof( uint32 ), TotalGroupIndicies
+		);
+
+		BaseVertexIndex += pMesh->mNumVertices; // pMesh->mNumVertices is not an index so we dont need +1 because we wont overwrite the previous vertex
+		IndexGroupOffset += TotalGroupIndicies;
+		TotalGroupIndicies = 0;
+	}
+	Mesh->SetName( pScene->mName.C_Str() );
+	Mesh->SetLoadCompleted( true );
+
+	return Mesh;
+}
+
+HSkeletalMesh FSkeletalGeometryManager::SK_ParseScene( const aiScene* pScene )
+{
+	return SK_ParseMeshes( pScene );
 }

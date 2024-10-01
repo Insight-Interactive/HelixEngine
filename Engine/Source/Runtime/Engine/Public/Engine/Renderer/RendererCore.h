@@ -25,9 +25,14 @@
 
 // The maximum number of back buffers a swapchain can have.
 #define HE_MAX_SWAPCHAIN_BACK_BUFFERS	3
+#define R_MAX_JOINTS_PER_VERTEX			4
+#define R_MAX_DEVICE_NAME_LENGTH		( 64 )
+#define R_MAX_JOINTS_PER_MODEL			180
 
 
 class FStaticGeometryManager;
+class FSkeletalGeometryManager;
+class FAnimationManager;
 class MaterialManager;
 class LightManager;
 
@@ -79,6 +84,10 @@ extern FTexture GDefaultTextures[];
 extern FDescriptorHeap GTextureHeap;
 // Manager of all static mesh geometry in the world.
 extern FStaticGeometryManager GStaticGeometryManager;
+// Manager of all skeletal mesh geometry in the world.
+extern FSkeletalGeometryManager GSkeletalGeometryManager;
+// Manager of all skeletal animations in the world.
+extern FAnimationManager GAnimationManager;
 // Common resolution formats an application may use.
 extern const FResolution GCommonResolutions[];
 

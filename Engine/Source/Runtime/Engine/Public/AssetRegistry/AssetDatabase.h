@@ -5,13 +5,14 @@
 
 #include "AssetRegistry/ShaderDatabase.h"
 
+#include "LuaScript.h"
+#include "Engine/GameProject.h"
+#include "Engine/ScriptManager.h"
 #include "Engine/Renderer/ModelManager.h"
 #include "Engine/Renderer/TextureManager.h"
-#include "Engine/GameProject.h"
-#include "Graphics/MaterialManager.h"
+#include "Engine/Renderer/AnimationManager.h"
 #include "Graphics/FontManager.h"
-#include "LuaScript.h"
-#include "Engine/ScriptManager.h"
+#include "Graphics/MaterialManager.h"
 
 
 static const char* kAssetManifestFilename = "AssetManifest.json";
@@ -32,6 +33,8 @@ class FAssetDatabase
 	friend class HLevel;
 public:
 
+	static HAnimation GetAnimation( const char* AnimationName );
+	static HSkeletalMesh GetSkeletalMesh( const char* MeshName );
 	static HStaticMesh GetStaticMesh( const char* MeshName );
 	static HTexture GetTexture( const char* TextureName );
 	static HMaterial GetMaterial( const char* MaterialName );
@@ -70,6 +73,23 @@ private:
 // Inline function implementations
 //
 
+/*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const char* AnimationName )
+{
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sAnimations\\%s", FGameProject::GetInstance()->GetContentFolder(), AnimationName );
+	HAnimation Anim = GAnimationManager.LoadAnimation( Path );
+	HE_ASSERT( Anim->IsValid() );
+	return Anim;
+}
+
+/*static*/ FORCEINLINE HSkeletalMesh FAssetDatabase::GetSkeletalMesh( const char* MeshName )
+{
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sSkeletalModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
+	HSkeletalMesh Mesh = GSkeletalGeometryManager.LoadSkeletalMesh( Path );
+	HE_ASSERT( Mesh->IsValid() );
+	return Mesh;
+}
 
 /*static*/ FORCEINLINE HStaticMesh FAssetDatabase::GetStaticMesh( const char* MeshName )
 {

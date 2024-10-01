@@ -16,6 +16,7 @@ enum EFormat
 {
 	F_Unknown					= 0,
 	F_R32G32B32A32_Float		= 2,
+	F_R32G32B32A32_UInt			= 3,
 	F_R32G32B32_Float			= 6,
 	F_R16G16B16A16_Float		= 10,
 	F_R16G16B16A16_UNorm		= 11,

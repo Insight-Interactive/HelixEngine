@@ -153,9 +153,9 @@ void HColliderComponent::Render( FCommandContext& GfxContext )
 		// TODO Request draw from model in model manager to render meshes of the same type in batches.
 		// Render the geometry.
 		GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
-		GfxContext.BindVertexBuffer( 0, m_MeshAsset->GetVertexBuffer() );
-		GfxContext.BindIndexBuffer( m_MeshAsset->GetIndexBuffer() );
-		GfxContext.DrawIndexedInstanced( m_MeshAsset->GetNumIndices(), 1, 0, 0, 0 );
+		GfxContext.BindVertexBuffer( 0, m_MeshAsset->GetMesh().GetVertexBuffer() );
+		GfxContext.BindIndexBuffer( m_MeshAsset->GetMesh().GetIndexBuffer() );
+		GfxContext.DrawIndexedInstanced( m_MeshAsset->GetMesh().GetNumIndices(), 1, 0, 0, 0 );
 	}
 #endif
 }

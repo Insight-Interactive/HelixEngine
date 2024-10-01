@@ -172,6 +172,22 @@ void FMaterial::BuildPipelineState()
 	FShaderReflection VertexReflection( VertexShader );
 	FShaderReflection PixelReflection( PixelShader );
 
+
+	// Choose the appropriate input layout. Their vertex shader could could require either static of skinned vertex layouts. 
+	//
+	FInputElementDesc* pInputElemDesc = GStaticMeshInputElements;
+	uint32 NumInputElems = kNumStaticMeshCommonInputElements;
+	FShaderInputDescription Desc = {};
+	for (uint32 i = 0; VertexReflection.GetInputBindingDescription( i, Desc ); i++)
+	{
+		if (Desc.Name != "\0" && strcmp( Desc.Name, "JOINTIDS" ) == 0)
+		{
+			pInputElemDesc = GSkinnedMeshInputElements;
+			NumInputElems = kNumSkinnedMeshCommonInputElements;
+			break;
+		}
+	}
+
 	const uint32 kNumStaticSamplers = (PixelReflection.GetNumTextureNormalInstructions() > 0) ? 1 : 0; // TODO: "1" should be the number of static samplers used in the shader
 	const uint32 NumResources = (PixelReflection.GetNumBoundResources() + VertexReflection.GetNumBoundResources()) - kNumStaticSamplers;
 	m_RootSig.Reset( NumResources, kNumStaticSamplers );
@@ -184,8 +200,8 @@ void FMaterial::BuildPipelineState()
 	FPipelineStateDesc PSODesc = {};
 	PSODesc.VertexShader					= { VertexShader.GetData(), VertexShader.GetDataSize() };
 	PSODesc.PixelShader						= { PixelShader.GetData(), PixelShader.GetDataSize() };
-	PSODesc.InputLayout.pInputElementDescs	= GSceneMeshInputElements;
-	PSODesc.InputLayout.NumElements			= kNumSceneMeshCommonInputElements;
+	PSODesc.InputLayout.pInputElementDescs	= pInputElemDesc;
+	PSODesc.InputLayout.NumElements			= NumInputElems;
 	PSODesc.pRootSignature					= &m_RootSig;
 	PSODesc.DepthStencilState				= CDepthStencilStateDesc();
 	FBlendDesc BlendDesc					= CBlendDesc();

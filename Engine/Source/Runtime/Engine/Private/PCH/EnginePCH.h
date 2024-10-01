@@ -117,6 +117,7 @@
 #include "Engine/Renderer/ColorBuffer.h"
 #include "Engine/Renderer/PixelBuffer.h"
 #include "Engine/Renderer/ModelManager.h"
+#include "Engine/Renderer/AnimationManager.h"
 #include "Engine/Renderer/RenderDevice.h"
 #include "Engine/Renderer/RendererCore.h"
 #include "Engine/Renderer/PipelineState.h"

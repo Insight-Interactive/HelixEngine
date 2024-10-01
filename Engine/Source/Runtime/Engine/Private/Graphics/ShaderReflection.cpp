@@ -64,6 +64,22 @@ void FShaderReflection::GetResourceBindingDescripion(const uint32& Index, FShade
 #endif
 }
 
+bool FShaderReflection::GetInputBindingDescription( const uint32 Index, FShaderInputDescription& outDesc ) const
+{
+	HE_ASSERT( m_pReflector != NULL );
+
+#if R_WITH_D3D12
+	D3D12_SIGNATURE_PARAMETER_DESC Desc = {};
+	HRESULT hr = m_pReflector->GetInputParameterDesc( Index, &Desc );
+	if (FAILED( hr ))
+		return false;
+
+	outDesc.Name = Desc.SemanticName;
+
+	return true;
+#endif
+}
+
 void FShaderReflection::GetConstantBufferByName(const Char* Name, FConstantBufferReflection& outBuffer) const
 {
 	HE_ASSERT(m_pReflector != NULL);
