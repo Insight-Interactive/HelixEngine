@@ -28,7 +28,6 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 
 	m_Body->SetMesh( FAssetDatabase::GetSkeletalMesh( "SK_Bot.fbx" ) );
 	m_Body->SetMaterial( FAssetDatabase::GetMaterial( "M_Animated.hmat" ) );
-	m_Body->SetAnimation( FAssetDatabase::GetAnimation( "BipedalLocamotion/Walk_Relaxed.fbx" ) );
 }
 
 AThirdPersonCharacter::~AThirdPersonCharacter()
@@ -85,6 +84,11 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 
 void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
 {
+	if (Delta > 0.f)
+		m_Body->SetAnimation( m_WalkRelaxed );
+	else
+		m_Body->SetAnimation( m_IdleRelaxed );
+
 	Move( m_CameraComponent->GetTransform().GetLocalForward(), Delta );
 }
 

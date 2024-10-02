@@ -26,6 +26,7 @@ HSkeletalMeshComponent::~HSkeletalMeshComponent()
 void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 {
 	Super::Render( GfxContext );
+
 	std::vector<FMatrix> WorldTransforms( m_MeshAsset->Joints.size() );
 
 	if (m_MeshAsset.IsValid())
@@ -112,7 +113,9 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		}
 		else
 		{
-			StringHashValue hashName = StringHash( "mixamoorig:Head" );
+			// TODO: Render the skeletal mesh in bind pose here
+			HE_ASSERT( false ); // Skeletal Mesh does not have a valid animation to play!
+
 			for (uint32 i = 0; i < m_MeshAsset->Joints.size(); i++)
 			{
 				FJoint& joint = m_MeshAsset->Joints[i];
@@ -123,7 +126,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 				if (joint.m_ParentIndex != R_JOINT_INVALID_INDEX)
 					ParentTransform = WorldTransforms[joint.m_ParentIndex];
 
-				WorldTransforms[i] = ParentTransform * joint.m_LocalMatrix;
+				WorldTransforms[i] = ParentTransform * joint.m_LocalMatrix * joint.m_OffsetMatrix;
 			}
 		}
 
@@ -149,31 +152,32 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 			m_JointCB->kJoints[i] = (WorldTransforms[i]).Transpose();
 		}
 
-		if (m_MaterialAsset.IsValid())
-		{
-			// Set the material information.
-			m_MaterialAsset->Bind( GfxContext );
-		}
+		//if (m_MaterialAsset.IsValid())
+		//{
+		//	// Set the material information.
+		//	m_MaterialAsset->Bind( GfxContext );
+		//}
 
-		// Set the world buffer.
-		m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
+		//// Set the world buffer.
+		//m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
 
-		for (uint32 i = 0; i < m_MeshAsset->m_Meshes.size(); i++)
-		{
-			GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
+		//for (uint32 i = 0; i < m_MeshAsset->m_Meshes.size(); i++)
+		//{
+		//	GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
-			// Set Joints
-			GfxContext.SetGraphicsConstantBuffer( kSkeletonJoints, m_JointCB );
+		//	// Set Joints
+		//	GfxContext.SetGraphicsConstantBuffer( kSkeletonJoints, m_JointCB );
 
-			FMesh& SKMesh = m_MeshAsset->m_Meshes[i];
+		//	FMesh& SKMesh = m_MeshAsset->m_Meshes[i];
 
-			// TODO Request draw from model in model manager to render meshes of the same type in batches.
-			// Render the geometry.
-			GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
-			GfxContext.BindVertexBuffer( 0, SKMesh.GetVertexBuffer() );
-			GfxContext.BindIndexBuffer( SKMesh.GetIndexBuffer() );
-			GfxContext.DrawIndexedInstanced( SKMesh.GetNumIndices(), 1, 0, 0, 0 );
-		}
+		//	// TODO Request draw from model in model manager to render meshes of the same type in batches.
+		//	// Render the geometry.
+		//	GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
+		//	GfxContext.BindVertexBuffer( 0, SKMesh.GetVertexBuffer() );
+		//	GfxContext.BindIndexBuffer( SKMesh.GetIndexBuffer() );
+		//	GfxContext.DrawIndexedInstanced( SKMesh.GetNumIndices(), 1, 0, 0, 0 );
+		//}
+
 	}
 }
 

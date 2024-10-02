@@ -16,7 +16,13 @@ public:
 	HE_GENERATED_BODY( ACharacter );
 
 
+
 protected:
 	HSkeletalMeshComponent* m_Body;
 
+	// Relaxed Animations
+	HAnimation m_IdleRelaxed;
+	HAnimation m_WalkRelaxed;
+	HAnimation m_IdleRelaxedToWalkRelaxed;
+	HAnimation m_WalkRelaxedToIdleRelaxed;
 };

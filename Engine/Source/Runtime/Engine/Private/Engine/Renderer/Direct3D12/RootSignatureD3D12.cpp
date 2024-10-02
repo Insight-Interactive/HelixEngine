@@ -115,7 +115,8 @@ void FRootSignature::Finalize(const WChar* name, ERootSignatureFlags Flags)
         ThrowIfFailedMsg(hr, "Failed to serialize D3D12 root signature!");
         if (pErrorBlob != NULL)
         {
-            R_LOG(Error, TEXT("Error while compiling RootSignature: %s"), (TChar*)pErrorBlob->GetBufferPointer())
+            Char* Error = (Char*)pErrorBlob->GetBufferPointer();
+            R_LOG(Error, TEXT("Error while compiling RootSignature: %s"), (Char*)pErrorBlob->GetBufferPointer())
         }
         ResetHr(hr);
 

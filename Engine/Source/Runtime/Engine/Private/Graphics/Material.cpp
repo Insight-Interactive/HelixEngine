@@ -151,6 +151,12 @@ void FMaterial::LoadFromFile( const String& Filepath )
 	}
 }
 
+bool IsReservedBufferName( const Char* BufferName )
+{
+	StringHashValue BufferNameHash = StringHash( BufferName );
+	return (BufferNameHash == StringHash( "SceneConstants_CB" ) || BufferNameHash == StringHash( "MeshWorld_CB" ) || BufferNameHash == StringHash( "SceneLights_CB" ) || BufferNameHash == StringHash( "SkeletonJoints_CB" ));
+}
+
 void FMaterial::BuildPipelineState()
 {
 	HE_ASSERT( m_VertexShaderGuid.IsValid() && m_PixelShaderGuid.IsValid() ); // Trying to build a pipeline with an incomplete shader set!
@@ -188,9 +194,31 @@ void FMaterial::BuildPipelineState()
 		}
 	}
 
+	// Find how many unique resources this shader declares. ie new resources the user added.
+	//
+	uint32 NumNewResources = 0;
+	for (uint32 i = 0; i < VertexReflection.GetNumBoundResources(); i++)
+	{
+		FShaderResourceDescription ResourceDesc = { };
+		VertexReflection.GetResourceBindingDescripion( i, ResourceDesc );
+		if (!IsReservedBufferName( ResourceDesc.Name ))
+			NumNewResources++;
+	}
+	for (uint32 i = 0; i < PixelReflection.GetNumBoundResources(); i++)
+	{
+		FShaderResourceDescription ResourceDesc = { };
+		PixelReflection.GetResourceBindingDescripion( i, ResourceDesc );
+		if (!IsReservedBufferName( ResourceDesc.Name ))
+			NumNewResources++;
+	}
 	const uint32 kNumStaticSamplers = (PixelReflection.GetNumTextureNormalInstructions() > 0) ? 1 : 0; // TODO: "1" should be the number of static samplers used in the shader
-	const uint32 NumResources = (PixelReflection.GetNumBoundResources() + VertexReflection.GetNumBoundResources()) - kNumStaticSamplers;
+	const uint32 NumResources = (kNumCommonRootParams + NumNewResources) - kNumStaticSamplers;
 	m_RootSig.Reset( NumResources, kNumStaticSamplers );
+	// Common root sigmature buffers
+	m_RootSig[kSceneConstants].InitAsConstantBuffer( kSceneConstants, SV_All );
+	m_RootSig[kMeshWorld].InitAsConstantBuffer( kMeshWorld, SV_Vertex );
+	m_RootSig[kLights].InitAsConstantBuffer( kLights, SV_Pixel );
+	m_RootSig[kSkeletonJoints].InitAsConstantBuffer( kSkeletonJoints, SV_Vertex );
 
 	ReflectShader( m_RootSig, SV_Vertex, VertexReflection );
 	ReflectShader( m_RootSig, SV_Pixel, PixelReflection );
@@ -338,13 +366,16 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 			HE_ASSERT( false );
 		}
 
-		const uint32 Register				= ResourceDesc.Register;
-		const StringHashValue NameHash		= StringHash( ResourceDesc.Name );
+		if (IsReservedBufferName( ResourceDesc.Name ))
+			continue; // Every shader has access to these buffers and their indicies are reserved so skip them.
+
+		const uint32 Register = ResourceDesc.Register;
+		const StringHashValue NameHash = StringHash( ResourceDesc.Name );
 		const uint32 NextAvailableRootIndex = outSignature.GetNextUnoccupiedIndex();
 		HE_ASSERT( NextAvailableRootIndex != -1 ); // There are no more available indicies in root signature!
 
-		const bool IsBufferMapped	= m_ConstBuffersMappings.find( NameHash ) != m_ConstBuffersMappings.end();
-		const bool IsTextureMapped	= m_TextureMappings.find( NameHash ) != m_TextureMappings.end();
+		const bool IsBufferMapped = m_ConstBuffersMappings.find( NameHash ) != m_ConstBuffersMappings.end();
+		const bool IsTextureMapped = m_TextureMappings.find( NameHash ) != m_TextureMappings.end();
 		if (IsBufferMapped || IsTextureMapped)
 			continue; // The root parameter at this index has already been initialized, just move to the next available one.
 
@@ -356,6 +387,7 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 			Reflector.GetConstantBufferByName( ResourceDesc.Name, ConstBuffer );
 
 			outSignature[NextAvailableRootIndex].InitAsConstantBuffer( Register, ShaderType );
+
 			bool ReservedBufferExists = SceneRenderer.ReservedBufferExistsByHashName( NameHash );
 			if (ReservedBufferExists)
 			{
@@ -382,53 +414,50 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 				// Create the element, but don't add the buffer pointers's. We have to add them for each frame later*.
 				auto& Result = m_ConstBuffersMappings.emplace( NameHash, std::make_pair( NextAvailableRootIndex, NULL ) );
 
-				if (Register != kMeshWorld) // Each mesh will have its own constant buffer, so, we dont have to have the material create and bind one for us.
+				auto& Iter = m_ConstBuffersMappings.at( NameHash );
+				auto& PerFrameBuffers = Iter.second;
+				PerFrameBuffers = std::vector<FConstantBufferInterface*>{};
+				PerFrameBuffers.resize( HE_MAX_SWAPCHAIN_BACK_BUFFERS );
+
+				for (uint32 j = 0; j < HE_MAX_SWAPCHAIN_BACK_BUFFERS; j++)
 				{
-					auto& Iter = m_ConstBuffersMappings.at( NameHash );
-					auto& PerFrameBuffers = Iter.second;
-					PerFrameBuffers = std::vector<FConstantBufferInterface*>{};
-					PerFrameBuffers.resize( HE_MAX_SWAPCHAIN_BACK_BUFFERS );
+					// Create and bind a pointer to the newly allocated buffer.
+					PerFrameBuffers[j] = new FConstantBuffer();
 
-					for (uint32 j = 0; j < HE_MAX_SWAPCHAIN_BACK_BUFFERS; j++)
-					{
-						// Create and bind a pointer to the newly allocated buffer.
-						PerFrameBuffers[j] = new FConstantBuffer();
-
-						// Initialize the buffer.
-						WString DebugName = L"";
+					// Initialize the buffer.
+					WString DebugName = L"";
 #				if HE_DEBUG
-						DebugName = StringHelper::UTF8ToUTF16( ResourceDesc.Name );
+					DebugName = StringHelper::UTF8ToUTF16( ResourceDesc.Name );
 #				endif
-						PerFrameBuffers[j]->Create( DebugName.c_str(), ConstBuffer.SizeInBytes );
+					PerFrameBuffers[j]->Create( DebugName.c_str(), ConstBuffer.SizeInBytes );
 
-						// Make the links to the variables in the shader const buffers.
+					// Make the links to the variables in the shader const buffers.
+					{
+						FConstantBuffer* pConstBuffer = SCast<FConstantBuffer*>( PerFrameBuffers[j] );
+						HE_ASSERT( pConstBuffer != NULL );
+
+						uint8* pBufferPtr = pConstBuffer->GetBufferPointer();
+						for (uint32 k = 0; k < ConstBuffer.Variables.size(); k++)
 						{
-							FConstantBuffer* pConstBuffer = SCast<FConstantBuffer*>( PerFrameBuffers[j] );
-							HE_ASSERT( pConstBuffer != NULL );
+							FShaderVariableDescription& Variable = ConstBuffer.Variables[k];
 
-							uint8* pBufferPtr = pConstBuffer->GetBufferPointer();
-							for (uint32 k = 0; k < ConstBuffer.Variables.size(); k++)
+							StringHashValue VarHash = StringHash( Variable.Name );
+							// TODO: Make a non hash entry in m_ConstBufferVarMappings[n] for easier debugging
+
+							// If the vector wasn't initialized, initialize it.
+							if (m_ConstBufferVarMappings[VarHash].size() == 0)
 							{
-								FShaderVariableDescription& Variable = ConstBuffer.Variables[k];
-
-								StringHashValue VarHash = StringHash( Variable.Name );
-								// TODO: Make a non hash entry in m_ConstBufferVarMappings[n] for easier debugging
-								
-								// If the vector wasn't initialized, initialize it.
-								if (m_ConstBufferVarMappings[VarHash].size() == 0)
-								{
-									m_ConstBufferVarMappings[VarHash] = std::vector< std::pair<FConstantBufferInterface*, uint8*> >{};
-									m_ConstBufferVarMappings[VarHash].resize( HE_MAX_SWAPCHAIN_BACK_BUFFERS );
-								}
-
-								// Map the pointer for this frame only.
-								m_ConstBufferVarMappings.at( VarHash )[j] = std::make_pair( PerFrameBuffers[j], pBufferPtr );
-
-								// Move to the next variable in the shader's constant buffer.
-								pBufferPtr += Variable.SizeInBytes;
-
-								// Note: the user will fill this buffer with their own data. We don't know what c++ variables this will contain.
+								m_ConstBufferVarMappings[VarHash] = std::vector< std::pair<FConstantBufferInterface*, uint8*> >{};
+								m_ConstBufferVarMappings[VarHash].resize( HE_MAX_SWAPCHAIN_BACK_BUFFERS );
 							}
+
+							// Map the pointer for this frame only.
+							m_ConstBufferVarMappings.at( VarHash )[j] = std::make_pair( PerFrameBuffers[j], pBufferPtr );
+
+							// Move to the next variable in the shader's constant buffer.
+							pBufferPtr += Variable.SizeInBytes;
+
+							// Note: the user will fill this buffer with their own data. We don't know what c++ variables this will contain.
 						}
 					}
 				}

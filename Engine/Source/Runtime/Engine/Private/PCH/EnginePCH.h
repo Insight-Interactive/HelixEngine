@@ -109,6 +109,7 @@
 #include "GUID.h"
 #include "Hash.h"
 #include "Containers/TDynamicArray.h"
+#include "SystemTime.h"
 
 // Renderer
 #include "Engine/Renderer/SwapChain.h"

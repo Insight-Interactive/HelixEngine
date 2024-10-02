@@ -4,7 +4,7 @@
 #include "DeferredShadingCommon.hlsli"
 
 
-HE_DECLARE_CONSTANT_BUFFER( RustedMetalConsts, 3 )
+HE_DECLARE_CONSTANT_BUFFER( RustedMetalConsts, 4 )
 {
     float2 kUVOffset;
 }

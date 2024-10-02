@@ -32,6 +32,7 @@ struct DirectionalLight
 #if R_WITH_D3D12 // TODO make this macro work to generate const buffers for each platform.
 
     // Declare a constant buffer to be input to the shader.
+    // NOTE: New constant buffers must start at ECommonRootParamsBuffers::kNumCommonRootParams (See ShaderRegisters.h)
 #   define HE_DECLARE_CONSTANT_BUFFER(Name, Register) cbuffer Name : register(b##Register)
     // Declare a 2D texture to be input to the shader.
 #   define HE_DECLARE_TEXTURE2D(Name, Register) Texture2D Name : register(t##Register);
