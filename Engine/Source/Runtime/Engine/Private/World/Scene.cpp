@@ -83,6 +83,9 @@ void HScene::RenderStaticLitOpaqueObjects(FCommandContext& CmdContext)
 		{
 			if (HStaticMeshComponent* pMesh = DCast<HStaticMeshComponent*>( *Iter ))
 			{
+				if (!pMesh->GetMaterial().IsValid())
+					continue;
+
 				if (pMesh->GetMaterial()->GetShadingModel() == SM_DefaultLit)
 					pMesh->Render(CmdContext);
 			}

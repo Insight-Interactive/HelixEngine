@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules/FindDirectX.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/cmake-modules/FindPkgMacros.cmake
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedDirectx11/CMakeLists.txt

@@ -8,8 +8,6 @@
 #include "GameFramework/Components/HCapsuleColliderComponent.h"
 
 
-extern HEngine* GEngine;
-
 MyGameInstance::MyGameInstance()
 {
 	CreateLogger(GGameLogger, "Game");

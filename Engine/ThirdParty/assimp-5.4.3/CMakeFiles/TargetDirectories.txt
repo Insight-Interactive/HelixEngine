@@ -8,6 +8,16 @@ C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/contrib/zli
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/contrib/zlib/CMakeFiles/ALL_BUILD.dir
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/code/CMakeFiles/assimp.dir
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/code/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_view/CMakeFiles/assimp_viewer.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_view/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_cmd/CMakeFiles/assimp_cmd.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_cmd/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedOpenGL/CMakeFiles/assimp_simpletexturedogl.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedOpenGL/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedDirectx11/CMakeFiles/assimp_simpletextureddirectx11.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedDirectx11/CMakeFiles/INSTALL.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleOpenGL/CMakeFiles/assimp_simpleogl.dir
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleOpenGL/CMakeFiles/INSTALL.dir
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/test/CMakeFiles/unit.dir
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/test/CMakeFiles/INSTALL.dir
 C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/test/headercheck/CMakeFiles/INSTALL.dir

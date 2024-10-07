@@ -1,0 +1,8 @@
+# CMake generation dependency list for this directory.
+C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleOpenGL/CMakeLists.txt
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindGLUT.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindOpenGL.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPkgConfig.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/SelectLibraryConfigurations.cmake

@@ -13,6 +13,7 @@
 #include "LuaScriptVM.h"
 #include "SystemTime.h"
 #include "Engine/Physics/Physics.h"
+#include "GameFramework/Actor/AThirdPersonCharacter.h"
 
 
 class WindowClosedEvent;
@@ -46,6 +47,16 @@ public:
 		Returns a reference to the main game world.
 	*/
 	HWorld& GetGameWorld();
+
+	/*
+		Returns a reference the main player camera.
+	*/
+	HCameraComponent& GetPlayerCamera();
+
+	/*
+		Returns a reference to the player.
+	*/
+	AThirdPersonCharacter& GetPlayerCharacter();
 	
 	/*
 		Pauses and unpauses the game logic. Note: Takes one frame for physics simulation to pause.
@@ -189,6 +200,16 @@ FORCEINLINE FViewportContext& HEngine::GetClientViewport()
 FORCEINLINE HWorld& HEngine::GetGameWorld()
 {
 	return m_GameWorld;
+}
+
+FORCEINLINE HCameraComponent& HEngine::GetPlayerCamera()
+{
+	return *GetPlayerCharacter().GetCameraComponent();
+}
+
+FORCEINLINE AThirdPersonCharacter& HEngine::GetPlayerCharacter()
+{
+	return *m_GameWorld.GetPlayerCharacter();
 }
 
 FORCEINLINE void HEngine::TogglePauseGame( bool GameIsPaused )

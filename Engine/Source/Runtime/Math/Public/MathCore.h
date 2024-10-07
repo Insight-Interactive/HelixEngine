@@ -696,6 +696,10 @@ namespace Math
     static const float PiDivTwo = float( 1.57079632679489661923 );
     static const float PiDivFour = float( 0.78539816339744830962 );
 
+    inline float NormalizedPercent( float A, float B, float Value )
+    {
+        return ((Value - A) + (B - Value)) / (Value - A);
+    }
 
     template <typename T>
     inline T Min( T Value, T Min )

@@ -108,13 +108,12 @@ public:
 
 	virtual void Create( const WChar* Name, uint32 Size = 0/* Ignored for this buffer type.. */ ) override;
 	virtual void Destroy() override;
+	virtual void UploadBuffer() override;
 
 	BufferDataType* operator->() { return GetBufferPointer(); }
 	BufferDataType* GetBufferPointer();
 
-
 protected:
-	virtual void UploadBuffer() override;
 
 protected:
 	uint8 m_Data[sizeof( BufferDataType )];

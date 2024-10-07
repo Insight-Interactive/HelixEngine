@@ -281,9 +281,11 @@ void FCommandContext::BindIndexBuffer(FIndexBuffer& IndexBuffer)
 	m_pID3D12CommandList->IASetIndexBuffer(pView);
 }
 
-void FCommandContext::SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBufferInterface& ConstantBuffer)
+void FCommandContext::SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBufferInterface& ConstantBuffer, bool Upload/* = true*/ )
 {
-	ConstantBuffer.UploadBuffer();
+	if( Upload )
+		ConstantBuffer.UploadBuffer();
+
 	D3D12_GPU_VIRTUAL_ADDRESS Address = ConstantBuffer.GetGPUVirtualAddress();
 	m_pID3D12CommandList->SetGraphicsRootConstantBufferView(RootParameterIndex, Address);
 }

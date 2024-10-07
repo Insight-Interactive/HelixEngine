@@ -42,7 +42,6 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 
 			// Calc animation
 
-			StringHashValue hashName = StringHash( "pelvis" );
 			for (uint32 i = 0; i < m_MeshAsset->Joints.size(); i++)
 			{
 				FJoint& joint = m_MeshAsset->Joints[i];
@@ -108,14 +107,19 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 				else
 				{
 					WorldTransforms[i] = FMatrix::Identity;
+					/*FMatrix ParentTransform = FMatrix::Identity;
+					if (joint.m_ParentIndex != R_JOINT_INVALID_INDEX)
+						ParentTransform = WorldTransforms[joint.m_ParentIndex];
+
+					WorldTransforms[i] = ParentTransform * joint.m_LocalMatrix;*/
 				}
 			}
 		}
-		else
+		else // Has no animation, just use the skeleton
 		{
-			// TODO: Render the skeletal mesh in bind pose here
-			HE_ASSERT( false ); // Skeletal Mesh does not have a valid animation to play!
+			// TODO: This breaks the debug skeleton
 
+			// TODO: Maybe to this for unanimated bones? Could be the problem with skinning
 			for (uint32 i = 0; i < m_MeshAsset->Joints.size(); i++)
 			{
 				FJoint& joint = m_MeshAsset->Joints[i];
@@ -126,7 +130,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 				if (joint.m_ParentIndex != R_JOINT_INVALID_INDEX)
 					ParentTransform = WorldTransforms[joint.m_ParentIndex];
 
-				WorldTransforms[i] = ParentTransform * joint.m_LocalMatrix * joint.m_OffsetMatrix;
+				WorldTransforms[i] = ParentTransform * joint.m_LocalMatrix;
 			}
 		}
 
@@ -135,7 +139,7 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		{
 			DebugJoint& Joint = m_DebugSkeletonMeshes[i];
 			MeshWorldCBData* DebugCBData = Joint.m_MeshWorldCB.GetBufferPointer();
-			DebugCBData->kWorldMat = (FMatrix::CreateScale( 0.5f ) * WorldTransforms[i] * m_Transform.GetWorldMatrix()).Transpose();
+			DebugCBData->kWorldMat = (FMatrix::CreateScale( 0.2f ) * WorldTransforms[i] * m_Transform.GetWorldMatrix()).Transpose();
 
 			GfxContext.SetGraphicsConstantBuffer( kMeshWorld, Joint.m_MeshWorldCB );
 			GfxContext.SetPrimitiveTopologyType( PT_TiangleList );
@@ -149,24 +153,26 @@ void HSkeletalMeshComponent::Render( FCommandContext& GfxContext )
 		{
 			FJoint& joint = m_MeshAsset->Joints[i];
 
-			m_JointCB->kJoints[i] = (WorldTransforms[i]).Transpose();
+			m_JointCB->kJoints[i] = ( WorldTransforms[i] * joint.m_OffsetMatrix ).Transpose();
 		}
 
-		//if (m_MaterialAsset.IsValid())
-		//{
-		//	// Set the material information.
-		//	m_MaterialAsset->Bind( GfxContext );
-		//}
+		if (m_MaterialAsset.IsValid())
+		{
+			// Set the material information.
+			m_MaterialAsset->Bind( GfxContext );
+		}
 
-		//// Set the world buffer.
-		//m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
+		// Set the world buffer.
+		m_MeshWorldCB->kWorldMat = m_Transform.GetWorldMatrix().Transpose();
+
+		//m_JointCB.UploadBuffer();
 
 		//for (uint32 i = 0; i < m_MeshAsset->m_Meshes.size(); i++)
 		//{
 		//	GfxContext.SetGraphicsConstantBuffer( kMeshWorld, m_MeshWorldCB );
 
 		//	// Set Joints
-		//	GfxContext.SetGraphicsConstantBuffer( kSkeletonJoints, m_JointCB );
+		//	GfxContext.SetGraphicsConstantBuffer( kSkeletonJoints, m_JointCB, false );
 
 		//	FMesh& SKMesh = m_MeshAsset->m_Meshes[i];
 

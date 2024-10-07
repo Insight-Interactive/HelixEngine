@@ -2,6 +2,8 @@
 
 #include "Engine/Physics/Physics.h"
 
+#include "Engine/Engine.h"
+#include "GameFramework/Components/HCameraComponent.h"
 #include "Engine/Physics/PhysicsContext.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/Physics/CollisionHandler.h"
@@ -386,6 +388,23 @@ namespace Physics
 		}
 
 		return Hit;
+	}
+
+	FVector3 ScreenToWorldPos( FVector2 ScreenPos )
+	{
+		float MaxTraceDistance = 10000.f;
+		FRaycastHitInfo HitInfo = {};
+		const FVector2 WindowDims = GEngine->GetClientViewport().GetDimensions();
+		HCameraComponent& Camera = GEngine->GetPlayerCamera();
+		FVector3 TraceStart = Camera.GetTransform().GetPosition();
+		FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenPos, WindowDims, Camera.GetViewMatrix(), Camera.GetProjectionMatrix() );
+
+		RayCast( TraceStart, Direction, MaxTraceDistance, &HitInfo, nullptr );
+
+		if (HitInfo.AnyHit)
+			return HitInfo.HitPos;
+		else
+			return TraceStart + Direction * MaxTraceDistance;
 	}
 
 	void RemoveActor( HRigidBody& Collider )

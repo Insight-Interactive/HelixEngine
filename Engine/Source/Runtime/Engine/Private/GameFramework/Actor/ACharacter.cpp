@@ -17,6 +17,7 @@ ACharacter::ACharacter( FActorInitArgs& InitArgs )
 	// Load relaxed animations
 	m_IdleRelaxed = FAssetDatabase::GetAnimation( "BipedalLocamotion/Idle_Relaxed.fbx" );
 	m_WalkRelaxed = FAssetDatabase::GetAnimation( "BipedalLocamotion/Walk_Relaxed.fbx" );
+	m_RunRelaxed = FAssetDatabase::GetAnimation( "BipedalLocamotion/Run_Relaxed.fbx" );
 	m_IdleRelaxedToWalkRelaxed = FAssetDatabase::GetAnimation( "BipedalLocamotion/Idle_Relaxed_To_Walk_Relaxed.fbx" );
 	m_WalkRelaxedToIdleRelaxed = FAssetDatabase::GetAnimation( "BipedalLocamotion/Walk_Relaxed_To_Idle_Relaxed.fbx" );
 	

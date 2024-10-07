@@ -16,12 +16,12 @@ enum EMenuState
 	MS_MenuStateCount
 };
 
-class GAME_API GameMenu
+class GAME_API InGameUI
 {
 	friend class MyGameInstance;
 public:
-	GameMenu();
-	~GameMenu();
+	InGameUI();
+	~InGameUI();
 
 	void Tick( float DeltaTime );
 
@@ -34,10 +34,17 @@ private:
 
 	void OnMenuPressed();
 
+	void UpdateWeaponInfoLabel();
+
 private:
 	EMenuState m_MenuState;
 
-	FUIPanel m_InGameUI;
+
+	FUIPanel m_InGameHUD;
+
+	// Crosshairs
+	FLabel m_CrosshairLabel;
+	FLabel m_CurrentWeaponInfo;
 	
 	FUIPanel m_PauseMenuUI;
 	FLabel m_PausedLabel;

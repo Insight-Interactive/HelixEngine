@@ -15,15 +15,13 @@ GP_PSInputSkinned main( GP_VSInputSkinned Input )
     const float4x4 WorldViewProjection = mul( WorldView, kCameraProjection );
     const float4x4 ViewProjection = mul( kCameraView, kCameraProjection );
 
-
     for (int i = 0; i < HE_MAX_JOINTS_PER_VERTEX; i++)
     {
         matrix JointTransform = Joints[Input.JointIDs[i]];
         Result.Position += Input.Weights[i] * mul( float4(Input.Position, 0.f), JointTransform );
         Result.Normal += Input.Weights[i] * mul( Input.Normal, (float3x3)JointTransform );
     }
-    Result.Position = mul( float4(Result.Position.xyz, 1.f), WorldViewProjection );
-    //Result.Position = mul( float4( Input.Position.xyz, 1.f ), WorldViewProjection );
+    Result.Position = mul( float4( Result.Position.xyz, 1.f ), WorldViewProjection );
 
     Result.JointIDs = Input.JointIDs;
     Result.Weights = Input.Weights;

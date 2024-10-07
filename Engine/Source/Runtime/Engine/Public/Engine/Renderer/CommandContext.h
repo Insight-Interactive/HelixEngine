@@ -82,7 +82,7 @@ public:
 	void SetColorBufferAsTexture(uint32 RootParameterIndex, uint32 Offset, FColorBuffer* Buffer);
 	void BindVertexBuffer(uint32 Slot, FVertexBuffer& Vertexbuffer);
 	void BindIndexBuffer(FIndexBuffer& IndexBuffer);
-	void SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBufferInterface& ConstantBuffer);
+	void SetGraphicsConstantBuffer(uint32 RootParameterIndex, FConstantBufferInterface& ConstantBuffer, bool Upload = true);
 	void SetTexture(uint32 Slot, HTexture& Texture);
 
 	void SetPipelineState(FPipelineState& Pipeline);

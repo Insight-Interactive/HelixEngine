@@ -20,7 +20,7 @@ public:
 		ZeroMemory( m_Text, sizeof( m_Text ) );
 
 		va_list args;
-		va_start( args, Fmt ); // Start capturing arguments after the 'Line' parameter in the method.
+		va_start( args, Fmt ); // Start capturing arguments after the 'Fmt' parameter in the method.
 		{
 			VSPrintBuffer( m_Text, sizeof( m_Text ), Fmt, args );
 		}

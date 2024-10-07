@@ -83,6 +83,31 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_view/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/tools/assimp_cmd/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedOpenGL/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleTexturedDirectx11/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/samples/SimpleOpenGL/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Dev/InsightInteractive/HelixEngine/Engine/ThirdParty/assimp-5.4.3/test/cmake_install.cmake")
 endif()
 

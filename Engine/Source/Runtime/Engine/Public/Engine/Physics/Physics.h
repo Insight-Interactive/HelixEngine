@@ -90,6 +90,8 @@ namespace Physics
 
 	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors );
 	
+	FVector3 ScreenToWorldPos( FVector2 ScreenPos );
+
 	physx::PxCapsuleController* CreateCapsuleController( const physx::PxControllerDesc& Desc );
 	physx::PxMaterial* CreateDefaultMaterial();
 	physx::PxScene* GetScene();

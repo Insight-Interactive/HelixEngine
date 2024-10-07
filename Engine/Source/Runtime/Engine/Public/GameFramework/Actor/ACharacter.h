@@ -23,6 +23,7 @@ protected:
 	// Relaxed Animations
 	HAnimation m_IdleRelaxed;
 	HAnimation m_WalkRelaxed;
+	HAnimation m_RunRelaxed;
 	HAnimation m_IdleRelaxedToWalkRelaxed;
 	HAnimation m_WalkRelaxedToIdleRelaxed;
 };

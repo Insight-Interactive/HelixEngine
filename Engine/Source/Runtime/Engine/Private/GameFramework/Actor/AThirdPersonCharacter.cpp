@@ -3,6 +3,7 @@
 #include "GameFramework/Actor/AThirdPersonCharacter.h"
 
 #include "World/World.h"
+#include "Engine/Engine.h"
 #include "AssetRegistry/AssetDatabase.h"
 #include "GameFramework/Components/HCameraComponent.h"
 #include "GameFramework/Components/HCameraBoomComponenet.h"
@@ -15,6 +16,8 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_ADSTimeSeconds( 0.1f )
 	, m_ADSFOVDegrees( 50.f )
 {
+	m_CurrentWeapon = &m_Rifle;
+	m_CurrentWeapon->m_Transform.LinkTo( m_Transform, FVector3( 32.f, 32.f, 32.f ) );
 
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
 	m_CameraBoom->GetTransform().LinkTo( m_Transform, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
@@ -58,6 +61,13 @@ void AThirdPersonCharacter::Tick( float DeltaTime )
 	}
 }
 
+FVector3 AThirdPersonCharacter::GetShootDirection()
+{
+	FVector2 WindowDims = GEngine->GetClientViewport().GetDimensions();
+	FVector2 ScreenFirePos = WindowDims * 0.5f;
+	return Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix() );
+}
+
 void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 {
 	Super::SetupController( Controller );
@@ -67,8 +77,8 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	// Locamotion
 	Controller.BindAxis( "MoveForward", this, &AThirdPersonCharacter::ThirdPersonMoveForward );
 	Controller.BindAxis( "MoveRight", this, &AThirdPersonCharacter::ThirdPersonMoveRight );
-	Controller.BindAction( "Sprint", IE_Pressed, this, &APawn::Sprint );
-	Controller.BindAction( "Sprint", IE_Released, this, &APawn::Sprint );
+	Controller.BindAction( "Sprint", IE_Pressed, this, &AThirdPersonCharacter::ThirdPersonSprint );
+	Controller.BindAction( "Sprint", IE_Released, this, &AThirdPersonCharacter::ThirdPersonSprint );
 	Controller.BindAction( "Jump", IE_Pressed, this, &APawn::Jump );
 	
 	// Camera
@@ -78,23 +88,43 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 	// Action
 	Controller.BindAction( "AimDownSight", IE_Pressed, this, &AThirdPersonCharacter::AimDownSight );
 	Controller.BindAction( "AimDownSight", IE_Released, this, &AThirdPersonCharacter::AimDownSight );
-	Controller.BindAction( "FireWeapon", IE_Held, this, &AThirdPersonCharacter::FireWeapon );
+	Controller.BindAction( "FireWeapon", IE_Pressed, this, &AThirdPersonCharacter::FireWeaponPressed );
+	Controller.BindAction( "FireWeapon", IE_Held, this, &AThirdPersonCharacter::FireWeaponHeld );
+	Controller.BindAction( "FireWeapon", IE_Released, this, &AThirdPersonCharacter::FireWeaponReleased );
+	Controller.BindAction( "ReloadWeapon", IE_Pressed, this, &AThirdPersonCharacter::ReloadWeapon );
 	Controller.BindAction( "Melee", IE_Pressed, this, &AThirdPersonCharacter::DoMelee );
 }
 
 void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
 {
-	if (Delta > 0.f)
-		m_Body->SetAnimation( m_WalkRelaxed );
-	else
-		m_Body->SetAnimation( m_IdleRelaxed );
+	if (!m_bIsSprinting)
+	{
+		if (Delta > 0.f)
+			m_Body->SetAnimation( m_WalkRelaxed );
+		else
+			m_Body->SetAnimation( m_IdleRelaxed );
+	}
 
+	//Move( m_Transform.GetLocalForward(), Delta );
 	Move( m_CameraComponent->GetTransform().GetLocalForward(), Delta );
+	
+	FVector3 Angles = m_CameraBoom->GetTransform().GetEulerRotation();
+	m_Body->GetTransform().SetRotation( 0.f, Angles.y, 0.f );
 }
 
 void AThirdPersonCharacter::ThirdPersonMoveRight( float Delta )
 {
 	Move( m_CameraComponent->GetTransform().GetLocalRight(), Delta );
+}
+
+void AThirdPersonCharacter::ThirdPersonSprint()
+{
+	APawn::Sprint();
+
+	if (m_bIsSprinting)
+	{
+		m_Body->SetAnimation( m_RunRelaxed );
+	}
 }
 
 void AThirdPersonCharacter::AimDownSight()
@@ -107,25 +137,39 @@ void AThirdPersonCharacter::AimDownSight()
 		m_CameraComponent->LerpFieldOfView( m_CameraFOV, m_ADSTimeSeconds );
 }
 
-void AThirdPersonCharacter::FireWeapon()
+void AThirdPersonCharacter::FireWeaponPressed()
 {
-	if (Pressed)
-		return;
+	if ( m_CurrentWeapon )
+		m_CurrentWeapon->OnFireInputPressed( GetShootDirection() );
 
-	Pressed = true;
-	FVector2 WindowDims( GetWorld()->GetWindowWidth(), GetWorld()->GetWindowHeight() );
-	FVector2 ScreenFirePos = WindowDims / 2;
+	//Pressed = true;
+	//CameraPos = m_CameraComponent->GetTransform().GetWorldPosition();
+	//
+	//float MaxTraceDistance = 10000.f;
+	//GetWorld()->Raycast( CameraPos, Direction, MaxTraceDistance, &HitInfo );
 
-	FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix() );
-	CameraPos = m_CameraComponent->GetTransform().GetWorldPosition();
-	
-	float MaxTraceDistance = 10000.f;
-	GetWorld()->Raycast( CameraPos, Direction, MaxTraceDistance, &HitInfo );
+	//if (HitInfo.AnyHit)
+	//	HitPos = HitInfo.HitPos;
+	//else
+	//	HitPos = CameraPos + Direction * MaxTraceDistance;
+}
 
-	if (HitInfo.AnyHit)
-		HitPos = HitInfo.HitPos;
-	else
-		HitPos = CameraPos + Direction * MaxTraceDistance;
+void AThirdPersonCharacter::FireWeaponHeld()
+{
+	if (m_CurrentWeapon)
+		m_CurrentWeapon->OnFireInputHeld( GetShootDirection() );
+}
+
+void AThirdPersonCharacter::FireWeaponReleased()
+{
+	if (m_CurrentWeapon)
+		m_CurrentWeapon->OnFireInputReleased( GetShootDirection() );
+}
+
+void AThirdPersonCharacter::ReloadWeapon()
+{
+	if (m_CurrentWeapon)
+		m_CurrentWeapon->Reload();
 }
 
 void AThirdPersonCharacter::DoMelee()

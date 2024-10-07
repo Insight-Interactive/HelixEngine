@@ -6,7 +6,8 @@
 #include "GameFwd.h"
 
 #include "GameFramework/GameInstance.h"
-#include "GameMenu.h"
+#include "UI/InGameUI.h"
+
 
 class GAME_API MyGameInstance : public HGameInstance
 {
@@ -23,6 +24,6 @@ protected:
 	virtual void Tick( float DeltaTime ) override;
 
 private:
-	GameMenu m_InGameMenu;
+	InGameUI m_InGameMenu;
 
 };

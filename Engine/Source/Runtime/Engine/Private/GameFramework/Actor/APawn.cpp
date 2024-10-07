@@ -14,7 +14,7 @@ m_Transform.SetPosition( (float)FootPos.x, (float)FootPos.y, (float)FootPos.z );
 
 
 static const float kDefaultMovementSpeed = 135.f;
-static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 1.7f;
+static const float kDefaultSprintSpeed = kDefaultMovementSpeed * 2.f;
 
 APawn::APawn( FActorInitArgs& InitArgs )
 	: AActor( InitArgs )

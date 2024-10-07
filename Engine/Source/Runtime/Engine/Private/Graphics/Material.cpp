@@ -233,7 +233,7 @@ void FMaterial::BuildPipelineState()
 	PSODesc.pRootSignature					= &m_RootSig;
 	PSODesc.DepthStencilState				= CDepthStencilStateDesc();
 	FBlendDesc BlendDesc					= CBlendDesc();
-	switch (GetShadingModel())
+	switch ( m_ShadingModel )
 	{
 	case SM_DefaultLit:
 	{
@@ -269,7 +269,7 @@ void FMaterial::BuildPipelineState()
 	}
 	PSODesc.BlendState			= BlendDesc;
 	FRasterizerDesc RasterDesc	= CRasterizerDesc();
-	if (GetIsTwoSided())
+	if ( m_IsTwoSided )
 		RasterDesc.CullMode = CM_None;
 	
 	PSODesc.DepthStencilState.DepthEnable	= m_DepthEnabled;

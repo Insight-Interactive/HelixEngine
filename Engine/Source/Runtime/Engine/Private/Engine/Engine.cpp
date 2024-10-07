@@ -225,7 +225,6 @@ void HEngine::PostShutdown()
 
 	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
 }
-#include "GameFramework/Actor/AThirdPersonCharacter.h"
 
 void HEngine::Tick()
 {

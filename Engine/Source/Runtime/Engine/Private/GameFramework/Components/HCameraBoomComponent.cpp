@@ -56,7 +56,7 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 {
 	const float kPitchRotationClamp = Math::DegreesToRadians( 50.f );
-	m_Rotation.x += -(PitchDelta * 25.f) * GEngine->GetDeltaTime();
+	m_Rotation.x += -(PitchDelta * 45.f) * GEngine->GetDeltaTime();
 	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	m_Transform.SetRotation( RotationQuat );
@@ -67,7 +67,7 @@ void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 
 void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
-	m_Rotation.y += -(YawDelta * 25.f) * GEngine->GetDeltaTime();
+	m_Rotation.y += -(YawDelta * 45.f) * GEngine->GetDeltaTime();
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
 	m_Transform.SetRotation( RotationQuat );
 	
