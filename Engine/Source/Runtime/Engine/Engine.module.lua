@@ -84,6 +84,7 @@ project ("Engine")
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/foundation/include",
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/common/src",
 		heGetThirdPartyModule( "PhysX-4.1" )				.. "physx/source/physxextensions/src",
+		"C:/Program Files (x86)/FMOD SoundSystem/FMOD Studio API Windows/api/core/inc" -- Every user needs to download FMOD until repo is privatly hosted.
 	}
 
 	links   
@@ -304,5 +305,21 @@ project ("Engine")
 			heGetThirdPartyModule( "PhysX-4.1" ) .. "physx/bin/win.x86_64.vc142.mt/release/PhysXCharacterKinematic_static_64.lib"
 		}
 	-- End PysX
+
+	-- FMOD
+
+	filter {"platforms:Win64"}
+		libdirs
+		{
+			"C:/Program Files (x86)/FMOD SoundSystem/FMOD Studio API Windows/api/core/lib/x64"
+		}
+		postbuildcommands
+		{
+			"%{dllCopyCommands.FMOD}",
+		}
+		links
+		{
+			"fmod_vc"
+		}
 
 --include ("Helix/DeploymentPrep.lua")

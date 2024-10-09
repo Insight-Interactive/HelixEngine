@@ -150,3 +150,6 @@
 #include "PxSimulationEventCallback.h"
 #include "characterkinematic/PxCapsuleController.h"
 #include "characterkinematic/PxControllerManager.h"
+// FMOD
+#include "fmod.hpp"
+#include "fmod_errors.h"

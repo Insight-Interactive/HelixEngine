@@ -386,7 +386,7 @@ namespace Physics
 			outHitInfo->Distance = HitInfo.block.distance;
 			outHitInfo->AnyHit = Hit;
 		}
-
+		
 		return Hit;
 	}
 

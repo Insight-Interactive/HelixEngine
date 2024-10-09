@@ -58,3 +58,5 @@ dllCopyCommands["PhysXGPUx86_release"]         = "{COPY} " .. heGetThirdPartyMod
 -- Assimp
 dllCopyCommands["Assimpx64_debug"]              = "{COPY} " .. heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/bin/Debug/assimp-vc142-mtd.dll %{cfg.targetdir}"
 dllCopyCommands["Assimpx64_release"]            = "{COPY} " .. heGetThirdPartyModule( "assimp-5.4.3" ) .. "build/x64/bin/Release/assimp-vc142-mt.dll %{cfg.targetdir}"
+-- FMOD
+dllCopyCommands["FMOD"]                         = "{COPY} \"C:/Program Files (x86)/FMOD SoundSystem/FMOD Studio API Windows/api/core/lib/x64/fmod.dll\" %{cfg.targetdir}"

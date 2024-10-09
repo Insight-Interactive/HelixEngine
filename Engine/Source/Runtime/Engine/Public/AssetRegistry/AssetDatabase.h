@@ -13,6 +13,7 @@
 #include "Engine/Renderer/AnimationManager.h"
 #include "Graphics/FontManager.h"
 #include "Graphics/MaterialManager.h"
+#include "Engine/Audio/AudioManager.h"
 
 
 static const char* kAssetManifestFilename = "AssetManifest.json";
@@ -33,6 +34,7 @@ class FAssetDatabase
 	friend class HLevel;
 public:
 
+	static HAudioClip GetAudioClip( const char* AudioClipName );
 	static HAnimation GetAnimation( const char* AnimationName );
 	static HSkeletalMesh GetSkeletalMesh( const char* MeshName );
 	static HStaticMesh GetStaticMesh( const char* MeshName );
@@ -73,12 +75,21 @@ private:
 // Inline function implementations
 //
 
+/*static*/ FORCEINLINE HAudioClip FAssetDatabase::GetAudioClip( const char* AudioClipName )
+{
+	FPath Path;
+	sprintf_s( Path.m_Path, "%sAudio\\%s", FGameProject::GetInstance()->GetContentFolder(), AudioClipName );
+	HAudioClip Clip = GAudioManager.LoadAudioFile( Path );
+	HE_ASSERT( Clip.IsValid() );
+	return Clip;
+}
+
 /*static*/ FORCEINLINE HAnimation FAssetDatabase::GetAnimation( const char* AnimationName )
 {
 	FPath Path;
 	sprintf_s( Path.m_Path, "%sAnimations\\%s", FGameProject::GetInstance()->GetContentFolder(), AnimationName );
 	HAnimation Anim = GAnimationManager.LoadAnimation( Path );
-	HE_ASSERT( Anim->IsValid() );
+	HE_ASSERT( Anim.IsValid() );
 	return Anim;
 }
 
@@ -87,7 +98,7 @@ private:
 	FPath Path;
 	sprintf_s( Path.m_Path, "%sSkeletalModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
 	HSkeletalMesh Mesh = GSkeletalGeometryManager.LoadSkeletalMesh( Path );
-	HE_ASSERT( Mesh->IsValid() );
+	HE_ASSERT( Mesh.IsValid() );
 	return Mesh;
 }
 
@@ -96,7 +107,7 @@ private:
 	FPath Path;
 	sprintf_s( Path.m_Path, "%sModels\\%s", FGameProject::GetInstance()->GetContentFolder(), MeshName );
 	HStaticMesh Mesh = GStaticGeometryManager.LoadHAssetMeshFromFile( Path.m_Path );
-	HE_ASSERT( Mesh->IsValid() );
+	HE_ASSERT( Mesh.IsValid() );
 	return Mesh;
 }
 

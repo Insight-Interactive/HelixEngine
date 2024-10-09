@@ -38,5 +38,9 @@ void InGameHUD::Setup()
 void InGameHUD::UpdateWeaponInfoLabel()
 {
 	FWeapon* Weapon = GEngine->GetGameWorld().GetPlayerCharacter()->GetCurrentWeapon();
-	m_CurrentWeaponInfo.SetText( L"%i / %i", (int)Weapon->m_MagazineAmmo, (int)Weapon->m_ReserveAmmo );
+	if (Weapon->GetStaticType() == WT_BulletWeapon)
+	{
+		FBulletWeapon* BulletWeapon = (FBulletWeapon*)Weapon;
+		m_CurrentWeaponInfo.SetText( L"%i / %i", BulletWeapon->m_MagazineAmmo, BulletWeapon->m_ReserveAmmo );
+	}
 }

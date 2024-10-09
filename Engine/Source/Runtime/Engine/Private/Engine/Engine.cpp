@@ -10,6 +10,7 @@
 #include "Engine/Event/EngineEvent.h"
 #include "Graphics/FontManager.h"
 #include "Engine/Renderer/RendererInitializer.h"
+#include "Engine/Audio/AudioManager.h"
 
 
 Logger GEngineLogger;
@@ -46,7 +47,7 @@ HEngine::~HEngine()
 
 void HEngine::EngineMain()
 {
-	HE_ASSERTEX( !IsInitialized(), TEXT("Trying to call Engine::EngineMain() on an engine instance that is already initialized!") )
+	HE_ASSERTEX( !IsInitialized(), TEXT( "Trying to call Engine::EngineMain() on an engine instance that is already initialized!" ) );
 
 	// Startup.
 	PreStartup();
@@ -90,6 +91,8 @@ void HEngine::PreStartup()
 	Input::Initialize();
 	Physics::Initialize();
 	m_ScriptSubsystem.Setup();
+	GAudioManager.Initialize();
+
 	FRendererInitializer::InitializeContext( m_RenderContext );
 	m_ScriptSubsystem.BindLuaFunction( "GetDeltaTime", *this, &HEngine::GetDeltaTime );
 	m_ScriptSubsystem.BindLuaFunction( "GetAppSeconds", *this, &HEngine::GetAppSeconds );
