@@ -20,14 +20,14 @@ bool FAudioManager::Initialize()
 	result = FMOD::System_Create( &m_System );      // Create the main system object.
 	if (result != FMOD_OK)
 	{
-		HE_LOG( Error, TEXT( "FMOD error! (%d) %s" ), result, FMOD_ErrorString( result ) );
+		HE_LOG( Error, "FMOD error! (%d) %s", result, FMOD_ErrorString( result ) );
 		HE_ASSERT( false );
 	}
 
 	result = m_System->init( 512, FMOD_INIT_NORMAL, 0 );    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
-		HE_LOG( Error, TEXT( "FMOD error! (%d) %s" ), result, FMOD_ErrorString( result ) );
+		HE_LOG( Error, "FMOD error! (%d) %s", result, FMOD_ErrorString( result ) );
 		HE_ASSERT( false );
 	}
 

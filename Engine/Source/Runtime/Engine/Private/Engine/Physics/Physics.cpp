@@ -415,7 +415,7 @@ namespace Physics
 		}
 		else
 		{
-			P_LOG( Warning, TEXT( "Trying to remove a rigid body from a scene that has not been initialized!" ) );
+			P_LOG( Warning, "Trying to remove a rigid body from a scene that has not been initialized!" );
 			HE_ASSERT( false );
 		}
 	}
@@ -434,7 +434,7 @@ namespace Physics
 		}
 		else
 		{
-			P_LOG( Warning, TEXT( "Trying to tick a physics scene that has not been initialized!" ) );
+			P_LOG( Warning, "Trying to tick a physics scene that has not been initialized!" );
 			HE_ASSERT( false );
 		}
 

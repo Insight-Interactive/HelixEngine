@@ -234,7 +234,7 @@ FORCEINLINE void FConstantBuffer::Create( const WChar* Name, uint32 Size )
 {
 	if (m_pData != nullptr)
 	{
-		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
+		R_LOG( Warning, "Trying to re-create a constant buffer that has already been inititlized." );
 		HE_ASSERT( false );
 		return;
 	}
@@ -299,7 +299,7 @@ FORCEINLINE void TConstantBuffer<BufferDataType>::Create( const WChar* Name, uin
 {
 	if (m_pWritePointer != nullptr)
 	{
-		R_LOG( Warning, TEXT( "Trying to re-create a constant buffer that has already been inititlized." ) );
+		R_LOG( Warning, "Trying to re-create a constant buffer that has already been inititlized." );
 		HE_ASSERT( false );
 		return;
 	}

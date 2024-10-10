@@ -40,7 +40,7 @@ void FileExplorerWindow::Show( WChar** Result )
 	}
 	else
 	{
-		HE_LOG( Error, TEXT( "Failed to get result from file dialog! HRESULT: %i" ), hr );
+		HE_LOG( Error, "Failed to get result from file dialog! HRESULT: %i", hr );
 		return;
 	}
 }

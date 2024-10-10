@@ -105,7 +105,7 @@ void FRenderDevice::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** 
 					*ppAdapter = pAdapter.Detach();
 					OutDeviceQueryResult.IsRealtimeRTSupported = true;
 
-					R_LOG(Log, TEXT("Found suitable D3D 12 hardware that can support DXR: %s"), Desc.Description);
+					R_LOG( Log, "Found suitable D3D 12 hardware that can support DXR: %s", TCharToChar(Desc.Description) );
 					continue;
 				}
 			}
@@ -120,7 +120,7 @@ void FRenderDevice::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** 
 			if (*ppAdapter != NULL) (*ppAdapter)->Release();
 
 			*ppAdapter = pAdapter.Detach();
-			R_LOG(Log, TEXT("Found suitable D3D 12 hardware: %s"), Desc.Description);
+			R_LOG( Log, "Found suitable D3D 12 hardware: %s", TCharToChar(Desc.Description) );
 		}
 	}
 	HE_ASSERT( *ppAdapter != NULL ); // Could not locate a proper adapter that supports D3D12.
@@ -129,7 +129,7 @@ void FRenderDevice::GetHardwareAdapter(IDXGIFactory6* pFactory, IDXGIAdapter1** 
 	(*ppAdapter)->GetDesc1(&Desc);
 	
 	::wcscpy_s(OutDeviceQueryResult.DeviceName, Desc.Description);
-	R_LOG(Log, TEXT("\"%s\" selected as D3D12 graphics hardware."), OutDeviceQueryResult.DeviceName);
+	R_LOG( Log, "\"%s\" selected as D3D12 graphics hardware.", TCharToChar(OutDeviceQueryResult.DeviceName) );
 }
 
 void FRenderDevice::UnInitialize()

@@ -123,7 +123,7 @@ void FSkyboxPass::UnBind(FCommandContext& GfxContext, FDepthBuffer& DepthBuffer)
 		GfxContext.DrawIndexedInstanced(m_SkyGeometry->GetMesh().GetNumIndices(), 1, 0, 0, 0);
 	}
 	else
-		HE_LOG(Warning, TEXT("Trying to render a skybox with invalid geometry!"));
+		HE_LOG(Warning, "Trying to render a skybox with invalid geometry!");
 
 	GfxContext.EndDebugMarker();
 }

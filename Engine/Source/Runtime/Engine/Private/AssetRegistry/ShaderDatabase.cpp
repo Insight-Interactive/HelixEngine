@@ -21,7 +21,7 @@ void FShaderDatabase::Deserialize( const JsonUtility::ReadContext& Value )
 		const Char* ShaderGuidStr = itr->name.GetString();
 		FGUID ShaderGUID = FGUID::CreateFromString( ShaderGuidStr );
 		String ShaderPath = itr->value.GetString();
-		HE_LOG( Log, TEXT( "Loading shader (GUID: %s) into database with path %s" ), CharToTChar( ShaderGuidStr ), CharToTChar( ShaderPath ) );
+		HE_LOG( Log, "Loading shader (GUID: %s) into database with path %s" , ShaderGuidStr, ShaderPath.c_str() );
 
 		m_Data[ShaderGUID] = ShaderPath;
 	}
@@ -42,7 +42,7 @@ void FShaderDatabase::Initialize()
 
 void FShaderDatabase::UnInitialize()
 {
-	HE_LOG( Log, TEXT( "Clearing shader database." ) );
+	HE_LOG( Log, "Clearing shader database." );
 	m_Data.clear();
 }
 
@@ -67,7 +67,7 @@ void FShaderDatabase::SerializeToFile_Implementation( const Char* Filepath )
 	{
 		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
 		{
-			HE_LOG( Error, TEXT( "Failed to serialize database %s" ), CharToTChar( GetName() ) );
+			HE_LOG( Error, "Failed to serialize database %s" , GetName().c_str() );
 			HE_ASSERT( false );
 		}
 	}

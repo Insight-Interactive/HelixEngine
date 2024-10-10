@@ -116,7 +116,7 @@ void FRootSignature::Finalize(const WChar* name, ERootSignatureFlags Flags)
         if (pErrorBlob != NULL)
         {
             Char* Error = (Char*)pErrorBlob->GetBufferPointer();
-            R_LOG(Error, TEXT("Error while compiling RootSignature: %s"), (Char*)pErrorBlob->GetBufferPointer())
+            R_LOG(Error, "Error while compiling RootSignature: %s", (Char*)pErrorBlob->GetBufferPointer())
         }
         ResetHr(hr);
 

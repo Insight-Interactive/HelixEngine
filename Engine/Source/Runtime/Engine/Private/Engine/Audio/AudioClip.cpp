@@ -18,17 +18,14 @@ FAudioClip::~FAudioClip()
 bool FAudioClip::Play()
 {
 	FMOD_RESULT result;
-	FMOD::System* System = GAudioManager.GetSystem();
-
-	result = System->playSound( m_Sound, nullptr, false, nullptr );
+	FMOD::System& System = GAudioManager.GetSystem();
+	
+	result = System.playSound( m_Sound, nullptr, false, nullptr );
 	return result == FMOD_OK;
 }
 
 bool FAudioClip::Stop()
 {
-	FMOD_RESULT result;
-	FMOD::System* System = GAudioManager.GetSystem();
-
 	return false;
 }
 

@@ -32,7 +32,6 @@ enum EWindowMode
 	WM_FullScreen	= 3,
 };
 
-const uint8 kMaxDebugNameLength = 128;
 const uint8 kMaxClassNameSize = 16;
 const uint8 kMaxWindowTitleLength = 64;
 
@@ -129,8 +128,6 @@ protected:
 	TDynamicArray<OutVoidInEWindowModeFn*> m_OnWindowModeChangedCallbacks;
 	FSwapChain m_SwapChain;
 
-	TChar m_DebugName[kMaxDebugNameLength];
-
 	static uint32 SWindowInstanceCount;
 	static CriticalSection SWindowInstanceCounterGuard;
 
@@ -215,7 +212,9 @@ inline void FWindow::SetWindowMode( EWindowMode NewMode )
 
 	if (m_WindowMode == NewMode)
 	{
-		HE_LOG( Warning, TEXT( "Trying to set window mode with same mode on window: %s" ), m_DebugName );
+		TChar Title[kMaxWindowTitleLength];
+		GetTitle( Title, sizeof( Title ) );
+		HE_LOG( Warning, "Trying to set window mode with same mode on window: %s", TCharToChar( Title ) );
 		return;
 	}
 	m_WindowMode = NewMode;

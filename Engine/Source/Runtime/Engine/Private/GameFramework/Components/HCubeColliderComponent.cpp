@@ -33,17 +33,17 @@ void HCubeColliderComponent::OnCreate()
 
 void HCubeColliderComponent::OnEnter( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT(  "------ %s Entered %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
+	HE_LOG( Log, "------ %s Entered %s", GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::OnExit( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "------ %s Exit %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
+	HE_LOG( Log, "------ %s Exit %s", GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::OnStay( HColliderComponent* Other )
 {
-	HE_LOG( Log, TEXT( "------ %s Stay %s" ), GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
+	HE_LOG( Log, "------ %s Stay %s" , GetOwner()->GetObjectName(), Other->GetOwner()->GetObjectName() );
 }
 
 void HCubeColliderComponent::Serialize( JsonUtility::WriteContext& Output )

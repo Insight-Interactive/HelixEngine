@@ -10,12 +10,12 @@
 
 void OutputBuffer::FlushBuffer()
 {
-	m_Stream.str( TEXT( "" ) );
+	m_Stream.str( "" );
 }
 
-HName OutputBuffer::GetStringBuffer()
+const char* OutputBuffer::GetStringBuffer()
 {
-	return m_Stream.str();
+	return m_Stream.str().c_str();
 }
 
 
@@ -37,10 +37,10 @@ Logger::~Logger()
 {
 }
 
-void Logger::Initialize(TChar* Name)
+void Logger::Initialize(char* Name)
 {
 	SetLoggerName(Name);
-	LogHelper(ELogSeverity::Log, TEXT("Logger initialized with name: %s"), HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
+	LogHelper(ELogSeverity::Log, "Logger initialized with name: %s", HE_FILE, HE_FUNCTION, __LINE__, GetLoggerName());
 
 	if (s_UseConsole && !s_ConsoleWindow.IsValid())
 	{
@@ -54,49 +54,49 @@ void Logger::Initialize(TChar* Name)
 	}
 }
 
-void Logger::SetLoggerName(TChar* Name)
+void Logger::SetLoggerName( char* Name)
 {
 	CopyMemory(
 		m_LoggerName,
 		Name,
-		kMakLoggerNameLength * sizeof(TChar)
+		kMakLoggerNameLength * sizeof( char )
 	);
 }
 
-void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* File, const TChar* Function, int Line, ...)
+void Logger::LogHelper(ELogSeverity Severity, const char* Fmt, const char* File, const char* Function, int Line, ...)
 {
 	const uint32 kMaxLogLength = 1024;
 
-	TChar TraceBuffer[kMaxLogLength];
-	TChar OutputBuffer[kMaxLogLength];
+	char TraceBuffer[kMaxLogLength];
+	char OutputBuffer[kMaxLogLength];
 
 	// Initialize the output message buffer.
 	va_list args;
 	va_start(args, Line); // Start capturing arguments after the 'Line' parameter in the method.
 	{
-		VSPrintBuffer(OutputBuffer, sizeof(OutputBuffer), Fmt, args);
+		vsnprintf_s(OutputBuffer, sizeof(OutputBuffer), Fmt, args);
 	}
 	va_end(args);
 
 	switch (Severity)
 	{
 	case ELogSeverity::Log:
-		PrintBuffer(TraceBuffer, TEXT("[%s][Log] - "), GetLoggerName());
+		sprintf_s(TraceBuffer, "[%s][Log] - ", GetLoggerName());
 		break;
 	case ELogSeverity::Verbose:
-		PrintBuffer(TraceBuffer, TEXT("[%s][Verbose][%s-%s-%i] - "), GetLoggerName(), File, Function, Line);
+		sprintf_s(TraceBuffer, "[%s][Verbose][%s-%s-%i] - ", GetLoggerName(), File, Function, Line);
 		break;
 	case ELogSeverity::Warning:
-		PrintBuffer(TraceBuffer, TEXT("[%s][Warning] - "), GetLoggerName());
+		sprintf_s(TraceBuffer, "[%s][Warning] - ", GetLoggerName());
 		break;
 	case ELogSeverity::Error:
-		PrintBuffer(TraceBuffer, TEXT("[%s][Error] - "), GetLoggerName());
+		sprintf_s(TraceBuffer, "[%s][Error] - ", GetLoggerName());
 		break;
 	case ELogSeverity::Critical:
-		PrintBuffer(TraceBuffer, TEXT("[%s][Critical] - "), GetLoggerName());
+		sprintf_s(TraceBuffer, "[%s][Critical] - ", GetLoggerName());
 		break;
 	default:
-		PrintBuffer(TraceBuffer, TEXT("Invalid log severity given to logger. Choose one option from ELogSeverity enum."));
+		sprintf_s(TraceBuffer, "Invalid log severity given to logger. Choose one option from ELogSeverity enum.");
 		break;
 	}
 
@@ -109,20 +109,20 @@ void Logger::LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* Fil
 		ScopedCriticalSection StreamGuard( GStreamGuard );
 		SOutputBuffer << TraceBuffer;
 		SOutputBuffer << OutputBuffer;
-		SOutputBuffer << TEXT( "\n" );
+		SOutputBuffer << "\n";
 	}
 	if (s_UseConsole)
 	{
-		Printf( TraceBuffer );
-		Printf( OutputBuffer );
-		Printf( TEXT("\n") );
+		printf( TraceBuffer );
+		printf( OutputBuffer );
+		printf( "\n" );
 	}
-#if HE_COMPILE_MSVC
-	else if ( IsDebuggerPresent() )
-	{
-		OutputDebugString(TraceBuffer);
-		OutputDebugString(OutputBuffer);
-		OutputDebugString(TEXT("\n"));
-	}
-#endif
+//#if HE_COMPILE_MSVC
+//	else if ( IsDebuggerPresent() )
+//	{
+//		OutputDebugString(TraceBuffer);
+//		OutputDebugString(OutputBuffer);
+//		OutputDebugString(TEXT("\n"));
+//	}
+//#endif
 }

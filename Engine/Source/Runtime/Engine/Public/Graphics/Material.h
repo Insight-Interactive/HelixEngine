@@ -292,7 +292,7 @@ FORCEINLINE bool FMaterial::SetTexture( const Char* TextureName, HTexture Textur
 		(*Iter).second.second = Texture;
 		return true;
 	}
-	HE_LOG( Warning, TEXT( "Trying to set texture with in material \"%s\" with invalid semantic name: %s. Is the Semantic being optimized out?" ), CharToTChar( m_DebugName ), CharToTChar( TextureName ) );
+	HE_LOG( Warning, "Trying to set texture with in material \"%s\" with invalid semantic name: %s. Is the Semantic being optimized out?", m_DebugName.c_str(), TextureName );
 	return false;
 }
 
@@ -313,7 +313,7 @@ FORCEINLINE bool FMaterial::SetShaderFloatVar( const Char* VariableName, const T
 		}
 		return true;
 	}
-	HE_LOG( Warning, TEXT( "Trying to set buffer constant in material \"%s\" with invalid semantic name: %s" ), CharToTChar( m_DebugName ), CharToTChar( VariableName ) );
+	HE_LOG( Warning, "Trying to set buffer constant in material \"%s\" with invalid semantic name: %s", m_DebugName.c_str(), VariableName );
 	return false;
 }
 

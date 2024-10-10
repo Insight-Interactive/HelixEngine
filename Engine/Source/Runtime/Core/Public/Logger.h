@@ -18,17 +18,17 @@ public:
 	{
 	}
 
-	inline void operator << ( const HName& Str )
+	inline void operator << ( const char* Str )
 	{
-		m_Stream << Str.c_str();
+		m_Stream << Str;
 	}
 
 	void FlushBuffer();
-	HName GetStringBuffer();
+	const char* GetStringBuffer();
 
 
 private:
-	TStringStream m_Stream;
+	std::stringstream m_Stream;
 
 };
 
@@ -56,7 +56,7 @@ public:
 	/*
 		Initialize the logger.
 	*/
-	void Initialize(TChar* Name);
+	void Initialize(char* Name);
 
 	/*
 		Returns a reference to the global log buffer where log messages are stored.
@@ -72,33 +72,33 @@ public:
 		Set the name of the logger.
 		@param [in] Name - The new name of the logger.
 	*/
-	void SetLoggerName(TChar* Name);
+	void SetLoggerName(char* Name);
 
 	/*
 		Returns the name of the logger.
 		@returns A constant pointer to the name of the logger.
 	*/
-	FORCEINLINE const TChar* GetLoggerName();
+	FORCEINLINE const char* GetLoggerName();
 
 	// Logger that will log output to the console window. Recommended that you dont call directly. 
 	// Instead, use macro to wrap this so logs will be stripped from release builds.
-	void LogHelper(ELogSeverity Severity, const TChar* Fmt, const TChar* File, const TChar* Function, int Line, ...);
+	void LogHelper(ELogSeverity Severity, const char* Fmt, const char* File, const char* Function, int Line, ...);
 
 private:
-	TChar m_LoggerName[kMakLoggerNameLength];
+	char m_LoggerName[kMakLoggerNameLength];
 
 	static ConsoleWindow s_ConsoleWindow;
 	static bool s_UseConsole;
 	static OutputBuffer SOutputBuffer;
 };
 
-const TChar* Logger::GetLoggerName()
+const char* Logger::GetLoggerName()
 {
-	return RCast<const TChar*>(m_LoggerName);
+	return RCast<const char*>(m_LoggerName);
 }
 
 #if HE_ENABLE_LOGS
-#	define CreateLogger(LoggerInstance, Name) ( LoggerInstance ).Initialize( TEXT(Name) )
+#	define CreateLogger(LoggerInstance, Name) ( LoggerInstance ).Initialize( Name )
 #else
 #	define CreateLogger(LoggerInstance, Name)
 #endif

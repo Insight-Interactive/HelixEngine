@@ -86,7 +86,7 @@ void HCameraComponent::SetProjectionValues(float FOVDegrees, float NearZ, float 
 	}
 	break;
 	default:
-		HE_LOG( Warning, TEXT( "Unidentified projection type provided when calculation projection values." ) );
+		HE_LOG( Warning, "Unidentified projection type provided when calculation projection values." );
 		HE_ASSERT( false );
 	break;
 	}

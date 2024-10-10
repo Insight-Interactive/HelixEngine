@@ -223,10 +223,10 @@ typedef std::wstringstream TStringStream;
 #	define CharToTChar( Str )								StringHelper::UTF8ToUTF16( Str ).c_str()
 #	define TCharToChar( Str )								StringHelper::UTF16ToUTF8( Str ).c_str()
 #	define WCharToTChar( Str )								Str
-#	define HE_FILE											LONG_STR( __FILE__ )
-#	define HE_FUNCTION										LONG_STR( __FUNCTION__ )
-#	define HE_TIME											LONG_STR( __TIME__ )
-#	define HE_DATA											LONG_STR( __DATE__ )
+#	define HE_FILE											( __FILE__ )
+#	define HE_FUNCTION										( __FUNCTION__ )
+#	define HE_TIME											( __TIME__ )
+#	define HE_DATA											( __DATE__ )
 
 #else
 typedef Char TChar;

@@ -77,7 +77,7 @@ FORCEINLINE void LightManager::AllocateSpotLightData(SpotLightDataHandle& OutHan
 {
 	if (m_SceneSpotLightDatas.size() == HE_MAX_SPOT_LIGHTS)
 	{
-		HE_LOG(Warning, TEXT("Too many spot lights added to the scene!"));
+		HE_LOG(Warning, "Too many spot lights added to the scene!");
 
 		*pOutLight = NULL;
 		OutHandle = IE_INVALID_SPOT_LIGHT_HANDLE;
@@ -97,7 +97,7 @@ FORCEINLINE void LightManager::AllocatePointLightData( PointLightDataHandle& Out
 {
 	if (m_ScenePointLightDatas.size() == HE_MAX_POINT_LIGHTS)
 	{
-		HE_LOG(Warning, TEXT("Too many point lights added to the scene!"));
+		HE_LOG(Warning, "Too many point lights added to the scene!");
 
 		if (pOutLight != NULL)
 			*pOutLight = NULL;

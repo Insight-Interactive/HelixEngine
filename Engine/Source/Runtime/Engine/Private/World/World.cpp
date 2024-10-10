@@ -47,7 +47,7 @@ void HWorld::Initialize( const FPath& LevelURL )
 		const rapidjson::Value& Actors = WorldJsonDoc["Actors"];
 		HE_ASSERT( Actors.IsArray() );
 		m_Level.Deserialize( Actors );
-		HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
+		HE_LOG( Log, "Level loaded with name: %s", GetObjectName() );
 
 		// Load static placed lights
 		/*const rapidjson::Value& Lights = WorldJsonDoc["Lights"];
@@ -104,7 +104,7 @@ void HWorld::Initialize()
 	SetObjectName( "Default World" );
 
 
-	HE_LOG( Log, TEXT( "Level loaded with name: %s" ), GetObjectName() );
+	HE_LOG( Log, "Level loaded with name: %s", GetObjectName() );
 }
 
 void HWorld::Save()
@@ -154,7 +154,7 @@ void HWorld::Flush()
 		RemovePanel( &m_DebugUI );
 
 		// Cleanup the rendering resources.
-		HE_LOG( Log, TEXT( "Flushing world: %s" ), GetObjectName() );
+		HE_LOG( Log, "Flushing world: %s", GetObjectName() );
 		GCommandManager.IdleGpu();
 		GLightManager.FlushLightCache();
 
@@ -263,7 +263,7 @@ void HWorld::Serialize( const Char* Filename )
 	{
 		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
 		{
-			HE_LOG( Error, TEXT( "Failed to serialize database %s" ), GetObjectName() );
+			HE_LOG( Error, "Failed to serialize database %s", GetObjectName() );
 			HE_ASSERT( false );
 		}
 	}
@@ -282,7 +282,7 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Level has no geo associated with it! Relying on actor collision, this is not recomended." ) );
+		HE_LOG( Warning, "Level has no geo associated with it! Relying on actor collision, this is not recomended." );
 	}
 
 	ZeroMemory( StringBuff, sizeof( StringBuff ) );
@@ -294,7 +294,7 @@ void HWorld::Deserialize( const JsonUtility::ReadContext& Value )
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Level has no nav mesh associated with it!" ) );
+		HE_LOG( Warning, "Level has no nav mesh associated with it!" );
 	}
 
 

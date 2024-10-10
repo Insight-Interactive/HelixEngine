@@ -46,7 +46,7 @@ void FInputDispatcher::Serialize( const Char* Filepath )
 	{
 		if (!OutFile->WriteData( (void*)StrBuffer.GetString(), StrBuffer.GetSize(), 1 ))
 		{
-			HE_LOG( Error, TEXT( "Failed to serialize input dispatcher mappings!" ) );
+			HE_LOG( Error, "Failed to serialize input dispatcher mappings!" );
 			HE_ASSERT( false );
 		}
 	}

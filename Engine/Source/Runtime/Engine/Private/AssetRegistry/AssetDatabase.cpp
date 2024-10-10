@@ -18,7 +18,7 @@ FAssetDatabase::FAssetDatabase()
 	else
 	{
 		HE_ASSERT( false );
-		HE_LOG( Error, TEXT( "Asset database already exists!" ) );
+		HE_LOG( Error, "Asset database already exists!" );
 	}
 }
 
@@ -59,7 +59,7 @@ FAssetDatabase::~FAssetDatabase()
 
 /*static*/ void FAssetDatabase::Uninitialize()
 {
-	HE_LOG( Log, TEXT( "Clearing asset databases." ) );
+	HE_LOG( Log, "Clearing asset databases." );
 
 	SInstance->m_ShaderDatabase.UnInitialize();
 }

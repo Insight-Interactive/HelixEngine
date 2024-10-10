@@ -151,7 +151,7 @@ void FSwapChain::ToggleFullScreen( bool IsEnabled )
 
 		if (IsEnabled && FullScreenState)
 		{
-			R_LOG( Warning, TEXT( "Full screen state is already active." ) );
+			R_LOG( Warning, "Full screen state is already active." );
 			return;
 		}
 

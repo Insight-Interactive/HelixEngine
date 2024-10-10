@@ -19,7 +19,7 @@ public:
 	bool Initialize();
 	bool Uninitialize();
 
-	FMOD::System* GetSystem() { return m_System; }
+	FMOD::System& GetSystem() { return *m_System; }
 
 	bool AudioClipExists( const String& Name ) const;
 	HAudioClip GetAudioClipByName( const String& Name );

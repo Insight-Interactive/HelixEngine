@@ -20,10 +20,10 @@ public:
 	HAnimation LoadAnimation( const FPath& Filename );
 
 private:
-	ManagedAnimation* FindOrLoadAnimationMeshFromFile( const FPath& FilePath );
+	HAnimation FindOrLoadAnimationMeshFromFile( const FPath& FilePath );
 
 private:
 	CriticalSection m_Mutex;
-	std::unordered_map<String, std::unique_ptr<ManagedAnimation>> m_AnimationCache;
+	std::unordered_map<String, HAnimation> m_AnimationCache;
 
 };

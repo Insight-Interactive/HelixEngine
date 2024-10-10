@@ -26,7 +26,6 @@ FWindow::FWindow()
 	, m_WindowMode( WM_Windowed )
 {
 	ZeroMemory( &m_WindowClassName, sizeof( m_WindowClassName ) );
-	ZeroMemory( &m_DebugName, sizeof( m_DebugName ) );
 }
 
 FWindow::FWindow( const TChar* Title, uint32 Width, uint32 Height, bool bHasTitleBar, bool bShowImmediate, FWindow* pParent )
@@ -54,7 +53,7 @@ void FWindow::Create( const FWindow::Description& Desc )
 
 	if (IsValid())
 	{
-		HE_LOG( Warning, TEXT( "Trying to initialize a window that has already been created." ) );
+		HE_LOG( Warning, "Trying to initialize a window that has already been created." );
 		return;
 	}
 
@@ -65,8 +64,7 @@ void FWindow::Create( const FWindow::Description& Desc )
 
 	PrintBuffer( m_WindowClassName, TEXT( "WinClass-%i" ), SWindowInstanceCount );
 
-	TCharStrCpy( m_DebugName, Desc.Title );
-	HE_LOG( Log, TEXT( "Registering Windows Desktop window with title:  %s  (Class: %s)" ), Desc.Title ? Desc.Title : TEXT( "Unnamed window" ), m_WindowClassName );
+	HE_LOG( Log, "Registering Windows Desktop window with title:  %s  (Class: %s)", TCharToChar(Desc.Title), m_WindowClassName );
 
 	// Resources
 	LPWSTR Cursor	= IDC_ARROW;
@@ -130,7 +128,9 @@ void FWindow::Destroy()
 {
 	if (IsValid())
 	{
-		HE_LOG( Log, TEXT( "Destroying window with name {%s}" ), m_DebugName );
+		TChar Title[kMaxWindowTitleLength];
+		GetTitle( Title, sizeof( Title ) );
+		HE_LOG( Log, "Destroying window with name {%s}", TCharToChar( Title ) );
 
 		if (::DestroyWindow( m_hWindowHandle ) != 0)
 		{
@@ -139,14 +139,14 @@ void FWindow::Destroy()
 		}
 		else
 		{
-			HE_LOG( Error, TEXT( "Failed to destroy window class with name: %s (Error code: %i)" ), m_DebugName, System::GetLastSystemErrorCode() );
+			HE_LOG( Error, "Failed to destroy window class with name: %s (Error code: %i)", TCharToChar( Title ), System::GetLastSystemErrorCode() );
 			return;
 		}
 
 		// Unregister the class.
 		if (::UnregisterClass( m_WindowClassName, NULL ) == 0)
 		{
-			HE_LOG( Error, TEXT( "Failed to unregister window class with class name: %s (Error code: %i)" ), m_WindowClassName, System::GetLastSystemErrorCode() );
+			HE_LOG( Error, "Failed to unregister window class with class name: %s (Error code: %i)", m_WindowClassName, System::GetLastSystemErrorCode() );
 			return;
 		}
 
@@ -172,13 +172,19 @@ bool FWindow::IsVisible()
 
 void FWindow::Show()
 {
-	HE_LOG( Log, TEXT( "Showing window with name  %s." ), m_DebugName );
+	TChar Title[kMaxWindowTitleLength];
+	GetTitle( Title, sizeof( Title ) );
+	HE_LOG( Log, "Showing window with name  %s.", TCharToChar( Title ) );
+
 	::ShowWindow( m_hWindowHandle, SW_SHOW );
 }
 
 void FWindow::Hide()
 {
-	HE_LOG( Log, TEXT( "Hiding window with name  %s." ), m_DebugName );
+	TChar Title[kMaxWindowTitleLength];
+	GetTitle( Title, sizeof( Title ) );
+	HE_LOG( Log, "Hiding window with name  %s.", TCharToChar( Title ) );
+
 	::ShowWindow( m_hWindowHandle, SW_HIDE );
 }
 
@@ -189,7 +195,9 @@ bool FWindow::HasFocus()
 
 void FWindow::SetFocus()
 {
-	HE_LOG( Log, TEXT( "Setting window with name  %s  as focus." ), m_DebugName );
+	TChar Title[kMaxWindowTitleLength];
+	GetTitle( Title, sizeof( Title ) );
+	HE_LOG( Log, "Setting window with name  %s  as focus." , TCharToChar( Title ) );
 
 	::SetForegroundWindow( m_hWindowHandle );
 	::SetFocus( m_hWindowHandle );
@@ -214,7 +222,9 @@ bool FWindow::SetTitle( const TChar* NewTitle )
 {
 	if (!m_Desc.bHasTitleBar)
 	{
-		HE_LOG( Warning, TEXT( "Trying to set a title (%s) for a window (%s) that has no title bar!" ), NewTitle, m_DebugName );
+		TChar Title[kMaxWindowTitleLength];
+		GetTitle( Title, sizeof( Title ) );
+		HE_LOG( Warning, "Trying to set a title (%s) for a window (%s) that has no title bar!", TCharToChar(NewTitle), TCharToChar( Title ) );
 		return false;
 	}
 
@@ -277,7 +287,7 @@ void FWindow::MakeMoueWindowAssociation()
 	RID.hwndTarget	= NULL;
 	if (!RegisterRawInputDevices( &RID, 1, sizeof( RID ) ))
 	{
-		HE_LOG( Error, TEXT( "Failed to register raw input devices. Error: %s" ), System::GetLastSystemError() );
+		HE_LOG( Error, "Failed to register raw input devices. Error: %s" , System::GetLastSystemError() );
 	}
 }
 
@@ -303,7 +313,9 @@ void FWindow::OnWindowModeChanged()
 			//
 			// Bring us into borderless mode.
 			//
-			HE_LOG( Log, TEXT( "Window \"%s\" Entering borderless mode." ), m_DebugName );
+			TChar Title[kMaxWindowTitleLength];
+			GetTitle( Title, sizeof( Title ) );
+			HE_LOG( Log, "Window \"%s\" Entering borderless mode.", TCharToChar( Title ) );
 
 			GetSwapChain()->ToggleFullScreen( true );
 
@@ -341,7 +353,9 @@ void FWindow::OnWindowModeChanged()
 			//
 			// Bring us into fullscreen mode.
 			//
-			HE_LOG( Log, TEXT( "Window \"%s\" Entering fullscreen mode." ), m_DebugName );
+			TChar Title[kMaxWindowTitleLength];
+			GetTitle( Title, sizeof( Title ) );
+			HE_LOG( Log, "Window \"%s\" Entering fullscreen mode.", TCharToChar( Title ) );
 
 			GetSwapChain()->ToggleFullScreen( true );
 
@@ -376,7 +390,9 @@ void FWindow::OnWindowModeChanged()
 			//
 			// Bring us into windowed mode.
 			//
-			HE_LOG( Log, TEXT( "Window \"%s\" Entering window mode." ), m_DebugName );
+			TChar Title[kMaxWindowTitleLength];
+			GetTitle( Title, sizeof( Title ) );
+			HE_LOG( Log, "Window \"%s\" Entering window mode.", TCharToChar( Title ) );
 
 			GetSwapChain()->ToggleFullScreen( false );
 

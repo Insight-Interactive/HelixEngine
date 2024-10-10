@@ -66,7 +66,7 @@ void HEngine::EngineMain()
 void HEngine::PreStartup()
 {
 	CreateLogger( GEngineLogger, "Helix Engine" );
-	HE_LOG( Log, TEXT( "Beginning engine pre-startup." ) );
+	HE_LOG( Log, "Beginning engine pre-startup." );
 
 	EmitEvent( EnginePreStartupEvent() );
 
@@ -97,12 +97,12 @@ void HEngine::PreStartup()
 	m_ScriptSubsystem.BindLuaFunction( "GetDeltaTime", *this, &HEngine::GetDeltaTime );
 	m_ScriptSubsystem.BindLuaFunction( "GetAppSeconds", *this, &HEngine::GetAppSeconds );
 
-	HE_LOG( Log, TEXT( "Engine pre-startup complete." ) );
+	HE_LOG( Log, "Engine pre-startup complete." );
 }
 
 void HEngine::Startup()
 {
-	HE_LOG( Log, TEXT( "Starting up engine." ) );
+	HE_LOG( Log, "Starting up engine." );
 
 	EmitEvent( EngineStartupEvent() );
 
@@ -158,12 +158,12 @@ void HEngine::Startup()
 
 	m_GameWorld.SetViewport( &m_MainViewPort );
 
-	HE_LOG( Log, TEXT( "Engine startup complete. (Took %f seconds)" ), SystemTime::TimeBetweenTicks( StartupTick, SystemTime::GetCurrentTick() ) );
+	HE_LOG( Log, "Engine startup complete. (Took %f seconds)", SystemTime::TimeBetweenTicks( StartupTick, SystemTime::GetCurrentTick() ) );
 }
 
 void HEngine::PostStartup()
 {
-	HE_LOG( Log, TEXT( "Beginning engine post-startup." ) );
+	HE_LOG( Log, "Beginning engine post-startup." );
 
 	EmitEvent( EnginePostStartupEvent() );
 
@@ -186,20 +186,20 @@ void HEngine::PostStartup()
 
 	m_IsInitialized = true;
 
-	HE_LOG( Log, TEXT( "Engine post-startup complete." ) );
+	HE_LOG( Log, "Engine post-startup complete." );
 }
 
 void HEngine::PreShutdown()
 {
-	HE_LOG( Log, TEXT( "Beginning engine pre-shutdown." ) );
+	HE_LOG( Log, "Beginning engine pre-shutdown." );
 
 	GCommandManager.IdleGpu();
-	HE_LOG( Log, TEXT( "Engine pre-shutdown complete." ) );
+	HE_LOG( Log, "Engine pre-shutdown complete." );
 }
 
 void HEngine::Shutdown()
 {
-	HE_LOG( Log, TEXT( "Shutting down engine." ) );
+	HE_LOG( Log, "Shutting down engine." );
 
 
 	FApp::GetInstance()->Shutdown();
@@ -212,12 +212,12 @@ void HEngine::Shutdown()
 	Input::UnInitialize();
 	Physics::UnInitialize();
 
-	HE_LOG( Log, TEXT( "Engine shutdown complete." ) );
+	HE_LOG( Log, "Engine shutdown complete." );
 }
 
 void HEngine::PostShutdown()
 {
-	HE_LOG( Log, TEXT( "Beginning engine post-shutdown." ) );
+	HE_LOG( Log, "Beginning engine post-shutdown." );
 
 
 	HE_SAFE_DELETE_PTR( GThreadPool );
@@ -226,12 +226,12 @@ void HEngine::PostShutdown()
 	HE_SAFE_DELETE_PTR( GGameInstance );
 	FRendererInitializer::UnInitializeContext( m_RenderContext );
 
-	HE_LOG( Log, TEXT( "Engine post-shutdown complete." ) );
+	HE_LOG( Log, "Engine post-shutdown complete." );
 }
 
 void HEngine::Tick()
 {
-	HE_LOG( Log, TEXT( "Entering Engine update loop." ) );
+	HE_LOG( Log, "Entering Engine update loop." );
 	Input::KbmZeroInputs();
 	
 	float Accumulator = 0.f;
@@ -278,7 +278,7 @@ void HEngine::Tick()
 
 	}
 
-	HE_LOG( Log, TEXT( "Exiting Engine update loop." ) );
+	HE_LOG( Log, "Exiting Engine update loop." );
 }
 
 void HEngine::RenderClientViewport( float DeltaTime )
@@ -333,7 +333,7 @@ bool HEngine::OnWindowLostFocus( WindowLostFocusEvent& e )
 
 void HEngine::RequestShutdown()
 {
-	HE_LOG( Log, TEXT( "Engine shutdown requested." ) );
+	HE_LOG( Log, "Engine shutdown requested." );
 	m_Application.Terminate();
 }
 

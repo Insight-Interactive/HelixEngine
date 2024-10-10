@@ -140,7 +140,7 @@ void FBatchRenderer::LineBatchInfo::AddLine( const FDebugLineRenderInfo& LineInf
 {
 	if (m_NumPendingLines == kMaxLineRenders)
 	{
-		R_LOG( Warning, TEXT( "Trying to add line to batch renderer but no more slots are available! No new lines where added." ) );
+		R_LOG( Warning, "Trying to add line to batch renderer but no more slots are available! No new lines where added." );
 		return;
 	}
 

@@ -19,7 +19,7 @@ LuaScriptVM::~LuaScriptVM()
 void LuaScriptVM::Scr_DebugLog( const Char* Msg )
 {
 #if HE_DEBUG
-	S_LOG( Log, TEXT( "%s" ), CharToTChar( Msg ) );
+	S_LOG( Log, "%s", Msg );
 #endif
 }
 
@@ -58,7 +58,7 @@ bool LuaScriptVM::RunScript( LuaScript& Script )
 		UpdateFn();
 	}
 	else
-		S_LOG( Warning, TEXT("Update function was not found in script: "), CharToTChar( Script.GetScriptName() ) );
+		S_LOG( Warning, "Update function was not found in script: ", CharToTChar( Script.GetScriptName() ) );
 
 	return true;
 }

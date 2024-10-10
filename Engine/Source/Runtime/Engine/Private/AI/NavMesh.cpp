@@ -62,7 +62,7 @@ void HNavMesh::Init( const FPath& Path )
 	m_NavMesh = LoadNavmesh(Path);
 	if (m_NavMesh == nullptr)
 	{
-		HE_LOG( Error, TEXT( "Failed to load navmesh for level with path %s! AI will no navigate" ), Path.m_Path );
+		HE_LOG( Error, "Failed to load navmesh for level with path %s! AI will no navigate", Path.m_Path );
 		HE_ASSERT( false );
 		return;
 	}

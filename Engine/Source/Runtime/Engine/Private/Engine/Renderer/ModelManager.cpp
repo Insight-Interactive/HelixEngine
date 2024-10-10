@@ -367,7 +367,7 @@ HSkeletalMesh FSkeletalGeometryManager::LoadSkeletalMesh( FPath& Path )
 	const aiScene* Scene = Importer.ReadFile( Path.m_Path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_PopulateArmatureData );
 	if (Scene == nullptr)
 	{
-		HE_LOG( Error, TEXT( "Failed to Load assimp model! Assimp: %s" ), Importer.GetErrorString() );
+		HE_LOG( Error, "Failed to Load assimp model! Assimp: %s", Importer.GetErrorString() );
 		HE_ASSERT( false );
 	}
 

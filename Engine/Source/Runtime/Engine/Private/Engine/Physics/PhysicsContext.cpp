@@ -120,5 +120,5 @@ void physx::PxDefaultErrorCallback::reportError( physx::PxErrorCode::Enum code, 
 	default:
 		break;
 	}
-	P_LOG_EXPLICIT_SEVERITY( Severity, TEXT( "[PhysX-%s-%i] %s" ), CharToTChar( file ), line, CharToTChar( message ) );
+	P_LOG_EXPLICIT_SEVERITY( Severity, "[PhysX-%s-%i] %s", file, line, message );
 }

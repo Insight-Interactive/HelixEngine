@@ -162,7 +162,7 @@ void HLevel::Deserialize( const JsonUtility::ReadContext& Value )
 			}
 			else
 			{
-				HE_LOG( Error, TEXT( "Failed to load actor with filepath: %s" ), CharToTChar( ActorPath.GetFullPath() ) );
+				HE_LOG( Error, "Failed to load actor with filepath: %s", ActorPath.GetFullPath() );
 				HE_ASSERT( false );
 			}
 		}

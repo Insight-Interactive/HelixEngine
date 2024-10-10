@@ -93,7 +93,7 @@ private:
 
 inline void FSkeletalGeometryManager::FlushCache()
 {
-	R_LOG( Warning, TEXT( "Skeletal model cache being flushed!" ) );
+	R_LOG( Warning, "Skeletal model cache being flushed!" );
 	ScopedCriticalSection Guard( m_MapMutex );
 
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)
@@ -160,7 +160,7 @@ inline bool FStaticGeometryManager::MeshExists( const String& Name ) const
 
 inline void FStaticGeometryManager::FlushCache()
 {
-	R_LOG( Warning, TEXT( "Static model cache being flushed!" ) );
+	R_LOG( Warning, "Static model cache being flushed!" );
 	ScopedCriticalSection Guard( m_MapMutex );
 
 	for (auto Iter = m_ModelCache.begin(); Iter != m_ModelCache.end(); ++Iter)

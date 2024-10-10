@@ -25,7 +25,7 @@ int main( int32 argc, Char* argv[] )
 
 	ThreadPool ThreadPool( System::GetProcessorCount(), NULL );
 
-	LOG( Log, TEXT( "Helix Package Cooker" ) );
+	LOG( Log, "Helix Package Cooker" );
 	FileSystem::Init();
 
 	Char InputDirectory[HE_MAX_PATH]; ZeroMemory( InputDirectory, sizeof( InputDirectory ) );
@@ -53,7 +53,7 @@ int main( int32 argc, Char* argv[] )
 	Char DstDir[HE_MAX_PATH];	ZeroMemory( DstDir, sizeof( DstDir ) );
 	// Copy the "Content" directory.
 	// Src
-	LOG( Log, TEXT("Copying Content directory... ") );
+	LOG( Log, "Copying Content directory... ");
 	strcpy_s( SrcDir, InputDirectory );
 	strcat_s( SrcDir, "\\Content" );
 	// Dst
@@ -70,7 +70,7 @@ int main( int32 argc, Char* argv[] )
 
 	// Copy the "Config" directory.
 	// Src
-	LOG( Log, TEXT("Copying Config directory... ") );
+	LOG( Log, "Copying Config directory... " );
 	strcpy_s( SrcDir, InputDirectory );
 	strcat_s( SrcDir, "\\Config" );
 	// Dst
@@ -87,7 +87,7 @@ int main( int32 argc, Char* argv[] )
 
 	// Copy the "*.hproject" file.
 	// Src
-	LOG( Log, TEXT("Copying *.project file... ") );
+	LOG( Log, "Copying *.project file... " );
 	strcpy_s( SrcDir, InputDirectory );
 	strcat_s( SrcDir, "\\*.hproject" );
 	// Dst
@@ -99,7 +99,7 @@ int main( int32 argc, Char* argv[] )
 
 	// Copy the "AssetManifest" file.
 	// Src
-	LOG( Log, TEXT( "Copying AssetManifest file... " ) );
+	LOG( Log, "Copying AssetManifest file... " );
 	strcpy_s( SrcDir, InputDirectory );
 	strcat_s( SrcDir, "\\AssetManifest.json" );
 	// Dst

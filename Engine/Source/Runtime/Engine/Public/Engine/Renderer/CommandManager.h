@@ -158,7 +158,7 @@ FORCEINLINE FCommandQueue& FCommandManager::GetQueue( const ECommandListType& Ty
 	case ECommandListType::CLT_Direct:
 	default:
 		return m_GraphicsQueue;
-		R_LOG( Warning, TEXT( "Unidentified enum value provided when getting command queue: %i! Returning graphics queue as fallback." ), Type );
+		R_LOG( Warning, "Unidentified enum value provided when getting command queue: %i! Returning graphics queue as fallback.", Type );
 	}
 }
 

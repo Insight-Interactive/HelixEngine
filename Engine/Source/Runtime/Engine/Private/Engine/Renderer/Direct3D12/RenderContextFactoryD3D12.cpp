@@ -19,7 +19,7 @@ void FRenderContextFactory::CreateContext(FRenderContext& OutContext)
 {
 	HE_ASSERT( m_pDXGIFactory != NULL); // Cannot create D3D12 context with null dxgi factory.
 
-	R_LOG(Log, TEXT("Initializing render context with Direct3D 12 backend."));
+	R_LOG(Log, "Initializing render context with Direct3D 12 backend.");
 
 	// Initialize all main components for the renderer.
 	InitializeMainComponents();
@@ -30,7 +30,7 @@ void FRenderContextFactory::CreateContext(FRenderContext& OutContext)
 	CreateTextureManager(GTextureManager);
 
 
-	R_LOG(Log, TEXT("Render backend initialization complete."));
+	R_LOG(Log, "Render backend initialization complete.");
 }
 
 void FRenderContextFactory::CreateDevice(FRenderDevice& OutDevice)

@@ -296,10 +296,10 @@ FORCEINLINE void HEngine::SetIsPlayingInEditor( bool IsPlaying )
 
 	if (m_IsPlayingInEditor)
 	{
-		HE_LOG( Log, TEXT( "Starting Play In Editor session." ) );
+		HE_LOG( Log, "Starting Play In Editor session." );
 	}
 	else
 	{
-		HE_LOG( Log, TEXT( "Ending Play In Editor session." ) );
+		HE_LOG( Log, "Ending Play In Editor session." );
 	}
 }

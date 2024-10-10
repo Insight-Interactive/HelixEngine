@@ -174,7 +174,7 @@ FORCEINLINE void HWorld::AddPanel( FUIPanel* pPanel )
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Trying to add a UI panel to the world but it was already added! Doing nothing for now." ) );
+		HE_LOG( Warning, "Trying to add a UI panel to the world but it was already added! Doing nothing for now." );
 	}
 }
 
@@ -188,7 +188,7 @@ FORCEINLINE void HWorld::RemovePanel( FUIPanel* pPanel )
 	}
 	else
 	{
-		HE_LOG( Warning, TEXT( "Trying to remove UI panel when it does not exist in the world! Was it added?" ) );
+		HE_LOG( Warning, "Trying to remove UI panel when it does not exist in the world! Was it added?" );
 	}
 }
 

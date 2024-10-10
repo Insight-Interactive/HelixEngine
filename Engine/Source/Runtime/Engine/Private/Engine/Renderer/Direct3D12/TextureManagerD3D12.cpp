@@ -117,7 +117,7 @@ void FTextureManager::CreateTextureFromMemory( ManagedTexture** pOutTexture, Dat
         }
         else
         {
-            R_LOG( Warning, TEXT( "Failed to create dds texture from memory. Falling back to default texture: %i" ), DefaultTexture )
+            R_LOG( Warning, "Failed to create dds texture from memory. Falling back to default texture: %i", DefaultTexture )
                 pD3D12Device->CopyDescriptorsSimple( 1, TextureAsset.m_hCpuDescriptorHandle, FallbackSRVHandle,
                     D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV );
         }

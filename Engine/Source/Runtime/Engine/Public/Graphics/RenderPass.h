@@ -82,7 +82,7 @@ FORCEINLINE void FRenderPass::SetOwningViewport(FViewportContext* pViewport)
 {
 	if (pViewport == NULL)
 	{
-		HE_LOG(Warning, TEXT("Setting null viewport for render pass. Was this intended?"));
+		HE_LOG(Warning, "Setting null viewport for render pass. Was this intended?");
 	}
 	m_pOwningViewport = pViewport;
 }

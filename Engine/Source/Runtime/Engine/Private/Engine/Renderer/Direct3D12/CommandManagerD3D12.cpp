@@ -39,7 +39,7 @@ void FCommandManager::CreateNewCommandContext( const ECommandListType& Type, FCo
 		// TODO
 		break;
 	default:
-		R_LOG( Error, TEXT("Unrecognized command list type provided while creating a new command context!"));
+		R_LOG( Error, "Unrecognized command list type provided while creating a new command context!");
 		HE_ASSERT( false );
 		break;
 	}

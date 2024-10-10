@@ -147,7 +147,7 @@ void FMaterial::LoadFromFile( const String& Filepath )
 	}
 	else
 	{
-		HE_LOG( Error, TEXT( "Failed to read material from file: %s" ), CharToTChar( GetDebugName() ) );
+		HE_LOG( Error, "Failed to read material from file: %s", GetDebugName() );
 	}
 }
 
@@ -362,7 +362,7 @@ void FMaterial::ReflectShader( FRootSignature& outSignature, EShaderVisibility S
 		Reflector.GetResourceBindingDescripion( i, ResourceDesc );
 		if (ResourceDesc.Name == "")
 		{
-			HE_LOG( Warning, TEXT( "Shader resource has empty name! This does not make sense and is not allowed." ) );
+			HE_LOG( Warning, "Shader resource has empty name! This does not make sense and is not allowed." );
 			HE_ASSERT( false );
 		}
 

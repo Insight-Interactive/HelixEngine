@@ -62,7 +62,7 @@ FORCEINLINE void FDatabaseInterface::RegisterAsset( const FGUID& AssetGuid, cons
 	if (InsertResult.second)
 	{
 		GUIDString GuidStr = AssetGuid.ToString();
-		HE_LOG( Warning, TEXT( "Registered asset Guid(\"%s\") into database (\"%s\")." ), CharToTChar( (const char*)GuidStr.CStr()), CharToTChar( m_DatabaseName ) );
+		HE_LOG( Warning, "Registered asset Guid(\"%s\") into database (\"%s\")." , (const char*)GuidStr.CStr(), m_DatabaseName );
 		SetDirty( true );
 	}
 }
@@ -77,7 +77,7 @@ FORCEINLINE void FDatabaseInterface::UnRegisterAsset( const FGUID& AssetGuid )
 	else
 	{
 		GUIDString GuidStr = AssetGuid.ToString();
-		HE_LOG( Warning, TEXT( "Trying to unregister asset (\"%s\") from database (\"%s\") that does not exist!" ), CharToTChar( (const char*)GuidStr.CStr() ), CharToTChar( m_DatabaseName ) );
+		HE_LOG( Warning, "Trying to unregister asset (\"%s\") from database (\"%s\") that does not exist!", (const char*)GuidStr.CStr(), m_DatabaseName );
 		HE_ASSERT( false );
 	}
 }
@@ -105,7 +105,7 @@ FORCEINLINE const String& FDatabaseInterface::GetValueByKey( const FGUID& Key ) 
 	}
 	else
 	{
-		HE_LOG( Error, TEXT( "Trying to find a item that has not been registered with the database. Has it been imported into the project?" ) );
+		HE_LOG( Error, "Trying to find a item that has not been registered with the database. Has it been imported into the project?" );
 		HE_ASSERT( false );
 		return GetInvalidAssetPath();
 	}

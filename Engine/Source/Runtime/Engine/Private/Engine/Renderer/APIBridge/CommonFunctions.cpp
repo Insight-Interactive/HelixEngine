@@ -16,7 +16,7 @@ namespace APIBridge
 		{
 		case EFormat::F_R8G8B8A8_UNorm: return DXGI_FORMAT_R8G8B8A8_UNORM;
 		default:
-			R_LOG(Error, TEXT("Invalid format trying to convert ETextureFormat to DXGI_FORMAT!"));
+			R_LOG(Error, "Invalid format trying to convert ETextureFormat to DXGI_FORMAT!");
 			return DXGI_FORMAT_B8G8R8A8_TYPELESS;
 		}
 
@@ -28,7 +28,7 @@ namespace APIBridge
 		{
 		case DXGI_FORMAT_R8G8B8A8_UNORM: return EFormat::F_R8G8B8A8_UNorm;
 		default:
-			R_LOG(Error, TEXT("Invalid format trying to convert DXGI_FORMAT to ETextureFormat!"));
+			R_LOG(Error, "Invalid format trying to convert DXGI_FORMAT to ETextureFormat!");
 			return EFormat::F_R8G8B8A8_UNorm;
 		}
 	}
@@ -46,7 +46,7 @@ namespace APIBridge
 		case ECommandListType::CLT_Direct: return D3D12_COMMAND_LIST_TYPE_DIRECT;
 		case ECommandListType::CLT_Compute: return D3D12_COMMAND_LIST_TYPE_COMPUTE;
 		default:
-			R_LOG(Error, TEXT("Failed to convert ECommandListType to D3D12_COMMAND_LIST_TYPE with specified enum value!"));
+			R_LOG(Error, "Failed to convert ECommandListType to D3D12_COMMAND_LIST_TYPE with specified enum value!");
 			return D3D12_COMMAND_LIST_TYPE_DIRECT;
 		}
 	}
@@ -58,7 +58,7 @@ namespace APIBridge
 		case D3D12_COMMAND_LIST_TYPE_DIRECT: return ECommandListType::CLT_Direct;
 		case D3D12_COMMAND_LIST_TYPE_COMPUTE: return ECommandListType::CLT_Compute;
 		default:
-			R_LOG(Error, TEXT("Failed to convert D3D12_COMMAND_LIST_TYPE to ECommandListType with specified enum value!"));
+			R_LOG(Error, "Failed to convert D3D12_COMMAND_LIST_TYPE to ECommandListType with specified enum value!");
 			return ECommandListType::CLT_Direct;
 		}
 	}

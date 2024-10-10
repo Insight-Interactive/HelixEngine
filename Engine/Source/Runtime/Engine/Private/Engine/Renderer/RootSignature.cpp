@@ -47,7 +47,7 @@ void FRootSignature::InitStaticSampler(
             NonStaticSamplerDesc.BorderColor[3] == 1.0f
             )
         {
-            R_LOG(Warning, TEXT("Sampler border color does not match static sampler limitations."));
+            R_LOG(Warning, "Sampler border color does not match static sampler limitations.");
         }
 
         if (NonStaticSamplerDesc.BorderColor[3] == 1.0f)

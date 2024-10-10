@@ -38,7 +38,7 @@
 			pComponent->Deserialize( ComponentItr->value[0] );
 		else
 		{
-			HE_LOG( Warning, TEXT( "Trying to deserialize overrides of a componenet on actor (%s) that doesn't exist with GUID: %s" ), CharToTChar( OutActor.GetObjectName() ), CharToTChar( ComponentGuidStr ) );
+			HE_LOG( Warning, "Trying to deserialize overrides of a componenet on actor (%s) that doesn't exist with GUID: %s" , OutActor.GetObjectName(), ComponentGuidStr );
 			HE_ASSERT( false );
 		}
 	}
@@ -148,7 +148,7 @@
 		}
 		else
 		{
-			HE_LOG( Error, TEXT( "Unrecognized component type when deserializing actor with name: %s" ), OutActor.GetObjectName() );
+			HE_LOG( Error, "Unrecognized component type when deserializing actor with name: %s" , OutActor.GetObjectName() );
 			HE_ASSERT( false );
 		}
 	}

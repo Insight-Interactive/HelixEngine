@@ -42,42 +42,39 @@ void ProcessAnimation( const aiScene* pScene, FAnimation& outAnim )
     }
 }
 
-ManagedAnimation* FAnimationManager::FindOrLoadAnimationMeshFromFile( const FPath& FilePath )
+HAnimation FAnimationManager::FindOrLoadAnimationMeshFromFile( const FPath& FilePath )
 {
     String AnimName = StringHelper::GetFilenameFromDirectory( FilePath.m_Path );
 
-    ManagedAnimation* pAnimation = nullptr;
+    HAnimation Animation;
     {
         ScopedCriticalSection Guard( m_Mutex );
 
         auto iter = m_AnimationCache.find( AnimName );
         if (iter != m_AnimationCache.end())
         {
-            // If a texture was already created make sure it has finished loading before
-            // returning a point to it.
-            pAnimation = iter->second.get();
-            pAnimation->WaitForLoad();
-            return pAnimation;
+            // If a animation was already created make sure it has finished loading before
+            // returning a pointer to it.
+            Animation->WaitForLoad();
+            return Animation;
         }
         else
         {
-            // If it's not found, create a new managed texture and start loading it.
-            pAnimation = new FAnimation();
-            //pTexture->SetName( key );
-            m_AnimationCache[AnimName].reset( pAnimation );
+            // If it's not found, create a new managed animation and start loading it.
+            Animation = new FAnimation;
         }
     }
 
     Assimp::Importer Importer;
     const aiScene* pScene = Importer.ReadFile( FilePath.m_Path, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_PopulateArmatureData );
     if (!pScene) {
-        R_LOG( Error, TEXT( "Failed to read animation from file: %s" ), Importer.GetErrorString() );
+        R_LOG( Error, "Failed to read animation from file: %s", Importer.GetErrorString() );
         HE_ASSERT( false );
         return nullptr;
     }
-    ProcessAnimation( pScene, pAnimation->GetAsset() );
-    pAnimation->SetLoadCompleted( true );
+    ProcessAnimation( pScene, Animation->GetAsset() );
+    Animation->SetLoadCompleted( true );
 
-    return pAnimation;
+    return Animation;
 }
 
