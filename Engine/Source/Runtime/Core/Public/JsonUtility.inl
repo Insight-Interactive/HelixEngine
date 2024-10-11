@@ -194,14 +194,15 @@ inline bool JsonUtility::GetTransform( const rapidjson::Value& OwningObject, con
 
 inline bool JsonUtility::GetTransform( const rapidjson::Value& TransformJson, FTransform& OutTransform )
 {
-	FVector3 Position, EulerRotation, Scale;
+	FVector3 Position, Scale;
+	FAngles EulerRotation;
 	JsonUtility::GetFloat( TransformJson, "PositionX", Position.x );
 	JsonUtility::GetFloat( TransformJson, "PositionY", Position.y );
 	JsonUtility::GetFloat( TransformJson, "PositionZ", Position.z );
 
-	JsonUtility::GetFloat( TransformJson, "RotationX", EulerRotation.x );
-	JsonUtility::GetFloat( TransformJson, "RotationY", EulerRotation.y );
-	JsonUtility::GetFloat( TransformJson, "RotationZ", EulerRotation.z );
+	JsonUtility::GetFloat( TransformJson, "RotationX", EulerRotation.pitch );
+	JsonUtility::GetFloat( TransformJson, "RotationY", EulerRotation.yaw );
+	JsonUtility::GetFloat( TransformJson, "RotationZ", EulerRotation.roll );
 
 	JsonUtility::GetFloat( TransformJson, "ScaleX", Scale.x );
 	JsonUtility::GetFloat( TransformJson, "ScaleY", Scale.y );
@@ -231,7 +232,7 @@ inline void JsonUtility::WriteTransform( JsonUtility::WriteContext& Output, cons
 inline void JsonUtility::WriteTransformValues( WriteContext& Output, const FTransform& Transform )
 {
 	FVector3 Pos = Transform.GetPosition();
-	FVector3 Rot = Transform.GetEulerRotation();
+	FAngles Rot = Transform.GetEulerRotation();
 	FVector3 Sca = Transform.GetScale();
 
 	Output.Key( "PositionX" );
@@ -242,11 +243,11 @@ inline void JsonUtility::WriteTransformValues( WriteContext& Output, const FTran
 	Output.Double( Pos.z );
 
 	Output.Key( "RotationX" );
-	Output.Double( Rot.x );
+	Output.Double( Rot.pitch );
 	Output.Key( "RotationY" );
-	Output.Double( Rot.y );
+	Output.Double( Rot.yaw );
 	Output.Key( "RotationZ" );
-	Output.Double( Rot.z );
+	Output.Double( Rot.roll );
 
 	Output.Key( "ScaleX" );
 	Output.Double( Sca.x );

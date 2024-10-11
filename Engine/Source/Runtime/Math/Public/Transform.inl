@@ -50,14 +50,14 @@ FORCEINLINE void FTransform::Translate(const float& X, const float& Y, const flo
 	SetPosition( m_Position.x + X, m_Position.y + Y, m_Position.z + Z);
 }
 
-FORCEINLINE void FTransform::Rotate(const FVector3& Euler )
+FORCEINLINE void FTransform::Rotate(const FAngles& Euler )
 {
-	m_Rotation *= FQuat::CreateFromYawPitchRoll( Euler.y, Euler.x, Euler.z );
+	m_Rotation *= FQuat::CreateFromYawPitchRoll( Euler.yaw, Euler.pitch, Euler.roll );
 }
 
 FORCEINLINE void FTransform::Rotate(const float& Pitch, const float& Yaw, const float& Roll)
 {
-	Rotate( FVector3( Pitch, Yaw, Roll ) );
+	Rotate( FAngles( Pitch, Yaw, Roll ) );
 }
 
 FORCEINLINE void FTransform::Scale(const FVector3& Scaling)
@@ -96,9 +96,9 @@ FORCEINLINE void FTransform::SetPosition(const FVector3& Position)
 	SetPosition(Position.x, Position.y, Position.z);
 }
 
-FORCEINLINE void FTransform::SetRotation(const FVector3& Euler)
+FORCEINLINE void FTransform::SetRotation(const FAngles& Euler)
 {
-	SetRotation( Euler.x, Euler.y, Euler.z);
+	SetRotation( Euler.pitch, Euler.yaw, Euler.roll);
 }
 
 FORCEINLINE void FTransform::SetRotation( const FQuat& Rotation )
@@ -113,7 +113,7 @@ FORCEINLINE void FTransform::SetScale(const FVector3& Scale)
 
 FORCEINLINE FVector3 FTransform::GetLocalUp() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Up, GetRotationMatrix() );
 	return Result;
 }
@@ -127,28 +127,28 @@ FORCEINLINE FVector3 FTransform::GetLocalDown() const
 
 FORCEINLINE FVector3 FTransform::GetLocalLeft() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Left, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalRight() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Right, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalForward() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Forward, GetRotationMatrix() );
 	return Result;
 }
 
 FORCEINLINE FVector3 FTransform::GetLocalBackward() const
 {
-	FVector3 Result = FVector3::Zero;
+	FVector3 Result;
 	RotateVector( Result, FVector3::Backward, GetRotationMatrix() );
 	return Result;
 }

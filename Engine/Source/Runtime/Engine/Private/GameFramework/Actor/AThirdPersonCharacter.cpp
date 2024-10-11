@@ -45,12 +45,26 @@ FVector3 HitPos;
 void AThirdPersonCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	
+	FVector3 BodyWorldPos = m_Body->GetTransform().GetWorldPosition();
+	FDebugLineRenderInfo LineInfo;
+	LineInfo.Start = BodyWorldPos;
+	LineInfo.End = BodyWorldPos + m_Body->GetTransform().GetLocalForward() * 100;
+	LineInfo.Color = FColor::WhiteOpaque;
+	LineInfo.IgnoreDepth = true;
+	GetWorld()->DrawDebugLine( LineInfo );
 
 
-	//FVector3 Pos = m_Transform.GetPosition();
-	//HE_LOG( Log, TEXT( "%f, %f, %f" ), Pos.x, Pos.y, Pos.z );
+	FVector3 CameraWorldPos = m_CameraComponent->GetTransform().GetWorldPosition();
+	FVector3 CameraForward = m_CameraComponent->GetTransform().GetLocalForward();
+	CameraForward.y = 0.f;
+	LineInfo.Start = BodyWorldPos;
+	LineInfo.End = BodyWorldPos + CameraForward * 100;
+	LineInfo.Color = FColor::RedOpaque;
+	LineInfo.IgnoreDepth = true;
+	GetWorld()->DrawDebugLine( LineInfo );
 
-	if (Pressed)
+	/*if (Pressed)
 	{
 		FDebugLineRenderInfo LineInfo;
 		LineInfo.Start = CameraPos;
@@ -58,7 +72,7 @@ void AThirdPersonCharacter::Tick( float DeltaTime )
 		LineInfo.Color = HitInfo.AnyHit ? FColor::RedOpaque : FColor::WhiteOpaque;
 		LineInfo.IgnoreDepth = false;
 		GetWorld()->DrawDebugLine( LineInfo );
-	}
+	}*/
 }
 
 FVector3 AThirdPersonCharacter::GetShootDirection()
@@ -72,7 +86,7 @@ void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )
 {
 	Super::SetupController( Controller );
 
-	// Setup event callbacks for movement.
+	// Setup event callbacks for movement and actions.
 	
 	// Locamotion
 	Controller.BindAxis( "MoveForward", this, &AThirdPersonCharacter::ThirdPersonMoveForward );
@@ -106,10 +120,15 @@ void AThirdPersonCharacter::ThirdPersonMoveForward( float Delta )
 	}
 
 	//Move( m_Transform.GetLocalForward(), Delta );
-	Move( m_CameraComponent->GetTransform().GetLocalForward(), Delta );
+	const FVector3& MoveDirection = m_CameraComponent->GetTransform().GetLocalForward();
+	Move( MoveDirection, Delta );
 	
-	FVector3 Angles = m_CameraBoom->GetTransform().GetEulerRotation();
-	m_Body->GetTransform().SetRotation( 0.f, Angles.y, 0.f );
+
+	FQuat CameraRotation = m_CameraComponent->GetTransform().GetRotation();
+	FQuat Lerped = FQuat::Slerp( CameraRotation, m_Body->GetTransform().GetRotation(), GEngine->GetDeltaTime() );
+	Lerped.x = 0.f;
+	Lerped.z = 0.f;
+	m_Body->GetTransform().SetRotation( Lerped );
 }
 
 void AThirdPersonCharacter::ThirdPersonMoveRight( float Delta )

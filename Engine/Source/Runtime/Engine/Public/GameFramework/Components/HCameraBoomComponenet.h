@@ -22,7 +22,7 @@ public:
 	void UseCameraCollision( bool UseCollision ) { m_UseCameraCollision = UseCollision; }
 	void SetViewOffset( const FVector3& Offset );
 
-	void SetBoomRotationAngles( FVector3& Angles ) 
+	void SetBoomRotationAngles( FAngles& Angles ) 
 	{ 
 		m_Rotation = Angles; 
 		UpdateCameraPitch( 0.f );
@@ -35,10 +35,12 @@ private:
 	FTransform m_Transform;
 
 	bool m_UseCameraCollision;
+	float m_CameraPitchSpeed;
+	float m_CameraYawSpeed;
 	float m_CameraCollisionTraceDistance;
 	HCameraComponent* m_Camera;
 
-	FVector3 m_Rotation;
+	FAngles m_Rotation;
 
 	FVector3 m_ViewOffset;
 

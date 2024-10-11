@@ -833,6 +833,11 @@ inline void FVector3::Normalize() noexcept
     XMStoreFloat3(this, X);
 }
 
+inline void FVector3::Flatten() noexcept
+{
+    this->y = 0.f;
+}
+
 inline void FVector3::Clamp(const FVector3& vmin, const FVector3& vmax) noexcept
 {
     using namespace DirectX;
@@ -2862,26 +2867,26 @@ inline float FQuat::Dot(const FQuat& q) const noexcept
     return XMVectorGetX(XMQuaternionDot(q1, q2));
 }
 
-inline FVector3 FQuat::ToEulerAngles() const noexcept
+inline FAngles FQuat::ToEulerAngles() const noexcept
 {
-    FVector3 r;
+    FAngles r;
 
     // roll (x-axis rotation)
     float sinr_cosp = 2 * (w * x + y * z);
     float cosr_cosp = 1 - 2 * (x * x + y * y);
-    r.x = std::atan2( sinr_cosp, cosr_cosp );
+    r.pitch = std::atan2( sinr_cosp, cosr_cosp );
 
     // pitch (y-axis rotation)
     float sinp = 2 * (w * y - z * x);
     if (std::abs( sinp ) >= 1)
-        r.y = std::copysign( XM_PI / 2, sinp ); // use 90 degrees if out of range
+        r.yaw = std::copysign( XM_PI / 2, sinp ); // use 90 degrees if out of range
     else
-        r.y = std::asin( sinp );
+        r.yaw = std::asin( sinp );
     
     // yaw (z-axis rotation)
     float siny_cosp = 2 * (w * z + x * y);
     float cosy_cosp = 1 - 2 * (y * y + z * z);
-    r.z = std::atan2( siny_cosp, cosy_cosp );
+    r.roll = std::atan2( siny_cosp, cosy_cosp );
 
     return r;
 }

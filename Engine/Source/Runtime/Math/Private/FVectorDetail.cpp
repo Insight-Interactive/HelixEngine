@@ -3,6 +3,12 @@
 #include "MathCore.h"
 
 
+// ---------------------
+//	FVector 2
+// ---------------------
+
+/* static */ const FAngles FAngles::Zero = { 0.f, 0.f, 0.f };
+
 
 // ---------------------
 //	FVector 2

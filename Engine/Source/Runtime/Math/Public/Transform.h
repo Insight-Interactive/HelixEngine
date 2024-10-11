@@ -20,7 +20,7 @@ public:
 
 	FVector3 GetPosition()		const { return m_Position; }
 	FQuat GetRotation()			const {	return m_Rotation; }
-	FVector3 GetEulerRotation() const { return m_Rotation.ToEulerAngles(); }
+	FAngles GetEulerRotation() const { return m_Rotation.ToEulerAngles(); }
 	FVector3 GetScale()			const { return m_Scale; }
 
 	FMatrix GetWorldMatrix()
@@ -61,12 +61,12 @@ public:
 	void SetScale( const float& X, const float& Y, const float& Z );
 
 	void SetPosition( const FVector3& Position );
-	void SetRotation( const FVector3& Euler );
+	void SetRotation( const FAngles& Euler );
 	void SetRotation( const FQuat& Rotation );
 	void SetScale( const FVector3& Scale );
 
 	void Translate( const FVector3& Translation );
-	void Rotate( const FVector3& Euler );
+	void Rotate( const FAngles& Euler );
 	void Scale( const FVector3& Scaling );
 
 	void Translate( const float& X, const float& Y, const float& Z );

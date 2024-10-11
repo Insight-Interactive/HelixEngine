@@ -20,6 +20,12 @@ struct Plane;
 
 struct FAngles
 {
+    FAngles( const float& Pitch, const float& Yaw, const float& Roll )
+        : pitch( Pitch )
+        , yaw( Yaw )
+        , roll (Roll )
+    {
+    }
     FAngles()
         : pitch( 0.f )
         , yaw( 0.f )
@@ -31,6 +37,7 @@ struct FAngles
     float yaw;
     float roll;
 
+    static const FAngles Zero;
 };
 
 //------------------------------------------------------------------------------
@@ -202,6 +209,8 @@ struct MATH_API FVector3 : public XMFLOAT3
     FVector3 Cross(const FVector3& V) const noexcept;
 
     void Normalize() noexcept;
+    // Flattens the vector along the xz plane.
+    void Flatten() noexcept;
 
     void Clamp(const FVector3& vmin, const FVector3& vmax) noexcept;
     void Clamp(const FVector3& vmin, const FVector3& vmax, FVector3& result) const noexcept;
@@ -601,7 +610,7 @@ struct MATH_API FQuat : public XMFLOAT4
 
     float Dot(const FQuat& Q) const noexcept;
 
-    FVector3 ToEulerAngles() const noexcept;
+    FAngles ToEulerAngles() const noexcept;
 
     // Static functions
     static FQuat CreateFromAxisAngle(const FVector3& axis, float angle) noexcept;

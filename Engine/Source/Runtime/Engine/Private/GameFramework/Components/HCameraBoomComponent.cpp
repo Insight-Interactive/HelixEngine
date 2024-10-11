@@ -11,6 +11,8 @@ HCameraBoomComponent::HCameraBoomComponent( FComponentInitArgs& InitArgs )
 	: HActorComponent( InitArgs )
 	, m_UseCameraCollision( true )
 	, m_CameraCollisionTraceDistance( 5.f )
+	, m_CameraPitchSpeed( 60.f )
+	, m_CameraYawSpeed( 60.f )
 {
 }
 
@@ -56,22 +58,22 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 {
 	const float kPitchRotationClamp = Math::DegreesToRadians( 50.f );
-	m_Rotation.x += -(PitchDelta * 60.f) * GEngine->GetDeltaTime();
-	m_Rotation.x = Math::Clamp( m_Rotation.x, -kPitchRotationClamp, kPitchRotationClamp );
-	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	m_Rotation.pitch += -(PitchDelta * m_CameraPitchSpeed) * GEngine->GetDeltaTime();
+	m_Rotation.pitch = Math::Clamp( m_Rotation.pitch, -kPitchRotationClamp, kPitchRotationClamp );
+	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );
 	m_Transform.SetRotation( RotationQuat );
 	
-	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );
 	m_Camera->GetTransform().SetRotation( RotationQuat );
 }
 
 void HCameraBoomComponent::UpdateCameraYaw( float YawDelta )
 {
-	m_Rotation.y += -(YawDelta * 60.f) * GEngine->GetDeltaTime();
-	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	m_Rotation.yaw += -(YawDelta * m_CameraYawSpeed) * GEngine->GetDeltaTime();
+	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );
 	m_Transform.SetRotation( RotationQuat );
 	
-	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.y, m_Rotation.x, m_Rotation.z );
+	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );
 	m_Camera->GetTransform().SetRotation( RotationQuat );
 }
 
@@ -80,7 +82,7 @@ void HCameraBoomComponent::SetCamera( HCameraComponent* Camera )
 	m_Camera = Camera;
 	m_Camera->GetTransform().LinkTo( m_Transform );
 	SetViewOffset( FVector3( 20.f, 10.f, -70.f ) );
-	m_Camera->GetTransform().SetRotation( FVector3::Zero );
+	m_Camera->GetTransform().SetRotation( FAngles::Zero );
 }
 
 void HCameraBoomComponent::SetViewOffset( const FVector3& Offset )
