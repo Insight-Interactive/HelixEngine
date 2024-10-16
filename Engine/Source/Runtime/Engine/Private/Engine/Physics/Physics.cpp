@@ -354,13 +354,15 @@ namespace Physics
 		}
 	};
 
-	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors )
+	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo /*= nullptr*/, std::vector<HRigidBody*>* IgnoreActors /*= nullptr*/ )
 	{
 		PxVec3 Orig( Origin.x, Origin.y, Origin.z );
 		PxVec3 UnitDir( UnitDirection.x, UnitDirection.y, UnitDirection.z );
+		FVector3 TargetHitPos = Origin + UnitDirection * Distance;
 		PxRaycastBuffer HitInfo = {};
 
 		FPhysicsQueryFilter QueryFilter;
+
 		if (IgnoreActors)
 		{
 			QueryFilter.IgnoreActors.resize( IgnoreActors->size() );
@@ -374,10 +376,11 @@ namespace Physics
 		}
 
 		const PxHitFlags HitFlags = PxHitFlag::eDEFAULT;
-		const PxQueryFlags QueryFlags( PxQueryFlags( PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC | PxQueryFlag::ePREFILTER ) );
-		const PxQueryFilterData filterData( PxFilterData(), QueryFlags );
+		//const PxQueryFlags QueryFlags( PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC | PxQueryFlag::ePREFILTER );
+		const PxQueryFlags QueryFlags( PxQueryFlag::eANY_HIT | PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC );
+		const PxQueryFilterData FilterData( PxFilterData(), QueryFlags );
 
-		bool Hit = PhysicsScene->raycast( Orig, UnitDir, Distance, HitInfo, HitFlags, filterData, &QueryFilter );
+		bool Hit = PhysicsScene->raycast( Orig, UnitDir, Distance, HitInfo, HitFlags, FilterData, &QueryFilter );
 		
 		if (outHitInfo != nullptr)
 		{
@@ -385,9 +388,23 @@ namespace Physics
 			outHitInfo->HitNormal = FVector3( HitInfo.block.normal.x, HitInfo.block.normal.y, HitInfo.block.normal.z );
 			outHitInfo->Distance = HitInfo.block.distance;
 			outHitInfo->AnyHit = Hit;
+			outHitInfo->Fraction = ((outHitInfo->HitPos - Origin).Length() + (TargetHitPos - outHitInfo->HitPos).Length()) / (outHitInfo->HitPos - Origin).Length();
 		}
 		
 		return Hit;
+	}
+
+	bool SphereCast( const FVector3& Start, const float& SphereSize )
+	{
+		PxSphereGeometry SphereGeo( SphereSize );
+		PxTransform Transform( Start.x, Start.y, Start.z );
+		PxOverlapBuffer HitInfo = {};
+
+		FPhysicsQueryFilter QueryFilter;
+		const PxQueryFlags QueryFlags( PxQueryFlag::eANY_HIT | PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC );
+		const PxQueryFilterData FilterData( PxFilterData(), QueryFlags );
+
+		return PhysicsScene->overlap( SphereGeo, Transform, HitInfo, FilterData, &QueryFilter );
 	}
 
 	FVector3 ScreenToWorldPos( FVector2 ScreenPos )
@@ -396,7 +413,7 @@ namespace Physics
 		FRaycastHitInfo HitInfo = {};
 		const FVector2 WindowDims = GEngine->GetClientViewport().GetDimensions();
 		HCameraComponent& Camera = GEngine->GetPlayerCamera();
-		FVector3 TraceStart = Camera.GetTransform().GetPosition();
+		FVector3 TraceStart = Camera.GetTransform().GetWorldPosition();
 		FVector3 Direction = Math::WorldDirectionFromScreenPos( ScreenPos, WindowDims, Camera.GetViewMatrix(), Camera.GetProjectionMatrix() );
 
 		RayCast( TraceStart, Direction, MaxTraceDistance, &HitInfo, nullptr );

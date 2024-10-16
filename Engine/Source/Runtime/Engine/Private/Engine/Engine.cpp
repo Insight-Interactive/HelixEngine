@@ -11,6 +11,7 @@
 #include "Graphics/FontManager.h"
 #include "Engine/Renderer/RendererInitializer.h"
 #include "Engine/Audio/AudioManager.h"
+#include "GameFramework/Ballistics/Ballistics.h"
 
 
 Logger GEngineLogger;
@@ -183,6 +184,7 @@ void HEngine::PostStartup()
 		m_GameWorld.BeginPlay();
 		GGameInstance->BeginPlay();
 	}
+	GBulletManager.Initialize();
 
 	m_IsInitialized = true;
 
@@ -208,6 +210,7 @@ void HEngine::Shutdown()
 
 	FAssetDatabase::Uninitialize();
 	GMaterialManager.FlushMaterialCache();
+	GBulletManager.UnInitialize();
 
 	Input::UnInitialize();
 	Physics::UnInitialize();
@@ -258,7 +261,9 @@ void HEngine::Tick()
 		if ((DeltaTime > 0.f) && (Accumulator >= DeltaTime))
 		{
 			Physics::Update( DeltaTime, m_FrameTimeScale );
+			GBulletManager.Update( DeltaTime );
 			m_GameWorld.Tick( DeltaTime );
+
 			m_AppSeconds += DeltaTime;
 			Accumulator -= DeltaTime;
 		}

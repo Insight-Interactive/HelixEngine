@@ -85,6 +85,39 @@ namespace Input
 	*/
 	void UnacquireMouse();
 
+	/*
+		Show the mouse.
+	*/
+	void ShowMouse();
+
+	/*
+		Hide the mouse.
+	*/
+	void HideMouse();
+
+	/*
+		Get the screen pos of the mouse.
+	*/
+	FVector2 GetMouseScreenPos();
+
+	/*
+		Get the smoothed X delta of the mouse movement .
+	*/
+	float GetMouseMoveDeltaX();
+
+	/*
+		Get the smoothed Y delta of the mouse movement .
+	*/
+	float GetMouseMoveDeltaY();
+
+	float GetGamepadLeftStickDeltaX();
+	float GetGamepadLeftStickDeltaY();
+
+	float GetGamepadRightStickDeltaX();
+	float GetGamepadRightStickDeltaY();
+
+
+
 	void SetAnalogValue( DigitalInput Input, float Value );
 	void SetMouseMoveDelta( float XValue, float YValue );
 	void SetMouseScrollDelta( float XScrollDelta, float YScrollDelta );
@@ -92,16 +125,9 @@ namespace Input
 	void SetKey( uint8 Key, bool IsPressed );
 
 
-	FVector2 GetMouseScreenPos();
-
-	float GetMouseMoveDeltaX();
-
-	float GetMouseMoveDeltaY();
 
 	bool GetIsMouseAcquired();
 
-	void ShowMouse();
-	void HideMouse();
 	void KbmZeroInputs();
 
 
@@ -155,13 +181,31 @@ inline FVector2 Input::GetMouseScreenPos()
 inline float Input::GetMouseMoveDeltaX()
 {
 	return m_Analogs[AnalogMouseX - AnalogLeftTrigger];
-	//return m_Mouse.GetMoveDeltaX();
 }
 
 inline float Input::GetMouseMoveDeltaY()
 {
 	return m_Analogs[AnalogMouseY - AnalogLeftTrigger];
-	//return m_Mouse.GetMoveDeltaY();
+}
+
+inline float Input::GetGamepadLeftStickDeltaX()
+{
+	return m_Analogs[AnalogLeftStickX - AnalogLeftTrigger];
+}
+
+inline float Input::GetGamepadLeftStickDeltaY()
+{
+	return m_Analogs[AnalogLeftStickY - AnalogLeftTrigger];
+}
+
+inline float Input::GetGamepadRightStickDeltaX()
+{
+	return m_Analogs[AnalogRightStickX - AnalogLeftTrigger];
+}
+
+inline float Input::GetGamepadRightStickDeltaY()
+{
+	return m_Analogs[AnalogRightStickY - AnalogLeftTrigger];
 }
 
 inline void Input::AcquireMouse()

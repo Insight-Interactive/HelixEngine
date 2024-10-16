@@ -33,6 +33,7 @@ struct FRaycastHitInfo
 	FVector3 HitPos;
 	FVector3 HitNormal;
 	float Distance;
+	float Fraction;
 	bool AnyHit;
 };
 
@@ -88,7 +89,8 @@ namespace Physics
 	void CreateCube( const FVector3& StartPos, const FQuat& StartRotation, HCubeRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 	void CreateCapsule( const FVector3& StartPos, const FQuat& StartRotation, HCapsuleRigidBody& outCube, bool IsTrigger, void* pUserData, bool IsKinematic, float Density, bool IsStatic, EFilterGroup CollisionGroup, EFilterGroup FilterGroup = FG_World );
 
-	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo, std::vector<HRigidBody*>* IgnoreActors );
+	bool RayCast( const FVector3& Origin, const FVector3& UnitDirection, const float& Distance, FRaycastHitInfo* outHitInfo = nullptr, std::vector<HRigidBody*>* IgnoreActors = nullptr );
+	bool SphereCast( const FVector3& Start, const float& SphereSize );
 	
 	FVector3 ScreenToWorldPos( FVector2 ScreenPos );
 

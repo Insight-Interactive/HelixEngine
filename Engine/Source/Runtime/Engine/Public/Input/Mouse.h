@@ -27,9 +27,9 @@ public:
 	void Hide() const;
 
 	bool GetIsAcquired() const;
-	float GetMoveDeltaX() const;
-	float GetMoveDeltaY() const;
-	FVector2 GetMoveDelta() const;
+	float GetRawMoveDeltaX() const;
+	float GetRawMoveDeltaY() const;
+	FVector2 GetRawMoveDelta() const;
 	FVector2 GetPosition() const;
 	float GetVerticalScrollDelta() const;
 	float GetButtonStateByIndex( const uint8& Index ) const;
@@ -148,9 +148,9 @@ inline void FMouse::Hide() const
 #endif
 }
 
-inline FVector2 FMouse::GetMoveDelta() const
+inline FVector2 FMouse::GetRawMoveDelta() const
 {
-	return FVector2( m_MouseState.MoveDelta[kState_Current][kMouseDeltaX], m_MouseState.MoveDelta[kState_Current][kMouseDeltaY] );
+	return FVector2( GetRawMoveDeltaX(), GetRawMoveDeltaY() );
 }
 
 inline FVector2 FMouse::GetPosition() const
@@ -195,12 +195,12 @@ inline void FMouse::SetIsAcquired( const bool& Value )
 	m_IsAcquired = Value;
 }
 
-inline float FMouse::GetMoveDeltaX() const
+inline float FMouse::GetRawMoveDeltaX() const
 {
 	return m_MouseState.MoveDelta[kState_Previous][kMouseDeltaX];
 }
 
-inline float FMouse::GetMoveDeltaY() const
+inline float FMouse::GetRawMoveDeltaY() const
 {
 	return m_MouseState.MoveDelta[kState_Previous][kMouseDeltaY];
 }

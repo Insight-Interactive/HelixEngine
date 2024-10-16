@@ -17,6 +17,7 @@ FORCEINLINE FTransform::~FTransform()
 
 FORCEINLINE FTransform::FTransform( FTransform&& Other ) noexcept
 {
+	m_Parent = Other.m_Parent;
 	m_Scale = Other.m_Scale;
 	m_Position = Other.m_Position;
 	m_Rotation = Other.m_Rotation;
@@ -29,6 +30,7 @@ FORCEINLINE FTransform::FTransform(const FTransform& FTransform)
 
 FORCEINLINE FTransform& FTransform::operator = (const FTransform& Other)
 {
+	m_Parent = Other.m_Parent;
 	m_Position = Other.m_Position;
 	m_Scale = Other.m_Scale;
 	m_Rotation = Other.m_Rotation;

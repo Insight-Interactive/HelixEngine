@@ -17,7 +17,7 @@ AThirdPersonCharacter::AThirdPersonCharacter( FActorInitArgs& InitArgs )
 	, m_ADSFOVDegrees( 50.f )
 {
 	m_CurrentWeapon = &m_Rifle;
-	m_CurrentWeapon->m_Transform.LinkTo( m_Transform, FVector3( 32.f, 32.f, 32.f ) );
+	m_CurrentWeapon->m_Transform.LinkTo( m_Transform, FVector3( 0.f, 100, 32.f ) );
 
 	m_CameraBoom = AddComponent<HCameraBoomComponent>( "CameraBoom" );
 	m_CameraBoom->GetTransform().LinkTo( m_Transform, FVector3(0.f, GetPawnHeight() * 0.5f, 0.f) );
@@ -79,7 +79,10 @@ FVector3 AThirdPersonCharacter::GetShootDirection()
 {
 	FVector2 WindowDims = GEngine->GetClientViewport().GetDimensions();
 	FVector2 ScreenFirePos = WindowDims * 0.5f;
-	return Math::WorldDirectionFromScreenPos( ScreenFirePos, WindowDims, m_CameraComponent->GetViewMatrix(), m_CameraComponent->GetProjectionMatrix() );
+	FVector3 ScreenWorldPos = Physics::ScreenToWorldPos( ScreenFirePos );
+	FVector3 Direction = ScreenWorldPos - m_CurrentWeapon->m_Transform.GetWorldPosition();
+	Direction.Normalize();
+	return Direction;
 }
 
 void AThirdPersonCharacter::SetupController( HControllerComponent& Controller )

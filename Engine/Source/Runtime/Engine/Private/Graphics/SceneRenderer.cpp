@@ -123,6 +123,7 @@ void FSceneRenderer::RenderScene( HScene& Scene, FColorBuffer& RenderTarget, con
 
 		// Draw 
 		Scene.RenderWorldGeo( CmdContext );
+		GBulletManager.RenderTracers( CmdContext );
 		Scene.RenderStaticLitOpaqueObjects( CmdContext );
 		Scene.RenderSkeletalLitOpaqueObjects( CmdContext );
 

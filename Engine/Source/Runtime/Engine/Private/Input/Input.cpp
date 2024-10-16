@@ -236,7 +236,7 @@ namespace Input
 #endif
 
 		const float kMouseSmoothing = 0.0018f;
-		FVector2 MouseMoveDelta = m_Mouse.GetMoveDelta();
+		FVector2 MouseMoveDelta = m_Mouse.GetRawMoveDelta();
 		SetAnalogValue( AnalogMouseX, MouseMoveDelta.x * kMouseSmoothing );
 		SetAnalogValue( AnalogMouseY, MouseMoveDelta.y * kMouseSmoothing );
 

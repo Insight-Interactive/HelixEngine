@@ -154,7 +154,7 @@ void FInputDispatcher::UpdateInputs( float DeltaTime )
 		//
 		for (size_t i = 0; i < m_ActionMappings.size(); i++)
 		{
-			DigitalInput ActionKey = m_ActionMappings[i].MappedKeycode;
+			const DigitalInput& ActionKey = m_ActionMappings[i].MappedKeycode;
 
 			if (Input::IsFirstPressed( ActionKey ))
 			{
@@ -174,7 +174,7 @@ void FInputDispatcher::UpdateInputs( float DeltaTime )
 		//
 		for (size_t i = 0; i < m_AxisMappings.size(); i++)
 		{
-			DigitalInput AxisKey = m_AxisMappings[i].MappedKeycode;
+			const DigitalInput& AxisKey = m_AxisMappings[i].MappedKeycode;
 
 			if (IsValidAnalogInput( AxisKey ))
 			{

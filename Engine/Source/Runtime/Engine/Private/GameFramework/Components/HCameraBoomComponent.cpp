@@ -25,33 +25,11 @@ void HCameraBoomComponent::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+
 	if( m_UseCameraCollision )
 	{
-		
-
-		/*FVector3 WorldPos = GetWorldPosition();
-		FVector3 CameraPos = m_Camera->GetWorldPosition();
-		FVector3 Direction = WorldPos - CameraPos;
-		Direction.Normalize();
-		FRaycastHitInfo HitInfo = {};
-		GetWorld()->Raycast( WorldPos, Direction, Direction.Length(), &HitInfo );
-
-		FDebugLineRenderInfo LineInfo;
-		LineInfo.Start = GetWorldPosition();
-		LineInfo.End = HitInfo.HitPos;
-		LineInfo.Color = FColor::BlueOpaque;
-		LineInfo.IgnoreDepth = false;
-		GetWorld()->DrawDebugLine( LineInfo );*/
-
-
-		/*bool TopHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalUp(), m_CameraCollisionTraceDistance );
-		bool BottomHit = GetWorld()->Raycast( WorldPos, m_Camera->GetLocalDown(), m_CameraCollisionTraceDistance );
-
-		bool LeftHit = GetWorld()->Raycast( WorldPos, GetLocalLeft(), m_CameraCollisionTraceDistance );
-		bool RightHit = GetWorld()->Raycast( WorldPos, GetLocalRight(), m_CameraCollisionTraceDistance );
-
-		if (LeftHit || RightHit)
-			SetPosition( PosPreRotation );*/
+		/*if (Physics::SphereCast( m_Camera->GetTransform().GetWorldPosition(), m_CameraCollisionTraceDistance ))
+			HE_LOG( Log, "Camera Hit!" );*/
 	}
 }
 
@@ -61,6 +39,7 @@ void HCameraBoomComponent::UpdateCameraPitch( float PitchDelta )
 	m_Rotation.pitch += -(PitchDelta * m_CameraPitchSpeed) * GEngine->GetDeltaTime();
 	m_Rotation.pitch = Math::Clamp( m_Rotation.pitch, -kPitchRotationClamp, kPitchRotationClamp );
 	FQuat RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );
+	
 	m_Transform.SetRotation( RotationQuat );
 	
 	RotationQuat = FQuat::CreateFromYawPitchRoll( m_Rotation.yaw, m_Rotation.pitch, m_Rotation.roll );

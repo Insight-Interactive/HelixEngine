@@ -1,5 +1,8 @@
 #pragma once
 
+#include "GameFramework/Ballistics/Ballistics.h"
+
+
 enum EWeaponType
 {
 	WT_Invalid,
@@ -50,14 +53,13 @@ public:
 
 	virtual EWeaponType GetStaticType() override { return WT_BulletWeapon; }
 
-	void DoFireBullet( const FVector3& Direction );
-
-	virtual void Fire()
+	virtual void Fire(const FVector3& Direction)
 	{
 		if ( IsMagazineEmpty() )
 			return;
 
 		m_MagazineAmmo--;
+		Ballistics::MagicBullet( m_Transform.GetWorldPosition(), Direction );
 	}
 
 	bool Reload()
@@ -110,7 +112,7 @@ public:
 
 	virtual void OnFireInputPressed( const FVector3& Direction ) override
 	{
-		FBulletWeapon::Fire();
+		FBulletWeapon::Fire(Direction);
 	}
 
 	virtual void OnFireInputHeld( const FVector3& Direction ) override

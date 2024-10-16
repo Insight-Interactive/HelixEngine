@@ -160,9 +160,9 @@ private:
 #if HE_WITH_EDITOR
 		Char HintName[kMaxHintNameLength];
 #endif
-		int32			HintHash;
-		DigitalInput	MappedKeycode;
-		float			Scale;
+		StringHashValue		HintHash;
+		DigitalInput		MappedKeycode;
+		float				Scale;
 	};
 
 	/*

@@ -15,6 +15,8 @@
             "e6d7b6e3-a012-424f-a1fe-486aee8b60ca": "Shaders/Core/SolidColor.ps.cso",
             "3e5d14f5-da55-4e50-b69f-622dd69ef93e": "Shaders/Core/MaterialBall.vs.cso",
             "9357df8a-a1b9-41ef-8476-7e1f5bab0be3": "Shaders/Core/RustedMetal.vs.cso",
+            "a1269368-a962-4044-b9c6-469a7a9f36c4": "Shaders/Core/Bullet.vs.cso",
+            "33d53596-4929-4118-ac26-f9977af5184d": "Shaders/Core/Bullet.ps.cso",
             "d7b84cd6-7942-4247-b55e-a36f1c1660a4": "Shaders/Core/DefaultSkeletalMeshGeometryPass.ps.cso",
             "cd635ce4-8e10-4f50-8cfe-2f40dfc5f27e": "Shaders/Core/DefaultSkeletalMeshGeometryPass.vs.cso"
         }
